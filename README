@@ -1,0 +1,18 @@
+A javascript implementation of the Firmata protocol for Arduino. This is a work in progress and will change rapidly over the next few weeks and needs considerably refactoring (as you can probably tell from the style of my code I have a lot more as3 experience than javascript… so I'm still have a lot to learn about javascript best practices).
+
+Currently Arduino-JS is mostly a port of as3glue (http://code.google.com/p/as3glue/) to javascript. A simple serial to WebSocket bridge is included in the server directory. This server requires node.js and is tested with node.js v0.4.9.
+
+The plan is to implement the full Firmata 2.2 protocol. So far everything from as3glue is implemented, including the new Servo spec for Firmata 2.2. Next up is i2c support. I've also added a class for the Innovations ID-12 RFID reader. This class also serves as an example of a method to add hardware abstractions to Arduino-JS. More HW classes will follow (similar to those implemented in the funnel.ui and funnel.i2c packets of funnel.cc as3 library: http://code.google.com/p/funnel/.
+
+Test environment:
+
+Chrome and Safari. May work in Firefox if you enable WebSockets
+
+Arduino UNO running StandardFirmata_2_2_forUNO_0_3
+
+The RFID example requires RFID_Firmata and the ID12RFIDReaderLibrary for Arduino (get it here: https://github.com/soundanalogous/ID-12-RFID-Reader-Library).
+
+Updated documentation will follow in a few days...
+
+
+
