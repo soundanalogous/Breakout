@@ -1,21 +1,27 @@
-// ID12RFIDReader
-// jeff hoefs 7/20/11
-//
+/**
+ * @author jeff hoefs
+ */
 
+/**
+ * Creates a new ID12RFIDReader
+ *
+ * @constructor
+ */
 function ID12RFIDReader(board) {
 	"use strict";
-	
-	this.className = "ID12RFIDReader"; 	// for testing
 
-	// call the super class
-	// 2nd parameter is passed to EventDispatcher constructor
-	EventDispatcher.call(this, this);
-
+	// to do: object id to be passed in as a param rather than
+	// explicitly set? This would support the ability to use multiple
+	// RFID readers with a single Arduino.
+	// Would also need to update the Arduino library to enable this.
 	var 	ID12_READER		= 13,
 			READ_EVENT		= 1,
 			REMOVE_EVENT	= 2;
-			
-	var self = this;
+
+	var self = this;	
+	this.className = "ID12RFIDReader"; 	// for testing
+	
+	var _evtDispatcher = new EventDispatcher(this);
 
 	board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, onSysExMessage);
 	
@@ -33,7 +39,6 @@ function ID12RFIDReader(board) {
 
 	// this is nice! found it here:
 	// http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
-	// I modified to pad by 1 zero rather than 3 zeros
 	function dec2hex(i) {
    		return (i+0x100).toString(16).substr(-2).toUpperCase();
 	}
@@ -62,13 +67,46 @@ function ID12RFIDReader(board) {
 	function dispatch(event) {
 		self.dispatchEvent(event);
 	}
+	
+	// public methods:
+	
+	/* implement EventDispatcher */
+	
+	/**
+	 * @borrows EventDispatcher#addEventListener as this.addEventListener
+	 */
+	this.addEventListener = function(type, listener) {
+		_evtDispatcher.addEventListener(type, listener);
+	}
+	
+	/**
+	 * @borrows EventDispatcher#removeEventListener as this.removeEventListener
+	 */	
+	this.removeEventListener = function(type, listener) {
+		_evtDispatcher.removeEventListener(type, listener);
+	}
+	
+	/**
+	 * @borrows EventDispatcher#hasEventListener as this.hasEventListener
+	 */	
+	this.hasEventListener = function(type) {
+		return _evtDispatcher.hasEventListener(type);
+	}
+	
+	/**
+	 * @borrows EventDispatcher#dispatchEvent as this.dispatchEvent
+	 */	
+	this.dispatchEvent = function(event) {
+		return _evtDispatcher.dispatchEvent(event);
+	}
 }
 
-// extends EventDispatcher
-ID12RFIDReader.prototype = new EventDispatcher;
-ID12RFIDReader.prototype.constructor = ID12RFIDReader;
-
-
+/**
+ * @constructor
+ * @augments Event
+ * @param type {string} The event type
+ * @param tag {string} The RFID tag value (hexadecimal)
+ */
 function RFIDEvent(type, tag) {
 	this.tag = tag;
 	// call the super class
@@ -78,3 +116,8 @@ function RFIDEvent(type, tag) {
 
 RFIDEvent.ADD_TAG = "addTag";
 RFIDEvent.REMOVE_TAG = "removeTag";
+
+// to do: figure out how to inherit a class without using 'new' when we want
+// to call the super class in the subclass constructor (as we do in this case)
+RFIDEvent.prototype = new Event;
+RFIDEvent.prototype.constructor = RFIDEvent;

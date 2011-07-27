@@ -21,13 +21,18 @@ $(document).ready(function() {
 		ard.removeEventListener(Event.CONNECTED, onConnect);
 	
 		//ard.resetBoard();
-		ard.reportVersion();
-		ard.reportFirmware();	
+
+		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
+		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
 		
 		ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
 		ard.addEventListener(ArduinoEvent.DIGITAL_DATA, onDigitalData);
 		ard.addEventListener(ArduinoEvent.STRING_MESSAGE, onStringMessage);
-				
+		
+		ard.reportVersion();
+		ard.reportFirmware();
+		
+		// Load the Firmata Example, EchoString.pde to see how this can be used
 		//ard.sendString("hello arduino");
 		
 		// set a pin to output
@@ -47,7 +52,7 @@ $(document).ready(function() {
 		//ard.setPinMode(4, Arduino.HIGH);
 		
 		// enable reporting for an analog pin
-		//ard.setAnalogPinReporting(0, Arduino.ON);
+		ard.setAnalogPinReporting(0, Arduino.ON);
 		
 		// disable reporting for an analog pin
 		//ard.setAnalogPinReporting(1, Arduino.OFF);
@@ -61,6 +66,14 @@ $(document).ready(function() {
 		ard.sendServoAttach(9);
 		setInterval(servoTest, 5000);
 		
+	}
+	
+	function onFirmwareVersion(event) {
+		console.log("firmware version: " + event.data.version);
+	}
+	
+	function onFirmwareName(event) {
+		console.log("firmware name: " + event.data.name + " version: " + event.data.version);
 	}
 	
 	function onStringMessage(event) {
