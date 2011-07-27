@@ -226,8 +226,6 @@ function Arduino(host, port) {
 	}
 	
 	function processQueryFirmwareResult(msg) {
-		
-		//assemble string from rcv bytes - weird.
 		var fname ="";
 		var data;
 		for (var i = 3; i < msg.length; i+=2)
