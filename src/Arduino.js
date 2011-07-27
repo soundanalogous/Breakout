@@ -86,6 +86,9 @@ function Arduino(host, port) {
 	// rather than using WebSockets directly.
 	// This will enable the user to swap the wrapper object if do not want to
 	// use WebSockets as long as all Socket wrappers maintain a consistent interface.
+	/**
+	 * @private
+	 */
 	function connect () {
 		
 		if(!("WebSocket" in window)) {
@@ -97,16 +100,22 @@ function Arduino(host, port) {
 		try{
 			socket = new WebSocket("ws://"+host+":"+port);
 			console.log("Starting up...");
-			
+			/**
+			 * @private
+			 */
 			socket.onopen = function(){
 				console.log("Socket Status: "+socket.readyState+" (open)");
 				self.dispatchEvent(new Event(Event.CONNECTED));
 			}
-			
+			/**
+			 * @private
+			 */
 			socket.onmessage = function(msg){
 				processData(msg.data);
 			}
-			
+			/**
+			 * @private
+			 */
 			socket.onclose = function(){
 				console.log("Socket Status: "+socket.readyState+' (Closed)');
 			}			
@@ -117,6 +126,9 @@ function Arduino(host, port) {
 
 	}
 	
+	/**
+	 * @private
+	 */
 	function processData(inputData) {
 		inputData *= 1;	// force inputData to integer (is there a better way to do this?)
 		var command;
@@ -196,7 +208,9 @@ function Arduino(host, port) {
 			}
 		}
 	}
-	
+	/**
+	 * @private
+	 */
 	function processDigitalPortBytes(port, bits0_6, bits7_13) {
 		var low;
 		var high;
@@ -224,7 +238,9 @@ function Arduino(host, port) {
 			_previousDigitalData[i + offset]=_digitalData[i + offset];
 		}	
 	}
-	
+	/**
+	 * @private
+	 */
 	function processQueryFirmwareResult(msg) {
 		var fname ="";
 		var data;
@@ -238,7 +254,9 @@ function Arduino(host, port) {
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.FIRMWARE_NAME, {name: fname, version: _firmwareVersion}));
 		
 	}
-
+	/**
+	 * @private
+	 */
 	function processSysExString(msg) {
 		var str = "";
 		var data;
@@ -249,8 +267,10 @@ function Arduino(host, port) {
 		}
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.STRING_MESSAGE, {message: str}));
 	}
-	
-	// convert char to decimal value
+	/**
+	 * convert char to decimal value
+	 * @private
+	 */
 	function toDec(ch) {
 		ch = ch.substring(0, 1);
 		var decVal = ch.charCodeAt(0);		
@@ -487,8 +507,8 @@ function Arduino(host, port) {
 	 * min and max values.
 	 *
 	 * @param pin {number} The pin the server is connected to.
-	 * @param minPulse {number} The minimum pulse width for the servo. Default = 544.
-	 * @param maxPulse {number} The maximum pulse width for the servo. Default = 2400.
+	 * @param minPulse {number} [optional] The minimum pulse width for the servo. Default = 544.
+	 * @param maxPulse {number} [optional] The maximum pulse width for the servo. Default = 2400.
 	 */
 	this.sendServoAttach = function(pin, minPulse, maxPulse) {
 
@@ -546,29 +566,33 @@ function Arduino(host, port) {
 	/* implement EventDispatcher */
 	
 	/**
-	 * @borrows EventDispatcher#addEventListener as this.addEventListener
+	 * @param type {String} The event type
+	 * @param listener {function} The function to be called when the event is fired
 	 */
 	this.addEventListener = function(type, listener) {
 		_evtDispatcher.addEventListener(type, listener);
 	}
 	
 	/**
-	 * @borrows EventDispatcher#removeEventListener as this.removeEventListener
-	 */	
+	 * @param type {String} The event type
+	 * @param listener {function} The function to be called when the event is fired
+	 */
 	this.removeEventListener = function(type, listener) {
 		_evtDispatcher.removeEventListener(type, listener);
 	}
 	
 	/**
-	 * @borrows EventDispatcher#hasEventListener as this.hasEventListener
-	 */	
+	 * @param type {String} The event type
+	 * return {boolean} True is listener exists for this type, false if not.
+	 */
 	this.hasEventListener = function(type) {
 		return _evtDispatcher.hasEventListener(type);
 	}
 	
 	/**
-	 * @borrows EventDispatcher#dispatchEvent as this.dispatchEvent
-	 */	
+	 * @param type {Event} The Event object
+	 * return {boolean} True if dispatch is successful, false if not.
+	 */		
 	this.dispatchEvent = function(event) {
 		return _evtDispatcher.dispatchEvent(event);
 	}	

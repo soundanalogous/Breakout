@@ -5,6 +5,7 @@
 /**
  * An as3-like EventDispatcher class.
  *
+ * @constructor
  * @param target {class} The instance of the class that implements EventDispatcher
  */
 function EventDispatcher(target) {
@@ -100,6 +101,7 @@ function EventDispatcher(target) {
 /** 
  * Event 'base class' (but it can also be instantiated directly)
  *
+ * @constructor
  * @param type {String} event type
  */
 function Event(type) {

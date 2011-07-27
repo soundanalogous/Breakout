@@ -26,7 +26,9 @@ function ID12RFIDReader(board) {
 	board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, onSysExMessage);
 	
 	// private methods:
-	
+	/**
+	 * @private
+	 */
 	function onSysExMessage(event) {
 		var message = event.data.message;
 
@@ -39,10 +41,16 @@ function ID12RFIDReader(board) {
 
 	// this is nice! found it here:
 	// http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
+	/**
+	 * @private
+	 */
 	function dec2hex(i) {
    		return (i+0x100).toString(16).substr(-2).toUpperCase();
 	}
 	
+	/**
+	 * @private
+	 */
 	function processRFIDData(data) {
 		var tagEvent = board.getValueFromTwo7bitBytes(data[1], data[2]);
 		var tagEventType = "";
@@ -64,6 +72,9 @@ function ID12RFIDReader(board) {
 		
 	}
 	
+	/**
+	 * @private
+	 */
 	function dispatch(event) {
 		self.dispatchEvent(event);
 	}
@@ -73,28 +84,32 @@ function ID12RFIDReader(board) {
 	/* implement EventDispatcher */
 	
 	/**
-	 * @borrows EventDispatcher#addEventListener as this.addEventListener
+	 * @param type {String} The event type
+	 * @param listener {function} The function to be called when the event is fired
 	 */
 	this.addEventListener = function(type, listener) {
 		_evtDispatcher.addEventListener(type, listener);
 	}
 	
 	/**
-	 * @borrows EventDispatcher#removeEventListener as this.removeEventListener
-	 */	
+	 * @param type {String} The event type
+	 * @param listener {function} The function to be called when the event is fired
+	 */
 	this.removeEventListener = function(type, listener) {
 		_evtDispatcher.removeEventListener(type, listener);
 	}
 	
 	/**
-	 * @borrows EventDispatcher#hasEventListener as this.hasEventListener
-	 */	
+	 * @param type {String} The event type
+	 * return {boolean} True is listener exists for this type, false if not.
+	 */
 	this.hasEventListener = function(type) {
 		return _evtDispatcher.hasEventListener(type);
 	}
 	
 	/**
-	 * @borrows EventDispatcher#dispatchEvent as this.dispatchEvent
+	 * @param type {Event} The Event object
+	 * return {boolean} True if dispatch is successful, false if not.
 	 */	
 	this.dispatchEvent = function(event) {
 		return _evtDispatcher.dispatchEvent(event);

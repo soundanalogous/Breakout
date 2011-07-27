@@ -1,0 +1,650 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">// Arduino.js</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="COMM">// jeff hoefs 7/20/11</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="COMM">// based on as3glue (http://code.google.com/p/as3glue/)</span><span class="WHIT">
+<span class='line'>  4</span> </span><span class="COMM">// </span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="COMM">// to do:</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="COMM">// 1. implement Firmata i2c spec</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="COMM">// 2. finalize the event model</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="COMM">// 3. support full Firmata 2.2 protocol</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="COMM">// 4. decouple socket (so you could use web socket, flash socket via swf, or other)?</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="COMM">// 5. align code to js best practices</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> 
+<span class='line'> 13</span> </span><span class="COMM">/**
+<span class='line'> 14</span>  * Creates a new Arduino object representing the digital and analog inputs and
+<span class='line'> 15</span>  * outputs of the device as well as support for sending strings between the Arduino
+<span class='line'> 16</span>  * sketch and your javascript application. Also support for hardware such as controlling
+<span class='line'> 17</span>  * a servo motor from javascript and additional libraries for an RFID reader with more
+<span class='line'> 18</span>  * to follow such as Button, Accelerometer, i2c device implementation, etc.
+<span class='line'> 19</span>  *
+<span class='line'> 20</span>  * @constructor
+<span class='line'> 21</span>  */</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Arduino</span><span class="PUNC">(</span><span class="NAME">host</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">port</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> 
+<span class='line'> 25</span> </span><span class="WHIT">	</span><span class="NAME">this.className</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"Arduino"</span><span class="PUNC">;</span><span class="WHIT"> 	</span><span class="COMM">// for testing</span><span class="WHIT">
+<span class='line'> 26</span> 
+<span class='line'> 27</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT">		</span><span class="NAME">FIRMATA_MAJOR_VERSION</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="WHIT">			</span><span class="NAME">FIRMATA_MINOR_VERSION</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">	
+<span class='line'> 30</span> 	</span><span class="COMM">// message command bytes (128-255/0x80-0xFF)</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT">		</span><span class="NAME">DIGITAL_MESSAGE</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x90</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">			</span><span class="NAME">ANALOG_MESSAGE</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xE0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">			</span><span class="NAME">REPORT_ANALOG</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xC0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">			</span><span class="NAME">REPORT_DIGITAL</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xD0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">			</span><span class="NAME">SET_PIN_MODE</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xF4</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">			</span><span class="NAME">REPORT_VERSION</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xF9</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">			</span><span class="NAME">SYSEX_RESET</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xFF</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">			</span><span class="NAME">START_SYSEX</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xF0</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">			</span><span class="NAME">END_SYSEX</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0xF7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">	
+<span class='line'> 41</span> 	</span><span class="COMM">// extended command set using sysex (0-127/0x00-0x7F)</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT">		</span><span class="NAME">SERVO_CONFIG</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x70</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">			</span><span class="NAME">STRING_DATA</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x71</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">			</span><span class="NAME">SHIFT_DATA</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x75</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">			</span><span class="NAME">I2C_REQUEST</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x76</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">			</span><span class="NAME">I2C_REPLY</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x77</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">			</span><span class="NAME">I2C_CONFIG</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x78</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">			</span><span class="NAME">EXTENDED_ANALOG</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x6F</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">			</span><span class="NAME">PIN_STATE_QUERY</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x6D</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">			</span><span class="NAME">PIN_STATE_RESPONSE</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x6E</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">			</span><span class="NAME">CAPABILITY_QUERY</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x6B</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">			</span><span class="NAME">CAPABILITY_RESPONSE</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x6C</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">			</span><span class="NAME">ANALOG_MAPPING_QUERY</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x69</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">			</span><span class="NAME">ANALOG_MAPPING_RESPONSE</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x6A</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">			</span><span class="NAME">REPORT_FIRMWARE</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x79</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">			</span><span class="NAME">SAMPLING_INTERVAL</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x7A</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">			</span><span class="NAME">SYSEX_NON_REALTIME</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x7E</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">			</span><span class="NAME">SYSEX_REALTIME</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x7F</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> 
+<span class='line'> 60</span> </span><span class="WHIT">	</span><span class="COMM">// private properties</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">self</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">;</span><span class="WHIT">	</span><span class="COMM">// get a reference to this class</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">host</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">host</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">port</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">port</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">socket</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="WHIT">	
+<span class='line'> 66</span> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_analogData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_digitalData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_digitalPins</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_executeMultiByteCommand</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_firmwareVersion</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_multiByteChannel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_previousAnalogData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_previousDigitalData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_storedInputData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_sysExData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">	
+<span class='line'> 78</span> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">			
+<span class='line'> 80</span> 	</span><span class="NAME">connect</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">			
+<span class='line'> 82</span> 	</span><span class="COMM">// private methods:</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">	
+<span class='line'> 84</span> 	</span><span class="COMM">// to do: </span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">	</span><span class="COMM">// Create a wrapper for WebSocket and compose the wrapper in this class</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">	</span><span class="COMM">// rather than using WebSockets directly.</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">	</span><span class="COMM">// This will enable the user to swap the wrapper object if do not want to</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">	</span><span class="COMM">// use WebSockets as long as all Socket wrappers maintain a consistent interface.</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 90</span> 	 * @private
+<span class='line'> 91</span> 	 */</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">connect</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">		
+<span class='line'> 94</span> 		</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="PUNC">!</span><span class="PUNC">(</span><span class="STRN">"WebSocket"</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">window</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Websockets not supported by this browser"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">			</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="STRN">"Websockets not supported by this browser"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">		
+<span class='line'>100</span> 		</span><span class="KEYW">try</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">			</span><span class="NAME">socket</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WebSocket</span><span class="PUNC">(</span><span class="STRN">"ws://"</span><span class="PUNC">+</span><span class="NAME">host</span><span class="PUNC">+</span><span class="STRN">":"</span><span class="PUNC">+</span><span class="NAME">port</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Starting up..."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">			</span><span class="COMM">/**
+<span class='line'>104</span> 			 * @private
+<span class='line'>105</span> 			 */</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">			</span><span class="NAME">socket.onopen</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">				</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Socket Status: "</span><span class="PUNC">+</span><span class="NAME">socket.readyState</span><span class="PUNC">+</span><span class="STRN">" (open)"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">				</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">(</span><span class="NAME">Event.CONNECTED</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">			</span><span class="COMM">/**
+<span class='line'>111</span> 			 * @private
+<span class='line'>112</span> 			 */</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">			</span><span class="NAME">socket.onmessage</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">				</span><span class="NAME">processData</span><span class="PUNC">(</span><span class="NAME">msg.data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">			</span><span class="COMM">/**
+<span class='line'>117</span> 			 * @private
+<span class='line'>118</span> 			 */</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">			</span><span class="NAME">socket.onclose</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">				</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Socket Status: "</span><span class="PUNC">+</span><span class="NAME">socket.readyState</span><span class="PUNC">+</span><span class="STRN">' (Closed)'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">			
+<span class='line'>122</span> 				
+<span class='line'>123</span> 		</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="PUNC">(</span><span class="NAME">exception</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Error "</span><span class="PUNC">+</span><span class="NAME">exception</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>126</span> 
+<span class='line'>127</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">	
+<span class='line'>129</span> 	</span><span class="COMM">/**
+<span class='line'>130</span> 	 * @private
+<span class='line'>131</span> 	 */</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">processData</span><span class="PUNC">(</span><span class="NAME">inputData</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">		</span><span class="NAME">inputData</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">	</span><span class="COMM">// force inputData to integer (is there a better way to do this?)</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">		
+<span class='line'>136</span> 		</span><span class="COMM">// we have command data</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">inputData</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">			</span><span class="NAME">_waitForData</span><span class="PUNC">--</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">			</span><span class="COMM">// collect the data</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">			</span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NAME">_waitForData</span><span class="PUNC">]</span><span class="PUNC">=</span><span class="NAME">inputData</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">			</span><span class="COMM">// we have all data executeMultiByteCommand</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>143</span> </span><span class="WHIT">				</span><span class="KEYW">switch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_executeMultiByteCommand</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>144</span> </span><span class="WHIT">					</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">DIGITAL_MESSAGE</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">						</span><span class="NAME">processDigitalPortBytes</span><span class="PUNC">(</span><span class="NAME">_multiByteChannel</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">//(LSB, MSB)</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">						</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">					</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">REPORT_VERSION</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">						</span><span class="NAME">_firmwareVersion</span><span class="PUNC">=</span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">						</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.FIRMWARE_VERSION</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">version</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">_firmwareVersion</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">						</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">					</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">ANALOG_MESSAGE</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">						</span><span class="NAME">_analogData</span><span class="PUNC">[</span><span class="NAME">_multiByteChannel</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self.getValueFromTwo7bitBytes</span><span class="PUNC">(</span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_storedInputData</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">						</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_analogData</span><span class="PUNC">[</span><span class="NAME">_multiByteChannel</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">_previousAnalogData</span><span class="PUNC">[</span><span class="NAME">_multiByteChannel</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">							</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.ANALOG_DATA</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">pin</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">_multiByteChannel</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">_analogData</span><span class="PUNC">[</span><span class="NAME">_multiByteChannel</span><span class="PUNC">]</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>155</span> 						</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">						</span><span class="NAME">_previousAnalogData</span><span class="PUNC">[</span><span class="NAME">_multiByteChannel</span><span class="PUNC">]</span><span class="PUNC">=</span><span class="NAME">_analogData</span><span class="PUNC">[</span><span class="NAME">_multiByteChannel</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">						</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">		</span><span class="COMM">// we have SysEx command data</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">		</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>163</span> </span><span class="WHIT">			</span><span class="COMM">// we have all sysex data</span><span class="WHIT">
+<span class='line'>164</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">inputData</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">END_SYSEX</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">				</span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">				</span><span class="KEYW">switch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_sysExData</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">					</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">REPORT_FIRMWARE</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">						</span><span class="NAME">processQueryFirmwareResult</span><span class="PUNC">(</span><span class="NAME">_sysExData</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>169</span> </span><span class="WHIT">						</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>170</span> </span><span class="WHIT">					</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">STRING_DATA</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>171</span> </span><span class="WHIT">						</span><span class="NAME">processSysExString</span><span class="PUNC">(</span><span class="NAME">_sysExData</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">						</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">					</span><span class="KEYW">default</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>174</span> </span><span class="WHIT">						</span><span class="COMM">// custom sysEx message</span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">						</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.SYSEX_MESSAGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">_sysExData</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">						</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">				</span><span class="NAME">_sysExData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>180</span> </span><span class="WHIT">			</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>181</span> </span><span class="WHIT">				</span><span class="NAME">_sysExData.push</span><span class="PUNC">(</span><span class="NAME">inputData</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">		</span><span class="COMM">// we have a command</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">		</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">			</span><span class="COMM">// extract the command and channel info from a byte if it is less than 0xF0</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">inputData</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">240</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">				</span><span class="NAME">command</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">inputData</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">240</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">				</span><span class="NAME">_multiByteChannel</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">inputData</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">15</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">			</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>192</span> </span><span class="WHIT">				</span><span class="COMM">// commands in the 0xF* range don't use channel data</span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">				</span><span class="NAME">command</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">inputData</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>194</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>195</span> </span><span class="WHIT">			</span><span class="KEYW">switch</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">command</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">				</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">REPORT_VERSION</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">				</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">DIGITAL_MESSAGE</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">				</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">ANALOG_MESSAGE</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">					</span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">;</span><span class="WHIT">	</span><span class="COMM">// 2 bytes needed</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">					</span><span class="NAME">_executeMultiByteCommand</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">					</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">				</span><span class="KEYW">case</span><span class="WHIT"> </span><span class="NAME">START_SYSEX</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">					</span><span class="NAME">_waitForData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// n bytes needed</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT">					</span><span class="NAME">_executeMultiByteCommand</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT">					</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>206</span> </span><span class="WHIT">				</span><span class="KEYW">default</span><span class="PUNC">:</span><span class="WHIT">
+<span class='line'>207</span> </span><span class="WHIT">					</span><span class="KEYW">break</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>209</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>212</span> 	 * @private
+<span class='line'>213</span> 	 */</span><span class="WHIT">
+<span class='line'>214</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">processDigitalPortBytes</span><span class="PUNC">(</span><span class="NAME">port</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">bits0_6</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">bits7_13</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>215</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">low</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">high</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">		</span><span class="COMM">// if port is 0, write bits 2..7 into _digitalData[2..7]</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">		</span><span class="COMM">// if port is 1, write bits 0..5 into _digitalData[8..13]</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">port</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>221</span> </span><span class="WHIT">			</span><span class="NAME">low</span><span class="PUNC">=</span><span class="NUMB">2</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">			</span><span class="NAME">high</span><span class="PUNC">=</span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>223</span> </span><span class="WHIT">			</span><span class="NAME">offset</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>224</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>225</span> </span><span class="WHIT">		</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">			</span><span class="NAME">low</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">			</span><span class="NAME">high</span><span class="PUNC">=</span><span class="NUMB">5</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">			</span><span class="NAME">offset</span><span class="PUNC">=</span><span class="NUMB">8</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">twoBytesForPorts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">bits0_6</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">bits7_13</span><span class="WHIT"> </span><span class="PUNC">&lt;&lt;</span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>231</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">mask</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>232</span> </span><span class="WHIT">		</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">low</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">high</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>233</span> </span><span class="WHIT">			</span><span class="NAME">mask</span><span class="PUNC">=</span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">&lt;&lt;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>234</span> </span><span class="WHIT">			</span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">]</span><span class="PUNC">=</span><span class="PUNC">(</span><span class="NAME">twoBytesForPorts</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NAME">mask</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">!=</span><span class="WHIT"> </span><span class="NAME">_previousDigitalData</span><span class="PUNC">[</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>236</span> </span><span class="WHIT">				</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.DIGITAL_DATA</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">pin</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">i</span><span class="PUNC">+</span><span class="NAME">offset</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">]</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>237</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>238</span> </span><span class="WHIT">			</span><span class="NAME">_previousDigitalData</span><span class="PUNC">[</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">]</span><span class="PUNC">=</span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">offset</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>239</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">	
+<span class='line'>240</span> 	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>241</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>242</span> 	 * @private
+<span class='line'>243</span> 	 */</span><span class="WHIT">
+<span class='line'>244</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">processQueryFirmwareResult</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>245</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">fname</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">		</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">msg.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">+</span><span class="PUNC">=</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>248</span> </span><span class="WHIT">		</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">			</span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">String.fromCharCode</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="WHIT">			</span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">String.fromCharCode</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">+</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">			</span><span class="NAME">fname</span><span class="PUNC">+</span><span class="PUNC">=</span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">		</span><span class="NAME">_firmwareVersion</span><span class="PUNC">=</span><span class="NAME">msg</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">msg</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="WHIT">		</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.FIRMWARE_NAME</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">name</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">fname</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">version</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">_firmwareVersion</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>255</span> </span><span class="WHIT">		
+<span class='line'>256</span> 	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>257</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>258</span> 	 * @private
+<span class='line'>259</span> 	 */</span><span class="WHIT">
+<span class='line'>260</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">processSysExString</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>261</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">str</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">""</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">		</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">msg.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">+</span><span class="PUNC">=</span><span class="NUMB">2</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">			</span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">String.fromCharCode</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>265</span> </span><span class="WHIT">			</span><span class="NAME">data</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">String.fromCharCode</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">+</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>266</span> </span><span class="WHIT">			</span><span class="NAME">str</span><span class="PUNC">+</span><span class="PUNC">=</span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>267</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">		</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.STRING_MESSAGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">str</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>269</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>270</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>271</span> 	 * convert char to decimal value
+<span class='line'>272</span> 	 * @private
+<span class='line'>273</span> 	 */</span><span class="WHIT">
+<span class='line'>274</span> </span><span class="WHIT">	</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">toDec</span><span class="PUNC">(</span><span class="NAME">ch</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>275</span> </span><span class="WHIT">		</span><span class="NAME">ch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ch.substring</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">decVal</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ch.charCodeAt</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>277</span> 		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">decVal</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">	
+<span class='line'>280</span> 	</span><span class="COMM">//public methods:</span><span class="WHIT">
+<span class='line'>281</span> </span><span class="WHIT">	
+<span class='line'>282</span> 	</span><span class="COMM">/**
+<span class='line'>283</span> 	 * A utility class to assemble a single value from the 2 bytes returned from the
+<span class='line'>284</span> 	 * Arduino (since data is passed in 7 bit Bytes rather than 8 bit it must be 
+<span class='line'>285</span> 	 * reassembled. This is to be used as a protected method and should not be needed
+<span class='line'>286</span> 	 * in any application level code.
+<span class='line'>287</span> 	 *
+<span class='line'>288</span> 	 * @private
+<span class='line'>289</span> 	 * @param lsb {number} The least-significant byte of the 2 values to be concatentated
+<span class='line'>290</span> 	 * @param msb {number} The most-significant byte of the 2 values to be concatenated
+<span class='line'>291</span> 	 * @return {number} The result of merging the 2 bytes
+<span class='line'>292</span> 	 */</span><span class="WHIT">
+<span class='line'>293</span> </span><span class="WHIT">	</span><span class="NAME">this.getValueFromTwo7bitBytes</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">lsb</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">msb</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">msb</span><span class="WHIT"> </span><span class="PUNC">&lt;&lt;</span><span class="NUMB">7</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">|</span><span class="WHIT"> </span><span class="NAME">lsb</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>295</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>296</span> </span><span class="WHIT">	
+<span class='line'>297</span> 	</span><span class="COMM">/**
+<span class='line'>298</span> 	 * @return {WebSocket} A reference to the WebSocket
+<span class='line'>299</span> 	 */</span><span class="WHIT">
+<span class='line'>300</span> </span><span class="WHIT">	</span><span class="NAME">this.getSocket</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">socket</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">	
+<span class='line'>302</span> 	</span><span class="COMM">/**
+<span class='line'>303</span> 	 * Resets the Arduino. To know when the Arduino is available after reset, listen for
+<span class='line'>304</span> 	 * Arduino.FIRMWARE_VERSION, because the version is automatically send from Arduino
+<span class='line'>305</span> 	 * upon reset.
+<span class='line'>306</span> 	 */</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="WHIT">	</span><span class="NAME">this.resetBoard</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>308</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="NAME">SYSEX_RESET</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>309</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>310</span> </span><span class="WHIT">	
+<span class='line'>311</span> 	</span><span class="COMM">/**
+<span class='line'>312</span> 	 * Request the Firmata version implemented in the firmware (sketch) running
+<span class='line'>313</span> 	 * on the Arduino.
+<span class='line'>314</span> 	 * Listen for the Arduino.FIRMWARE_VERSION event to be notified of when 
+<span class='line'>315</span> 	 * the Firmata version is returned from the Arduino.
+<span class='line'>316</span> 	 */</span><span class="WHIT">	
+<span class='line'>317</span> 	</span><span class="NAME">this.reportVersion</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>318</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="NAME">REPORT_VERSION</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>319</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>320</span> </span><span class="WHIT">	
+<span class='line'>321</span> 	</span><span class="COMM">/**
+<span class='line'>322</span> 	 * Request the name of the firmware (the sketch) running on the Arduino.
+<span class='line'>323</span> 	 * Listen for the Arduino.FIRMWARE_NAME event to be notified of when 
+<span class='line'>324</span> 	 * the name is returned from the Arduino. The version number is also returned.
+<span class='line'>325</span> 	 */</span><span class="WHIT">
+<span class='line'>326</span> </span><span class="WHIT">	</span><span class="NAME">this.reportFirmware</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>327</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">START_SYSEX</span><span class="PUNC">,</span><span class="NAME">REPORT_FIRMWARE</span><span class="PUNC">,</span><span class="NAME">END_SYSEX</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>328</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>329</span> </span><span class="WHIT">	
+<span class='line'>330</span> 	</span><span class="COMM">/**
+<span class='line'>331</span> 	 * Disables digital pin reporting for all digital pins
+<span class='line'>332</span> 	 */</span><span class="WHIT">
+<span class='line'>333</span> </span><span class="WHIT">	</span><span class="NAME">this.disableDigitalPinReporting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>334</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">REPORT_DIGITAL</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>335</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">REPORT_DIGITAL</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>336</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>337</span> </span><span class="WHIT">	
+<span class='line'>338</span> 	</span><span class="COMM">/**
+<span class='line'>339</span> 	 * Enables digital pin reporting for all digital pins. You must call this
+<span class='line'>340</span> 	 * before you can receive digital pin data from the Arduino.
+<span class='line'>341</span> 	 */</span><span class="WHIT">
+<span class='line'>342</span> </span><span class="WHIT">	</span><span class="NAME">this.enableDigitalPinReporting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>343</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">REPORT_DIGITAL</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">REPORT_DIGITAL</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>345</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>346</span> </span><span class="WHIT">	
+<span class='line'>347</span> 	</span><span class="COMM">/**
+<span class='line'>348</span> 	 * Call this method to enable or disable analog input for the specified pin.
+<span class='line'>349</span> 	 * Listen for the ArduinoEvent.ANALOG_DATA to be notified of incoming analog data.
+<span class='line'>350</span> 	 *
+<span class='line'>351</span> 	 * @param pin {number} The pin connected to the analog input
+<span class='line'>352</span> 	 * @param mode {number} Arduino.ON to enable input or Arduino.OFF to disable input
+<span class='line'>353</span> 	 * for the specified pin.
+<span class='line'>354</span> 	 */</span><span class="WHIT">
+<span class='line'>355</span> </span><span class="WHIT">	</span><span class="NAME">this.setAnalogPinReporting</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">REPORT_ANALOG</span><span class="WHIT"> </span><span class="PUNC">|</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mode</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>357</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>358</span> </span><span class="WHIT">	
+<span class='line'>359</span> 	</span><span class="COMM">/**
+<span class='line'>360</span> 	 * Set the specified pin to Input or Output. Also used to enable the pull-up resistor
+<span class='line'>361</span> 	 * for the specified pin by writing Arduino.HIGH to the pin.
+<span class='line'>362</span> 	 * For example, setPinMode(4, Arduino.HIGH) will enable the pull-up resistor for digital
+<span class='line'>363</span> 	 * pin 4.
+<span class='line'>364</span> 	 * For digital input, listen for the ArduinoEvent.DIGITAL_DATA to be notified 
+<span class='line'>365</span> 	 * of incoming digital data.
+<span class='line'>366</span> 	 *
+<span class='line'>367</span> 	 * @param pin {number} The pin connected to the digital input or output
+<span class='line'>368</span> 	 * @param mode {number} Arduino.INPUT or Arduino.OUTPUT and optionally Arduino.HIGH to 
+<span class='line'>369</span> 	 * enable the pull-up resistor.
+<span class='line'>370</span> 	 */</span><span class="WHIT">
+<span class='line'>371</span> </span><span class="WHIT">	</span><span class="NAME">this.setPinMode</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>372</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">SET_PIN_MODE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mode</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>373</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>374</span> </span><span class="WHIT">	
+<span class='line'>375</span> 	</span><span class="COMM">/**
+<span class='line'>376</span> 	 * Returns the analog data for a specified pin. When an analog value
+<span class='line'>377</span> 	 * is received it is stored. However it is best in most cases to listen
+<span class='line'>378</span> 	 * for the ArduinoEvent.ANALOG_DATA and get the analog value from the
+<span class='line'>379</span> 	 * event parameter (event.data.value) rather than using this getter method.
+<span class='line'>380</span> 	 *
+<span class='line'>381</span> 	 * @param pin {number} The pin number to return analog data for
+<span class='line'>382</span> 	 * @return {number} The analog data for the specified pin
+<span class='line'>383</span> 	 */</span><span class="WHIT">
+<span class='line'>384</span> </span><span class="WHIT">	</span><span class="NAME">this.getAnalogData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>385</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_analogData</span><span class="PUNC">[</span><span class="NAME">pin</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>386</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>387</span> </span><span class="WHIT">	
+<span class='line'>388</span> 	</span><span class="COMM">/**
+<span class='line'>389</span> 	 * Returns the digital data for a specified pin. When a digital value
+<span class='line'>390</span> 	 * is received it is stored. However it is best in most cases to listen
+<span class='line'>391</span> 	 * for the ArduinoEvent.DIGITAL_DATA and get the digital value from the
+<span class='line'>392</span> 	 * event parameter (event.data.value) rather than using this getter method.
+<span class='line'>393</span> 	 
+<span class='line'>394</span> 	 * @param pin {number} The pin number to return digital data for
+<span class='line'>395</span> 	 * @return {number} The digital data for the specified pin
+<span class='line'>396</span> 	 */</span><span class="WHIT">	
+<span class='line'>397</span> 	</span><span class="NAME">this.getDigitalData</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>398</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">pin</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>400</span> </span><span class="WHIT">	
+<span class='line'>401</span> 	</span><span class="COMM">/**
+<span class='line'>402</span> 	 * @return {string} The version of the Firmata firmware running on the Arduino.
+<span class='line'>403</span> 	 */</span><span class="WHIT">
+<span class='line'>404</span> </span><span class="WHIT">	</span><span class="NAME">this.getFirmwareVersion</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_firmwareVersion</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>407</span> </span><span class="WHIT">	
+<span class='line'>408</span> 	</span><span class="COMM">/**
+<span class='line'>409</span> 	 * Simulate an analog signal on a PWM pin. For example use this method to fade an LED or
+<span class='line'>410</span> 	 * send an 8-bit waveform.
+<span class='line'>411</span> 	 *
+<span class='line'>412</span> 	 * @param pin {number} The pin to send the analog signal to.
+<span class='line'>413</span> 	 * @param value {number} The value (to do: check on max resolution) to send
+<span class='line'>414</span> 	 */</span><span class="WHIT">
+<span class='line'>415</span> </span><span class="WHIT">	</span><span class="NAME">this.sendAnalog</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">ANALOG_MESSAGE</span><span class="WHIT"> </span><span class="PUNC">|</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pin</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">0x0F</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">0x7F</span><span class="PUNC">,</span><span class="PUNC">(</span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">0x7F</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>418</span> </span><span class="WHIT">	
+<span class='line'>419</span> 	</span><span class="COMM">/**
+<span class='line'>420</span> 	 * Set a digital pin on the Arduino to High or Low.
+<span class='line'>421</span> 	 *
+<span class='line'>422</span> 	 * @param pin {number} The pin number to set or clear.
+<span class='line'>423</span> 	 * @param mode {number} Either Arduino.HIGH or Arduino.LOW
+<span class='line'>424</span> 	 */</span><span class="WHIT">
+<span class='line'>425</span> </span><span class="WHIT">	</span><span class="NAME">this.sendDigital</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">mode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">mode</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">Arduino.HIGH</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>427</span> </span><span class="WHIT">			</span><span class="COMM">// set the bit</span><span class="WHIT">
+<span class='line'>428</span> </span><span class="WHIT">			</span><span class="NAME">_digitalPins</span><span class="PUNC">|</span><span class="PUNC">=</span><span class="PUNC">(</span><span class="NAME">mode</span><span class="WHIT"> </span><span class="PUNC">&lt;&lt;</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>429</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>430</span> </span><span class="WHIT">		</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">mode</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">Arduino.LOW</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>431</span> </span><span class="WHIT">			</span><span class="COMM">// clear the bit</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="WHIT">			</span><span class="NAME">_digitalPins</span><span class="PUNC">&</span><span class="PUNC">=</span><span class="PUNC">~</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="WHIT"> </span><span class="PUNC">&lt;&lt;</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>433</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>434</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pin</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>435</span> </span><span class="WHIT">			</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">DIGITAL_MESSAGE</span><span class="PUNC">|</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_digitalPins</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_digitalPins</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>436</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>437</span> </span><span class="WHIT">		</span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>438</span> </span><span class="WHIT">			</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">DIGITAL_MESSAGE</span><span class="PUNC">|</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_digitalPins</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">8</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>439</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>440</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>441</span> </span><span class="WHIT">	
+<span class='line'>442</span> 	</span><span class="COMM">// to do: test this function... I've never actually used it.</span><span class="WHIT">
+<span class='line'>443</span> </span><span class="WHIT">	</span><span class="NAME">this.sendDigitalPort</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">portNumber</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">portData</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>444</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">DIGITAL_MESSAGE</span><span class="WHIT"> </span><span class="PUNC">|</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">portNumber</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">0x0F</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">portData</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">portData</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>445</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>446</span> </span><span class="WHIT">	
+<span class='line'>447</span> 	</span><span class="COMM">// to do: allow 1 or 2 params</span><span class="WHIT">
+<span class='line'>448</span> </span><span class="WHIT">	</span><span class="COMM">// (string) and (command, string)</span><span class="WHIT">
+<span class='line'>449</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>450</span> 	 * Send a string message to the Arduino. This is useful if you have a custom sketch
+<span class='line'>451</span> 	 * running on the Arduino rather than StandardFirmata and want to communicate with
+<span class='line'>452</span> 	 * your javascript message via string messages that you then parse in javascript.
+<span class='line'>453</span> 	 * You can receive string messages as well.
+<span class='line'>454</span> 	 *
+<span class='line'>455</span> 	 * &lt;p>To test, load the EchoString.pde example from Firmata->Examples menu in the
+<span class='line'>456</span> 	 * Arduino Application, then use sendString("your string message") to have it
+<span class='line'>457</span> 	 * echoed back to your javascript application.&lt;/p>
+<span class='line'>458</span> 	 * 
+<span class='line'>459</span> 	 * @param s {String} The string message to send to the Arduino
+<span class='line'>460</span> 	 */</span><span class="WHIT">
+<span class='line'>461</span> </span><span class="WHIT">	</span><span class="NAME">this.sendString</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">s</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>462</span> </span><span class="WHIT">		</span><span class="NAME">this.sendSysex</span><span class="PUNC">(</span><span class="NAME">STRING_DATA</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">s</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>463</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>464</span> </span><span class="WHIT">	
+<span class='line'>465</span> 	</span><span class="COMM">/**
+<span class='line'>466</span> 	 * Send a sysEx message to the Arduino. This is useful for sending custom sysEx data
+<span class='line'>467</span> 	 * to the Arduino, for example if you are not using StandardFirmata. You would likely
+<span class='line'>468</span> 	 * use it in a class rather than calling it from your main application.
+<span class='line'>469</span> 	 *
+<span class='line'>470</span> 	 * @private
+<span class='line'>471</span> 	 * @param command {number} The sysEx command value (see firmata.org)
+<span class='line'>472</span> 	 * @param data {array} A packet of data representing the sysEx message to be sent
+<span class='line'>473</span> 	 * @see &lt;a href="http://firmata.org/wiki/Protocol#Sysex_Message_Format">Firmata Sysex Message Format"&lt;/a>
+<span class='line'>474</span> 	 */</span><span class="WHIT">
+<span class='line'>475</span> </span><span class="WHIT">	</span><span class="NAME">this.sendSysex</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">command</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>476</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">tempArray</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>477</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">START_SYSEX</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>478</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">command</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>479</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">charVal</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>480</span> </span><span class="WHIT">		</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">=</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">=</span><span class="NAME">data.length</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">&lt;</span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>481</span> </span><span class="WHIT">			</span><span class="NAME">charVal</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">toDec</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>482</span> </span><span class="WHIT">			</span><span class="NAME">tempArray.push</span><span class="PUNC">(</span><span class="NAME">charVal</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>483</span> </span><span class="WHIT">			</span><span class="NAME">tempArray.push</span><span class="PUNC">(</span><span class="NAME">charVal</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>484</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>485</span> </span><span class="WHIT">		</span><span class="NAME">tempArray.push</span><span class="PUNC">(</span><span class="NAME">END_SYSEX</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>486</span> </span><span class="WHIT">		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="NAME">tempArray</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>487</span> 	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>488</span> </span><span class="WHIT">	
+<span class='line'>489</span> 	</span><span class="COMM">/**
+<span class='line'>490</span> 	 * Set the angle (in degrees) to rotate the servo head to. Only tested for 0-180 degrees
+<span class='line'>491</span> 	 * so far since that's the limit of my servo.
+<span class='line'>492</span> 	 *
+<span class='line'>493</span> 	 * @param pin {number} The pin the servo is connected to.
+<span class='line'>494</span> 	 * @param value {number} The angle (in degrees) to rotate the servo head to
+<span class='line'>495</span> 	 */</span><span class="WHIT">
+<span class='line'>496</span> </span><span class="WHIT">	</span><span class="NAME">this.sendServo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>497</span> </span><span class="WHIT">		</span><span class="COMM">//if (_digitalPinMode[pin]==Arduino.SERVO && (_digitalData[pin]!=value || force)) {</span><span class="WHIT">
+<span class='line'>498</span> </span><span class="WHIT">			</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">ANALOG_MESSAGE</span><span class="WHIT"> </span><span class="PUNC">|</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pin</span><span class="WHIT"> </span><span class="PUNC">&</span><span class="WHIT"> </span><span class="NUMB">0x0F</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>499</span> </span><span class="WHIT">			</span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">pin</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>500</span> </span><span class="WHIT">		</span><span class="COMM">//}</span><span class="WHIT">
+<span class='line'>501</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>502</span> </span><span class="WHIT">	
+<span class='line'>503</span> 	</span><span class="COMM">/**
+<span class='line'>504</span> 	 * Call to associate a pin with a connected servo motor. See the documentation for your
+<span class='line'>505</span> 	 * servo motor for the minimum and maximum pulse width. If you can't find it, then the
+<span class='line'>506</span> 	 * default values should be close enough so call sendServoAttach(pin) omitting the
+<span class='line'>507</span> 	 * min and max values.
+<span class='line'>508</span> 	 *
+<span class='line'>509</span> 	 * @param pin {number} The pin the server is connected to.
+<span class='line'>510</span> 	 * @param minPulse {number} [optional] The minimum pulse width for the servo. Default = 544.
+<span class='line'>511</span> 	 * @param maxPulse {number} [optional] The maximum pulse width for the servo. Default = 2400.
+<span class='line'>512</span> 	 */</span><span class="WHIT">
+<span class='line'>513</span> </span><span class="WHIT">	</span><span class="NAME">this.sendServoAttach</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">minPulse</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">maxPulse</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>514</span> 
+<span class='line'>515</span> </span><span class="WHIT">		</span><span class="NAME">minPulse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">minPulse</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">544</span><span class="PUNC">;</span><span class="WHIT"> 	</span><span class="COMM">// default value = 544</span><span class="WHIT">
+<span class='line'>516</span> </span><span class="WHIT">		</span><span class="NAME">maxPulse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">maxPulse</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">2400</span><span class="PUNC">;</span><span class="WHIT">	</span><span class="COMM">// default value = 2400</span><span class="WHIT">
+<span class='line'>517</span> </span><span class="WHIT">	
+<span class='line'>518</span> 		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">tempArray</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>519</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">START_SYSEX</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>520</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SERVO_CONFIG</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>521</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>522</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">3</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">minPulse</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>523</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">4</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">minPulse</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>524</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">5</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">maxPulse</span><span class="WHIT"> </span><span class="PUNC">%</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>525</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">6</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">maxPulse</span><span class="WHIT"> </span><span class="PUNC">>></span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>526</span> </span><span class="WHIT">		</span><span class="NAME">tempArray</span><span class="PUNC">[</span><span class="NUMB">7</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">END_SYSEX</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>527</span> </span><span class="WHIT">		</span><span class="COMM">//_digitalPinMode[pin] = Arduino.SERVO;</span><span class="WHIT">
+<span class='line'>528</span> </span><span class="WHIT">		
+<span class='line'>529</span> 		</span><span class="NAME">self.send</span><span class="PUNC">(</span><span class="NAME">tempArray</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>530</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>531</span> </span><span class="WHIT">	
+<span class='line'>532</span> 	</span><span class="COMM">/**
+<span class='line'>533</span> 	 * Checks if a servo is connected to the specified pin number
+<span class='line'>534</span> 	 *
+<span class='line'>535</span> 	 * @param pin {number} The pin number you are checking for a servo on.
+<span class='line'>536</span> 	 * @return {number} The pin number if it contains a servo, else -1
+<span class='line'>537</span> 	 */</span><span class="WHIT">
+<span class='line'>538</span> </span><span class="WHIT">	</span><span class="NAME">this.getServo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pin</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>539</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">_digitalPinMode</span><span class="PUNC">[</span><span class="NAME">pin</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NAME">Arduino.SERVO</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>540</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_digitalData</span><span class="PUNC">[</span><span class="NAME">pin</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>541</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>542</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>543</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>544</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>545</span> </span><span class="WHIT">		
+<span class='line'>546</span> 	</span><span class="COMM">/**
+<span class='line'>547</span> 	 * A wrapper for the send method of the WebSocket
+<span class='line'>548</span> 	 * I'm not sure there is a case for the user to call this method
+<span class='line'>549</span> 	 * So I'm making this private for now.
+<span class='line'>550</span> 	 *
+<span class='line'>551</span> 	 * @private
+<span class='line'>552</span> 	 * @param message {array} Message data to be sent to the Arduino
+<span class='line'>553</span> 	 */</span><span class="WHIT">
+<span class='line'>554</span> </span><span class="WHIT">	</span><span class="NAME">this.send</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>555</span> </span><span class="WHIT">		</span><span class="NAME">socket.send</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>556</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>557</span> </span><span class="WHIT">	
+<span class='line'>558</span> 	</span><span class="COMM">/**
+<span class='line'>559</span> 	 * A wrapper for the close method of the WebSocket
+<span class='line'>560</span> 	 */</span><span class="WHIT">
+<span class='line'>561</span> </span><span class="WHIT">	</span><span class="NAME">this.close</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>562</span> </span><span class="WHIT">		</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"socket = "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">socket</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>563</span> </span><span class="WHIT">		</span><span class="NAME">socket.close</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>564</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>565</span> </span><span class="WHIT">	
+<span class='line'>566</span> 	</span><span class="COMM">/* implement EventDispatcher */</span><span class="WHIT">
+<span class='line'>567</span> </span><span class="WHIT">	
+<span class='line'>568</span> 	</span><span class="COMM">/**
+<span class='line'>569</span> 	 * @param type {String} The event type
+<span class='line'>570</span> 	 * @param listener {function} The function to be called when the event is fired
+<span class='line'>571</span> 	 */</span><span class="WHIT">
+<span class='line'>572</span> </span><span class="WHIT">	</span><span class="NAME">this.addEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>573</span> </span><span class="WHIT">		</span><span class="NAME">_evtDispatcher.addEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>574</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>575</span> </span><span class="WHIT">	
+<span class='line'>576</span> 	</span><span class="COMM">/**
+<span class='line'>577</span> 	 * @param type {String} The event type
+<span class='line'>578</span> 	 * @param listener {function} The function to be called when the event is fired
+<span class='line'>579</span> 	 */</span><span class="WHIT">
+<span class='line'>580</span> </span><span class="WHIT">	</span><span class="NAME">this.removeEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>581</span> </span><span class="WHIT">		</span><span class="NAME">_evtDispatcher.removeEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>582</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>583</span> </span><span class="WHIT">	
+<span class='line'>584</span> 	</span><span class="COMM">/**
+<span class='line'>585</span> 	 * @param type {String} The event type
+<span class='line'>586</span> 	 * return {boolean} True is listener exists for this type, false if not.
+<span class='line'>587</span> 	 */</span><span class="WHIT">
+<span class='line'>588</span> </span><span class="WHIT">	</span><span class="NAME">this.hasEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>589</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher.hasEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>590</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>591</span> </span><span class="WHIT">	
+<span class='line'>592</span> 	</span><span class="COMM">/**
+<span class='line'>593</span> 	 * @param type {Event} The Event object
+<span class='line'>594</span> 	 * return {boolean} True if dispatch is successful, false if not.
+<span class='line'>595</span> 	 */</span><span class="WHIT">		
+<span class='line'>596</span> 	</span><span class="NAME">this.dispatchEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>597</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher.dispatchEvent</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>598</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">	
+<span class='line'>599</span> 
+<span class='line'>600</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>601</span> 
+<span class='line'>602</span> </span><span class="NAME">Arduino.HIGH</span><span class="WHIT">					</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>603</span> </span><span class="NAME">Arduino.LOW</span><span class="WHIT">						</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>604</span> </span><span class="NAME">Arduino.INPUT</span><span class="WHIT">					</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>605</span> </span><span class="NAME">Arduino.OUTPUT</span><span class="WHIT">					</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>606</span> </span><span class="NAME">Arduino.ON</span><span class="WHIT">						</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>607</span> </span><span class="NAME">Arduino.OFF</span><span class="WHIT">						</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>608</span> </span><span class="WHIT">	
+<span class='line'>609</span> </span><span class="COMM">// pin modes		</span><span class="WHIT">
+<span class='line'>610</span> </span><span class="NAME">Arduino.ANALOG</span><span class="WHIT">					</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x02</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>611</span> </span><span class="NAME">Arduino.PWM</span><span class="WHIT">						</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>612</span> </span><span class="NAME">Arduino.SERVO</span><span class="WHIT">					</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x04</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>613</span> </span><span class="NAME">Arduino.SHIFT</span><span class="WHIT">					</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x05</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>614</span> </span><span class="NAME">Arduino.I2C</span><span class="WHIT">						</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x06</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>615</span> </span><span class="NAME">Arduino.TOTAL_PIN_MODES</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>616</span> 
+<span class='line'>617</span> 
+<span class='line'>618</span> </span><span class="COMM">/**
+<span class='line'>619</span>  * @constructor
+<span class='line'>620</span>  * @augments Event
+<span class='line'>621</span>  * @param type {string} The event type
+<span class='line'>622</span>  * @param data {object} An object containing additional parameters
+<span class='line'>623</span>  */</span><span class="WHIT">
+<span class='line'>624</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>625</span> </span><span class="WHIT">	</span><span class="NAME">this.data</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>626</span> </span><span class="WHIT">	</span><span class="COMM">// call the super class</span><span class="WHIT">
+<span class='line'>627</span> </span><span class="WHIT">	</span><span class="COMM">// 2nd parameter is passed to EventDispatcher constructor</span><span class="WHIT">
+<span class='line'>628</span> </span><span class="WHIT">	</span><span class="NAME">Event.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>629</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>630</span> 
+<span class='line'>631</span> </span><span class="COMM">// events</span><span class="WHIT">
+<span class='line'>632</span> </span><span class="NAME">ArduinoEvent.ANALOG_DATA</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"analodData"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>633</span> </span><span class="NAME">ArduinoEvent.DIGITAL_DATA</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"digitalData"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>634</span> </span><span class="NAME">ArduinoEvent.FIRMWARE_VERSION</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"firmwareVersion"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>635</span> </span><span class="NAME">ArduinoEvent.FIRMWARE_NAME</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"firmwareName"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>636</span> </span><span class="NAME">ArduinoEvent.STRING_MESSAGE</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"stringMessage"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>637</span> </span><span class="NAME">ArduinoEvent.SYSEX_MESSAGE</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"sysexMessage"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>638</span> 
+<span class='line'>639</span> </span><span class="COMM">// to do: figure out how to inherit a class without using 'new' when we want</span><span class="WHIT">
+<span class='line'>640</span> </span><span class="COMM">// to call the super class in the subclass constructor (as we do in this case)</span><span class="WHIT">
+<span class='line'>641</span> </span><span class="NAME">ArduinoEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>642</span> </span><span class="NAME">ArduinoEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ArduinoEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>643</span> </span></pre></body></html>
