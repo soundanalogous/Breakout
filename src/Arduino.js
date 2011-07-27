@@ -493,13 +493,8 @@ function Arduino(host, port) {
 	 * @param maxPulse {number} The maximum pulse width for the servo. Default = 2400.
 	 */
 	this.sendServoAttach = function(pin, minPulse, maxPulse) {
-		/**
-		 * @default 544
-		 */
+
 		minPulse = minPulse || 544; 	// default value = 544
-		/**
-		 * @default 2400
-		 */
 		maxPulse = maxPulse || 2400;	// default value = 2400
 	
 		var tempArray = [];
