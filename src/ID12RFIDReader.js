@@ -6,6 +6,7 @@
  * Creates a new ID12RFIDReader
  *
  * @constructor
+ * @param {Class} board A reference to the Arduino class instance
  */
 function ID12RFIDReader(board) {
 	"use strict";
@@ -84,23 +85,23 @@ function ID12RFIDReader(board) {
 	/* implement EventDispatcher */
 	
 	/**
-	 * @param type {String} The event type
-	 * @param listener {function} The function to be called when the event is fired
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
 	 */
 	this.addEventListener = function(type, listener) {
 		_evtDispatcher.addEventListener(type, listener);
 	}
 	
 	/**
-	 * @param type {String} The event type
-	 * @param listener {function} The function to be called when the event is fired
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
 	 */
 	this.removeEventListener = function(type, listener) {
 		_evtDispatcher.removeEventListener(type, listener);
 	}
 	
 	/**
-	 * @param type {String} The event type
+	 * @param {String} type The event type
 	 * return {boolean} True is listener exists for this type, false if not.
 	 */
 	this.hasEventListener = function(type) {
@@ -108,9 +109,9 @@ function ID12RFIDReader(board) {
 	}
 	
 	/**
-	 * @param type {Event} The Event object
+	 * @param {Event} type The Event object
 	 * return {boolean} True if dispatch is successful, false if not.
-	 */	
+	 */		
 	this.dispatchEvent = function(event) {
 		return _evtDispatcher.dispatchEvent(event);
 	}
@@ -119,8 +120,8 @@ function ID12RFIDReader(board) {
 /**
  * @constructor
  * @augments Event
- * @param type {string} The event type
- * @param tag {string} The RFID tag value (hexadecimal)
+ * @param {String} type The event type
+ * @param {String} tag The RFID tag value (hexadecimal)
  */
 function RFIDEvent(type, tag) {
 	this.tag = tag;
@@ -129,7 +130,9 @@ function RFIDEvent(type, tag) {
 	Event.call(this, type);
 }
 
+/** @constant */
 RFIDEvent.ADD_TAG = "addTag";
+/** @constant */
 RFIDEvent.REMOVE_TAG = "removeTag";
 
 // to do: figure out how to inherit a class without using 'new' when we want

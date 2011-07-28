@@ -6,7 +6,7 @@
  * An as3-like EventDispatcher class.
  *
  * @constructor
- * @param target {class} The instance of the class that implements EventDispatcher
+ * @param {Class} target The instance of the class that implements EventDispatcher
  */
 function EventDispatcher(target) {
 	"use strict";
@@ -15,8 +15,8 @@ function EventDispatcher(target) {
 	var _eventListeners = {};
 	
 	/**
-	 * @param type {String} The event type
-	 * @param listener {function} The function to be called when the event is fired
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
 	 */
 	this.addEventListener = function (type, listener) {
 		if(!_eventListeners[type]) {
@@ -26,8 +26,8 @@ function EventDispatcher(target) {
 	}
 	
 	/**
-	 * @param type {String} The event type
-	 * @param listener {function} The function to be called when the event is fired
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
 	 */
 	this.removeEventListener = function(type, listener) {
 		for (var i=0, len = _eventListeners[type].length; i<len; i++) {
@@ -38,7 +38,7 @@ function EventDispatcher(target) {
 	}
 	
 	/**
-	 * @param type {String} The event type
+	 * @param {String} type The event type
 	 * return {boolean} True is listener exists for this type, false if not.
 	 */
 	this.hasEventListener = function(type) {
@@ -51,7 +51,7 @@ function EventDispatcher(target) {
 	}
 	
 	/**
-	 * @param type {Event} The Event object
+	 * @param {Event} type The Event object
 	 * return {boolean} True if dispatch is successful, false if not.
 	 */	
 	this.dispatchEvent = function(event) {
@@ -102,13 +102,16 @@ function EventDispatcher(target) {
  * Event 'base class' (but it can also be instantiated directly)
  *
  * @constructor
- * @param type {String} event type
+ * @param {String} type event type
  */
 function Event(type) {
 	this.type = type;
 	this.target = null;
 }
 
+/** @constant */
 Event.CONNECTED = "connected";
+/** @constant */
 Event.CHANGE	= "change";
+/** @constant */
 Event.COMPLETE	= "complete";

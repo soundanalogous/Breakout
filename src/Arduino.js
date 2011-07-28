@@ -18,6 +18,8 @@
  * to follow such as Button, Accelerometer, i2c device implementation, etc.
  *
  * @constructor
+ * @param {String} host The host address of the web server
+ * @param {Number} port The port to connect to on the web server
  */
 function Arduino(host, port) {
 	"use strict";
@@ -286,9 +288,9 @@ function Arduino(host, port) {
 	 * in any application level code.
 	 *
 	 * @private
-	 * @param lsb {number} The least-significant byte of the 2 values to be concatentated
-	 * @param msb {number} The most-significant byte of the 2 values to be concatenated
-	 * @return {number} The result of merging the 2 bytes
+	 * @param {Number} lsb The least-significant byte of the 2 values to be concatentated
+	 * @param {Number} msb The most-significant byte of the 2 values to be concatenated
+	 * @return {Number} The result of merging the 2 bytes
 	 */
 	this.getValueFromTwo7bitBytes = function(lsb, msb) {
 		return (msb <<7) | lsb;
@@ -348,8 +350,8 @@ function Arduino(host, port) {
 	 * Call this method to enable or disable analog input for the specified pin.
 	 * Listen for the ArduinoEvent.ANALOG_DATA to be notified of incoming analog data.
 	 *
-	 * @param pin {number} The pin connected to the analog input
-	 * @param mode {number} Arduino.ON to enable input or Arduino.OFF to disable input
+	 * @param {Number} pin The pin connected to the analog input
+	 * @param {Number} mode Arduino.ON to enable input or Arduino.OFF to disable input
 	 * for the specified pin.
 	 */
 	this.setAnalogPinReporting = function(pin, mode) {
@@ -364,8 +366,8 @@ function Arduino(host, port) {
 	 * For digital input, listen for the ArduinoEvent.DIGITAL_DATA to be notified 
 	 * of incoming digital data.
 	 *
-	 * @param pin {number} The pin connected to the digital input or output
-	 * @param mode {number} Arduino.INPUT or Arduino.OUTPUT and optionally Arduino.HIGH to 
+	 * @param {Number} pin The pin connected to the digital input or output
+	 * @param {Number} mode Arduino.INPUT or Arduino.OUTPUT and optionally Arduino.HIGH to 
 	 * enable the pull-up resistor.
 	 */
 	this.setPinMode = function(pin, mode) {
@@ -378,8 +380,8 @@ function Arduino(host, port) {
 	 * for the ArduinoEvent.ANALOG_DATA and get the analog value from the
 	 * event parameter (event.data.value) rather than using this getter method.
 	 *
-	 * @param pin {number} The pin number to return analog data for
-	 * @return {number} The analog data for the specified pin
+	 * @param {Number} pin The pin number to return analog data for
+	 * @return {Number} The analog data for the specified pin
 	 */
 	this.getAnalogData = function(pin) {
 		return _analogData[pin];
@@ -391,15 +393,15 @@ function Arduino(host, port) {
 	 * for the ArduinoEvent.DIGITAL_DATA and get the digital value from the
 	 * event parameter (event.data.value) rather than using this getter method.
 	 
-	 * @param pin {number} The pin number to return digital data for
-	 * @return {number} The digital data for the specified pin
+	 * @param {Number} pin The pin number to return digital data for
+	 * @return {Number} The digital data for the specified pin
 	 */	
 	this.getDigitalData = function(pin) {
 		return _digitalData[pin];
 	}
 	
 	/**
-	 * @return {string} The version of the Firmata firmware running on the Arduino.
+	 * @return {String} The version of the Firmata firmware running on the Arduino.
 	 */
 	this.getFirmwareVersion = function() {
 		return _firmwareVersion;
@@ -409,8 +411,8 @@ function Arduino(host, port) {
 	 * Simulate an analog signal on a PWM pin. For example use this method to fade an LED or
 	 * send an 8-bit waveform.
 	 *
-	 * @param pin {number} The pin to send the analog signal to.
-	 * @param value {number} The value (to do: check on max resolution) to send
+	 * @param {Number} pin The pin to send the analog signal to.
+	 * @param {Number} value The value (to do: check on max resolution) to send
 	 */
 	this.sendAnalog = function(pin, value) {
 		self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x7F,(value >> 7) & 0x7F]);
@@ -419,8 +421,8 @@ function Arduino(host, port) {
 	/**
 	 * Set a digital pin on the Arduino to High or Low.
 	 *
-	 * @param pin {number} The pin number to set or clear.
-	 * @param mode {number} Either Arduino.HIGH or Arduino.LOW
+	 * @param {Number} pin The pin number to set or clear.
+	 * @param {Number} mode Either Arduino.HIGH or Arduino.LOW
 	 */
 	this.sendDigital = function(pin, mode) {
 		if (mode == Arduino.HIGH) {
@@ -456,10 +458,10 @@ function Arduino(host, port) {
 	 * Arduino Application, then use sendString("your string message") to have it
 	 * echoed back to your javascript application.</p>
 	 * 
-	 * @param s {String} The string message to send to the Arduino
+	 * @param {String} str The string message to send to the Arduino
 	 */
-	this.sendString = function(s) {
-		this.sendSysex(STRING_DATA, s);
+	this.sendString = function(str) {
+		this.sendSysex(STRING_DATA, str);
 	}
 	
 	/**
@@ -468,8 +470,8 @@ function Arduino(host, port) {
 	 * use it in a class rather than calling it from your main application.
 	 *
 	 * @private
-	 * @param command {number} The sysEx command value (see firmata.org)
-	 * @param data {array} A packet of data representing the sysEx message to be sent
+	 * @param {Number} command The sysEx command value (see firmata.org)
+	 * @param {Number[]} data A packet of data representing the sysEx message to be sent
 	 * @see <a href="http://firmata.org/wiki/Protocol#Sysex_Message_Format">Firmata Sysex Message Format"</a>
 	 */
 	this.sendSysex = function(command, data) {
@@ -490,8 +492,8 @@ function Arduino(host, port) {
 	 * Set the angle (in degrees) to rotate the servo head to. Only tested for 0-180 degrees
 	 * so far since that's the limit of my servo.
 	 *
-	 * @param pin {number} The pin the servo is connected to.
-	 * @param value {number} The angle (in degrees) to rotate the servo head to
+	 * @param {Number} pin The pin the servo is connected to.
+	 * @param {Number} value The angle (in degrees) to rotate the servo head to
 	 */
 	this.sendServo = function(pin, value) {
 		//if (_digitalPinMode[pin]==Arduino.SERVO && (_digitalData[pin]!=value || force)) {
@@ -506,9 +508,9 @@ function Arduino(host, port) {
 	 * default values should be close enough so call sendServoAttach(pin) omitting the
 	 * min and max values.
 	 *
-	 * @param pin {number} The pin the server is connected to.
-	 * @param minPulse {number} [optional] The minimum pulse width for the servo. Default = 544.
-	 * @param maxPulse {number} [optional] The maximum pulse width for the servo. Default = 2400.
+	 * @param {Number} pin The pin the server is connected to.
+	 * @param {Number} minPulse [optional] The minimum pulse width for the servo. Default = 544.
+	 * @param {Number} maxPulse [optional] The maximum pulse width for the servo. Default = 2400.
 	 */
 	this.sendServoAttach = function(pin, minPulse, maxPulse) {
 
@@ -532,8 +534,8 @@ function Arduino(host, port) {
 	/**
 	 * Checks if a servo is connected to the specified pin number
 	 *
-	 * @param pin {number} The pin number you are checking for a servo on.
-	 * @return {number} The pin number if it contains a servo, else -1
+	 * @param {Number} pin The pin number you are checking for a servo on.
+	 * @return {Number} The pin number if it contains a servo, else -1
 	 */
 	this.getServo = function(pin) {
 		if (_digitalPinMode[pin] == Arduino.SERVO) {
@@ -549,7 +551,7 @@ function Arduino(host, port) {
 	 * So I'm making this private for now.
 	 *
 	 * @private
-	 * @param message {array} Message data to be sent to the Arduino
+	 * @param {Number[]} message Message data to be sent to the Arduino
 	 */
 	this.send = function(message) {
 		socket.send(message);
@@ -566,23 +568,23 @@ function Arduino(host, port) {
 	/* implement EventDispatcher */
 	
 	/**
-	 * @param type {String} The event type
-	 * @param listener {function} The function to be called when the event is fired
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
 	 */
 	this.addEventListener = function(type, listener) {
 		_evtDispatcher.addEventListener(type, listener);
 	}
 	
 	/**
-	 * @param type {String} The event type
-	 * @param listener {function} The function to be called when the event is fired
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
 	 */
 	this.removeEventListener = function(type, listener) {
 		_evtDispatcher.removeEventListener(type, listener);
 	}
 	
 	/**
-	 * @param type {String} The event type
+	 * @param {String} type The event type
 	 * return {boolean} True is listener exists for this type, false if not.
 	 */
 	this.hasEventListener = function(type) {
@@ -590,7 +592,7 @@ function Arduino(host, port) {
 	}
 	
 	/**
-	 * @param type {Event} The Event object
+	 * @param {Event} type The Event object
 	 * return {boolean} True if dispatch is successful, false if not.
 	 */		
 	this.dispatchEvent = function(event) {
@@ -599,27 +601,40 @@ function Arduino(host, port) {
 
 }
 
+// to do: use a static object to represent constants?
+
+/** @constant */
 Arduino.HIGH					= 1;
+/** @constant */
 Arduino.LOW						= 0;
+/** @constant */
 Arduino.INPUT					= 0;
+/** @constant */
 Arduino.OUTPUT					= 1;
+/** @constant */
 Arduino.ON						= 1;
+/** @constant */
 Arduino.OFF						= 0;
 	
 // pin modes		
 Arduino.ANALOG					= 0x02;
+/** @constant */
 Arduino.PWM						= 0x03;
+/** @constant */
 Arduino.SERVO					= 0x04;
+/** @constant */
 Arduino.SHIFT					= 0x05;
+/** @constant */
 Arduino.I2C						= 0x06;
+/** @constant */
 Arduino.TOTAL_PIN_MODES			= 7;
 
 
 /**
  * @constructor
  * @augments Event
- * @param type {string} The event type
- * @param data {object} An object containing additional parameters
+ * @param {String} type The event type
+ * @param {Object} data An object containing additional parameters
  */
 function ArduinoEvent(type, data) {
 	this.data = data;
@@ -629,11 +644,17 @@ function ArduinoEvent(type, data) {
 }
 
 // events
+/** @constant */
 ArduinoEvent.ANALOG_DATA			= "analodData";
+/** @constant */
 ArduinoEvent.DIGITAL_DATA			= "digitalData";
+/** @constant */
 ArduinoEvent.FIRMWARE_VERSION		= "firmwareVersion";
+/** @constant */
 ArduinoEvent.FIRMWARE_NAME			= "firmwareName";
+/** @constant */
 ArduinoEvent.STRING_MESSAGE			= "stringMessage";
+/** @constant */
 ArduinoEvent.SYSEX_MESSAGE			= "sysexMessage";
 
 // to do: figure out how to inherit a class without using 'new' when we want
