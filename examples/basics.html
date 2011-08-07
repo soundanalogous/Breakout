@@ -13,7 +13,7 @@ $(document).ready(function() {
 	var intensity = 0;
 	var direction = 1;
 	var servoDir = true;
-
+	
 	ard.addEventListener(Event.CONNECTED, onConnect);
 
 	function onConnect(event) {
@@ -52,7 +52,7 @@ $(document).ready(function() {
 		//ard.setPinMode(4, Arduino.HIGH);
 		
 		// enable reporting for an analog pin
-		ard.setAnalogPinReporting(0, Arduino.ON);
+		//ard.setAnalogPinReporting(0, Arduino.ON);
 		
 		// disable reporting for an analog pin
 		//ard.setAnalogPinReporting(1, Arduino.OFF);
@@ -65,6 +65,10 @@ $(document).ready(function() {
 		ard.setPinMode(9, Arduino.SERVO);
 		ard.sendServoAttach(9);
 		setInterval(servoTest, 5000);
+		
+		// maximum value supported is 16bits
+		// params: pin, value
+		//ard.sendExtendedAnalog(25, 65536);
 		
 	}
 	

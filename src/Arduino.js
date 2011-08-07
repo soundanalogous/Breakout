@@ -415,8 +415,41 @@ function Arduino(host, port) {
 	 * @param {Number} value The value (to do: check on max resolution) to send
 	 */
 	this.sendAnalog = function(pin, value) {
-		self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x7F,(value >> 7) & 0x7F]);
+		self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F,(value >> 7) & 0x007F]);
 	}
+	
+	/**
+	 * An alternative to the normal analog message allowing addressing beyond pin 15
+	 * and supports sending analog values up to 16 bits.
+	 *
+	 * @param {Number} pin The pin to send the analog signal to
+	 * @param {Number} value The value to send to the specified pin
+	 */
+	this.sendExtendedAnalog = function(pin, value) {
+		var tempArray = [];
+		
+		// if > 16 bits
+		if (value > Math.pow(2, 16)) {
+			var err = "Extended Analog values > 16 bits are not currently supported by StandardFirmata";
+			console.log(err);
+			throw err;
+			return;
+		}
+		
+		tempArray[0] = START_SYSEX;
+		tempArray[1] = EXTENDED_ANALOG;
+		tempArray[2] = pin;
+		tempArray[3] = value & 0x007F;
+	 	tempArray[4] = (value >> 7) & 0x007F;	// up to 14 bits
+				
+	 	// if > 14 bits
+	 	if (value >= Math.pow(2, 14)) {
+	 		tempArray[5] = (value >> 14) & 0x007F;
+	 	}
+
+		tempArray.push(END_SYSEX);
+		self.send(tempArray);	
+	}	
 	
 	/**
 	 * Set a digital pin on the Arduino to High or Low.
@@ -427,11 +460,11 @@ function Arduino(host, port) {
 	this.sendDigital = function(pin, mode) {
 		if (mode == Arduino.HIGH) {
 			// set the bit
-			_digitalPins|=(mode << pin);
+			_digitalPins |= (mode << pin);
 		}
 		else if (mode == Arduino.LOW) {
 			// clear the bit
-			_digitalPins&=~(1 << pin);
+			_digitalPins &= ~(1 << pin);
 		}
 		if (pin <= 7) {
 			self.send([DIGITAL_MESSAGE|0, _digitalPins % 128, (_digitalPins >> 7) & 1]);	
@@ -461,7 +494,15 @@ function Arduino(host, port) {
 	 * @param {String} str The string message to send to the Arduino
 	 */
 	this.sendString = function(str) {
-		this.sendSysex(STRING_DATA, str);
+		// convert chars to decimal values
+		var decValues = [];
+		for (var i=0, len=str.length; i<len; i++) {
+			decValues.push(toDec(str[i]) & 0x007F);
+			decValues.push((toDec(str[i]) >> 7) & 0x007F);
+		}
+		// data > 7 bits in length must be split into 2 bytes and packed into an
+		// array before passing to the sendSysex method
+		this.sendSysex(STRING_DATA, decValues);
 	}
 	
 	/**
@@ -478,16 +519,20 @@ function Arduino(host, port) {
 		var tempArray = [];
 		tempArray[0] = START_SYSEX;
 		tempArray[1] = command;
-		var charVal;
+		// this would be problematic since the sysex message format does not enforce
+		// splitting all bytes after the command byte
+		//for (var i=0, len=data.length; i<len; i++) {
+		//	tempArray.push(data[i] & 0x007F);
+		//	tempArray.push((data[i] >> 7) & 0x007F);				
+		//}
+		
 		for (var i=0, len=data.length; i<len; i++) {
-			charVal = toDec(data[i]);
-			tempArray.push(charVal % 128);
-			tempArray.push(charVal >> 7);
+			tempArray.push(data[i]);			
 		}
 		tempArray.push(END_SYSEX);
 		self.send(tempArray);		
 	}
-	
+		
 	/**
 	 * Set the angle (in degrees) to rotate the servo head to. Only tested for 0-180 degrees
 	 * so far since that's the limit of my servo.
