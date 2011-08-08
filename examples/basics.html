@@ -64,12 +64,11 @@ $(document).ready(function() {
 		// set a pin to SERVO
 		ard.setPinMode(9, Arduino.SERVO);
 		ard.sendServoAttach(9);
-		setInterval(servoTest, 5000);
+		//setInterval(servoTest, 5000);
 		
-		// maximum value supported is 16bits
-		// params: pin, value
-		//ard.sendExtendedAnalog(25, 65536);
-		
+		ard.queryCapabilities();
+		ard.addEventListener(ArduinoEvent.CAPABILITY_RESPONSE, onCapabilityResponse);
+				
 	}
 	
 	function onFirmwareVersion(event) {
@@ -78,6 +77,18 @@ $(document).ready(function() {
 	
 	function onFirmwareName(event) {
 		console.log("firmware name: " + event.data.name + " version: " + event.data.version);
+	}
+	
+	function onCapabilityResponse(event) {
+		// print capabilities to the console
+		//ard.reportCapabilities();
+		
+		// get capabilities for pin 2
+		var pin2Capabilities = ard.getDigitalPin(2).capabilities;
+		// print pin 2 capabilities to console
+		for (var mode in pin2Capabilities) {
+			console.log("mode: " + mode + "\tresolution: " + pin2Capabilities[mode]);
+		}
 	}
 	
 	function onStringMessage(event) {
@@ -93,7 +104,9 @@ $(document).ready(function() {
 	}
 	
 	function fade() {
-		ard.sendAnalog(11, intensity+=direction);
+		ard.sendAnalog(11, intensity += direction);
+		// test sendExtendedAnalog method
+		//ard.sendExtendedAnalog(11, intensity += direction);
 		if (intensity == 255) direction = -1;
 		else if (intensity == 0) direction = 1;
 	}

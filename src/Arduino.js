@@ -21,8 +21,10 @@
  * @param {String} host The host address of the web server
  * @param {Number} port The port to connect to on the web server
  */
-function Arduino(host, port) {
+function Arduino(host, port, boardType) {
 	"use strict";
+	
+	var _boardType = boardType || Arduino.STANDARD;
 
 	this.className = "Arduino"; 	// for testing
 
@@ -58,6 +60,7 @@ function Arduino(host, port) {
 			SAMPLING_INTERVAL		= 0x7A,
 			SYSEX_NON_REALTIME		= 0x7E,
 			SYSEX_REALTIME			= 0x7F;
+	
 
 	// private properties
 	var self = this;	// get a reference to this class
@@ -67,7 +70,7 @@ function Arduino(host, port) {
 	
 	var _analogData = [];
 	var _digitalData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	var _digitalPins = 0;
+	//var _digitalPins = 0;
 	var _executeMultiByteCommand = 0;
 	var _firmwareVersion = 0;
 	var _multiByteChannel = 0;
@@ -77,9 +80,15 @@ function Arduino(host, port) {
 	var _sysExData = [];
 	var _waitForData = 0;
 	
+	var _analogPins;
+	var _digitalPins;
+	var _ioPins = [];
+	
 	var _evtDispatcher = new EventDispatcher(this);
 			
 	connect();
+	
+	configure();
 			
 	// private methods:
 	
@@ -129,6 +138,45 @@ function Arduino(host, port) {
 	}
 	
 	/**
+	 * currently only Arduino with ATMega168 or ATMega328 is supported
+	 * to do: create Configuration class in order to support different arduino boards
+	 * such as: mega, teensy, etc.
+	 * 
+	 * @private
+	 */
+	function configure() {
+		var pinTypes = [];
+
+		if (_boardType == Arduino.STANDARD) {
+			var TOTAL_PINS = 24;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
+			// map pins
+			_analogPins = [16, 17, 18, 19, 20, 21, 22, 23];	
+			// pins 14 & 15 are not used (the pin numbering by Firmata is kinda weird... 
+			// this is just the way it is unfortunately
+			_digitalPins = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23];
+			
+			// default pin configuration
+			pinTypes = [
+				Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT,
+				Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT,
+				Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, undefined, undefined,
+				Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG,
+				Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG
+			];
+			
+			// create a new Pin object for each pin specified by Firmata (which may not align
+			// with the actual Arduino board)
+			for (var i=0; i<TOTAL_PINS; i++) {
+				var pin = new Pin(i, pinTypes[i]);
+				_ioPins[i] = pin;
+			}
+			
+		} else {
+			// to do: configuration for other board types
+		}
+	}
+	
+	/**
 	 * @private
 	 */
 	function processData(inputData) {
@@ -171,6 +219,9 @@ function Arduino(host, port) {
 						break;
 					case STRING_DATA:
 						processSysExString(_sysExData);
+						break;
+					case CAPABILITY_RESPONSE:
+						processCababilitiesResponse(_sysExData);
 						break;
 					default:
 						// custom sysEx message
@@ -268,6 +319,36 @@ function Arduino(host, port) {
 			str+=data;
 		}
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.STRING_MESSAGE, {message: str}));
+	}
+	/**
+	 * note: this implementation may change
+	 *
+	 * @private
+	 */
+	function processCababilitiesResponse(msg) {
+		var pinCapabilities = {};
+		var byteCounter = 1; // skip 1st byte because it's the command
+		var pinCounter = 0;
+		var len = msg.length;
+		
+		//console.log(msg);
+		
+		while (byteCounter <= len) {
+			// 127 denotes end of pin's modes
+			if (msg[byteCounter] == 127) {
+				_ioPins[pinCounter].capabilities = pinCapabilities;
+				pinCapabilities = {};
+				pinCounter++;
+				byteCounter++;
+			} else {
+				// create capabilities object (mode: resolution) for each  mode
+				// supported by each pin
+				pinCapabilities[msg[byteCounter]] = msg[byteCounter + 1];
+				byteCounter += 2;
+			}
+		}
+
+		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.CAPABILITY_RESPONSE));
 	}
 	/**
 	 * convert char to decimal value
@@ -458,19 +539,24 @@ function Arduino(host, port) {
 	 * @param {Number} mode Either Arduino.HIGH or Arduino.LOW
 	 */
 	this.sendDigital = function(pin, mode) {
+		var digitalPin = 0;
 		if (mode == Arduino.HIGH) {
 			// set the bit
-			_digitalPins |= (mode << pin);
+			//_digitalPins |= (mode << pin);
+			digitalPin |= (mode << pin);
 		}
 		else if (mode == Arduino.LOW) {
 			// clear the bit
-			_digitalPins &= ~(1 << pin);
+			//_digitalPins &= ~(1 << pin);
+			digitalPin &= ~(1 << pin);
 		}
 		if (pin <= 7) {
-			self.send([DIGITAL_MESSAGE|0, _digitalPins % 128, (_digitalPins >> 7) & 1]);	
+			//self.send([DIGITAL_MESSAGE|0, _digitalPins % 128, (_digitalPins >> 7) & 1]);
+			self.send([DIGITAL_MESSAGE|0, digitalPin % 128, (digitalPin >> 7) & 1]);
 		}
 		else {
-			self.send([DIGITAL_MESSAGE|1, _digitalPins >> 8, 0]);
+			//self.send([DIGITAL_MESSAGE|1, _digitalPins >> 8, 0]);
+			self.send([DIGITAL_MESSAGE|1, digitalPin >> 8, 0]);
 		}
 	}
 	
@@ -589,7 +675,47 @@ function Arduino(host, port) {
 			return -1;
 		}
 	}
-		
+	
+	/**
+	 * Query the cababilities and current state any board running Firmata.
+	 */
+	this.queryCapabilities = function() {
+		self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
+	}
+	
+	/**
+	 * @return {Pin} A reference to the Pin object.
+	 */
+	this.getPin = function(pinNumber) {
+		return _ioPins[pinNumber];
+	}
+	
+	/**
+	 * @return {Pin} A reference to the Pin object.
+	 */	
+	this.getAnalogPin = function(pinNumber) {
+		return _ioPins[_analogPins[pinNumber]];
+	}
+	
+	/**
+	 * @return {Pin} A reference to the Pin object.
+	 */	
+	this.getDigitalPin = function(pinNumber) {
+		return _ioPins[_digitalPins[pinNumber]];
+	}
+	
+	/**
+	 * Call this method to print the capabilities for all pins to the console
+	 */
+	this.reportCapabilities = function() {
+		var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
+		for (var i=0, len=_ioPins.length; i<len; i++) {
+			for (var mode in _ioPins[i].capabilities) {
+				console.log("pin " + i + "\tmode: " + modeNames[mode] + "\tresolution (# of bits): " + _ioPins[i].capabilities[mode]);
+			}
+		}
+	}	
+	
 	/**
 	 * A wrapper for the send method of the WebSocket
 	 * I'm not sure there is a case for the user to call this method
@@ -648,20 +774,25 @@ function Arduino(host, port) {
 
 // to do: use a static object to represent constants?
 
+// board types:
+Arduino.STANDARD				= 0; // UNO, Duemilanove, Diecimila, NG
+Arduino.MEGA					= 1; // not yet supported
+
 /** @constant */
 Arduino.HIGH					= 1;
 /** @constant */
 Arduino.LOW						= 0;
 /** @constant */
-Arduino.INPUT					= 0;
-/** @constant */
-Arduino.OUTPUT					= 1;
-/** @constant */
 Arduino.ON						= 1;
 /** @constant */
 Arduino.OFF						= 0;
 	
-// pin modes		
+// pin modes
+/** @constant */
+Arduino.INPUT					= 0x00;
+/** @constant */
+Arduino.OUTPUT					= 0x01;
+/** @constant */
 Arduino.ANALOG					= 0x02;
 /** @constant */
 Arduino.PWM						= 0x03;
@@ -673,6 +804,35 @@ Arduino.SHIFT					= 0x05;
 Arduino.I2C						= 0x06;
 /** @constant */
 Arduino.TOTAL_PIN_MODES			= 7;
+
+
+/**
+ * An object to represent an Arduino pin
+ * @constructor
+ * @param {Number} number The pin number
+ * @param {Number} type The type of pin
+ */
+function Pin(number, type) {
+	this.number = number;
+	this.type = type;
+	this.capabilities;
+	
+	var _value = 0;
+	var _lastValue = 0;
+	
+	this.getValue = function() {
+		return _value;
+	}
+	
+	this.setValue = function(val) {
+		_lastValue = _value;
+		_value = val;
+	}
+	
+	this.getLastValue = function() {
+		return _lastValue;
+	}
+}
 
 
 /**
@@ -701,6 +861,8 @@ ArduinoEvent.FIRMWARE_NAME			= "firmwareName";
 ArduinoEvent.STRING_MESSAGE			= "stringMessage";
 /** @constant */
 ArduinoEvent.SYSEX_MESSAGE			= "sysexMessage";
+/** @constant */
+ArduinoEvent.CAPABILITY_RESPONSE	= "capabilityResponse";
 
 // to do: figure out how to inherit a class without using 'new' when we want
 // to call the super class in the subclass constructor (as we do in this case)
