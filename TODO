@@ -1,0 +1,20 @@
+* finish refactoring to use Pin object rather than various arrays
+	- decide on as3glue or funnel model for sending pin data
+
+* support full Firmata 2.2 protocol
+	- implement i2c spec
+
+* finalize the event model
+	
+* create config file (json?) or (class?) for each Arduino board type
+	- or use capabilities query to determine configuration automatically?
+	
+* decouple socket (so you could use web socket, flash socket via swf, or other)?
+
+* align code to js best practices
+
+* create simple server application
+	- cross platform
+	- easy to install
+	- gui to select serial port and baud rate
+	- supports multiple Arduino connections simultaneously?
