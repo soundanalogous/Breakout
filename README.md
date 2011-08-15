@@ -1,7 +1,7 @@
 Arduino-JS
 ===
 
-A javascript implementation of the Firmata protocol for Arduino. This is an early release so expect it to change over the next few weeks (however there should be little change in the interface, but probably considerable change in the implementation).
+A javascript implementation of the Firmata protocol for Arduino. This is a work in progress so expect it to change over the next few weeks.
 
 To use:
 
@@ -16,12 +16,6 @@ To use:
 9. Open an example html file directly in Chrome and view the Developer tools (View -> Developer -> Developer Tools) and click on Console. Safari should also work but I haven't tested it extensively. You may need to refresh your browser once the tools load. You should see the firmware version and firmware name printed to the console along with other data.
 10. Make something cool.
 
-Development Progress
----
-
-Arduino-JS is still in the early phase of development. Currently Arduino-JS is mostly a port of [as3glue](http://code.google.com/p/as3glue/) to javascript.
-
-The plan is to implement the full Firmata 2.2 protocol. So far everything from as3glue is implemented, including the new Servo spec for Firmata 2.2. Next up is i2c support. I've also added a class for the Innovations ID-12 RFID reader. This class also serves as an example of a method to add hardware abstractions to Arduino-JS. More HW classes will follow - similar to those implemented in the funnel.ui and funnel.i2c packets of [funnel](http://code.google.com/p/funnel/) as3 library.
 
 Test environment
 ---
