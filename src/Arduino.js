@@ -252,7 +252,8 @@ function Arduino(host, port, boardType) {
 						analogPin.setValue(self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0]));
 						if (analogPin.getValue() != analogPin.getLastValue()) {
 							// use analog pin number rather than actual pin number
-							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA, {pin: _multiByteChannel, value: analogPin.getValue()}));		
+							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA, {pin: _multiByteChannel, value: analogPin.getValue()}));
+							pin.dispatchEvent(new Event(Event.CHANGE));
 						}
 						break;
 				}
@@ -330,7 +331,7 @@ function Arduino(host, port, boardType) {
 		
 		for (var i=0; i<8; i++) {
 			pin = self.getPin(offset + i);
-			if (pin.type == Pin.OUTPUT | pin.type == Pin.INPUT) {  // only care about INPUT right?
+			if (pin.type == Pin.INPUT) {
 				pinVal = (portVal >> i) & 0x01;	// test this
 				// to do: update to use getter pin.lastValue
 	    		if (pinVal != pin.getValue()) {
@@ -338,6 +339,8 @@ function Arduino(host, port, boardType) {
 	    			pin.setValue(pinVal);
 	    			// to to: update pin.getValue(); to use getter pin.value
 	    			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.DIGITAL_DATA, {pin: pin.getNumber(), value: pin.getValue()}));
+	    			pin.dispatchEvent(new Event(Event.CHANGE));
+	    			// to do: add PinEvent.RISING_EDGE and PinEvent.FALLING_EDGE?
 	    		}
 	    	}
 	    }
@@ -999,6 +1002,8 @@ function Pin(number, type) {
 	var _value = 0;
 	var _lastValue = 0;
 	
+	var _evtDispatcher = new EventDispatcher(this);
+	
 	/**
 	 * Get the pin number corresponding to the Arduino documentation for the type of board.
 	 * The number has been adjusted to match the Arduino documentation rather than truly represent
@@ -1034,6 +1039,40 @@ function Pin(number, type) {
 	this.getLastValue = function() {
 		return _lastValue;
 	}
+	
+	/* implement EventDispatcher */
+	
+	/**
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
+	 */
+	this.addEventListener = function(type, listener) {
+		_evtDispatcher.addEventListener(type, listener);
+	}
+	
+	/**
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
+	 */
+	this.removeEventListener = function(type, listener) {
+		_evtDispatcher.removeEventListener(type, listener);
+	}
+	
+	/**
+	 * @param {String} type The event type
+	 * return {boolean} True is listener exists for this type, false if not.
+	 */
+	this.hasEventListener = function(type) {
+		return _evtDispatcher.hasEventListener(type);
+	}
+	
+	/**
+	 * @param {Event} type The Event object
+	 * return {boolean} True if dispatch is successful, false if not.
+	 */		
+	this.dispatchEvent = function(event) {
+		return _evtDispatcher.dispatchEvent(event);
+	}	
 }
 
 /** @constant */

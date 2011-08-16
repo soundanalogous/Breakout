@@ -23,6 +23,7 @@ $(document).ready(function() {
 		//ard.removeEventListener(Event.CONNECTED, onConnect);
 		ard.removeEventListener(ArduinoEvent.READY, onReady);
 	
+		// reset the arduino board
 		//ard.resetBoard();
 
 		ard.reportVersion();
@@ -31,8 +32,11 @@ $(document).ready(function() {
 		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
 		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
 		
+		// listen for incoming analog data (all pins
 		ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
+		// listen for incoming digital data (all pins, all ports)
 		ard.addEventListener(ArduinoEvent.DIGITAL_DATA, onDigitalData);
+		// listen for incoming string messages
 		ard.addEventListener(ArduinoEvent.STRING_MESSAGE, onStringMessage);
 		
 		// Load the Firmata Example, EchoString.pde to see how this can be used
@@ -46,7 +50,11 @@ $(document).ready(function() {
 		setInterval(blink, 3000);
 	
 		//set digital pin 2 to input
-		//ard.setPinMode(2, Pin.INPUT);
+		ard.setPinMode(2, Pin.INPUT);
+		
+		// get a reference to the pin and listen for Change event
+		var buttonPin = ard.getDigitalPin(2);
+		buttonPin.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// set a pin to high
 		//ard.sendDigital(13, Pin.HIGH);
@@ -91,7 +99,10 @@ $(document).ready(function() {
 		//ard.queryAnalogMapping();
 	}
 	
-
+	function onButtonChange(event) {
+		var pin = event.target;
+		console.log("button changed: pin = " + pin.getNumber() + "\tvalue = " + pin.getValue());
+	}	
 	
 	function onFirmwareVersion(event) {
 		console.log("firmware version: " + event.data.version);

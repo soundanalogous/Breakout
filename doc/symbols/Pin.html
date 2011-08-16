@@ -411,6 +411,24 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#addEventListener">addEventListener</a></b>(type, listener)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#dispatchEvent">dispatchEvent</a></b>(type)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pin.html#getLastValue">getLastValue</a></b>()
 								</div>
 								<div class="description"></div>
@@ -430,6 +448,24 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pin.html#getValue">getValue</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#hasEventListener">hasEventListener</a></b>(type)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#removeEventListener">removeEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -778,6 +814,85 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
+					<a name="addEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addEventListener</b>(type, listener)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>The event type</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function}</span> <b>listener</b>
+									
+								</dt>
+								<dd>The function to be called when the event is fired</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="dispatchEvent"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>dispatchEvent</b>(type)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Event.html">Event</a>}</span> <b>type</b>
+									
+								</dt>
+								<dd>The Event object
+return {boolean} True if dispatch is successful, false if not.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="getLastValue"> </a>
 					<div class="fixedFont">
 					
@@ -879,6 +994,85 @@ Arduino Mega.
 
 					<hr />
 				
+					<a name="hasEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hasEventListener</b>(type)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>The event type
+return {boolean} True is listener exists for this type, false if not.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removeEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeEventListener</b>(type, listener)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>The event type</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function}</span> <b>listener</b>
+									
+								</dt>
+								<dd>The function to be called when the event is fired</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="setValue"> </a>
 					<div class="fixedFont">
 					
@@ -927,7 +1121,7 @@ Arduino Mega.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Aug 14 2011 23:24:09 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Aug 15 2011 23:25:10 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>
