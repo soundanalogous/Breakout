@@ -253,7 +253,7 @@ function Arduino(host, port, boardType) {
 						if (analogPin.getValue() != analogPin.getLastValue()) {
 							// use analog pin number rather than actual pin number
 							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA, {pin: _multiByteChannel, value: analogPin.getValue()}));
-							pin.dispatchEvent(new Event(Event.CHANGE));
+							analogPin.dispatchEvent(new Event(Event.CHANGE));
 						}
 						break;
 				}
