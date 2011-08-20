@@ -219,7 +219,8 @@ function Arduino(host, port, boardType) {
 						break;
 					case ANALOG_MESSAGE:
 						analogPin = self.getAnalogPin(_multiByteChannel);
-						analogPin.setValue(self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0]));
+						// map analog input values from 0-1023 to 0.0 to 1.0
+						analogPin.setValue(self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023);
 						if (analogPin.getValue() != analogPin.getLastValue()) {
 							// use analog pin number rather than actual pin number
 							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA, {pin: _multiByteChannel, value: analogPin.getValue()}));
@@ -642,10 +643,10 @@ function Arduino(host, port, boardType) {
 	}
 	
 	/**
-	 * Returns the analog data for a specified pin. When an analog value
-	 * is received it is stored. However it is best in most cases to listen
+	 * Returns the analog data for a specified pin. The range is from 0.0 to 1.0.
+	 * <p>When an analog value is received it is stored. However it is best in most cases to listen
 	 * for the ArduinoEvent.ANALOG_DATA and get the analog value from the
-	 * event parameter (event.data.value) rather than using this getter method.
+	 * event parameter (event.data.value) rather than using this getter method.</p>
 	 *
 	 * @param {Number} pin The pin number to return analog data for
 	 * @return {Number} The analog data for the specified pin
@@ -655,10 +656,10 @@ function Arduino(host, port, boardType) {
 	}
 	
 	/**
-	 * Returns the digital data for a specified pin. When a digital value
-	 * is received it is stored. However it is best in most cases to listen
+	 * Returns the digital data for a specified pin.
+	 * <p>When a digital value is received it is stored. However it is best in most cases to listen
 	 * for the ArduinoEvent.DIGITAL_DATA and get the digital value from the
-	 * event parameter (event.data.value) rather than using this getter method.
+	 * event parameter (event.data.value) rather than using this getter method.</p>
 	 
 	 * @param {Number} pin The pin number to return digital data for
 	 * @return {Number} The digital data for the specified pin
@@ -984,135 +985,6 @@ function Arduino(host, port, boardType) {
 Arduino.STANDARD				= 0; // UNO, Duemilanove, Diecimila, NG
 Arduino.MEGA					= 1; // not yet supported
 	
-
-/**
- * An object to represent an Arduino pin
- * @constructor
- * @param {Number} number The pin number
- * @param {Number} type The type of pin
- */
-function Pin(number, type) {
-	this.type = type;
-	this.capabilities;
-	
-	var self = this;
-	var _number = number;
-	var _value = 0;
-	var _lastValue = 0;
-	
-	var _evtDispatcher = new EventDispatcher(this);
-	
-	/**
-	 * Dispatch a Change event whenever a pin value changes
-	 * @private
-	 */
-	function detectChange(oldValue, newValue) {
-		if (oldValue == newValue) return;
-		//console.log("detect change");
-		self.dispatchEvent(new Event(Event.CHANGE));
-	}
-	
-	/**
-	 * Get the pin number corresponding to the Arduino documentation for the type of board.
-	 * The number has been adjusted to match the Arduino documentation rather than truly represent
-	 * the pin number of the AVR. For example, with a Standard Arduino board, analog pin 0 = digital 
-	 * pin 14 even though analog pin 0 is actually pin 16 (because there are 3 ports and it's the 
-	 * first pin of the 3rd port). This will be different for other board types such as the
-	 * Arduino Mega.
-	 * 
-	 * @return {Number} The pin number
-	 */
-	this.getNumber = function() {
-		return _number;
-	}
-	
-	/**
-	 * @return {Number} Get the current digital or analog value of the pin
-	 */
-	this.getValue = function() {
-		return _value;
-	}
-	
-	/**
-	 * @param {Number} val Set the pin value
-	 */
-	this.setValue = function(val) {
-		_lastValue = _value;
-		_value = val;
-		detectChange(_lastValue, _value);
-	}
-	
-	/**
-	 * @return {Number} Get the last pin value
-	 */
-	this.getLastValue = function() {
-		return _lastValue;
-	}
-	
-	/* implement EventDispatcher */
-	
-	/**
-	 * @param {String} type The event type
-	 * @param {Function} listener The function to be called when the event is fired
-	 */
-	this.addEventListener = function(type, listener) {
-		_evtDispatcher.addEventListener(type, listener);
-	}
-	
-	/**
-	 * @param {String} type The event type
-	 * @param {Function} listener The function to be called when the event is fired
-	 */
-	this.removeEventListener = function(type, listener) {
-		_evtDispatcher.removeEventListener(type, listener);
-	}
-	
-	/**
-	 * @param {String} type The event type
-	 * return {boolean} True is listener exists for this type, false if not.
-	 */
-	this.hasEventListener = function(type) {
-		return _evtDispatcher.hasEventListener(type);
-	}
-	
-	/**
-	 * @param {Event} type The Event object
-	 * return {boolean} True if dispatch is successful, false if not.
-	 */		
-	this.dispatchEvent = function(event) {
-		return _evtDispatcher.dispatchEvent(event);
-	}	
-}
-
-/** @constant */
-Pin.HIGH					= 1;
-/** @constant */
-Pin.LOW						= 0;
-/** @constant */
-Pin.ON						= 1;
-/** @constant */
-Pin.OFF						= 0;
-
-// pin modes
-/** @constant */
-Pin.DIN						= 0x00;
-/** @constant */
-Pin.DOUT					= 0x01;
-/** @constant */
-Pin.AIN						= 0x02;
-/** @constant */
-Pin.AOUT					= 0x03;
-/** @constant */
-Pin.PWM						= 0x03;
-/** @constant */
-Pin.SERVO					= 0x04;
-/** @constant */
-Pin.SHIFT					= 0x05;
-/** @constant */
-Pin.I2C						= 0x06;
-/** @constant */
-Pin.TOTAL_PIN_MODES			= 7;
-
 
 /**
  * @constructor
