@@ -225,7 +225,7 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_Arduino.js.html">Arduino.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_Pin.js.html">Pin.js</a>.
 				
 			</p>
 
@@ -430,7 +430,25 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#clear">clear</a></b>()
+								</div>
+								<div class="description">Resets the minimum, maximum, average and lastValue of the pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pin.html#dispatchEvent">dispatchEvent</a></b>(type)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#getAverage">getAverage</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -448,9 +466,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#getMaximum">getMaximum</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#getMinimum">getMinimum</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Pin.html#getNumber">getNumber</a></b>()
 								</div>
 								<div class="description">Get the pin number corresponding to the Arduino documentation for the type of board.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Pin.html#getPreFilterValue">getPreFilterValue</a></b>()
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -888,6 +933,31 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="clear"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>clear</b>()
+					
+					</div>
+					<div class="description">
+						Resets the minimum, maximum, average and lastValue of the pin.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="dispatchEvent"> </a>
 					<div class="fixedFont">
 					
@@ -919,6 +989,38 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 						
 						
 						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getAverage"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getAverage</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The average value of the pin over time. Call clear() to reset.</dd>
+							
+							</dl>
 						
 						
 						
@@ -957,6 +1059,70 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 
 					<hr />
 				
+					<a name="getMaximum"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getMaximum</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The maximum value of the pin over time. Call clear() to reset.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getMinimum"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getMinimum</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The minimum value of the pin over time. Call clear() to reset.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name="getNumber"> </a>
 					<div class="fixedFont">
 					
@@ -986,6 +1152,38 @@ Arduino Mega.
 							<dt class="heading">Returns:</dt>
 							
 								<dd><span class="light fixedFont">{Number}</span> The pin number</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPreFilterValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getPreFilterValue</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The value before any filters were applied.</dd>
 							
 							</dl>
 						
@@ -1153,7 +1351,7 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Aug 19 2011 21:29:53 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Aug 20 2011 14:46:47 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>
