@@ -77,49 +77,23 @@
 <span class='line'> 70</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 71</span> </span><span class="WHIT">		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">isSuccess</span><span class="PUNC">;</span><span class="WHIT">	
 <span class='line'> 72</span> 	</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">		
-<span class='line'> 74</span> 	</span><span class="COMM">/*
-<span class='line'> 75</span> 	// DOM-like implementation, pass type and optional args
-<span class='line'> 76</span> 	this.dispatchEvent = function(event) {
-<span class='line'> 77</span> 		var isSuccess = false;
-<span class='line'> 78</span> 		
-<span class='line'> 79</span> 		var args = [];
-<span class='line'> 80</span> 		args.push(_target);
-<span class='line'> 81</span> 		for (var i=1, len=arguments.length; i&lt;len; i++) {
-<span class='line'> 82</span> 			args.push(arguments[i]);
-<span class='line'> 83</span> 		}
-<span class='line'> 84</span> 		
-<span class='line'> 85</span> 		//if (_eventListeners[event]) {
-<span class='line'> 86</span> 		if (this.hasEventListener(event)) {
-<span class='line'> 87</span> 			for (var j=0, len=_eventListeners[event].length; j&lt;len; j++) {
-<span class='line'> 88</span> 				try {
-<span class='line'> 89</span> 					_eventListeners[event][j].apply(this, args);
-<span class='line'> 90</span> 					isSuccess = true;
-<span class='line'> 91</span> 				} catch(e) {
-<span class='line'> 92</span> 					// to do: handle error
-<span class='line'> 93</span> 				}
-<span class='line'> 94</span> 			}
-<span class='line'> 95</span> 		}
-<span class='line'> 96</span> 		return isSuccess;
-<span class='line'> 97</span> 	}
-<span class='line'> 98</span> 	*/</span><span class="WHIT">
-<span class='line'> 99</span> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>100</span> 
-<span class='line'>101</span> </span><span class="COMM">/** 
-<span class='line'>102</span>  * Event 'base class' (but it can also be instantiated directly)
-<span class='line'>103</span>  *
-<span class='line'>104</span>  * @constructor
-<span class='line'>105</span>  * @param {String} type event type
-<span class='line'>106</span>  */</span><span class="WHIT">
-<span class='line'>107</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>108</span> </span><span class="WHIT">	</span><span class="NAME">this.type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>109</span> </span><span class="WHIT">	</span><span class="NAME">this.target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>110</span> </span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>111</span> 
-<span class='line'>112</span> </span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>113</span> </span><span class="NAME">Event.CONNECTED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"connected"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>114</span> </span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>115</span> </span><span class="NAME">Event.CHANGE</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"change"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>116</span> </span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>117</span> </span><span class="NAME">Event.COMPLETE</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"complete"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>118</span> </span></pre></body></html>
+<span class='line'> 73</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 74</span> 
+<span class='line'> 75</span> </span><span class="COMM">/** 
+<span class='line'> 76</span>  * Event 'base class' (but it can also be instantiated directly)
+<span class='line'> 77</span>  *
+<span class='line'> 78</span>  * @constructor
+<span class='line'> 79</span>  * @param {String} type event type
+<span class='line'> 80</span>  */</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">	</span><span class="NAME">this.type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">	</span><span class="NAME">this.target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 85</span> 
+<span class='line'> 86</span> </span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="NAME">Event.CONNECTED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"connected"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="NAME">Event.CHANGE</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"change"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="NAME">Event.COMPLETE</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"complete"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span></pre></body></html>
