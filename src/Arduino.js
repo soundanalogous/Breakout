@@ -1,13 +1,8 @@
 // Arduino.js
-// jeff hoefs 7/20/11
-// based on as3glue (http://code.google.com/p/as3glue/)
-// 
-// to do:
-// 1. implement Firmata i2c spec
-// 2. finalize the event model
-// 3. support full Firmata 2.2 protocol
-// 4. decouple socket (so you could use web socket, flash socket via swf, or other)?
-// 5. align code to js best practices
+// Jeff Hoefs
+//
+// based largely on as3glue (http://code.google.com/p/as3glue/)
+// and funnel (http://code.google.com/p/funnel/)
 
 
 /**
@@ -67,30 +62,29 @@ function Arduino(host, port, boardType) {
 	var host = host;
 	var port = port;
 	var socket;
-	
-	var _analogData = [];
-	var _digitalData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	//var _digitalPins = 0;
+		
+	// input processing
 	var _executeMultiByteCommand = 0;
-	var _firmwareVersion = 0;
 	var _multiByteChannel = 0;
-	var _previousAnalogData = [];
-	var _previousDigitalData = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 	var _storedInputData = [];
 	var _sysExData = [];
 	var _waitForData = 0;
 	
+	var _digitalPort = [];
+	var _numPorts;
 	var _analogPinMapping = [];
 	var _digitalPinMapping = [];
 	var _ioPins = [];
 	var _totalPins = 0;
-	var _isAutoConfig = false;
+	
+	var _firmwareVersion = 0;
 	
 	var _evtDispatcher = new EventDispatcher(this);
 			
+	configure();
+
 	connect();
 	
-	configure();
 					
 	// private methods:
 	
@@ -119,9 +113,8 @@ function Arduino(host, port, boardType) {
 			socket.onopen = function(){
 				console.log("Socket Status: "+socket.readyState+" (open)");
 				self.dispatchEvent(new Event(Event.CONNECTED));
-				
-				//self.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
-				//self.reportVersion();
+				// a little time to ensure all data is returned from Arduino
+				setTimeout(begin, 1000);
 			}
 			/**
 			 * @private
@@ -142,64 +135,57 @@ function Arduino(host, port, boardType) {
 
 	}
 	
-	// contemplating...
-	/*
-	function onVersion(event) {
-		self.removeEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
-		var version = event.data.version * 10;
-		
-		if (version >= 22) {
-			autoConfigure();
-		} else {
-			configure();
-		}
-	}
-	*/
-	
 	/**
-	 * Automatically configure using queryCapabilities. This only works with StandardFirmata
-	 * using Firmata version 2.2 (Arduino 0022) or higher
-	 *
 	 * @private
 	 */
-	//function autoConfigure() {
-	//	_isAutoConfig = true;
-	//	self.queryCapabilities();
-	//}
+	function begin() {
+		console.log("ready");
+		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+	}
 	
 	/**
 	 * currently only Arduino with ATMega168 or ATMega328 is supported
-	 * to do: create Configuration class in order to support different arduino boards
-	 * such as: mega, teensy, etc.
 	 * 
 	 * @private
 	 */
 	function configure() {	
 		var pinTypes = [];
+		var pinNumCounter = 2;  // skip rx and tx pins
 		
 		if (_boardType == Arduino.STANDARD) {
 					
-			var TOTAL_PINS = 24;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
+			_totalPins = 24;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
+			
 			// map pins
 			_analogPinMapping = [16, 17, 18, 19, 20, 21, 22, 23];	
-			// pins 14 & 15 are not used (the pin numbering by Firmata is kinda weird... 
-			// this is just the way it is unfortunately
-			_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21];
+			// pins 14 & 15 are not used because pin numbers align with ports (8 pins per port)
+			// but pins 7 and 8 of port 1 are not broken out on the Arduino board
+			_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23];
+			
+			_numPorts = 3;
+			_digitalPort = [0, 0, 0];	// 3 ports
 			
 			// default pin configuration
 			pinTypes = [
-				Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT,
-				Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT,
-				Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, Arduino.OUTPUT, undefined, undefined,
-				Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG,
-				Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG, Arduino.ANALOG
+				undefined, undefined, Pin.DOUT, Pin.DOUT, Pin.DOUT,
+				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
+				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, undefined, undefined,
+				Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN,
+				Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN
 			];
 			
-			// create a new Pin object for each pin specified by Firmata (which may not align
-			// with the actual Arduino board)
-			for (var i=0; i<TOTAL_PINS; i++) {
-				var pin = new Pin(i, pinTypes[i]);
+			// create pins for each port
+			// because not all pins in a 3 ports are broken out on the Arduino board,
+			// some pins will be unused.
+			for (var i=0; i<_totalPins; i++) {
+				// align pin numbers with Arduino documentation (digital pin 14 = analog pin 0)
+				var pin = new Pin(pinNumCounter, pinTypes[i]);
+				managePinListener(pin);
 				_ioPins[i] = pin;
+				// skip rx and tx pins
+				if (i > 1 && pinTypes[i] != undefined) {
+					pinNumCounter++;
+				}
 			}
 			
 		} else {
@@ -207,13 +193,14 @@ function Arduino(host, port, boardType) {
 		}
 		
 	}
-	
+		
 	/**
 	 * @private
 	 */
 	function processData(inputData) {
 		inputData *= 1;	// force inputData to integer (is there a better way to do this?)
 		var command;
+		var analogPin = {};
 		
 		// we have command data
 		if (_waitForData > 0 && inputData < 128) {
@@ -231,11 +218,12 @@ function Arduino(host, port, boardType) {
 						self.dispatchEvent(new ArduinoEvent(ArduinoEvent.FIRMWARE_VERSION, {version: _firmwareVersion}));
 						break;
 					case ANALOG_MESSAGE:
-						_analogData[_multiByteChannel] = self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0]);
-						if (_analogData[_multiByteChannel] != _previousAnalogData[_multiByteChannel]) {
-							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA, {pin: _multiByteChannel, value: _analogData[_multiByteChannel]}));		
+						analogPin = self.getAnalogPin(_multiByteChannel);
+						analogPin.setValue(self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0]));
+						if (analogPin.getValue() != analogPin.getLastValue()) {
+							// use analog pin number rather than actual pin number
+							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA, {pin: _multiByteChannel, value: analogPin.getValue()}));
 						}
-						_previousAnalogData[_multiByteChannel]=_analogData[_multiByteChannel];
 						break;
 				}
 			}
@@ -299,36 +287,29 @@ function Arduino(host, port, boardType) {
 			}
 		}
 	}
+	
 	/**
 	 * @private
 	 */
 	function processDigitalPortBytes(port, bits0_6, bits7_13) {
-		var low;
-		var high;
-		var offset;
-		// if port is 0, write bits 2..7 into _digitalData[2..7]
-		// if port is 1, write bits 0..5 into _digitalData[8..13]
-		if (port == 0) {
-			low=2;
-			high=7;
-			offset=0;
-		}
-		else {
-			low=0;
-			high=5;
-			offset=8;
-		}
-		var twoBytesForPorts = bits0_6 + (bits7_13 << 7);
-		var mask;
-		for (var i = low; i <= high; i++) {
-			mask=1 << i;
-			_digitalData[i + offset]=(twoBytesForPorts & mask) >> i;
-			if (_digitalData[i + offset] != _previousDigitalData[i + offset]) {
-				self.dispatchEvent(new ArduinoEvent(ArduinoEvent.DIGITAL_DATA, {pin: (i+offset), value: _digitalData[i + offset]}));
-			}
-			_previousDigitalData[i + offset]=_digitalData[i + offset];
-		}	
+		var offset = port * 8;
+		var portVal = bits0_6 | (bits7_13 << 7);
+		var pinVal;
+		var pin = {};
+		
+		for (var i=0; i<8; i++) {
+			pin = self.getPin(offset + i);
+			if (pin.type == Pin.DIN) {
+				pinVal = (portVal >> i) & 0x01;	// test this
+	    		if (pinVal != pin.getValue()) {
+	    			pin.setValue(pinVal);
+	    			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.DIGITAL_DATA, {pin: pin.getNumber(), value: pin.getValue()}));
+	    		}
+	    	}
+	    }
+
 	}
+	
 	/**
 	 * @private
 	 */
@@ -345,6 +326,7 @@ function Arduino(host, port, boardType) {
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.FIRMWARE_NAME, {name: fname, version: _firmwareVersion}));
 		
 	}
+	
 	/**
 	 * @private
 	 */
@@ -358,6 +340,7 @@ function Arduino(host, port, boardType) {
 		}
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.STRING_MESSAGE, {message: str}));
 	}
+	
 	/**
 	 * note: this implementation may change
 	 *
@@ -386,61 +369,6 @@ function Arduino(host, port, boardType) {
 
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.CAPABILITY_RESPONSE));
 	}
-
-	// auto configure using capabilities response
-	// not sure if this is a good idea... could cause more problems than it solves
-	/*
-	function processCapabilitiesResponse(msg) {
-		var pinCapabilities = {};
-		var byteCounter = 1; // skip 1st byte because it's the command
-		var pinCounter = 0;
-		var digitalPinCounter = 2;
-		var analogPinCounter = 0;
-		var len = msg.length;
-		var type;
-		
-		// map rx and tx pins
-		_digitalPinMapping[0] = 0;
-		_digitalPinMapping[1] = 1;
-				
-		while (byteCounter <= len) {
-			// 127 denotes end of pin's modes
-			if (msg[byteCounter] == 127) {
-
-				if (pinCapabilities[Arduino.OUTPUT]) {
-					// map digital pins
-					_digitalPinMapping[digitalPinCounter++] = pinCounter;
-					// set default type
-					if (pinCapabilities[Arduino.ANALOG]) {
-						type = Arduino.ANALOG;
-						_analogPinMapping[analogPinCounter++] = pinCounter;
-					} else {
-						type = Arduino.OUTPUT;
-					}
-				} else {
-					type = undefined;
-				}
-				
-				var pin = new Pin(pinCounter, type);
-				pin.capabilities = pinCapabilities;
-				_ioPins[pinCounter] = pin;
-				
-				pinCapabilities = {};
-				pinCounter++;
-				byteCounter++;
-			} else {
-				// create capabilities object (mode: resolution) for each  mode
-				// supported by each pin
-				pinCapabilities[msg[byteCounter]] = msg[byteCounter + 1];
-				byteCounter += 2;
-			}
-		}
-		
-		_totalPins = pinCounter;
-
-		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
-	}
-	*/
 	
 	/**
 	 * note: this implementation may change
@@ -461,6 +389,7 @@ function Arduino(host, port, boardType) {
 		}
 		
 		_ioPins[pinNumber].type = pinType;
+		managePinListener(_ioPins[pinNumber]);
 		_ioPins[pinNumber].setValue(value);
 		
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.PIN_STATE_RESPONSE));
@@ -489,6 +418,127 @@ function Arduino(host, port, boardType) {
 		var decVal = ch.charCodeAt(0);		
 		return decVal;
 	}
+	
+	/**
+	 * Called when ever a pin value is set via pin.setValue(someValue).
+	 * Sends digital or analog output pin and output values to the Arduino.
+	 *
+	 * @private
+	 * @param {Event} pin A reference to the event object (Pin in this case).
+	 */
+	 function sendOut(event) {
+	 	var type = event.target.type;
+	 	var pinNum = event.target.getNumber();
+	 	var value = event.target.getValue();
+	 	
+	 	switch(type) {
+	 		case Pin.DOUT:
+	 			sendDigitalData(pinNum, value);
+	 		break;
+	 		case Pin.AOUT:
+	 			sendAnalogData(pinNum, value);
+	 		break;
+	 		case Pin.SERVO:
+	 			sendServoData(pinNum, value);
+	 		break;
+	 	}
+
+	 }
+	 
+	/**
+	 * Ensure that event listeners are properly managed for pin objects as the pin
+	 * type is changed during the execution of the program.
+	 *
+	 * @private
+	 */	 
+	function managePinListener(pin) {
+		if (pin.type == Pin.DOUT || pin.type == Pin.AOUT || pin.type == Pin.SERVO) {
+			if (!pin.hasEventListener(Event.CHANGE)) {
+				pin.addEventListener(Event.CHANGE, sendOut);
+			}
+		} else {
+			if (pin.hasEventListener(Event.CHANGE)) {
+				try {
+					pin.removeEventListener(Event.CHANGE, sendOut);
+				} catch (e) {
+					// pin had reference to other handler, ignore
+					console.log("debug: caught pin removeEventListener exception");
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @private
+	 */
+	function sendAnalogData(pin, value) {
+		if (pin > 15 || value > Math.pow(2, 14)) {
+			sendExtendedAnalogData(pin, value);
+		} else {
+			self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F,(value >> 7) & 0x007F]);
+		}
+	}
+
+	/**
+	 * @private
+	 */	
+	function sendExtendedAnalogData(pin, value) {
+		var tempArray = [];
+		
+		// if > 16 bits
+		if (value > Math.pow(2, 16)) {
+			var err = "Extended Analog values > 16 bits are not currently supported by StandardFirmata";
+			console.log(err);
+			throw err;
+			return;
+		}
+		
+		tempArray[0] = START_SYSEX;
+		tempArray[1] = EXTENDED_ANALOG;
+		tempArray[2] = pin;
+		tempArray[3] = value & 0x007F;
+	 	tempArray[4] = (value >> 7) & 0x007F;	// up to 14 bits
+				
+	 	// if > 14 bits
+	 	if (value >= Math.pow(2, 14)) {
+	 		tempArray[5] = (value >> 14) & 0x007F;
+	 	}
+	 	
+		tempArray.push(END_SYSEX);
+		self.send(tempArray);
+	}
+	
+	/**
+	 * @private
+	 */
+	function sendDigitalData(pin, value) {
+		var portNum = Math.floor(pin / 8);
+
+		if (value == Pin.HIGH) {
+			// set the bit
+			_digitalPort[portNum] |= (value << (pin % 8));
+		}
+		else if (value == Pin.LOW) {
+			// clear the bit
+			_digitalPort[portNum] &= ~(1 << (pin % 8));
+		}
+		else {
+			console.log("invalid value passed to sendDigital, value must be 0 or 1");
+			return; // invalid value
+		}
+		
+		self.sendDigitalPort(portNum, _digitalPort[portNum]);	
+	}
+	
+	/**
+	 * @private
+	 */	
+	function sendServoData(pin, value) {
+		var servoPin = self.getDigitalPin(pin);
+		if (servoPin.type == Pin.SERVO && servoPin.getLastValue() != value) {
+			self.send([ANALOG_MESSAGE | (pin & 0x0F), value % 128, value >> 7]);
+		}	
+	}	
 	
 	//public methods:
 	
@@ -544,8 +594,9 @@ function Arduino(host, port, boardType) {
 	 * Disables digital pin reporting for all digital pins
 	 */
 	this.disableDigitalPinReporting = function() {
-		self.send([REPORT_DIGITAL, 0]);
-		self.send([REPORT_DIGITAL + 1, 0]);
+		for (var i=0; i <_numPorts; i++) {
+			self.send([(REPORT_DIGITAL | i), Pin.OFF]);
+		}
 	}
 	
 	/**
@@ -553,8 +604,9 @@ function Arduino(host, port, boardType) {
 	 * before you can receive digital pin data from the Arduino.
 	 */
 	this.enableDigitalPinReporting = function() {
-		self.send([REPORT_DIGITAL + 0, 1]);
-		self.send([REPORT_DIGITAL + 1, 1]);
+		for (var i=0; i<_numPorts; i++) {
+			self.send([(REPORT_DIGITAL | i), Pin.ON]);
+		}
 	}
 	
 	/**
@@ -562,7 +614,7 @@ function Arduino(host, port, boardType) {
 	 * Listen for the ArduinoEvent.ANALOG_DATA to be notified of incoming analog data.
 	 *
 	 * @param {Number} pin The pin connected to the analog input
-	 * @param {Number} mode Arduino.ON to enable input or Arduino.OFF to disable input
+	 * @param {Number} mode Pin.ON to enable input or Pin.OFF to disable input
 	 * for the specified pin.
 	 */
 	this.setAnalogPinReporting = function(pin, mode) {
@@ -571,17 +623,21 @@ function Arduino(host, port, boardType) {
 	
 	/**
 	 * Set the specified pin to Input or Output. Also used to enable the pull-up resistor
-	 * for the specified pin by writing Arduino.HIGH to the pin.
-	 * For example, setPinMode(4, Arduino.HIGH) will enable the pull-up resistor for digital
+	 * for the specified pin by writing Pin.HIGH to the pin.
+	 * For example, setPinMode(4, Pin.HIGH) will enable the pull-up resistor for digital
 	 * pin 4.
 	 * For digital input, listen for the ArduinoEvent.DIGITAL_DATA to be notified 
 	 * of incoming digital data.
 	 *
 	 * @param {Number} pin The pin connected to the digital input or output
-	 * @param {Number} mode Arduino.INPUT or Arduino.OUTPUT and optionally Arduino.HIGH to 
+	 * @param {Number} mode Pin.DIN or Pin.DOUT and optionally Pin.HIGH to 
 	 * enable the pull-up resistor.
 	 */
 	this.setPinMode = function(pin, mode) {
+		self.getDigitalPin(pin).type = mode;
+		
+		managePinListener(self.getDigitalPin(pin));
+		
 		self.send([SET_PIN_MODE, pin, mode]);
 	}
 	
@@ -595,7 +651,7 @@ function Arduino(host, port, boardType) {
 	 * @return {Number} The analog data for the specified pin
 	 */
 	this.getAnalogData = function(pin) {
-		return _analogData[pin];
+		return self.getAnalogPin(pin).getValue();
 	}
 	
 	/**
@@ -608,7 +664,7 @@ function Arduino(host, port, boardType) {
 	 * @return {Number} The digital data for the specified pin
 	 */	
 	this.getDigitalData = function(pin) {
-		return _digitalData[pin];
+		return self.getDigitalPin(pin).getValue();
 	}
 	
 	/**
@@ -626,7 +682,15 @@ function Arduino(host, port, boardType) {
 	 * @param {Number} value The value (to do: check on max resolution) to send
 	 */
 	this.sendAnalog = function(pin, value) {
-		self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F,(value >> 7) & 0x007F]);
+		var pwmPin = self.getDigitalPin(pin); 
+		
+		// will this ever be a case?
+		if (pwmPin.type != Pin.PWM) {
+			pwmPin.type = Pin.PWM;
+			managePinListener(pwmPin);
+		}	
+		
+		pwmPin.setValue(value);
 	}
 	
 	/**
@@ -637,62 +701,38 @@ function Arduino(host, port, boardType) {
 	 * @param {Number} value The value to send to the specified pin
 	 */
 	this.sendExtendedAnalog = function(pin, value) {
-		var tempArray = [];
-		
-		// if > 16 bits
-		if (value > Math.pow(2, 16)) {
-			var err = "Extended Analog values > 16 bits are not currently supported by StandardFirmata";
-			console.log(err);
-			throw err;
-			return;
+		var analogPin = self.getDigitalPin(pin);
+
+		// will this ever be a case?
+		if (analogPin.type != Pin.AOUT) {
+			analogPin.type = Pin.AOUT;
+			managePinListener(analogPin);
 		}
 		
-		tempArray[0] = START_SYSEX;
-		tempArray[1] = EXTENDED_ANALOG;
-		tempArray[2] = pin;
-		tempArray[3] = value & 0x007F;
-	 	tempArray[4] = (value >> 7) & 0x007F;	// up to 14 bits
-				
-	 	// if > 14 bits
-	 	if (value >= Math.pow(2, 14)) {
-	 		tempArray[5] = (value >> 14) & 0x007F;
-	 	}
-
-		tempArray.push(END_SYSEX);
-		self.send(tempArray);	
+		analogPin.setValue(value);	
 	}	
 	
 	/**
 	 * Set a digital pin on the Arduino to High or Low.
 	 *
 	 * @param {Number} pin The pin number to set or clear.
-	 * @param {Number} mode Either Arduino.HIGH or Arduino.LOW
+	 * @param {Number} value Either Pin.HIGH or Pin.LOW
 	 */
-	this.sendDigital = function(pin, mode) {
-		var digitalPin = 0;
-		if (mode == Arduino.HIGH) {
-			// set the bit
-			//_digitalPins |= (mode << pin);
-			digitalPin |= (mode << pin);
-		}
-		else if (mode == Arduino.LOW) {
-			// clear the bit
-			//_digitalPins &= ~(1 << pin);
-			digitalPin &= ~(1 << pin);
-		}
-		if (pin <= 7) {
-			//self.send([DIGITAL_MESSAGE|0, _digitalPins % 128, (_digitalPins >> 7) & 1]);
-			self.send([DIGITAL_MESSAGE|0, digitalPin % 128, (digitalPin >> 7) & 1]);
-		}
-		else {
-			//self.send([DIGITAL_MESSAGE|1, _digitalPins >> 8, 0]);
-			self.send([DIGITAL_MESSAGE|1, digitalPin >> 8, 0]);
-		}
+	this.sendDigital = function(pin, value) {
+		// set the value of the Pin object
+		self.getDigitalPin(pin).setValue(value);		
 	}
 	
-	// to do: test this function... I've never actually used it.
+	/**
+	 * Send the digital values for a port. Making this private for now.
+	 *
+	 * @private
+	 * @param {Number} portNumber The number of the port
+	 * @param {Number} portData A byte representing the state of the 8 pins for the specified port
+	 */
 	this.sendDigitalPort = function(portNumber, portData) {
-		self.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData % 128, portData >> 7]);
+		// to do: update Pin.value for each pin that changed?
+		self.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
 	}
 	
 	// to do: allow 1 or 2 params
@@ -757,10 +797,8 @@ function Arduino(host, port, boardType) {
 	 * @param {Number} value The angle (in degrees) to rotate the servo head to
 	 */
 	this.sendServo = function(pin, value) {
-		//if (_digitalPinMode[pin]==Arduino.SERVO && (_digitalData[pin]!=value || force)) {
-			self.send([ANALOG_MESSAGE | (pin & 0x0F), value % 128, value >> 7]);
-			_digitalData[pin] = value;
-		//}
+		var servoPin = self.getDigitalPin(pin);
+		servoPin.setValue(value);
 	}
 	
 	/**
@@ -774,6 +812,7 @@ function Arduino(host, port, boardType) {
 	 * @param {Number} maxPulse [optional] The maximum pulse width for the servo. Default = 2400.
 	 */
 	this.sendServoAttach = function(pin, minPulse, maxPulse) {
+		var servoPin;
 
 		minPulse = minPulse || 544; 	// default value = 544
 		maxPulse = maxPulse || 2400;	// default value = 2400
@@ -787,20 +826,25 @@ function Arduino(host, port, boardType) {
 		tempArray[5] = maxPulse % 128;
 		tempArray[6] = maxPulse >> 7;
 		tempArray[7] = END_SYSEX;
-		//_digitalPinMode[pin] = Arduino.SERVO;
 		
 		self.send(tempArray);
+	
+		servoPin = self.getDigitalPin(pin);
+		servoPin.type = Pin.SERVO;
+		managePinListener(servoPin);	
 	}
 	
 	/**
 	 * Checks if a servo is connected to the specified pin number
 	 *
 	 * @param {Number} pin The pin number you are checking for a servo on.
-	 * @return {Number} The pin number if it contains a servo, else -1
+	 * @return {Number} If Servo Pin, the current value (angle) of the servo, else -1
 	 */
 	this.getServo = function(pin) {
-		if (_digitalPinMode[pin] == Arduino.SERVO) {
-			return _digitalData[pin];
+		var servoPin = self.getDigitalPin(pin);
+
+		if (servoPin.type == Pin.SERVO) {
+			return servoPin.getValue();			
 		} else {
 			return -1;
 		}
@@ -816,8 +860,9 @@ function Arduino(host, port, boardType) {
 	}
 	
 	/**
-	 * Query the current configuration and state of any pin
+	 * Query the current configuration and state of any pin. Making this private for now.
 	 * 
+	 * @private
 	 * @param {Pin} pin The Pin to be queried
 	 */
 	this.queryPinState = function(pin) {
@@ -846,21 +891,21 @@ function Arduino(host, port, boardType) {
 	}
 	
 	/**
-	 * @return {Pin} A reference to the Pin object.
+	 * @return {Pin} An unmapped reference to the Pin object.
 	 */
 	this.getPin = function(pinNumber) {
 		return _ioPins[pinNumber];
 	}
 	
 	/**
-	 * @return {Pin} A reference to the Pin object.
+	 * @return {Pin} A reference to the Pin object (mapped to the Arduino board analog pin).
 	 */	
 	this.getAnalogPin = function(pinNumber) {
 		return _ioPins[_analogPinMapping[pinNumber]];
 	}
 	
 	/**
-	 * @return {Pin} A reference to the Pin object.
+	 * @return {Pin} A reference to the Pin object (mapped to the Arduino board digital pin).
 	 */	
 	this.getDigitalPin = function(pinNumber) {
 		return _ioPins[_digitalPinMapping[pinNumber]];
@@ -934,39 +979,11 @@ function Arduino(host, port, boardType) {
 
 }
 
-// to do: use a static object to represent constants?
 
 // board types:
 Arduino.STANDARD				= 0; // UNO, Duemilanove, Diecimila, NG
 Arduino.MEGA					= 1; // not yet supported
-
-/** @constant */
-Arduino.HIGH					= 1;
-/** @constant */
-Arduino.LOW						= 0;
-/** @constant */
-Arduino.ON						= 1;
-/** @constant */
-Arduino.OFF						= 0;
 	
-// pin modes
-/** @constant */
-Arduino.INPUT					= 0x00;
-/** @constant */
-Arduino.OUTPUT					= 0x01;
-/** @constant */
-Arduino.ANALOG					= 0x02;
-/** @constant */
-Arduino.PWM						= 0x03;
-/** @constant */
-Arduino.SERVO					= 0x04;
-/** @constant */
-Arduino.SHIFT					= 0x05;
-/** @constant */
-Arduino.I2C						= 0x06;
-/** @constant */
-Arduino.TOTAL_PIN_MODES			= 7;
-
 
 /**
  * An object to represent an Arduino pin
@@ -975,26 +992,126 @@ Arduino.TOTAL_PIN_MODES			= 7;
  * @param {Number} type The type of pin
  */
 function Pin(number, type) {
-	this.number = number;
 	this.type = type;
 	this.capabilities;
 	
+	var self = this;
+	var _number = number;
 	var _value = 0;
 	var _lastValue = 0;
 	
+	var _evtDispatcher = new EventDispatcher(this);
+	
+	/**
+	 * Dispatch a Change event whenever a pin value changes
+	 * @private
+	 */
+	function detectChange(oldValue, newValue) {
+		if (oldValue == newValue) return;
+		//console.log("detect change");
+		self.dispatchEvent(new Event(Event.CHANGE));
+	}
+	
+	/**
+	 * Get the pin number corresponding to the Arduino documentation for the type of board.
+	 * The number has been adjusted to match the Arduino documentation rather than truly represent
+	 * the pin number of the AVR. For example, with a Standard Arduino board, analog pin 0 = digital 
+	 * pin 14 even though analog pin 0 is actually pin 16 (because there are 3 ports and it's the 
+	 * first pin of the 3rd port). This will be different for other board types such as the
+	 * Arduino Mega.
+	 * 
+	 * @return {Number} The pin number
+	 */
+	this.getNumber = function() {
+		return _number;
+	}
+	
+	/**
+	 * @return {Number} Get the current digital or analog value of the pin
+	 */
 	this.getValue = function() {
 		return _value;
 	}
 	
+	/**
+	 * @param {Number} val Set the pin value
+	 */
 	this.setValue = function(val) {
 		_lastValue = _value;
 		_value = val;
+		detectChange(_lastValue, _value);
 	}
 	
+	/**
+	 * @return {Number} Get the last pin value
+	 */
 	this.getLastValue = function() {
 		return _lastValue;
 	}
+	
+	/* implement EventDispatcher */
+	
+	/**
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
+	 */
+	this.addEventListener = function(type, listener) {
+		_evtDispatcher.addEventListener(type, listener);
+	}
+	
+	/**
+	 * @param {String} type The event type
+	 * @param {Function} listener The function to be called when the event is fired
+	 */
+	this.removeEventListener = function(type, listener) {
+		_evtDispatcher.removeEventListener(type, listener);
+	}
+	
+	/**
+	 * @param {String} type The event type
+	 * return {boolean} True is listener exists for this type, false if not.
+	 */
+	this.hasEventListener = function(type) {
+		return _evtDispatcher.hasEventListener(type);
+	}
+	
+	/**
+	 * @param {Event} type The Event object
+	 * return {boolean} True if dispatch is successful, false if not.
+	 */		
+	this.dispatchEvent = function(event) {
+		return _evtDispatcher.dispatchEvent(event);
+	}	
 }
+
+/** @constant */
+Pin.HIGH					= 1;
+/** @constant */
+Pin.LOW						= 0;
+/** @constant */
+Pin.ON						= 1;
+/** @constant */
+Pin.OFF						= 0;
+
+// pin modes
+/** @constant */
+Pin.DIN						= 0x00;
+/** @constant */
+Pin.DOUT					= 0x01;
+/** @constant */
+Pin.AIN						= 0x02;
+/** @constant */
+Pin.AOUT					= 0x03;
+/** @constant */
+Pin.PWM						= 0x03;
+/** @constant */
+Pin.SERVO					= 0x04;
+/** @constant */
+Pin.SHIFT					= 0x05;
+/** @constant */
+Pin.I2C						= 0x06;
+/** @constant */
+Pin.TOTAL_PIN_MODES			= 7;
 
 
 /**
