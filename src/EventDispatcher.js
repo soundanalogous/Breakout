@@ -70,32 +70,6 @@ function EventDispatcher(target) {
 		}
 		return isSuccess;	
 	}
-		
-	/*
-	// DOM-like implementation, pass type and optional args
-	this.dispatchEvent = function(event) {
-		var isSuccess = false;
-		
-		var args = [];
-		args.push(_target);
-		for (var i=1, len=arguments.length; i<len; i++) {
-			args.push(arguments[i]);
-		}
-		
-		//if (_eventListeners[event]) {
-		if (this.hasEventListener(event)) {
-			for (var j=0, len=_eventListeners[event].length; j<len; j++) {
-				try {
-					_eventListeners[event][j].apply(this, args);
-					isSuccess = true;
-				} catch(e) {
-					// to do: handle error
-				}
-			}
-		}
-		return isSuccess;
-	}
-	*/
 }
 
 /** 
