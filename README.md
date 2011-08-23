@@ -9,8 +9,8 @@ To use
 Install node.js and the required modules:
 
 1. Install [node.js](http://www.github.com/joyent/node) if you don't have it (download the version tagged 'works') or clone via git and checkout version 0.4.9. Follow the instructions to build.
-2. If you have not aready do so, install [npm](http://npmjs.org/) 
-3. The server code depends on 2 node modules: [node-serialport](github.com/voodootikigod/node-serialport) and [node-websocket-server](github.com/miksago/node-websocket-server). Navigate to Arduino-JS/server/ then install each module (see the readme for each module for instructions)
+2. Install [npm](http://npmjs.org/) if you have not already
+3. The server code depends on 2 node modules: [node-serialport](https://github.com/voodootikigod/node-serialport) and [node-websocket-server](https://github.com/miksago/node-websocket-server). Navigate to Arduino-JS/server/ then install each module (see the readme for each module for instructions)
 
 Upload StandardFirmata to the Arduino board:
 
