@@ -3,19 +3,23 @@ Arduino-JS
 
 A javascript implementation of the Firmata protocol for Arduino. This is a work in progress so expect it to change over the next few weeks.
 
-To use:
+To use
+---
 
 Install node.js and the required modules:
+
 1. Install [node.js](http://www.github.com/joyent/node) if you don't have it (download the version tagged 'works') or clone via git and checkout version 0.4.9. Follow the instructions to build.
 2. If you have not aready do so, install [npm](http://npmjs.org/) 
 3. The server code depends on 2 node modules: [node-serialport](github.com/voodootikigod/node-serialport) and [node-websocket-server](github.com/miksago/node-websocket-server). Navigate to Arduino-JS/server/ then install each module (see the readme for each module for instructions)
 
 Upload StandardFirmata to the Arduino board:
+
 1. If you are using an Arduino UNO, upload StandardFirmata_2_2_forUNO_0_3 from File -> Examples -> Firmata (make sure you are using Arduino 0022). If you have an older Arduino or clone, upload StandardFirmata.
 2. While you are in the Arduino IDE, select Tools -> Serial Port and note the serial port for your Arduino.
 3. Make sure your Arduino board is attached to your computer.
 
 Run the example file:
+
 1. Copy the examples from Arduino-JS/examples/ to the root of the Arduino-JS folder.
 2. Open Arduino-JS/server/server.js and replace the serial port string on line 25 with the serial port of your connected Arduino board (see step 3 above).
 3. Navigate to the server directory of Arduino-JS and run via the following command in your terminal: node server.js
