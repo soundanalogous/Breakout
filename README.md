@@ -8,7 +8,7 @@ To use
 
 Install node.js and the required modules:
 
-1. Install [node.js](http://www.github.com/joyent/node) if you don't have it (download the version tagged 'works') or clone via git and checkout version 0.4.9. Follow the instructions to build.
+1. Install [node.js](http://www.github.com/joyent/node) if you don't have it (download the version tagged 'works') or clone via git and checkout version 0.4.11. Follow the instructions to build.
 2. Install [npm](http://npmjs.org/) if you have not already
 3. The server code depends on 2 node modules: [node-serialport](https://github.com/voodootikigod/node-serialport) and [node-websocket-server](https://github.com/miksago/node-websocket-server). Navigate to Arduino-JS/server/ then install each module (see the readme for each module for instructions)
 
@@ -29,7 +29,9 @@ Run the example file:
 Test environment
 ---
 
-Google Chrome. Seems to work in Safari too, but I have not tested extensively. May work in Firefox if you enable WebSockets.
+Google Chrome. Seems to work in Safari too, but I have not tested extensively. Does not currently work in Firefox 6. I need to change the server to use a more current WebSocket implementation.
+
+node js version 0.4.11
 
 Arduino UNO running StandardFirmata_2_2_forUNO_0_3
 
