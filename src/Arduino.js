@@ -22,7 +22,9 @@ function Arduino(host, port, boardType) {
 	var _boardType = boardType || Arduino.STANDARD;
 
 	this.className = "Arduino"; 	// for testing
-
+	
+	var _browser = "";
+	
 	var		FIRMATA_MAJOR_VERSION	= 2,
 			FIRMATA_MINOR_VERSION	= 2;
 	
@@ -98,14 +100,23 @@ function Arduino(host, port, boardType) {
 	 */
 	function connect () {
 		
-		if(!("WebSocket" in window)) {
+		if("MozWebSocket" in window) {
+			_browser = "mozilla";
+		} else if ("WebSocket" in window) {
+			_browser = "other";
+		} else {
 			console.log("Websockets not supported by this browser");
 			throw "Websockets not supported by this browser";
 			return;
 		}
 		
 		try{
-			socket = new WebSocket("ws://"+host+":"+port);
+			// note: mozilla support not yet working... need updated WebSocket server
+			if (_browser === "mozilla") {
+				socket = new MozWebSocket("ws://"+host+":"+port);
+			} else {
+				socket = new WebSocket("ws://"+host+":"+port);
+			}
 			console.log("Starting up...");
 			/**
 			 * @private

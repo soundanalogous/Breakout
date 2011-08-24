@@ -1,3 +1,5 @@
+* update WebSocket server to use WebSocket version 07 or higher to enable Firefox 6 WebSocket support
+
 * implement i2c spec (need to update StandardFirmataWithI2C first)
 	
 * create config file (json?) or (class?) for each Arduino board type
