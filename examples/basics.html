@@ -27,8 +27,8 @@ $(document).ready(function() {
 		// reset the arduino board
 		//ard.resetBoard();
 
-		ard.reportVersion();
-		ard.reportFirmware();
+		//ard.reportVersion();
+		//ard.reportFirmware();
 
 		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
 		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
@@ -64,16 +64,16 @@ $(document).ready(function() {
 		//ard.setPinMode(4, Pin.HIGH);
 		
 		// enable reporting for an analog pin
-		ard.setAnalogPinReporting(0, Pin.ON);
+		//ard.setAnalogPinReporting(0, Pin.ON);
 		var pot = ard.getAnalogPin(0);
-		//pot.addEventListener(Event.CHANGE, onPotChange);
+		pot.addEventListener(Event.CHANGE, onPotChange);
 		
 		// disable reporting for an analog pin
 		//ard.setAnalogPinReporting(0, Pin.OFF);
 		
 		// StandardFirmata seems to have a bug that prevents analog pins being set as
 		// digital pins (this works however with StandardFirmataWithI2C)
-		//ard.setPinMode(15, Pin.DIN);
+		ard.setPinMode(17, Pin.DIN);
 		
 		// set a pin to PWM
 		ard.setPinMode(11, Pin.PWM);
@@ -84,17 +84,19 @@ $(document).ready(function() {
 		ard.sendServoAttach(9);
 		//setInterval(servoTest, 5000);
 		
-		//ard.queryCapabilities();
-		//ard.addEventListener(ArduinoEvent.CAPABILITY_RESPONSE, onCapabilityResponse);
+		ard.queryCapabilities();
+		ard.addEventListener(ArduinoEvent.CAPABILITY_RESPONSE, onCapabilityResponse);
 		
 		// query digital pins
 		//for (var j=0; j<14; j++) {
-		//	ard.queryPinState(ard.getDigitalPin(j));
+			//ard.queryPinState(ard.getDigitalPin(j));
 		//}
 		
 		// query analog pins
-		//for (var k=0; k<8; k++) {
-		//	ard.queryPinState(ard.getAnalogPin(k));
+		//for (var k=0; k<6; k++) {
+		//	if (ard.getAnalogPin(k).type == Pin.AIN) {
+		//		ard.queryPinState(ard.getAnalogPin(k));
+		//	}
 		//}
 		
 		//ard.queryPinState(ard.getDigitalPin(14));
@@ -104,7 +106,9 @@ $(document).ready(function() {
 	
 	function onPotChange(event) {
 		var pin = event.target;
-		console.log("pot value = " + pin.getValue() + "\tmin = " + pin.getMinimum() + "\tmax = " + pin.getMaximum() + "\tavg = " + pin.getAverage());
+		console.log("pot value = " + pin.getValue().toFixed(3) + 
+			"\tmin = " + pin.getMinimum().toFixed(3) + "\tmax = " + 
+			pin.getMaximum().toFixed(3) + "\tavg = " + pin.getAverage().toFixed(3));
 	}
 	
 	function onButtonChange(event) {

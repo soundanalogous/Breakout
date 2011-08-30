@@ -26,7 +26,7 @@ function Arduino(host, port, boardType) {
 	var _browser = "";
 	
 	var		FIRMATA_MAJOR_VERSION	= 2,
-			FIRMATA_MINOR_VERSION	= 2;
+			FIRMATA_MINOR_VERSION	= 3;
 	
 	// message command bytes (128-255/0x80-0xFF)
 	var		DIGITAL_MESSAGE			= 0x90,
@@ -165,13 +165,11 @@ function Arduino(host, port, boardType) {
 		
 		if (_boardType == Arduino.STANDARD) {
 					
-			_totalPins = 24;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
+			_totalPins = 20;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
 			
 			// map pins
-			_analogPinMapping = [16, 17, 18, 19, 20, 21, 22, 23];	
-			// pins 14 & 15 are not used because pin numbers align with ports (8 pins per port)
-			// but pins 7 and 8 of port 1 are not broken out on the Arduino board
-			_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23];
+			_analogPinMapping = [14, 15, 16, 17, 18, 19];
+			_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
 			
 			_numPorts = 3;
 			_digitalPort = [0, 0, 0];	// 3 ports
@@ -180,7 +178,7 @@ function Arduino(host, port, boardType) {
 			pinTypes = [
 				undefined, undefined, Pin.DOUT, Pin.DOUT, Pin.DOUT,
 				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, undefined, undefined,
+				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
 				Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN,
 				Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN
 			];
@@ -190,13 +188,9 @@ function Arduino(host, port, boardType) {
 			// some pins will be unused.
 			for (var i=0; i<_totalPins; i++) {
 				// align pin numbers with Arduino documentation (digital pin 14 = analog pin 0)
-				var pin = new Pin(pinNumCounter, pinTypes[i]);
+				var pin = new Pin(i, pinTypes[i]);
 				managePinListener(pin);
 				_ioPins[i] = pin;
-				// skip rx and tx pins
-				if (i > 1 && pinTypes[i] != undefined) {
-					pinNumCounter++;
-				}
 			}
 			
 		} else {
@@ -305,21 +299,25 @@ function Arduino(host, port, boardType) {
 	 */
 	function processDigitalPortBytes(port, bits0_6, bits7_13) {
 		var offset = port * 8;
+		var lastPin = offset + 8;
 		var portVal = bits0_6 | (bits7_13 << 7);
 		var pinVal;
 		var pin = {};
 		
-		for (var i=0; i<8; i++) {
-			pin = self.getPin(offset + i);
+		if (lastPin >= _totalPins) lastPin = _totalPins;
+		
+		var j=0;
+		for (var i=offset; i<lastPin; i++) {
+			pin = self.getDigitalPin(i);
 			if (pin.type == Pin.DIN) {
-				pinVal = (portVal >> i) & 0x01;	// test this
+				pinVal = (portVal >> j) & 0x01;	// test this
 	    		if (pinVal != pin.getValue()) {
 	    			pin.setValue(pinVal);
 	    			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.DIGITAL_DATA, {pin: pin.getNumber(), value: pin.getValue()}));
 	    		}
 	    	}
+	    	j++;
 	    }
-
 	}
 	
 	/**
@@ -879,7 +877,7 @@ function Arduino(host, port, boardType) {
 	 */
 	this.queryPinState = function(pin) {
 		// to do: ensure that pin is a Pin object
-		var pinNumber = pin.number;
+		var pinNumber = pin.getNumber();
 		self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
 	}
 	
