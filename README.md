@@ -1,7 +1,8 @@
 Arduino-JS
 ===
 
-A javascript implementation of the Firmata protocol for Arduino. This is a work in progress so expect it to change over the next few weeks.
+A javascript implementation of the Firmata protocol for Arduino. This branch will only work correctly with [Firmata version 2.3](http://firmata.svn.sourceforge.net/viewvc/firmata/arduino/trunk/Firmata/).
+This is a work in progress so expect it to change over the next few weeks.
 
 To use
 ---
@@ -14,7 +15,7 @@ Install node.js and the required modules:
 
 Upload StandardFirmata to the Arduino board:
 
-1. If you are using an Arduino UNO, upload StandardFirmata_2_2_forUNO_0_3 from File -> Examples -> Firmata (make sure you are using Arduino 0022). If you have an older Arduino or clone, upload StandardFirmata.
+1. If you are using an ATMega168 or ATMega 328 based Arduino, upload StandardFirmata [from exampes here: ](http://firmata.svn.sourceforge.net/viewvc/firmata/arduino/trunk/Firmata/)
 2. While you are in the Arduino IDE, select Tools -> Serial Port and note the serial port for your Arduino.
 3. Make sure your Arduino board is attached to your computer.
 
@@ -33,7 +34,7 @@ Google Chrome. Seems to work in Safari too, but I have not tested extensively. D
 
 node js version 0.4.11
 
-Arduino UNO running StandardFirmata_2_2_forUNO_0_3
+Arduino UNO running StandardFirmata (for Firmata 2.3)
 
 The RFID example requires RFID_Firmata and the ID12RFIDReaderLibrary for Arduino [get it here](https://github.com/soundanalogous/ID-12-RFID-Reader-Library).
 
