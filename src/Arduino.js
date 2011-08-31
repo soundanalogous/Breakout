@@ -16,11 +16,9 @@
  * @param {String} host The host address of the web server
  * @param {Number} port The port to connect to on the web server
  */
-function Arduino(host, port, boardType) {
+function Arduino(host, port) {
 	"use strict";
 	
-	var _boardType = boardType || Arduino.STANDARD;
-
 	this.className = "Arduino"; 	// for testing
 	
 	var _browser = "";
@@ -83,8 +81,6 @@ function Arduino(host, port, boardType) {
 	
 	var _evtDispatcher = new EventDispatcher(this);
 			
-	configure();
-
 	connect();
 	
 					
@@ -124,8 +120,7 @@ function Arduino(host, port, boardType) {
 			socket.onopen = function(){
 				console.log("Socket Status: "+socket.readyState+" (open)");
 				self.dispatchEvent(new Event(Event.CONNECTED));
-				// a little time to ensure all data is returned from Arduino
-				setTimeout(begin, 1000);
+				begin();
 			}
 			/**
 			 * @private
@@ -150,53 +145,65 @@ function Arduino(host, port, boardType) {
 	 * @private
 	 */
 	function begin() {
-		console.log("ready");
-		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+		self.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
+		self.reportVersion();
 	}
 	
 	/**
-	 * currently only Arduino with ATMega168 or ATMega328 is supported
+	 * @private
+	 */
+	function onVersion(event) {
+		console.log("on version");
+		self.removeEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
+		var version = event.data.version * 10;
+		
+		// make sure the user has uploaded StandardFirmata 2.3 or greater
+		if (version >= 23) {
+			queryCapabilities();
+		} else {
+			// to do: abort script if possible, or use default config for Standard Arduino
+			// pop up an alert dialog instead?
+			console.log("You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher");
+			//defaultConfiguration();
+		}
+	}	
+	
+	/**
+	 * Fallback to standard Arduino board?
 	 * 
 	 * @private
 	 */
-	function configure() {	
+	function defaultConfiguration() {	
 		var pinTypes = [];
 		var pinNumCounter = 2;  // skip rx and tx pins
-		
-		if (_boardType == Arduino.STANDARD) {
 					
-			_totalPins = 20;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
-			
-			// map pins
-			_analogPinMapping = [14, 15, 16, 17, 18, 19];
-			_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-			
-			_numPorts = 3;
-			_digitalPort = [0, 0, 0];	// 3 ports
-			
-			// default pin configuration
-			pinTypes = [
-				undefined, undefined, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-				Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-				Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN,
-				Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN
-			];
-			
-			// create pins for each port
-			// because not all pins in a 3 ports are broken out on the Arduino board,
-			// some pins will be unused.
-			for (var i=0; i<_totalPins; i++) {
-				// align pin numbers with Arduino documentation (digital pin 14 = analog pin 0)
-				var pin = new Pin(i, pinTypes[i]);
-				managePinListener(pin);
-				_ioPins[i] = pin;
-			}
-			
-		} else {
-			// to do: configuration for other board types
-		}
+		_totalPins = 20;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
 		
+		// map pins
+		_analogPinMapping = [14, 15, 16, 17, 18, 19];
+		_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+		
+		_numPorts = 3;
+		_digitalPort = [0, 0, 0];	// 3 ports
+		
+		// default pin configuration
+		pinTypes = [
+			undefined, undefined, Pin.DOUT, Pin.DOUT, Pin.DOUT,
+			Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
+			Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
+			Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN,
+			Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN
+		];
+		
+		// create pins for each port
+		// because not all pins in a 3 ports are broken out on the Arduino board,
+		// some pins will be unused.
+		for (var i=0; i<_totalPins; i++) {
+			// align pin numbers with Arduino documentation (digital pin 14 = analog pin 0)
+			var pin = new Pin(i, pinTypes[i]);
+			managePinListener(pin);
+			_ioPins[i] = pin;
+		}
 	}
 		
 	/**
@@ -309,6 +316,10 @@ function Arduino(host, port, boardType) {
 		var j=0;
 		for (var i=offset; i<lastPin; i++) {
 			pin = self.getDigitalPin(i);
+			// ignore data send on Firmata startup
+			// same for analog?
+			if (pin == undefined) return;
+			
 			if (pin.type == Pin.DIN) {
 				pinVal = (portVal >> j) & 0x01;	// test this
 	    		if (pinVal != pin.getValue()) {
@@ -350,9 +361,10 @@ function Arduino(host, port, boardType) {
 		}
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.STRING_MESSAGE, {message: str}));
 	}
-	
-	/**
-	 * note: this implementation may change
+		
+	/** 
+	 * Auto configure using capabilities response
+	 * This should create a configuration for any board in the Firmata boards.h file
 	 *
 	 * @private
 	 */
@@ -360,12 +372,36 @@ function Arduino(host, port, boardType) {
 		var pinCapabilities = {};
 		var byteCounter = 1; // skip 1st byte because it's the command
 		var pinCounter = 0;
+		var analogPinCounter = 0;
 		var len = msg.length;
+		var type;
 				
+		// create default configuration
 		while (byteCounter <= len) {
 			// 127 denotes end of pin's modes
 			if (msg[byteCounter] == 127) {
-				_ioPins[pinCounter].capabilities = pinCapabilities;
+				
+				// is digital pin mapping even necessary anymore?
+				_digitalPinMapping[pinCounter] = pinCounter;
+				type = undefined;
+				
+				// assign default types
+				if (pinCapabilities[Pin.DOUT]) {
+					// map digital pins
+					type = Pin.DOUT;
+				}
+				
+				if (pinCapabilities[Pin.AIN]) {
+					type = Pin.AIN;
+					// map analog input pins
+					_analogPinMapping[analogPinCounter++] = pinCounter;
+				} 
+				
+				var pin = new Pin(pinCounter, type);
+				pin.capabilities = pinCapabilities;
+				managePinListener(pin);
+				_ioPins[pinCounter] = pin;
+				
 				pinCapabilities = {};
 				pinCounter++;
 				byteCounter++;
@@ -376,9 +412,22 @@ function Arduino(host, port, boardType) {
 				byteCounter += 2;
 			}
 		}
+		
+		_numPorts = Math.ceil(pinCounter / 8);
+		console.log("debug: numports = " + _numPorts);
+		
+		// initialize port values
+		for (var j=0; j<_numPorts; j++) {
+			_digitalPort[j] = 0;
+		}
+		
+		_totalPins = pinCounter;
+		console.log("num pins = " + _totalPins);
+		
+		self.reportCapabilities();
 
-		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.CAPABILITY_RESPONSE));
-	}
+		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+	}	
 	
 	/**
 	 * note: this implementation may change
@@ -548,6 +597,15 @@ function Arduino(host, port, boardType) {
 		if (servoPin.type == Pin.SERVO && servoPin.getLastValue() != value) {
 			self.send([ANALOG_MESSAGE | (pin & 0x0F), value % 128, value >> 7]);
 		}	
+	}	
+	
+	/**
+	 * Query the cababilities and current state any board running Firmata.
+	 * 
+	 * @private
+	 */
+	function queryCapabilities() {
+		self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
 	}	
 	
 	//public methods:
@@ -865,9 +923,9 @@ function Arduino(host, port, boardType) {
 	 * 
 	 * @private
 	 */
-	this.queryCapabilities = function() {
-		self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
-	}
+	//this.queryCapabilities = function() {
+	//	self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
+	//}
 	
 	/**
 	 * Query the current configuration and state of any pin. Making this private for now.

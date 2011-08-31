@@ -22,8 +22,9 @@ var defaults = {
 
 // Create new serialport pointer
 //var serial = new serialPort("/dev/tty.usbmodemfa131" , defaults);
-//var serial = new serialPort("/dev/tty.usbmodemfd121" , defaults);
-var serial = new serialPort("/dev/tty.usbserial-A8008iu0" , defaults);
+var serial = new serialPort("/dev/tty.usbmodemfd121" , defaults);
+//var serial = new serialPort("/dev/tty.usbserial-A8008iu0" , defaults);
+//var serial = new serialPort("/dev/tty.usbserial-A6007WTr" , defaults);
 
 serial.on( "data", function( data ) {
 

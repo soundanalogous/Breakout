@@ -15,20 +15,17 @@ $(document).ready(function() {
 	var direction = 1;
 	var servoDir = true;
 	
-	//ard.addEventListener(Event.CONNECTED, onConnect);
 	ard.addEventListener(ArduinoEvent.READY, onReady);
 
-	//function onConnect(event) {
 	function onReady(event) {
 					
-		//ard.removeEventListener(Event.CONNECTED, onConnect);
 		ard.removeEventListener(ArduinoEvent.READY, onReady);
 	
 		// reset the arduino board
 		//ard.resetBoard();
 
-		//ard.reportVersion();
-		//ard.reportFirmware();
+		ard.reportVersion();
+		ard.reportFirmware();
 
 		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
 		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
@@ -64,7 +61,7 @@ $(document).ready(function() {
 		//ard.setPinMode(4, Pin.HIGH);
 		
 		// enable reporting for an analog pin
-		ard.setAnalogPinReporting(0, Pin.ON);
+		//ard.setAnalogPinReporting(0, Pin.ON);
 		var pot = ard.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		
@@ -73,7 +70,7 @@ $(document).ready(function() {
 		
 		// StandardFirmata seems to have a bug that prevents analog pins being set as
 		// digital pins (this works however with StandardFirmataWithI2C)
-		ard.setPinMode(17, Pin.DIN);
+		ard.setPinMode(16, Pin.DIN);
 		
 		// set a pin to PWM
 		ard.setPinMode(11, Pin.PWM);
@@ -82,10 +79,8 @@ $(document).ready(function() {
 		// set a pin to SERVO
 		ard.setPinMode(9, Pin.SERVO);
 		ard.sendServoAttach(9);
-		setInterval(servoTest, 5000);
-		
-		ard.queryCapabilities();
-		ard.addEventListener(ArduinoEvent.CAPABILITY_RESPONSE, onCapabilityResponse);
+		//setInterval(servoTest, 5000);
+
 		
 		// query digital pins
 		//for (var j=0; j<14; j++) {
