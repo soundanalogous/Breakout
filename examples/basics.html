@@ -64,7 +64,7 @@ $(document).ready(function() {
 		//ard.setPinMode(4, Pin.HIGH);
 		
 		// enable reporting for an analog pin
-		//ard.setAnalogPinReporting(0, Pin.ON);
+		ard.setAnalogPinReporting(0, Pin.ON);
 		var pot = ard.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		
@@ -82,7 +82,7 @@ $(document).ready(function() {
 		// set a pin to SERVO
 		ard.setPinMode(9, Pin.SERVO);
 		ard.sendServoAttach(9);
-		//setInterval(servoTest, 5000);
+		setInterval(servoTest, 5000);
 		
 		ard.queryCapabilities();
 		ard.addEventListener(ArduinoEvent.CAPABILITY_RESPONSE, onCapabilityResponse);
