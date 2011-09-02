@@ -153,7 +153,6 @@ function Arduino(host, port) {
 	 * @private
 	 */
 	function onVersion(event) {
-		console.log("on version");
 		self.removeEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
 		var version = event.data.version * 10;
 		
@@ -854,6 +853,7 @@ function Arduino(host, port) {
 			tempArray.push(data[i]);			
 		}
 		tempArray.push(END_SYSEX);
+		
 		self.send(tempArray);		
 	}
 		

@@ -24,8 +24,8 @@ $(document).ready(function() {
 		// reset the arduino board
 		//ard.resetBoard();
 
-		ard.reportVersion();
-		ard.reportFirmware();
+		//ard.reportVersion();
+		//ard.reportFirmware();
 
 		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
 		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
@@ -80,7 +80,6 @@ $(document).ready(function() {
 		ard.setPinMode(9, Pin.SERVO);
 		ard.sendServoAttach(9);
 		//setInterval(servoTest, 5000);
-
 		
 		// query digital pins
 		//for (var j=0; j<14; j++) {
