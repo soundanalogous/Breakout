@@ -39,27 +39,21 @@ function I2CBase(board, address, delayUS) {
 	 */
 	function onSysExMessage(event) {
 		var message = event.data.message;
+		var addr = self.board.getValueFromTwo7bitBytes(message[1], message[2]);
+		var data = [];
 
 		if (message[0] != I2CBase.I2C_REPLY) {
 			return;
 		} else {
 			// to do: make sure i2c address in message matches the i2c address of the subclass
 			// return if no match;
-			if (self.board.getValueFromTwo7bitBytes(message[1], message[2]) != _address) return;
-
-			processI2CData(message);
+			if (addr != _address) return;
+			
+			for (var i=3, len=message.length; i<len; i+=2) {
+				data.push(self.board.getValueFromTwo7bitBytes(message[i], message[i+1]));
+			}
+			self.handleI2C(data);
 		}
-	}
-	
-	/**
-	 * @private
-	 */
-	function processI2CData(data) {
-		console.log("i2c data = " + data);
-		
-		//_command = resolveCommandFromData
-		//self.handleI2C(_command, data);
-
 	}
 	
 	// public methods:
@@ -99,7 +93,7 @@ function I2CBase(board, address, delayUS) {
 	/**
 	 * @inheritDoc
 	 */
-	this.handleI2C = function(command, data) {
+	this.handleI2C = function(data) {
 		// To be implemented in sublasses
 		// data should be: slave address, register, data0, data1...
 	}

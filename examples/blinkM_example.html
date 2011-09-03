@@ -6,6 +6,7 @@
 <script src="src/Pin.js"></script>
 <script src="src/I2CBase.js"></script>
 <script src="src/BlinkM.js"></script>
+<script src="src/CompassHMC6352.js"></script>
 <script src="src/Arduino.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -13,6 +14,7 @@ $(document).ready(function() {
 	var ard = new Arduino("localhost", 8080);
 	
 	var blinkM;
+	var compass;
 	
 	ard.addEventListener(ArduinoEvent.READY, onReady);
 
@@ -23,7 +25,14 @@ $(document).ready(function() {
 		blinkM = new BlinkM(ard);
 		blinkM.stopScript();
 		setInterval(randomColor, 2000);
+		
+		compass = new CompassHMC6352(ard);
+		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
 
+	}
+	
+	function onHeadingUpdate(evt) {
+		console.log("heading = " + evt.target.getHeading());
 	}
 	
 	function randomColor() {

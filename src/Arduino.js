@@ -157,7 +157,7 @@ function Arduino(host, port) {
 		var version = event.data.version * 10;
 		
 		// make sure the user has uploaded StandardFirmata 2.3 or greater
-		if (version >= 23) {
+		if (version >= 22) {
 			queryCapabilities();
 		} else {
 			// to do: abort script if possible, or use default config for Standard Arduino
