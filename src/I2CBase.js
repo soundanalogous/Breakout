@@ -21,7 +21,6 @@ function I2CBase(board, address, delayUS) {
 	var self = this;
 	var _address = address;
 	var _delay = delayUS || 0;
-	var _reservedByte = 0;
 	var _delayInMicrosecondsLSB = _delay & 0xFF;
 	var _delayInMicrosecondsMSB = (_delay >> 8) & 0xFF;
 	var _command;
@@ -30,8 +29,8 @@ function I2CBase(board, address, delayUS) {
 
 	board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, onSysExMessage);
 	
-	// call this for each board in case delay is set?
-	board.sendSysex(I2CBase.I2C_CONFIG, [_reservedByte, _delayInMicrosecondsLSB, _delayInMicrosecondsMSB]);
+	// call this for each board in case delay is set
+	board.sendSysex(I2CBase.I2C_CONFIG, [_delayInMicrosecondsLSB, _delayInMicrosecondsMSB]);
 		
 	// private methods:
 	/**
@@ -59,12 +58,12 @@ function I2CBase(board, address, delayUS) {
 	// public methods:
 	
 	/**
-	 * Send and i2c command to the board
+	 * Send an i2c request command to the board
 	 * @protected
 	 * @param {Number} command
 	 * @param {Number[]} data
 	 */
-	this.sendI2C = function(command, data) {
+	this.sendI2CRequest = function(data) {
 
 		// to do: support 10-bit i2c address
 		var tempData = [];
@@ -79,7 +78,7 @@ function I2CBase(board, address, delayUS) {
 			tempData.push((data[i] >> 7) & 0x007F);				
 		}
 		
-		self.board.sendSysex(command, tempData);
+		self.board.sendSysex(I2CBase.I2C_REQUEST, tempData);
 		
 	}
 	

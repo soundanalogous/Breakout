@@ -9,10 +9,9 @@ function CompassHMC6352(board, address) {
 	I2CBase.call(self, board, address);
 		
 	// 0x51 = 10 Hz measurement rate, Query mode
-	self.sendI2C(I2CBase.I2C_REQUEST, [I2CBase.WRITE, address, 0x47, 0x74, 0x51]);
-	self.sendI2C(I2CBase.I2C_REQUEST, [I2CBase.WRITE, address, 0x41]);
-	self.sendI2C(I2CBase.I2C_REQUEST, [I2CBase.READ_CONTINUOUS, address, 0x7F, 0x02]);
-	
+	self.sendI2CRequest([I2CBase.WRITE, address, 0x47, 0x74, 0x51]);
+	self.sendI2CRequest([I2CBase.WRITE, address, 0x41]);
+	self.sendI2CRequest([I2CBase.READ_CONTINUOUS, address, 0x7F, 0x02]);
 	
 	this.getHeading = function() {
 		return _heading;

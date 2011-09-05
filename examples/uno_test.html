@@ -28,15 +28,9 @@ $(document).ready(function() {
 	
 		// reset the arduino board
 		//ard.resetBoard();
-
-		//ard.reportVersion();
-		//ard.reportFirmware();
-
-		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
-		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
 		
 		// listen for incoming analog data (all pins
-		//ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
+		ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
 		// listen for incoming digital data (all pins, all ports)
 		ard.addEventListener(ArduinoEvent.DIGITAL_DATA, onDigitalData);
 		// listen for incoming string messages
@@ -87,21 +81,6 @@ $(document).ready(function() {
 		compass = new CompassHMC6352(ard);
 		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
 		
-		// query digital pins
-		//for (var j=0; j<14; j++) {
-			//ard.queryPinState(ard.getDigitalPin(j));
-		//}
-		
-		// query analog pins
-		//for (var k=0; k<6; k++) {
-		//	if (ard.getAnalogPin(k).type == Pin.AIN) {
-		//		ard.queryPinState(ard.getAnalogPin(k));
-		//	}
-		//}
-		
-		//ard.queryPinState(ard.getDigitalPin(14));
-		
-		//ard.queryAnalogMapping();
 	}
 	
 	function onHeadingUpdate(evt) {
