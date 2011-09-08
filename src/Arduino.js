@@ -1,8 +1,9 @@
 // Arduino.js
-// Jeff Hoefs
+// Copyright (C) 2011 Jeff Hoefs.  All rights reserved.
 //
-// based largely on as3glue (http://code.google.com/p/as3glue/)
-// and funnel (http://code.google.com/p/funnel/)
+// based on:
+// Funnel as3 library (http://code.google.com/p/funnel/)
+// and as3glue (http://code.google.com/p/as3glue/)
 
 
 /**
@@ -20,12 +21,7 @@ function Arduino(host, port) {
 	"use strict";
 	
 	this.className = "Arduino"; 	// for testing
-	
-	var _browser = "";
-	
-	var		FIRMATA_MAJOR_VERSION	= 2,
-			FIRMATA_MINOR_VERSION	= 3;
-	
+			
 	// message command bytes (128-255/0x80-0xFF)
 	var		DIGITAL_MESSAGE			= 0x90,
 			ANALOG_MESSAGE			= 0xE0,
@@ -62,7 +58,8 @@ function Arduino(host, port) {
 	var host = host;
 	var port = port;
 	var socket;
-		
+	var _browser = "";
+	
 	// input processing
 	var _executeMultiByteCommand = 0;
 	var _multiByteChannel = 0;
@@ -74,6 +71,7 @@ function Arduino(host, port) {
 	var _numPorts;
 	var _analogPinMapping = [];
 	var _digitalPinMapping = [];
+	var _i2cPins = [];
 	var _ioPins = [];
 	var _totalPins = 0;
 	
@@ -211,7 +209,6 @@ function Arduino(host, port) {
 	function processData(inputData) {
 		inputData *= 1;	// force inputData to integer (is there a better way to do this?)
 		var command;
-		var analogPin = {};
 		
 		// we have command data
 		if (_waitForData > 0 && inputData < 128) {
@@ -229,7 +226,17 @@ function Arduino(host, port) {
 						self.dispatchEvent(new ArduinoEvent(ArduinoEvent.FIRMWARE_VERSION, {version: _firmwareVersion}));
 						break;
 					case ANALOG_MESSAGE:
-						analogPin = self.getAnalogPin(_multiByteChannel);
+						var analogPin = self.getAnalogPin(_multiByteChannel);
+						// NOTE: is there a better way to handle this? This issue is on browser refresh
+						// the Arduino board is still sending analog data if analog reporting was set
+						// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
+						// is called. There is not way to call that method fast enough so the following code is
+						// needed. An alternative would be to set a flag that prevents critical operations
+						// before systemReset has completed
+						if (analogPin == undefined) {
+							//console.log("analog pin undefined");
+							break;
+						}
 						// map analog input values from 0-1023 to 0.0 to 1.0
 						analogPin.setValue(self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023);
 						if (analogPin.getValue() != analogPin.getLastValue()) {
@@ -355,8 +362,8 @@ function Arduino(host, port) {
 		var data;
 		for (var i = 1; i < msg.length; i+=2) {
 			data = String.fromCharCode(msg[i]);
-			data += String.fromCharCode(msg[i+1]);
-			str+=data;
+			data += String.fromCharCode(msg[i+1]);		
+			str+=data.charAt(0);
 		}
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.STRING_MESSAGE, {message: str}));
 	}
@@ -401,6 +408,11 @@ function Arduino(host, port) {
 				managePinListener(pin);
 				_ioPins[pinCounter] = pin;
 				
+				// store the 2 i2c pin numbers if they exist
+				if (pin.capabilities[Pin.I2C]) {
+					_i2cPins.push(pin.getNumber());
+				}
+				
 				pinCapabilities = {};
 				pinCounter++;
 				byteCounter++;
@@ -413,7 +425,7 @@ function Arduino(host, port) {
 		}
 		
 		_numPorts = Math.ceil(pinCounter / 8);
-		console.log("debug: numports = " + _numPorts);
+		console.log("debug: num ports = " + _numPorts);
 		
 		// initialize port values
 		for (var j=0; j<_numPorts; j++) {
@@ -421,13 +433,45 @@ function Arduino(host, port) {
 		}
 		
 		_totalPins = pinCounter;
-		console.log("num pins = " + _totalPins);
+		console.log("debug: num pins = " + _totalPins);
 		
 		self.reportCapabilities();
 
-		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
-	}	
+		//self.addEventListener(ArduinoEvent.STRING_MESSAGE, onReadyString);
+		console.log("debug: system reset");
+		systemReset();
+		//self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+
+		// delay to allow systemReset function to execute in StandardFirmata
+		setTimeout(startup, 500);
+		console.log("debug: configured");
+	}
 	
+	function startup() {
+		console.log("debug: startup");
+		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+	}
+	
+	/**
+	 * @private
+	 */
+	function onReadyString(evt) {
+		if (evt.data.message == 'ready') {
+			console.log("debug: ready");
+			self.removeEventListener(ArduinoEvent.STRING_MESSAGE, onReadyString);
+			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+		}
+	}
+	
+	/**
+	 * Resets the board to its default state without physically resetting the board.
+	 *
+	 * @private
+	 */
+	function systemReset() {
+		self.send(SYSEX_RESET);
+	}	
+		
 	/**
 	 * note: this implementation may change
 	 *
@@ -438,6 +482,7 @@ function Arduino(host, port) {
 		var pinNumber = msg[1];
 		var pinType = msg[2];
 		var value;
+		var pin = _ioPins[pinNumber];
 		
 		if (len > 4) {
 			// get value
@@ -446,11 +491,16 @@ function Arduino(host, port) {
 			value = msg[3];
 		}
 		
-		_ioPins[pinNumber].type = pinType;
-		managePinListener(_ioPins[pinNumber]);
-		_ioPins[pinNumber].setValue(value);
+		if (pin.type != pinType) {
+			pin.type = pinType;
+			managePinListener(pin);
+		}
+		if (pin.getValue() != value) {
+			pin.setValue(value);
+		}
 		
-		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.PIN_STATE_RESPONSE));
+		// to do: update this
+		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.PIN_STATE_RESPONSE, {pin: pinNumber, type: pinType, value: value}));
 	}
 	
 	/**
@@ -628,16 +678,7 @@ function Arduino(host, port) {
 	 * @return {WebSocket} A reference to the WebSocket
 	 */
 	this.getSocket = function() { return socket }
-	
-	/**
-	 * Resets the Arduino. To know when the Arduino is available after reset, listen for
-	 * Arduino.FIRMWARE_VERSION, because the version is automatically send from Arduino
-	 * upon reset.
-	 */
-	this.resetBoard = function() {
-		self.send(SYSEX_RESET);
-	}
-	
+		
 	/**
 	 * Request the Firmata version implemented in the firmware (sketch) running
 	 * on the Arduino.
@@ -892,7 +933,7 @@ function Arduino(host, port) {
 		tempArray[3] = minPulse % 128;
 		tempArray[4] = minPulse >> 7;
 		tempArray[5] = maxPulse % 128;
-		tempArray[6] = maxPulse >> 7;
+		tempArray[6] = maxPulse >> 7;	
 		tempArray[7] = END_SYSEX;
 		
 		self.send(tempArray);
@@ -980,6 +1021,22 @@ function Arduino(host, port) {
 	}
 	
 	/**
+	 * @return {Number} Total number of pins
+	 */
+	this.getPinCount = function() {
+		return _totalPins;
+	}
+	
+	/**
+	 * @return {Number[]} The pin numbers of the i2c pins if the board has i2c.
+	 * Returns undefined if the board does not have i2c pins.
+	 * @private (internal only)
+	 */
+	this.getI2cPins = function() {
+		return _i2cPins;
+	}
+	
+	/**
 	 * Call this method to print the capabilities for all pins to the console
 	 */
 	this.reportCapabilities = function() {
@@ -1047,11 +1104,6 @@ function Arduino(host, port) {
 
 }
 
-
-// board types:
-Arduino.STANDARD				= 0; // UNO, Duemilanove, Diecimila, NG
-Arduino.MEGA					= 1; // not yet supported
-	
 
 /**
  * @constructor

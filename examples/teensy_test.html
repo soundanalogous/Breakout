@@ -25,18 +25,15 @@ $(document).ready(function() {
 	function onReady(event) {
 					
 		ard.removeEventListener(ArduinoEvent.READY, onReady);
-	
-		// reset the arduino board
-		//ard.resetBoard();
 
-		//ard.reportVersion();
-		//ard.reportFirmware();
+		ard.reportVersion();
+		ard.reportFirmware();
 
 		ard.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onFirmwareVersion);
 		ard.addEventListener(ArduinoEvent.FIRMWARE_NAME, onFirmwareName);
 		
 		// listen for incoming analog data (all pins
-		//ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
+		ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
 		// listen for incoming digital data (all pins, all ports)
 		ard.addEventListener(ArduinoEvent.DIGITAL_DATA, onDigitalData);
 		// listen for incoming string messages
@@ -60,15 +57,14 @@ $(document).ready(function() {
 		buttonPin.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// enable reporting for an analog pin
-		ard.setAnalogPinReporting(0, Pin.ON);
+		//ard.setAnalogPinReporting(0, Pin.ON);
 		var pot = ard.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		
 		// disable reporting for an analog pin
 		//ard.setAnalogPinReporting(0, Pin.OFF);
 		
-		// StandardFirmata seems to have a bug that prevents analog pins being set as
-		// digital pins (this works however with StandardFirmataWithI2C)
+		// set analog pin to digital input
 		ard.setPinMode(16, Pin.DIN);
 		
 		// set a pin to PWM
@@ -76,9 +72,10 @@ $(document).ready(function() {
 		setInterval(fade, 10);			
 		
 		// set a pin to SERVO
+		// can use either of the following two calls to attach a servo to a pin
 		ard.setPinMode(9, Pin.SERVO);
-		ard.sendServoAttach(9);
-		setInterval(servoTest, 5000);
+		//ard.sendServoAttach(9);
+		//setInterval(servoTest, 5000);
 		
 		blinkM = new BlinkM(ard);
 		blinkM.stopScript();
@@ -87,22 +84,27 @@ $(document).ready(function() {
 		compass = new CompassHMC6352(ard);
 		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
 		
-		// query digital pins
-		//for (var j=0; j<14; j++) {
-			//ard.queryPinState(ard.getDigitalPin(j));
-		//}
+		setTimeout(stopReading, 1000);
+		//setTimeout(startReading, 3000);
 		
-		// query analog pins
-		//for (var k=0; k<6; k++) {
-		//	if (ard.getAnalogPin(k).type == Pin.AIN) {
-		//		ard.queryPinState(ard.getAnalogPin(k));
-		//	}
-		//}
+		ard.addEventListener(ArduinoEvent.PIN_STATE_RESPONSE, onPinStateResponse);
+
+		//ard.queryAnalogMapping();	
 		
-		//ard.queryPinState(ard.getDigitalPin(14));
+		// query pin state for each pin
+		for (var j=0, len = ard.getPinCount(); j<len; j++) {
+			ard.queryPinState(ard.getDigitalPin(j));
+		}
 		
-		//ard.queryAnalogMapping();
 	}
+	
+	function stopReading() {
+		compass.stopReading();
+	}
+	
+	function startReading() {
+		compass.startReading();
+	}		
 	
 	function onHeadingUpdate(evt) {
 		console.log("heading = " + evt.target.getHeading());
@@ -137,11 +139,6 @@ $(document).ready(function() {
 		console.log("firmware name: " + event.data.name + " version: " + event.data.version);
 	}
 	
-	function onCapabilityResponse(event) {
-		// print capabilities to the console
-		ard.reportCapabilities();
-	}
-	
 	function onStringMessage(event) {
 		console.log("string received: " + event.data.message);
 	}
@@ -152,6 +149,12 @@ $(document).ready(function() {
 	
 	function onAnalogData(event) {
 		console.log("analog in pin: " + event.data.pin + " = " + event.data.value + "\ttarget = " + event.target.className);
+	}
+	
+	function onPinStateResponse(event) {
+		var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
+		var pinType = modeNames[event.data.type];
+		console.log("pin state response = " + event.data.pin + "\t" + pinType);
 	}
 	
 	function fade() {

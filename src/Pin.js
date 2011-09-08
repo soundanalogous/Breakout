@@ -169,30 +169,30 @@ function Pin(number, type) {
 }
 
 /** @constant */
-Pin.HIGH					= 1;
+Pin.HIGH = 1;
 /** @constant */
-Pin.LOW						= 0;
+Pin.LOW	= 0;
 /** @constant */
-Pin.ON						= 1;
+Pin.ON = 1;
 /** @constant */
-Pin.OFF						= 0;
+Pin.OFF = 0;
 
 // pin modes
 /** @constant */
-Pin.DIN						= 0x00;
+Pin.DIN = 0x00;
 /** @constant */
-Pin.DOUT					= 0x01;
+Pin.DOUT = 0x01;
 /** @constant */
-Pin.AIN						= 0x02;
+Pin.AIN = 0x02;
 /** @constant */
-Pin.AOUT					= 0x03;
+Pin.AOUT = 0x03;
 /** @constant */
-Pin.PWM						= 0x03;
+Pin.PWM = 0x03;
 /** @constant */
-Pin.SERVO					= 0x04;
+Pin.SERVO = 0x04;
 /** @constant */
-Pin.SHIFT					= 0x05;
+Pin.SHIFT = 0x05;
 /** @constant */
-Pin.I2C						= 0x06;
+Pin.I2C = 0x06;
 /** @constant */
-Pin.TOTAL_PIN_MODES			= 7;
+Pin.TOTAL_PIN_MODES = 7;

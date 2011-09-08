@@ -11,7 +11,6 @@ function CompassHMC6352(board, address) {
 	// 0x51 = 10 Hz measurement rate, Query mode
 	self.sendI2CRequest([I2CBase.WRITE, address, 0x47, 0x74, 0x51]);
 	self.sendI2CRequest([I2CBase.WRITE, address, 0x41]);
-	self.sendI2CRequest([I2CBase.READ_CONTINUOUS, address, 0x7F, 0x02]);
 	
 	this.getHeading = function() {
 		return _heading;
@@ -26,6 +25,16 @@ function CompassHMC6352(board, address) {
 		}
 		_lastHeading = _heading;
 	}
+	
+	this.startReading = function() {
+		self.sendI2CRequest([I2CBase.READ_CONTINUOUS, address, 0x7F, 0x02]);
+	}
+	
+	this.stopReading = function() {
+		self.sendI2CRequest([I2CBase.STOP_READING, address]);
+	}
+	
+	this.startReading();
 
 }
 

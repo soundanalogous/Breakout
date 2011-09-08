@@ -26,6 +26,18 @@ function I2CBase(board, address, delayUS) {
 	var _command;
 	var _evtDispatcher = new EventDispatcher(this);
 	
+	// if the pins are not set as I2C, set them now
+	var i2cPins = board.getI2cPins();
+	if (i2cPins.length == 2) {
+		if (board.getPin(i2cPins[0]).type != Pin.I2C) {
+			board.getPin(i2cPins[0]).type = Pin.I2C;
+			board.getPin(i2cPins[1]).type = Pin.I2C;
+		}
+	} else {
+		// to do: proper error handling
+		console.log("Error, this board does not support i2c");
+		return;
+	}
 
 	board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, onSysExMessage);
 	
