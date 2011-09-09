@@ -1,8 +1,7 @@
 Arduino-JS
 ===
 
-A javascript implementation of the Firmata protocol for Arduino. This branch will only work correctly with [Firmata version 2.3](http://firmata.svn.sourceforge.net/viewvc/firmata/arduino/trunk/Firmata/).
-This project a work in progress so expect it to change over the next few weeks.
+A javascript implementation of the Firmata protocol for Arduino. This branch is for testing new features in [Firmata 2.3](http://firmata.svn.sourceforge.net/viewvc/firmata/arduino/trunk/Firmata/) and Arduino 1.0. Expect it to change frequently until late September.
 
 To use
 ---
@@ -34,12 +33,11 @@ Google Chrome. Seems to work in Safari too, but I have not tested extensively. D
 
 node js version 0.4.11
 
-Arduino UNO running StandardFirmata (for Firmata 2.3)
-Arduino FIO running StandardFirmata (for Firmata 2.3). Works when wired, wireless is not yet working.
+Arduino UNO running StandardFirmata (for Firmata 2.3). Compiled in Arduino 1.0 beta3
+Teensy 2.0 running StandardFirmata (for Firmata 2.3). Compiled in Arduino 0022.
+Arduino FIO running StandardFirmata (for Firmata 2.3). Compiled in Arduino 1.0 beta3
 
 The RFID example requires RFID_Firmata and the ID12RFIDReaderLibrary for Arduino [get it here](https://github.com/soundanalogous/ID-12-RFID-Reader-Library).
-
-Updated documentation and better examples will follow in a few days...
 
 
 

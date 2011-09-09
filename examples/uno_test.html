@@ -25,6 +25,9 @@ $(document).ready(function() {
 	function onReady(event) {
 					
 		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		
+		// test sampline interval
+		//ard.setSamplingInterval(33);
 			
 		// listen for incoming analog data (all pins
 		ard.addEventListener(ArduinoEvent.ANALOG_DATA, onAnalogData);
@@ -157,9 +160,9 @@ $(document).ready(function() {
 	}	
 	
 	function fade() {
-		//ard.sendAnalog(11, intensity += direction);
+		ard.sendAnalog(11, intensity += direction);
 		// test sendExtendedAnalog method
-		ard.sendExtendedAnalog(11, intensity += direction);
+		//ard.sendExtendedAnalog(11, intensity += direction);
 		if (intensity == 255) direction = -1;
 		else if (intensity == 0) direction = 1;
 	}

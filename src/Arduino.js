@@ -437,7 +437,6 @@ function Arduino(host, port) {
 		
 		self.reportCapabilities();
 
-		//self.addEventListener(ArduinoEvent.STRING_MESSAGE, onReadyString);
 		console.log("debug: system reset");
 		systemReset();
 		//self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
@@ -447,20 +446,12 @@ function Arduino(host, port) {
 		console.log("debug: configured");
 	}
 	
-	function startup() {
-		console.log("debug: startup");
-		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
-	}
-	
 	/**
 	 * @private
 	 */
-	function onReadyString(evt) {
-		if (evt.data.message == 'ready') {
-			console.log("debug: ready");
-			self.removeEventListener(ArduinoEvent.STRING_MESSAGE, onReadyString);
-			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
-		}
+	function startup() {
+		console.log("debug: startup");
+		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
 	}
 	
 	/**
@@ -958,16 +949,7 @@ function Arduino(host, port) {
 			return -1;
 		}
 	}
-	
-	/**
-	 * Query the cababilities and current state any board running Firmata.
-	 * 
-	 * @private
-	 */
-	//this.queryCapabilities = function() {
-	//	self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
-	//}
-	
+		
 	/**
 	 * Query the current configuration and state of any pin. Making this private for now.
 	 * 
