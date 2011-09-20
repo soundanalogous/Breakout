@@ -57,7 +57,7 @@ $(document).ready(function() {
 		buttonPin.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// enable reporting for an analog pin
-		//ard.setAnalogPinReporting(0, Pin.ON);
+		ard.setAnalogPinReporting(0, Pin.ON);
 		var pot = ard.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		
@@ -75,7 +75,7 @@ $(document).ready(function() {
 		// can use either of the following two calls to attach a servo to a pin
 		ard.setPinMode(9, Pin.SERVO);
 		//ard.sendServoAttach(9);
-		//setInterval(servoTest, 5000);
+		setInterval(servoTest, 5000);
 		
 		blinkM = new BlinkM(ard);
 		blinkM.stopScript();
