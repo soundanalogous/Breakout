@@ -91,7 +91,7 @@ function Arduino(host, port) {
 	// use WebSockets as long as all Socket wrappers maintain a consistent interface.
 	/**
 	 * @private
-	 */
+	 */	
 	function connect () {
 		
 		if("MozWebSocket" in window) {

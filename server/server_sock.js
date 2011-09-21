@@ -1,11 +1,12 @@
-var http = require('http'),
-		WebSocketServer = require('websocket').server;
+var http = require("http"),
+		websockets = require("websockets");
 
 /* uncomment to serve page */
-var	fs = require('fs'),
-		path = require('path'),
-		mime = require('mime'),
-		repl = require('repl');
+
+var	fs = require("fs"),
+		path = require("path"),
+		repl = require("repl");
+
 
 var connectedSocket = null;
 
@@ -28,10 +29,10 @@ var serial = new serialPort("/dev/tty.usbmodem12341" , defaults);	// Teensy
 
 
 serial.on( "data", function( data ) {
-		
+
 	if ( data[0] >= 0 ) {
 		if(connectedSocket != null) {
-			connectedSocket.sendUTF(String(data[0]));
+			connectedSocket.send(String(data[0]));
 		}
 	}
 
@@ -44,7 +45,6 @@ serial.on( "error", function( msg ) {
 
 /* example to serve page */
 var httpServer = http.createServer(function(request, response) {
-
   if(request.method == "GET"){
   	console.log("url = " + request.url);
   	var file;
@@ -87,45 +87,48 @@ var httpServer = http.createServer(function(request, response) {
   }
 });
 
-httpServer.listen(8080, function() {
-	console.log((new Date()) + " Server is listening on port 8080");
-});
+
 
 /* WEBSOCKET SERVER */
 
+// use this method to serve page
+var server = websockets.createServer({server: httpServer});
+
 // use this method if opening the page directly in Chrome
-var server = new WebSocketServer({
-	httpServer: httpServer,
-	autoAcceptConnections: true
-});
+//var server = websockets.createServer();
 
-server.on('connect', function(connection) {
 
+// listen for a client connection
+server.addListener("connect", function(connection) {
 	connectedSocket = connection;
-	console.log((new Date()) + " Connection accepted.");
-	
-	connection.on('message', function(data) {
-	  var message;
-	  
-      if (data.type === 'utf8') {
-      	message = data.utf8Data;
-      } else if (data.type === 'binary') {
-		// will this ever be the case?
-      }
-      
+	console.log('[*] open');
+		
+	// use this method to receive messages from the client
+	connection.addListener("message", function(data) {
+      var message = String(data);
       var msgData;
+      
       if (message.indexOf(',')) {
       	msgData = message.split(',');
       } else {
-      	msgData = message;
+      	msgData[0] = message;
       }
       
       // write the message to the serial port
       serial.write(msgData);
-      
+
 	});
+
+	// use this method to be notified when the client connection has been closed
+	connection.addListener("close", function(){
+		console.log('[*] close');
+		// to do: quit node server on close
+	})
 	
-	connection.on('close', function(connection) {
-		console.log((new Date()) + " Peer " + connection.remoteAddress + " disconnected.");
-	});
 });
+
+server.addListener("error", function(){
+  console.log(Array.prototype.join.call(arguments, ", "));
+});
+
+server.listen(8080);
