@@ -1,4 +1,4 @@
-* update WebSocket server to use WebSocket version 07 or higher to enable Firefox 6 WebSocket support
+* test server with Firefox 7
 	
 * decouple socket (so you could use web socket, flash socket via swf, or other)?
 
