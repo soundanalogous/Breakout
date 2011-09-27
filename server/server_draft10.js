@@ -5,12 +5,21 @@ var http = require('http'),
 
 var connectedSocket = null;
 
+var mimeTypes = {
+	"html": "text/html",
+	"ico": "image/x-icon",
+	"jpeg": "image/jpeg",
+	"jpg": "image/jpeg",
+	"png": "image/png",
+	"js": "application/javascript",
+	"css": "text/css"};
+
 /* SERIAL */
 
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
 // to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbmodem12341";	// Teensy 2.0
+var port = "/dev/tty.usbmodemfd121";	// Teensy 2.0
 // "/dev/tty.usbmodemfd121" Arduino UNO
 
 var serialDefaults = {
@@ -42,52 +51,47 @@ var httpServer = http.createServer(function(request, response) {
 
   if(request.method == "GET"){
   	//console.log("debug: url = " + request.url);
-  	var type,
-  		filename;
+  	var	filename;
   	
   	// absolute path
-  	/*
-  	if (request.url == "/") {
-  		filename = path.normalize(path.join(__dirname,  "../index.html"));
-  	} else {
-  		filename = path.normalize(path.join(__dirname,  ".." + request.url));
-  	}
-  	*/
+  	//if (request.url == "/") {
+  	//	filename = path.normalize(path.join(__dirname,  "../index.html"));
+  	//} else {
+  	//	filename = path.normalize(path.join(__dirname,  ".." + request.url));
+  	//}
   	
   	// use relative path (seems to be working... on OSX at least)
   	if (request.url == "/") {
+  		// default to index.html
   		filename = path.normalize("../index.html");
   	} else {
   		filename = path.normalize(".." + request.url);
   	}
-
   	//console.log("debug: filename = " + filename);
-  	
+
   	var extension = request.url.substring(request.url.lastIndexOf(".")+1);
   	//console.log("debug: ext = " + extension);
-    if( extension == "ico" ){
-      response.writeHead(200, {'Content-Type': 'image/x-icon', 'Connection': 'close'});
-      response.end("");
-    } else {
-      if (extension == "js") {
-      	type = "application/javascript; charset=UTF-8";
-      }
-      else {
-      	type = "text/html; charset=UTF-8";
-      }
-      //console.log("debug: type = " + type);
-      response.writeHead(200, {'Content-Type': type, 'Connection': 'close'});
-      fs.createReadStream( filename, {
-        'flags': 'r',
-        'encoding': 'binary',
-        'mode': 0666,
-        'bufferSize': 4 * 1024
-      }).addListener("data", function(chunk){
-        response.write(chunk, 'binary');
-      }).addListener("end",function() {
-        response.end();
-      });
-    }
+  	
+  	path.exists(filename, function(exists) {
+  		var type = mimeTypes[extension];
+  		if (exists) {
+      		response.writeHead(200, {'Content-Type': type, 'Connection': 'close'});
+      		fs.createReadStream( filename, {
+       			'flags': 'r',
+        		'encoding': 'binary',
+        		'mode': 0666,
+        		'bufferSize': 4 * 1024
+      		}).addListener("data", function(chunk){
+        		response.write(chunk, 'binary');
+      		}).addListener("end",function() {
+        		response.end();
+      		}); 
+  		} else {
+      		response.writeHead(200, {'Content-Type': type, 'Connection': 'close'});
+      		response.end("");  		
+  		}
+  	});
+    
   } else {
     response.writeHead(404);
     response.end();

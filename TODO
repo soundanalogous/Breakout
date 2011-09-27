@@ -1,5 +1,3 @@
-* test server with Firefox 7
-	
 * decouple socket (so you could use web socket, flash socket via swf, or other)?
 
 * align code to js best practices
