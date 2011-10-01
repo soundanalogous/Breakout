@@ -47,7 +47,7 @@ Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0 r
 - Arduino FIO
 - Arduino Mega
 
-The RFID example requires RFID_Firmata and the ID12RFIDReaderLibrary for Arduino [get it here](https://github.com/soundanalogous/ID-12-RFID-Reader-Library).
+The RFID example requires RFID_Firmata and the IDxRFIDReader library for Arduino [get it here](https://github.com/soundanalogous/IDxRFIDReader). RFID_Firmata is included in the Examples directory of the IDxRFIDReader library.
 
 
 
