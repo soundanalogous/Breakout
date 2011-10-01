@@ -22,16 +22,15 @@ Upload StandardFirmata to the Arduino board:
 
 Run an example file:
 
-1. Copy an examples from Arduino-JS/examples/ to the root of the Arduino-JS folder.
-2. Open Arduino-JS/server/server.js and replace the serial port string on line 31 with the serial port of your connected Arduino board (see step 3 above).
-3. Navigate to the server directory of Arduino-JS and run via the following command in your terminal: node server.js
-4. Verify that the server is running, you should see "...Server is listening on port 8080" in your terminal. If not make sure you have installed Node.js correctly (read the Node.js wiki) and entered the serial port for your Arduino in the server.js file.
-5. Open an example html file directly in Chrome or Safari and view the console (in Chrome: View -> Developer -> Developer Tools). You can also load the application by typing the url in the browser 'http://localhost:8080/filename.html"
+1. Open Arduino-JS/server/server.js and replace the serial port string on line 31 with the serial port of your connected Arduino board (see step 3 above).
+2. Navigate to the server directory of Arduino-JS and run via the following command in your terminal: node server.js
+3. Verify that the server is running, you should see "...Server is listening on port 8080" in your terminal. If not make sure you have installed Node.js correctly (read the Node.js wiki) and entered the serial port for your Arduino in the server.js file.
+4. Open an example html file directly in Chrome or Safari and view the console (in Chrome: View -> Developer -> Developer Tools). You can also load the application by typing the url in the browser 'http://localhost:8080/examples/filename.html"
 
 Test environment
 ---
 
-Mac OSX Snow Leopard and Lion
+Mac OSX Snow Leopard and Lion (have not tested in Linux or Windows)
 
 Supported browsers:
 
@@ -48,7 +47,7 @@ Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0 r
 - Arduino FIO
 - Arduino Mega
 
-The RFID example requires RFID_Firmata and the ID12RFIDReaderLibrary for Arduino [get it here](https://github.com/soundanalogous/ID-12-RFID-Reader-Library).
+The RFID example requires RFID_Firmata and the IDxRFIDReader library for Arduino [get it here](https://github.com/soundanalogous/IDxRFIDReader). RFID_Firmata is included in the Examples directory of the IDxRFIDReader library.
 
 
 
