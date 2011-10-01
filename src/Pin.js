@@ -19,6 +19,7 @@ function Pin(number, type) {
 		_avg = 0,
 		_sum = 0;
 		_numSamples = 0,
+		_analogReporting = Pin.OFF,
 		MAX_SAMPLES = Number.MAX_VALUE;
 	
 	var _evtDispatcher = new EventDispatcher(this);
@@ -59,11 +60,6 @@ function Pin(number, type) {
 	
 	/**
 	 * Get the pin number corresponding to the Arduino documentation for the type of board.
-	 * The number has been adjusted to match the Arduino documentation rather than truly represent
-	 * the pin number of the AVR. For example, with a Standard Arduino board, analog pin 0 = digital 
-	 * pin 14 even though analog pin 0 is actually pin 16 (because there are 3 ports and it's the 
-	 * first pin of the 3rd port). This will be different for other board types such as the
-	 * Arduino Mega.
 	 * 
 	 * @return {Number} The pin number
 	 */
@@ -109,6 +105,14 @@ function Pin(number, type) {
 		_preFilterValue = val;
 		_value = val;
 		detectChange(_lastValue, _value);
+	}
+	
+	this.setAnalogReporting = function(mode) {
+		_analogReporting = mode;
+	}
+	
+	this.getAnalogReporting = function() {
+		return _analogReporting;
 	}
 	
 	/**

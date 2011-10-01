@@ -105,7 +105,6 @@ function Arduino(host, port) {
 		}
 		
 		try{
-			// note: mozilla support not yet working... need updated WebSocket server
 			if (_browser === "mozilla") {
 				socket = new MozWebSocket("ws://"+host+":"+port);
 			} else {
@@ -155,53 +154,14 @@ function Arduino(host, port) {
 		var version = event.data.version * 10;
 		
 		// make sure the user has uploaded StandardFirmata 2.3 or greater
-		if (version >= 22) {
+		if (version >= 23) {
 			queryCapabilities();
 		} else {
 			// to do: abort script if possible, or use default config for Standard Arduino
 			// pop up an alert dialog instead?
 			console.log("You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher");
-			//defaultConfiguration();
 		}
 	}	
-	
-	/**
-	 * Fallback to standard Arduino board?
-	 * 
-	 * @private
-	 */
-	function defaultConfiguration() {	
-		var pinTypes = [];
-		var pinNumCounter = 2;  // skip rx and tx pins
-					
-		_totalPins = 20;	// 14 digital + 2 unused + 8 analog (only 6 on some boards)
-		
-		// map pins
-		_analogPinMapping = [14, 15, 16, 17, 18, 19];
-		_digitalPinMapping = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
-		
-		_numPorts = 3;
-		_digitalPort = [0, 0, 0];	// 3 ports
-		
-		// default pin configuration
-		pinTypes = [
-			undefined, undefined, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-			Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-			Pin.DOUT, Pin.DOUT, Pin.DOUT, Pin.DOUT,
-			Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN,
-			Pin.AIN, Pin.AIN, Pin.AIN, Pin.AIN
-		];
-		
-		// create pins for each port
-		// because not all pins in a 3 ports are broken out on the Arduino board,
-		// some pins will be unused.
-		for (var i=0; i<_totalPins; i++) {
-			// align pin numbers with Arduino documentation (digital pin 14 = analog pin 0)
-			var pin = new Pin(i, pinTypes[i]);
-			managePinListener(pin);
-			_ioPins[i] = pin;
-		}
-	}
 		
 	/**
 	 * @private
@@ -452,6 +412,7 @@ function Arduino(host, port) {
 	function startup() {
 		console.log("debug: startup");
 		self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+		self.enableDigitalPinReporting();
 	}
 	
 	/**
@@ -694,7 +655,7 @@ function Arduino(host, port) {
 	 */
 	this.disableDigitalPinReporting = function() {
 		for (var i=0; i <_numPorts; i++) {
-			self.send([(REPORT_DIGITAL | i), Pin.OFF]);
+			self.sendDigitalPortReporting(i, Pin.OFF);
 		}
 	}
 	
@@ -704,8 +665,16 @@ function Arduino(host, port) {
 	 */
 	this.enableDigitalPinReporting = function() {
 		for (var i=0; i<_numPorts; i++) {
-			self.send([(REPORT_DIGITAL | i), Pin.ON]);
+			self.sendDigitalPortReporting(i, Pin.ON);
 		}
+	}
+	
+	/**
+	 * Enable or disable reporting of all digital pins for the specified port.
+	 * @param {Number} mode Either Pin.On or Pin.OFF
+	 */
+	this.sendDigitalPortReporting = function(port, mode) {
+		self.send([(REPORT_DIGITAL | port), mode]);
 	}
 	
 	/**
@@ -718,6 +687,8 @@ function Arduino(host, port) {
 	 */
 	this.setAnalogPinReporting = function(pin, mode) {
 		self.send([REPORT_ANALOG | pin, mode]);
+		self.getAnalogPin(pin).type = Pin.AIN;
+		self.getAnalogPin(pin).setAnalogReporting(mode);
 	}
 	
 	/**
@@ -733,8 +704,8 @@ function Arduino(host, port) {
 	 * enable the pull-up resistor.
 	 */
 	this.setPinMode = function(pin, mode) {
-		self.getDigitalPin(pin).type = mode;
 		
+		self.getDigitalPin(pin).type = mode;
 		managePinListener(self.getDigitalPin(pin));
 		
 		self.send([SET_PIN_MODE, pin, mode]);
@@ -976,8 +947,7 @@ function Arduino(host, port) {
 	 * @param {Number} interval The interval for main loop in the Arduino application. Default = 19ms.
 	 */
 	this.setSamplingInterval = function(interval) {
-		// to do: test this to ensure it is working properly
-		// also set a range to prevent people from entering extreme values.
+		// To do: set a range to prevent people from entering extreme values.
 		self.send([START_SYSEX,SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
 	}
 	

@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - ArduinoEvent</title>
+		<title>JsDoc Reference - I2CBase</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -222,26 +222,24 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class ArduinoEvent
+				Class I2CBase
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/Event.html">Event</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_Arduino.js.html">Arduino.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_I2CBase.js.html">I2CBase.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ArduinoEvent.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class I2CBase.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -254,9 +252,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/ArduinoEvent.html#constructor">ArduinoEvent</a></b>(type, data)
+								<b><a href="../symbols/I2CBase.html#constructor">I2CBase</a></b>(board, address, delayUS)
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new I2CBase base class</div>
 						</td>
 					</tr>
 				</tbody>
@@ -267,7 +265,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ArduinoEvent.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class I2CBase.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -281,7 +279,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.ANALOG_DATA">ANALOG_DATA</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.I2C_CONFIG">I2C_CONFIG</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -291,7 +289,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.ANALOG_MAPPING_RESPONSE">ANALOG_MAPPING_RESPONSE</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.I2C_REPLY">I2C_REPLY</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -301,7 +299,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.CAPABILITY_RESPONSE">CAPABILITY_RESPONSE</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.I2C_REQUEST">I2C_REQUEST</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -311,7 +309,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.DIGITAL_DATA">DIGITAL_DATA</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.READ">READ</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -321,7 +319,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.FIRMWARE_NAME">FIRMWARE_NAME</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.READ_CONTINUOUS">READ_CONTINUOUS</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -331,7 +329,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.FIRMWARE_VERSION">FIRMWARE_VERSION</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.STOP_READING">STOP_READING</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -341,37 +339,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.PIN_STATE_RESPONSE">PIN_STATE_RESPONSE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.READY">READY</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.STRING_MESSAGE">STRING_MESSAGE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ArduinoEvent.<b><a href="../symbols/ArduinoEvent.html#.SYSEX_MESSAGE">SYSEX_MESSAGE</a></b>
+								I2CBase.<b><a href="../symbols/I2CBase.html#.WRITE">WRITE</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -382,13 +350,108 @@ ul.inheritsList
 				
 				
 				
-				<dl class="inheritsList">
-				
-				</dl>
-				
 			
 
 <!-- ============================== methods summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class I2CBase.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#addEventListener">addEventListener</a></b>(type, listener)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#dispatchEvent">dispatchEvent</a></b>(type)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#getAddress">getAddress</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#getCommand">getCommand</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#handleI2C">handleI2C</a></b>(data)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#hasEventListener">hasEventListener</a></b>(type)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#removeEventListener">removeEventListener</a></b>(type, listener)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#sendI2CRequest">sendI2CRequest</a></b>(command, data)
+								</div>
+								<div class="description">Send an i2c request command to the board</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/I2CBase.html#update">update</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -401,11 +464,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>ArduinoEvent</b>(type, data)
+						<b>I2CBase</b>(board, address, delayUS)
 				</div>
 				
 				<div class="description">
-					
+					Creates a new I2CBase base class
 					
 				</div>
 				
@@ -417,16 +480,22 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{String}</span>  <b>type</b>
+								<span class="light fixedFont">{Class}</span>  <b>board</b>
 								
 							</dt>
-								<dd>The event type</dd>
+								<dd>A reference to the Arduino class instance</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Object}</span>  <b>data</b>
+								<span class="light fixedFont">{Number}</span>  <b>address</b>
 								
 							</dt>
-								<dd>An object containing additional parameters</dd>
+								<dd>The I2C address of the device</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>delayUS</b>
+								
+							</dt>
+								<dd>The number of microseconds ...</dd>
 						
 						</dl>
 					
@@ -446,11 +515,11 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".ANALOG_DATA"> </a>
+					<a name=".I2C_CONFIG"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>ANALOG_DATA</b>
+					<span class="light">I2CBase.</span><b>I2C_CONFIG</b>
 					
 					</div>
 					<div class="description">
@@ -468,11 +537,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".ANALOG_MAPPING_RESPONSE"> </a>
+					<a name=".I2C_REPLY"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>ANALOG_MAPPING_RESPONSE</b>
+					<span class="light">I2CBase.</span><b>I2C_REPLY</b>
 					
 					</div>
 					<div class="description">
@@ -490,11 +559,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".CAPABILITY_RESPONSE"> </a>
+					<a name=".I2C_REQUEST"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>CAPABILITY_RESPONSE</b>
+					<span class="light">I2CBase.</span><b>I2C_REQUEST</b>
 					
 					</div>
 					<div class="description">
@@ -512,11 +581,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".DIGITAL_DATA"> </a>
+					<a name=".READ"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>DIGITAL_DATA</b>
+					<span class="light">I2CBase.</span><b>READ</b>
 					
 					</div>
 					<div class="description">
@@ -534,11 +603,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".FIRMWARE_NAME"> </a>
+					<a name=".READ_CONTINUOUS"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>FIRMWARE_NAME</b>
+					<span class="light">I2CBase.</span><b>READ_CONTINUOUS</b>
 					
 					</div>
 					<div class="description">
@@ -556,11 +625,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".FIRMWARE_VERSION"> </a>
+					<a name=".STOP_READING"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>FIRMWARE_VERSION</b>
+					<span class="light">I2CBase.</span><b>STOP_READING</b>
 					
 					</div>
 					<div class="description">
@@ -578,77 +647,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".PIN_STATE_RESPONSE"> </a>
+					<a name=".WRITE"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ArduinoEvent.</span><b>PIN_STATE_RESPONSE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".READY"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ArduinoEvent.</span><b>READY</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".STRING_MESSAGE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ArduinoEvent.</span><b>STRING_MESSAGE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".SYSEX_MESSAGE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ArduinoEvent.</span><b>SYSEX_MESSAGE</b>
+					<span class="light">I2CBase.</span><b>WRITE</b>
 					
 					</div>
 					<div class="description">
@@ -669,6 +672,336 @@ ul.inheritsList
 			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="addEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addEventListener</b>(type, listener)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>The event type</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function}</span> <b>listener</b>
+									
+								</dt>
+								<dd>The function to be called when the event is fired</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="dispatchEvent"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>dispatchEvent</b>(type)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/Event.html">Event</a>}</span> <b>type</b>
+									
+								</dt>
+								<dd>The Event object
+return {boolean} True if dispatch is successful, false if not.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="getAddress"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getAddress</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The address of the i2c device</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getCommand"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getCommand</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The command returned by the i2c device</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="handleI2C"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>handleI2C</b>(data)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>data</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="hasEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>hasEventListener</b>(type)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>The event type
+return {boolean} True is listener exists for this type, false if not.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removeEventListener"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeEventListener</b>(type, listener)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>type</b>
+									
+								</dt>
+								<dd>The event type</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Function}</span> <b>listener</b>
+									
+								</dt>
+								<dd>The function to be called when the event is fired</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="sendI2CRequest"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>sendI2CRequest</b>(command, data)
+					
+					</div>
+					<div class="description">
+						Send an i2c request command to the board
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>command</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number[]}</span> <b>data</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="update"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>update</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
 			
 			
 <!-- ============================== event details ========================= -->		

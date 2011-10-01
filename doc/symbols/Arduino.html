@@ -195,15 +195,23 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ArduinoEvent.html">ArduinoEvent</a></li>
 	
+	<li><a href="../symbols/BlinkM.html">BlinkM</a></li>
+	
+	<li><a href="../symbols/CompassHMC6352.html">CompassHMC6352</a></li>
+	
 	<li><a href="../symbols/Event.html">Event</a></li>
 	
 	<li><a href="../symbols/EventDispatcher.html">EventDispatcher</a></li>
+	
+	<li><a href="../symbols/I2CBase.html">I2CBase</a></li>
 	
 	<li><a href="../symbols/ID12RFIDReader.html">ID12RFIDReader</a></li>
 	
 	<li><a href="../symbols/Pin.html">Pin</a></li>
 	
 	<li><a href="../symbols/RFIDEvent.html">RFIDEvent</a></li>
+	
+	<li><a href="../symbols/Servo.html">Servo</a></li>
 	
 </ul>
 <hr />
@@ -244,7 +252,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Arduino.html#constructor">Arduino</a></b>(host, port, boardType)
+								<b><a href="../symbols/Arduino.html#constructor">Arduino</a></b>(host, port)
 							</div>
 							<div class="description">Creates a new Arduino object representing the digital and analog inputs and
 outputs of the device as well as support for sending strings between the Arduino
@@ -374,6 +382,15 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getPinCount">getPinCount</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getServo">getServo</a></b>(pin)
 								</div>
 								<div class="description">Checks if a servo is connected to the specified pin number</div>
@@ -447,15 +464,6 @@ on the Arduino.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#resetBoard">resetBoard</a></b>()
-								</div>
-								<div class="description">Resets the Arduino.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendAnalog">sendAnalog</a></b>(pin, value)
 								</div>
 								<div class="description">Simulate an analog signal on a PWM pin.</div>
@@ -468,6 +476,15 @@ on the Arduino.</div>
 								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendDigital">sendDigital</a></b>(pin, value)
 								</div>
 								<div class="description">Set a digital pin on the Arduino to High or Low.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendDigitalPortReporting">sendDigitalPortReporting</a></b>(mode, mode)
+								</div>
+								<div class="description">Enable or disable reporting of all digital pins for the specified port.</div>
 							</td>
 						</tr>
 					
@@ -552,7 +569,7 @@ and supports sending analog values up to 16 bits.</div>
 				</div>
 				
 				<div class="fixedFont">
-						<b>Arduino</b>(host, port, boardType)
+						<b>Arduino</b>(host, port)
 				</div>
 				
 				<div class="description">
@@ -582,12 +599,6 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 								
 							</dt>
 								<dd>The port to connect to on the web server</dd>
-						
-							<dt>
-								 <b>boardType</b>
-								
-							</dt>
-								<dd></dd>
 						
 						</dl>
 					
@@ -1018,6 +1029,38 @@ event parameter (event.data.value) rather than using this getter method.</p>
 
 					<hr />
 				
+					<a name="getPinCount"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>getPinCount</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> Total number of pins</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name="getServo"> </a>
 					<div class="fixedFont">
 					
@@ -1277,33 +1320,6 @@ the Firmata version is returned from the Arduino.
 
 					<hr />
 				
-					<a name="resetBoard"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>resetBoard</b>()
-					
-					</div>
-					<div class="description">
-						Resets the Arduino. To know when the Arduino is available after reset, listen for
-Arduino.FIRMWARE_VERSION, because the version is automatically send from Arduino
-upon reset.
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="sendAnalog"> </a>
 					<div class="fixedFont">
 					
@@ -1377,6 +1393,48 @@ send an 8-bit waveform.
 									
 								</dt>
 								<dd>Either Pin.HIGH or Pin.LOW</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="sendDigitalPortReporting"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>sendDigitalPortReporting</b>(mode, mode)
+					
+					</div>
+					<div class="description">
+						Enable or disable reporting of all digital pins for the specified port.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>mode</b>
+									
+								</dt>
+								<dd>Either Pin.On or Pin.OFF</dd>
+							
+								<dt>
+									<b>mode</b>
+									
+								</dt>
+								<dd></dd>
 							
 							</dl>
 						
@@ -1710,7 +1768,7 @@ this method should not be called.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Aug 20 2011 14:46:47 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Oct 01 2011 19:54:11 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>
