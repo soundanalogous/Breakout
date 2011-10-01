@@ -1,9 +1,22 @@
-* decouple socket (so you could use web socket, flash socket via swf, or other)?
+* port funnel UI classes (as3) to javascript:
+    - Accelerometer
+    - Button
+    - DCMotor
+    - LED
+    - RGBLED
+    - Servo
+    - SoftPot
+
+* decide on and implement namespacing scheme
 
 * align code to js best practices
 
-* create simple server application
+* create a few practical examples (current examples simply print to console)
+
+* create minified library
+
+* create simple gui-based server application
 	- cross platform
 	- easy to install
 	- gui to select serial port and baud rate
-	- supports multiple Arduino connections simultaneously?
+	- support multiple Arduino connections simultaneously?

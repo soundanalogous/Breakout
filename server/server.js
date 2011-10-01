@@ -2,8 +2,7 @@
  * fallback code from: https://gist.github.com/1219165
  *
  * Supports WebSocket drafts 75, 76 and 10 
- * Tested successfully with Chrome 14 and Safari 5.1
- * Should also work with Firefox 7 (but not yet tested)
+ * Tested successfully with Chrome 14 Firefox 7, and Safari 5.1
  */
 
 var http = require('http'),
@@ -28,8 +27,7 @@ var mimeTypes = {
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
 // to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbmodemfd121";	// Arduino Mega
-// "/dev/tty.usbmodemfd121" Arduino UNO
+var port = "/dev/tty.usbmodemfd121";
 
 var serialDefaults = {
 	baudrate: 57600,

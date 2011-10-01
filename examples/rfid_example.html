@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-<script src="src/EventDispatcher.js"></script>
-<script src="src/Pin.js"></script>
-<script src="src/Arduino.js"></script>
-<script src="src/ID12RFIDReader.js"></script>
+
+<meta charset=utf-8 />
+<style type="text/css">
+#textBox{
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+
+</style>
+<title>RFID Example</title>
+
+<script src="../libs/jquery-1.6.3.min.js"></script>
+<script src="../src/EventDispatcher.js"></script>
+<script src="../src/Pin.js"></script>
+<script src="../src/Arduino.js"></script>
+<script src="../src/ID12RFIDReader.js"></script>
+
 <script type="text/javascript">
 $(document).ready(function() {
 		
 	var ard = new Arduino("localhost", 8080);
 	
 	var rfid;
-	
-	ard.addEventListener(Event.CONNECTED, onConnect);
+		
+	ard.addEventListener(ArduinoEvent.READY, onReady);
 
-	function onConnect() {
-	
-		ard.removeEventListener(Event.CONNECTED, onConnect);
-
-		ard.reportVersion();
-		ard.reportFirmware();	
+	function onReady(event) {
+					
+		ard.removeEventListener(ArduinoEvent.READY, onReady);
 			
 		rfid = new ID12RFIDReader(ard);
 		rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);
@@ -28,46 +39,21 @@ $(document).ready(function() {
 	}
 	
 	function onAddTag(event) {
-		console.log("added tag: " + event.tag + "\ttarget = " + event.target.className);
+		$('#textBox').html("Added tag: " + event.tag);
 	}
 	
 	function onRemoveTag(event) {
-		console.log("removed tag: " + event.tag + "\ttarget = " + event.target.className);
+		$('#textBox').html("Removed tag: " + event.tag);
 	}
-		
-	$('#disconnect').click(function(){
-		ard.close();
-	});
-			
+						
 });
 
 </script>
 
-<meta charset=utf-8 />
-<style type="text/css">
-body{font-family:Arial, Helvetica, sans-serif;}
-#container{
-	border:5px solid grey;
-	width:800px;
-	margin:0 auto;
-	padding:10px;
-}
-
-</style>
-<title>WebSockets Client</title>
-
 </head>
 <body>
-  <div id="wrapper">
   
-  	<div id="container">
-    
-    	<h1>WebSockets Client</h1>
-    	
-        <button id="disconnect">Disconnect</button>
-
-	</div>
+<div id="textBox">Read a tag.</div>
   
-  </div>
 </body>
 </html>​

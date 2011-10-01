@@ -1,3 +1,9 @@
+/* serial to websocket bridge
+ *
+ * Supports WebSocket draft 10 
+ * Tested successfully with Chrome 14 and Firefox 7
+ */
+
 var http = require('http'),
 	WebSocketServer = require('websocket').server,
 	fs = require('fs'),
@@ -19,8 +25,7 @@ var mimeTypes = {
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
 // to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbmodemfd121";	// Teensy 2.0
-// "/dev/tty.usbmodemfd121" Arduino UNO
+var port = "/dev/tty.usbmodemfd121";
 
 var serialDefaults = {
 	baudrate: 57600,
