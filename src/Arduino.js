@@ -17,7 +17,7 @@
  * @param {String} host The host address of the web server
  * @param {Number} port The port to connect to on the web server
  */
-function Arduino(host, port) {
+function Arduino(host, port, protocol) {
 	"use strict";
 	
 	this.className = "Arduino"; 	// for testing
@@ -57,6 +57,7 @@ function Arduino(host, port) {
 	var self = this;	// get a reference to this class
 	var host = host;
 	var port = port;
+	var protocol = protocol || "default-protocol";
 	var socket;
 	var _browser = "";
 	
@@ -106,9 +107,9 @@ function Arduino(host, port) {
 		
 		try{
 			if (_browser === "mozilla") {
-				socket = new MozWebSocket("ws://"+host+":"+port);
+				socket = new MozWebSocket("ws://"+host+":"+port, protocol);
 			} else {
-				socket = new WebSocket("ws://"+host+":"+port);
+				socket = new WebSocket("ws://"+host+":"+port, protocol);
 			}
 			console.log("Starting up...");
 			/**

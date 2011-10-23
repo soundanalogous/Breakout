@@ -18,6 +18,7 @@ var mimeTypes = {
 	"jpg": "image/jpeg",
 	"png": "image/png",
 	"js": "application/javascript",
+	"manifest" : "text/cache-manifest",
 	"css": "text/css"};
 
 /* SERIAL */
