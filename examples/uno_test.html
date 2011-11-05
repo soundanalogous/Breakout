@@ -18,16 +18,36 @@
 
 <title>Arduino UNO Test</title>
 
+<!-- order of import is important -->
+<!-- a minified file will be provided in the future to make this simpler -->
 <script src="../libs/jquery-1.6.3.min.js"></script>
+<script src="../src/ARDJS.js"></script>
+<script src="../src/Event.js"></script>
 <script src="../src/EventDispatcher.js"></script>
+<script src="../src/ArduinoEvent.js"></script>
 <script src="../src/Pin.js"></script>
 <script src="../src/I2CBase.js"></script>
 <script src="../src/ui/BlinkM.js"></script>
 <script src="../src/ui/CompassHMC6352.js"></script>
+<script src="../src/ui/PhysicalInputBase.js"></script>
+<script src="../src/ui/Button.js"></script>
 <script src="../src/Arduino.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var Arduino = ARDJS.Arduino;
+	var Pin = ARDJS.Pin;
+	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var Event = ARDJS.Event;
+	var BlinkM = ARDJS.ui.BlinkM;
+	var CompassHMC6352 = ARDJS.ui.CompassHMC6352;
+	var Button = ARDJS.ui.Button;
+	var ButtonEvent = ARDJS.ui.ButtonEvent;
+
 		
 	var ard = new Arduino("localhost", 8080);
 	
@@ -57,15 +77,17 @@ $(document).ready(function() {
 		ard.setPinMode(13, Pin.DOUT);
 		// get a reference to the pin
 		blinkLED = ard.getDigitalPin(13);
-		blinkLED.setValue(Pin.LOW);	
+		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 	
 		//set digital pin 2 to input
 		ard.setPinMode(2, Pin.DIN);
 		
 		// get a reference to the pin and listen for Change event
-		var button01 = ard.getDigitalPin(2);
-		button01.addEventListener(Event.CHANGE, onButtonChange);
+		//var button01 = ard.getDigitalPin(2);
+		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_UP);
+		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 		
 		// enable reporting for an analog pin
 		ard.setAnalogPinReporting(0, Pin.ON);
@@ -134,26 +156,36 @@ $(document).ready(function() {
 	
 	function onPotChange(event) {
 		var pin = event.target;
-		var analogData = "pot value: " + pin.getValue().toFixed(3) + 
-			"\tmin = " + pin.getMinimum().toFixed(3) + "\tmax = " + 
-			pin.getMaximum().toFixed(3) + "\tavg = " + pin.getAverage().toFixed(3)
+		var analogData = "pot value: " + pin.value.toFixed(3) + 
+			"\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
+			pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
 		
 		//console.log(analogData);
 		$('#potData').html(analogData);	
 	}
+
+	function onButtonPress(event) {
+		var btn = event.target;
+		$('#button').html("button: pin = " + btn.pinNumber + " pressed");
+	}
+
+	function onButtonRelease(event) {
+		var btn = event.target;
+		$('#button').html("button: pin = " + btn.pinNumber + " released");
+	}
 	
 	function onButtonChange(event) {
 		var pin = event.target;
-		//console.log("button changed: pin = " + pin.getNumber() + "\tvalue = " + pin.getValue());
-		$('#button').html("button: pin = " + pin.getNumber() + "\tvalue = " + pin.getValue());	
+		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
+		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
 	
 	function onFirmwareVersion(event) {
-		console.log("firmware version: " + event.data.version);
+		console.log("firmware version: " + event.version);
 	}
 	
 	function onFirmwareName(event) {
-		console.log("firmware name: " + event.data.name + " version: " + event.data.version);
+		console.log("firmware name: " + event.name + " version: " + event.version);
 	}
 	
 	function onCapabilityResponse(event) {
@@ -162,17 +194,17 @@ $(document).ready(function() {
 	}
 	
 	function onStringMessage(event) {
-		console.log("string received: " + event.data.message);
+		console.log("string received: " + event.message);
 	}
 	
 	function onPinStateResponse(event) {
 		var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
-		var pinType = modeNames[event.data.type];
-		console.log("pin state response = " + event.data.pin + "\t" + pinType);
+		var pinType = modeNames[event.type];
+		console.log("pin state response = " + event.pin + "\t" + pinType);
 	}	
 	
 	function fade() {
-		fadeLED.setValue(intensity += direction);
+		fadeLED.value = (intensity += direction);
 		// test sendExtendedAnalog method
 		//ard.sendExtendedAnalog(11, intensity += direction);
 		if (intensity == 255) direction = -1;
@@ -181,9 +213,9 @@ $(document).ready(function() {
 	
 	function servoTest() {
 		if (servoDir) {
-			servo.setValue(0);
+			servo.value = 0;
 		} else {
-			servo.setValue(180);
+			servo.value = 180;
 		}
 		servoDir = !servoDir;
 	}
@@ -191,9 +223,9 @@ $(document).ready(function() {
 	function blink() {
 		frames++;
 		if (frames % 2 == 0) {
-			blinkLED.setValue(Pin.LOW);
+			blinkLED.value = Pin.LOW;
 		} else {
-			blinkLED.setValue(Pin.HIGH);
+			blinkLED.value = Pin.HIGH;
 		}
 	}
 			
