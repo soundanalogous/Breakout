@@ -14,17 +14,20 @@ ARDJS.ui.BlinkM = (function() {
 	/**
 	 * Creates and BlinkM object
 	 *
+	 * @exports BlinkM as ARDJS.ui.BlinkM
 	 * @constructor
-	 * @augments I2CBase 
+	 * @augments ARDJS.I2CBase 
 	 * @param {Arduino} board The Arduino instance
 	 * @param {Number} address The i2c address of the BlinkM module
 	 */
 	BlinkM = function(board, address) {
 
-		this.address = address || 0x09;	// default i2c address for BlinkM
+		address = address || 0x09;	// default i2c address for BlinkM
+
+		this.name = "BlinkM"; // for testing
 		
 		// call super class
-		I2CBase.call(this, board, this.address);
+		I2CBase.call(this, board, address);
 		
 
 	};

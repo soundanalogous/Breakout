@@ -7,7 +7,6 @@ ARDJS.namespace('ARDJS.Pin');
 ARDJS.Pin = (function() {
 	"use strict";
 
-	///** @exports Pin as ARDJS.Pin */
 	var Pin;
 
 	// dependencies
@@ -17,6 +16,7 @@ ARDJS.Pin = (function() {
 	/**
 	 * An object to represent an Arduino pin
 	 *
+	 * @exports Pin as ARDJS.Pin
 	 * @constructor
 	 * @param {Number} number The pin number
 	 * @param {Number} type The type of pin
@@ -24,10 +24,12 @@ ARDJS.Pin = (function() {
 	Pin = function(number, type) {
 		this.type = type;
 		this.capabilities;
+
+		this.name = "Pin"; // for testing
 		
 		this._number = number,
-		this._value = 0,
-		this._lastValue = 0,
+		this._value = 1,
+		this._lastValue = 1,
 		this._preFilterValue,
 		this._average = 0,
 		this._minimum = Math.pow(2, 16),

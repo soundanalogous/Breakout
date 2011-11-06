@@ -15,18 +15,21 @@ ARDJS.ui.CompassHMC6352 = (function() {
 	/**
 	 * HMC6352 digital compass module
 	 *
+	 * @exports CompassHMC6352 as ARDJS.ui.CompassHMC6352
 	 * @constructor
-	 * @augments I2CBase
+	 * @augments ARDJS.I2CBase
 	 * @param {Arduino} board The Arduino instance
 	 * @param {Number} address The i2c address of the compass module
 	 */
 	CompassHMC6352 = function(board, address) {
 
-		this.address = address || 0x21;
+		address = address || 0x21;
 		this._heading = 0;
 		this._lastHeading = 0;
+
+		this.name = "CompassHMC6352"; // for testing
 		
-		I2CBase.call(this, board, this.address);
+		I2CBase.call(this, board, address);
 			
 		// 0x51 = 10 Hz measurement rate, Query mode
 		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x47, 0x74, 0x51]);
@@ -39,13 +42,13 @@ ARDJS.ui.CompassHMC6352 = (function() {
 	CompassHMC6352.prototype = ARDJS.inherit(I2CBase.prototype);
 	CompassHMC6352.prototype.constructor = CompassHMC6352;
 
-
 	/**
-	 * @returns {Number} The heading in degrees
-	 */
-	CompassHMC6352.prototype.getHeading = function() {
-		return this._heading;
-	}
+	 * [read-only] The heading in degrees.
+	 * @name CompassHMC6352#heading
+	 * @property
+	 * @type Number
+	 */ 	 
+	CompassHMC6352.prototype.__defineGetter__("heading", function() {return this._heading; });
 	
 	/**
 	 * @private

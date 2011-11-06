@@ -17,6 +17,7 @@ ARDJS.I2CBase = (function() {
 	/**
 	 * Creates a new I2CBase base class
 	 *
+	 * @exports I2CBase as ARDJS.I2CBase
 	 * @constructor
 	 * @param {Class} board A reference to the Arduino class instance
 	 * @param {Number} address The I2C address of the device
@@ -27,7 +28,7 @@ ARDJS.I2CBase = (function() {
 
 		if (board == undefined) return;
 
-		this.className = "I2CDevice"; 	// for testing
+		this.name = "I2CDevice"; // for testing
 		this.board = board;
 
 		var _delay = delayUS || 0,
@@ -59,6 +60,17 @@ ARDJS.I2CBase = (function() {
 
 
 	I2CBase.prototype = {
+
+		/**
+		 * [read-only] The address of the i2c device.
+		 * @name I2CBase#address
+		 * @protected
+		 * @property
+		 * @type Number
+		 */			 
+		get address() {
+			return this._address;
+		},	
 
 		// private methods:
 		/**
@@ -112,8 +124,9 @@ ARDJS.I2CBase = (function() {
 			this.board.sendSysex(I2CBase.I2C_REQUEST, tempData);
 			
 		},
-
+	
 		/**
+		 * @protected
 		 * @inheritDoc
 		 */
 		update: function() {
@@ -121,29 +134,14 @@ ARDJS.I2CBase = (function() {
 		},
 		
 		/**
+		 * @protected
 		 * @inheritDoc
 		 */
 		handleI2C: function(data) {
 			// To be implemented in sublasses
 			// data should be: slave address, register, data0, data1...
 		},
-		
-		/**
-		 * @protected
-		 * @return {Number} The command returned by the i2c device
-		 */
-		getCommand: function() {
-			//return this._command;
-		},
-		
-		/**
-		 * @protected
-		 * @return {Number} The address of the i2c device
-		 */
-		getAddress: function() {
-			return this._address;
-		},
-
+				
 		/* implement EventDispatcher */
 		
 		/**

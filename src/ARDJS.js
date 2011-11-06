@@ -1,12 +1,10 @@
 /**
  * @author Jeff Hoefs
+ * 
  */
 
-/** @namespace The core collection of objects for Arduino-JS */
+/** @namespace Namespace and utility functions for Arduino-JS */
 var ARDJS = ARDJS || {};
-
-/** @namespace A collection of objects representing physical UI components*/
-var ARDJS.ui = ARDJS.ui || {};
 
 /**
  * use this function to safely create a new namespace

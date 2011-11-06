@@ -4,7 +4,6 @@
 
 ARDJS.namespace('ARDJS.ArduinoEvent');
 
-
 ARDJS.ArduinoEvent = (function() {
 
 	var ArduinoEvent;
@@ -13,12 +12,16 @@ ARDJS.ArduinoEvent = (function() {
 	var Event = ARDJS.Event;
 
 	/**
+	 * @exports ArduinoEvent as ARDJS.ArduinoEvent
 	 * @constructor
-	 * @augments Event
+	 * @augments ARDJS.Event
 	 * @param {String} type The event type
 	 * @param {Object} data An object containing additional parameters
 	 */
 	ArduinoEvent = function(type) {
+
+		this.name = "ArduinoEvent"; // for testing
+		
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);

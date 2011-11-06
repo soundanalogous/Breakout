@@ -60,6 +60,8 @@ $(document).ready(function() {
 	var servo;
 	var blinkLED;
 	var fadeLED;
+
+	console.log("name = " + ard.name);
 	
 	ard.addEventListener(ArduinoEvent.READY, onReady);
 
@@ -85,7 +87,7 @@ $(document).ready(function() {
 		
 		// get a reference to the pin and listen for Change event
 		//var button01 = ard.getDigitalPin(2);
-		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_UP);
+		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_DOWN);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 		
@@ -141,8 +143,8 @@ $(document).ready(function() {
 	}	
 	
 	function onHeadingUpdate(evt) {
-		//console.log("heading = " + evt.target.getHeading());
-		$('#heading').html("heading: " + evt.target.getHeading());
+		//console.log("heading = " + evt.target.heading);
+		$('#heading').html("heading: " + evt.target.heading);
 	}	
 	
 	function randomColor() {

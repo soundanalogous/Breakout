@@ -14,6 +14,7 @@ ARDJS.ui.Servo = (function() {
 	/**
 	 * Creates a new Servo
 	 *
+	 * @exports Servo as ARDJS.ui.Servo
 	 * @constructor
 	 * @param {Arduino} board A reference to the Arduino class instance.
 	 * @param {Number} servoPin The number of the pin the servo is connected to.
@@ -21,7 +22,7 @@ ARDJS.ui.Servo = (function() {
 	Servo = function(board, servoPin) {
 		"use strict";
 		
-		this.className = "Servo"; 	// for testing
+		this.name = "Servo"; // for testing
 
 		this._pin = board.getDigitalPin(servoPin);
 		this._angle;
@@ -31,15 +32,19 @@ ARDJS.ui.Servo = (function() {
 
 	Servo.prototype = {
 
-		// to do: make getters and setters and add documentation
-		setAngle: function(value) {
+		/**
+		 * Set the angle (in degrees) to rotate the server head to.
+		 * @name Servo#angle
+		 * @property
+		 * @type Number
+		 */ 
+		set angle(value) {
 			if (this._pin.type == Pin.SERVO) {
 				this._angle = value;
 				this._pin.value = this._angle;
 			}
 		},
-		
-		getAngle: function() {
+		get angle() {
 			if (this._pin.type == Pin.SERVO) {
 				return this._angle;
 			}

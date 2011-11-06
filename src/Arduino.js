@@ -24,14 +24,16 @@ ARDJS.Arduino = (function() {
 	 * a servo motor from javascript and additional libraries for an RFID reader with more
 	 * to follow such as Button, Accelerometer, i2c device implementation, etc.
 	 *
+	 * @exports Arduino as ARDJS.Arduino
 	 * @constructor
-	 * @param {String} host The host address of the web server
-	 * @param {Number} port The port to connect to on the web server
+	 * @param {String} host The host address of the web server.
+	 * @param {Number} port The port to connect to on the web server.
+	 * @param {String} protocol The websockt protocol definition (if necessary).
 	 */
 	Arduino = function(host, port, protocol) {
 		"use strict";
 		
-		this.className = "Arduino"; 	// for testing
+		this.name = "Arduino"; // for testing
 				
 		// message command bytes (128-255/0x80-0xFF)
 		var		DIGITAL_MESSAGE			= 0x90,

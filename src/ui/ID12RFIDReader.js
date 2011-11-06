@@ -16,13 +16,14 @@ ARDJS.ui.ID12RFIDReader = (function() {
 	/**
 	 * Creates a new ID12RFIDReader
 	 *
+	 * @exports ID12RFIDReader as ARDJS.ui.ID12RFIDReader
 	 * @constructor
 	 * @param {Class} board A reference to the Arduino class instance
 	 */
 	ID12RFIDReader = function(board) {
 		"use strict";
 
-		this.className = "ID12RFIDReader"; 	// for testing
+		this.name = "ID12RFIDReader"; 	// for testing
 
 		// to do: object id to be passed in as a param rather than
 		// explicitly set? This would support the ability to use multiple
@@ -145,12 +146,14 @@ ARDJS.ui.RFIDEvent = (function() {
 	"use strict";
 
 	var RFIDEvent;
+
+	// dependencies
 	var Event = ARDJS.Event;
 
 	/**
-	 * @namespace ARDJS.ui
+	 * @exports RFIDEvent as ARDJS.ui.RFIDEvent
 	 * @constructor
-	 * @augments Event
+	 * @augments ARDJS.Event
 	 * @param {String} type The event type
 	 * @param {String} tag The RFID tag value (hexadecimal)
 	 */

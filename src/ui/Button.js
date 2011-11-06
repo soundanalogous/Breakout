@@ -12,10 +12,14 @@ ARDJS.ui.ButtonEvent = (function() {
 	var Event = ARDJS.Event;
 
 	/**
+	 * @exports ButtonEvent as ARDJS.ui.ButtonEvent
 	 * @constructor
-	 * @augments Event
+	 * @augments ARDJS.Event
 	 */
 	ButtonEvent = function(type) {
+
+		this.name = "ButtonEvent"; // for testing
+
 		Event.call(this, type);
 	}
 
@@ -52,8 +56,9 @@ ARDJS.ui.Button = (function() {
 	 * listening for pin change events on a Pin object, is that the Button class handles debouncing 
 	 * and provides helpful button events: Pressed, Released, Long Press and Sustained Press
 	 *
+	 * @exports Button as ARDJS.ui.Button
 	 * @constructor
-	 * @augments PhysicalInputBase
+	 * @augments ARDJS.ui.PhysicalInputBase
 	 * @param {Pin} pin A reference to the pin the button is connected to.
 	 * @param {number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
 	 * Default is PULL_DOWN.
@@ -65,8 +70,7 @@ ARDJS.ui.Button = (function() {
 		
 		PhysicalInputBase.call(this);
 
-		// for testing
-		this.className = "Button";
+		this.name = "Button"; // for testing
 		this._pin = pin;
 		
 		this.buttonMode = buttonMode || Button.PULL_DOWN;
@@ -93,8 +97,6 @@ ARDJS.ui.Button = (function() {
 		
 		var btnVal = evt.target.value;
 		var stateHandler;
-
-
 
 		if (this.buttonMode === Button.PULL_DOWN) {
 			if (btnVal === 1) stateHandler = this.pressed;
@@ -151,22 +153,14 @@ ARDJS.ui.Button = (function() {
 		this._repeatCount++;
 	};
 	
-	
 	/**
-	 * Set the debounce interval.
-	 * @param {number} interval The debounce time interval in milliseconds
-	 */
-	Button.prototype.setDebounceInterval = function(interval) {
-		this._debounceInterval = interval;
-	};
-	
-	/**
-	 * get the debounce interval.
-	 * @return {number} interval The debounce time interval in milliseconds
-	 */	
-	Button.prototype.getDebounceInterval = function() {
-		return this._debounceInterval;
-	};
+	 * The debounce time interval in milliseconds.
+	 * @name Button#debounceInterval
+	 * @property
+	 * @type Number
+	 */ 
+	Button.prototype.__defineGetter__("debounceInterval", function() { return this._debounceInterval; });
+	Button.prototype.__defineSetter__("debounceInterval", function(interval) { this._debounceInterval = interval; });
 	
 	/**
 	 * [read-only] The pin number of the pin the button is attached to.

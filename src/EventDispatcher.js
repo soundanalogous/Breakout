@@ -11,6 +11,7 @@ ARDJS.EventDispatcher = (function () {
 	/**
 	 * An as3-like EventDispatcher class.
 	 *
+	 * @exports EventDispatcher as ARDJS.EventDispatcher
 	 * @constructor
 	 * @param {Class} target The instance of the class that implements EventDispatcher
 	 */
@@ -18,11 +19,12 @@ ARDJS.EventDispatcher = (function () {
 		"use strict";
 		
 		this._target = target || null;
-		this._eventListeners = {};		
+		this._eventListeners = {};
+		
+		this.name = "EventDispatcher"; // for testing	
 	}
 
 	EventDispatcher.prototype = {
-		constructor: EventDispatcher,
 
 		/**
 		 * @param {String} type The event type

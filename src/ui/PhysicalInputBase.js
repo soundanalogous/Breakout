@@ -15,9 +15,12 @@ ARDJS.ui.PhysicalInputBase = (function() {
 	 * A base class for physical inputs. Treat this class as an abstract base
 	 * class - do not instantiate it directly.
 	 *
+	 * @exports PhysicalInputBase as ARDJS.ui.PhysicalInputBase
 	 * @constructor
 	 */
 	PhysicalInputBase = function() {
+
+		this.name = "PhysicalInputBase"; // for testing
 
 		this._evtDispatcher = new EventDispatcher(this);
 	}
