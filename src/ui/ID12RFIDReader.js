@@ -2,6 +2,43 @@
  * @author jeff hoefs
  */
 
+ARDJS.namespace('ARDJS.ui.RFIDEvent');
+
+ARDJS.ui.RFIDEvent = (function() {
+	"use strict";
+
+	var RFIDEvent;
+
+	// dependencies
+	var Event = ARDJS.Event;
+
+	/**
+	 * @exports RFIDEvent as ARDJS.ui.RFIDEvent
+	 * @constructor
+	 * @augments ARDJS.Event
+	 * @param {String} type The event type
+	 * @param {String} tag The RFID tag value (hexadecimal)
+	 */
+	RFIDEvent = function(type, tag) {
+		this.tag = tag;
+		// call the super class
+		// 2nd parameter is passed to EventDispatcher constructor
+		Event.call(this, type);
+	}
+
+	/** @constant */
+	RFIDEvent.ADD_TAG = "addTag";
+	/** @constant */
+	RFIDEvent.REMOVE_TAG = "removeTag";
+
+	RFIDEvent.prototype = ARDJS.inherit(Event.prototype);
+	RFIDEvent.prototype.constructor = RFIDEvent;
+
+	return RFIDEvent;
+
+}());
+
+
 ARDJS.namespace('ARDJS.ui.ID12RFIDReader');
 
 ARDJS.ui.ID12RFIDReader = (function() {
@@ -37,9 +74,8 @@ ARDJS.ui.ID12RFIDReader = (function() {
 		
 		this._evtDispatcher = new EventDispatcher(this);
 
-		board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
-			
-	}
+		board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));			
+	};
 
 	ID12RFIDReader.prototype = {
 
@@ -70,19 +106,20 @@ ARDJS.ui.ID12RFIDReader = (function() {
 		 * @private
 		 */
 		processRFIDData: function(data) {
+
 			var tagEvent = this.board.getValueFromTwo7bitBytes(data[1], data[2]);
 			var tagEventType = "";
 			var tag = "";
 					
 			for (var i=3, len=data.length; i<len; i+=2) {
-				tag += dec2hex(this.board.getValueFromTwo7bitBytes(data[i], data[i+1]));
+				tag += this.dec2hex(this.board.getValueFromTwo7bitBytes(data[i], data[i+1]));
 			}
-			
+
 			// change this to dispatch a single event and handle add or remove in object parameter?
 			if (tagEvent == this.READ_EVENT) {
-				dispatch(new RFIDEvent(RFIDEvent.ADD_TAG, tag));
+				this.dispatch(new RFIDEvent(RFIDEvent.ADD_TAG, tag));
 			} else if (tagEvent == this.REMOVE_EVENT) {
-				dispatch(new RFIDEvent(RFIDEvent.REMOVE_TAG, tag));
+				this.dispatch(new RFIDEvent(RFIDEvent.REMOVE_TAG, tag));
 			} else {
 				// got something else
 				return;
@@ -137,41 +174,5 @@ ARDJS.ui.ID12RFIDReader = (function() {
 	};
 
 	return ID12RFIDReader;
-
-}());
-
-ARDJS.namespace('ARDJS.ui.RFIDEvent');
-
-ARDJS.ui.RFIDEvent = (function() {
-	"use strict";
-
-	var RFIDEvent;
-
-	// dependencies
-	var Event = ARDJS.Event;
-
-	/**
-	 * @exports RFIDEvent as ARDJS.ui.RFIDEvent
-	 * @constructor
-	 * @augments ARDJS.Event
-	 * @param {String} type The event type
-	 * @param {String} tag The RFID tag value (hexadecimal)
-	 */
-	RFIDEvent = function(type, tag) {
-		this.tag = tag;
-		// call the super class
-		// 2nd parameter is passed to EventDispatcher constructor
-		Event.call(this, type);
-	}
-
-	/** @constant */
-	RFIDEvent.ADD_TAG = "addTag";
-	/** @constant */
-	RFIDEvent.REMOVE_TAG = "removeTag";
-
-	RFIDEvent.prototype = ARDJS.inherit(Event.prototype);
-	RFIDEvent.prototype.constructor = RFIDEvent;
-
-	return RFIDEvent;
 
 }());
