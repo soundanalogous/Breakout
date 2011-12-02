@@ -1,7 +1,7 @@
 Arduino-JS
 ===
 
-A javascript framework for Arduino. Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0 rc1](http://code.google.com/p/arduino/wiki/Arduino1).
+A javascript framework for Arduino. Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
 
 Arduino-JS is currently alpha software so exptect it to change.
 
@@ -40,7 +40,7 @@ Supported browsers:
 
 node js version 0.4.12
 
-Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0 rc1):
+Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0):
 
 - Arduino UNO
 - Teensy 2.0
