@@ -1,15 +1,13 @@
 /* serial to websocket bridge
- * fallback code from: https://gist.github.com/1219165
  *
- * Supports WebSocket drafts 75, 76 and 10 
- * Tested successfully with Chrome 14 Firefox 7, and Safari 5.1
+ * Supports WebSocket draft 10 
+ * Tested successfully with Chrome 14 and Firefox 7
  */
 
 var http = require('http'),
-		WebSocketRequest = require('websocket').request,
-		fs = require('fs'),
-		path = require('path'),
-		ws = require('websocket-server');
+	WebSocketServer = require('websocket').server,
+	fs = require('fs'),
+	path = require('path');
 
 var connectedSocket = null;
 
@@ -22,7 +20,7 @@ var mimeTypes = {
 	"js": "application/javascript",
 	"manifest" : "text/cache-manifest",
 	"css": "text/css"};
-	
+
 /* SERIAL */
 
 var serialport = require("serialport");
@@ -37,6 +35,7 @@ var serialDefaults = {
 
 // Create new serialport pointer
 var serial = new serialPort(port , serialDefaults);
+
 
 serial.on( "data", function( data ) {
 		
@@ -109,103 +108,41 @@ httpServer.listen(8080, function() {
 	console.log((new Date()) + " Server is listening on port 8080");
 });
 
-/* node-websocket-server fallback to drafts 75 and 76 */
+/* WEBSOCKET SERVER */
 
-var miksagoConnection = require('./node_modules/websocket-server/lib/ws/connection');
-
-var miksagoServer = ws.createServer();
-miksagoServer.server = httpServer;
-
-miksagoServer.addListener('connection', function(connection) {
-	// Add remoteAddress property
-	connection.remoteAddress = connection._socket.remoteAddress;
-
-	// use 'sendUTF' regardless of the server implementation
-	connection.sendUTF = connection.send;
-	handleConnection(connection);
+var server = new WebSocketServer({
+	httpServer: httpServer,
+	autoAcceptConnections: true
 });
 
-/* WebSocket-Node config */
-var wsServerConfig = {
-	// all options *except* 'httpServer' are required when bypassing
-	// WebSocketServer
-	maxReceivedFrameSize: 0x10000,
-	maxReceivedMessageSize: 0x100000,
-	fragmentOutgoingMessages: true,
-	fragmentationThreshold: 0x4000,
-	keepalive: true,
-	keepaliveInterval: 20000,
-	assembleFragments: true,
-	// autoAcceptConnections is not applicable when bypassing WebSocketServer
-	// autoAcceptConnections: false,
-	disableNagleAlgorithm: true,
-	closeTimeout: 5000
-};
+server.on('connect', function(connection) {
 
-// Handle the upgrade event ourselves instead of using WebSocketServer
-
-httpServer.on('upgrade', function(req, socket, head) {
-
-    if (typeof req.headers['sec-websocket-version'] !== 'undefined') {
-
-        // WebSocket hybi-08/-09/-10 connection (WebSocket-Node)
-        var wsRequest = new WebSocketRequest(socket, req, wsServerConfig);
-        try {
-            wsRequest.readHandshake();
-            var wsConnection = wsRequest.accept(wsRequest.requestedProtocols[0], wsRequest.origin);
-            handleConnection(wsConnection);
-        }
-        catch(e) {
-            console.log("WebSocket Request unsupported by WebSocket-Node: " + e.toString());
-            return;
-        }
-
-    } else {
-
-        // WebSocket hixie-75/-76/hybi-00 connection (node-websocket-server)
-        if (req.method === 'GET' &&
-            (req.headers.upgrade && req.headers.connection) &&
-            req.headers.upgrade.toLowerCase() === 'websocket' &&
-            req.headers.connection.toLowerCase() === 'upgrade') {
-            new miksagoConnection(miksagoServer.manager, miksagoServer.options, req, socket, head);
-        }
-
-    }
-
-});
-
-/* A common connection handler */
-
-function handleConnection(connection) {
 	connectedSocket = connection;
-
-    console.log((new Date()) + " Connection accepted.");
-    
-    connection.addListener('message', function(wsMessage) {
-        var message = wsMessage;
-
-        // WebSocket-Node adds a "type", node-websocket-server does not
-        if (typeof wsMessage.type !== 'undefined') {
-            if (wsMessage.type !== 'utf8') {
-                return;
-            }
-            message = wsMessage.utf8Data;
-        }
+	console.log((new Date()) + " Connection accepted.");
+	
+	connection.on('message', function(data) {
+	  var message;
+	  
+      if (data.type === 'utf8') {
+      	message = data.utf8Data;
+      } else if (data.type === 'binary') {
+		// will this ever be the case?
+      }
       
-		var msgData;
-		if (message.indexOf(',')) {
-			msgData = message.split(',');
-		} else {
-			msgData = message;
-		}
+      var msgData;
+      if (message.indexOf(',')) {
+      	msgData = message.split(',');
+      } else {
+      	msgData = message;
+      }
       
-		// write the message to the serial port
-		serial.write(msgData);
-		
-    });
-    
-    connection.addListener('close', function() {
-        console.log((new Date()) + " Peer " + connection.remoteAddress + " disconnected.");
-        connectedSocket = null;
-    });
-}
+      // write the message to the serial port
+      serial.write(msgData);
+      
+	});
+	
+	connection.on('close', function(connection) {
+		console.log((new Date()) + " Peer " + connection.remoteAddress + " disconnected.");
+		connectedSocket = null;
+	});
+});

@@ -79,11 +79,10 @@ ARDJS.ui.Button = (function() {
 		this._debounceInterval = 20,
 		this._repeatCount = 0,
 		this._timer = null,
-		this._timeout = null;	
-		
-		pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
-		
-	}
+		this._timeout = null;
+				
+		pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));	
+	};
 
 
 	Button.prototype = ARDJS.inherit(PhysicalInputBase.prototype);

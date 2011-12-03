@@ -20,7 +20,7 @@ var mimeTypes = {
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
 // to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbserial-A4007WZS";
+var port = "/dev/tty.usbmodemfd121";
 
 var serialDefaults = {
   baudrate: 57600,
