@@ -10,8 +10,8 @@ To use
 
 Install node.js and the required modules:
 
-1. Install [node.js](http://www.github.com/joyent/node) if you don't have it (download the version tagged 'works') or clone via git and checkout version 0.4.12. Follow the instructions to build.
-2. Install [npm](http://npmjs.org/) if you have not already
+1. Install [node.js](http://www.github.com/joyent/node). You can download and run the installer for your platform, or if you prefer to build manually, clone via git and checkout version 0.6.4 and follow the instructions to build.
+2. If you are installing node manually, install [npm](http://npmjs.org/) if you have not already. If you ran an installer in step 1, then npm was automatically installed for you.
 3. The server code depends on 3 node modules: [node-serialport](https://github.com/voodootikigod/node-serialport), [WebSocket-Node](https://github.com/Worlize/WebSocket-Node) and [node-websocket-server](https://github.com/miksago/node-websocket-server). Navigate to Arduino-JS/server/ then install each module (see the readme for each module for instructions)
 
 Upload StandardFirmata to the Arduino board:
@@ -34,11 +34,11 @@ Mac OSX Snow Leopard and Lion (have not tested in Linux or Windows)
 
 Supported browsers:
 
-- Google Chrome 14
-- Safari 5
-- Firefox 7
+- Google Chrome 14 & 15
+- Safari 5 (seems to have broken... should work again when Safari updates Websocket protocol)
+- Firefox 7 & 8
 
-node js version 0.4.12
+node js version 0.6.4
 
 Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0):
 
