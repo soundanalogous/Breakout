@@ -1,62 +1,84 @@
 /**
- * HMC6352 digital compass module
- *
- * @constructor
- * @augments I2CBase
- * @param {Arduino} board The Arduino instance
- * @param {Number} address The i2c address of the compass module
+ * @author Jeff Hoefs
  */
-function CompassHMC6352(board, address) {
 
-	address = address || 0x21;
-	
-	var self = this;
-	var _heading = 0;
-	var _lastHeading = 0;
-	
-	I2CBase.call(self, board, address);
-		
-	// 0x51 = 10 Hz measurement rate, Query mode
-	self.sendI2CRequest([I2CBase.WRITE, address, 0x47, 0x74, 0x51]);
-	self.sendI2CRequest([I2CBase.WRITE, address, 0x41]);
-	
+ARDJS.namespace('ARDJS.ui.CompassHMC6352');
+
+ARDJS.ui.CompassHMC6352 = (function() {
+
+	var CompassHMC6352;
+
+	// dependencies
+	var I2CBase = ARDJS.I2CBase,
+		Event = ARDJS.Event;
+
 	/**
-	 * @returns {Number} The heading in degrees
+	 * HMC6352 digital compass module
+	 *
+	 * @exports CompassHMC6352 as ARDJS.ui.CompassHMC6352
+	 * @constructor
+	 * @augments ARDJS.I2CBase
+	 * @param {Arduino} board The Arduino instance
+	 * @param {Number} address The i2c address of the compass module
 	 */
-	this.getHeading = function() {
-		return _heading;
+	CompassHMC6352 = function(board, address) {
+
+		address = address || 0x21;
+		this._heading = 0;
+		this._lastHeading = 0;
+
+		this.name = "CompassHMC6352"; // for testing
+		
+		I2CBase.call(this, board, address);
+			
+		// 0x51 = 10 Hz measurement rate, Query mode
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x47, 0x74, 0x51]);
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x41]);
+		
+		this.startReading();
+
 	}
+
+	CompassHMC6352.prototype = ARDJS.inherit(I2CBase.prototype);
+	CompassHMC6352.prototype.constructor = CompassHMC6352;
+
+	/**
+	 * [read-only] The heading in degrees.
+	 * @name CompassHMC6352#heading
+	 * @property
+	 * @type Number
+	 */ 	 
+	CompassHMC6352.prototype.__defineGetter__("heading", function() {return this._heading; });
 	
 	/**
 	 * @private
 	 */
-	this.handleI2C = function(data) {
+	CompassHMC6352.prototype.handleI2C = function(data) {
+
 		// data[0] = register
-		_heading = Math.floor(((data[1] << 8) | data[2]) / 10.0);
+		this._heading = Math.floor(((data[1] << 8) | data[2]) / 10.0);
 		
-		if (_heading != _lastHeading) {
-			self.dispatchEvent(new Event(Event.CHANGE));
+		if (this._heading != this._lastHeading) {
+			this.dispatchEvent(new Event(Event.CHANGE));
 		}
-		_lastHeading = _heading;
+		this._lastHeading = this._heading;
 	}
 	
 	/**
 	 * Start continuous reading of the sensor
 	 */
-	this.startReading = function() {
-		self.sendI2CRequest([I2CBase.READ_CONTINUOUS, address, 0x7F, 0x02]);
+	CompassHMC6352.prototype.startReading = function() {
+		this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, 0x7F, 0x02]);
 	}
 	
 	/**
 	 * Stop continuous reading of the sensor
 	 */
-	this.stopReading = function() {
-		self.sendI2CRequest([I2CBase.STOP_READING, address]);
+	CompassHMC6352.prototype.stopReading = function() {
+		this.sendI2CRequest([I2CBase.STOP_READING, this.address]);
 	}
-	
-	this.startReading();
 
-}
 
-CompassHMC6352.prototype = new I2CBase;
-CompassHMC6352.prototype.constructor = CompassHMC6352;
+	return CompassHMC6352;
+
+}());

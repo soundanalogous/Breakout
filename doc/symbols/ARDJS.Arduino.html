@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Arduino</title>
+		<title>JsDoc Reference - ARDJS.Arduino</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -191,27 +191,35 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/Arduino.html">Arduino</a></li>
+	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ArduinoEvent.html">ArduinoEvent</a></li>
+	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
 	
-	<li><a href="../symbols/BlinkM.html">BlinkM</a></li>
+	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
 	
-	<li><a href="../symbols/CompassHMC6352.html">CompassHMC6352</a></li>
+	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
-	<li><a href="../symbols/Event.html">Event</a></li>
+	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
-	<li><a href="../symbols/EventDispatcher.html">EventDispatcher</a></li>
+	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
-	<li><a href="../symbols/I2CBase.html">I2CBase</a></li>
+	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
 	
-	<li><a href="../symbols/ID12RFIDReader.html">ID12RFIDReader</a></li>
+	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
-	<li><a href="../symbols/Pin.html">Pin</a></li>
+	<li><a href="../symbols/ARDJS.ui.Button.html">ARDJS.ui.Button</a></li>
 	
-	<li><a href="../symbols/RFIDEvent.html">RFIDEvent</a></li>
+	<li><a href="../symbols/ARDJS.ui.ButtonEvent.html">ARDJS.ui.ButtonEvent</a></li>
 	
-	<li><a href="../symbols/Servo.html">Servo</a></li>
+	<li><a href="../symbols/ARDJS.ui.CompassHMC6352.html">ARDJS.ui.CompassHMC6352</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.ID12RFIDReader.html">ARDJS.ui.ID12RFIDReader</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.PhysicalInputBase.html">ARDJS.ui.PhysicalInputBase</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.RFIDEvent.html">ARDJS.ui.RFIDEvent</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
 </ul>
 <hr />
@@ -222,7 +230,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class Arduino
+				Class ARDJS.Arduino
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -239,7 +247,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Arduino.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.Arduino.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -252,7 +260,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Arduino.html#constructor">Arduino</a></b>(host, port)
+								<b><a href="../symbols/ARDJS.Arduino.html#constructor">ARDJS.Arduino</a></b>(host, port, protocol)
 							</div>
 							<div class="description">Creates a new Arduino object representing the digital and analog inputs and
 outputs of the device as well as support for sending strings between the Arduino
@@ -270,7 +278,7 @@ sketch and your javascript application.</div>
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Arduino.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class ARDJS.Arduino.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -283,7 +291,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#addEventListener">addEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#addEventListener">addEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -292,7 +300,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#close">close</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#close">close</a></b>()
 								</div>
 								<div class="description">A wrapper for the close method of the WebSocket</div>
 							</td>
@@ -301,7 +309,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#disableDigitalPinReporting">disableDigitalPinReporting</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#disableDigitalPinReporting">disableDigitalPinReporting</a></b>()
 								</div>
 								<div class="description">Disables digital pin reporting for all digital pins</div>
 							</td>
@@ -310,7 +318,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#dispatchEvent">dispatchEvent</a></b>(type)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#dispatchEvent">dispatchEvent</a></b>(type, optionalParams)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -319,7 +327,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#enableDigitalPinReporting">enableDigitalPinReporting</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#enableDigitalPinReporting">enableDigitalPinReporting</a></b>()
 								</div>
 								<div class="description">Enables digital pin reporting for all digital pins.</div>
 							</td>
@@ -328,7 +336,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getAnalogData">getAnalogData</a></b>(pin)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getAnalogData">getAnalogData</a></b>(pin)
 								</div>
 								<div class="description">Returns the analog data for a specified pin.</div>
 							</td>
@@ -337,7 +345,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getAnalogPin">getAnalogPin</a></b>(pinNumber)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getAnalogPin">getAnalogPin</a></b>(pinNumber)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -346,7 +354,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getDigitalData">getDigitalData</a></b>(pin)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getDigitalData">getDigitalData</a></b>(pin)
 								</div>
 								<div class="description">Returns the digital data for a specified pin.</div>
 							</td>
@@ -355,7 +363,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getDigitalPin">getDigitalPin</a></b>(pinNumber)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getDigitalPin">getDigitalPin</a></b>(pinNumber)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -364,7 +372,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getFirmwareVersion">getFirmwareVersion</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getFirmwareVersion">getFirmwareVersion</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -373,7 +381,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getPin">getPin</a></b>(pinNumber)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getPin">getPin</a></b>(pinNumber)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -382,7 +390,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getPinCount">getPinCount</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getPinCount">getPinCount</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -391,7 +399,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getServo">getServo</a></b>(pin)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getServo">getServo</a></b>(pin)
 								</div>
 								<div class="description">Checks if a servo is connected to the specified pin number</div>
 							</td>
@@ -400,7 +408,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#getSocket">getSocket</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#getSocket">getSocket</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -409,7 +417,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#hasEventListener">hasEventListener</a></b>(type)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#hasEventListener">hasEventListener</a></b>(type)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -418,7 +426,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#queryAnalogMapping">queryAnalogMapping</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#queryAnalogMapping">queryAnalogMapping</a></b>()
 								</div>
 								<div class="description">Query which pins correspond to the analog channels</div>
 							</td>
@@ -427,7 +435,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#removeEventListener">removeEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#removeEventListener">removeEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -436,7 +444,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#reportCapabilities">reportCapabilities</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#reportCapabilities">reportCapabilities</a></b>()
 								</div>
 								<div class="description">Call this method to print the capabilities for all pins to the console</div>
 							</td>
@@ -445,7 +453,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#reportFirmware">reportFirmware</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#reportFirmware">reportFirmware</a></b>()
 								</div>
 								<div class="description">Request the name of the firmware (the sketch) running on the Arduino.</div>
 							</td>
@@ -454,7 +462,7 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#reportVersion">reportVersion</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#reportVersion">reportVersion</a></b>()
 								</div>
 								<div class="description">Request the Firmata version implemented in the firmware (sketch) running
 on the Arduino.</div>
@@ -464,7 +472,7 @@ on the Arduino.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendAnalog">sendAnalog</a></b>(pin, value)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendAnalog">sendAnalog</a></b>(pin, value)
 								</div>
 								<div class="description">Simulate an analog signal on a PWM pin.</div>
 							</td>
@@ -473,7 +481,7 @@ on the Arduino.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendDigital">sendDigital</a></b>(pin, value)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendDigital">sendDigital</a></b>(pin, value)
 								</div>
 								<div class="description">Set a digital pin on the Arduino to High or Low.</div>
 							</td>
@@ -482,7 +490,7 @@ on the Arduino.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendDigitalPortReporting">sendDigitalPortReporting</a></b>(mode, mode)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendDigitalPortReporting">sendDigitalPortReporting</a></b>(mode, mode)
 								</div>
 								<div class="description">Enable or disable reporting of all digital pins for the specified port.</div>
 							</td>
@@ -491,7 +499,7 @@ on the Arduino.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendExtendedAnalog">sendExtendedAnalog</a></b>(pin, value)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendExtendedAnalog">sendExtendedAnalog</a></b>(pin, value)
 								</div>
 								<div class="description">An alternative to the normal analog message allowing addressing beyond pin 15
 and supports sending analog values up to 16 bits.</div>
@@ -501,7 +509,7 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendServo">sendServo</a></b>(pin, value)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendServo">sendServo</a></b>(pin, value)
 								</div>
 								<div class="description">Set the angle (in degrees) to rotate the servo head to.</div>
 							</td>
@@ -510,7 +518,7 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendServoAttach">sendServoAttach</a></b>(pin, minPulse, maxPulse)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendServoAttach">sendServoAttach</a></b>(pin, minPulse, maxPulse)
 								</div>
 								<div class="description">Call to associate a pin with a connected servo motor.</div>
 							</td>
@@ -519,7 +527,7 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#sendString">sendString</a></b>(str)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#sendString">sendString</a></b>(str)
 								</div>
 								<div class="description">Send a string message to the Arduino.</div>
 							</td>
@@ -528,7 +536,7 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#setAnalogPinReporting">setAnalogPinReporting</a></b>(pin, mode)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#setAnalogPinReporting">setAnalogPinReporting</a></b>(pin, mode)
 								</div>
 								<div class="description">Call this method to enable or disable analog input for the specified pin.</div>
 							</td>
@@ -537,7 +545,7 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#setPinMode">setPinMode</a></b>(pin, mode)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#setPinMode">setPinMode</a></b>(pin, mode)
 								</div>
 								<div class="description">Set the specified pin to Input or Output.</div>
 							</td>
@@ -546,7 +554,7 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Arduino.html#setSamplingInterval">setSamplingInterval</a></b>(interval)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Arduino.html#setSamplingInterval">setSamplingInterval</a></b>(interval)
 								</div>
 								<div class="description">Set the sampling interval (how often to run the main loop on the Arduino).</div>
 							</td>
@@ -569,7 +577,7 @@ and supports sending analog values up to 16 bits.</div>
 				</div>
 				
 				<div class="fixedFont">
-						<b>Arduino</b>(host, port)
+						<b>ARDJS.Arduino</b>(host, port, protocol)
 				</div>
 				
 				<div class="description">
@@ -592,13 +600,19 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 								<span class="light fixedFont">{String}</span>  <b>host</b>
 								
 							</dt>
-								<dd>The host address of the web server</dd>
+								<dd>The host address of the web server.</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Number}</span>  <b>port</b>
 								
 							</dt>
-								<dd>The port to connect to on the web server</dd>
+								<dd>The port to connect to on the web server.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>protocol</b>
+								
+							</dt>
+								<dd>The websockt protocol definition (if necessary).</dd>
 						
 						</dl>
 					
@@ -717,7 +731,7 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 					<div class="fixedFont">
 					
 					
-					<b>dispatchEvent</b>(type)
+					<b>dispatchEvent</b>(type, optionalParams)
 					
 					</div>
 					<div class="description">
@@ -733,10 +747,16 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/Event.html">Event</a>}</span> <b>type</b>
+									<span class="light fixedFont">{Event}</span> <b>type</b>
 									
 								</dt>
-								<dd>The Event object
+								<dd>The Event object</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
+									
+								</dt>
+								<dd>Optional parameters to assign to the event object.
 return {boolean} True if dispatch is successful, false if not.</dd>
 							
 							</dl>
@@ -787,7 +807,7 @@ before you can receive digital pin data from the Arduino.
 						Returns the analog data for a specified pin. The range is from 0.0 to 1.0.
 <p>When an analog value is received it is stored. However it is best in most cases to listen
 for the ArduinoEvent.ANALOG_DATA and get the analog value from the
-event parameter (event.data.value) rather than using this getter method.</p>
+event parameter (event.value) rather than using this getter method.</p>
 						
 						
 					</div>
@@ -825,7 +845,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 					<a name="getAnalogPin"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/Pin.html">Pin</a>}</span>
+					<span class="light">{Pin}</span>
 					<b>getAnalogPin</b>(pinNumber)
 					
 					</div>
@@ -856,7 +876,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/Pin.html">Pin</a>}</span> A reference to the Pin object (mapped to the Arduino board analog pin).</dd>
+								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the Arduino board analog pin).</dd>
 							
 							</dl>
 						
@@ -876,7 +896,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 						Returns the digital data for a specified pin.
 <p>When a digital value is received it is stored. However it is best in most cases to listen
 for the ArduinoEvent.DIGITAL_DATA and get the digital value from the
-event parameter (event.data.value) rather than using this getter method.</p>
+event parameter (event.value) rather than using this getter method.</p>
 						
 						
 					</div>
@@ -914,7 +934,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 					<a name="getDigitalPin"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/Pin.html">Pin</a>}</span>
+					<span class="light">{Pin}</span>
 					<b>getDigitalPin</b>(pinNumber)
 					
 					</div>
@@ -945,7 +965,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/Pin.html">Pin</a>}</span> A reference to the Pin object (mapped to the Arduino board digital pin).</dd>
+								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the Arduino board digital pin).</dd>
 							
 							</dl>
 						
@@ -989,7 +1009,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 					<a name="getPin"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{<a href="../symbols/Pin.html">Pin</a>}</span>
+					<span class="light">{Pin}</span>
 					<b>getPin</b>(pinNumber)
 					
 					</div>
@@ -1020,7 +1040,7 @@ event parameter (event.data.value) rather than using this getter method.</p>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{<a href="../symbols/Pin.html">Pin</a>}</span> An unmapped reference to the Pin object.</dd>
+								<dd><span class="light fixedFont">{Pin}</span> An unmapped reference to the Pin object.</dd>
 							
 							</dl>
 						
@@ -1768,7 +1788,7 @@ this method should not be called.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Oct 01 2011 19:54:11 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Nov 06 2011 00:25:58 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

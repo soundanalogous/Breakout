@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Pin</title>
+		<title>JsDoc Reference - ARDJS.Pin</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -191,27 +191,35 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/Arduino.html">Arduino</a></li>
+	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ArduinoEvent.html">ArduinoEvent</a></li>
+	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
 	
-	<li><a href="../symbols/BlinkM.html">BlinkM</a></li>
+	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
 	
-	<li><a href="../symbols/CompassHMC6352.html">CompassHMC6352</a></li>
+	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
-	<li><a href="../symbols/Event.html">Event</a></li>
+	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
-	<li><a href="../symbols/EventDispatcher.html">EventDispatcher</a></li>
+	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
-	<li><a href="../symbols/I2CBase.html">I2CBase</a></li>
+	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
 	
-	<li><a href="../symbols/ID12RFIDReader.html">ID12RFIDReader</a></li>
+	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
-	<li><a href="../symbols/Pin.html">Pin</a></li>
+	<li><a href="../symbols/ARDJS.ui.Button.html">ARDJS.ui.Button</a></li>
 	
-	<li><a href="../symbols/RFIDEvent.html">RFIDEvent</a></li>
+	<li><a href="../symbols/ARDJS.ui.ButtonEvent.html">ARDJS.ui.ButtonEvent</a></li>
 	
-	<li><a href="../symbols/Servo.html">Servo</a></li>
+	<li><a href="../symbols/ARDJS.ui.CompassHMC6352.html">ARDJS.ui.CompassHMC6352</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.ID12RFIDReader.html">ARDJS.ui.ID12RFIDReader</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.PhysicalInputBase.html">ARDJS.ui.PhysicalInputBase</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.RFIDEvent.html">ARDJS.ui.RFIDEvent</a></li>
+	
+	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
 </ul>
 <hr />
@@ -222,7 +230,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class Pin
+				Class ARDJS.Pin
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -239,7 +247,7 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Pin.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.Pin.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -252,7 +260,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Pin.html#constructor">Pin</a></b>(number, type)
+								<b><a href="../symbols/ARDJS.Pin.html#constructor">ARDJS.Pin</a></b>(number, type)
 							</div>
 							<div class="description">An object to represent an Arduino pin</div>
 						</td>
@@ -265,7 +273,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class Pin.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.Pin.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -279,7 +287,47 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.AIN">AIN</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.AIN">AIN</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#analogReporting">analogReporting</a></b>
+								</div>
+								<div class="description">[read-only] Indicates whether or not analog reporting is enabled for this pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.AOUT">AOUT</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#average">average</a></b>
+								</div>
+								<div class="description">[read-only] The average value of the pin over time.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.DIN">DIN</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -289,7 +337,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.AOUT">AOUT</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.DOUT">DOUT</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -299,7 +347,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.DIN">DIN</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.HIGH">HIGH</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -309,7 +357,67 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.DOUT">DOUT</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.I2C">I2C</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#lastValue">lastValue</a></b>
+								</div>
+								<div class="description">[read-only] The last pin value.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.LOW">LOW</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#maximum">maximum</a></b>
+								</div>
+								<div class="description">[read-only] The maximum value of the pin over time.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#minimum">minimum</a></b>
+								</div>
+								<div class="description">[read-only] The minimum value of the pin over time.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#number">number</a></b>
+								</div>
+								<div class="description">[read-only] The pin number corresponding to the Arduino documentation for the type of board.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.OFF">OFF</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -319,7 +427,27 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.HIGH">HIGH</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.ON">ON</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Pin.html#preFilterValue">preFilterValue</a></b>
+								</div>
+								<div class="description">[read-only] The value before any filters were applied.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.PWM">PWM</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -329,7 +457,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.I2C">I2C</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.SERVO">SERVO</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -339,7 +467,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.LOW">LOW</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.SHIFT">SHIFT</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -349,59 +477,19 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.OFF">OFF</a></b>
+								ARDJS.Pin.<b><a href="../symbols/ARDJS.Pin.html#.TOTAL_PIN_MODES">TOTAL_PIN_MODES</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.ON">ON</a></b>
+								<b><a href="../symbols/ARDJS.Pin.html#value">value</a></b>
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.PWM">PWM</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.SERVO">SERVO</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.SHIFT">SHIFT</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								Pin.<b><a href="../symbols/Pin.html#.TOTAL_PIN_MODES">TOTAL_PIN_MODES</a></b>
-								</div>
-								<div class="description"></div>
+								<div class="description">The current digital or analog value of the pin.</div>
 							</td>
 						</tr>
 					
@@ -416,7 +504,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Pin.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class ARDJS.Pin.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -429,7 +517,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#addEventListener">addEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Pin.html#addEventListener">addEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -438,7 +526,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#clear">clear</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Pin.html#clear">clear</a></b>()
 								</div>
 								<div class="description">Resets the minimum, maximum, average and lastValue of the pin.</div>
 							</td>
@@ -447,7 +535,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#dispatchEvent">dispatchEvent</a></b>(type)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Pin.html#dispatchEvent">dispatchEvent</a></b>(type, optionalParams)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -456,7 +544,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getAnalogReporting">getAnalogReporting</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Pin.html#hasEventListener">hasEventListener</a></b>(type)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -465,97 +553,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getAverage">getAverage</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getLastValue">getLastValue</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getMaximum">getMaximum</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getMinimum">getMinimum</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getNumber">getNumber</a></b>()
-								</div>
-								<div class="description">Get the pin number corresponding to the Arduino documentation for the type of board.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getPreFilterValue">getPreFilterValue</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#getValue">getValue</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#hasEventListener">hasEventListener</a></b>(type)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#removeEventListener">removeEventListener</a></b>(type, listener)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#setAnalogReporting">setAnalogReporting</a></b>(mode)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Pin.html#setValue">setValue</a></b>(val)
+								<div class="fixedFont"><b><a href="../symbols/ARDJS.Pin.html#removeEventListener">removeEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -578,7 +576,7 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>Pin</b>(number, type)
+						<b>ARDJS.Pin</b>(number, type)
 				</div>
 				
 				<div class="description">
@@ -627,11 +625,33 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>AIN</b>
+					<span class="light">ARDJS.Pin.</span><b>AIN</b>
 					
 					</div>
 					<div class="description">
 						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="analogReporting"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Boolean}</span>
+					<b>analogReporting</b>
+					
+					</div>
+					<div class="description">
+						[read-only] Indicates whether or not analog reporting is enabled for this pin.
 						
 						
 					</div>
@@ -649,7 +669,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>AOUT</b>
+					<span class="light">ARDJS.Pin.</span><b>AOUT</b>
 					
 					</div>
 					<div class="description">
@@ -667,11 +687,33 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="average"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>average</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The average value of the pin over time. Call clear() to reset.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".DIN"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>DIN</b>
+					<span class="light">ARDJS.Pin.</span><b>DIN</b>
 					
 					</div>
 					<div class="description">
@@ -693,7 +735,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>DOUT</b>
+					<span class="light">ARDJS.Pin.</span><b>DOUT</b>
 					
 					</div>
 					<div class="description">
@@ -715,7 +757,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>HIGH</b>
+					<span class="light">ARDJS.Pin.</span><b>HIGH</b>
 					
 					</div>
 					<div class="description">
@@ -737,11 +779,33 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>I2C</b>
+					<span class="light">ARDJS.Pin.</span><b>I2C</b>
 					
 					</div>
 					<div class="description">
 						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="lastValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>lastValue</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The last pin value.
 						
 						
 					</div>
@@ -759,7 +823,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>LOW</b>
+					<span class="light">ARDJS.Pin.</span><b>LOW</b>
 					
 					</div>
 					<div class="description">
@@ -777,11 +841,77 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="maximum"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>maximum</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The maximum value of the pin over time. Call clear() to reset.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="minimum"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>minimum</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The minimum value of the pin over time. Call clear() to reset.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="number"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>number</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The pin number corresponding to the Arduino documentation for the type of board.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".OFF"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>OFF</b>
+					<span class="light">ARDJS.Pin.</span><b>OFF</b>
 					
 					</div>
 					<div class="description">
@@ -803,7 +933,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>ON</b>
+					<span class="light">ARDJS.Pin.</span><b>ON</b>
 					
 					</div>
 					<div class="description">
@@ -821,11 +951,33 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="preFilterValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>preFilterValue</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The value before any filters were applied.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".PWM"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>PWM</b>
+					<span class="light">ARDJS.Pin.</span><b>PWM</b>
 					
 					</div>
 					<div class="description">
@@ -847,7 +999,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>SERVO</b>
+					<span class="light">ARDJS.Pin.</span><b>SERVO</b>
 					
 					</div>
 					<div class="description">
@@ -869,7 +1021,7 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>SHIFT</b>
+					<span class="light">ARDJS.Pin.</span><b>SHIFT</b>
 					
 					</div>
 					<div class="description">
@@ -891,11 +1043,33 @@ ul.inheritsList
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">Pin.</span><b>TOTAL_PIN_MODES</b>
+					<span class="light">ARDJS.Pin.</span><b>TOTAL_PIN_MODES</b>
 					
 					</div>
 					<div class="description">
 						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="value"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>value</b>
+					
+					</div>
+					<div class="description">
+						The current digital or analog value of the pin.
 						
 						
 					</div>
@@ -988,7 +1162,7 @@ ul.inheritsList
 					<div class="fixedFont">
 					
 					
-					<b>dispatchEvent</b>(type)
+					<b>dispatchEvent</b>(type, optionalParams)
 					
 					</div>
 					<div class="description">
@@ -1004,10 +1178,16 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{<a href="../symbols/Event.html">Event</a>}</span> <b>type</b>
+									<span class="light fixedFont">{Event}</span> <b>type</b>
 									
 								</dt>
-								<dd>The Event object
+								<dd>The Event object</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
+									
+								</dt>
+								<dd>Optional parameters to assign to the event object.
 return {boolean} True if dispatch is successful, false if not.</dd>
 							
 							</dl>
@@ -1015,255 +1195,6 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 						
 						
 						
-						
-						
-						
-
-					<hr />
-				
-					<a name="getAnalogReporting"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>getAnalogReporting</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="getAverage"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getAverage</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The average value of the pin over time. Call clear() to reset.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getLastValue"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getLastValue</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> Get the last pin value</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getMaximum"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getMaximum</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The maximum value of the pin over time. Call clear() to reset.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getMinimum"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getMinimum</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The minimum value of the pin over time. Call clear() to reset.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getNumber"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getNumber</b>()
-					
-					</div>
-					<div class="description">
-						Get the pin number corresponding to the Arduino documentation for the type of board.
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The pin number</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getPreFilterValue"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getPreFilterValue</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The value before any filters were applied.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getValue"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getValue</b>()
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> Get the current digital or analog value of the pin</dd>
-							
-							</dl>
 						
 						
 						
@@ -1347,78 +1278,6 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 						
 						
 
-					<hr />
-				
-					<a name="setAnalogReporting"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setAnalogReporting</b>(mode)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>mode</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setValue"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setValue</b>(val)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>val</b>
-									
-								</dt>
-								<dd>Set the pin value</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
 					
 				
 			
@@ -1433,7 +1292,7 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Oct 01 2011 19:54:11 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Nov 06 2011 00:25:59 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

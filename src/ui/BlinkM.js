@@ -1,28 +1,49 @@
 /**
- * Creates and BlinkM object
- *
- * @constructor
- * @augments I2CBase 
- * @param {Arduino} board The Arduino instance
- * @param {Number} address The i2c address of the BlinkM module
+ * @author Jeff Hoefs
  */
-function BlinkM(board, address) {
 
-	address = address || 0x09;	// default i2c address for BlinkM
-	
-	var self = this;
+ARDJS.namespace('ARDJS.ui.BlinkM');
 
-	// call super class
-	I2CBase.call(self, board, address);
-	
+ARDJS.ui.BlinkM = (function() {
+
+	var BlinkM;
+
+	// dependencies
+	var I2CBase = ARDJS.I2CBase;
+
+	/**
+	 * Creates and BlinkM object
+	 *
+	 * @exports BlinkM as ARDJS.ui.BlinkM
+	 * @constructor
+	 * @augments ARDJS.I2CBase 
+	 * @param {Arduino} board The Arduino instance
+	 * @param {Number} address The i2c address of the BlinkM module
+	 */
+	BlinkM = function(board, address) {
+
+		address = address || 0x09;	// default i2c address for BlinkM
+
+		this.name = "BlinkM"; // for testing
+		
+		// call super class
+		I2CBase.call(this, board, address);
+		
+
+	};
+
+	BlinkM.prototype = ARDJS.inherit(I2CBase.prototype);
+	BlinkM.prototype.constructor = BlinkM;
+
+
 	/**
 	 * Sets the BlinkM to the specified RGB color immediately
 	 * @param {Number{}} color An array containing the RGB values. 
 	 * color[0] = R, color[1] = G, color[2] = B
 	 */
-	this.goToRGBColorNow = function(color) {
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x6E, color[0], color[1], color[2]]);
-	}
+	BlinkM.prototype.goToRGBColorNow = function(color) {
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x6E, color[0], color[1], color[2]]);
+	};
 	
 	/**
 	 * Fades to the specified RGB color in the specified time duration. 
@@ -32,13 +53,13 @@ function BlinkM(board, address) {
 	 * color[0] = R, color[1] = G, color[2] = B
 	 * @param {Number} speed The fade speed. Default value is 15.
 	 */
-	this.fadeToRGBColor = function(color, speed) {
-		speed = speed || -1;
+	BlinkM.prototype.fadeToRGBColor = function(color, speed) {
+		var speed = speed || -1;
 		if (speed >= 0) {
-			self.sendI2CRequest([I2CBase.WRITE, address, 0x66, speed]);
+			this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
 		}
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x63, color[0], color[1], color[2]]);
-	}
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x63, color[0], color[1], color[2]]);
+	};
 
 	/**
 	 * Fade to a random RGB color.
@@ -48,13 +69,13 @@ function BlinkM(board, address) {
 	 * colorRange[0] = range for Red (0-255), colorRange[1] = range for Green, etc.
 	 * @param {Number} speed The fade speed. Default value is 15.
 	 */
-	this.fadeToRandomRGBColor = function (colorRange, speed) {
-		speed = speed || -1;
+	BlinkM.prototype.fadeToRandomRGBColor = function (colorRange, speed) {
+		var speed = speed || -1;
 		if (speed >= 0) {
-			self.sendI2CRequest([I2CBase.WRITE, address, 0x66, speed]);
+			this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
 		}
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x43, colorRange[0], colorRange[1], colorRange[2]]);
-	}
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x43, colorRange[0], colorRange[1], colorRange[2]]);
+	};
 
 	/**
 	 * Fades to the specified HSB color in the specified time duration. 
@@ -64,13 +85,13 @@ function BlinkM(board, address) {
 	 * color[0] = H, color[1] = S, color[2] = B
 	 * @param {Number} speed The fade speed. Default value is 15.
 	 */
-	this.fadeToHSBColor = function(color, speed) {
-		speed = speed || -1;
+	BlinkM.prototype.fadeToHSBColor = function(color, speed) {
+		var speed = speed || -1;
 		if (speed >= 0) {
-			self.sendI2CRequest([I2CBase.WRITE, address, 0x66, speed]);
+			this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
 		}
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x68, color[0], color[1], color[2]]);
-	}
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x68, color[0], color[1], color[2]]);
+	};
 	
 	/**
 	 * Fade to a random HSB color.
@@ -80,13 +101,13 @@ function BlinkM(board, address) {
 	 * colorRange[0] = range for Hue (0-255), colorRange[1] = range for Saturation, etc.
 	 * @param {Number} speed The fade speed. Default value is 15.
 	 */	
-	this.fadeToRandomHSBColor = function(colorRange, speed) {
-		speed = speed || -1;
+	BlinkM.prototype.fadeToRandomHSBColor = function(colorRange, speed) {
+		var speed = speed || -1;
 		if (speed >= 0) {
-			self.sendI2CRequest([I2CBase.WRITE, address, 0x66, speed]);
+			this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
 		}
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x48, colorRange[0], colorRange[1], colorRange[2]]);
-	}
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x48, colorRange[0], colorRange[1], colorRange[2]]);
+	};
 
 	/**
 	 * Set the rate at which color fading happens. The range is from 1 to 255, where 1 is the
@@ -94,9 +115,9 @@ function BlinkM(board, address) {
 	 *
 	 * @param {Number} speed
 	 */
-	this.setFadeSpeed = function(speed) {
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x66, speed]);
-	}
+	BlinkM.prototype.setFadeSpeed = function(speed) {
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
+	};
 	
 	/**
 	 * Play a predefined light script. See the BlinkM datasheet page 20 for a list and 
@@ -106,27 +127,27 @@ function BlinkM(board, address) {
 	 * @param {Number} theNumberOfRepeats The number of times the script should repeat.
 	 * @param {Number} lineNumber The line number to begin the script from.
 	 */
-	this.playLightScript = function(scriptId, theNumberOfRepeats, lineNumber) {
-		theNumberOfRepeats = theNumberOfRepeats || 1;
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x70, scriptId, theNumberOfRepeats, lineNumber]);
-	}
+	BlinkM.prototype.playLightScript = function(scriptId, theNumberOfRepeats, lineNumber) {
+		var theNumberOfRepeats = theNumberOfRepeats || 1;
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x70, scriptId, theNumberOfRepeats, lineNumber]);
+	};
 
 	/**
 	 * Stop the currently playing predefined light script.
 	 */
-	this.stopScript = function() {
-		//self.sendI2CRequest([I2CBase.WRITE, address, 'o'.charCodeAt(0)]);
-		self.sendI2CRequest([I2CBase.WRITE, address, 0x6F]);
-	}
+	BlinkM.prototype.stopScript = function() {
+		//self.sendI2CRequest([I2CBase.WRITE, this.address, 'o'.charCodeAt(0)]);
+		this.sendI2CRequest([I2CBase.WRITE, this.address, 0x6F]);
+	};
 
 	/**
 	 * @private
 	 */
-	this.handleI2C = function(command, data) {
+	BlinkM.prototype.handleI2C = function(data) {
 		// TODO: implement if needed
 		console.log("BlinkM: " + data);
-	}
-}
+	};
 
-BlinkM.prototype = new I2CBase;
-BlinkM.prototype.constructor = BlinkM;
+	return BlinkM;
+
+}());
