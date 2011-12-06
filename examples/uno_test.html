@@ -50,8 +50,8 @@ $(document).ready(function() {
 	var Button = ARDJS.ui.Button;
 	var ButtonEvent = ARDJS.ui.ButtonEvent;
 
-		
-	var ard = new Arduino("localhost", 8887);
+	// set 3rd parameter to true to use the socket.io server
+	var ard = new Arduino("192.168.2.3", 8080, true);
 	
 	var frames = 0;
 	var intensity = 0;
@@ -126,8 +126,6 @@ $(document).ready(function() {
 		setTimeout(startReading, 3000);
 		
 		ard.addEventListener(ArduinoEvent.PIN_STATE_RESPONSE, onPinStateResponse);
-
-
 
 		//ard.queryAnalogMapping();	
 		

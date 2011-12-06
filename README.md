@@ -1,7 +1,7 @@
 Arduino-JS
 ===
 
-A javascript framework for Arduino. Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
+A javascript framework for Arduino for prototyping HW/SW interaction. Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
 
 Arduino-JS is currently alpha software so exptect it to change.
 
@@ -31,6 +31,12 @@ Test environment
 ---
 
 Mac OSX Snow Leopard and Lion (have not tested in Linux or Windows)
+
+Note: tested in Windows 7, but can't get node-serialport to install in Windows. As an alternative I'm developing a cross platform java serial to websocket bridge that I'll post in a few days.
+
+Also works on smartphones that support websockets. Have tested successfully on the following (make sure you set the IP address in the Arduino constructor to the IP address of the server - the computer the Arduino is connected to):
+iPhone 3GS, iPhone4, iPhone4S (using server_socket-io.js)
+Android 2.3.3 and 3.1 (using Firefox 8 browser in Andriod, works with either server.js or server_socket-io.js). Native Android browser does not yet support websockets (socket.io will use xhr polling).
 
 Supported browsers:
 
