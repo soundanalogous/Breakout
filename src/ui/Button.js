@@ -96,7 +96,7 @@ ARDJS.ui.Button = (function() {
 		
 		var btnVal = evt.target.value;
 		var stateHandler;
-
+				
 		if (this.buttonMode === Button.PULL_DOWN) {
 			if (btnVal === 1) stateHandler = this.pressed;
 			else stateHandler = this.released;
@@ -121,7 +121,7 @@ ARDJS.ui.Button = (function() {
 
 		this.dispatchEvent(new ButtonEvent(ButtonEvent.PRESS));
 		
-		this_timer = setInterval(this.sustainedPress.bind(this), this.longPressDelay);
+		this._timer = setInterval(this.sustainedPress.bind(this), this.longPressDelay);
 	};
 	
 	/**
