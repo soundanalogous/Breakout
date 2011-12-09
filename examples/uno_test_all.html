@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+#textBox{
+
+}
+
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>Arduino UNO Test</title>
+
+<!-- order of import is important -->
+<script src="../socket.io/socket.io.js"></script>
+<script src="../libs/jquery-1.6.3.min.js"></script>
+<script src="../src/ARDJS.js"></script>
+<script src="../src/Event.js"></script>
+<script src="../src/EventDispatcher.js"></script>
+<script src="../src/ArduinoEvent.js"></script>
+<script src="../src/Pin.js"></script>
+<script src="../src/I2CBase.js"></script>
+<script src="../src/ui/BlinkM.js"></script>
+<script src="../src/ui/CompassHMC6352.js"></script>
+<script src="../src/ui/PhysicalInputBase.js"></script>
+<script src="../src/ui/Button.js"></script>
+<script src="../src/WebSocket.js"></script>
+<script src="../src/Arduino.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var Arduino = ARDJS.Arduino;
+	var Pin = ARDJS.Pin;
+	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var Event = ARDJS.Event;
+	var BlinkM = ARDJS.ui.BlinkM;
+	var CompassHMC6352 = ARDJS.ui.CompassHMC6352;
+	var Button = ARDJS.ui.Button;
+	var ButtonEvent = ARDJS.ui.ButtonEvent;
+
+		
+	var ard = new Arduino("192.168.2.3", 8080, true);
+	
+	var frames = 0;
+	var intensity = 0;
+	var direction = 1;
+	var servoDir = true;
+	var blinkM;
+	var compass;
+	var servo;
+	var blinkLED;
+	var fadeLED;
+
+	console.log("name = " + ard.name);
+	
+	ard.addEventListener(ArduinoEvent.READY, onReady);
+
+	function onReady(event) {
+					
+		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		
+		// test sampline interval
+		//ard.setSamplingInterval(33);
+			
+		// listen for incoming string messages
+		ard.addEventListener(ArduinoEvent.STRING_MESSAGE, onStringMessage);
+		
+		// set digital pin 13 to output
+		ard.setPinMode(13, Pin.DOUT);
+		// get a reference to the pin
+		blinkLED = ard.getDigitalPin(13);
+		blinkLED.value = Pin.LOW;	
+		setInterval(blink, 3000);
+	
+		//set digital pin 2 to input
+		ard.setPinMode(2, Pin.DIN);
+		
+		// get a reference to the pin and listen for Change event
+		//var button01 = ard.getDigitalPin(2);
+		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_DOWN);
+		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+		
+		// enable reporting for an analog pin
+		ard.setAnalogPinReporting(0, Pin.ON);
+		var pot = ard.getAnalogPin(0);
+		pot.addEventListener(Event.CHANGE, onPotChange);
+		// disable reporting for an analog pin
+		//ard.setAnalogPinReporting(0, Pin.OFF);
+		
+		// set analog pin to digital input
+		ard.setPinMode(16, Pin.DIN);
+		var button02 = ard.getDigitalPin(16);
+		button02.addEventListener(Event.CHANGE, onButtonChange);
+		
+		// set a pin to PWM
+		ard.setPinMode(11, Pin.PWM);
+		fadeLED = ard.getDigitalPin(11);
+		setInterval(fade, 11);			
+		
+		// set a pin to SERVO
+		ard.setPinMode(9, Pin.SERVO);
+		servo = ard.getDigitalPin(9);
+		//setInterval(servoTest, 5000);
+		
+		blinkM = new BlinkM(ard);
+		blinkM.stopScript();
+		setInterval(randomColor, 2000);
+		
+		compass = new CompassHMC6352(ard);
+		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
+		
+		setTimeout(stopReading, 1000);
+		setTimeout(startReading, 3000);
+		
+		ard.addEventListener(ArduinoEvent.PIN_STATE_RESPONSE, onPinStateResponse);
+
+		//ard.queryAnalogMapping();	
+		
+		// query pin state for each pin
+		//for (var j=0, len = ard.getPinCount(); j<len; j++) {
+		//	ard.queryPinState(ard.getDigitalPin(j));
+		//}
+		
+	}
+	
+	function stopReading() {
+		compass.stopReading();
+	}
+	
+	function startReading() {
+		compass.startReading();
+	}	
+	
+	function onHeadingUpdate(evt) {
+		//console.log("heading = " + evt.target.heading);
+		$('#heading').html("heading: " + evt.target.heading);
+	}	
+	
+	function randomColor() {
+		var red = Math.floor(Math.random() * 255);
+		var green = Math.floor(Math.random() * 255);
+		var blue = Math.floor(Math.random() * 255);
+		
+		blinkM.goToRGBColorNow([red, green, blue]);
+		//blinkM.fadeToRGBColor([red, green, blue]);
+	}	
+	
+	function onPotChange(event) {
+		var pin = event.target;
+		var analogData = "pot value: " + pin.value.toFixed(3) + 
+			"\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
+			pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
+		
+		//console.log(analogData);
+		$('#potData').html(analogData);	
+	}
+
+	function onButtonPress(event) {
+		var btn = event.target;
+		$('#button').html("button: pin = " + btn.pinNumber + " pressed");
+	}
+
+	function onButtonRelease(event) {
+		var btn = event.target;
+		$('#button').html("button: pin = " + btn.pinNumber + " released");
+	}
+	
+	function onButtonChange(event) {
+		var pin = event.target;
+		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
+		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
+	}	
+	
+	function onFirmwareVersion(event) {
+		console.log("firmware version: " + event.version);
+	}
+	
+	function onFirmwareName(event) {
+		console.log("firmware name: " + event.name + " version: " + event.version);
+	}
+	
+	function onCapabilityResponse(event) {
+		// print capabilities to the console
+		ard.reportCapabilities();
+	}
+	
+	function onStringMessage(event) {
+		console.log("string received: " + event.message);
+	}
+	
+	function onPinStateResponse(event) {
+		var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
+		var pinType = modeNames[event.type];
+		console.log("pin state response = " + event.pin + "\t" + pinType);
+	}	
+	
+	function fade() {
+		fadeLED.value = (intensity += direction);
+		// test sendExtendedAnalog method
+		//ard.sendExtendedAnalog(11, intensity += direction);
+		if (intensity == 255) direction = -1;
+		else if (intensity == 0) direction = 1;
+	}
+	
+	function servoTest() {
+		if (servoDir) {
+			servo.value = 0;
+		} else {
+			servo.value = 180;
+		}
+		servoDir = !servoDir;
+	}
+	
+	function blink() {
+		frames++;
+		if (frames % 2 == 0) {
+			blinkLED.value = Pin.LOW;
+		} else {
+			blinkLED.value = Pin.HIGH;
+		}
+	}
+			
+});
+
+</script>
+
+</head>
+<body>
+  
+	<div id="potData" class="text">pot value:</div>
+	<div id="heading" class="text">heading:</div>
+	<div id="button" class="text">button:</div>
+  
+</body>
+</html>​

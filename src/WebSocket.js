@@ -97,7 +97,9 @@ ARDJS.Socket = (function() {
 				if ("MozWebSocket" in window) {
 					self._socket = new MozWebSocket("ws://"+self._host+":"+self._port, self._protocol);
 				} else if ("WebSocket" in window) {
-					self._socket = new WebSocket("ws://"+self._host+":"+self._port, self._protocol);
+					// Safari doesn't like protocol parameter
+					//self._socket = new WebSocket("ws://"+self._host+":"+self._port, self._protocol);
+					self._socket = new WebSocket("ws://"+self._host+":"+self._port);
 				} else {
 					console.log("Websockets not supported by this browser");
 					throw "Websockets not supported by this browser";
