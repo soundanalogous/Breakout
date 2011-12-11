@@ -15,9 +15,8 @@
 <title>RFID Example</title>
 
 <!-- order of import is important -->
-<script src="../socket.io/socket.io.js"></script>
 <script src="../build/ArduinoJS.js"></script>
-<script src="../libs/jquery-1.6.3.min.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -29,8 +28,7 @@ $(document).ready(function() {
 	var ID12RFIDReader = ARDJS.ui.ID12RFIDReader;
 	var RFIDEvent = ARDJS.ui.RFIDEvent;
 	
-	// set 3rd parameter to true to use the socket.io server
-	var ard = new Arduino("localhost", 8080, true);
+	var ard = new Arduino("localhost", 8887+'/websocket');
 	
 	var rfid;
 		

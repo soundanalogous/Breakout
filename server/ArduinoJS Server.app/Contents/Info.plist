@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>CFBundleName</key>
+	<string>ArduinoJS Server</string>
+	<key>CFBundleIdentifier</key>
+	<string>ardjs.ArduinoJSServer</string>
+	<key>CFBundleVersion</key>
+	<string>100.0</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<string>true</string>
+	<key>CFBundleExecutable</key>
+	<string>JavaApplicationStub</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleIconFile</key>
+	<string>GenericApp.icns</string>
+	<key>Java</key>
+	<dict>
+		<key>MainClass</key>
+		<string>ardjs.ArduinoJSServer</string>
+		<key>JVMVersion</key>
+		<string>1.5+</string>
+		<key>ClassPath</key>
+			<array>
+			<string>$JAVAROOT/ArduinoJSServer.jar</string>
+			<string>$JAVAROOT/RXTXcomm.jar</string>
+			<string>$JAVAROOT/webbit-0.3.0-full.jar</string>
+			</array>
+	</dict>
+</dict>
+</plist>

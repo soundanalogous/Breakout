@@ -13,8 +13,3 @@
 * create a few practical examples
 
 * create build script
-
-* create simple gui-based server application (in progress... will upload soon)
-	- cross platform
-	- easy to install
-	- gui to select serial port and network port (for webserver connection)
