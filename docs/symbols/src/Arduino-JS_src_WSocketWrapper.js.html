@@ -55,12 +55,12 @@
 <span class='line'> 48</span>  * @author jeff hoefs
 <span class='line'> 49</span>  */</span><span class="WHIT">
 <span class='line'> 50</span> 
-<span class='line'> 51</span> </span><span class="NAME">ARDJS.namespace</span><span class="PUNC">(</span><span class="STRN">'ARDJS.Socket'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="NAME">ARDJS.namespace</span><span class="PUNC">(</span><span class="STRN">'ARDJS.WSocketWrapper'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 52</span> 
-<span class='line'> 53</span> </span><span class="NAME">ARDJS.Socket</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="NAME">ARDJS.WSocketWrapper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 54</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 55</span> 
-<span class='line'> 56</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Socket</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">WSocketWrapper</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 57</span> 
 <span class='line'> 58</span> </span><span class="WHIT"> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 59</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
@@ -69,7 +69,7 @@
 <span class='line'> 62</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 63</span> 	 * Creates a wrapper for various websocket implementations to unify the interface.
 <span class='line'> 64</span> 	 *
-<span class='line'> 65</span> 	 * @exports Socket as ARDJS.Socket
+<span class='line'> 65</span> 	 * @exports WSocketWrapper as ARDJS.WSocketWrapper
 <span class='line'> 66</span> 	 * @constructor
 <span class='line'> 67</span> 	 * @param {String} host The host address of the web server.
 <span class='line'> 68</span> 	 * @param {Number} port The port to connect to on the web server.
@@ -77,8 +77,8 @@
 <span class='line'> 70</span> 	 * native websocket implementation.
 <span class='line'> 71</span> 	 * @param {String} protocol The websockt protocol definition (if necessary).
 <span class='line'> 72</span> 	 */</span><span class="WHIT">
-<span class='line'> 73</span> </span><span class="WHIT">	</span><span class="NAME">Socket</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">host</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">port</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">useSocketIO</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">protocol</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 74</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"Socket"</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// for testing</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">host</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">port</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">useSocketIO</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">protocol</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"WSocketWrapper"</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="COMM">// for testing</span><span class="WHIT">
 <span class='line'> 75</span> 
 <span class='line'> 76</span> </span><span class="WHIT">		</span><span class="NAME">EventDispatcher.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 77</span> 
@@ -93,15 +93,15 @@
 <span class='line'> 86</span> 
 <span class='line'> 87</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 88</span> 
-<span class='line'> 89</span> </span><span class="WHIT">	</span><span class="NAME">Socket.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.inherit</span><span class="PUNC">(</span><span class="NAME">EventDispatcher.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 90</span> </span><span class="WHIT">	</span><span class="NAME">Socket.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Socket</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.inherit</span><span class="PUNC">(</span><span class="NAME">EventDispatcher.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">WSocketWrapper</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 91</span> 
 <span class='line'> 92</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 93</span> 	 * Initialize the websocket
 <span class='line'> 94</span> 	 * @param {Object} self A reference to this websocket object.
 <span class='line'> 95</span> 	 * @private
 <span class='line'> 96</span> 	 */</span><span class="WHIT">
-<span class='line'> 97</span> </span><span class="WHIT">	</span><span class="NAME">Socket.prototype.init</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper.prototype.init</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">self</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 98</span> 
 <span class='line'> 99</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">self._useSocketIO</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>100</span> </span><span class="WHIT">			</span><span class="NAME">self._socket</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">io.connect</span><span class="PUNC">(</span><span class="STRN">"http://"</span><span class="PUNC">+</span><span class="NAME">self._host</span><span class="PUNC">+</span><span class="STRN">":"</span><span class="PUNC">+</span><span class="NAME">self._port</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -164,7 +164,7 @@
 <span class='line'>157</span> 	 * Send a message
 <span class='line'>158</span> 	 * @param {String} message The message to send
 <span class='line'>159</span> 	 */</span><span class="WHIT">
-<span class='line'>160</span> </span><span class="WHIT">	</span><span class="NAME">Socket.prototype.send</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper.prototype.send</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>161</span> </span><span class="WHIT">		</span><span class="COMM">// to do: ensure socket is not null before trying to send</span><span class="WHIT">
 <span class='line'>162</span> </span><span class="WHIT">		</span><span class="NAME">this._socket.send</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>163</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
@@ -174,12 +174,12 @@
 <span class='line'>167</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'>168</span> 	 * [read-only] Wrapper for the readyState method of the native websocket implementation
 <span class='line'>169</span> 	 * &lt;p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3&lt;/p>
-<span class='line'>170</span> 	 * @name Socket#readyState
+<span class='line'>170</span> 	 * @name WSocketWrapper#readyState
 <span class='line'>171</span> 	 * @property
 <span class='line'>172</span> 	 * @type String
 <span class='line'>173</span> 	 */</span><span class="WHIT">		 
-<span class='line'>174</span> 	</span><span class="NAME">Socket.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"readyState"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._readyState</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>174</span> 	</span><span class="NAME">WSocketWrapper.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"readyState"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._readyState</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>175</span> 
-<span class='line'>176</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Socket</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>176</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">WSocketWrapper</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>177</span> 
 <span class='line'>178</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

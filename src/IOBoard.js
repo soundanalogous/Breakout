@@ -16,6 +16,7 @@ ARDJS.IOBoard = (function() {
 		EventDispatcher = ARDJS.EventDispatcher,
 		Event = ARDJS.Event,
 		SocketEvent = ARDJS.SocketEvent,
+		WSocketWrapper = ARDJS.WSocketWrapper,
 		IOBoardEvent = ARDJS.IOBoardEvent;
 
 	/**
@@ -97,7 +98,7 @@ ARDJS.IOBoard = (function() {
 		
 		var _evtDispatcher = new EventDispatcher(this);
 
-		var socket = new ARDJS.Socket(host, port, useSocketIO, protocol);
+		var socket = new WSocketWrapper(host, port, useSocketIO, protocol);
 		socket.addEventListener(SocketEvent.CONNECTED, onSocketConnection);
 		socket.addEventListener(SocketEvent.MESSAGE, onSocketMessage);
 		socket.addEventListener(SocketEvent.CLOSE, onSocketClosed);
