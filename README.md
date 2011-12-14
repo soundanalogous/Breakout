@@ -1,42 +1,52 @@
 Arduino-JS
 ===
 
-A javascript framework for Arduino. Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
+Arduino-JS enables rapid prototyping of browser-based applications that require physical inputs and outputs. Simply load StandardFirmata on your Arduino (or Arduino-compatible board) once and then use javascript (and html, css, etc) to use physical I/O with your web apps. You can also load pages on capable tablets and phones (browser must support websockets) if they are on the same wi-fi network as the computer running the Arduino-JS server.
 
-Arduino-JS is currently alpha software so exptect it to change.
+Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
+
+Arduino-JS is currently alpha so the API is not 100% stable so expect changes if you pull future releases. The API should be locked down by mid January.
 
 To use
 ---
 
-Install node.js and the required modules:
-
-1. Install [node.js](http://www.github.com/joyent/node). You can download and run the installer for your platform, or if you prefer to build manually, clone via git and checkout version 0.6.4 and follow the instructions to build.
-2. If you are installing node manually, install [npm](http://npmjs.org/) if you have not already. If you ran an installer in step 1, then npm was automatically installed for you.
-3. The server code depends on 3 node modules: [node-serialport](https://github.com/voodootikigod/node-serialport), [WebSocket-Node](https://github.com/Worlize/WebSocket-Node) and [node-websocket-server](https://github.com/miksago/node-websocket-server). Navigate to Arduino-JS/server/ then install each module (see the readme for each module for instructions)
-
-Upload StandardFirmata to the Arduino board:
+The first step is to upload StandardFirmata to your Arduino board:
 
 1. Launch Arduino 1.0 and navigate to File -> Examples -> Firmata -> StandardFirmata
-2. While you are in the Arduino IDE, select Tools -> Serial Port and note the serial port for your Arduino.
-3. Make sure your Arduino board is attached to your computer.
+2. Compile StandardFirmata for your board and upload.
 
-Run an example file:
+There are 2 choices of servers to use with Arduino-JS. The simplest is ArduinoJS Server which is a java application with a simple GUI. The alternative server requires [node.js](http://nodejs.org/). See instructions in the [wiki](https://github.com/soundanalogous/Arduino-JS/wiki/Using-the-node.js-server) to use the node.js server.
 
-1. Open Arduino-JS/server/server.js and replace the serial port string on line 31 with the serial port of your connected Arduino board (see step 3 above).
-2. Navigate to the server directory of Arduino-JS and run via the following command in your terminal: node server.js
-3. Verify that the server is running, you should see "...Server is listening on port 8080" in your terminal. If not make sure you have installed Node.js correctly (read the Node.js wiki) and entered the serial port for your Arduino in the server.js file.
-4. Open an example html file directly in Chrome or Safari and view the console (in Chrome: View -> Developer -> Developer Tools). You can also load the application by typing the url in the browser 'http://localhost:8080/examples/filename.html"
+Instructions for using ArduinoJS Server:
 
-Test environment
+1. Wire some hardware components to your Arduino (see schematics included with the examples).
+2. Make sure your Arduino is attached and the StandardFirmata sketch is uploaded. 
+3. You'll find the ArduinoJS Server (ArduinoJS Server.app for OS X or ArduinoJS Server.exe for Windows) in the Arduino-JS/server/. Simply double-click to launch the application.
+4. Select the serial port for your Arduino from the drop-down. If you wish to use a different network port than 8887 you may change also change it (and use the new port in steps 5 and 6 below).
+5. Click the Connect button. You should see the message "Server started on port: 8887".
+6. Open the example file: hello_world.html (http://localhost:8887/examples/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater).
+
+
+Test environment (for Arduino JS Server)
 ---
 
-Mac OSX Snow Leopard and Lion (have not tested in Linux or Windows)
+Mac OSX Snow Leopard and Lion
+Windows 7 ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
+Linux not yet supported (if you want to help, please let me know)
+
+Arduino-JS Server
+
+Also works on smartphones that support websockets. Have tested successfully on the following (make sure you set the IP address in the Arduino constructor to the IP address of the server - the computer the Arduino is connected to):
+
+Tested devices: 
+- iPhone 3GS, iPhone4, iPhone4S (iPhone 3G is too slow)
+- Android 2.3.3 and 3.1 (using Firefox 8 browser in Andriod). Native Android browser does not yet support websockets (you can use the node.js-based server.js and socket.io will use Flash or xhr polling).
 
 Supported browsers:
 
 - Google Chrome 14 & 15
-- Safari 5 (seems to have broken... should work again when Safari updates Websocket protocol)
-- Firefox 7 & 8
+- Safari 5 (desktop and mobile)
+- Firefox 7 & 8 (desktop and mobile)
 
 node js version 0.6.4
 
@@ -46,6 +56,14 @@ Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0):
 - Teensy 2.0
 - Arduino FIO
 - Arduino Mega
+
+The following boards should also work (I just don't have them to confirm):
+- Teensy 1.0
+- Teensy++ 1.0 and 2.0
+- Sanguino
+- Illuminato
+- older Arduinos (Duemilanove, Diecimila, NG)
+- Wiring
 
 The RFID example requires RFID_Firmata and the IDxRFIDReader library for Arduino [get it here](https://github.com/soundanalogous/IDxRFIDReader). RFID_Firmata is included in the Examples directory of the IDxRFIDReader library.
 

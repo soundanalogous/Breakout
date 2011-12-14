@@ -79,11 +79,10 @@ ARDJS.ui.Button = (function() {
 		this._debounceInterval = 20,
 		this._repeatCount = 0,
 		this._timer = null,
-		this._timeout = null;	
-		
-		pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
-		
-	}
+		this._timeout = null;
+				
+		pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));	
+	};
 
 
 	Button.prototype = ARDJS.inherit(PhysicalInputBase.prototype);
@@ -97,7 +96,7 @@ ARDJS.ui.Button = (function() {
 		
 		var btnVal = evt.target.value;
 		var stateHandler;
-
+				
 		if (this.buttonMode === Button.PULL_DOWN) {
 			if (btnVal === 1) stateHandler = this.pressed;
 			else stateHandler = this.released;
@@ -122,7 +121,7 @@ ARDJS.ui.Button = (function() {
 
 		this.dispatchEvent(new ButtonEvent(ButtonEvent.PRESS));
 		
-		this_timer = setInterval(this.sustainedPress.bind(this), this.longPressDelay);
+		this._timer = setInterval(this.sustainedPress.bind(this), this.longPressDelay);
 	};
 	
 	/**

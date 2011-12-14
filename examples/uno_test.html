@@ -19,20 +19,8 @@
 <title>Arduino UNO Test</title>
 
 <!-- order of import is important -->
-<!-- a minified file will be provided in the future to make this simpler -->
-<script src="../libs/jquery-1.6.3.min.js"></script>
-<script src="../src/ARDJS.js"></script>
-<script src="../src/Event.js"></script>
-<script src="../src/EventDispatcher.js"></script>
-<script src="../src/ArduinoEvent.js"></script>
-<script src="../src/Pin.js"></script>
-<script src="../src/I2CBase.js"></script>
-<script src="../src/ui/BlinkM.js"></script>
-<script src="../src/ui/CompassHMC6352.js"></script>
-<script src="../src/ui/PhysicalInputBase.js"></script>
-<script src="../src/ui/Button.js"></script>
-<script src="../src/Arduino.js"></script>
-
+<script src="../build/ArduinoJS.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -48,8 +36,7 @@ $(document).ready(function() {
 	var Button = ARDJS.ui.Button;
 	var ButtonEvent = ARDJS.ui.ButtonEvent;
 
-		
-	var ard = new Arduino("localhost", 8080);
+	var ard = new Arduino("localhost", 8887+'/websocket');
 	
 	var frames = 0;
 	var intensity = 0;
@@ -68,7 +55,7 @@ $(document).ready(function() {
 	function onReady(event) {
 					
 		ard.removeEventListener(ArduinoEvent.READY, onReady);
-		
+
 		// test sampline interval
 		//ard.setSamplingInterval(33);
 			
@@ -90,14 +77,14 @@ $(document).ready(function() {
 		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_DOWN);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
-		
+
 		// enable reporting for an analog pin
 		ard.setAnalogPinReporting(0, Pin.ON);
 		var pot = ard.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		// disable reporting for an analog pin
 		//ard.setAnalogPinReporting(0, Pin.OFF);
-		
+
 		// set analog pin to digital input
 		ard.setPinMode(16, Pin.DIN);
 		var button02 = ard.getDigitalPin(16);
@@ -178,7 +165,7 @@ $(document).ready(function() {
 	
 	function onButtonChange(event) {
 		var pin = event.target;
-		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
+		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value);
 		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
 	

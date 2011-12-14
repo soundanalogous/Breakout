@@ -1,22 +1,15 @@
 * port funnel UI classes (as3) to javascript:
     - Accelerometer
-    - Button
     - DCMotor
     - LED
     - RGBLED
-    - Servo
     - SoftPot
+    
+* decide on file structure:
+	- core + ui?
+	- core + input + output?
+	- core + sensors + actuators?
 
-* decide on and implement namespacing scheme
+* create a few practical examples
 
-* align code to js best practices
-
-* create a few practical examples (current examples simply print to console)
-
-* create minified library
-
-* create simple gui-based server application
-	- cross platform
-	- easy to install
-	- gui to select serial port and baud rate
-	- support multiple Arduino connections simultaneously?
+* create build script

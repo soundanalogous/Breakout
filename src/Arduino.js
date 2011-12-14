@@ -15,6 +15,7 @@ ARDJS.Arduino = (function() {
 	var Pin = ARDJS.Pin,
 		EventDispatcher = ARDJS.EventDispatcher,
 		Event = ARDJS.Event,
+		SocketEvent = ARDJS.SocketEvent,
 		ArduinoEvent = ARDJS.ArduinoEvent;
 
 	/**
@@ -30,7 +31,7 @@ ARDJS.Arduino = (function() {
 	 * @param {Number} port The port to connect to on the web server.
 	 * @param {String} protocol The websockt protocol definition (if necessary).
 	 */
-	Arduino = function(host, port, protocol) {
+	Arduino = function(host, port, useSocketIO, protocol) {
 		"use strict";
 		
 		this.name = "Arduino"; // for testing
@@ -71,6 +72,7 @@ ARDJS.Arduino = (function() {
 		var host = host;
 		var port = port;
 		var protocol = protocol || "default-protocol";
+		var useSocketIO = useSocketIO || false;
 		var socket;
 		var _browser = "";
 		
@@ -88,69 +90,39 @@ ARDJS.Arduino = (function() {
 		var _i2cPins = [];
 		var _ioPins = [];
 		var _totalPins = 0;
+
+		var _useSocketIO = false;
 		
 		var _firmwareVersion = 0;
 		
 		var _evtDispatcher = new EventDispatcher(this);
+
+		var socket = new ARDJS.Socket(host, port, useSocketIO, protocol);
+		socket.addEventListener(SocketEvent.CONNECTED, onSocketConnection);
+		socket.addEventListener(SocketEvent.MESSAGE, onSocketMessage);
+		socket.addEventListener(SocketEvent.CLOSE, onSocketClosed);
+
+		/**
+		 * @private
+		 */
+		function onSocketConnection(event) {
+			console.log("Socket Status: (open)");
+			self.dispatchEvent(new Event(Event.CONNECTED));
+			begin();			
+		}
+
+		function onSocketMessage(event) {
+			processData(event.message);
+		}
+
+		function onSocketClosed(event) {
+			console.log("Socket Status: "+socket.readyState+' (Closed)');
+		}
 				
-		connect();
+		//connect();
 		
 						
 		// private methods:
-		
-		// to do: 
-		// Create a wrapper for WebSocket and compose the wrapper in this class
-		// rather than using WebSockets directly.
-		// This will enable the user to swap the wrapper object if do not want to
-		// use WebSockets as long as all Socket wrappers maintain a consistent interface.
-		/**
-		 * @private
-		 */	
-		function connect () {
-			
-			if("MozWebSocket" in window) {
-				_browser = "mozilla";
-			} else if ("WebSocket" in window) {
-				_browser = "other";
-			} else {
-				console.log("Websockets not supported by this browser");
-				throw "Websockets not supported by this browser";
-				return;
-			}
-			
-			try{
-				if (_browser === "mozilla") {
-					socket = new MozWebSocket("ws://"+host+":"+port, protocol);
-				} else {
-					socket = new WebSocket("ws://"+host+":"+port, protocol);
-				}
-				console.log("Starting up...");
-				/**
-				 * @private
-				 */
-				socket.onopen = function(){
-					console.log("Socket Status: "+socket.readyState+" (open)");
-					self.dispatchEvent(new Event(Event.CONNECTED));
-					begin();
-				}
-				/**
-				 * @private
-				 */
-				socket.onmessage = function(msg){
-					processData(msg.data);
-				}
-				/**
-				 * @private
-				 */
-				socket.onclose = function(){
-					console.log("Socket Status: "+socket.readyState+' (Closed)');
-				}			
-					
-			} catch(exception){
-				console.log("Error "+exception);
-			}
-
-		}
 		
 		/**
 		 * @private
@@ -409,7 +381,7 @@ ARDJS.Arduino = (function() {
 			_totalPins = pinCounter;
 			console.log("debug: num pins = " + _totalPins);
 			
-			self.reportCapabilities();
+			//self.reportCapabilities();
 
 			console.log("debug: system reset");
 			systemReset();

@@ -5,7 +5,7 @@
 ARDJS.namespace('ARDJS.Pin');
 
 ARDJS.Pin = (function() {
-	"use strict";
+	//"use strict";	// closure compiler doesn't like this... should be fixed soon though
 
 	var Pin;
 
@@ -28,8 +28,8 @@ ARDJS.Pin = (function() {
 		this.name = "Pin"; // for testing
 		
 		this._number = number,
-		this._value = 1,
-		this._lastValue = 1,
+		this._value = -1,
+		this._lastValue = -1,
 		this._preFilterValue,
 		this._average = 0,
 		this._minimum = Math.pow(2, 16),
