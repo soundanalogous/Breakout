@@ -1,9 +1,9 @@
 Arduino-JS
 ===
 
-Arduino-JS enables rapid prototyping of browser-based applications that require physical inputs and outputs. Simply load StandardFirmata on your Arduino (or Arduino-compatible board) once and then use javascript (and html, css, etc) to use physical I/O with your web apps. You can also load pages on capable tablets and phones (browser must support websockets) if they are on the same wi-fi network as the computer running the Arduino-JS server.
+Arduino-JS enables rapid prototyping of browser-based applications that require physical inputs and outputs. Simply load StandardFirmata on your Arduino (or Arduino-compatible board, see list below) once and then use javascript (and html, css, etc) to use physical I/O with your web apps. You can also load pages on capable tablets and phones (browser must support websockets) if they are on the same wi-fi network as the computer running the Arduino-JS server.
 
-Arduino-JS is only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
+Arduino-JS is currently only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
 
 Arduino-JS is currently alpha so the API is not 100% stable so expect changes if you pull future releases. The API should be locked down by mid January.
 
@@ -30,19 +30,18 @@ Instructions for using ArduinoJS Server:
 Test environment (for Arduino JS Server)
 ---
 
-Mac OSX Snow Leopard and Lion
-Windows 7 ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
-Linux not yet supported (if you want to help, please let me know)
+Tested OS:
 
-Arduino-JS Server
+- Mac OSX Snow Leopard and Lion
+- Windows 7 ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
+- Linux not yet supported (if you want to help, please let me know)
 
-Also works on smartphones that support websockets. Have tested successfully on the following (make sure you set the IP address in the Arduino constructor to the IP address of the server - the computer the Arduino is connected to):
+Tested devices:
 
-Tested devices: 
-- iPhone 3GS, iPhone4, iPhone4S (iPhone 3G is too slow)
+- iPhone 3GS, iPhone4, iPhone4S
 - Android 2.3.3 and 3.1 (using Firefox 8 browser in Andriod). Native Android browser does not yet support websockets (you can use the node.js-based server.js and socket.io will use Flash or xhr polling).
 
-Supported browsers:
+Tested browsers:
 
 - Google Chrome 14 & 15
 - Safari 5 (desktop and mobile)

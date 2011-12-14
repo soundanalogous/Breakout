@@ -11,6 +11,12 @@ ARDJS.SocketEvent = (function() {
 	// dependencies
 	var Event = ARDJS.Event;
 
+	/**
+	 * @exports SocketEvent as ARDJS.SocketEvent
+	 * @constructor
+	 * @augments ARDJS.Event
+	 * @param {String} type The event type
+	 */
 	SocketEvent = function(type) {
 		this.name = "SocketEvent"; // for testing
 		
@@ -53,6 +59,17 @@ ARDJS.Socket = (function() {
  	var EventDispatcher = ARDJS.EventDispatcher,
  		SocketEvent = ARDJS.SocketEvent;
 
+	/**
+	 * Creates a wrapper for various websocket implementations to unify the interface.
+	 *
+	 * @exports Socket as ARDJS.Socket
+	 * @constructor
+	 * @param {String} host The host address of the web server.
+	 * @param {Number} port The port to connect to on the web server.
+	 * @param {Boolean} useSocketIO Set true to use socket.io implementation, set false to use
+	 * native websocket implementation.
+	 * @param {String} protocol The websockt protocol definition (if necessary).
+	 */
 	Socket = function(host, port, useSocketIO, protocol) {
 		this.name = "Socket"; // for testing
 
@@ -72,6 +89,11 @@ ARDJS.Socket = (function() {
 	Socket.prototype = ARDJS.inherit(EventDispatcher.prototype);
 	Socket.prototype.constructor = Socket;
 
+	/**
+	 * Initialize the websocket
+	 * @param {Object} self A reference to this websocket object.
+	 * @private
+	 */
 	Socket.prototype.init = function(self) {
 
 		if (self._useSocketIO) {
@@ -131,12 +153,24 @@ ARDJS.Socket = (function() {
 
 	};
 
+	/**
+	 * Send a message
+	 * @param {String} message The message to send
+	 */
 	Socket.prototype.send = function(message) {
 		// to do: ensure socket is not null before trying to send
 		this._socket.send(message);
 	};
 
 	// to do: ensure socket is not null before trying to get readyState
+
+	/**
+	 * [read-only] Wrapper for the readyState method of the native websocket implementation
+	 * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
+	 * @name Socket#readyState
+	 * @property
+	 * @type String
+	 */		 
 	Socket.prototype.__defineGetter__("readyState", function() { return this._readyState; });
 
 	return Socket;

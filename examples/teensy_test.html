@@ -27,16 +27,16 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Arduino = ARDJS.Arduino;
+	var IOBoard = ARDJS.IOBoard;
 	var Pin = ARDJS.Pin;
-	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var IOBoardEvent = ARDJS.IOBoardEvent;
 	var Event = ARDJS.Event;
 	var BlinkM = ARDJS.ui.BlinkM;
 	var CompassHMC6352 = ARDJS.ui.CompassHMC6352;
 	var Button = ARDJS.ui.Button;
 	var ButtonEvent = ARDJS.ui.ButtonEvent;
 
-	var ard = new Arduino("localhost", 8887+'/websocket');
+	var teensy = new IOBoard("localhost", 8887+'/websocket');
 	
 	var frames = 0;
 	var intensity = 0;
@@ -48,69 +48,69 @@ $(document).ready(function() {
 	var blinkLED;
 	var fadeLED;
 
-	console.log("name = " + ard.name);
+	console.log("name = " + teensy.name);
 	
-	ard.addEventListener(ArduinoEvent.READY, onReady);
+	teensy.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 					
-		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		teensy.removeEventListener(IOBoardEvent.READY, onReady);
 		
 		// test sampline interval
-		//ard.setSamplingInterval(33);
+		//teensy.setSamplingInterval(33);
 			
 		// listen for incoming string messages
-		ard.addEventListener(ArduinoEvent.STRING_MESSAGE, onStringMessage);
+		teensy.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
 		// set digital pin 4 to output
-		ard.setPinMode(4, Pin.DOUT);
+		teensy.setPinMode(4, Pin.DOUT);
 		// get a reference to the pin
-		blinkLED = ard.getDigitalPin(4);
+		blinkLED = teensy.getDigitalPin(4);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 	
 		//set digital pin 2 to input
-		ard.setPinMode(2, Pin.DIN);
+		teensy.setPinMode(2, Pin.DIN);
 		
 		// get a reference to the pin and listen for Change event
-		//var button01 = ard.getDigitalPin(2);
-		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_DOWN);
+		//var button01 = teensy.getDigitalPin(2);
+		var button01 = new Button(teensy.getDigitalPin(2), Button.PULL_DOWN);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 		
 		// enable reporting for an analog pin
-		ard.setAnalogPinReporting(0, Pin.ON);
-		var pot = ard.getAnalogPin(0);
+		teensy.setAnalogPinReporting(0, Pin.ON);
+		var pot = teensy.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		// disable reporting for an analog pin
-		//ard.setAnalogPinReporting(0, Pin.OFF);
+		//teensy.setAnalogPinReporting(0, Pin.OFF);
 		
 		// set analog pin to digital input
-		ard.setPinMode(16, Pin.DIN);
-		var button02 = ard.getDigitalPin(16);
+		teensy.setPinMode(16, Pin.DIN);
+		var button02 = teensy.getDigitalPin(16);
 		button02.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// set a pin to PWM
-		ard.setPinMode(10, Pin.PWM);
-		fadeLED = ard.getDigitalPin(10);
+		teensy.setPinMode(10, Pin.PWM);
+		fadeLED = teensy.getDigitalPin(10);
 		setInterval(fade, 10);			
 		
 		// set a pin to SERVO
-		ard.setPinMode(9, Pin.SERVO);
-		servo = ard.getDigitalPin(9);
+		teensy.setPinMode(9, Pin.SERVO);
+		servo = teensy.getDigitalPin(9);
 		//setInterval(servoTest, 5000);
 		
-		blinkM = new BlinkM(ard);
+		blinkM = new BlinkM(teensy);
 		blinkM.stopScript();
 		setInterval(randomColor, 2000);
 		
-		compass = new CompassHMC6352(ard);
+		compass = new CompassHMC6352(teensy);
 		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
 		
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);
 		
-		ard.addEventListener(ArduinoEvent.PIN_STATE_RESPONSE, onPinStateResponse);		
+		teensy.addEventListener(IOBoardEvent.PIN_STATE_RESPONSE, onPinStateResponse);		
 	}
 	
 	function stopReading() {
@@ -171,7 +171,7 @@ $(document).ready(function() {
 	
 	function onCapabilityResponse(event) {
 		// print capabilities to the console
-		ard.reportCapabilities();
+		teensy.reportCapabilities();
 	}
 	
 	function onStringMessage(event) {
@@ -187,7 +187,7 @@ $(document).ready(function() {
 	function fade() {
 		fadeLED.value = (intensity += direction);
 		// test sendExtendedAnalog method
-		//ard.sendExtendedAnalog(11, intensity += direction);
+		//teensy.sendExtendedAnalog(11, intensity += direction);
 		if (intensity == 255) direction = -1;
 		else if (intensity == 0) direction = 1;
 	}

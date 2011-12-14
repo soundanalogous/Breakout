@@ -11,6 +11,7 @@ var ARDJS = ARDJS || {};
  * if a namespace already exists, it won't be recreated
  *
  * @function
+ * @param {String} ns_string The namespace as a string.
  */
 ARDJS.namespace = function (ns_string) {
 	var parts = ns_string.split('.'),
@@ -38,6 +39,7 @@ ARDJS.namespace = function (ns_string) {
  * Use this method rather than Object.create() directly if
  * browser compatibility is unknow
  * @function
+ * @param {Object} p The prototype of the object to inherit.
  */
 ARDJS.inherit = function(p) {
 	if (p == null) throw TypeError(); // p must be a non-null object
@@ -49,13 +51,16 @@ ARDJS.inherit = function(p) {
 	function f() {}; // define a dummy constructor function
 	f.prototype = p; // Set its prototype property to p
 	return new f(); // use f() to create an 'heir' of p.
-}
+};
 
 /* Utility functions */
 
-// add bind for browsers that don't support it (Safari)
 if (!Function.prototype.bind) {  
-  Function.prototype.bind = function (oThis) {  
+
+	/** add bind for browsers that don't support it (Safari)
+	 * @private
+	 */
+  	Function.prototype.bind = function (oThis) {  
     if (typeof this !== "function") {  
       // closest thing possible to the ECMAScript 5 internal IsCallable function  
       throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");  
