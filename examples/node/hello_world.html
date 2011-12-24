@@ -12,11 +12,11 @@
 }
 </style>
 
-<title>Arduino-JS Hello World!</title>
+<title>Hello World!</title>
 
 <!-- order of import is important -->
 <script src="../../socket.io/socket.io.js"></script>
-<script src="../../build/ArduinoJS.js"></script>
+<script src="../../build/Arduino.js"></script>
 <script src="../libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -24,16 +24,16 @@ $(document).ready(function() {
 	// dependencies:
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Arduino = ARDJS.Arduino;
+	var IOBoard = ARDJS.IOBoard;
 	var Pin = ARDJS.Pin;
-	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var IOBoardEvent = ARDJS.IOBoardEvent;
 	var Button = ARDJS.ui.Button;
 	var ButtonEvent = ARDJS.ui.ButtonEvent;
 
 	// replace "localhost" with the address of your server
 	// to use load pages on a compatible mobile device
 	// set 3rd parameter to true to use the socket.io server	
-	var ard = new Arduino("localhost", 8080, true);
+	var ard = new IOBoard("localhost", 8080, true);
 	
 	var frames = 0;
 	var intensity = 0;
@@ -41,14 +41,14 @@ $(document).ready(function() {
 	var blinkLED;
 	var fadeLED;
 	
-	// listen for the Arduino READY event which indicates the Arduino
+	// listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
-	ard.addEventListener(ArduinoEvent.READY, onReady);
+	ard.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 		
 		// remove the event listener because it is no longer needed
-		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		ard.removeEventListener(IOBoardEvent.READY, onReady);
 		
 		// set digital pin 13 to output
 		ard.setPinMode(13, Pin.DOUT);

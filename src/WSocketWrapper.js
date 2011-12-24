@@ -11,6 +11,12 @@ ARDJS.SocketEvent = (function() {
 	// dependencies
 	var Event = ARDJS.Event;
 
+	/**
+	 * @exports SocketEvent as ARDJS.SocketEvent
+	 * @constructor
+	 * @augments ARDJS.Event
+	 * @param {String} type The event type
+	 */
 	SocketEvent = function(type) {
 		this.name = "SocketEvent"; // for testing
 		
@@ -42,19 +48,30 @@ ARDJS.SocketEvent = (function() {
  * @author jeff hoefs
  */
 
-ARDJS.namespace('ARDJS.Socket');
+ARDJS.namespace('ARDJS.WSocketWrapper');
 
-ARDJS.Socket = (function() {
+ARDJS.WSocketWrapper = (function() {
 	"use strict";
 
- 	var Socket;
+ 	var WSocketWrapper;
 
  	// dependencies
  	var EventDispatcher = ARDJS.EventDispatcher,
  		SocketEvent = ARDJS.SocketEvent;
 
-	Socket = function(host, port, useSocketIO, protocol) {
-		this.name = "Socket"; // for testing
+	/**
+	 * Creates a wrapper for various websocket implementations to unify the interface.
+	 *
+	 * @exports WSocketWrapper as ARDJS.WSocketWrapper
+	 * @constructor
+	 * @param {String} host The host address of the web server.
+	 * @param {Number} port The port to connect to on the web server.
+	 * @param {Boolean} useSocketIO Set true to use socket.io implementation, set false to use
+	 * native websocket implementation.
+	 * @param {String} protocol The websockt protocol definition (if necessary).
+	 */
+	WSocketWrapper = function(host, port, useSocketIO, protocol) {
+		this.name = "WSocketWrapper"; // for testing
 
 		EventDispatcher.call(this, this);
 
@@ -69,10 +86,15 @@ ARDJS.Socket = (function() {
 
 	};
 
-	Socket.prototype = ARDJS.inherit(EventDispatcher.prototype);
-	Socket.prototype.constructor = Socket;
+	WSocketWrapper.prototype = ARDJS.inherit(EventDispatcher.prototype);
+	WSocketWrapper.prototype.constructor = WSocketWrapper;
 
-	Socket.prototype.init = function(self) {
+	/**
+	 * Initialize the websocket
+	 * @param {Object} self A reference to this websocket object.
+	 * @private
+	 */
+	WSocketWrapper.prototype.init = function(self) {
 
 		if (self._useSocketIO) {
 			self._socket = io.connect("http://"+self._host+":"+self._port);
@@ -131,14 +153,26 @@ ARDJS.Socket = (function() {
 
 	};
 
-	Socket.prototype.send = function(message) {
+	/**
+	 * Send a message
+	 * @param {String} message The message to send
+	 */
+	WSocketWrapper.prototype.send = function(message) {
 		// to do: ensure socket is not null before trying to send
 		this._socket.send(message);
 	};
 
 	// to do: ensure socket is not null before trying to get readyState
-	Socket.prototype.__defineGetter__("readyState", function() { return this._readyState; });
 
-	return Socket;
+	/**
+	 * [read-only] Wrapper for the readyState method of the native websocket implementation
+	 * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
+	 * @name WSocketWrapper#readyState
+	 * @property
+	 * @type String
+	 */		 
+	WSocketWrapper.prototype.__defineGetter__("readyState", function() { return this._readyState; });
+
+	return WSocketWrapper;
 
 }());

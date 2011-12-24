@@ -22,15 +22,15 @@
 <script src="../src/ARDJS.js"></script>
 <script src="../src/Event.js"></script>
 <script src="../src/EventDispatcher.js"></script>
-<script src="../src/ArduinoEvent.js"></script>
+<script src="../src/IOBoardEvent.js"></script>
 <script src="../src/Pin.js"></script>
 <script src="../src/I2CBase.js"></script>
 <script src="../src/ui/BlinkM.js"></script>
 <script src="../src/ui/CompassHMC6352.js"></script>
 <script src="../src/ui/PhysicalInputBase.js"></script>
 <script src="../src/ui/Button.js"></script>
-<script src="../src/WebSocket.js"></script>
-<script src="../src/Arduino.js"></script>
+<script src="../src/WSocketWrapper.js"></script>
+<script src="../src/IOBoard.js"></script>
 <script src="libs/jquery-1.6.3.min.js"></script>
 
 <script type="text/javascript">
@@ -39,9 +39,9 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Arduino = ARDJS.Arduino;
+	var IOBoard = ARDJS.IOBoard;
 	var Pin = ARDJS.Pin;
-	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var IOBoardEvent = ARDJS.IOBoardEvent;
 	var Event = ARDJS.Event;
 	var BlinkM = ARDJS.ui.BlinkM;
 	var CompassHMC6352 = ARDJS.ui.CompassHMC6352;
@@ -49,7 +49,7 @@ $(document).ready(function() {
 	var ButtonEvent = ARDJS.ui.ButtonEvent;
 
 		
-	var ard = new Arduino("localhost", 8887+'/websocket');
+	var ard = new IOBoard("localhost", 8887+'/websocket');
 	
 	var frames = 0;
 	var intensity = 0;
@@ -63,17 +63,17 @@ $(document).ready(function() {
 
 	console.log("name = " + ard.name);
 	
-	ard.addEventListener(ArduinoEvent.READY, onReady);
+	ard.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 					
-		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		ard.removeEventListener(IOBoardEvent.READY, onReady);
 		
 		// test sampline interval
 		//ard.setSamplingInterval(33);
 			
 		// listen for incoming string messages
-		ard.addEventListener(ArduinoEvent.STRING_MESSAGE, onStringMessage);
+		ard.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
 		// set digital pin 13 to output
 		ard.setPinMode(13, Pin.DOUT);
@@ -123,7 +123,7 @@ $(document).ready(function() {
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);
 		
-		ard.addEventListener(ArduinoEvent.PIN_STATE_RESPONSE, onPinStateResponse);
+		ard.addEventListener(IOBoardEvent.PIN_STATE_RESPONSE, onPinStateResponse);
 
 		//ard.queryAnalogMapping();	
 		

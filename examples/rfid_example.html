@@ -23,20 +23,20 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Arduino = ARDJS.Arduino;
-	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var IOBoard = ARDJS.IOBoard;
+	var IOBoardEvent = ARDJS.IOBoardEvent;
 	var ID12RFIDReader = ARDJS.ui.ID12RFIDReader;
 	var RFIDEvent = ARDJS.ui.RFIDEvent;
 	
-	var ard = new Arduino("localhost", 8887+'/websocket');
+	var ard = new IOBoard("localhost", 8887+'/websocket');
 	
 	var rfid;
 		
-	ard.addEventListener(ArduinoEvent.READY, onReady);
+	ard.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 					
-		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		ard.removeEventListener(IOBoardEvent.READY, onReady);
 			
 		rfid = new ID12RFIDReader(ard);
 		rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);

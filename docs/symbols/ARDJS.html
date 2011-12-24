@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Function</title>
+		<title>JsDoc Reference - ARDJS</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,17 +193,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
-	
-	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
-	
 	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
 	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
+	<li><a href="../symbols/ARDJS.IOBoard.html">ARDJS.IOBoard</a></li>
+	
+	<li><a href="../symbols/ARDJS.IOBoardEvent.html">ARDJS.IOBoardEvent</a></li>
+	
 	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
+	
+	<li><a href="../symbols/ARDJS.SocketEvent.html">ARDJS.SocketEvent</a></li>
 	
 	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
@@ -221,7 +223,7 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
-	<li><a href="../symbols/Function.html">Function</a></li>
+	<li><a href="../symbols/ARDJS.WSocketWrapper.html">ARDJS.WSocketWrapper</a></li>
 	
 </ul>
 <hr />
@@ -232,7 +234,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Built-In Namespace Function
+				Namespace ARDJS
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -240,12 +242,35 @@ ul.inheritsList
 				
 				
 			
+				Namespace and utility functions for Arduino-JS
 				
 				
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ARDJS.js.html">ARDJS.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.">
+				<caption>Namespace Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.html#constructor">ARDJS</a></b>
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			
 
 <!-- ============================== properties summary ===================== -->
@@ -255,7 +280,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class Function.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class ARDJS.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -266,11 +291,21 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/Function.html#bind">bind</a></b>(oThis)
+								<div class="fixedFont">ARDJS.<b><a href="../symbols/ARDJS.html#.inherit">inherit</a></b>(p)
 								</div>
-								<div class="description"></div>
+								<div class="description">copied from Flanagan, David.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">ARDJS.<b><a href="../symbols/ARDJS.html#.namespace">namespace</a></b>(ns_string)
+								</div>
+								<div class="description">use this function to safely create a new namespace
+if a namespace already exists, it won't be recreated</div>
 							</td>
 						</tr>
 					
@@ -285,6 +320,33 @@ ul.inheritsList
 
 <!-- ============================== constructor details ==================== -->		
 			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Namespace Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>ARDJS</b>
+				</div>
+				
+				<div class="description">
+					
+					
+				</div>
+				
+				
+				
+				
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
 
 <!-- ============================== field details ========================== -->		
 			
@@ -295,18 +357,18 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="bind"> </a>
-					<div class="fixedFont">
+					<a name=".inherit"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<b>bind</b>(oThis)
+					<span class="light">ARDJS.</span><b>inherit</b>(p)
 					
 					</div>
 					<div class="description">
-						
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ARDJS.js.html">ARDJS.js</a>.
+						copied from Flanagan, David. JavaScript: The Definitive Guide
+
+Use this method rather than Object.create() directly if
+browser compatibility is unknow
 						
 						
 					</div>
@@ -318,10 +380,47 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<b>oThis</b>
+									<span class="light fixedFont">{Object}</span> <b>p</b>
 									
 								</dt>
-								<dd></dd>
+								<dd>The prototype of the object to inherit.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".namespace"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">ARDJS.</span><b>namespace</b>(ns_string)
+					
+					</div>
+					<div class="description">
+						use this function to safely create a new namespace
+if a namespace already exists, it won't be recreated
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>ns_string</b>
+									
+								</dt>
+								<dd>The namespace as a string.</dd>
 							
 							</dl>
 						
@@ -346,7 +445,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Dec 11 2011 03:02:58 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 23:10:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

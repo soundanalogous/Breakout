@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - ARDJS.ui.ButtonEvent</title>
+		<title>JsDoc Reference - ARDJS.ui.Servo</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,17 +193,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
-	
-	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
-	
 	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
 	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
+	<li><a href="../symbols/ARDJS.IOBoard.html">ARDJS.IOBoard</a></li>
+	
+	<li><a href="../symbols/ARDJS.IOBoardEvent.html">ARDJS.IOBoardEvent</a></li>
+	
 	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
+	
+	<li><a href="../symbols/ARDJS.SocketEvent.html">ARDJS.SocketEvent</a></li>
 	
 	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
@@ -221,7 +223,7 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
-	<li><a href="../symbols/Function.html">Function</a></li>
+	<li><a href="../symbols/ARDJS.WSocketWrapper.html">ARDJS.WSocketWrapper</a></li>
 	
 </ul>
 <hr />
@@ -232,26 +234,24 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class ARDJS.ui.ButtonEvent
+				Class ARDJS.ui.Servo
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/ARDJS.Event.html">ARDJS.Event</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ui_Button.js.html">Button.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ui_Servo.js.html">Servo.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.ui.ButtonEvent.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.ui.Servo.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -264,9 +264,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/ARDJS.ui.ButtonEvent.html#constructor">ARDJS.ui.ButtonEvent</a></b>(type)
+								<b><a href="../symbols/ARDJS.ui.Servo.html#constructor">ARDJS.ui.Servo</a></b>(board, servoPin)
 							</div>
-							<div class="description"></div>
+							<div class="description">Creates a new Servo</div>
 						</td>
 					</tr>
 				</tbody>
@@ -277,7 +277,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.ui.ButtonEvent.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.ui.Servo.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -288,42 +288,12 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ARDJS.ui.ButtonEvent.<b><a href="../symbols/ARDJS.ui.ButtonEvent.html#.LONG_PRESS">LONG_PRESS</a></b>
+								<b><a href="../symbols/ARDJS.ui.Servo.html#angle">angle</a></b>
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ui.ButtonEvent.<b><a href="../symbols/ARDJS.ui.ButtonEvent.html#.PRESS">PRESS</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ui.ButtonEvent.<b><a href="../symbols/ARDJS.ui.ButtonEvent.html#.RELEASE">RELEASE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ui.ButtonEvent.<b><a href="../symbols/ARDJS.ui.ButtonEvent.html#.SUSTAINED_PRESS">SUSTAINED_PRESS</a></b>
-								</div>
-								<div class="description"></div>
+								<div class="description">Set the angle (in degrees) to rotate the server head to.</div>
 							</td>
 						</tr>
 					
@@ -331,10 +301,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/ARDJS.Event.html">ARDJS.Event</a>: </dt><dd><a href="../symbols/ARDJS.Event.html#target">target</a>, <a href="../symbols/ARDJS.Event.html#type">type</a></dd>
-				</dl>
 				
 			
 
@@ -351,11 +317,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>ARDJS.ui.ButtonEvent</b>(type)
+						<b>ARDJS.ui.Servo</b>(board, servoPin)
 				</div>
 				
 				<div class="description">
-					
+					Creates a new Servo
 					
 				</div>
 				
@@ -367,10 +333,16 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								 <b>type</b>
+								<span class="light fixedFont">{Arduino}</span>  <b>board</b>
 								
 							</dt>
-								<dd></dd>
+								<dd>A reference to the Arduino class instance.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>servoPin</b>
+								
+							</dt>
+								<dd>The number of the pin the servo is connected to.</dd>
 						
 						</dl>
 					
@@ -390,81 +362,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".LONG_PRESS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="angle"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">ARDJS.ui.ButtonEvent.</span><b>LONG_PRESS</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".PRESS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ui.ButtonEvent.</span><b>PRESS</b>
+					<span class="light">{Number}</span>
+					<b>angle</b>
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".RELEASE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ui.ButtonEvent.</span><b>RELEASE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".SUSTAINED_PRESS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ui.ButtonEvent.</span><b>SUSTAINED_PRESS</b>
-					
-					</div>
-					<div class="description">
-						
+						Set the angle (in degrees) to rotate the server head to.
 						
 						
 					</div>
@@ -493,7 +399,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Dec 11 2011 03:02:58 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 23:10:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

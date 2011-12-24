@@ -47,7 +47,7 @@ ARDJS.ui.ID12RFIDReader = (function() {
 
 	// dependencies
 	var EventDispatcher = ARDJS.EventDispatcher,
-		ArduinoEvent = ARDJS.ArduinoEvent,
+		IOBoardEvent = ARDJS.IOBoardEvent,
 		RFIDEvent = ARDJS.ui.RFIDEvent;
 
 	/**
@@ -74,7 +74,7 @@ ARDJS.ui.ID12RFIDReader = (function() {
 		
 		this._evtDispatcher = new EventDispatcher(this);
 
-		board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));			
+		board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));			
 	};
 
 	ID12RFIDReader.prototype = {

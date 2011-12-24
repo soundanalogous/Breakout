@@ -12,7 +12,7 @@ ARDJS.I2CBase = (function() {
  	// dependencies
  	var Pin = ARDJS.Pin,
  		EventDispatcher = ARDJS.EventDispatcher,
- 		ArduinoEvent = ARDJS.ArduinoEvent;
+ 		IOBoardEvent = ARDJS.IOBoardEvent;
 
 	/**
 	 * Creates a new I2CBase base class
@@ -51,7 +51,7 @@ ARDJS.I2CBase = (function() {
 			return;
 		}
 
-		board.addEventListener(ArduinoEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
+		board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
 		
 		// call this for each board in case delay is set
 		board.sendSysex(I2CBase.I2C_CONFIG, [_delayInMicrosecondsLSB, _delayInMicrosecondsMSB]);

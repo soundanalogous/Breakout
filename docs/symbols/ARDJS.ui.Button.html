@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - ARDJS.ArduinoEvent</title>
+		<title>JsDoc Reference - ARDJS.ui.Button</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,17 +193,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
-	
-	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
-	
 	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
 	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
+	<li><a href="../symbols/ARDJS.IOBoard.html">ARDJS.IOBoard</a></li>
+	
+	<li><a href="../symbols/ARDJS.IOBoardEvent.html">ARDJS.IOBoardEvent</a></li>
+	
 	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
+	
+	<li><a href="../symbols/ARDJS.SocketEvent.html">ARDJS.SocketEvent</a></li>
 	
 	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
@@ -221,7 +223,7 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
-	<li><a href="../symbols/Function.html">Function</a></li>
+	<li><a href="../symbols/ARDJS.WSocketWrapper.html">ARDJS.WSocketWrapper</a></li>
 	
 </ul>
 <hr />
@@ -232,26 +234,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class ARDJS.ArduinoEvent
+				Class ARDJS.ui.Button
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
 				<br />Extends
-					<a href="../symbols/ARDJS.Event.html">ARDJS.Event</a>.<br />
+					<a href="../symbols/ARDJS.ui.PhysicalInputBase.html">ARDJS.ui.PhysicalInputBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ArduinoEvent.js.html">ArduinoEvent.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ui_Button.js.html">Button.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.ArduinoEvent.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.ui.Button.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -264,9 +266,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/ARDJS.ArduinoEvent.html#constructor">ARDJS.ArduinoEvent</a></b>(type, data)
+								<b><a href="../symbols/ARDJS.ui.Button.html#constructor">ARDJS.ui.Button</a></b>(pin, buttonMode, longPressDelay)
 							</div>
-							<div class="description"></div>
+							<div class="description">An object to represent a physical button.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -277,7 +279,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.ArduinoEvent.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.ui.Button.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -288,10 +290,30 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.ui.Button.html#debounceInterval">debounceInterval</a></b>
+								</div>
+								<div class="description">The debounce time interval in milliseconds.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.ui.Button.html#pinNumber">pinNumber</a></b>
+								</div>
+								<div class="description">[read-only] The pin number of the pin the button is attached to.</div>
+							</td>
+						</tr>
+					
+						<tr>
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.ANALOG_DATA">ANALOG_DATA</a></b>
+								ARDJS.ui.Button.<b><a href="../symbols/ARDJS.ui.Button.html#.PULL_DOWN">PULL_DOWN</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -301,87 +323,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.ANALOG_MAPPING_RESPONSE">ANALOG_MAPPING_RESPONSE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.CAPABILITY_RESPONSE">CAPABILITY_RESPONSE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.DIGITAL_DATA">DIGITAL_DATA</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.FIRMWARE_NAME">FIRMWARE_NAME</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.FIRMWARE_VERSION">FIRMWARE_VERSION</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.PIN_STATE_RESPONSE">PIN_STATE_RESPONSE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.READY">READY</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.STRING_MESSAGE">STRING_MESSAGE</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								ARDJS.ArduinoEvent.<b><a href="../symbols/ARDJS.ArduinoEvent.html#.SYSEX_MESSAGE">SYSEX_MESSAGE</a></b>
+								ARDJS.ui.Button.<b><a href="../symbols/ARDJS.ui.Button.html#.PULL_UP">PULL_UP</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -393,12 +335,21 @@ ul.inheritsList
 				
 				
 				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/ARDJS.Event.html">ARDJS.Event</a>: </dt><dd><a href="../symbols/ARDJS.Event.html#target">target</a>, <a href="../symbols/ARDJS.Event.html#type">type</a></dd>
+				
 				</dl>
 				
 			
 
 <!-- ============================== methods summary ======================== -->
+			
+				
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/ARDJS.ui.PhysicalInputBase.html">ARDJS.ui.PhysicalInputBase</a>: </dt><dd><a href="../symbols/ARDJS.ui.PhysicalInputBase.html#addEventListener">addEventListener</a>, <a href="../symbols/ARDJS.ui.PhysicalInputBase.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/ARDJS.ui.PhysicalInputBase.html#hasEventListener">hasEventListener</a>, <a href="../symbols/ARDJS.ui.PhysicalInputBase.html#removeEventListener">removeEventListener</a></dd>
+				</dl>
+				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -411,11 +362,13 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>ARDJS.ArduinoEvent</b>(type, data)
+						<b>ARDJS.ui.Button</b>(pin, buttonMode, longPressDelay)
 				</div>
 				
 				<div class="description">
-					
+					An object to represent a physical button. The advantage of using the Button class over
+listening for pin change events on a Pin object, is that the Button class handles debouncing 
+and provides helpful button events: Pressed, Released, Long Press and Sustained Press
 					
 				</div>
 				
@@ -427,16 +380,23 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{String}</span>  <b>type</b>
+								<span class="light fixedFont">{Pin}</span>  <b>pin</b>
 								
 							</dt>
-								<dd>The event type</dd>
+								<dd>A reference to the pin the button is connected to.</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Object}</span>  <b>data</b>
+								<span class="light fixedFont">{number}</span>  <b>buttonMode</b>
 								
 							</dt>
-								<dd>An object containing additional parameters</dd>
+								<dd>The mode of the button (either PULL_DOWN or PULL_UP). 
+Default is PULL_DOWN.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{number}</span>  <b>longPressDelay</b>
+								
+							</dt>
+								<dd>The delay time in milliseconds before a long press event is fired.</dd>
 						
 						</dl>
 					
@@ -456,11 +416,55 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".ANALOG_DATA"> </a>
+					<a name="debounceInterval"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>debounceInterval</b>
+					
+					</div>
+					<div class="description">
+						The debounce time interval in milliseconds.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="pinNumber"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>pinNumber</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The pin number of the pin the button is attached to.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".PULL_DOWN"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>ANALOG_DATA</b>
+					<span class="light">ARDJS.ui.Button.</span><b>PULL_DOWN</b>
 					
 					</div>
 					<div class="description">
@@ -478,187 +482,11 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".ANALOG_MAPPING_RESPONSE"> </a>
+					<a name=".PULL_UP"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>ANALOG_MAPPING_RESPONSE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".CAPABILITY_RESPONSE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>CAPABILITY_RESPONSE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".DIGITAL_DATA"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>DIGITAL_DATA</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".FIRMWARE_NAME"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>FIRMWARE_NAME</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".FIRMWARE_VERSION"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>FIRMWARE_VERSION</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".PIN_STATE_RESPONSE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>PIN_STATE_RESPONSE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".READY"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>READY</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".STRING_MESSAGE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>STRING_MESSAGE</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".SYSEX_MESSAGE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">ARDJS.ArduinoEvent.</span><b>SYSEX_MESSAGE</b>
+					<span class="light">ARDJS.ui.Button.</span><b>PULL_UP</b>
 					
 					</div>
 					<div class="description">
@@ -691,7 +519,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Dec 11 2011 03:02:58 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 23:10:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

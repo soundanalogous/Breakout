@@ -19,7 +19,7 @@
 <span class='line'> 12</span> </span><span class="WHIT"> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 13</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.Pin</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 14</span> </span><span class="WHIT"> 		</span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 15</span> </span><span class="WHIT"> 		</span><span class="NAME">ArduinoEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.ArduinoEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT"> 		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 18</span> 	 * Creates a new I2CBase base class
@@ -58,7 +58,7 @@
 <span class='line'> 51</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 52</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 53</span> 
-<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="NAME">board.addEventListener</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.SYSEX_MESSAGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.onSysExMessage.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="NAME">board.addEventListener</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.SYSEX_MESSAGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.onSysExMessage.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 55</span> </span><span class="WHIT">		
 <span class='line'> 56</span> 		</span><span class="COMM">// call this for each board in case delay is set</span><span class="WHIT">
 <span class='line'> 57</span> </span><span class="WHIT">		</span><span class="NAME">board.sendSysex</span><span class="PUNC">(</span><span class="NAME">I2CBase.I2C_CONFIG</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="NAME">_delayInMicrosecondsLSB</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">_delayInMicrosecondsMSB</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">

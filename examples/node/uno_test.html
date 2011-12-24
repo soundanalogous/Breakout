@@ -20,7 +20,7 @@
 
 <!-- order of import is important -->
 <script src="../../socket.io/socket.io.js"></script>
-<script src="../../build/ArduinoJS.js"></script>
+<script src="../../build/ArduinoS.js"></script>
 <script src="../libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -28,9 +28,9 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Arduino = ARDJS.Arduino;
+	var IOBoard = ARDJS.IOBoard;
 	var Pin = ARDJS.Pin;
-	var ArduinoEvent = ARDJS.ArduinoEvent;
+	var IOBoardEvent = ARDJS.IOBoardEvent;
 	var Event = ARDJS.Event;
 	var BlinkM = ARDJS.ui.BlinkM;
 	var CompassHMC6352 = ARDJS.ui.CompassHMC6352;
@@ -38,7 +38,7 @@ $(document).ready(function() {
 	var ButtonEvent = ARDJS.ui.ButtonEvent;
 
 	// set 3rd parameter to true to use the socket.io server
-	var ard = new Arduino("localhost", 8080, true);
+	var ard = new IOBoard("localhost", 8080, true);
 	
 	var frames = 0;
 	var intensity = 0;
@@ -52,17 +52,17 @@ $(document).ready(function() {
 
 	console.log("name = " + ard.name);
 	
-	ard.addEventListener(ArduinoEvent.READY, onReady);
+	ard.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 					
-		ard.removeEventListener(ArduinoEvent.READY, onReady);
+		ard.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// test sampline interval
 		//ard.setSamplingInterval(33);
 			
 		// listen for incoming string messages
-		ard.addEventListener(ArduinoEvent.STRING_MESSAGE, onStringMessage);
+		ard.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
 		// set digital pin 13 to output
 		ard.setPinMode(13, Pin.DOUT);
@@ -112,7 +112,7 @@ $(document).ready(function() {
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);
 		
-		ard.addEventListener(ArduinoEvent.PIN_STATE_RESPONSE, onPinStateResponse);
+		ard.addEventListener(IOBoardEvent.PIN_STATE_RESPONSE, onPinStateResponse);
 		
 	}
 	

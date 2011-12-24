@@ -1,40 +1,41 @@
-// Arduino.js
+// IOBoard.js
 // Copyright (C) 2011 Jeff Hoefs.  All rights reserved.
 //
 // based on:
 // Funnel as3 library (http://code.google.com/p/funnel/)
 // and as3glue (http://code.google.com/p/as3glue/)
 
-ARDJS.namespace('ARDJS.Arduino');
+ARDJS.namespace('ARDJS.IOBoard');
 
-ARDJS.Arduino = (function() {
+ARDJS.IOBoard = (function() {
 
-	var Arduino;
+	var IOBoard;
 
 	// dependencies
 	var Pin = ARDJS.Pin,
 		EventDispatcher = ARDJS.EventDispatcher,
 		Event = ARDJS.Event,
 		SocketEvent = ARDJS.SocketEvent,
-		ArduinoEvent = ARDJS.ArduinoEvent;
+		WSocketWrapper = ARDJS.WSocketWrapper,
+		IOBoardEvent = ARDJS.IOBoardEvent;
 
 	/**
-	 * Creates a new Arduino object representing the digital and analog inputs and
-	 * outputs of the device as well as support for sending strings between the Arduino
+	 * Creates a new IOBoard object representing the digital and analog inputs and
+	 * outputs of the device as well as support for sending strings between the IOBoard
 	 * sketch and your javascript application. Also support for hardware such as controlling
 	 * a servo motor from javascript and additional libraries for an RFID reader with more
 	 * to follow such as Button, Accelerometer, i2c device implementation, etc.
 	 *
-	 * @exports Arduino as ARDJS.Arduino
+	 * @exports IOBoard as ARDJS.IOBoard
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
 	 * @param {String} protocol The websockt protocol definition (if necessary).
 	 */
-	Arduino = function(host, port, useSocketIO, protocol) {
+	IOBoard = function(host, port, useSocketIO, protocol) {
 		"use strict";
 		
-		this.name = "Arduino"; // for testing
+		this.name = "IOBoard"; // for testing
 				
 		// message command bytes (128-255/0x80-0xFF)
 		var		DIGITAL_MESSAGE			= 0x90,
@@ -97,7 +98,7 @@ ARDJS.Arduino = (function() {
 		
 		var _evtDispatcher = new EventDispatcher(this);
 
-		var socket = new ARDJS.Socket(host, port, useSocketIO, protocol);
+		var socket = new WSocketWrapper(host, port, useSocketIO, protocol);
 		socket.addEventListener(SocketEvent.CONNECTED, onSocketConnection);
 		socket.addEventListener(SocketEvent.MESSAGE, onSocketMessage);
 		socket.addEventListener(SocketEvent.CLOSE, onSocketClosed);
@@ -128,7 +129,7 @@ ARDJS.Arduino = (function() {
 		 * @private
 		 */
 		function begin() {
-			self.addEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
+			self.addEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
 			self.reportVersion();
 		}
 		
@@ -136,16 +137,16 @@ ARDJS.Arduino = (function() {
 		 * @private
 		 */
 		function onVersion(event) {
-			self.removeEventListener(ArduinoEvent.FIRMWARE_VERSION, onVersion);
+			self.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
 			var version = event.version * 10;
 			
 			// make sure the user has uploaded StandardFirmata 2.3 or greater
 			if (version >= 23) {
 				queryCapabilities();
 			} else {
-				// to do: abort script if possible, or use default config for Standard Arduino
+				// to do: abort script if possible, or use default config for Standard IOBoard
 				// pop up an alert dialog instead?
-				console.log("You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher");
+				console.log("You must upload StandardFirmata version 2.3 or greater from IOBoard version 1.0 or higher");
 			}
 		}	
 			
@@ -169,12 +170,12 @@ ARDJS.Arduino = (function() {
 							break;
 						case REPORT_VERSION:
 							_firmwareVersion=_storedInputData[1] + _storedInputData[0] / 10;
-							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
+							self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
 							break;
 						case ANALOG_MESSAGE:
 							var analogPin = self.getAnalogPin(_multiByteChannel);
 							// NOTE: is there a better way to handle this? This issue is on browser refresh
-							// the Arduino board is still sending analog data if analog reporting was set
+							// the IOBoard board is still sending analog data if analog reporting was set
 							// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
 							// is called. There is not way to call that method fast enough so the following code is
 							// needed. An alternative would be to set a flag that prevents critical operations
@@ -187,7 +188,7 @@ ARDJS.Arduino = (function() {
 							analogPin.value = self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023;
 							if (analogPin.value != analogPin.lastValue) {
 								// use analog pin number rather than actual pin number
-								self.dispatchEvent(new ArduinoEvent(ArduinoEvent.ANALOG_DATA), {pin: _multiByteChannel, value: analogPin.value});
+								self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: _multiByteChannel, value: analogPin.value});
 							}
 							break;
 					}
@@ -216,7 +217,7 @@ ARDJS.Arduino = (function() {
 							break;
 						default:
 							// custom sysEx message
-							self.dispatchEvent(new ArduinoEvent(ArduinoEvent.SYSEX_MESSAGE), {message: _sysExData});
+							self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: _sysExData});
 							break;
 					}
 					_sysExData = [];
@@ -276,7 +277,7 @@ ARDJS.Arduino = (function() {
 					pinVal = (portVal >> j) & 0x01;	// test this
 		    		if (pinVal != pin.value) {
 		    			pin.value = pinVal;
-		    			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.DIGITAL_DATA), {pin: pin.number, value: pin.value});
+		    			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DIGITAL_DATA), {pin: pin.number, value: pin.value});
 		    		}
 		    	}
 		    	j++;
@@ -296,7 +297,7 @@ ARDJS.Arduino = (function() {
 				fname += data;
 			}
 			_firmwareVersion=msg[1] + msg[2] / 10;
-			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.FIRMWARE_NAME), {name: fname, version: _firmwareVersion});
+			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: fname, version: _firmwareVersion});
 			
 		}
 		
@@ -311,7 +312,7 @@ ARDJS.Arduino = (function() {
 				data += String.fromCharCode(msg[i+1]);		
 				str+=data.charAt(0);
 			}
-			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.STRING_MESSAGE), {message: str});
+			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
 		}
 			
 		/** 
@@ -396,7 +397,7 @@ ARDJS.Arduino = (function() {
 		 */
 		function startup() {
 			console.log("debug: startup");
-			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.READY));
+			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
 			self.enableDigitalPinReporting();
 		}
 		
@@ -437,7 +438,7 @@ ARDJS.Arduino = (function() {
 			}
 			
 			// to do: update this
-			self.dispatchEvent(new ArduinoEvent(ArduinoEvent.PIN_STATE_RESPONSE), {pin: pinNumber, type: pinType, value: value});
+			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pinNumber, type: pinType, value: value});
 		}
 		
 		/**
@@ -466,7 +467,7 @@ ARDJS.Arduino = (function() {
 		
 		/**
 		 * Called when ever a pin value is set via pin.setValue(someValue).
-		 * Sends digital or analog output pin and output values to the Arduino.
+		 * Sends digital or analog output pin and output values to the IOBoard.
 		 *
 		 * @private
 		 * @param {Event} pin A reference to the event object (Pin in this case).
@@ -598,7 +599,7 @@ ARDJS.Arduino = (function() {
 		
 		/**
 		 * A utility class to assemble a single value from the 2 bytes returned from the
-		 * Arduino (since data is passed in 7 bit Bytes rather than 8 bit it must be 
+		 * IOBoard (since data is passed in 7 bit Bytes rather than 8 bit it must be 
 		 * reassembled. This is to be used as a protected method and should not be needed
 		 * in any application level code.
 		 *
@@ -618,18 +619,18 @@ ARDJS.Arduino = (function() {
 			
 		/**
 		 * Request the Firmata version implemented in the firmware (sketch) running
-		 * on the Arduino.
-		 * Listen for the Arduino.FIRMWARE_VERSION event to be notified of when 
-		 * the Firmata version is returned from the Arduino.
+		 * on the IOBoard.
+		 * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
+		 * the Firmata version is returned from the IOBoard.
 		 */	
 		this.reportVersion = function() {
 			self.send(REPORT_VERSION);
 		}
 		
 		/**
-		 * Request the name of the firmware (the sketch) running on the Arduino.
-		 * Listen for the Arduino.FIRMWARE_NAME event to be notified of when 
-		 * the name is returned from the Arduino. The version number is also returned.
+		 * Request the name of the firmware (the sketch) running on the IOBoard.
+		 * Listen for the IOBoard.FIRMWARE_NAME event to be notified of when 
+		 * the name is returned from the IOBoard. The version number is also returned.
 		 */
 		this.reportFirmware = function() {
 			self.send([START_SYSEX,REPORT_FIRMWARE,END_SYSEX]);
@@ -646,7 +647,7 @@ ARDJS.Arduino = (function() {
 		
 		/**
 		 * Enables digital pin reporting for all digital pins. You must call this
-		 * before you can receive digital pin data from the Arduino.
+		 * before you can receive digital pin data from the IOBoard.
 		 */
 		this.enableDigitalPinReporting = function() {
 			for (var i=0; i<_numPorts; i++) {
@@ -664,7 +665,7 @@ ARDJS.Arduino = (function() {
 		
 		/**
 		 * Call this method to enable or disable analog input for the specified pin.
-		 * Listen for the ArduinoEvent.ANALOG_DATA to be notified of incoming analog data.
+		 * Listen for the IOBoardEvent.ANALOG_DATA to be notified of incoming analog data.
 		 *
 		 * @param {Number} pin The pin connected to the analog input
 		 * @param {Number} mode Pin.ON to enable input or Pin.OFF to disable input
@@ -681,7 +682,7 @@ ARDJS.Arduino = (function() {
 		 * for the specified pin by writing Pin.HIGH to the pin.
 		 * For example, setPinMode(4, Pin.HIGH) will enable the pull-up resistor for digital
 		 * pin 4.
-		 * For digital input, listen for the ArduinoEvent.DIGITAL_DATA to be notified 
+		 * For digital input, listen for the IOBoardEvent.DIGITAL_DATA to be notified 
 		 * of incoming digital data.
 		 *
 		 * @param {Number} pin The pin connected to the digital input or output
@@ -699,7 +700,7 @@ ARDJS.Arduino = (function() {
 		/**
 		 * Returns the analog data for a specified pin. The range is from 0.0 to 1.0.
 		 * <p>When an analog value is received it is stored. However it is best in most cases to listen
-		 * for the ArduinoEvent.ANALOG_DATA and get the analog value from the
+		 * for the IOBoardEvent.ANALOG_DATA and get the analog value from the
 		 * event parameter (event.value) rather than using this getter method.</p>
 		 *
 		 * @param {Number} pin The pin number to return analog data for
@@ -712,7 +713,7 @@ ARDJS.Arduino = (function() {
 		/**
 		 * Returns the digital data for a specified pin.
 		 * <p>When a digital value is received it is stored. However it is best in most cases to listen
-		 * for the ArduinoEvent.DIGITAL_DATA and get the digital value from the
+		 * for the IOBoardEvent.DIGITAL_DATA and get the digital value from the
 		 * event parameter (event.value) rather than using this getter method.</p>
 		 
 		 * @param {Number} pin The pin number to return digital data for
@@ -723,7 +724,7 @@ ARDJS.Arduino = (function() {
 		}
 		
 		/**
-		 * @return {String} The version of the Firmata firmware running on the Arduino.
+		 * @return {String} The version of the Firmata firmware running on the IOBoard.
 		 */
 		this.getFirmwareVersion = function() {
 			return _firmwareVersion;
@@ -768,7 +769,7 @@ ARDJS.Arduino = (function() {
 		}	
 		
 		/**
-		 * Set a digital pin on the Arduino to High or Low.
+		 * Set a digital pin on the IOBoard to High or Low.
 		 *
 		 * @param {Number} pin The pin number to set or clear.
 		 * @param {Number} value Either Pin.HIGH or Pin.LOW
@@ -793,16 +794,16 @@ ARDJS.Arduino = (function() {
 		// to do: allow 1 or 2 params
 		// (string) and (command, string)
 		/**
-		 * Send a string message to the Arduino. This is useful if you have a custom sketch
-		 * running on the Arduino rather than StandardFirmata and want to communicate with
+		 * Send a string message to the IOBoard. This is useful if you have a custom sketch
+		 * running on the IOBoard rather than StandardFirmata and want to communicate with
 		 * your javascript message via string messages that you then parse in javascript.
 		 * You can receive string messages as well.
 		 *
 		 * <p>To test, load the EchoString.pde example from Firmata->Examples menu in the
-		 * Arduino Application, then use sendString("your string message") to have it
+		 * IOBoard Application, then use sendString("your string message") to have it
 		 * echoed back to your javascript application.</p>
 		 * 
-		 * @param {String} str The string message to send to the Arduino
+		 * @param {String} str The string message to send to the IOBoard
 		 */
 		this.sendString = function(str) {
 			// convert chars to decimal values
@@ -817,8 +818,8 @@ ARDJS.Arduino = (function() {
 		}
 		
 		/**
-		 * Send a sysEx message to the Arduino. This is useful for sending custom sysEx data
-		 * to the Arduino, for example if you are not using StandardFirmata. You would likely
+		 * Send a sysEx message to the IOBoard. This is useful for sending custom sysEx data
+		 * to the IOBoard, for example if you are not using StandardFirmata. You would likely
 		 * use it in a class rather than calling it from your main application.
 		 *
 		 * @private
@@ -926,10 +927,10 @@ ARDJS.Arduino = (function() {
 		}
 		
 		/**
-		 * Set the sampling interval (how often to run the main loop on the Arduino). Normally
+		 * Set the sampling interval (how often to run the main loop on the IOBoard). Normally
 		 * this method should not be called.
 		 *
-		 * @param {Number} interval The interval for main loop in the Arduino application. Default = 19ms.
+		 * @param {Number} interval The interval for main loop in the IOBoard application. Default = 19ms.
 		 */
 		this.setSamplingInterval = function(interval) {
 			// To do: set a range to prevent people from entering extreme values.
@@ -944,14 +945,14 @@ ARDJS.Arduino = (function() {
 		}
 		
 		/**
-		 * @return {Pin} A reference to the Pin object (mapped to the Arduino board analog pin).
+		 * @return {Pin} A reference to the Pin object (mapped to the IOBoard board analog pin).
 		 */	
 		this.getAnalogPin = function(pinNumber) {
 			return _ioPins[_analogPinMapping[pinNumber]];
 		}
 		
 		/**
-		 * @return {Pin} A reference to the Pin object (mapped to the Arduino board digital pin).
+		 * @return {Pin} A reference to the Pin object (mapped to the IOBoard board digital pin).
 		 */	
 		this.getDigitalPin = function(pinNumber) {
 			return _ioPins[_digitalPinMapping[pinNumber]];
@@ -991,7 +992,7 @@ ARDJS.Arduino = (function() {
 		 * So I'm making this private for now.
 		 *
 		 * @private
-		 * @param {Number[]} message Message data to be sent to the Arduino
+		 * @param {Number[]} message Message data to be sent to the IOBoard
 		 */
 		this.send = function(message) {
 			socket.send(message);
@@ -1042,6 +1043,6 @@ ARDJS.Arduino = (function() {
 
 	}
 
-	return Arduino;
+	return IOBoard;
 
 }());	

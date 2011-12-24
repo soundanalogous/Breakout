@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - _global_</title>
+		<title>JsDoc Reference - ARDJS.ui.RFIDEvent</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,17 +193,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
-	
-	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
-	
 	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
 	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
+	<li><a href="../symbols/ARDJS.IOBoard.html">ARDJS.IOBoard</a></li>
+	
+	<li><a href="../symbols/ARDJS.IOBoardEvent.html">ARDJS.IOBoardEvent</a></li>
+	
 	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
+	
+	<li><a href="../symbols/ARDJS.SocketEvent.html">ARDJS.SocketEvent</a></li>
 	
 	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
@@ -221,7 +223,7 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
-	<li><a href="../symbols/Function.html">Function</a></li>
+	<li><a href="../symbols/ARDJS.WSocketWrapper.html">ARDJS.WSocketWrapper</a></li>
 	
 </ul>
 <hr />
@@ -232,70 +234,76 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Built-In Namespace _global_
+				Class ARDJS.ui.RFIDEvent
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/ARDJS.Event.html">ARDJS.Event</a>.<br />
 				
 			
 				
 				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ui_ID12RFIDReader.js.html">ID12RFIDReader.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.ui.RFIDEvent.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.ui.RFIDEvent.html#constructor">ARDJS.ui.RFIDEvent</a></b>(type, tag)
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
 
 <!-- ============================== properties summary ===================== -->
 			
-
-<!-- ============================== methods summary ======================== -->
-			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class _global_.">
-					<caption>Method Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.ui.RFIDEvent.">
+					<caption>Field Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#fBound">fBound</a></b>()
+								<div class="fixedFont">
+								ARDJS.ui.RFIDEvent.<b><a href="../symbols/ARDJS.ui.RFIDEvent.html#.ADD_TAG">ADD_TAG</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#fNOP">fNOP</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#Socket">Socket</a></b>(host, port, useSocketIO, protocol)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/_global_.html#SocketEvent">SocketEvent</a></b>(type)
+								<div class="fixedFont">
+								ARDJS.ui.RFIDEvent.<b><a href="../symbols/ARDJS.ui.RFIDEvent.html#.REMOVE_TAG">REMOVE_TAG</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -306,43 +314,85 @@ ul.inheritsList
 				
 				
 				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/ARDJS.Event.html">ARDJS.Event</a>: </dt><dd><a href="../symbols/ARDJS.Event.html#target">target</a>, <a href="../symbols/ARDJS.Event.html#type">type</a></dd>
+				</dl>
+				
+			
+
+<!-- ============================== methods summary ======================== -->
 			
 <!-- ============================== events summary ======================== -->
 			
 
 <!-- ============================== constructor details ==================== -->		
 			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>ARDJS.ui.RFIDEvent</b>(type, tag)
+				</div>
+				
+				<div class="description">
+					
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>type</b>
+								
+							</dt>
+								<dd>The event type</dd>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>tag</b>
+								
+							</dt>
+								<dd>The RFID tag value (hexadecimal)</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
 
 <!-- ============================== field details ========================== -->		
 			
-
-<!-- ============================== method details ========================= -->		
-			
 				<div class="sectionTitle">
-					Method Detail
+					Field Detail
 				</div>
 				
-					<a name="fBound"> </a>
-					<div class="fixedFont">
+					<a name=".ADD_TAG"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<b>fBound</b>()
+					<span class="light">ARDJS.ui.RFIDEvent.</span><b>ADD_TAG</b>
 					
 					</div>
 					<div class="description">
 						
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ARDJS.js.html">ARDJS.js</a>.
-						
 						
 					</div>
 					
 					
-					
-						
-						
-						
+
 						
 						
 						
@@ -350,123 +400,21 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="fNOP"> </a>
-					<div class="fixedFont">
+					<a name=".REMOVE_TAG"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<b>fNOP</b>()
+					<span class="light">ARDJS.ui.RFIDEvent.</span><b>REMOVE_TAG</b>
 					
 					</div>
 					<div class="description">
 						
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ARDJS.js.html">ARDJS.js</a>.
-						
 						
 					</div>
 					
 					
-					
-						
-						
-						
-						
-						
-						
-						
 
-					<hr />
-				
-					<a name="Socket"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>Socket</b>(host, port, useSocketIO, protocol)
-					
-					</div>
-					<div class="description">
-						
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_WebSocket.js.html">WebSocket.js</a>.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>host</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>port</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>useSocketIO</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<b>protocol</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="SocketEvent"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>SocketEvent</b>(type)
-					
-					</div>
-					<div class="description">
-						
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_WebSocket.js.html">WebSocket.js</a>.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>type</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
 						
 						
 						
@@ -474,6 +422,9 @@ ul.inheritsList
 
 					
 				
+			
+
+<!-- ============================== method details ========================= -->		
 			
 			
 <!-- ============================== event details ========================= -->		
@@ -486,7 +437,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Dec 11 2011 03:02:58 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 23:10:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

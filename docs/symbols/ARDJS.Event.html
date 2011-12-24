@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - ARDJS</title>
+		<title>JsDoc Reference - ARDJS.Event</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,17 +193,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.html">ARDJS</a></li>
 	
-	<li><a href="../symbols/ARDJS.Arduino.html">ARDJS.Arduino</a></li>
-	
-	<li><a href="../symbols/ARDJS.ArduinoEvent.html">ARDJS.ArduinoEvent</a></li>
-	
 	<li><a href="../symbols/ARDJS.Event.html">ARDJS.Event</a></li>
 	
 	<li><a href="../symbols/ARDJS.EventDispatcher.html">ARDJS.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/ARDJS.I2CBase.html">ARDJS.I2CBase</a></li>
 	
+	<li><a href="../symbols/ARDJS.IOBoard.html">ARDJS.IOBoard</a></li>
+	
+	<li><a href="../symbols/ARDJS.IOBoardEvent.html">ARDJS.IOBoardEvent</a></li>
+	
 	<li><a href="../symbols/ARDJS.Pin.html">ARDJS.Pin</a></li>
+	
+	<li><a href="../symbols/ARDJS.SocketEvent.html">ARDJS.SocketEvent</a></li>
 	
 	<li><a href="../symbols/ARDJS.ui.BlinkM.html">ARDJS.ui.BlinkM</a></li>
 	
@@ -221,7 +223,7 @@ ul.inheritsList
 	
 	<li><a href="../symbols/ARDJS.ui.Servo.html">ARDJS.ui.Servo</a></li>
 	
-	<li><a href="../symbols/Function.html">Function</a></li>
+	<li><a href="../symbols/ARDJS.WSocketWrapper.html">ARDJS.WSocketWrapper</a></li>
 	
 </ul>
 <hr />
@@ -232,7 +234,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace ARDJS
+				Class ARDJS.Event
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -240,17 +242,17 @@ ul.inheritsList
 				
 				
 			
-				Namespace and utility functions for Arduino-JS
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_ARDJS.js.html">ARDJS.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_Event.js.html">Event.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class ARDJS.Event.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -262,9 +264,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/ARDJS.html#constructor">ARDJS</a></b>
+								<b><a href="../symbols/ARDJS.Event.html#constructor">ARDJS.Event</a></b>(type)
 							</div>
-							<div class="description"></div>
+							<div class="description">Event 'base class' (but it can also be instantiated directly)</div>
 						</td>
 					</tr>
 				</tbody>
@@ -275,7 +277,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class ARDJS.Event.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -286,20 +288,50 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ARDJS.<b><a href="../symbols/ARDJS.html#.Socket">Socket</a></b>
+								ARDJS.Event.<b><a href="../symbols/ARDJS.Event.html#.CHANGE">CHANGE</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								ARDJS.<b><a href="../symbols/ARDJS.html#.SocketEvent">SocketEvent</a></b>
+								ARDJS.Event.<b><a href="../symbols/ARDJS.Event.html#.COMPLETE">COMPLETE</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								ARDJS.Event.<b><a href="../symbols/ARDJS.Event.html#.CONNECTED">CONNECTED</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Event.html#target">target</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/ARDJS.Event.html#type">type</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -314,43 +346,6 @@ ul.inheritsList
 
 <!-- ============================== methods summary ======================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class ARDJS.">
-					<caption>Method Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">ARDJS.<b><a href="../symbols/ARDJS.html#.inherit">inherit</a></b>(p)
-								</div>
-								<div class="description">copied from Flanagan, David.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">ARDJS.<b><a href="../symbols/ARDJS.html#.namespace">namespace</a></b>(ns_string)
-								</div>
-								<div class="description">use this function to safely create a new namespace
-if a namespace already exists, it won't be recreated</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-			
 <!-- ============================== events summary ======================== -->
 			
 
@@ -358,21 +353,32 @@ if a namespace already exists, it won't be recreated</div>
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>ARDJS</b>
+						<b>ARDJS.Event</b>(type)
 				</div>
 				
 				<div class="description">
-					
+					Event 'base class' (but it can also be instantiated directly)
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>type</b>
+								
+							</dt>
+								<dd>event type</dd>
+						
+						</dl>
 					
 					
 					
@@ -390,18 +396,15 @@ if a namespace already exists, it won't be recreated</div>
 					Field Detail
 				</div>
 				
-					<a name=".Socket"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name=".CHANGE"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ARDJS.</span><b>Socket</b>
+					<span class="light">ARDJS.Event.</span><b>CHANGE</b>
 					
 					</div>
 					<div class="description">
 						
-						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_WebSocket.js.html">WebSocket.js</a>.
 						
 						
 					</div>
@@ -415,18 +418,81 @@ if a namespace already exists, it won't be recreated</div>
 
 					<hr />
 				
-					<a name=".SocketEvent"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name=".COMPLETE"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">ARDJS.</span><b>SocketEvent</b>
+					<span class="light">ARDJS.Event.</span><b>COMPLETE</b>
 					
 					</div>
 					<div class="description">
 						
 						
-							<br />
-							<i>Defined in: </i> <a href="../symbols/src/Arduino-JS_src_WebSocket.js.html">WebSocket.js</a>.
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".CONNECTED"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">ARDJS.Event.</span><b>CONNECTED</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="target"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>target</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="type"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>type</b>
+					
+					</div>
+					<div class="description">
+						
 						
 						
 					</div>
@@ -444,87 +510,6 @@ if a namespace already exists, it won't be recreated</div>
 
 <!-- ============================== method details ========================= -->		
 			
-				<div class="sectionTitle">
-					Method Detail
-				</div>
-				
-					<a name=".inherit"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">ARDJS.</span><b>inherit</b>(p)
-					
-					</div>
-					<div class="description">
-						copied from Flanagan, David. JavaScript: The Definitive Guide
-
-Use this method rather than Object.create() directly if
-browser compatibility is unknow
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>p</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".namespace"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">ARDJS.</span><b>namespace</b>(ns_string)
-					
-					</div>
-					<div class="description">
-						use this function to safely create a new namespace
-if a namespace already exists, it won't be recreated
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>ns_string</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					
-				
-			
 			
 <!-- ============================== event details ========================= -->		
 			
@@ -536,7 +521,7 @@ if a namespace already exists, it won't be recreated
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Dec 11 2011 03:02:58 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Dec 13 2011 23:10:49 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

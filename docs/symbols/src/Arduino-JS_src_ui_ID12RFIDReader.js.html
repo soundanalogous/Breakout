@@ -54,7 +54,7 @@
 <span class='line'> 47</span> 
 <span class='line'> 48</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 49</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 50</span> </span><span class="WHIT">		</span><span class="NAME">ArduinoEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.ArduinoEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.IOBoardEvent</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 51</span> </span><span class="WHIT">		</span><span class="NAME">RFIDEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.ui.RFIDEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 52</span> 
 <span class='line'> 53</span> </span><span class="WHIT">	</span><span class="COMM">/**
@@ -81,7 +81,7 @@
 <span class='line'> 74</span> </span><span class="WHIT">		
 <span class='line'> 75</span> 		</span><span class="NAME">this._evtDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 76</span> 
-<span class='line'> 77</span> </span><span class="WHIT">		</span><span class="NAME">board.addEventListener</span><span class="PUNC">(</span><span class="NAME">ArduinoEvent.SYSEX_MESSAGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.onSysExMessage.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
+<span class='line'> 77</span> </span><span class="WHIT">		</span><span class="NAME">board.addEventListener</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.SYSEX_MESSAGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.onSysExMessage.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
 <span class='line'> 78</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 79</span> 
 <span class='line'> 80</span> </span><span class="WHIT">	</span><span class="NAME">ID12RFIDReader.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
