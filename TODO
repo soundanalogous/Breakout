@@ -4,11 +4,6 @@
     - LED
     - RGBLED
     - SoftPot
-    
-* decide on file structure:
-	- core + ui?
-	- core + input + output?
-	- core + sensors + actuators?
 
 * create a few practical examples
 
