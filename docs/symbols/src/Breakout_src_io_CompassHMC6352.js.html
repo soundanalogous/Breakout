@@ -9,23 +9,23 @@
 <span class='line'>  2</span>  * @author Jeff Hoefs
 <span class='line'>  3</span>  */</span><span class="WHIT">
 <span class='line'>  4</span> 
-<span class='line'>  5</span> </span><span class="NAME">ARDJS.namespace</span><span class="PUNC">(</span><span class="STRN">'ARDJS.ui.CompassHMC6352'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.CompassHMC6352'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  6</span> 
-<span class='line'>  7</span> </span><span class="NAME">ARDJS.ui.CompassHMC6352</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="NAME">BREAKOUT.io.CompassHMC6352</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  8</span> 
 <span class='line'>  9</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">CompassHMC6352</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 13</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.Event</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Event</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 14</span> 
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 16</span> 	 * HMC6352 digital compass module
 <span class='line'> 17</span> 	 *
-<span class='line'> 18</span> 	 * @exports CompassHMC6352 as ARDJS.ui.CompassHMC6352
+<span class='line'> 18</span> 	 * @exports CompassHMC6352 as BREAKOUT.io.CompassHMC6352
 <span class='line'> 19</span> 	 * @constructor
-<span class='line'> 20</span> 	 * @augments ARDJS.I2CBase
-<span class='line'> 21</span> 	 * @param {Arduino} board The Arduino instance
+<span class='line'> 20</span> 	 * @augments BREAKOUT.I2CBase
+<span class='line'> 21</span> 	 * @param {IOBoard} board The IOBoard instance
 <span class='line'> 22</span> 	 * @param {Number} address The i2c address of the compass module
 <span class='line'> 23</span> 	 */</span><span class="WHIT">
 <span class='line'> 24</span> </span><span class="WHIT">	</span><span class="NAME">CompassHMC6352</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">address</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -46,7 +46,7 @@
 <span class='line'> 39</span> 
 <span class='line'> 40</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 41</span> 
-<span class='line'> 42</span> </span><span class="WHIT">	</span><span class="NAME">CompassHMC6352.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.inherit</span><span class="PUNC">(</span><span class="NAME">I2CBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">	</span><span class="NAME">CompassHMC6352.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.inherit</span><span class="PUNC">(</span><span class="NAME">I2CBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 43</span> </span><span class="WHIT">	</span><span class="NAME">CompassHMC6352.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">CompassHMC6352</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 44</span> 
 <span class='line'> 45</span> </span><span class="WHIT">	</span><span class="COMM">/**

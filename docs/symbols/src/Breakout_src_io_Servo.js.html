@@ -9,21 +9,21 @@
 <span class='line'>  2</span>  * @author jeff hoefs
 <span class='line'>  3</span>  */</span><span class="WHIT">
 <span class='line'>  4</span> 
-<span class='line'>  5</span> </span><span class="NAME">ARDJS.namespace</span><span class="PUNC">(</span><span class="STRN">'ARDJS.ui.Servo'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.Servo'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  6</span> 
-<span class='line'>  7</span> </span><span class="NAME">ARDJS.ui.Servo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="NAME">BREAKOUT.io.Servo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  8</span> 
 <span class='line'>  9</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Servo</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.Pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
 <span class='line'> 14</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 15</span> 	 * Creates a new Servo
 <span class='line'> 16</span> 	 *
-<span class='line'> 17</span> 	 * @exports Servo as ARDJS.ui.Servo
+<span class='line'> 17</span> 	 * @exports Servo as BREAKOUT.io.Servo
 <span class='line'> 18</span> 	 * @constructor
-<span class='line'> 19</span> 	 * @param {Arduino} board A reference to the Arduino class instance.
+<span class='line'> 19</span> 	 * @param {IOBoard} board A reference to the IOBoard instance.
 <span class='line'> 20</span> 	 * @param {Number} servoPin The number of the pin the servo is connected to.
 <span class='line'> 21</span> 	 */</span><span class="WHIT">
 <span class='line'> 22</span> </span><span class="WHIT">	</span><span class="NAME">Servo</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">servoPin</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">

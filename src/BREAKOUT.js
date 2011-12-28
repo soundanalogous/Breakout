@@ -67,8 +67,10 @@ if (!Function.prototype.bind) {
     }  
   
     var aArgs = Array.prototype.slice.call(arguments, 1),   
-        fToBind = this,   
-        fNOP = function () {},  
+        fToBind = this, 
+        /** @private */  
+        fNOP = function () {},
+        /** @private */  
         fBound = function () {  
           return fToBind.apply(this instanceof fNOP  
                                  ? this  

@@ -9,22 +9,22 @@
 <span class='line'>  2</span>  * @author Jeff Hoefs
 <span class='line'>  3</span>  */</span><span class="WHIT">
 <span class='line'>  4</span> 
-<span class='line'>  5</span> </span><span class="NAME">ARDJS.namespace</span><span class="PUNC">(</span><span class="STRN">'ARDJS.ui.BlinkM'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  5</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.BlinkM'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  6</span> 
-<span class='line'>  7</span> </span><span class="NAME">ARDJS.ui.BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="NAME">BREAKOUT.io.BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  8</span> 
 <span class='line'>  9</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BlinkM</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.I2CBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
 <span class='line'> 14</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 15</span> 	 * Creates and BlinkM object
 <span class='line'> 16</span> 	 *
-<span class='line'> 17</span> 	 * @exports BlinkM as ARDJS.ui.BlinkM
+<span class='line'> 17</span> 	 * @exports BlinkM as BREAKOUT.io.BlinkM
 <span class='line'> 18</span> 	 * @constructor
-<span class='line'> 19</span> 	 * @augments ARDJS.I2CBase 
-<span class='line'> 20</span> 	 * @param {Arduino} board The Arduino instance
+<span class='line'> 19</span> 	 * @augments BREAKOUT.I2CBase 
+<span class='line'> 20</span> 	 * @param {IOBoard} board The IOBoard instance
 <span class='line'> 21</span> 	 * @param {Number} address The i2c address of the BlinkM module
 <span class='line'> 22</span> 	 */</span><span class="WHIT">
 <span class='line'> 23</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">address</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -39,7 +39,7 @@
 <span class='line'> 32</span> 
 <span class='line'> 33</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 34</span> 
-<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ARDJS.inherit</span><span class="PUNC">(</span><span class="NAME">I2CBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.inherit</span><span class="PUNC">(</span><span class="NAME">I2CBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 36</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BlinkM</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 37</span> 
 <span class='line'> 38</span> 

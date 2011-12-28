@@ -58,7 +58,7 @@ BREAKOUT.io.Button = (function() {
 	 *
 	 * @exports Button as BREAKOUT.io.Button
 	 * @constructor
-	 * @augments BREAKOUT.io.PhysicalInputBase
+	 * @augments BREAKOUT.PhysicalInputBase
 	 * @param {Pin} pin A reference to the pin the button is connected to.
 	 * @param {number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
 	 * Default is PULL_DOWN.
