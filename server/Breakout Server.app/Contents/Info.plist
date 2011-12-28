@@ -3,9 +3,9 @@
 <plist version="0.9">
 <dict>
 	<key>CFBundleName</key>
-	<string>ArduinoJS Server</string>
+	<string>Breakout Server</string>
 	<key>CFBundleIdentifier</key>
-	<string>ardjs.ArduinoJSServer</string>
+	<string>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</string>
 	<key>CFBundleVersion</key>
 	<string>100.0</string>
 	<key>CFBundleAllowMixedLocalizations</key>
@@ -25,15 +25,11 @@
 	<key>Java</key>
 	<dict>
 		<key>MainClass</key>
-		<string>ardjs.ArduinoJSServer</string>
+		<string>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</string>
 		<key>JVMVersion</key>
 		<string>1.5+</string>
 		<key>ClassPath</key>
-			<array>
-			<string>$JAVAROOT/ArduinoJSServer.jar</string>
-			<string>$JAVAROOT/RXTXcomm.jar</string>
-			<string>$JAVAROOT/webbit-0.3.0-full.jar</string>
-			</array>
+			<string>$JAVAROOT/BreakoutServer.jar</string>
 	</dict>
 </dict>
 </plist>
