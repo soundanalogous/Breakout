@@ -5,19 +5,19 @@
 // Funnel as3 library (http://code.google.com/p/funnel/)
 // and as3glue (http://code.google.com/p/as3glue/)
 
-ARDJS.namespace('ARDJS.IOBoard');
+BREAKOUT.namespace('BREAKOUT.IOBoard');
 
-ARDJS.IOBoard = (function() {
+BREAKOUT.IOBoard = (function() {
 
 	var IOBoard;
 
 	// dependencies
-	var Pin = ARDJS.Pin,
-		EventDispatcher = ARDJS.EventDispatcher,
-		Event = ARDJS.Event,
-		SocketEvent = ARDJS.SocketEvent,
-		WSocketWrapper = ARDJS.WSocketWrapper,
-		IOBoardEvent = ARDJS.IOBoardEvent;
+	var Pin = BREAKOUT.Pin,
+		EventDispatcher = BREAKOUT.EventDispatcher,
+		Event = BREAKOUT.Event,
+		SocketEvent = BREAKOUT.SocketEvent,
+		WSocketWrapper = BREAKOUT.WSocketWrapper,
+		IOBoardEvent = BREAKOUT.IOBoardEvent;
 
 	/**
 	 * Creates a new IOBoard object representing the digital and analog inputs and
@@ -26,7 +26,7 @@ ARDJS.IOBoard = (function() {
 	 * a servo motor from javascript and additional libraries for an RFID reader with more
 	 * to follow such as Button, Accelerometer, i2c device implementation, etc.
 	 *
-	 * @exports IOBoard as ARDJS.IOBoard
+	 * @exports IOBoard as BREAKOUT.IOBoard
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.

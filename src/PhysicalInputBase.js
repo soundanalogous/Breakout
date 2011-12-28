@@ -2,20 +2,20 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.ui.PhysicalInputBase');
+BREAKOUT.namespace('BREAKOUT.PhysicalInputBase');
 
-ARDJS.ui.PhysicalInputBase = (function() {
+BREAKOUT.PhysicalInputBase = (function() {
 
 	var PhysicalInputBase;
 
 	// dependencies
-	var EventDispatcher = ARDJS.EventDispatcher;
+	var EventDispatcher = BREAKOUT.EventDispatcher;
 
 	/**
 	 * A base class for physical inputs. Treat this class as an abstract base
 	 * class - do not instantiate it directly.
 	 *
-	 * @exports PhysicalInputBase as ARDJS.ui.PhysicalInputBase
+	 * @exports PhysicalInputBase as BREAKOUT.PhysicalInputBase
 	 * @constructor
 	 */
 	PhysicalInputBase = function() {

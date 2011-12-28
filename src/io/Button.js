@@ -2,19 +2,19 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.ui.ButtonEvent');
+BREAKOUT.namespace('BREAKOUT.io.ButtonEvent');
 
-ARDJS.ui.ButtonEvent = (function() {
+BREAKOUT.io.ButtonEvent = (function() {
 
 	var ButtonEvent;
 
 	// dependencies
-	var Event = ARDJS.Event;
+	var Event = BREAKOUT.Event;
 
 	/**
-	 * @exports ButtonEvent as ARDJS.ui.ButtonEvent
+	 * @exports ButtonEvent as BREAKOUT.io.ButtonEvent
 	 * @constructor
-	 * @augments ARDJS.Event
+	 * @augments BREAKOUT.Event
 	 */
 	ButtonEvent = function(type) {
 
@@ -32,7 +32,7 @@ ARDJS.ui.ButtonEvent = (function() {
 	/** @constant */
 	ButtonEvent.SUSTAINED_PRESS = "sustainedPress";
 
-	ButtonEvent.prototype = ARDJS.inherit(Event.prototype);
+	ButtonEvent.prototype = BREAKOUT.inherit(Event.prototype);
 	ButtonEvent.prototype.constructor = ButtonEvent;
 
 	return ButtonEvent;
@@ -40,25 +40,25 @@ ARDJS.ui.ButtonEvent = (function() {
 }());
 
 
-ARDJS.namespace('ARDJS.ui.Button');
+BREAKOUT.namespace('BREAKOUT.io.Button');
 
-ARDJS.ui.Button = (function() {
+BREAKOUT.io.Button = (function() {
 
 	var Button;
 
 	// dependencies
-	var PhysicalInputBase = ARDJS.ui.PhysicalInputBase,
-		Event = ARDJS.Event,
-		ButtonEvent = ARDJS.ui.ButtonEvent;
+	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
+		Event = BREAKOUT.Event,
+		ButtonEvent = BREAKOUT.io.ButtonEvent;
 
 	/**
 	 * An object to represent a physical button. The advantage of using the Button class over
 	 * listening for pin change events on a Pin object, is that the Button class handles debouncing 
 	 * and provides helpful button events: Pressed, Released, Long Press and Sustained Press
 	 *
-	 * @exports Button as ARDJS.ui.Button
+	 * @exports Button as BREAKOUT.io.Button
 	 * @constructor
-	 * @augments ARDJS.ui.PhysicalInputBase
+	 * @augments BREAKOUT.io.PhysicalInputBase
 	 * @param {Pin} pin A reference to the pin the button is connected to.
 	 * @param {number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
 	 * Default is PULL_DOWN.
@@ -85,7 +85,7 @@ ARDJS.ui.Button = (function() {
 	};
 
 
-	Button.prototype = ARDJS.inherit(PhysicalInputBase.prototype);
+	Button.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
 	Button.prototype.constructor = Button;
 
 

@@ -2,19 +2,19 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.IOBoardEvent');
+BREAKOUT.namespace('BREAKOUT.IOBoardEvent');
 
-ARDJS.IOBoardEvent = (function() {
+BREAKOUT.IOBoardEvent = (function() {
 
 	var IOBoardEvent;
 
 	// dependencies
-	var Event = ARDJS.Event;
+	var Event = BREAKOUT.Event;
 
 	/**
-	 * @exports IOBoardEvent as ARDJS.IOBoardEvent
+	 * @exports IOBoardEvent as BREAKOUT.IOBoardEvent
 	 * @constructor
-	 * @augments ARDJS.Event
+	 * @augments BREAKOUT.Event
 	 * @param {String} type The event type
 	 * @param {Object} data An object containing additional parameters
 	 */
@@ -50,7 +50,7 @@ ARDJS.IOBoardEvent = (function() {
 	IOBoardEvent.READY = "arduinoReady";
 
 
-	IOBoardEvent.prototype = ARDJS.inherit(Event.prototype);
+	IOBoardEvent.prototype = BREAKOUT.inherit(Event.prototype);
 	IOBoardEvent.prototype.constructor = IOBoardEvent;
 
 	return IOBoardEvent;

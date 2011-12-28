@@ -2,16 +2,16 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.Event');
+BREAKOUT.namespace('BREAKOUT.Event');
 
-ARDJS.Event = (function() {
+BREAKOUT.Event = (function() {
 
 	var Event;
 
 	/** 
 	 * Event 'base class' (but it can also be instantiated directly)
 	 *
-	 * @exports Event as ARDJS.Event
+	 * @exports Event as BREAKOUT.Event
 	 * @constructor
 	 * @param {String} type event type
 	 */

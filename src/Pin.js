@@ -2,21 +2,21 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.Pin');
+BREAKOUT.namespace('BREAKOUT.Pin');
 
-ARDJS.Pin = (function() {
+BREAKOUT.Pin = (function() {
 	//"use strict";	// closure compiler doesn't like this... should be fixed soon though
 
 	var Pin;
 
 	// dependencies
-	var EventDispatcher = ARDJS.EventDispatcher,
-		Event = ARDJS.Event;
+	var EventDispatcher = BREAKOUT.EventDispatcher,
+		Event = BREAKOUT.Event;
 
 	/**
 	 * An object to represent an Arduino pin
 	 *
-	 * @exports Pin as ARDJS.Pin
+	 * @exports Pin as BREAKOUT.Pin
 	 * @constructor
 	 * @param {Number} number The pin number
 	 * @param {Number} type The type of pin

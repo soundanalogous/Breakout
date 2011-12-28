@@ -2,21 +2,21 @@
  * @author jeff hoefs
  */
 
-ARDJS.namespace('ARDJS.ui.Servo');
+BREAKOUT.namespace('BREAKOUT.io.Servo');
 
-ARDJS.ui.Servo = (function() {
+BREAKOUT.io.Servo = (function() {
 
 	var Servo;
 
 	// dependencies
-	var Pin = ARDJS.Pin;
+	var Pin = BREAKOUT.Pin;
 
 	/**
 	 * Creates a new Servo
 	 *
-	 * @exports Servo as ARDJS.ui.Servo
+	 * @exports Servo as BREAKOUT.io.Servo
 	 * @constructor
-	 * @param {Arduino} board A reference to the Arduino class instance.
+	 * @param {IOBoard} board A reference to the IOBoard instance.
 	 * @param {Number} servoPin The number of the pin the servo is connected to.
 	 */
 	Servo = function(board, servoPin) {

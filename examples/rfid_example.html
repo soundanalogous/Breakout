@@ -23,10 +23,10 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var IOBoard = ARDJS.IOBoard;
-	var IOBoardEvent = ARDJS.IOBoardEvent;
-	var ID12RFIDReader = ARDJS.ui.ID12RFIDReader;
-	var RFIDEvent = ARDJS.ui.RFIDEvent;
+	var IOBoard = BREAKOUT.IOBoard;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var ID12RFIDReader = BREAKOUT.io.ID12RFIDReader;
+	var RFIDEvent = BREAKOUT.io.RFIDEvent;
 	
 	var ard = new IOBoard("localhost", 8887+'/websocket');
 	

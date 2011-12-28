@@ -2,16 +2,16 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.EventDispatcher');
+BREAKOUT.namespace('BREAKOUT.EventDispatcher');
 
-ARDJS.EventDispatcher = (function () {
+BREAKOUT.EventDispatcher = (function () {
 
 	var EventDispatcher;
 
 	/**
 	 * An as3-like EventDispatcher class.
 	 *
-	 * @exports EventDispatcher as ARDJS.EventDispatcher
+	 * @exports EventDispatcher as BREAKOUT.EventDispatcher
 	 * @constructor
 	 * @param {Class} target The instance of the class that implements EventDispatcher
 	 */

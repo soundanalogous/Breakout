@@ -2,20 +2,20 @@
  * @author jeff hoefs
  */
 
-ARDJS.namespace('ARDJS.ui.RFIDEvent');
+BREAKOUT.namespace('BREAKOUT.io.RFIDEvent');
 
-ARDJS.ui.RFIDEvent = (function() {
+BREAKOUT.io.RFIDEvent = (function() {
 	"use strict";
 
 	var RFIDEvent;
 
 	// dependencies
-	var Event = ARDJS.Event;
+	var Event = BREAKOUT.Event;
 
 	/**
-	 * @exports RFIDEvent as ARDJS.ui.RFIDEvent
+	 * @exports RFIDEvent as BREAKOUT.io.RFIDEvent
 	 * @constructor
-	 * @augments ARDJS.Event
+	 * @augments BREAKOUT.Event
 	 * @param {String} type The event type
 	 * @param {String} tag The RFID tag value (hexadecimal)
 	 */
@@ -31,7 +31,7 @@ ARDJS.ui.RFIDEvent = (function() {
 	/** @constant */
 	RFIDEvent.REMOVE_TAG = "removeTag";
 
-	RFIDEvent.prototype = ARDJS.inherit(Event.prototype);
+	RFIDEvent.prototype = BREAKOUT.inherit(Event.prototype);
 	RFIDEvent.prototype.constructor = RFIDEvent;
 
 	return RFIDEvent;
@@ -39,23 +39,23 @@ ARDJS.ui.RFIDEvent = (function() {
 }());
 
 
-ARDJS.namespace('ARDJS.ui.ID12RFIDReader');
+BREAKOUT.namespace('BREAKOUT.io.ID12RFIDReader');
 
-ARDJS.ui.ID12RFIDReader = (function() {
+BREAKOUT.io.ID12RFIDReader = (function() {
 
 	var ID12RFIDReader;
 
 	// dependencies
-	var EventDispatcher = ARDJS.EventDispatcher,
-		IOBoardEvent = ARDJS.IOBoardEvent,
-		RFIDEvent = ARDJS.ui.RFIDEvent;
+	var EventDispatcher = BREAKOUT.EventDispatcher,
+		IOBoardEvent = BREAKOUT.IOBoardEvent,
+		RFIDEvent = BREAKOUT.io.RFIDEvent;
 
 	/**
 	 * Creates a new ID12RFIDReader
 	 *
-	 * @exports ID12RFIDReader as ARDJS.ui.ID12RFIDReader
+	 * @exports ID12RFIDReader as BREAKOUT.io.ID12RFIDReader
 	 * @constructor
-	 * @param {Class} board A reference to the Arduino class instance
+	 * @param {IOBoard} board A reference to the IOBoard instance
 	 */
 	ID12RFIDReader = function(board) {
 		"use strict";

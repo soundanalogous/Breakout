@@ -27,14 +27,14 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var IOBoard = ARDJS.IOBoard;
-	var Pin = ARDJS.Pin;
-	var IOBoardEvent = ARDJS.IOBoardEvent;
-	var Event = ARDJS.Event;
-	var BlinkM = ARDJS.ui.BlinkM;
-	var CompassHMC6352 = ARDJS.ui.CompassHMC6352;
-	var Button = ARDJS.ui.Button;
-	var ButtonEvent = ARDJS.ui.ButtonEvent;
+	var IOBoard = BREAKOUT.IOBoard;
+	var Pin = BREAKOUT.Pin;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var Event = BREAKOUT.Event;
+	var BlinkM = BREAKOUT.io.BlinkM;
+	var CompassHMC6352 = BREAKOUT.io.CompassHMC6352;
+	var Button = BREAKOUT.io.Button;
+	var ButtonEvent = BREAKOUT.io.ButtonEvent;
 
 	var ard = new IOBoard("localhost", 8887+'/websocket');
 	

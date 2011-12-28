@@ -2,23 +2,23 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.ui.CompassHMC6352');
+BREAKOUT.namespace('BREAKOUT.io.CompassHMC6352');
 
-ARDJS.ui.CompassHMC6352 = (function() {
+BREAKOUT.io.CompassHMC6352 = (function() {
 
 	var CompassHMC6352;
 
 	// dependencies
-	var I2CBase = ARDJS.I2CBase,
-		Event = ARDJS.Event;
+	var I2CBase = BREAKOUT.I2CBase,
+		Event = BREAKOUT.Event;
 
 	/**
 	 * HMC6352 digital compass module
 	 *
-	 * @exports CompassHMC6352 as ARDJS.ui.CompassHMC6352
+	 * @exports CompassHMC6352 as BREAKOUT.io.CompassHMC6352
 	 * @constructor
-	 * @augments ARDJS.I2CBase
-	 * @param {Arduino} board The Arduino instance
+	 * @augments BREAKOUT.I2CBase
+	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Number} address The i2c address of the compass module
 	 */
 	CompassHMC6352 = function(board, address) {
@@ -39,7 +39,7 @@ ARDJS.ui.CompassHMC6352 = (function() {
 
 	}
 
-	CompassHMC6352.prototype = ARDJS.inherit(I2CBase.prototype);
+	CompassHMC6352.prototype = BREAKOUT.inherit(I2CBase.prototype);
 	CompassHMC6352.prototype.constructor = CompassHMC6352;
 
 	/**

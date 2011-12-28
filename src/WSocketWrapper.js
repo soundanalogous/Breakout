@@ -2,19 +2,19 @@
  * @author jeff hoefs
  */
 
-ARDJS.namespace('ARDJS.SocketEvent');
+BREAKOUT.namespace('BREAKOUT.SocketEvent');
 
-ARDJS.SocketEvent = (function() {
+BREAKOUT.SocketEvent = (function() {
 	
 	var SocketEvent;
 
 	// dependencies
-	var Event = ARDJS.Event;
+	var Event = BREAKOUT.Event;
 
 	/**
-	 * @exports SocketEvent as ARDJS.SocketEvent
+	 * @exports SocketEvent as BREAKOUT.SocketEvent
 	 * @constructor
-	 * @augments ARDJS.Event
+	 * @augments BREAKOUT.Event
 	 * @param {String} type The event type
 	 */
 	SocketEvent = function(type) {
@@ -33,7 +33,7 @@ ARDJS.SocketEvent = (function() {
 	/** @constant */
 	SocketEvent.CLOSE = "socketClosed";
 
-	SocketEvent.prototype = ARDJS.inherit(Event.prototype);
+	SocketEvent.prototype = BREAKOUT.inherit(Event.prototype);
 	SocketEvent.prototype.constructor = SocketEvent;	
 
 	return SocketEvent;
@@ -48,21 +48,21 @@ ARDJS.SocketEvent = (function() {
  * @author jeff hoefs
  */
 
-ARDJS.namespace('ARDJS.WSocketWrapper');
+BREAKOUT.namespace('BREAKOUT.WSocketWrapper');
 
-ARDJS.WSocketWrapper = (function() {
+BREAKOUT.WSocketWrapper = (function() {
 	"use strict";
 
  	var WSocketWrapper;
 
  	// dependencies
- 	var EventDispatcher = ARDJS.EventDispatcher,
- 		SocketEvent = ARDJS.SocketEvent;
+ 	var EventDispatcher = BREAKOUT.EventDispatcher,
+ 		SocketEvent = BREAKOUT.SocketEvent;
 
 	/**
 	 * Creates a wrapper for various websocket implementations to unify the interface.
 	 *
-	 * @exports WSocketWrapper as ARDJS.WSocketWrapper
+	 * @exports WSocketWrapper as BREAKOUT.WSocketWrapper
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
@@ -86,7 +86,7 @@ ARDJS.WSocketWrapper = (function() {
 
 	};
 
-	WSocketWrapper.prototype = ARDJS.inherit(EventDispatcher.prototype);
+	WSocketWrapper.prototype = BREAKOUT.inherit(EventDispatcher.prototype);
 	WSocketWrapper.prototype.constructor = WSocketWrapper;
 
 	/**

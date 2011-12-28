@@ -3,8 +3,8 @@
  * 
  */
 
-/** @namespace Namespace and utility functions for Arduino-JS */
-var ARDJS = ARDJS || {};
+/** @namespace Namespace and utility functions for Breakout */
+var BREAKOUT = BREAKOUT || {};
 
 /**
  * use this function to safely create a new namespace
@@ -13,13 +13,13 @@ var ARDJS = ARDJS || {};
  * @function
  * @param {String} ns_string The namespace as a string.
  */
-ARDJS.namespace = function (ns_string) {
+BREAKOUT.namespace = function (ns_string) {
 	var parts = ns_string.split('.'),
-		parent = ARDJS,
+		parent = BREAKOUT,
 		i;
 		
 	// strip redundant leading global
-	if (parts[0] === "ARDJS") {
+	if (parts[0] === "BREAKOUT") {
 		parts = parts.slice(1);
 	}
 	
@@ -41,7 +41,7 @@ ARDJS.namespace = function (ns_string) {
  * @function
  * @param {Object} p The prototype of the object to inherit.
  */
-ARDJS.inherit = function(p) {
+BREAKOUT.inherit = function(p) {
 	if (p == null) throw TypeError(); // p must be a non-null object
 	if (Object.create) { // If Object.create() is defined...
 		return Object.create(p); // then just use it

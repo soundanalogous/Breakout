@@ -2,24 +2,24 @@
  * @author jeff hoefs
  */
 
-ARDJS.namespace('ARDJS.I2CBase');
+BREAKOUT.namespace('BREAKOUT.I2CBase');
 
-ARDJS.I2CBase = (function() {
+BREAKOUT.I2CBase = (function() {
 	"use strict";
 
  	var I2CBase;
 
  	// dependencies
- 	var Pin = ARDJS.Pin,
- 		EventDispatcher = ARDJS.EventDispatcher,
- 		IOBoardEvent = ARDJS.IOBoardEvent;
+ 	var Pin = BREAKOUT.Pin,
+ 		EventDispatcher = BREAKOUT.EventDispatcher,
+ 		IOBoardEvent = BREAKOUT.IOBoardEvent;
 
 	/**
 	 * Creates a new I2CBase base class
 	 *
-	 * @exports I2CBase as ARDJS.I2CBase
+	 * @exports I2CBase as BREAKOUT.I2CBase
 	 * @constructor
-	 * @param {Class} board A reference to the Arduino class instance
+	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Number} address The I2C address of the device
 	 * @param {Number} delayUS The number of microseconds ...
 	 */

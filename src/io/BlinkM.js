@@ -2,22 +2,22 @@
  * @author Jeff Hoefs
  */
 
-ARDJS.namespace('ARDJS.ui.BlinkM');
+BREAKOUT.namespace('BREAKOUT.io.BlinkM');
 
-ARDJS.ui.BlinkM = (function() {
+BREAKOUT.io.BlinkM = (function() {
 
 	var BlinkM;
 
 	// dependencies
-	var I2CBase = ARDJS.I2CBase;
+	var I2CBase = BREAKOUT.I2CBase;
 
 	/**
 	 * Creates and BlinkM object
 	 *
-	 * @exports BlinkM as ARDJS.ui.BlinkM
+	 * @exports BlinkM as BREAKOUT.io.BlinkM
 	 * @constructor
-	 * @augments ARDJS.I2CBase 
-	 * @param {Arduino} board The Arduino instance
+	 * @augments BREAKOUT.I2CBase 
+	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Number} address The i2c address of the BlinkM module
 	 */
 	BlinkM = function(board, address) {
@@ -32,7 +32,7 @@ ARDJS.ui.BlinkM = (function() {
 
 	};
 
-	BlinkM.prototype = ARDJS.inherit(I2CBase.prototype);
+	BlinkM.prototype = BREAKOUT.inherit(I2CBase.prototype);
 	BlinkM.prototype.constructor = BlinkM;
 
 
