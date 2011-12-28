@@ -1,4 +1,4 @@
-* port funnel UI classes (as3) to javascript:
+* port additional funnel UI classes to javascript:
     - Accelerometer
     - DCMotor
     - LED
