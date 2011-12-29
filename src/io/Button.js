@@ -49,6 +49,7 @@ BREAKOUT.io.Button = (function() {
 	// dependencies
 	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
 		Event = BREAKOUT.Event,
+		Pin = BREAKOUT.Pin,
 		ButtonEvent = BREAKOUT.io.ButtonEvent;
 
 	/**
@@ -59,35 +60,58 @@ BREAKOUT.io.Button = (function() {
 	 * @exports Button as BREAKOUT.io.Button
 	 * @constructor
 	 * @augments BREAKOUT.PhysicalInputBase
-	 * @param {Pin} pin A reference to the pin the button is connected to.
+	 * @param {IOBoard} board A reference to the IOBoard instance
+	 * @param {number} pin The pin number the button is connected to. If an analog pin is used as a digital pin,
+	 * the pin number is the last digital pin + the analog pin number + 1 (so for a standard Arduino board, analog 
+	 * pin 0 can be used as digital pin 14).
 	 * @param {number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
 	 * Default is PULL_DOWN.
-	 * @param {number} longPressDelay The delay time in milliseconds before a long press event is fired.
+	 * @param {number} sustainedPressInterval The delay time in milliseconds before a sustained press event is fired.
 	 *
 	 */
-	Button = function(pin, buttonMode, longPressDelay) {
+	Button = function(board, pinNumber, buttonMode, sustainedPressInterval) {
 		"use strict";
 		
 		PhysicalInputBase.call(this);
 
 		this.name = "Button"; // for testing
-		this._pin = pin;
+		this._pin = board.getDigitalPin(pinNumber);
+		//this._pinNumber = pinNumber;
 		
 		this.buttonMode = buttonMode || Button.PULL_DOWN;
-		this.longPressDelay = longPressDelay || 1000;
+		this._sustainedPressInterval = sustainedPressInterval || 1000;
 
 		this._debounceInterval = 20,
 		this._repeatCount = 0,
 		this._timer = null,
 		this._timeout = null;
+		
+		//this._board = null;
+		this._board = board;
+		board.setPinMode(pinNumber, Pin.DIN);
+
+		if (this.buttonMode === Button.INTERNAL_PULL_UP) {
+			// enable internal pull up resistor
+			board.enablePullUp(pinNumber);
+			// set value to high to avoid initial change event
+			this._pin.value = Pin.HIGH;
+		}
 				
-		pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));	
+		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));	
 	};
 
 
 	Button.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
 	Button.prototype.constructor = Button;
 
+	/*
+	Button.prototype.init = function(board) {
+		this._pin = board.getDigitalPin(this._pinNumber);
+		this._board = board;
+		board.setPinMode(pinNumber, Pin.DIN);
+		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
+	};
+	*/
 
 	/**
 	 * @private
@@ -100,7 +124,7 @@ BREAKOUT.io.Button = (function() {
 		if (this.buttonMode === Button.PULL_DOWN) {
 			if (btnVal === 1) stateHandler = this.pressed;
 			else stateHandler = this.released;
-		} else if (this.buttonMode === Button.PULL_UP) {
+		} else if (this.buttonMode === Button.PULL_UP || this.buttonMode === Button.INTERNAL_PULL_UP) {
 			if (btnVal === 1) stateHandler = this.released;
 			else stateHandler = this.pressed;
 		}
@@ -121,7 +145,7 @@ BREAKOUT.io.Button = (function() {
 
 		this.dispatchEvent(new ButtonEvent(ButtonEvent.PRESS));
 		
-		this._timer = setInterval(this.sustainedPress.bind(this), this.longPressDelay);
+		this._timer = setInterval(this.sustainedPress.bind(this), this._sustainedPressInterval);
 	};
 	
 	/**
@@ -162,6 +186,15 @@ BREAKOUT.io.Button = (function() {
 	Button.prototype.__defineSetter__("debounceInterval", function(interval) { this._debounceInterval = interval; });
 	
 	/**
+	 * The delay time (in milliseconds) the button must be held before a sustained press event is fired.
+	 * @name Button#sustainedPressInterval
+	 * @property
+	 * @type Number
+	 */ 
+	Button.prototype.__defineGetter__("sustainedPressInterval", function() { return this._sustainedPressInterval; });
+	Button.prototype.__defineSetter__("sustainedPressInterval", function(intervalTime) { this._sustainedPressInterval = intervalTime; });
+
+	/**
 	 * [read-only] The pin number of the pin the button is attached to.
 	 * @name Button#pinNumber
 	 * @property
@@ -173,6 +206,8 @@ BREAKOUT.io.Button = (function() {
 	Button.PULL_DOWN = 0;
 	/** @constant */
 	Button.PULL_UP 	= 1;
+	/** @contstant */
+	Button.INTERNAL_PULL_UP = 2;
 
 	return Button;
 

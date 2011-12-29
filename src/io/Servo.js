@@ -16,8 +16,8 @@ BREAKOUT.io.Servo = (function() {
 	 *
 	 * @exports Servo as BREAKOUT.io.Servo
 	 * @constructor
-	 * @param {IOBoard} board A reference to the IOBoard instance.
-	 * @param {Number} servoPin The number of the pin the servo is connected to.
+	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
+	 * @param {Pin} servoPin A reference to the Pin the servo is connected to.
 	 */
 	Servo = function(board, servoPin) {
 		"use strict";
@@ -25,6 +25,7 @@ BREAKOUT.io.Servo = (function() {
 		this.name = "Servo"; // for testing
 
 		this._pin = board.getDigitalPin(servoPin);
+		//this._pin = servoPin
 		this._angle;
 		
 		board.sendServoAttach(servoPin);

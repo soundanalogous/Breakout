@@ -125,7 +125,6 @@ BREAKOUT.WSocketWrapper = (function() {
 				} else {
 					console.log("Websockets not supported by this browser");
 					throw "Websockets not supported by this browser";
-					return;	
 				}
 
 				console.log("Starting up...");
