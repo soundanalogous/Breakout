@@ -41,9 +41,9 @@ BREAKOUT.I2CBase = (function() {
 		// if the pins are not set as I2C, set them now
 		var i2cPins = board.getI2cPins();
 		if (i2cPins.length == 2) {
-			if (board.getPin(i2cPins[0]).type != Pin.I2C) {
-				board.getPin(i2cPins[0]).type = Pin.I2C;
-				board.getPin(i2cPins[1]).type = Pin.I2C;
+			if (board.getPin(i2cPins[0]).getType() != Pin.I2C) {
+				board.getPin(i2cPins[0]).setType(Pin.I2C);
+				board.getPin(i2cPins[1]).setType(Pin.I2C);
 			}
 		} else {
 			// to do: proper error handling

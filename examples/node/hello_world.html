@@ -51,23 +51,19 @@ $(document).ready(function() {
 		ard.removeEventListener(IOBoardEvent.READY, onReady);
 		
 		// set digital pin 13 to output
-		ard.setPinMode(13, Pin.DOUT);
+		ard.setDigitalPinMode(13, Pin.DOUT);
 		// get a reference to the pin
 		blinkLED = ard.getDigitalPin(13);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 		
 		// set a pin to PWM
-		ard.setPinMode(11, Pin.PWM);
+		ard.setDigitalPinMode(11, Pin.PWM);
 		fadeLED = ard.getDigitalPin(11);
 		setInterval(fade, 11);			
-	
-		//set digital pin 2 to input
-		ard.setPinMode(2, Pin.DIN);
 		
-		// create a new button (passing in a reference to the pin the button
-		// is attached to)
-		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_DOWN);
+		// create a new button
+		var button01 = new Button(ard, ard.getDigitalPin(2), Button.PULL_DOWN);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 		

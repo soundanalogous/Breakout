@@ -20,7 +20,7 @@ BREAKOUT.io.RFIDEvent = (function() {
 	 * @param {String} tag The RFID tag value (hexadecimal)
 	 */
 	RFIDEvent = function(type, tag) {
-		this.tag = tag;
+		this._tag = tag;
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
@@ -33,6 +33,14 @@ BREAKOUT.io.RFIDEvent = (function() {
 
 	RFIDEvent.prototype = BREAKOUT.inherit(Event.prototype);
 	RFIDEvent.prototype.constructor = RFIDEvent;
+
+	/**
+	 * [read-only] The RFID tag value (hexadecimal string).
+	 * @name RFIDEvent#tag
+	 * @property
+	 * @type String
+	 */ 
+	RFIDEvent.prototype.__defineGetter__("tag", function() { return this._tag; });
 
 	return RFIDEvent;
 

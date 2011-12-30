@@ -57,27 +57,21 @@ $(document).ready(function() {
 
 		// print the supported modes and resolution (in bits) for each pin
 		//uno.reportCapabilities();
-
-		// test sampline interval
-		//uno.setSamplingInterval(33);
 			
 		// listen for incoming string messages
 		uno.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
 		// set digital pin 13 to output
-		uno.setPinMode(13, Pin.DOUT);
+		uno.setDigitalPinMode(13, Pin.DOUT);
 		// get a reference to the pin
 		blinkLED = uno.getDigitalPin(13);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 	
-		//set digital pin 2 to input
-		//uno.setPinMode(2, Pin.DIN);
 		
 		// get a reference to the pin and listen for Change event
-		//var button01 = new Button(uno.getDigitalPin(2), Button.PULL_DOWN);
-		var button01 = new Button(uno, 2, Button.PULL_DOWN);
-		//var button01 = new Button(uno, 2, Button.INTERNAL_PULL_UP);
+		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
+		//var button01 = new Button(uno, uno.getDigitalPin(2), Button.INTERNAL_PULL_UP);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 
@@ -88,21 +82,20 @@ $(document).ready(function() {
 		//uno.disableAnalogPin(0);
 
 		// set analog pin to digital input
-		uno.setPinMode(16, Pin.DIN);
+		uno.setDigitalPinMode(16, Pin.DIN);
 		var button02 = uno.getDigitalPin(16);
-		//var button02 = uno.getAnalogPin(2);
 		button02.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// set a pin to PWM
-		uno.setPinMode(11, Pin.PWM);
+		uno.setDigitalPinMode(11, Pin.PWM);
 		fadeLED = uno.getDigitalPin(11);
 		setInterval(fade, 11);			
 		
 		// set a pin to SERVO
-		//uno.setPinMode(9, Pin.SERVO);
+		//uno.setDigitalPinMode(9, Pin.SERVO);
 		//servo = uno.getDigitalPin(9);
-		servo = new Servo(uno, 9);
-		//setInterval(servoTest, 5000);
+		servo = new Servo(uno, uno.getDigitalPin(9));
+		setInterval(servoTest, 5000);
 		
 		blinkM = new BlinkM(uno);
 		blinkM.stopScript();
@@ -113,9 +106,7 @@ $(document).ready(function() {
 		
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);
-		
-		uno.addEventListener(IOBoardEvent.PIN_STATE_RESPONSE, onPinStateResponse);
-		
+				
 	}
 	
 	function stopReading() {

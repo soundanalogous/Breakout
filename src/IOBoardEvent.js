@@ -16,7 +16,6 @@ BREAKOUT.IOBoardEvent = (function() {
 	 * @constructor
 	 * @augments BREAKOUT.Event
 	 * @param {String} type The event type
-	 * @param {Object} data An object containing additional parameters
 	 */
 	IOBoardEvent = function(type) {
 

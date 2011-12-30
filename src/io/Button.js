@@ -61,22 +61,21 @@ BREAKOUT.io.Button = (function() {
 	 * @constructor
 	 * @augments BREAKOUT.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
-	 * @param {number} pin The pin number the button is connected to. If an analog pin is used as a digital pin,
-	 * the pin number is the last digital pin + the analog pin number + 1 (so for a standard Arduino board, analog 
-	 * pin 0 can be used as digital pin 14).
-	 * @param {number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
+	 * @param {Pin} pin A reference to the Pin the button is connected to.
+	 * @param {Number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
 	 * Default is PULL_DOWN.
-	 * @param {number} sustainedPressInterval The delay time in milliseconds before a sustained press event is fired.
+	 * @param {Number} sustainedPressInterval The delay time in milliseconds before a sustained press event is fired.
 	 *
 	 */
-	Button = function(board, pinNumber, buttonMode, sustainedPressInterval) {
+	Button = function(board, pin, buttonMode, sustainedPressInterval) {
 		"use strict";
 		
 		PhysicalInputBase.call(this);
 
 		this.name = "Button"; // for testing
-		this._pin = board.getDigitalPin(pinNumber);
-		//this._pinNumber = pinNumber;
+		this._pin = pin;
+
+		var pinNumber = pin.number;
 		
 		this.buttonMode = buttonMode || Button.PULL_DOWN;
 		this._sustainedPressInterval = sustainedPressInterval || 1000;
@@ -86,9 +85,8 @@ BREAKOUT.io.Button = (function() {
 		this._timer = null,
 		this._timeout = null;
 		
-		//this._board = null;
 		this._board = board;
-		board.setPinMode(pinNumber, Pin.DIN);
+		board.setDigitalPinMode(pinNumber, Pin.DIN);
 
 		if (this.buttonMode === Button.INTERNAL_PULL_UP) {
 			// enable internal pull up resistor
@@ -103,15 +101,6 @@ BREAKOUT.io.Button = (function() {
 
 	Button.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
 	Button.prototype.constructor = Button;
-
-	/*
-	Button.prototype.init = function(board) {
-		this._pin = board.getDigitalPin(this._pinNumber);
-		this._board = board;
-		board.setPinMode(pinNumber, Pin.DIN);
-		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
-	};
-	*/
 
 	/**
 	 * @private

@@ -2,23 +2,23 @@
  * @author jeff hoefs
  */
 
-BREAKOUT.namespace('BREAKOUT.SocketEvent');
+BREAKOUT.namespace('BREAKOUT.WSocketEvent');
 
-BREAKOUT.SocketEvent = (function() {
+BREAKOUT.WSocketEvent = (function() {
 	
-	var SocketEvent;
+	var WSocketEvent;
 
 	// dependencies
 	var Event = BREAKOUT.Event;
 
 	/**
-	 * @exports SocketEvent as BREAKOUT.SocketEvent
+	 * @exports WSocketEvent as BREAKOUT.WSocketEvent
 	 * @constructor
 	 * @augments BREAKOUT.Event
 	 * @param {String} type The event type
 	 */
-	SocketEvent = function(type) {
-		this.name = "SocketEvent"; // for testing
+	WSocketEvent = function(type) {
+		this.name = "WSocketEvent"; // for testing
 		
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
@@ -27,16 +27,16 @@ BREAKOUT.SocketEvent = (function() {
 
 	// events
 	/** @constant */
-	SocketEvent.CONNECTED = "socketConnected";
+	WSocketEvent.CONNECTED = "webSocketConnected";
 	/** @constant */
-	SocketEvent.MESSAGE = "socketMessage";
+	WSocketEvent.MESSAGE = "webSocketMessage";
 	/** @constant */
-	SocketEvent.CLOSE = "socketClosed";
+	WSocketEvent.CLOSE = "webSocketClosed";
 
-	SocketEvent.prototype = BREAKOUT.inherit(Event.prototype);
-	SocketEvent.prototype.constructor = SocketEvent;	
+	WSocketEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	WSocketEvent.prototype.constructor = WSocketEvent;	
 
-	return SocketEvent;
+	return WSocketEvent;
 
 }());
 
@@ -57,7 +57,7 @@ BREAKOUT.WSocketWrapper = (function() {
 
  	// dependencies
  	var EventDispatcher = BREAKOUT.EventDispatcher,
- 		SocketEvent = BREAKOUT.SocketEvent;
+ 		WSocketEvent = BREAKOUT.WSocketEvent;
 
 	/**
 	 * Creates a wrapper for various websocket implementations to unify the interface.
@@ -101,10 +101,10 @@ BREAKOUT.WSocketWrapper = (function() {
 
 			try {
 				self._socket.on('connect', function() {
-					self.dispatchEvent(new SocketEvent(SocketEvent.CONNECTED));
+					self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
 
 					self._socket.on('message', function(msg) {
-						self.dispatchEvent(new SocketEvent(SocketEvent.MESSAGE), {message: msg});
+						self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg});
 					});
 				});
 				
@@ -131,15 +131,15 @@ BREAKOUT.WSocketWrapper = (function() {
 
 				self._socket.onopen = function() {
 
-					self.dispatchEvent(new SocketEvent(SocketEvent.CONNECTED));
+					self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
 
 					self._socket.onmessage = function(msg) {
-						self.dispatchEvent(new SocketEvent(SocketEvent.MESSAGE), {message: msg.data});
+						self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg.data});
 					};
 
 					self._socket.onclose = function() {
 						self._readyState = self._socket.readyState;
-						self.dispatchEvent(new SocketEvent(SocketEvent.CLOSE));	
+						self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));	
 					};
 
 				};

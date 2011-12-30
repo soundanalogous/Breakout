@@ -14,7 +14,7 @@ BREAKOUT.Pin = (function() {
 		Event = BREAKOUT.Event;
 
 	/**
-	 * An object to represent an Arduino pin
+	 * An object to represent an IOBoard pin
 	 *
 	 * @exports Pin as BREAKOUT.Pin
 	 * @constructor
@@ -22,28 +22,46 @@ BREAKOUT.Pin = (function() {
 	 * @param {Number} type The type of pin
 	 */
 	Pin = function(number, type) {
-		this.type = type;
-		this.capabilities;
 
 		this.name = "Pin"; // for testing
-		
-		this._number = number,
-		this._value = -1,
-		this._lastValue = -1,
-		this._preFilterValue,
-		this._average = 0,
-		this._minimum = Math.pow(2, 16),
-		this._maximum = 0,
-		this._avg = 0,
-		this._sum = 0,
-		this._numSamples = 0,
-		this._analogReporting = Pin.OFF,
+
+		this._type = type;
+		this._capabilities;
+		this._number = number;
+		this._analogNumber = undefined;
+		this._value = -1;
+		this._lastValue = -1;
+		this._preFilterValue;
+		this._average = 0;
+		this._minimum = Math.pow(2, 16);
+		this._maximum = 0;
+		this._avg = 0;
+		this._sum = 0;
+		this._numSamples = 0;
 		
 		this._evtDispatcher = new EventDispatcher(this);	
 
 	};
 
 	Pin.prototype = {
+		
+		/**
+		 * The analogNumber sould only be set internally.
+		 * @private
+		 */		
+		setAnalogNumber: function(num) {
+			this._analogNumber = num;
+		},
+
+		/**
+		 * [read-only] The analog pin number used by the IOBoard (printed on board or datasheet).
+		 * @name Pin#analogNumber
+		 * @property
+		 * @type Number
+		 */	
+		get analogNumber() {
+			return this._analogNumber;
+		},		
 
 		/**
 		 * [read-only] The pin number corresponding to the Arduino documentation for the type of board.
@@ -101,23 +119,6 @@ BREAKOUT.Pin = (function() {
 			this._value = val;
 			this.detectChange(this._lastValue, this._value);
 		},
-
-		/**
-		 * [read-only] Indicates whether or not analog reporting is enabled for this pin.
-		 * @name Pin#analogReporting
-		 * @property
-		 * @type Boolean
-		 */			
-		get analogReporting() {
-			return this._analogReporting;
-		},
-		
-		/**
-		 * @private
-		 */	
-		set analogReporting(mode) {
-			this._analogReporting = mode;
-		},
 		
 		/**
 		 * [read-only] The last pin value.
@@ -138,6 +139,42 @@ BREAKOUT.Pin = (function() {
 		get preFilterValue() {
 			return this._preFilterValue;
 		},
+
+		/**
+		 * The type/mode of the pin (eg. Pin.DIN, Pin.DOUT, etc). Use IOBoard.setDigitalPinMode(pinNumber) 
+		 * to set the pin type.
+		 * @return {Number} The pin type/mode
+		 */	
+		getType: function() {
+			return this._type;
+		},
+
+		/**
+		 * Set the pin type. This method should only be used internaly.
+		 * @private
+		 */
+		setType: function(pinType) {
+			// ensure pin type is valid
+			if (pinType >= 0 && pinType < Pin.TOTAL_PIN_MODES) {
+				this._type = pinType;
+			}
+		},			
+
+		/**
+		 * An object storing the capabilities of the pin.
+		 * @return {Object} An object describing the capabilities of this Pin.
+		 */	
+		getCapabilities: function() {
+			return this._capabilities;
+		},
+
+		/**
+		 * This method should only be used internally.
+		 * @private
+		 */
+		setCapabilities: function(pinCapabilities) {
+			this._capabilities = pinCapabilities;
+		},		
 
 		/**
 		 * Dispatch a Change event whenever a pin value changes

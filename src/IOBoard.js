@@ -15,7 +15,7 @@ BREAKOUT.IOBoard = (function() {
 	var Pin = BREAKOUT.Pin,
 		EventDispatcher = BREAKOUT.EventDispatcher,
 		Event = BREAKOUT.Event,
-		SocketEvent = BREAKOUT.SocketEvent,
+		WSocketEvent = BREAKOUT.WSocketEvent,
 		WSocketWrapper = BREAKOUT.WSocketWrapper,
 		IOBoardEvent = BREAKOUT.IOBoardEvent;
 
@@ -66,16 +66,13 @@ BREAKOUT.IOBoard = (function() {
 				SAMPLING_INTERVAL		= 0x7A,
 				SYSEX_NON_REALTIME		= 0x7E,
 				SYSEX_REALTIME			= 0x7F;
-		
 
+		var MIN_SAMPLING_INTERVAL = 10,
+			MAX_SAMPLING_INTERVAL = 100;
+		
 		// private properties
-		var self = this;	// get a reference to this class
-		var host = host;
-		var port = port;
-		var protocol = protocol || "default-protocol";
-		var useSocketIO = useSocketIO || false;
-		var socket;
-		var _browser = "";
+		var _self = this;	// get a reference to this class
+		var _socket;
 		
 		// input processing
 		var _executeMultiByteCommand = 0;
@@ -91,17 +88,17 @@ BREAKOUT.IOBoard = (function() {
 		var _i2cPins = [];
 		var _ioPins = [];
 		var _totalPins = 0;
-
-		var _useSocketIO = false;
+		// default sampling interval
+		var _samplingInterval = 19;
 		
 		var _firmwareVersion = 0;
 		
 		var _evtDispatcher = new EventDispatcher(this);
 
-		socket = new WSocketWrapper(host, port, useSocketIO, protocol);
-		socket.addEventListener(SocketEvent.CONNECTED, onSocketConnection);
-		socket.addEventListener(SocketEvent.MESSAGE, onSocketMessage);
-		socket.addEventListener(SocketEvent.CLOSE, onSocketClosed);
+		_socket = new WSocketWrapper(host, port, useSocketIO, protocol);
+		_socket.addEventListener(WSocketEvent.CONNECTED, onSocketConnection);
+		_socket.addEventListener(WSocketEvent.MESSAGE, onSocketMessage);
+		_socket.addEventListener(WSocketEvent.CLOSE, onSocketClosed);
 
 		// private methods:
 
@@ -110,7 +107,7 @@ BREAKOUT.IOBoard = (function() {
 		 */
 		function onSocketConnection(event) {
 			console.log("Socket Status: (open)");
-			self.dispatchEvent(new Event(Event.CONNECTED));
+			_self.dispatchEvent(new Event(Event.CONNECTED));
 			begin();			
 		}
 
@@ -125,7 +122,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketClosed(event) {
-			console.log("Socket Status: "+socket.readyState+' (Closed)');
+			console.log("Socket Status: "+_socket.readyState+' (Closed)');
 		}
 						
 								
@@ -133,15 +130,15 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function begin() {
-			self.addEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
-			self.reportVersion();
+			_self.addEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
+			_self.reportVersion();
 		}
 		
 		/**
 		 * @private
 		 */
 		function onVersion(event) {
-			self.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
+			_self.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
 			var version = event.version * 10;
 			
 			// make sure the user has uploaded StandardFirmata 2.3 or greater
@@ -174,10 +171,10 @@ BREAKOUT.IOBoard = (function() {
 							break;
 						case REPORT_VERSION:
 							_firmwareVersion=_storedInputData[1] + _storedInputData[0] / 10;
-							self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
+							_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
 							break;
 						case ANALOG_MESSAGE:
-							var analogPin = self.getAnalogPin(_multiByteChannel);
+							var analogPin = _self.getAnalogPin(_multiByteChannel);
 							// NOTE: is there a better way to handle this? This issue is on browser refresh
 							// the IOBoard board is still sending analog data if analog reporting was set
 							// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
@@ -189,10 +186,10 @@ BREAKOUT.IOBoard = (function() {
 								break;
 							}
 							// map analog input values from 0-1023 to 0.0 to 1.0
-							analogPin.value = self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023;
+							analogPin.value = _self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023;
 							if (analogPin.value != analogPin.lastValue) {
 								// use analog pin number rather than actual pin number
-								self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
+								_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
 							}
 							break;
 					}
@@ -221,7 +218,7 @@ BREAKOUT.IOBoard = (function() {
 							break;
 						default:
 							// custom sysEx message
-							self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: _sysExData});
+							_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: _sysExData});
 							break;
 					}
 					_sysExData = [];
@@ -272,16 +269,15 @@ BREAKOUT.IOBoard = (function() {
 			
 			var j=0;
 			for (var i=offset; i<lastPin; i++) {
-				pin = self.getDigitalPin(i);
+				pin = _self.getDigitalPin(i);
 				// ignore data send on Firmata startup
-				// same for analog?
 				if (pin == undefined) return;
 				
-				if (pin.type == Pin.DIN) {
+				if (pin.getType() == Pin.DIN) {
 					pinVal = (portVal >> j) & 0x01;
 		    		if (pinVal != pin.value) {
 		    			pin.value = pinVal;
-		    			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DIGITAL_DATA), {pin: pin});
+		    			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DIGITAL_DATA), {pin: pin});
 		    		}
 		    	}
 		    	j++;
@@ -301,7 +297,7 @@ BREAKOUT.IOBoard = (function() {
 				fname += data;
 			}
 			_firmwareVersion=msg[1] + msg[2] / 10;
-			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: fname, version: _firmwareVersion});
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: fname, version: _firmwareVersion});
 			
 		}
 		
@@ -316,12 +312,12 @@ BREAKOUT.IOBoard = (function() {
 				data += String.fromCharCode(msg[i+1]);		
 				str+=data.charAt(0);
 			}
-			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
 		}
 			
 		/** 
-		 * Auto configure using capabilities response
-		 * This should create a configuration for any board in the Firmata boards.h file
+		 * Auto configure using capabilities response.
+		 * This creates a configuration for any board in the Firmata boards.h file.
 		 *
 		 * @private
 		 */
@@ -355,12 +351,12 @@ BREAKOUT.IOBoard = (function() {
 					} 
 					
 					var pin = new Pin(pinCounter, type);
-					pin.capabilities = pinCapabilities;
+					pin.setCapabilities(pinCapabilities);
 					managePinListener(pin);
 					_ioPins[pinCounter] = pin;
 					
 					// store the 2 i2c pin numbers if they exist
-					if (pin.capabilities[Pin.I2C]) {
+					if (pin.getCapabilities()[Pin.I2C]) {
 						_i2cPins.push(pin.number);
 					}
 					
@@ -386,14 +382,8 @@ BREAKOUT.IOBoard = (function() {
 			_totalPins = pinCounter;
 			console.log("debug: num pins = " + _totalPins);
 			
-			//self.reportCapabilities();
-
-			console.log("debug: system reset");
-			systemReset();
-
-			// delay to allow systemReset function to execute in StandardFirmata
-			setTimeout(startup, 500);
-			console.log("debug: configured");
+			// map the analog pins to the board pins
+			queryAnalogMapping();
 		}
 		
 		/**
@@ -401,8 +391,8 @@ BREAKOUT.IOBoard = (function() {
 		 */
 		function startup() {
 			console.log("debug: startup");
-			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
-			self.enableDigitalPinReporting();
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
+			_self.enableDigitalPins();
 		}
 		
 		/**
@@ -411,7 +401,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function systemReset() {
-			self.send(SYSEX_RESET);
+			_self.send(SYSEX_RESET);
 		}	
 			
 		/**
@@ -427,34 +417,45 @@ BREAKOUT.IOBoard = (function() {
 			
 			if (len > 4) {
 				// get value
-				value = self.getValueFromTwo7bitBytes(msg[3], msg[4]);
+				value = _self.getValueFromTwo7bitBytes(msg[3], msg[4]);
 			} else if (len > 3) {
 				value = msg[3];
 			}
 			
-			if (pin.type != pinType) {
-				pin.type = pinType;
+			if (pin.getType() != pinType) {
+				pin.setType(pinType);
 				managePinListener(pin);
 			}
 			if (pin.value != value) {
 				pin.value = value;
 			}
 			
-			// to do: update this
-			self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pinNumber, type: pinType, value: value});
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pinNumber, type: pinType, value: value});
 		}
 		
 		/**
+		 * Map map analog pins to board pin numbers. Need to do this because
+		 * the capability query does not provide the correct order of analog pins.
 		 *
 		 * @private
 		 */
 		function processAnalogMappingResponse(msg) {
-			var len = msg.length;		
+			var len = msg.length;
 			for (var i=1; i<len; i++) {
 				if (msg[i] != 127) {
 					_analogPinMapping[msg[i]] = i - 1;
+					_self.getPin(i-1).setAnalogNumber(msg[i]);
 				}
 			}
+			
+			// perform a soft reset of the board
+			// the board state will be reset to its default state
+			console.log("debug: system reset");
+			systemReset();
+
+			// delay to allow systemReset function to execute in StandardFirmata
+			setTimeout(startup, 500);
+			console.log("debug: configured");
 		}
 		
 		/**
@@ -475,7 +476,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @param {Event} event A reference to the event object (Pin in this case).
 		 */
 		 function sendOut(event) {
-		 	var type = event.target.type;
+		 	var type = event.target.getType();
 		 	var pinNum = event.target.number;
 		 	var value = event.target.value;
 		 	
@@ -500,7 +501,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */	 
 		function managePinListener(pin) {
-			if (pin.type == Pin.DOUT || pin.type == Pin.AOUT || pin.type == Pin.SERVO) {
+			if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
 				if (!pin.hasEventListener(Event.CHANGE)) {
 					pin.addEventListener(Event.CHANGE, sendOut);
 				}
@@ -523,7 +524,7 @@ BREAKOUT.IOBoard = (function() {
 			if (pin > 15 || value > Math.pow(2, 14)) {
 				sendExtendedAnalogData(pin, value);
 			} else {
-				self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F,(value >> 7) & 0x007F]);
+				_self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F,(value >> 7) & 0x007F]);
 			}
 		}
 
@@ -538,7 +539,6 @@ BREAKOUT.IOBoard = (function() {
 				var err = "Extended Analog values > 16 bits are not currently supported by StandardFirmata";
 				console.log(err);
 				throw err;
-				return;
 			}
 			
 			analogData[0] = START_SYSEX;
@@ -553,7 +553,7 @@ BREAKOUT.IOBoard = (function() {
 		 	}
 		 	
 			analogData.push(END_SYSEX);
-			self.send(analogData);
+			_self.send(analogData);
 		}
 		
 		/**
@@ -575,16 +575,16 @@ BREAKOUT.IOBoard = (function() {
 				return; // invalid value
 			}
 			
-			self.sendDigitalPort(portNum, _digitalPort[portNum]);	
+			_self.sendDigitalPort(portNum, _digitalPort[portNum]);	
 		}
 		
 		/**
 		 * @private
 		 */	
 		function sendServoData(pin, value) {
-			var servoPin = self.getDigitalPin(pin);
-			if (servoPin.type == Pin.SERVO && servoPin.lastValue != value) {
-				self.send([ANALOG_MESSAGE | (pin & 0x0F), value % 128, value >> 7]);
+			var servoPin = _self.getDigitalPin(pin);
+			if (servoPin.getType() == Pin.SERVO && servoPin.lastValue != value) {
+				_self.send([ANALOG_MESSAGE | (pin & 0x0F), value % 128, value >> 7]);
 			}	
 		}	
 		
@@ -594,8 +594,17 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function queryCapabilities() {
-			self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
+			_self.send([START_SYSEX,CAPABILITY_QUERY,END_SYSEX]);
 		}
+
+		/**
+		 * Query which pins correspond to the analog channels
+		 *
+		 * @private
+		 */
+		function queryAnalogMapping() {
+			_self.send([START_SYSEX,ANALOG_MAPPING_QUERY,END_SYSEX]);
+		};		
 		
 		/**
 		 * Call this method to enable or disable analog input for the specified pin.
@@ -606,10 +615,30 @@ BREAKOUT.IOBoard = (function() {
 		 * for the specified pin.
 		 */
 		function setAnalogPinReporting(pin, mode) {
-			self.send([REPORT_ANALOG | pin, mode]);
-			self.getAnalogPin(pin).type = Pin.AIN;
-			self.getAnalogPin(pin).analogReporting = mode;
-		}			
+			_self.send([REPORT_ANALOG | pin, mode]);
+			_self.getAnalogPin(pin).setType(Pin.AIN);
+		};
+
+		// getters and setters:
+
+		/**
+		 * Get or set the sampling interval (how often to run the main loop on the IOBoard). Normally
+		 * the sampling interval should not be changed. Default = 19 (ms).
+		 *
+		 * @name IOBoard#samplingInterval
+		 * @property
+		 * @type Number
+		 */ 
+		this.__defineGetter__("samplingInterval", function() { return _samplingInterval; });
+		this.__defineSetter__("samplingInterval", function(interval) {
+			if (interval >= MIN_SAMPLING_INTERVAL && interval <= MAX_SAMPLING_INTERVAL) {
+				_samplingInterval = interval;
+				_self.send([START_SYSEX,SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
+			} else {
+				// to do: throw error?
+				console.log("sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
+			}
+		});			
 		
 		//public methods:
 		
@@ -629,9 +658,9 @@ BREAKOUT.IOBoard = (function() {
 		};
 		
 		/**
-		 * @return {WebSocket} A reference to the WebSocket
+		 * @return {WSocketWrapper} A reference to the WebSocket
 		 */
-		this.getSocket = function() { return socket };
+		this.getSocket = function() { return _socket };
 			
 		/**
 		 * Request the Firmata version implemented in the firmware (sketch) running
@@ -640,7 +669,7 @@ BREAKOUT.IOBoard = (function() {
 		 * the Firmata version is returned from the IOBoard.
 		 */	
 		this.reportVersion = function() {
-			self.send(REPORT_VERSION);
+			_self.send(REPORT_VERSION);
 		};
 		
 		/**
@@ -649,15 +678,15 @@ BREAKOUT.IOBoard = (function() {
 		 * the name is returned from the IOBoard. The version number is also returned.
 		 */
 		this.reportFirmware = function() {
-			self.send([START_SYSEX,REPORT_FIRMWARE,END_SYSEX]);
+			_self.send([START_SYSEX,REPORT_FIRMWARE,END_SYSEX]);
 		};
 		
 		/**
 		 * Disables digital pin reporting for all digital pins
 		 */
-		this.disableDigitalPinReporting = function() {
+		this.disableDigitalPins = function() {
 			for (var i=0; i <_numPorts; i++) {
-				self.sendDigitalPortReporting(i, Pin.OFF);
+				_self.sendDigitalPortReporting(i, Pin.OFF);
 			}
 		};
 		
@@ -665,9 +694,9 @@ BREAKOUT.IOBoard = (function() {
 		 * Enables digital pin reporting for all digital pins. You must call this
 		 * before you can receive digital pin data from the IOBoard.
 		 */
-		this.enableDigitalPinReporting = function() {
+		this.enableDigitalPins = function() {
 			for (var i=0; i<_numPorts; i++) {
-				self.sendDigitalPortReporting(i, Pin.ON);
+				_self.sendDigitalPortReporting(i, Pin.ON);
 			}
 		};
 		
@@ -676,7 +705,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @param {Number} mode Either Pin.On or Pin.OFF
 		 */
 		this.sendDigitalPortReporting = function(port, mode) {
-			self.send([(REPORT_DIGITAL | port), mode]);
+			_self.send([(REPORT_DIGITAL | port), mode]);
 		};
 		
 		/**
@@ -699,24 +728,25 @@ BREAKOUT.IOBoard = (function() {
 		};
 		
 		/**
-		 * Set the specified pin to Input or Output. 
+		 * Set the specified digital pin mode. 
 		 *
-		 * @param {Pin} pin A reference to the pin connected to the digital input or output
-		 * @param {Number} mode Pin.DIN or Pin.DOUT and optionally Pin.HIGH to 
-		 * enable the pull-up resistor.
+		 * @param {Number} pin The number of the pin. When using and analog pin as a digital
+		 * pin, refer the datasheet for your board to obtain the digital pin equivalent of the
+		 * analog pin number. For example on an Arduino UNO, analog pin 0 = digital pin 14.
+		 * @param {Number} mode Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO, Pin.SHIFT, or Pin.I2c
 		 */
-		this.setPinMode = function(pin, mode) {
+		this.setDigitalPinMode = function(pinNumber, mode) {
 			
-			self.getDigitalPin(pin).type = mode;
-			managePinListener(self.getDigitalPin(pin));
+			_self.getDigitalPin(pinNumber).setType(mode);
+			managePinListener(_self.getDigitalPin(pinNumber));
 			
-			self.send([SET_PIN_MODE, pin, mode]);			
+			_self.send([SET_PIN_MODE, pinNumber, mode]);			
 		};
 
 		/**
 		 * Enable the internal pull-up resistor for the specified pin number
 		 *
-		 * @param {number} pinNum The number of the input pin to enable the pull-up resistor.
+		 * @param {Number} pinNum The number of the input pin to enable the pull-up resistor.
 		 */
 		this.enablePullUp = function(pinNum) {
 			sendDigitalData(pinNum, Pin.HIGH);
@@ -737,11 +767,9 @@ BREAKOUT.IOBoard = (function() {
 		 * @param {Number} portData A byte representing the state of the 8 pins for the specified port
 		 */
 		this.sendDigitalPort = function(portNumber, portData) {
-			self.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
+			_self.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
 		};
 		
-		// to do: allow 1 or 2 params
-		// (string) and (command, string)
 		/**
 		 * Send a string message to the IOBoard. This is useful if you have a custom sketch
 		 * running on the IOBoard rather than StandardFirmata and want to communicate with
@@ -792,7 +820,7 @@ BREAKOUT.IOBoard = (function() {
 			}
 			sysexData.push(END_SYSEX);
 			
-			self.send(sysexData);		
+			_self.send(sysexData);		
 		};
 					
 		/**
@@ -821,10 +849,10 @@ BREAKOUT.IOBoard = (function() {
 			servoData[6] = maxPulse >> 7;	
 			servoData[7] = END_SYSEX;
 			
-			self.send(servoData);
+			_self.send(servoData);
 		
-			servoPin = self.getDigitalPin(pin);
-			servoPin.type = Pin.SERVO;
+			servoPin = _self.getDigitalPin(pin);
+			servoPin.setType(Pin.SERVO);
 			managePinListener(servoPin);	
 		};
 					
@@ -837,27 +865,9 @@ BREAKOUT.IOBoard = (function() {
 		this.queryPinState = function(pin) {
 			// to do: ensure that pin is a Pin object
 			var pinNumber = pin.number;
-			self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
+			_self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
 		};
-		
-		/**
-		 * Query which pins correspond to the analog channels
-		 */
-		this.queryAnalogMapping = function() {
-			self.send([START_SYSEX,ANALOG_MAPPING_QUERY,END_SYSEX]);
-		};
-		
-		/**
-		 * Set the sampling interval (how often to run the main loop on the IOBoard). Normally
-		 * this method should not be called.
-		 *
-		 * @param {Number} interval The interval for main loop in the IOBoard application. Default = 19ms.
-		 */
-		this.setSamplingInterval = function(interval) {
-			// To do: set a range to prevent people from entering extreme values.
-			self.send([START_SYSEX,SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
-		};
-		
+						
 		/**
 		 * @return {Pin} An unmapped reference to the Pin object.
 		 */
@@ -901,8 +911,8 @@ BREAKOUT.IOBoard = (function() {
 		this.reportCapabilities = function() {
 			var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
 			for (var i=0, len=_ioPins.length; i<len; i++) {
-				for (var mode in _ioPins[i].capabilities) {
-					console.log("pin " + i + "\tmode: " + modeNames[mode] + "\tresolution (# of bits): " + _ioPins[i].capabilities[mode]);
+				for (var mode in _ioPins[i].getCapabilities()) {
+					console.log("pin " + i + "\tmode: " + modeNames[mode] + "\tresolution (# of bits): " + _ioPins[i].getCapabilities()[mode]);
 				}
 			}
 		};
@@ -916,15 +926,18 @@ BREAKOUT.IOBoard = (function() {
 		 * @param {Number[]} message Message data to be sent to the IOBoard
 		 */
 		this.send = function(message) {
-			socket.send(message);
+			_socket.send(message);
 		};
 		
 		/**
-		 * A wrapper for the close method of the WebSocket
+		 * A wrapper for the close method of the WebSocket. Making this private
+		 * until a use case arises.
+		 *
+		 * @private
 		 */
 		this.close = function() {
-			console.log("socket = " + socket);
-			socket.close();
+			console.log("socket = " + _socket);
+			_socket.close();
 		};
 		
 		/* implement EventDispatcher */

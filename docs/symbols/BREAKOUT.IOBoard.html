@@ -221,7 +221,7 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a></li>
 	
-	<li><a href="../symbols/BREAKOUT.SocketEvent.html">BREAKOUT.SocketEvent</a></li>
+	<li><a href="../symbols/BREAKOUT.WSocketEvent.html">BREAKOUT.WSocketEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.WSocketWrapper.html">BREAKOUT.WSocketWrapper</a></li>
 	
@@ -277,6 +277,34 @@ sketch and your javascript application.</div>
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.IOBoard.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.IOBoard.html#samplingInterval">samplingInterval</a></b>
+								</div>
+								<div class="description">Get or set the sampling interval (how often to run the main loop on the IOBoard).</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
@@ -304,16 +332,16 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#close">close</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#disableAnalogPin">disableAnalogPin</a></b>(pin)
 								</div>
-								<div class="description">A wrapper for the close method of the WebSocket</div>
+								<div class="description">Call this method to disable analog input for the specified pin.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#disableDigitalPinReporting">disableDigitalPinReporting</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#disableDigitalPins">disableDigitalPins</a></b>()
 								</div>
 								<div class="description">Disables digital pin reporting for all digital pins</div>
 							</td>
@@ -331,7 +359,16 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#enableDigitalPinReporting">enableDigitalPinReporting</a></b>()
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#enableAnalogPin">enableAnalogPin</a></b>(pin)
+								</div>
+								<div class="description">Call this method to enable analog input for the specified pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#enableDigitalPins">enableDigitalPins</a></b>()
 								</div>
 								<div class="description">Enables digital pin reporting for all digital pins.</div>
 							</td>
@@ -340,9 +377,9 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getAnalogData">getAnalogData</a></b>(pin)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#enablePullUp">enablePullUp</a></b>(pinNum)
 								</div>
-								<div class="description">Returns the analog data for a specified pin.</div>
+								<div class="description">Enable the internal pull-up resistor for the specified pin number</div>
 							</td>
 						</tr>
 					
@@ -352,15 +389,6 @@ sketch and your javascript application.</div>
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getAnalogPin">getAnalogPin</a></b>(pinNumber)
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getDigitalData">getDigitalData</a></b>(pin)
-								</div>
-								<div class="description">Returns the digital data for a specified pin.</div>
 							</td>
 						</tr>
 					
@@ -403,15 +431,6 @@ sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getServo">getServo</a></b>(pin)
-								</div>
-								<div class="description">Checks if a servo is connected to the specified pin number</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getSocket">getSocket</a></b>()
 								</div>
 								<div class="description"></div>
@@ -424,33 +443,6 @@ sketch and your javascript application.</div>
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#hasEventListener">hasEventListener</a></b>(type)
 								</div>
 								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#-onSocketClosed">onSocketClosed</a></b>(event)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;inner&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#-onSocketMessage">onSocketMessage</a></b>(event)
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#queryAnalogMapping">queryAnalogMapping</a></b>()
-								</div>
-								<div class="description">Query which pins correspond to the analog channels</div>
 							</td>
 						</tr>
 					
@@ -494,46 +486,9 @@ on the IOBoard.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#sendAnalog">sendAnalog</a></b>(pin, value)
-								</div>
-								<div class="description">Simulate an analog signal on a PWM pin.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#sendDigital">sendDigital</a></b>(pin, value)
-								</div>
-								<div class="description">Set a digital pin on the IOBoard to High or Low.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#sendDigitalPortReporting">sendDigitalPortReporting</a></b>(mode, mode)
 								</div>
 								<div class="description">Enable or disable reporting of all digital pins for the specified port.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#sendExtendedAnalog">sendExtendedAnalog</a></b>(pin, value)
-								</div>
-								<div class="description">An alternative to the normal analog message allowing addressing beyond pin 15
-and supports sending analog values up to 16 bits.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#sendServo">sendServo</a></b>(pin, value)
-								</div>
-								<div class="description">Set the angle (in degrees) to rotate the servo head to.</div>
 							</td>
 						</tr>
 					
@@ -558,27 +513,9 @@ and supports sending analog values up to 16 bits.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#setAnalogPinReporting">setAnalogPinReporting</a></b>(pin, mode)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#setDigitalPinMode">setDigitalPinMode</a></b>(pin, mode)
 								</div>
-								<div class="description">Call this method to enable or disable analog input for the specified pin.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#setPinMode">setPinMode</a></b>(pin, mode)
-								</div>
-								<div class="description">Set the specified pin to Input or Output.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#setSamplingInterval">setSamplingInterval</a></b>(interval)
-								</div>
-								<div class="description">Set the sampling interval (how often to run the main loop on the IOBoard).</div>
+								<div class="description">Set the specified digital pin mode.</div>
 							</td>
 						</tr>
 					
@@ -656,6 +593,34 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="samplingInterval"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>samplingInterval</b>
+					
+					</div>
+					<div class="description">
+						Get or set the sampling interval (how often to run the main loop on the IOBoard). Normally
+the sampling interval should not be changed. Default = 19 (ms).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -705,21 +670,32 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 
 					<hr />
 				
-					<a name="close"> </a>
+					<a name="disableAnalogPin"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>close</b>()
+					<b>disableAnalogPin</b>(pin)
 					
 					</div>
 					<div class="description">
-						A wrapper for the close method of the WebSocket
+						Call this method to disable analog input for the specified pin.
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>pin</b>
+									
+								</dt>
+								<dd>The pin connected to the analog input</dd>
+							
+							</dl>
 						
 						
 						
@@ -730,11 +706,11 @@ to follow such as Button, Accelerometer, i2c device implementation, etc.
 
 					<hr />
 				
-					<a name="disableDigitalPinReporting"> </a>
+					<a name="disableDigitalPins"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>disableDigitalPinReporting</b>()
+					<b>disableDigitalPins</b>()
 					
 					</div>
 					<div class="description">
@@ -798,11 +774,47 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 
 					<hr />
 				
-					<a name="enableDigitalPinReporting"> </a>
+					<a name="enableAnalogPin"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>enableDigitalPinReporting</b>()
+					<b>enableAnalogPin</b>(pin)
+					
+					</div>
+					<div class="description">
+						Call this method to enable analog input for the specified pin.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>pin</b>
+									
+								</dt>
+								<dd>The pin connected to the analog input</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="enableDigitalPins"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>enableDigitalPins</b>()
 					
 					</div>
 					<div class="description">
@@ -824,18 +836,15 @@ before you can receive digital pin data from the IOBoard.
 
 					<hr />
 				
-					<a name="getAnalogData"> </a>
+					<a name="enablePullUp"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>getAnalogData</b>(pin)
+					
+					<b>enablePullUp</b>(pinNum)
 					
 					</div>
 					<div class="description">
-						Returns the analog data for a specified pin. The range is from 0.0 to 1.0.
-<p>When an analog value is received it is stored. However it is best in most cases to listen
-for the IOBoardEvent.ANALOG_DATA and get the analog value from the
-event parameter (event.value) rather than using this getter method.</p>
+						Enable the internal pull-up resistor for the specified pin number
 						
 						
 					</div>
@@ -847,23 +856,16 @@ event parameter (event.value) rather than using this getter method.</p>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
+									<span class="light fixedFont">{Number}</span> <b>pinNum</b>
 									
 								</dt>
-								<dd>The pin number to return analog data for</dd>
+								<dd>The number of the input pin to enable the pull-up resistor.</dd>
 							
 							</dl>
 						
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The analog data for the specified pin</dd>
-							
-							</dl>
 						
 						
 						
@@ -905,52 +907,6 @@ event parameter (event.value) rather than using this getter method.</p>
 							<dt class="heading">Returns:</dt>
 							
 								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the IOBoard board analog pin).</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getDigitalData"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getDigitalData</b>(pin)
-					
-					</div>
-					<div class="description">
-						Returns the digital data for a specified pin.
-<p>When a digital value is received it is stored. However it is best in most cases to listen
-for the IOBoardEvent.DIGITAL_DATA and get the digital value from the
-event parameter (event.value) rather than using this getter method.</p>
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin number to return digital data for</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> The digital data for the specified pin</dd>
 							
 							</dl>
 						
@@ -1109,53 +1065,10 @@ event parameter (event.value) rather than using this getter method.</p>
 
 					<hr />
 				
-					<a name="getServo"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>getServo</b>(pin)
-					
-					</div>
-					<div class="description">
-						Checks if a servo is connected to the specified pin number
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin number you are checking for a servo on.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Number}</span> If Servo Pin, the current value (angle) of the servo, else -1</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
 					<a name="getSocket"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{WebSocket}</span>
+					<span class="light">{WSocketWrapper}</span>
 					<b>getSocket</b>()
 					
 					</div>
@@ -1175,7 +1088,7 @@ event parameter (event.value) rather than using this getter method.</p>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{WebSocket}</span> A reference to the WebSocket</dd>
+								<dd><span class="light fixedFont">{WSocketWrapper}</span> A reference to the WebSocket</dd>
 							
 							</dl>
 						
@@ -1211,103 +1124,6 @@ event parameter (event.value) rather than using this getter method.</p>
 return {boolean} True is listener exists for this type, false if not.</dd>
 							
 							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="-onSocketClosed"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
-					
-					
-					<b>onSocketClosed</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="-onSocketMessage"> </a>
-					<div class="fixedFont">&lt;inner&gt; 
-					
-					
-					<b>onSocketMessage</b>(event)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>event</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="queryAnalogMapping"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>queryAnalogMapping</b>()
-					
-					</div>
-					<div class="description">
-						Query which pins correspond to the analog channels
-						
-						
-					</div>
-					
-					
-					
 						
 						
 						
@@ -1440,91 +1256,6 @@ the Firmata version is returned from the IOBoard.
 
 					<hr />
 				
-					<a name="sendAnalog"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>sendAnalog</b>(pin, value)
-					
-					</div>
-					<div class="description">
-						Simulate an analog signal on a PWM pin. For example use this method to fade an LED or
-send an 8-bit waveform.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin to send the analog signal to.</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>value</b>
-									
-								</dt>
-								<dd>The value (to do: check on max resolution) to send</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sendDigital"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>sendDigital</b>(pin, value)
-					
-					</div>
-					<div class="description">
-						Set a digital pin on the IOBoard to High or Low.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin number to set or clear.</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>value</b>
-									
-								</dt>
-								<dd>Either Pin.HIGH or Pin.LOW</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
 					<a name="sendDigitalPortReporting"> </a>
 					<div class="fixedFont">
 					
@@ -1555,92 +1286,6 @@ send an 8-bit waveform.
 									
 								</dt>
 								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sendExtendedAnalog"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>sendExtendedAnalog</b>(pin, value)
-					
-					</div>
-					<div class="description">
-						An alternative to the normal analog message allowing addressing beyond pin 15
-and supports sending analog values up to 16 bits.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin to send the analog signal to</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>value</b>
-									
-								</dt>
-								<dd>The value to send to the specified pin</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sendServo"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>sendServo</b>(pin, value)
-					
-					</div>
-					<div class="description">
-						Set the angle (in degrees) to rotate the servo head to. Only tested for 0-180 degrees
-so far since that's the limit of my servo.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin the servo is connected to.</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>value</b>
-									
-								</dt>
-								<dd>The angle (in degrees) to rotate the servo head to</dd>
 							
 							</dl>
 						
@@ -1747,16 +1392,15 @@ echoed back to your javascript application.</p>
 
 					<hr />
 				
-					<a name="setAnalogPinReporting"> </a>
+					<a name="setDigitalPinMode"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>setAnalogPinReporting</b>(pin, mode)
+					<b>setDigitalPinMode</b>(pin, mode)
 					
 					</div>
 					<div class="description">
-						Call this method to enable or disable analog input for the specified pin.
-Listen for the IOBoardEvent.ANALOG_DATA to be notified of incoming analog data.
+						Set the specified digital pin mode.
 						
 						
 					</div>
@@ -1771,99 +1415,15 @@ Listen for the IOBoardEvent.ANALOG_DATA to be notified of incoming analog data.
 									<span class="light fixedFont">{Number}</span> <b>pin</b>
 									
 								</dt>
-								<dd>The pin connected to the analog input</dd>
+								<dd>The number of the pin. When using and analog pin as a digital
+pin, refer the datasheet for your board to obtain the digital pin equivalent of the
+analog pin number. For example on an Arduino UNO, analog pin 0 = digital pin 14.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{Number}</span> <b>mode</b>
 									
 								</dt>
-								<dd>Pin.ON to enable input or Pin.OFF to disable input
-for the specified pin.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setPinMode"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setPinMode</b>(pin, mode)
-					
-					</div>
-					<div class="description">
-						Set the specified pin to Input or Output. Also used to enable the pull-up resistor
-for the specified pin by writing Pin.HIGH to the pin.
-For example, setPinMode(4, Pin.HIGH) will enable the pull-up resistor for digital
-pin 4.
-For digital input, listen for the IOBoardEvent.DIGITAL_DATA to be notified 
-of incoming digital data.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>pin</b>
-									
-								</dt>
-								<dd>The pin connected to the digital input or output</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>mode</b>
-									
-								</dt>
-								<dd>Pin.DIN or Pin.DOUT and optionally Pin.HIGH to 
-enable the pull-up resistor.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="setSamplingInterval"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>setSamplingInterval</b>(interval)
-					
-					</div>
-					<div class="description">
-						Set the sampling interval (how often to run the main loop on the IOBoard). Normally
-this method should not be called.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>interval</b>
-									
-								</dt>
-								<dd>The interval for main loop in the IOBoard application. Default = 19ms.</dd>
+								<dd>Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO, Pin.SHIFT, or Pin.I2c</dd>
 							
 							</dl>
 						
@@ -1888,7 +1448,7 @@ this method should not be called.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Wed Dec 28 2011 13:52:11 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Dec 30 2011 18:27:32 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

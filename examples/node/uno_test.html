@@ -57,48 +57,41 @@ $(document).ready(function() {
 	function onReady(event) {
 					
 		ard.removeEventListener(IOBoardEvent.READY, onReady);
-
-		// test sampline interval
-		//ard.setSamplingInterval(33);
 			
 		// listen for incoming string messages
 		ard.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
 		// set digital pin 13 to output
-		ard.setPinMode(13, Pin.DOUT);
+		ard.setDigitalPinMode(13, Pin.DOUT);
 		// get a reference to the pin
 		blinkLED = ard.getDigitalPin(13);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
-	
-		//set digital pin 2 to input
-		ard.setPinMode(2, Pin.DIN);
 		
 		// get a reference to the pin and listen for Change event
-		//var button01 = ard.getDigitalPin(2);
-		var button01 = new Button(ard.getDigitalPin(2), Button.PULL_DOWN);
+		var button01 = new Button(ard, ard.getDigitalPin(2), Button.PULL_DOWN);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 
 		// enable reporting for an analog pin
-		ard.setAnalogPinReporting(0, Pin.ON);
+		ard.enableAnalogPin(0);
 		var pot = ard.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		// disable reporting for an analog pin
-		//ard.setAnalogPinReporting(0, Pin.OFF);
+		//ard.disableAnalogPin(0);
 
 		// set analog pin to digital input
-		ard.setPinMode(16, Pin.DIN);
+		ard.setDigitalPinMode(16, Pin.DIN);
 		var button02 = ard.getDigitalPin(16);
 		button02.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// set a pin to PWM
-		ard.setPinMode(11, Pin.PWM);
+		ard.setDigitalPinMode(11, Pin.PWM);
 		fadeLED = ard.getDigitalPin(11);
 		setInterval(fade, 11);			
 		
 		// set a pin to SERVO
-		ard.setPinMode(9, Pin.SERVO);
+		ard.setDigitalPinMode(9, Pin.SERVO);
 		servo = ard.getDigitalPin(9);
 		//setInterval(servoTest, 5000);
 		
@@ -111,8 +104,6 @@ $(document).ready(function() {
 		
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);
-		
-		ard.addEventListener(IOBoardEvent.PIN_STATE_RESPONSE, onPinStateResponse);
 		
 	}
 	

@@ -35,6 +35,7 @@ $(document).ready(function() {
 	var CompassHMC6352 = BREAKOUT.io.CompassHMC6352;
 	var Button = BREAKOUT.io.Button;
 	var ButtonEvent = BREAKOUT.io.ButtonEvent;
+	var Servo = BREAKOUT.io.Servo;
 
 	var teensy = new IOBoard("localhost", 8887+'/websocket');
 	
@@ -55,50 +56,49 @@ $(document).ready(function() {
 	function onReady(event) {
 					
 		teensy.removeEventListener(IOBoardEvent.READY, onReady);
-		
-		// test sampline interval
-		//teensy.setSamplingInterval(33);
-			
+					
 		// listen for incoming string messages
 		teensy.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
-		
+
 		// set digital pin 4 to output
-		teensy.setPinMode(4, Pin.DOUT);
+		teensy.setDigitalPinMode(4, Pin.DOUT);
 		// get a reference to the pin
 		blinkLED = teensy.getDigitalPin(4);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 	
 		//set digital pin 2 to input
-		teensy.setPinMode(2, Pin.DIN);
+		teensy.setDigitalPinMode(2, Pin.DIN);
 		
 		// get a reference to the pin and listen for Change event
-		//var button01 = teensy.getDigitalPin(2);
-		var button01 = new Button(teensy.getDigitalPin(2), Button.PULL_DOWN);
+		var button01 = new Button(teensy, teensy.getDigitalPin(2), Button.PULL_DOWN);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 		
 		// enable reporting for an analog pin
-		teensy.setAnalogPinReporting(0, Pin.ON);
-		var pot = teensy.getAnalogPin(0);
+		teensy.enableAnalogPin(2);
+		var pot = teensy.getAnalogPin(2);
+		console.log("pin number = " + pot.number);
+		console.log("analog number = " + pot.analogNumber);
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		// disable reporting for an analog pin
-		//teensy.setAnalogPinReporting(0, Pin.OFF);
+		//teensy.disableAnalogPin(0);
 		
 		// set analog pin to digital input
-		teensy.setPinMode(16, Pin.DIN);
+		teensy.setDigitalPinMode(16, Pin.DIN);
 		var button02 = teensy.getDigitalPin(16);
 		button02.addEventListener(Event.CHANGE, onButtonChange);
 		
 		// set a pin to PWM
-		teensy.setPinMode(10, Pin.PWM);
+		teensy.setDigitalPinMode(10, Pin.PWM);
 		fadeLED = teensy.getDigitalPin(10);
 		setInterval(fade, 10);			
 		
 		// set a pin to SERVO
-		teensy.setPinMode(9, Pin.SERVO);
-		servo = teensy.getDigitalPin(9);
-		//setInterval(servoTest, 5000);
+		//teensy.setDigitalPinMode(9, Pin.SERVO);
+		//servo = teensy.getDigitalPin(9);
+		servo = new Servo(teensy, teensy.getDigitalPin(9));
+		setInterval(servoTest, 5000);
 		
 		blinkM = new BlinkM(teensy);
 		blinkM.stopScript();
@@ -168,21 +168,10 @@ $(document).ready(function() {
 	function onFirmwareName(event) {
 		console.log("firmware name: " + event.name + " version: " + event.version);
 	}
-	
-	function onCapabilityResponse(event) {
-		// print capabilities to the console
-		teensy.reportCapabilities();
-	}
-	
+		
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
 	}
-	
-	function onPinStateResponse(event) {
-		var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
-		var pinType = modeNames[event.type];
-		console.log("pin state response = " + event.pin + "\t" + pinType);
-	}	
 	
 	function fade() {
 		fadeLED.value = (intensity += direction);
@@ -194,9 +183,11 @@ $(document).ready(function() {
 	
 	function servoTest() {
 		if (servoDir) {
-			servo.value = 0;
+			//servo.value = 0;
+			servo.angle = 0;
 		} else {
-			servo.value = 180;
+			//servo.value = 180;
+			servo.angle = 180;
 		}
 		servoDir = !servoDir;
 	}

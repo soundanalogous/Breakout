@@ -24,11 +24,12 @@ BREAKOUT.io.Servo = (function() {
 		
 		this.name = "Servo"; // for testing
 
-		this._pin = board.getDigitalPin(servoPin);
-		//this._pin = servoPin
+		this._pin = servoPin;
 		this._angle;
+
+		var pinNumber = servoPin.number;
 		
-		board.sendServoAttach(servoPin);
+		board.sendServoAttach(pinNumber);
 	}
 
 	Servo.prototype = {
@@ -40,13 +41,13 @@ BREAKOUT.io.Servo = (function() {
 		 * @type Number
 		 */ 
 		set angle(value) {
-			if (this._pin.type == Pin.SERVO) {
+			if (this._pin.getType() == Pin.SERVO) {
 				this._angle = value;
 				this._pin.value = this._angle;
 			}
 		},
 		get angle() {
-			if (this._pin.type == Pin.SERVO) {
+			if (this._pin.getType() == Pin.SERVO) {
 				return this._angle;
 			}
 		}		
