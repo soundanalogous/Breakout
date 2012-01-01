@@ -27,17 +27,16 @@ BREAKOUT.filters.TriggerPoint = (function() {
 
 		this.name = "TriggerPoint";
 
-		this._points = [];
+		this._points = {};
 		this._range = [];
 		this._lastStatus;
 
-		if (points === null) points = [[0.5, 0]];
+		if (points === undefined) points = [[0.5, 0]];
 
 		if (points[0] instanceof Array) {
-			console.log(points);
-			for (var point in points) {
-				console.log(point);
-				this._points[point[0]] = point[1];
+			var len = points.length;
+			for (var i=0; i<len; i++) {
+				this._points[points[i][0]] = points[i][1];	
 			}
 		} else if (typeof points[0] === "number") {
 			this._points[points[0]] = points[1];
@@ -105,7 +104,6 @@ BREAKOUT.filters.TriggerPoint = (function() {
 			var t1 = keys[i+1];
 			var p0 = t0 + this._points[t0];
 			var p1 = t1 - this._points[t1];
-			console.log("vals = " + keys[0] + " " + keys[1]);
 			if (p0 >= p1) throw new Error("The specified range overlaps...");
 			this._range.push([p0, p1]);
 		}

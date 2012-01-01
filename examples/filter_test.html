@@ -73,8 +73,8 @@ $(document).ready(function() {
 		var pot = uno.getAnalogPin(0);
 		//pot.addFilter(new Convolution(Convolution.MOVING_AVERAGE))
 		//pot.addFilter(new Scaler(0, 1, 0, 10, Scaler.LINEAR));
-		//pot.addFilter(new TriggerPoint([0.5, 0.1]));
-		pot.addFilter(new TriggerPoint([[0.15, 0],[0.8, 0]]));
+		pot.addFilter(new TriggerPoint([0.5, 0.1]));
+		//pot.addFilter(new TriggerPoint([[0.15, 0],[0.8, 0]]));
 		//pot.addFilter(new TriggerPoint());	
 		pot.addEventListener(Event.CHANGE, onPotChange);
 		//uno.disableAnalogPin(0);
