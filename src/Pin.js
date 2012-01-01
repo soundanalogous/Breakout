@@ -38,6 +38,9 @@ BREAKOUT.Pin = (function() {
 		this._avg = 0;
 		this._sum = 0;
 		this._numSamples = 0;
+		this._filters = null;
+		this._generators = null;
+		this._generator = null;
 		
 		this._evtDispatcher = new EventDispatcher(this);	
 
@@ -116,7 +119,8 @@ BREAKOUT.Pin = (function() {
 			this.calculateMinMaxAndMean(val);
 			this._lastValue = this._value;
 			this._preFilterValue = val;
-			this._value = val;
+			//this._value = val;
+			this._value = this.applyFilters(val);
 			this.detectChange(this._lastValue, this._value);
 		},
 		
@@ -138,6 +142,22 @@ BREAKOUT.Pin = (function() {
 		 */			 
 		get preFilterValue() {
 			return this._preFilterValue;
+		},
+
+		/**
+		 * Get and set filters for the Pin.
+		 * @name Pin#filters
+		 * @property
+		 * @type FilterBase
+		 */	
+		get filters() {
+			return this._filters;
+		},
+		set filters(filterArray) {
+			if (filterArray === null || filterArray.length ===0) {
+				this._filters = filterArray;
+				return;
+			}
 		},
 
 		/**
@@ -181,8 +201,7 @@ BREAKOUT.Pin = (function() {
 		 * @private
 		 */
 		detectChange: function(oldValue, newValue) {
-			if (oldValue == newValue) return;
-			//console.log("detect change");
+			if (oldValue === newValue) return;
 			this.dispatchEvent(new Event(Event.CHANGE));
 		},
 		
@@ -218,8 +237,65 @@ BREAKOUT.Pin = (function() {
 		clear: function() {
 			this._minimum = this._maximum = this._average = this._lastValue = this._preFilterValue;
 			this.clearWeight();
-		},		
+		},
+		
+		/**
+		 * Add a new filter to the Pin.
+		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
+		 */
+		addFilter: function(newFilter) {
 
+			if (newFilter === null) {
+				return;
+			}
+
+			if (this._filters === null) {
+				this._filters = [];
+			}
+
+			this._filters.push(newFilter);
+		},
+
+		/**
+		 * Sets new filters to the pin
+		 * @param {FilterBase[]} newFilters An array of Filter Objects to be applied to the Pin
+		 */
+		setFilters: function(newFilters) {
+			// use the filters setter
+			this.filters = newFilters;
+		},
+
+		/**
+		 * Removes all filters from the pin
+		 */
+		removeAllFilters: function() {
+			this._filters = null;
+		},
+
+		/**
+		 * @private
+		 */
+		autoSetValue: function(event) {
+			// use the value setter
+			this.value = _generator.value;	
+		},
+
+		/**
+		 * @private
+		 */
+		applyFilters: function(val) {
+			var result;
+
+			if (this._filters === null) return val;
+			
+			result = val;
+			var len = this._filters.length;
+			for (var i = 0; i < len; i++) {
+				result = this._filters[i].processSample(result);
+			}
+
+			return result;
+		},
 
 		/* implement EventDispatcher */
 		
