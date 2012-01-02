@@ -34,6 +34,7 @@ $(document).ready(function() {
 	var Servo = BREAKOUT.io.Servo;
 	var LED = BREAKOUT.io.LED;
 	var Oscillator = BREAKOUT.generators.Oscillator;
+	var Potentiometer = BREAKOUT.io.Potentiometer;
 
 	var uno = new IOBoard("localhost", 8887);
 	
@@ -43,7 +44,6 @@ $(document).ready(function() {
 	var compass;
 	var servo;
 	var blinkLED;
-	var fadeLED;
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -57,6 +57,7 @@ $(document).ready(function() {
 		// listen for incoming string messages
 		uno.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
+		
 		// set digital pin 13 to output
 		uno.setDigitalPinMode(13, Pin.DOUT);
 		// get a reference to the pin
@@ -64,37 +65,56 @@ $(document).ready(function() {
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 		
-		// get a reference to the pin and listen for Change event
+
+		// Digital input using Button object:
+		// params: board, pin, mode
 		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
 		//var button01 = new Button(uno, uno.getDigitalPin(2), Button.INTERNAL_PULL_UP);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 
+		// Analog input example using Pin object:
 		// need to enable an analog pin in order to read it
-		uno.enableAnalogPin(0);
-		var pot = uno.getAnalogPin(0);
-		pot.addEventListener(Event.CHANGE, onPotChange);
+		//uno.enableAnalogPin(0);
+		//var pot = uno.getAnalogPin(0);
+		//pot.addEventListener(Event.CHANGE, onPotChange);
 
+		// Analog input example using Potentiometer object:
+		// params: board, analogPin, enableSmoothing
+		var pot = new Potentiometer(uno, uno.getAnalogPin(0), true);
+		pot.addEventListener(Event.CHANGE, onPotChange);
+		// scale the range of pot values (0 -> 1) to 0 -> 180
+		pot.setRange(0, 180);
+
+
+		// Digital input example using Pin object:
 		// set analog pin to digital input
 		uno.setDigitalPinMode(16, Pin.DIN);
 		var button02 = uno.getDigitalPin(16);
 		button02.addEventListener(Event.CHANGE, onButtonChange);
 		
+
 		// create a new LED
-		fadeLED = new LED(uno, uno.getDigitalPin(11));
+		// params: board, pin
+		var fadeLED = new LED(uno, uno.getDigitalPin(11));
 		// use a sine wave to fade the led on and off every 2 seconds
 		fadeLED.blink(2000, 0, Oscillator.SINE);				
 		
-		// create a new Servo, attaching to PWM pin 9
+
+		// Servo example using Servo object:
+		// params: board, pin
 		servo = new Servo(uno, uno.getDigitalPin(9));
-		setInterval(servoTest, 5000);
+		//setInterval(servoTest, 5000);
+		// NOTE: running a servo can interfere with analog inputs, creating jitter in the signal
 		
-		// create a new BlinkM module
+
+		// i2c module example: BlinkM module
 		blinkM = new BlinkM(uno);
 		blinkM.stopScript();
 		setInterval(randomColor, 2000);
-		
-		// create a new digital compass
+
+
+		// i2c module example:	HMC6352 digital compass module	
 		compass = new CompassHMC6352(uno);
 		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
 		
@@ -114,7 +134,6 @@ $(document).ready(function() {
 	}	
 	
 	function onHeadingUpdate(evt) {
-		//console.log("heading = " + evt.target.heading);
 		$('#heading').html("heading: " + evt.target.heading);
 	}	
 	
@@ -129,12 +148,12 @@ $(document).ready(function() {
 	}	
 	
 	function onPotChange(event) {
-		var pin = event.target;
-		var analogData = "pot value: " + pin.value.toFixed(3) + 
-			"\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
-			pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
+		var pot = event.target;
+		var analogData = "pot value: " + pot.value.toFixed(2) + 
+			"\tpre filter: " + pot.preFilterValue.toFixed(2) + "\tmin = " + 
+			pot.minimum.toFixed(2) + "\tmax = " + 
+			pot.maximum.toFixed(2) + "\tavg = " + pot.average.toFixed(2);
 		
-		//console.log(analogData);
 		$('#potData').html(analogData);	
 	}
 
@@ -150,7 +169,7 @@ $(document).ready(function() {
 	
 	function onButtonChange(event) {
 		var pin = event.target;
-		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value);
+
 		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
 			

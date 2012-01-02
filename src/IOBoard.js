@@ -34,7 +34,7 @@ BREAKOUT.IOBoard = (function() {
 	IOBoard = function(host, port, useSocketIO, protocol) {
 		"use strict";
 		
-		this.name = "IOBoard"; // for testing
+		this.name = "IOBoard";
 				
 		// message command bytes (128-255/0x80-0xFF)
 		var		DIGITAL_MESSAGE			= 0x90,
@@ -147,9 +147,7 @@ BREAKOUT.IOBoard = (function() {
 			if (version >= 23) {
 				queryCapabilities();
 			} else {
-				// to do: abort script if possible, or use default config for Standard IOBoard
-				// pop up an alert dialog instead?
-				console.log("You must upload StandardFirmata version 2.3 or greater from IOBoard version 1.0 or higher");
+				throw new Error("You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher");
 			}
 		}	
 			
@@ -180,9 +178,9 @@ BREAKOUT.IOBoard = (function() {
 							// NOTE: is there a better way to handle this? This issue is on browser refresh
 							// the IOBoard board is still sending analog data if analog reporting was set
 							// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
-							// is called. There is not way to call that method fast enough so the following code is
+							// is called. There is not a way to call that method fast enough so the following code is
 							// needed. An alternative would be to set a flag that prevents critical operations
-							// before systemReset has completed
+							// before systemReset has completed.
 							if (analogPin == undefined) {
 								//console.log("analog pin undefined");
 								break;
@@ -190,7 +188,6 @@ BREAKOUT.IOBoard = (function() {
 							// map analog input values from 0-1023 to 0.0 to 1.0
 							analogPin.value = _self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023;
 							if (analogPin.value != analogPin.lastValue) {
-								// use analog pin number rather than actual pin number
 								_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
 							}
 							break;
@@ -579,7 +576,7 @@ BREAKOUT.IOBoard = (function() {
 				_digitalPort[portNum] &= ~(1 << (pin % 8));
 			}
 			else {
-				console.log("invalid value passed to sendDigital, value must be 0 or 1");
+				console.log("Warning: Invalid value passed to sendDigital, value must be 0 or 1.");
 				return; // invalid value
 			}
 			
@@ -644,7 +641,7 @@ BREAKOUT.IOBoard = (function() {
 				_self.send([START_SYSEX,SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
 			} else {
 				// to do: throw error?
-				console.log("sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
+				console.log("Warning: Sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
 			}
 		});			
 		

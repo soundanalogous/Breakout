@@ -25,7 +25,7 @@ BREAKOUT.io.Servo = (function() {
 	Servo = function(board, servoPin, minAngle, maxAngle) {
 		"use strict";
 		
-		this.name = "Servo"; // for testing
+		this.name = "Servo";
 
 		this._pin = servoPin;
 		this._angle;

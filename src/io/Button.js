@@ -1,7 +1,6 @@
 /**
  * @author Jeff Hoefs
- * Based on Button.as in Funnel AS3 library (funnel.cc) by Shigeru Kobayashi 
- */
+  */
 
 BREAKOUT.namespace('BREAKOUT.io.ButtonEvent');
 
@@ -20,7 +19,7 @@ BREAKOUT.io.ButtonEvent = (function() {
 	 */
 	ButtonEvent = function(type) {
 
-		this.name = "ButtonEvent"; // for testing
+		this.name = "ButtonEvent";
 
 		Event.call(this, type);
 	}
@@ -79,7 +78,7 @@ BREAKOUT.io.Button = (function() {
 		
 		PhysicalInputBase.call(this);
 
-		this.name = "Button"; // for testing
+		this.name = "Button";
 		this._pin = pin;
 
 		var pinNumber = pin.number;

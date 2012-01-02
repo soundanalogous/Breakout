@@ -180,6 +180,7 @@ BREAKOUT.Pin = (function() {
 				this._filters = filterArray;
 				return;
 			}
+			this._filters = filterArray;
 		},
 
 		/**
