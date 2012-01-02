@@ -1,5 +1,4 @@
-// IOBoard.js
-// Copyright (C) 2011 Jeff Hoefs.  All rights reserved.
+// Copyright (C) 2011-2012 Jeff Hoefs.  All rights reserved.
 //
 // based on:
 // Funnel as3 library (http://code.google.com/p/funnel/)
@@ -652,6 +651,8 @@ BREAKOUT.IOBoard = (function() {
 		//public methods:
 		
 		/**
+		 * To do: make this a static method
+		 *
 		 * A utility class to assemble a single value from the 2 bytes returned from the
 		 * IOBoard (since data is passed in 7 bit Bytes rather than 8 bit it must be 
 		 * reassembled. This is to be used as a protected method and should not be needed

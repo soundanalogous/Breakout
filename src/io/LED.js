@@ -101,6 +101,7 @@ BREAKOUT.io.LED = (function() {
 		},
 
 		/**
+		 * Check if the LED is on
 		 * @return {Boolean} True if the LED is on, false if it is off.
 		 */
 		isOn: function() {
@@ -108,7 +109,7 @@ BREAKOUT.io.LED = (function() {
 		},
 
 		/**
-		 * Toggle the LED value
+		 * Toggle the LED on or off
 		 */
 		toggle: function() {
 			this._pin.value = 1 - this._pin.value;
@@ -139,7 +140,7 @@ BREAKOUT.io.LED = (function() {
 		},
 
 		/**
-		 * Stop the blinking.
+		 * Stop the LED blink cycle.
 		 */
 		stopBlinking: function() {
 			if (this._pin.generator !== null) {
@@ -149,7 +150,7 @@ BREAKOUT.io.LED = (function() {
 		},
 
 		/**
-		 * The LED must be connected to a PWM pin to use thie method.
+		 * The LED must be connected to a PWM pin to use this method.
 		 *
 		 * @param {Number} time The fade-in time (in milliseconds).
 		 */
@@ -158,7 +159,7 @@ BREAKOUT.io.LED = (function() {
 		},
 
 		/**
-		 * The LED must be connected to a PWM pin to use thie method.
+		 * The LED must be connected to a PWM pin to use this method.
 		 *
 		 * @param {Number} time The fade-out time (in milliseconds).
 		 */
@@ -167,7 +168,7 @@ BREAKOUT.io.LED = (function() {
 		},
 
 		/**
-		 * The LED must be connected to a PWM pin to use thie method.
+		 * The LED must be connected to a PWM pin to use this method.
 		 *		
 		 * @param {Number} to The new intensity value to fade to.
 		 * @param {Number} time The fade time (in milliseconds).

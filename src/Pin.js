@@ -24,20 +24,20 @@ BREAKOUT.Pin = (function() {
 	 */
 	Pin = function(number, type) {
 
-		this.name = "Pin"; // for testing
+		this.name = "Pin";
 
 		this._type = type;
 		this._capabilities;
 		this._number = number;
-		this._maxPWMValue = 255;
 		this._analogNumber = undefined;
+		this._maxPWMValue = 255;
 		this._value = -1;
 		this._lastValue = -1;
 		this._preFilterValue;
 		this._average = 0;
 		this._minimum = Math.pow(2, 16);
 		this._maximum = 0;
-		this._avg = 0;
+		//this._avg = 0;
 		this._sum = 0;
 		this._numSamples = 0;
 		this._filters = null;
