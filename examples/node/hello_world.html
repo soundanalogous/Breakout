@@ -37,7 +37,7 @@ $(document).ready(function() {
 	
 	var frames = 0;
 	var intensity = 0;
-	var direction = 1;
+	var direction = 0.01;
 	var blinkLED;
 	var fadeLED;
 	
@@ -82,8 +82,8 @@ $(document).ready(function() {
 	// fade the led on and off
 	function fade() {
 		fadeLED.value = (intensity += direction);
-		if (intensity == 255) direction = -1;
-		else if (intensity == 0) direction = 1;
+		if (intensity >= 1.0) direction = -0.01;
+		else if (intensity <= 0.0) direction = 0.01;
 	}
 	
 	// blink the onboard LED

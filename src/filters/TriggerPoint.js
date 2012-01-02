@@ -17,7 +17,7 @@ BREAKOUT.filters.TriggerPoint = (function() {
 	 * Divides an input to 0 or 1 based on the threshold and hysteresis. You can also
 	 * use multiple points by providing a nested array such as [[0.4, 0.1], [0.7, 0.05]].
 	 *
-	 * @exports Convolution as BREAKOUT.filters.TriggerPoint
+	 * @exports TriggerPoint as BREAKOUT.filters.TriggerPoint
 	 * @constructor
 	 * @augments BREAKOUT.filters.FilterBase
 	 * @param {Number[]} points An array of threshold and hysteresis values
@@ -59,7 +59,7 @@ BREAKOUT.filters.TriggerPoint = (function() {
 	TriggerPoint.prototype.processSample = function(val) {
 		var status = this._lastStatus;
 		var len = this._range.length;
-		for (var i=0; i<len; ++i) {
+		for (var i=0; i<len; i++) {
 			var range = this._range[i];
 			if (range[0] <= val && val <= range[1]) {
 				status = i;
@@ -83,7 +83,7 @@ BREAKOUT.filters.TriggerPoint = (function() {
 	};
 
 	TriggerPoint.prototype.removeAllPoints = function() {
-		this._points = [];
+		this._points = {};
 		this.updateRange();
 	};
 
@@ -99,10 +99,10 @@ BREAKOUT.filters.TriggerPoint = (function() {
 		this._range.push([Number.NEGATIVE_INFINITY, firstKey - this._points[firstKey]]);
 
 		var len = keys.length - 1;
-		for (var i=0; i<len; ++i) {
+		for (var i=0; i<len; i++) {
 			var t0 = keys[i];
 			var t1 = keys[i+1];
-			var p0 = t0 + this._points[t0];
+			var p0 = (t0 * 1) + this._points[t0]; // multiply by 1 to force type to number
 			var p1 = t1 - this._points[t1];
 			if (p0 >= p1) throw new Error("The specified range overlaps...");
 			this._range.push([p0, p1]);

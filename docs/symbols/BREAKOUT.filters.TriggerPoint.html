@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.io.Button</title>
+		<title>JsDoc Reference - BREAKOUT.filters.TriggerPoint</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -250,26 +250,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.io.Button
+				Class BREAKOUT.filters.TriggerPoint
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
 				<br />Extends
-					<a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a>.<br />
+					<a href="../symbols/BREAKOUT.filters.FilterBase.html">BREAKOUT.filters.FilterBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_Button.js.html">Button.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_filters_TriggerPoint.js.html">TriggerPoint.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.Button.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.filters.TriggerPoint.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -282,9 +282,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#constructor">BREAKOUT.io.Button</a></b>(board, pin, buttonMode, sustainedPressInterval)
+								<b><a href="../symbols/BREAKOUT.filters.TriggerPoint.html#constructor">BREAKOUT.filters.TriggerPoint</a></b>(points)
 							</div>
-							<div class="description">An object to represent a physical button.</div>
+							<div class="description">Divides an input to 0 or 1 based on the threshold and hysteresis.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -293,14 +293,17 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+
+<!-- ============================== methods summary ======================== -->
+			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.Button.">
-					<caption>Field Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.filters.TriggerPoint.">
+					<caption>Method Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Field Attributes</th>
-							<th scope="col">Field Name and Description</th>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -308,18 +311,7 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#debounceInterval">debounceInterval</a></b>
-								</div>
-								<div class="description">The debounce time interval in milliseconds.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.INTERNAL_PULL_UP">INTERNAL_PULL_UP</a></b>
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.filters.TriggerPoint.html#addPoint">addPoint</a></b>(threshold, hysteresis)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -328,28 +320,16 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#pinNumber">pinNumber</a></b>
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.filters.TriggerPoint.html#processSample">processSample</a></b>(val)
 								</div>
-								<div class="description">[read-only] The pin number of the pin the button is attached to.</div>
+								<div class="description">Override FilterBase.processSample</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.PULL_DOWN">PULL_DOWN</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.PULL_UP">PULL_UP</a></b>
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.filters.TriggerPoint.html#removeAllPoints">removeAllPoints</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -358,10 +338,9 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#sustainedPressInterval">sustainedPressInterval</a></b>
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.filters.TriggerPoint.html#removePoint">removePoint</a></b>(threshold)
 								</div>
-								<div class="description">The delay time (in milliseconds) the button must be held before a sustained press event is fired.</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -372,18 +351,6 @@ ul.inheritsList
 				
 				<dl class="inheritsList">
 				
-				</dl>
-				
-			
-
-<!-- ============================== methods summary ======================== -->
-			
-				
-				
-				
-				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a>: </dt><dd><a href="../symbols/BREAKOUT.PhysicalInputBase.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#removeEventListener">removeEventListener</a></dd>
 				</dl>
 				
 			
@@ -398,17 +365,12 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.io.Button</b>(board, pin, buttonMode, sustainedPressInterval)
+						<b>BREAKOUT.filters.TriggerPoint</b>(points)
 				</div>
 				
 				<div class="description">
-					An object to represent a physical button. The advantage of using the Button class over
-listening for pin change events on a Pin object, is that the Button class handles debouncing 
-and provides helpful button events: Pressed, Released, Long Press and Sustained Press
-
-<p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to the button is 
-connected to ground, configuration is PULL_DOWN, if the resistor is connected to power, 
-then the configuration is PULL_UP.</p>
+					Divides an input to 0 or 1 based on the threshold and hysteresis. You can also
+use multiple points by providing a nested array such as [[0.4, 0.1], [0.7, 0.05]].
 					
 				</div>
 				
@@ -420,30 +382,11 @@ then the configuration is PULL_UP.</p>
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{IOBoard}</span>  <b>board</b>
+								<span class="light fixedFont">{Number[]}</span>  <b>points</b>
 								
 							</dt>
-								<dd>A reference to the IOBoard instance</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Pin}</span>  <b>pin</b>
-								
-							</dt>
-								<dd>A reference to the Pin the button is connected to.</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>buttonMode</b>
-								
-							</dt>
-								<dd>The mode of the button (either Button.PULL_DOWN or 
-Button.PULL_UP if wired with external resistors or Button.INTERNAL_PULL_UP if
-using the internal pull-up resistors. Default is PULL_DOWN.</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>sustainedPressInterval</b>
-								
-							</dt>
-								<dd>The delay time in milliseconds before a sustained press event is fired.</dd>
+								<dd>An array of threshold and hysteresis values
+operations for input buffers.</dd>
 						
 						</dl>
 					
@@ -459,145 +402,152 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 <!-- ============================== field details ========================== -->		
 			
-				<div class="sectionTitle">
-					Field Detail
-				</div>
-				
-					<a name="debounceInterval"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>debounceInterval</b>
-					
-					</div>
-					<div class="description">
-						The debounce time interval in milliseconds.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".INTERNAL_PULL_UP"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">BREAKOUT.io.Button.</span><b>INTERNAL_PULL_UP</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="pinNumber"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>pinNumber</b>
-					
-					</div>
-					<div class="description">
-						[read-only] The pin number of the pin the button is attached to.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".PULL_DOWN"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.io.Button.</span><b>PULL_DOWN</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".PULL_UP"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.io.Button.</span><b>PULL_UP</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sustainedPressInterval"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>sustainedPressInterval</b>
-					
-					</div>
-					<div class="description">
-						The delay time (in milliseconds) the button must be held before a sustained press event is fired.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					
-				
-			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="addPoint"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addPoint</b>(threshold, hysteresis)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>threshold</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>hysteresis</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="processSample"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>processSample</b>(val)
+					
+					</div>
+					<div class="description">
+						Override FilterBase.processSample
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>val</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removeAllPoints"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeAllPoints</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="removePoint"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removePoint</b>(threshold)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>threshold</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
 			
 			
 <!-- ============================== event details ========================= -->		

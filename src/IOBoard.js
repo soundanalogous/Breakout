@@ -95,6 +95,9 @@ BREAKOUT.IOBoard = (function() {
 		
 		var _evtDispatcher = new EventDispatcher(this);
 
+		// '/websocket' is required for the Breakout Server
+		if (!useSocketIO && typeof port === "number") port = port+'/websocket';
+
 		_socket = new WSocketWrapper(host, port, useSocketIO, protocol);
 		_socket.addEventListener(WSocketEvent.CONNECTED, onSocketConnection);
 		_socket.addEventListener(WSocketEvent.MESSAGE, onSocketMessage);
@@ -521,6 +524,12 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function sendAnalogData(pin, value) {
+
+			var pwmMax = _self.getDigitalPin(pin).maxPWMValue;
+			value *= pwmMax;
+			value = (value < 0) ? 0: value;
+			value = (value > pwmMax) ? pwmMax : value;
+
 			if (pin > 15 || value > Math.pow(2, 14)) {
 				sendExtendedAnalogData(pin, value);
 			} else {
@@ -584,7 +593,7 @@ BREAKOUT.IOBoard = (function() {
 		function sendServoData(pin, value) {
 			var servoPin = _self.getDigitalPin(pin);
 			if (servoPin.getType() == Pin.SERVO && servoPin.lastValue != value) {
-				_self.send([ANALOG_MESSAGE | (pin & 0x0F), value % 128, value >> 7]);
+				sendAnalogData(pin, value);
 			}	
 		}	
 		

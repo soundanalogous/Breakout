@@ -28,16 +28,16 @@ $(document).ready(function() {
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
 	var Button = BREAKOUT.io.Button;
 	var ButtonEvent = BREAKOUT.io.ButtonEvent;
+	var LED = BREAKOUT.io.LED;
+	var Oscillator = BREAKOUT.generators.Oscillator;
 
 	// replace "localhost" with the address of your server
 	// to use load pages on a compatible mobile device
-	var ard = new IOBoard("localhost", 8887+'/websocket');
+	var ard = new IOBoard("localhost", 8887);
 	
-	var frames = 0;
-	var intensity = 0;
-	var direction = 1;
-	var blinkLED;
+	var onboardLED;
 	var fadeLED;
+
 	
 	// listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
@@ -48,50 +48,46 @@ $(document).ready(function() {
 		// remove the event listener because it is no longer needed
 		ard.removeEventListener(IOBoardEvent.READY, onReady);
 		
-		// set digital pin 13 to output
-		ard.setDigitalPinMode(13, Pin.DOUT);
-		// get a reference to the pin
-		blinkLED = ard.getDigitalPin(13);
-		blinkLED.value = Pin.LOW;	
-		setInterval(blink, 3000);
+		// create a new LED
+		onboardLED = new LED(ard, ard.getDigitalPin(13));
+		// turn the LED on
+		onboardLED.on();
 		
-		// set a pin to PWM
-		ard.setDigitalPinMode(11, Pin.PWM);
-		fadeLED = ard.getDigitalPin(11);
-		setInterval(fade, 11);			
+
+		// create a new LED
+		fadeLED = new LED(ard, ard.getDigitalPin(11));
+		// use a sine wave to fade the led on and off every second
+		fadeLED.blink(1000, 0, Oscillator.SINE);
+
 	
 		// create a new button
 		var button01 = new Button(ard, ard.getDigitalPin(2), Button.PULL_DOWN);
+		// listen for button press and release events
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+
+		// change the LEDs after 5 seconds
+		setTimeout(changeLEDs, 5000);
 		
 	}
 	
 	function onButtonPress(event) {
+		// get a reference to the button object that fired the event
 		var btn = event.target;
 		$('#button').html("button: pin = " + btn.pinNumber + " pressed");
 	}
 
 	function onButtonRelease(event) {
+		// get a reference to the button object that fired the event
 		var btn = event.target;
 		$('#button').html("button: pin = " + btn.pinNumber + " released");
 	}
-	
-	// fade the led on and off
-	function fade() {
-		fadeLED.value = (intensity += direction);
-		if (intensity == 255) direction = -1;
-		else if (intensity == 0) direction = 1;
-	}
-	
-	// blink the onboard LED
-	function blink() {
-		frames++;
-		if (frames % 2 == 0) {
-			blinkLED.value = Pin.LOW;
-		} else {
-			blinkLED.value = Pin.HIGH;
-		}
+
+	function changeLEDs() {
+		fadeLED.stopBlinking();
+
+		// toggle the LED on or off 10 times every 2 seconds
+		onboardLED.blink(2000, 10);
 	}
 			
 });
@@ -102,9 +98,10 @@ $(document).ready(function() {
 <body>
   
   	<img src="images/hw_schematic.png"/>
-	<p class="text">The led attached to pin 11 should fade on and off</br>
-	and the onboard led should toggle on and off ever</br>
-	3 seconds.</p>
+	<p class="text">The led attached to pin 11 should fade on and off<br> 
+	for 5 seconds then turn off and the onboard led <br>
+	should toggle on for 5 seconds then blink on and off<br>
+	every 2 seconds 10 times.</p>
 	<div id="button" class="text">button:</div>
   
 </body>

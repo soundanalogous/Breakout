@@ -197,6 +197,20 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.filters.Convolution.html">BREAKOUT.filters.Convolution</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.filters.FilterBase.html">BREAKOUT.filters.FilterBase</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.filters.Scaler.html">BREAKOUT.filters.Scaler</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.filters.TriggerPoint.html">BREAKOUT.filters.TriggerPoint</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.generators.GeneratorBase.html">BREAKOUT.generators.GeneratorBase</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.generators.GeneratorEvent.html">BREAKOUT.generators.GeneratorEvent</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.generators.Oscillator.html">BREAKOUT.generators.Oscillator</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.BlinkM.html">BREAKOUT.io.BlinkM</a></li>
@@ -208,6 +222,8 @@ ul.inheritsList
 	<li><a href="../symbols/BREAKOUT.io.CompassHMC6352.html">BREAKOUT.io.CompassHMC6352</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.ID12RFIDReader.html">BREAKOUT.io.ID12RFIDReader</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.io.LED.html">BREAKOUT.io.LED</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.RFIDEvent.html">BREAKOUT.io.RFIDEvent</a></li>
 	
@@ -348,6 +364,26 @@ ul.inheritsList
 						</tr>
 					
 						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Pin.html#filters">filters</a></b>
+								</div>
+								<div class="description">Get and set filters for the Pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Pin.html#generator">generator</a></b>
+								</div>
+								<div class="description">Get a reference to the current generator.</div>
+							</td>
+						</tr>
+					
+						<tr>
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
@@ -394,6 +430,16 @@ ul.inheritsList
 								<b><a href="../symbols/BREAKOUT.Pin.html#maximum">maximum</a></b>
 								</div>
 								<div class="description">[read-only] The maximum value of the pin over time.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Pin.html#maxPWMValue">maxPWMValue</a></b>
+								</div>
+								<div class="description">[read-only] The maximum PWM value supported for this pin.</div>
 							</td>
 						</tr>
 					
@@ -530,6 +576,24 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#addFilter">addFilter</a></b>(newFilter)
+								</div>
+								<div class="description">Add a new filter to the Pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#addGenerator">addGenerator</a></b>(newGenerator)
+								</div>
+								<div class="description">Add a new generator to the Pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#clear">clear</a></b>()
 								</div>
 								<div class="description">Resets the minimum, maximum, average and lastValue of the pin.</div>
@@ -575,9 +639,36 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#removeAllFilters">removeAllFilters</a></b>()
+								</div>
+								<div class="description">Removes all filters from the pin</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#removeEventListener">removeEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#removeGenerator">removeGenerator</a></b>()
+								</div>
+								<div class="description">Removes the generator from the pin.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Pin.html#setFilters">setFilters</a></b>(newFilters)
+								</div>
+								<div class="description">Sets new filters to the pin</div>
 							</td>
 						</tr>
 					
@@ -775,6 +866,50 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="filters"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{FilterBase}</span>
+					<b>filters</b>
+					
+					</div>
+					<div class="description">
+						Get and set filters for the Pin.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="generator"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{GeneratorBase}</span>
+					<b>generator</b>
+					
+					</div>
+					<div class="description">
+						Get a reference to the current generator.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name=".HIGH"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
@@ -872,6 +1007,30 @@ ul.inheritsList
 					</div>
 					<div class="description">
 						[read-only] The maximum value of the pin over time. Call clear() to reset.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="maxPWMValue"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>maxPWMValue</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The maximum PWM value supported for this pin.
+<p> This is the max PWM value supported by Arduino (currently 255) rather 
+than the max PWM value specified by the microcontroller datasheet.</p>
 						
 						
 					</div>
@@ -1155,6 +1314,79 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="addFilter"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addFilter</b>(newFilter)
+					
+					</div>
+					<div class="description">
+						Add a new filter to the Pin.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{FilterBase}</span> <b>newFilter</b>
+									
+								</dt>
+								<dd>A filter object that extends FilterBase.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="addGenerator"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>addGenerator</b>(newGenerator)
+					
+					</div>
+					<div class="description">
+						Add a new generator to the Pin. A pin can only have one generator assigned. 
+Assigning a new generator will replace the previously assigned generator.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{GeneratorBase}</span> <b>newGenerator</b>
+									
+								</dt>
+								<dd>A generator object that extends GeneratorBase.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="clear"> </a>
 					<div class="fixedFont">
 					
@@ -1325,6 +1557,31 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 
 					<hr />
 				
+					<a name="removeAllFilters"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeAllFilters</b>()
+					
+					</div>
+					<div class="description">
+						Removes all filters from the pin
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="removeEventListener"> </a>
 					<div class="fixedFont">
 					
@@ -1365,6 +1622,67 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 						
 						
 
+					<hr />
+				
+					<a name="removeGenerator"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>removeGenerator</b>()
+					
+					</div>
+					<div class="description">
+						Removes the generator from the pin.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="setFilters"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setFilters</b>(newFilters)
+					
+					</div>
+					<div class="description">
+						Sets new filters to the pin
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{FilterBase[]}</span> <b>newFilters</b>
+									
+								</dt>
+								<dd>An array of Filter Objects to be applied to the Pin</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
 					
 				
 			
@@ -1379,7 +1697,7 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Dec 30 2011 18:27:32 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 01 2012 20:58:56 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

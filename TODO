@@ -1,7 +1,6 @@
 * port additional funnel UI classes to javascript:
     - Accelerometer
     - DCMotor
-    - LED
     - RGBLED
     - SoftPot
 

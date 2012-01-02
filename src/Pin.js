@@ -11,7 +11,8 @@ BREAKOUT.Pin = (function() {
 
 	// dependencies
 	var EventDispatcher = BREAKOUT.EventDispatcher,
-		Event = BREAKOUT.Event;
+		Event = BREAKOUT.Event,
+		GeneratorEvent = BREAKOUT.generators.GeneratorEvent;
 
 	/**
 	 * An object to represent an IOBoard pin
@@ -28,6 +29,7 @@ BREAKOUT.Pin = (function() {
 		this._type = type;
 		this._capabilities;
 		this._number = number;
+		this._maxPWMValue = 255;
 		this._analogNumber = undefined;
 		this._value = -1;
 		this._lastValue = -1;
@@ -39,7 +41,6 @@ BREAKOUT.Pin = (function() {
 		this._sum = 0;
 		this._numSamples = 0;
 		this._filters = null;
-		this._generators = null;
 		this._generator = null;
 		
 		this._evtDispatcher = new EventDispatcher(this);	
@@ -75,6 +76,28 @@ BREAKOUT.Pin = (function() {
 		get number() {
 			return this._number;
 		},
+
+		/**
+		 * The maximum PWM value supported for this pin. This value should normally
+		 * be set internally.
+		 * @private
+		 */
+		setMaxPWMValue: function(val) {
+			this._maxPWMValue = value;
+		},
+
+		/**
+		 * [read-only] The maximum PWM value supported for this pin.
+		 * <p> This is the max PWM value supported by Arduino (currently 255) rather 
+		 * than the max PWM value specified by the microcontroller datasheet.</p>
+		 *
+		 * @name Pin#maxPWMValue
+		 * @property
+		 * @type Number
+		 */			 
+		get maxPWMValue() {
+			return this._maxPWMValue;
+		},		
 		
 		/**
 		 * [read-only] The average value of the pin over time. Call clear() to reset.
@@ -119,7 +142,6 @@ BREAKOUT.Pin = (function() {
 			this.calculateMinMaxAndMean(val);
 			this._lastValue = this._value;
 			this._preFilterValue = val;
-			//this._value = val;
 			this._value = this.applyFilters(val);
 			this.detectChange(this._lastValue, this._value);
 		},
@@ -158,6 +180,16 @@ BREAKOUT.Pin = (function() {
 				this._filters = filterArray;
 				return;
 			}
+		},
+
+		/**
+		 * Get a reference to the current generator.
+		 * @name Pin#generator
+		 * @property
+		 * @type GeneratorBase
+		 */	
+		get generator() {
+			return this._generator;
 		},
 
 		/**
@@ -257,6 +289,28 @@ BREAKOUT.Pin = (function() {
 		},
 
 		/**
+		 * Add a new generator to the Pin. A pin can only have one generator assigned. 
+		 * Assigning a new generator will replace the previously assigned generator.
+		 *
+		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
+		 */
+		addGenerator: function(newGenerator) {
+			this.removeGenerator();
+			this._generator = newGenerator;
+			this._generator.addEventListener(GeneratorEvent.UPDATE, this.autoSetValue.bind(this));
+		},
+
+		/**
+		 * Removes the generator from the pin.
+		 */
+		removeGenerator: function() {
+			if (this._generator !== null) {
+				this._generator.removeEventListener(GeneratorEvent.UPDATE, this.autoSetValue);
+			}
+			this._generator = null;				
+		},
+
+		/**
 		 * Sets new filters to the pin
 		 * @param {FilterBase[]} newFilters An array of Filter Objects to be applied to the Pin
 		 */
@@ -276,8 +330,16 @@ BREAKOUT.Pin = (function() {
 		 * @private
 		 */
 		autoSetValue: function(event) {
+			var val = this._generator.value;
+
+			// scale PWM values to 0 - 255
+			// if (this._type === Pin.PWM) {
+			// 	val *= 255.0;
+			// 	val = (val < 0) ? 0: val;
+			// 	val = (val > 255) ? 255 : val;
+			// }
 			// use the value setter
-			this.value = _generator.value;	
+			this.value = val;
 		},
 
 		/**

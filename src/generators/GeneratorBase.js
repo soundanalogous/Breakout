@@ -1,5 +1,44 @@
 /**
  * @author Jeff Hoefs
+ * Based on GeneratorEvent.as in Funnel AS3 library (funnel.cc)
+ */
+
+ BREAKOUT.namespace('BREAKOUT.generators.GeneratorEvent');
+
+ BREAKOUT.generators.GeneratorEvent = (function() {
+ 	"use strict";
+
+ 	var GeneratorEvent;
+
+ 	// dependencies
+	var Event = BREAKOUT.Event;
+
+ 	/**
+ 	 * @exports GeneratorEvent as BREAKOUT.generators.GeneratorEvent
+ 	 * @constructor
+ 	 * @augments BREAKOUT.Event
+ 	 * @param {String} type The event type
+ 	 */
+ 	GeneratorEvent = function(type) {
+ 		
+ 		Event.call(this, type);
+
+ 		this.name = "GeneratorEvent";
+ 	};
+
+ 	GeneratorEvent.prototype = BREAKOUT.inherit(Event.prototype);
+ 	GeneratorEvent.prototype.constructor = GeneratorEvent;
+
+ 	/** @constant */
+ 	GeneratorEvent.UPDATE = "update";
+
+ 	return GeneratorEvent;
+
+ }());
+
+
+ /**
+ * @author Jeff Hoefs
  * Based on IGenerator.as in Funnel AS3 library (funnel.cc)
  */
 
@@ -25,6 +64,7 @@
  		EventDispatcher.call(this, this);
 
  		this.name = "GeneratorBase";
+ 		/** @protected */
  		this._value;
 
  	};

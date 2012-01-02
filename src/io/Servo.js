@@ -1,5 +1,6 @@
 /**
- * @author jeff hoefs
+ * @author Jeff Hoefs
+ * Based on Servo.as in Funnel AS3 library (funnel.cc) by Shigeru Kobayashi
  */
 
 BREAKOUT.namespace('BREAKOUT.io.Servo');
@@ -18,17 +19,22 @@ BREAKOUT.io.Servo = (function() {
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} servoPin A reference to the Pin the servo is connected to.
+	 * @param {Number} minAngle The minimum angle the server can rotate to (default = 0).
+	 * @param {Number} maxAngle The maximum angle the server can rotate to (default = 180).
 	 */
-	Servo = function(board, servoPin) {
+	Servo = function(board, servoPin, minAngle, maxAngle) {
 		"use strict";
 		
 		this.name = "Servo"; // for testing
 
 		this._pin = servoPin;
 		this._angle;
+		this._minAngle = minAngle || 0;
+		this._maxAngle = maxAngle || 180;
 
 		var pinNumber = servoPin.number;
 		
+		// sendServoAttach will set the pin mode to Pin.SERVO
 		board.sendServoAttach(pinNumber);
 	}
 
@@ -43,7 +49,10 @@ BREAKOUT.io.Servo = (function() {
 		set angle(value) {
 			if (this._pin.getType() == Pin.SERVO) {
 				this._angle = value;
-				this._pin.value = this._angle;
+				//this._pin.value = this._angle;
+				this._pin.value = Math.max(0, Math.min(1, (this._angle - this._minAngle) / 
+								(this._maxAngle - this._minAngle) * Servo.COEF_TO_0_180));
+
 			}
 		},
 		get angle() {
@@ -52,6 +61,11 @@ BREAKOUT.io.Servo = (function() {
 			}
 		}		
 	};
+
+	/**
+	 * The scale to convert 0-1 (0-255 in 8bit) to 0-0.706 (0-180 in 8bit).
+	 */
+	Servo.COEF_TO_0_180 = 180 / 255;
 
 	return Servo;
 

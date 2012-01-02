@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>Oscillator Test</title>
+
+<!-- order of import is important -->
+<script src="../build/Breakout.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BREAKOUT.IOBoard;
+	var Pin = BREAKOUT.Pin;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var Event = BREAKOUT.Event;
+	var Oscillator = BREAKOUT.generators.Oscillator;
+
+	var arduino = new IOBoard("localhost", 8887);
+	
+	var frames = 0;
+	var intensity = 0;
+	var direction = 1;
+	var blinkLED;
+	var fadeLED;
+	var oscSquare;
+	var oscSin;
+	
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+					
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+		
+		var freq = 1; // time in seconds
+	
+		// set a pin to PWM
+		arduino.setDigitalPinMode(11, Pin.PWM);
+		fadeLED = arduino.getDigitalPin(11);
+		// create a new generator
+		oscSin = new Oscillator(Oscillator.SINE, freq, 1, 0, 0, 0);
+		// add the generator to the pin
+		fadeLED.addGenerator(oscSin);
+		// start the generator
+		oscSin.start();
+
+		// set digital pin 13 to output
+		arduino.setDigitalPinMode(13, Pin.DOUT);
+		// get a reference to the pin
+		blinkLED = arduino.getDigitalPin(13);
+		oscSquare = new Oscillator(Oscillator.SQUARE, freq, 1, 0, 0, 0);
+		blinkLED.addGenerator(oscSquare);
+		oscSquare.start();
+				
+	}
+			
+});
+
+</script>
+
+</head>
+<body>
+    
+</body>
+</html>​

@@ -1,7 +1,7 @@
 Breakout
 ===
 
-Breakout enables rapid prototyping of browser-based applications that require physical inputs and outputs. Simply load StandardFirmata on your Arduino (or Arduino-compatible board) once and then use javascript (and html, css, etc) to use physical I/O with your web apps. You can also load pages on capable tablets and phones (browser must support websockets) if they are on the same wi-fi network as the computer running the Breakout server.
+Breakout enables rapid prototyping of browser-based applications that require physical inputs and outputs. Simply load StandardFirmata on your Arduino (or Arduino-compatible board) once and then write javascript to use physical I/O with your web apps. You can also load pages on capable tablets and phones (browser must support websockets) if they are on the same wi-fi network as the computer running the Breakout server.
 
 Breakout is currently only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
 

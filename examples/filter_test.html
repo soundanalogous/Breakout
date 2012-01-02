@@ -12,13 +12,14 @@
 }
 </style>
 
-<title>Arduino UNO Test</title>
+<title>Filter Test</title>
 
-<!-- order of import is important -->
 <script src="../build/Breakout.js"></script>
 <script src="libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+
+	// to do: plot data to a scope-like graph
 
 	// dependencies
 	// declare these variables so you don't have
@@ -27,68 +28,34 @@ $(document).ready(function() {
 	var Pin = BREAKOUT.Pin;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
 	var Event = BREAKOUT.Event;
-	var Button = BREAKOUT.io.Button;
-	var ButtonEvent = BREAKOUT.io.ButtonEvent;
 	var Scaler = BREAKOUT.filters.Scaler;
 	var Convolution = BREAKOUT.filters.Convolution;
 	var TriggerPoint = BREAKOUT.filters.TriggerPoint;
 
-	var uno = new IOBoard("localhost", 8887+'/websocket');
+	var arduino = new IOBoard("localhost", 8887);
+	var triggerPoint;
 	
-	var frames = 0;
-	var intensity = 0;
-	var direction = 1;
-	var servoDir = true;
-	var blinkM;
-	var compass;
-	var servo;
-	var blinkLED;
-	var fadeLED;
-	var scalerTest;
-	
-	uno.addEventListener(IOBoardEvent.READY, onReady);
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 					
-		uno.removeEventListener(IOBoardEvent.READY, onReady);
-			
-		// listen for incoming string messages
-		uno.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
-		
-		// set digital pin 13 to output
-		uno.setDigitalPinMode(13, Pin.DOUT);
-		// get a reference to the pin
-		blinkLED = uno.getDigitalPin(13);
-		blinkLED.value = Pin.LOW;	
-		setInterval(blink, 3000);
-	
-		
-		// get a reference to the pin and listen for Change event
-		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
-		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
-		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);		
+
+		triggerPoint = new TriggerPoint([[0.15, 0],[0.8, 0]]);
 
 		// need to enable an analog pin in order to read it
-		uno.enableAnalogPin(0);
-		var pot = uno.getAnalogPin(0);
+		arduino.enableAnalogPin(0);
+		var pot = arduino.getAnalogPin(0);
 		//pot.addFilter(new Convolution(Convolution.MOVING_AVERAGE))
 		//pot.addFilter(new Scaler(0, 1, 0, 10, Scaler.LINEAR));
-		pot.addFilter(new TriggerPoint([0.5, 0.1]));
-		//pot.addFilter(new TriggerPoint([[0.15, 0],[0.8, 0]]));
+		pot.addFilter(triggerPoint);		
+		//pot.addFilter(new TriggerPoint([0.5, 0.1]));
 		//pot.addFilter(new TriggerPoint());	
 		pot.addEventListener(Event.CHANGE, onPotChange);
-		//uno.disableAnalogPin(0);
 
-		// set analog pin to digital input
-		uno.setDigitalPinMode(16, Pin.DIN);
-		var button02 = uno.getDigitalPin(16);
-		button02.addEventListener(Event.CHANGE, onButtonChange);
-		
-		// set a pin to PWM
-		uno.setDigitalPinMode(11, Pin.PWM);
-		fadeLED = uno.getDigitalPin(11);
-		setInterval(fade, 11);			
-		
+		//setTimeout(addPoint, 4000);
+		//setTimeout(removePoint, 8000);
+		//setTimeout(removeAllPoints, 12000);
 				
 	}
 	
@@ -102,43 +69,19 @@ $(document).ready(function() {
 		$('#preFilterData').html("pre-filter value: " + pin.preFilterValue.toFixed(3));
 	}
 
-	function onButtonPress(event) {
-		var btn = event.target;
-		$('#button').html("button: pin = " + btn.pinNumber + " pressed");
+	function addPoint() {
+		triggerPoint.addPoint(0.5, 0.05);
 	}
 
-	function onButtonRelease(event) {
-		var btn = event.target;
-		$('#button').html("button: pin = " + btn.pinNumber + " released");
+	function removePoint() {
+		triggerPoint.removePoint(0.15);
 	}
-	
-	function onButtonChange(event) {
-		var pin = event.target;
-		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value);
-		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
-	}	
-		
-	function onStringMessage(event) {
-		console.log("string received: " + event.message);
-	}
-		
-	function fade() {
-		fadeLED.value = (intensity += direction);
-		if (intensity == 255) direction = -1;
-		else if (intensity == 0) direction = 1;
-	}
-	
-	function blink() {
-		frames++;
-		if (frames % 2 == 0) {
-			blinkLED.value = Pin.LOW;
-		} else {
-			blinkLED.value = Pin.HIGH;
-		}
+
+	function removeAllPoints() {
+		triggerPoint.removeAllPoints();
 	}
 			
 });
-
 </script>
 
 </head>
@@ -146,7 +89,6 @@ $(document).ready(function() {
   
 	<div id="potData" class="text">pot value:</div>
 	<div id="preFilterData" class="text">pre-filter value:</div>
-	<div id="button" class="text">button:</div>
   
 </body>
 </html>​

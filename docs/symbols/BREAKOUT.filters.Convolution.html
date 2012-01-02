@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.io.Button</title>
+		<title>JsDoc Reference - BREAKOUT.filters.Convolution</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -250,26 +250,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.io.Button
+				Class BREAKOUT.filters.Convolution
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
 				<br />Extends
-					<a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a>.<br />
+					<a href="../symbols/BREAKOUT.filters.FilterBase.html">BREAKOUT.filters.FilterBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_Button.js.html">Button.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_filters_Convolution.js.html">Convolution.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.Button.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.filters.Convolution.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -282,9 +282,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#constructor">BREAKOUT.io.Button</a></b>(board, pin, buttonMode, sustainedPressInterval)
+								<b><a href="../symbols/BREAKOUT.filters.Convolution.html#constructor">BREAKOUT.filters.Convolution</a></b>(kernel)
 							</div>
-							<div class="description">An object to represent a physical button.</div>
+							<div class="description">This class performs a convolution operation of the inputs.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -295,7 +295,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.Button.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.filters.Convolution.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -309,29 +309,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#debounceInterval">debounceInterval</a></b>
+								<b><a href="../symbols/BREAKOUT.filters.Convolution.html#coef">coef</a></b>
 								</div>
-								<div class="description">The debounce time interval in milliseconds.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.INTERNAL_PULL_UP">INTERNAL_PULL_UP</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#pinNumber">pinNumber</a></b>
-								</div>
-								<div class="description">[read-only] The pin number of the pin the button is attached to.</div>
+								<div class="description">An array of coefficients to be used with product-sum operations for input buffers.</div>
 							</td>
 						</tr>
 					
@@ -339,9 +319,9 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.PULL_DOWN">PULL_DOWN</a></b>
+								BREAKOUT.filters.Convolution.<b><a href="../symbols/BREAKOUT.filters.Convolution.html#.LPF">LPF</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">Low-pass filter kernel.</div>
 							</td>
 						</tr>
 					
@@ -349,19 +329,9 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.PULL_UP">PULL_UP</a></b>
+								BREAKOUT.filters.Convolution.<b><a href="../symbols/BREAKOUT.filters.Convolution.html#.MOVING_AVERAGE">MOVING_AVERAGE</a></b>
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#sustainedPressInterval">sustainedPressInterval</a></b>
-								</div>
-								<div class="description">The delay time (in milliseconds) the button must be held before a sustained press event is fired.</div>
+								<div class="description">Moving average filter kernel.</div>
 							</td>
 						</tr>
 					
@@ -380,10 +350,32 @@ ul.inheritsList
 			
 				
 				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.filters.Convolution.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.filters.Convolution.html#processSample">processSample</a></b>(val)
+								</div>
+								<div class="description">Override FilterBase.processSample</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
 				
 				
 				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a>: </dt><dd><a href="../symbols/BREAKOUT.PhysicalInputBase.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#removeEventListener">removeEventListener</a></dd>
+				
 				</dl>
 				
 			
@@ -398,17 +390,12 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.io.Button</b>(board, pin, buttonMode, sustainedPressInterval)
+						<b>BREAKOUT.filters.Convolution</b>(kernel)
 				</div>
 				
 				<div class="description">
-					An object to represent a physical button. The advantage of using the Button class over
-listening for pin change events on a Pin object, is that the Button class handles debouncing 
-and provides helpful button events: Pressed, Released, Long Press and Sustained Press
-
-<p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to the button is 
-connected to ground, configuration is PULL_DOWN, if the resistor is connected to power, 
-then the configuration is PULL_UP.</p>
+					This class performs a convolution operation of the inputs. A low-pass filter is used to remove fine noise and
+a high pass filter is used to remove drift.
 					
 				</div>
 				
@@ -420,30 +407,11 @@ then the configuration is PULL_UP.</p>
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{IOBoard}</span>  <b>board</b>
+								<span class="light fixedFont">{Number[]}</span>  <b>kernel</b>
 								
 							</dt>
-								<dd>A reference to the IOBoard instance</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Pin}</span>  <b>pin</b>
-								
-							</dt>
-								<dd>A reference to the Pin the button is connected to.</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>buttonMode</b>
-								
-							</dt>
-								<dd>The mode of the button (either Button.PULL_DOWN or 
-Button.PULL_UP if wired with external resistors or Button.INTERNAL_PULL_UP if
-using the internal pull-up resistors. Default is PULL_DOWN.</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>sustainedPressInterval</b>
-								
-							</dt>
-								<dd>The delay time in milliseconds before a sustained press event is fired.</dd>
+								<dd>An array of coefficients to be used with product-sum
+operations for input buffers.</dd>
 						
 						</dl>
 					
@@ -463,15 +431,16 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 					Field Detail
 				</div>
 				
-					<a name="debounceInterval"> </a>
+					<a name="coef"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{Number}</span>
-					<b>debounceInterval</b>
+					<span class="light">{Number[]}</span>
+					<b>coef</b>
 					
 					</div>
 					<div class="description">
-						The debounce time interval in milliseconds.
+						An array of coefficients to be used with product-sum operations for input buffers. 
+If assigned a new array, the input buffer will be cleared.
 						
 						
 					</div>
@@ -485,59 +454,15 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 					<hr />
 				
-					<a name=".INTERNAL_PULL_UP"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">BREAKOUT.io.Button.</span><b>INTERNAL_PULL_UP</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="pinNumber"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>pinNumber</b>
-					
-					</div>
-					<div class="description">
-						[read-only] The pin number of the pin the button is attached to.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".PULL_DOWN"> </a>
+					<a name=".LPF"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.io.Button.</span><b>PULL_DOWN</b>
+					<span class="light">BREAKOUT.filters.Convolution.</span><b>LPF</b>
 					
 					</div>
 					<div class="description">
-						
+						Low-pass filter kernel. Use by passing this array to the constructor.
 						
 						
 					</div>
@@ -551,37 +476,15 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 					<hr />
 				
-					<a name=".PULL_UP"> </a>
+					<a name=".MOVING_AVERAGE"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.io.Button.</span><b>PULL_UP</b>
+					<span class="light">BREAKOUT.filters.Convolution.</span><b>MOVING_AVERAGE</b>
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sustainedPressInterval"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Number}</span>
-					<b>sustainedPressInterval</b>
-					
-					</div>
-					<div class="description">
-						The delay time (in milliseconds) the button must be held before a sustained press event is fired.
+						Moving average filter kernel. Use by passing this array to the constructor.
 						
 						
 					</div>
@@ -599,6 +502,47 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 <!-- ============================== method details ========================= -->		
 			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="processSample"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>processSample</b>(val)
+					
+					</div>
+					<div class="description">
+						Override FilterBase.processSample
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>val</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
 			
 <!-- ============================== event details ========================= -->		
 			
@@ -610,7 +554,7 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 01 2012 20:58:56 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 01 2012 20:58:55 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

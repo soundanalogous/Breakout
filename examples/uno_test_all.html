@@ -4,10 +4,6 @@
 
 <meta charset=utf-8 />
 <style type="text/css">
-#textBox{
-
-}
-
 .text {
 	font-family: "Arial";
 	font-size: 22px;
@@ -49,11 +45,11 @@ $(document).ready(function() {
 	var ButtonEvent = BREAKOUT.io.ButtonEvent;
 
 		
-	var ard = new IOBoard("localhost", 8887+'/websocket');
+	var ard = new IOBoard("localhost", 8887);
 	
 	var frames = 0;
 	var intensity = 0;
-	var direction = 1;
+	var direction = 0.01;
 	var servoDir = true;
 	var blinkM;
 	var compass;
@@ -197,10 +193,8 @@ $(document).ready(function() {
 	
 	function fade() {
 		fadeLED.value = (intensity += direction);
-		// test sendExtendedAnalog method
-		//ard.sendExtendedAnalog(11, intensity += direction);
-		if (intensity == 255) direction = -1;
-		else if (intensity == 0) direction = 1;
+		if (intensity >= 1.0) direction = -0.01;
+		else if (intensity <= 0.0) direction = 0.01;
 	}
 	
 	function servoTest() {

@@ -4,10 +4,6 @@
 
 <meta charset=utf-8 />
 <style type="text/css">
-#textBox{
-
-}
-
 .text {
 	font-family: "Arial";
 	font-size: 22px;
@@ -36,12 +32,12 @@ $(document).ready(function() {
 	var Button = BREAKOUT.io.Button;
 	var ButtonEvent = BREAKOUT.io.ButtonEvent;
 	var Servo = BREAKOUT.io.Servo;
+	var LED = BREAKOUT.io.LED;
+	var Oscillator = BREAKOUT.generators.Oscillator;
 
-	var uno = new IOBoard("localhost", 8887+'/websocket');
+	var uno = new IOBoard("localhost", 8887);
 	
 	var frames = 0;
-	var intensity = 0;
-	var direction = 1;
 	var servoDir = true;
 	var blinkM;
 	var compass;
@@ -67,7 +63,6 @@ $(document).ready(function() {
 		blinkLED = uno.getDigitalPin(13);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
-	
 		
 		// get a reference to the pin and listen for Change event
 		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
@@ -79,28 +74,27 @@ $(document).ready(function() {
 		uno.enableAnalogPin(0);
 		var pot = uno.getAnalogPin(0);
 		pot.addEventListener(Event.CHANGE, onPotChange);
-		//uno.disableAnalogPin(0);
 
 		// set analog pin to digital input
 		uno.setDigitalPinMode(16, Pin.DIN);
 		var button02 = uno.getDigitalPin(16);
 		button02.addEventListener(Event.CHANGE, onButtonChange);
 		
-		// set a pin to PWM
-		uno.setDigitalPinMode(11, Pin.PWM);
-		fadeLED = uno.getDigitalPin(11);
-		setInterval(fade, 11);			
+		// create a new LED
+		fadeLED = new LED(uno, uno.getDigitalPin(11));
+		// use a sine wave to fade the led on and off every 2 seconds
+		fadeLED.blink(2000, 0, Oscillator.SINE);				
 		
-		// set a pin to SERVO
-		//uno.setDigitalPinMode(9, Pin.SERVO);
-		//servo = uno.getDigitalPin(9);
+		// create a new Servo, attaching to PWM pin 9
 		servo = new Servo(uno, uno.getDigitalPin(9));
 		setInterval(servoTest, 5000);
 		
+		// create a new BlinkM module
 		blinkM = new BlinkM(uno);
 		blinkM.stopScript();
 		setInterval(randomColor, 2000);
 		
+		// create a new digital compass
 		compass = new CompassHMC6352(uno);
 		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
 		
@@ -109,10 +103,12 @@ $(document).ready(function() {
 				
 	}
 	
+	// test compass stopReading method
 	function stopReading() {
 		compass.stopReading();
 	}
 	
+	// test compass startReading method
 	function startReading() {
 		compass.startReading();
 	}	
@@ -122,6 +118,7 @@ $(document).ready(function() {
 		$('#heading').html("heading: " + evt.target.heading);
 	}	
 	
+	// set a random color on the BlinkM module
 	function randomColor() {
 		var red = Math.floor(Math.random() * 255);
 		var green = Math.floor(Math.random() * 255);
@@ -156,36 +153,22 @@ $(document).ready(function() {
 		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value);
 		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
-	
-	function onFirmwareVersion(event) {
-		console.log("firmware version: " + event.version);
-	}
-	
-	function onFirmwareName(event) {
-		console.log("firmware name: " + event.name + " version: " + event.version);
-	}
-		
+			
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
 	}
-		
-	function fade() {
-		fadeLED.value = (intensity += direction);
-		if (intensity == 255) direction = -1;
-		else if (intensity == 0) direction = 1;
-	}
 	
+	// rotate the servo head		
 	function servoTest() {
 		if (servoDir) {
-			//servo.value = 0;
 			servo.angle = 0;
 		} else {
-			//servo.value = 180;
 			servo.angle = 180;
 		}
 		servoDir = !servoDir;
 	}
 	
+	// blink an led using only pin methods
 	function blink() {
 		frames++;
 		if (frames % 2 == 0) {

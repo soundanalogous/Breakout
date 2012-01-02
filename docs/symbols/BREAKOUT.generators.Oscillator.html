@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.I2CBase</title>
+		<title>JsDoc Reference - BREAKOUT.generators.Oscillator</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -250,24 +250,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.I2CBase
+				Class BREAKOUT.generators.Oscillator
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/BREAKOUT.generators.GeneratorBase.html">BREAKOUT.generators.GeneratorBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_I2CBase.js.html">I2CBase.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_generators_Oscillator.js.html">Oscillator.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.I2CBase.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.generators.Oscillator.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -280,9 +282,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.I2CBase.html#constructor">BREAKOUT.I2CBase</a></b>(board, address, delayUS)
+								<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#constructor">BREAKOUT.generators.Oscillator</a></b>(wave, freq, amplitude, offset, phase, times)
 							</div>
-							<div class="description">Creates a new I2CBase base class</div>
+							<div class="description">Osc outputs a waveform on the associated PWM pin.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -293,7 +295,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.I2CBase.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.generators.Oscillator.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -307,79 +309,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.I2CBase.html#address">address</a></b>
+								<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#serviceInterval">serviceInterval</a></b>
 								</div>
-								<div class="description">[read-only] The address of the i2c device.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.I2C_CONFIG">I2C_CONFIG</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.I2C_REPLY">I2C_REPLY</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.I2C_REQUEST">I2C_REQUEST</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.READ">READ</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.READ_CONTINUOUS">READ_CONTINUOUS</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.STOP_READING">STOP_READING</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.WRITE">WRITE</a></b>
-								</div>
-								<div class="description"></div>
+								<div class="description">The service interval in milliseconds.</div>
 							</td>
 						</tr>
 					
@@ -388,13 +320,17 @@ ul.inheritsList
 				
 				
 				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/BREAKOUT.generators.GeneratorBase.html">BREAKOUT.generators.GeneratorBase</a>: </dt><dd><a href="../symbols/BREAKOUT.generators.GeneratorBase.html#value">value</a></dd>
+				</dl>
+				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.I2CBase.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.generators.Oscillator.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -405,65 +341,92 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#addEventListener">addEventListener</a></b>(type, listener)
+								<div class="fixedFont">BREAKOUT.generators.Oscillator.<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#.IMPULSE">IMPULSE</a></b>(val, lastVal)
 								</div>
-								<div class="description"></div>
+								<div class="description">impulse</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">BREAKOUT.generators.Oscillator.<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#.LINEAR">LINEAR</a></b>(val, lastVal)
+								</div>
+								<div class="description">linear</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#dispatchEvent">dispatchEvent</a></b>(type, optionalParams)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.generators.Oscillator.html#reset">reset</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Resets the oscillator.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">BREAKOUT.generators.Oscillator.<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#.SAW">SAW</a></b>(val, lastVal)
+								</div>
+								<div class="description">saw wave</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">BREAKOUT.generators.Oscillator.<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#.SINE">SINE</a></b>(val, lastVal)
+								</div>
+								<div class="description">sine wave</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">BREAKOUT.generators.Oscillator.<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#.SQUARE">SQUARE</a></b>(val, lastVal)
+								</div>
+								<div class="description">square wave</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#handleI2C">handleI2C</a></b>(data)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.generators.Oscillator.html#start">start</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Starts the oscillator</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#hasEventListener">hasEventListener</a></b>(type)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.generators.Oscillator.html#stop">stop</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Stops the oscillator.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">BREAKOUT.generators.Oscillator.<b><a href="../symbols/BREAKOUT.generators.Oscillator.html#.TRIANGLE">TRIANGLE</a></b>(val, lastVal)
+								</div>
+								<div class="description">triangle wave</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#removeEventListener">removeEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.generators.Oscillator.html#update">update</a></b>(interval)
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#sendI2CRequest">sendI2CRequest</a></b>(command, data)
-								</div>
-								<div class="description">Send an i2c request command to the board</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#update">update</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">By default the interval is 33 milliseconds.</div>
 							</td>
 						</tr>
 					
@@ -471,6 +434,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a>: </dt><dd><a href="../symbols/BREAKOUT.EventDispatcher.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.EventDispatcher.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.EventDispatcher.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.EventDispatcher.html#removeEventListener">removeEventListener</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -484,11 +451,12 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.I2CBase</b>(board, address, delayUS)
+						<b>BREAKOUT.generators.Oscillator</b>(wave, freq, amplitude, offset, phase, times)
 				</div>
 				
 				<div class="description">
-					Creates a new I2CBase base class
+					Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
+an LED on or off.
 					
 				</div>
 				
@@ -500,22 +468,40 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{IOBoard}</span>  <b>board</b>
+								<span class="light fixedFont">{Number}</span>  <b>wave</b>
 								
 							</dt>
-								<dd>A reference to the IOBoard instance</dd>
+								<dd>waveform</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>address</b>
+								<span class="light fixedFont">{Number}</span>  <b>freq</b>
 								
 							</dt>
-								<dd>The I2C address of the device</dd>
+								<dd>frequency</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>delayUS</b>
+								<span class="light fixedFont">{Number}</span>  <b>amplitude</b>
 								
 							</dt>
-								<dd>The number of microseconds ...</dd>
+								<dd>amplitude</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>offset</b>
+								
+							</dt>
+								<dd>offset</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>phase</b>
+								
+							</dt>
+								<dd>phase</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>times</b>
+								
+							</dt>
+								<dd>The repeat count from 0 to infinite.</dd>
 						
 						</dl>
 					
@@ -535,169 +521,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="address"> </a>
+					<a name="serviceInterval"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Number}</span>
-					<b>address</b>
+					<b>serviceInterval</b>
 					
 					</div>
 					<div class="description">
-						[read-only] The address of the i2c device.
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".I2C_CONFIG"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>I2C_CONFIG</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".I2C_REPLY"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>I2C_REPLY</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".I2C_REQUEST"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>I2C_REQUEST</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".READ"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>READ</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".READ_CONTINUOUS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>READ_CONTINUOUS</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".STOP_READING"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>STOP_READING</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name=".WRITE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>WRITE</b>
-					
-					</div>
-					<div class="description">
-						
+						The service interval in milliseconds. Default is 33ms.
 						
 						
 					</div>
@@ -719,15 +551,15 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="addEventListener"> </a>
-					<div class="fixedFont">
+					<a name=".IMPULSE"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<b>addEventListener</b>(type, listener)
+					<span class="light">BREAKOUT.generators.Oscillator.</span><b>IMPULSE</b>(val, lastVal)
 					
 					</div>
 					<div class="description">
-						
+						impulse
 						
 						
 					</div>
@@ -739,92 +571,13 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
+									<b>val</b>
 									
 								</dt>
-								<dd>The event type</dd>
+								<dd></dd>
 							
 								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="dispatchEvent"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>dispatchEvent</b>(type, optionalParams)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Event}</span> <b>type</b>
-									
-								</dt>
-								<dd>The Event object</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
-									
-								</dt>
-								<dd>Optional parameters to assign to the event object.
-return {boolean} True if dispatch is successful, false if not.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="handleI2C"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>handleI2C</b>(data)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>data</b>
+									<b>lastVal</b>
 									
 								</dt>
 								<dd></dd>
@@ -840,15 +593,15 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 
 					<hr />
 				
-					<a name="hasEventListener"> </a>
-					<div class="fixedFont">
+					<a name=".LINEAR"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<b>hasEventListener</b>(type)
+					<span class="light">BREAKOUT.generators.Oscillator.</span><b>LINEAR</b>(val, lastVal)
 					
 					</div>
 					<div class="description">
-						
+						linear
 						
 						
 					</div>
@@ -860,92 +613,256 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type
-return {boolean} True is listener exists for this type, false if not.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="removeEventListener"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>removeEventListener</b>(type, listener)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sendI2CRequest"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>sendI2CRequest</b>(command, data)
-					
-					</div>
-					<div class="description">
-						Send an i2c request command to the board
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>command</b>
+									<b>val</b>
 									
 								</dt>
 								<dd></dd>
 							
 								<dt>
-									<span class="light fixedFont">{Number[]}</span> <b>data</b>
+									<b>lastVal</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="reset"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reset</b>()
+					
+					</div>
+					<div class="description">
+						Resets the oscillator.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".SAW"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">BREAKOUT.generators.Oscillator.</span><b>SAW</b>(val, lastVal)
+					
+					</div>
+					<div class="description">
+						saw wave
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>val</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lastVal</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".SINE"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">BREAKOUT.generators.Oscillator.</span><b>SINE</b>(val, lastVal)
+					
+					</div>
+					<div class="description">
+						sine wave
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>val</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lastVal</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".SQUARE"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">BREAKOUT.generators.Oscillator.</span><b>SQUARE</b>(val, lastVal)
+					
+					</div>
+					<div class="description">
+						square wave
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>val</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lastVal</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="start"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>start</b>()
+					
+					</div>
+					<div class="description">
+						Starts the oscillator
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="stop"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>stop</b>()
+					
+					</div>
+					<div class="description">
+						Stops the oscillator.
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".TRIANGLE"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">BREAKOUT.generators.Oscillator.</span><b>TRIANGLE</b>(val, lastVal)
+					
+					</div>
+					<div class="description">
+						triangle wave
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>val</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<b>lastVal</b>
 									
 								</dt>
 								<dd></dd>
@@ -965,17 +882,28 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 					<div class="fixedFont">
 					
 					
-					<b>update</b>()
+					<b>update</b>(interval)
 					
 					</div>
 					<div class="description">
-						
+						By default the interval is 33 milliseconds. The Osc is updated every 33ms.
 						
 						
 					</div>
 					
 					
 					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>interval</b>
+									
+								</dt>
+								<dd>The update interval in milliseconds.</dd>
+							
+							</dl>
 						
 						
 						

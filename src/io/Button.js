@@ -1,5 +1,6 @@
 /**
  * @author Jeff Hoefs
+ * Based on Button.as in Funnel AS3 library (funnel.cc) by Shigeru Kobayashi 
  */
 
 BREAKOUT.namespace('BREAKOUT.io.ButtonEvent');
@@ -15,6 +16,7 @@ BREAKOUT.io.ButtonEvent = (function() {
 	 * @exports ButtonEvent as BREAKOUT.io.ButtonEvent
 	 * @constructor
 	 * @augments BREAKOUT.Event
+ 	 * @param {String} type The event type	 
 	 */
 	ButtonEvent = function(type) {
 
@@ -57,13 +59,18 @@ BREAKOUT.io.Button = (function() {
 	 * listening for pin change events on a Pin object, is that the Button class handles debouncing 
 	 * and provides helpful button events: Pressed, Released, Long Press and Sustained Press
 	 *
+	 * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to the button is 
+	 * connected to ground, configuration is PULL_DOWN, if the resistor is connected to power, 
+	 * then the configuration is PULL_UP.</p>
+	 *
 	 * @exports Button as BREAKOUT.io.Button
 	 * @constructor
 	 * @augments BREAKOUT.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} pin A reference to the Pin the button is connected to.
-	 * @param {Number} buttonMode The mode of the button (either PULL_DOWN or PULL_UP). 
-	 * Default is PULL_DOWN.
+	 * @param {Number} buttonMode The mode of the button (either Button.PULL_DOWN or 
+	 * Button.PULL_UP if wired with external resistors or Button.INTERNAL_PULL_UP if
+	 * using the internal pull-up resistors. Default is PULL_DOWN.
 	 * @param {Number} sustainedPressInterval The delay time in milliseconds before a sustained press event is fired.
 	 *
 	 */
