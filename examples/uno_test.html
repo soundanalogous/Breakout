@@ -35,7 +35,9 @@ $(document).ready(function() {
 	var LED = BREAKOUT.io.LED;
 	var Oscillator = BREAKOUT.generators.Oscillator;
 	var Potentiometer = BREAKOUT.io.Potentiometer;
+	var RGBLED = BREAKOUT.io.RGBLED;
 
+	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
 	
 	var frames = 0;
@@ -44,11 +46,13 @@ $(document).ready(function() {
 	var compass;
 	var servo;
 	var blinkLED;
+	var rbgLED;
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-					
+		
+		// remove the listener because it is no longer needed
 		uno.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// print the supported modes and resolution (in bits) for each pin
@@ -57,7 +61,7 @@ $(document).ready(function() {
 		// listen for incoming string messages
 		uno.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
-		
+
 		// set digital pin 13 to output
 		uno.setDigitalPinMode(13, Pin.DOUT);
 		// get a reference to the pin
@@ -65,13 +69,13 @@ $(document).ready(function() {
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 		
-
 		// Digital input using Button object:
 		// params: board, pin, mode
 		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
 		//var button01 = new Button(uno, uno.getDigitalPin(2), Button.INTERNAL_PULL_UP);
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+
 
 		// Analog input example using Pin object:
 		// need to enable an analog pin in order to read it
@@ -106,12 +110,25 @@ $(document).ready(function() {
 		servo = new Servo(uno, uno.getDigitalPin(9));
 		//setInterval(servoTest, 5000);
 		// NOTE: running a servo can interfere with analog inputs, creating jitter in the signal
-		
+
+
+		// RGBLED example using RGBLED object:
+		// NOTE: the r, g, b pins of the LED must be connected to PWM pins on the IOBoard
+		// params: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
+		rgbLED = new RGBLED(
+			uno, 
+			uno.getDigitalPin(3), 
+			uno.getDigitalPin(5), 
+			uno.getDigitalPin(6), 
+			RGBLED.COMMON_CATHODE);
+
+		rgbLED.setColor(128, 255, 0);
+
 
 		// i2c module example: BlinkM module
 		blinkM = new BlinkM(uno);
 		blinkM.stopScript();
-		setInterval(randomColor, 2000);
+		setInterval(randomColor, 4000);
 
 
 		// i2c module example:	HMC6352 digital compass module	
@@ -143,6 +160,8 @@ $(document).ready(function() {
 		var green = Math.floor(Math.random() * 255);
 		var blue = Math.floor(Math.random() * 255);
 		
+		// fade rgb led to random color in .5 seconds
+		rgbLED.fadeTo(red, green, blue, 500);
 		blinkM.goToRGBColorNow([red, green, blue]);
 		//blinkM.fadeToRGBColor([red, green, blue]);
 	}	

@@ -32,7 +32,7 @@ BREAKOUT.io.Potentiometer = (function() {
 		this.name = "Potentiometer";
 		this._pin = pin;
 
-		smooth = smooth || false;
+		enableSmoothing = enableSmoothing || false;
 
 		var analogPinNumber = this._pin.analogNumber;
 		board.enableAnalogPin(analogPinNumber);
