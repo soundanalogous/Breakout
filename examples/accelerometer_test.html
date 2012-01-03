@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>Accelerometer Test</title>
+
+<script src="../build/Breakout.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// to do: plot data to a scope-like graph
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BREAKOUT.IOBoard;
+	var Pin = BREAKOUT.Pin;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var Event = BREAKOUT.Event;
+	var AnalogAccelerometer = BREAKOUT.io.AnalogAccelerometer;
+	var Button = BREAKOUT.io.Button;
+	var ButtonEvent = BREAKOUT.io.ButtonEvent;
+
+	var arduino = new IOBoard("localhost", 8887);
+	var RANGE_GS = 3; // +/-3 Gs for ADXL335
+	var SUPPLY_V = 3.3; // supply voltage of sensor (set aref to same voltage)
+	
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+					
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);		
+
+		var button01 = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
+		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);		
+
+
+		var accelerometer = new AnalogAccelerometer(
+								arduino, 
+								arduino.getAnalogPin(0), 
+								arduino.getAnalogPin(1), 
+								arduino.getAnalogPin(2),
+								RANGE_GS,
+								false);
+
+	    
+	    // You need to calibrate an analog accelerometer to get the most accurate values
+	    // get the min and max range values for each axis
+		var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
+		var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
+		var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
+
+		// var xRange = accelerometer.getCalibratedRange(1.135, 1.824, SUPPLY_V);
+		// var yRange = accelerometer.getCalibratedRange(1.126, 1.833, SUPPLY_V);
+		// var zRange = accelerometer.getCalibratedRange(1.155, 1.792, SUPPLY_V);		
+
+		// accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
+		// accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
+		// accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
+		
+		accelerometer.addEventListener(Event.CHANGE, showUncalibratedValues);
+		//accelerometer.addEventListener(Event.CHANGE, onAccelerationChange);
+				
+	}
+
+	function onButtonPress(event) {
+		console.log("button pressed");
+	}
+
+	function onButtonRelease(event) {
+		console.log("button released");
+	}
+
+	function showUncalibratedValues(event) {
+		var accel = event.target;
+
+		$('#xVal').html("x min = " + (accel.xPin.minimum * RANGE_GS).toFixed(3) + 
+				" \tx max = " + (accel.xPin.maximum * RANGE_GS).toFixed(3));
+
+		$('#yVal').html("y min = " + (accel.yPin.minimum * RANGE_GS).toFixed(3) + 
+				" \ty max = " + (accel.yPin.maximum * RANGE_GS).toFixed(3));
+
+		$('#zVal').html("z min = " + (accel.zPin.minimum * RANGE_GS).toFixed(3) + 
+				" \tz max = " + (accel.zPin.maximum * RANGE_GS).toFixed(3));
+	}
+	
+	function onAccelerationChange(event) {
+		var accel = event.target;
+		
+		$('#xVal').html("x = " + accel.x.toFixed(3));
+		$('#yVal').html("y = " + accel.y.toFixed(3));
+		$('#zVal').html("z = " + accel.z.toFixed(3));
+	}
+			
+});
+</script>
+
+</head>
+<body>
+  
+	<div id="xVal" class="text">x =</div>
+	<div id="yVal" class="text">y =</div>
+	<div id="zVal" class="text">z =</div>
+  
+</body>
+</html>​

@@ -22,7 +22,7 @@ BREAKOUT.io.Potentiometer = (function() {
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} pin A reference to the Pin the potentiometer is connected to.
-	 * @param {Boolean} enableSmoothing True to enable smoothing, false to disable.
+	 * @param {Boolean} enableSmoothing True to enable smoothing, false to disable. Default is false.
 	 */
 	Potentiometer = function(board, pin, enableSmoothing) {
 		"use strict";

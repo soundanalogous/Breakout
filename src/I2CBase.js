@@ -24,7 +24,6 @@ BREAKOUT.I2CBase = (function() {
 	 * @param {Number} delayUS The number of microseconds ...
 	 */
 	I2CBase = function(board, address, delayUS) {
-		"use strict";
 
 		if (board == undefined) return;
 
