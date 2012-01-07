@@ -12,7 +12,7 @@
 }
 </style>
 
-<title>Analog Accelerometer Test</title>
+<title>Accelerometer Calibration</title>
 
 <script src="../build/Breakout.js"></script>
 <script src="libs/jquery-1.6.3.min.js"></script>
@@ -37,9 +37,10 @@ $(document).ready(function() {
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
+					
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);		
 
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);				
-
+	
 		// params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
 		var accelerometer = new AnalogAccelerometer(
 								arduino, 
@@ -47,31 +48,22 @@ $(document).ready(function() {
 								arduino.getAnalogPin(1), 
 								arduino.getAnalogPin(2),
 								RANGE_GS,
-								true);
-
-	    // You need to calibrate an analog accelerometer to get the most accurate values
-	    // get the min and max range values for each axis
-
-	    // calibration settings for a ADXL335 at 3.3v
-	    // params: minimum voltage on the axis, max voltage on the axis, supply voltage
-		var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
-		var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
-		var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
-
-		// params: axis, minimum range, maximum range
-		accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
-		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
-		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
+								false);
 		
-		accelerometer.addEventListener(Event.CHANGE, onAccelerationChange);
+		accelerometer.addEventListener(Event.CHANGE, showUncalibratedValues);
 	}
-	
-	function onAccelerationChange(event) {
+
+	function showUncalibratedValues(event) {
 		var accel = event.target;
-		
-		$('#xVal').html("x = " + accel.x.toFixed(3));
-		$('#yVal').html("y = " + accel.y.toFixed(3));
-		$('#zVal').html("z = " + accel.z.toFixed(3));
+
+		$('#xVal').html("x min = " + (accel.xPin.minimum * SUPPLY_V).toFixed(3) + 
+				" \tx max = " + (accel.xPin.maximum * SUPPLY_V).toFixed(3));
+
+		$('#yVal').html("y min = " + (accel.yPin.minimum * SUPPLY_V).toFixed(3) + 
+				" \ty max = " + (accel.yPin.maximum * SUPPLY_V).toFixed(3));
+
+		$('#zVal').html("z min = " + (accel.zPin.minimum * SUPPLY_V).toFixed(3) + 
+				" \tz max = " + (accel.zPin.maximum * SUPPLY_V).toFixed(3));
 	}
 			
 });

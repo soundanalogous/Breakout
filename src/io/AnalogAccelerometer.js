@@ -204,10 +204,10 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	 * to store the return value and then pass obj.min and obj.max along with the respective axis
 	 * identifier to the setRangeFor method.
 	 * 
-	 * @param {Number} minVoltage The minimum value
-	 * @param {Number} maxVoltage The maximum value
+	 * @param {Number} minVoltage The minimum value reported on the axis
+	 * @param {Number} maxVoltage The maximum value reported on the axis
 	 * @param {Number} supplyVoltage The supply voltage of the Acceleromter (enter as 3.3, 3.0, 5.0, etc).
-	 * @return {Object} An object containin the min and max range values to be passed to the 
+	 * @return {Object} An object containing the min and max range values to be passed to the 
 	 * setRangeFor method.
 	 */
 	AnalogAccelerometer.prototype.getCalibratedRange = function(minVoltage, maxVoltage, supplyVoltage) {
@@ -217,6 +217,8 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 		
 		// find zero G (average of min and max)
 		var zeroG = (minVoltage + maxVoltage) / 2;
+
+		console.log(this._dynamicRange + " : " + supplyVoltage);
 		
 		range.min = (zeroG - (mVPerG * this._dynamicRange))/supplyVoltage;
 		range.max = (zeroG + (mVPerG * this._dynamicRange))/supplyVoltage;
