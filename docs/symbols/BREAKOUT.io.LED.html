@@ -193,6 +193,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.html">BREAKOUT</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.AccelerometerI2CBase.html">BREAKOUT.AccelerometerI2CBase</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a></li>
@@ -213,6 +215,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html">BREAKOUT.io.AnalogAccelerometer</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.io.BlinkM.html">BREAKOUT.io.BlinkM</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a></li>
@@ -225,7 +229,11 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.io.LED.html">BREAKOUT.io.LED</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.io.Potentiometer.html">BREAKOUT.io.Potentiometer</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.io.RFIDEvent.html">BREAKOUT.io.RFIDEvent</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.io.RGBLED.html">BREAKOUT.io.RGBLED</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.Servo.html">BREAKOUT.io.Servo</a></li>
 	
@@ -348,7 +356,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.LED.html#fadeIn">fadeIn</a></b>(time)
 								</div>
-								<div class="description">The LED must be connected to a PWM pin to use thie method.</div>
+								<div class="description">The LED must be connected to a PWM pin to use this method.</div>
 							</td>
 						</tr>
 					
@@ -357,7 +365,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.LED.html#fadeOut">fadeOut</a></b>(time)
 								</div>
-								<div class="description">The LED must be connected to a PWM pin to use thie method.</div>
+								<div class="description">The LED must be connected to a PWM pin to use this method.</div>
 							</td>
 						</tr>
 					
@@ -366,7 +374,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.LED.html#fadeTo">fadeTo</a></b>(to, time)
 								</div>
-								<div class="description">The LED must be connected to a PWM pin to use thie method.</div>
+								<div class="description">The LED must be connected to a PWM pin to use this method.</div>
 							</td>
 						</tr>
 					
@@ -375,7 +383,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.LED.html#isOn">isOn</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Check if the LED is on</div>
 							</td>
 						</tr>
 					
@@ -402,7 +410,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.LED.html#stopBlinking">stopBlinking</a></b>()
 								</div>
-								<div class="description">Stop the blinking.</div>
+								<div class="description">Stop the LED blink cycle.</div>
 							</td>
 						</tr>
 					
@@ -411,7 +419,7 @@ ul.inheritsList
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.LED.html#toggle">toggle</a></b>()
 								</div>
-								<div class="description">Toggle the LED value</div>
+								<div class="description">Toggle the LED on or off</div>
 							</td>
 						</tr>
 					
@@ -585,7 +593,7 @@ A value of 0 will blink forever.</dd>
 					
 					</div>
 					<div class="description">
-						The LED must be connected to a PWM pin to use thie method.
+						The LED must be connected to a PWM pin to use this method.
 						
 						
 					</div>
@@ -621,7 +629,7 @@ A value of 0 will blink forever.</dd>
 					
 					</div>
 					<div class="description">
-						The LED must be connected to a PWM pin to use thie method.
+						The LED must be connected to a PWM pin to use this method.
 						
 						
 					</div>
@@ -657,7 +665,7 @@ A value of 0 will blink forever.</dd>
 					
 					</div>
 					<div class="description">
-						The LED must be connected to a PWM pin to use thie method.
+						The LED must be connected to a PWM pin to use this method.
 						
 						
 					</div>
@@ -699,7 +707,7 @@ A value of 0 will blink forever.</dd>
 					
 					</div>
 					<div class="description">
-						
+						Check if the LED is on
 						
 						
 					</div>
@@ -781,7 +789,7 @@ A value of 0 will blink forever.</dd>
 					
 					</div>
 					<div class="description">
-						Stop the blinking.
+						Stop the LED blink cycle.
 						
 						
 					</div>
@@ -806,7 +814,7 @@ A value of 0 will blink forever.</dd>
 					
 					</div>
 					<div class="description">
-						Toggle the LED value
+						Toggle the LED on or off
 						
 						
 					</div>
@@ -835,7 +843,7 @@ A value of 0 will blink forever.</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 01 2012 20:58:56 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jan 06 2012 23:55:09 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

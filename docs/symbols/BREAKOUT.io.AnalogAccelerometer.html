@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.io.Button</title>
+		<title>JsDoc Reference - BREAKOUT.io.AnalogAccelerometer</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -258,26 +258,24 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.io.Button
+				Class BREAKOUT.io.AnalogAccelerometer
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_Button.js.html">Button.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_AnalogAccelerometer.js.html">AnalogAccelerometer.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.Button.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.AnalogAccelerometer.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -290,9 +288,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#constructor">BREAKOUT.io.Button</a></b>(board, pin, buttonMode, sustainedPressInterval)
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#constructor">BREAKOUT.io.AnalogAccelerometer</a></b>(board, xPin, yPin, zPin, dynamicRange, enableSmoothing)
 							</div>
-							<div class="description">An object to represent a physical button.</div>
+							<div class="description">Creates a new Analog Accelerometer object</div>
 						</td>
 					</tr>
 				</tbody>
@@ -303,7 +301,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.Button.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.AnalogAccelerometer.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -317,17 +315,62 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#debounceInterval">debounceInterval</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#dynamicRange">dynamicRange</a></b>
 								</div>
-								<div class="description">The debounce time interval in milliseconds.</div>
+								<div class="description">[read-only] The current range setting of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.INTERNAL_PULL_UP">INTERNAL_PULL_UP</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#rotationX">rotationX</a></b>
+								</div>
+								<div class="description">[read-only] The rotation on the x axis 
+of gravity (9.8 m/sec2).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#rotationY">rotationY</a></b>
+								</div>
+								<div class="description">[read-only] The rotation on the y axis 
+of gravity (9.8 m/sec2).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#rotationZ">rotationZ</a></b>
+								</div>
+								<div class="description">[read-only] The rotation on the z axis 
+of gravity (9.8 m/sec2).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#x">x</a></b>
+								</div>
+								<div class="description">[read-only] The x axis of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BREAKOUT.io.AnalogAccelerometer.<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#.X_AXIS">X_AXIS</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -337,9 +380,10 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#pinNumber">pinNumber</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#y">y</a></b>
 								</div>
-								<div class="description">[read-only] The pin number of the pin the button is attached to.</div>
+								<div class="description">[read-only] The y axis of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
 							</td>
 						</tr>
 					
@@ -347,17 +391,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.PULL_DOWN">PULL_DOWN</a></b>
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								BREAKOUT.io.Button.<b><a href="../symbols/BREAKOUT.io.Button.html#.PULL_UP">PULL_UP</a></b>
+								BREAKOUT.io.AnalogAccelerometer.<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#.Y_AXIS">Y_AXIS</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -367,9 +401,20 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.Button.html#sustainedPressInterval">sustainedPressInterval</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#z">z</a></b>
 								</div>
-								<div class="description">The delay time (in milliseconds) the button must be held before a sustained press event is fired.</div>
+								<div class="description">[read-only] The z axis of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BREAKOUT.io.AnalogAccelerometer.<b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#.Z_AXIS">Z_AXIS</a></b>
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -378,21 +423,44 @@ ul.inheritsList
 				
 				
 				
-				<dl class="inheritsList">
-				
-				</dl>
-				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.io.AnalogAccelerometer.">
+					<caption>Method Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Method Attributes</th>
+							<th scope="col">Method Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#getCalibratedRange">getCalibratedRange</a></b>(minVoltage, maxVoltage, supplyVoltage)
+								</div>
+								<div class="description">Use this method to get the minimum and maximum range values for an axis.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html#setRangeFor">setRangeFor</a></b>(axis, minimum, maximum)
+								</div>
+								<div class="description">Scale the range for the specified axis (from 0 to 1) to (minimum to maximum).</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
 				
 				
-				<dl class="inheritsList">
-				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a>: </dt><dd><a href="../symbols/BREAKOUT.PhysicalInputBase.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.PhysicalInputBase.html#removeEventListener">removeEventListener</a></dd>
-				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -406,17 +474,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.io.Button</b>(board, pin, buttonMode, sustainedPressInterval)
+						<b>BREAKOUT.io.AnalogAccelerometer</b>(board, xPin, yPin, zPin, dynamicRange, enableSmoothing)
 				</div>
 				
 				<div class="description">
-					An object to represent a physical button. The advantage of using the Button class over
-listening for pin change events on a Pin object, is that the Button class handles debouncing 
-and provides helpful button events: Pressed, Released, Long Press and Sustained Press
-
-<p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to the button is 
-connected to ground, configuration is PULL_DOWN, if the resistor is connected to power, 
-then the configuration is PULL_UP.</p>
+					Creates a new Analog Accelerometer object
 					
 				</div>
 				
@@ -434,24 +496,35 @@ then the configuration is PULL_UP.</p>
 								<dd>A reference to the IOBoard instance</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Pin}</span>  <b>pin</b>
+								<span class="light fixedFont">{Pin}</span>  <b>xPin</b>
 								
 							</dt>
-								<dd>A reference to the Pin the button is connected to.</dd>
+								<dd>A reference to the Pin connected to the x axis of the accelerometer</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>buttonMode</b>
+								<span class="light fixedFont">{Pin}</span>  <b>yPin</b>
 								
 							</dt>
-								<dd>The mode of the button (either Button.PULL_DOWN or 
-Button.PULL_UP if wired with external resistors or Button.INTERNAL_PULL_UP if
-using the internal pull-up resistors. Default is PULL_DOWN.</dd>
+								<dd>A reference to the Pin connected to the y axis of the accelerometer</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>sustainedPressInterval</b>
+								<span class="light fixedFont">{Pin}</span>  <b>zPin</b>
 								
 							</dt>
-								<dd>The delay time in milliseconds before a sustained press event is fired.</dd>
+								<dd>A reference to the Pin connected to the z axis of the accelerometer</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>dynamicRange</b>
+								
+							</dt>
+								<dd>The range of the acceleromter in Gs (typically 2 or 3 for an 
+analog accelerometer). See the datasheet for the acceleromter to get the exact value.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Boolean}</span>  <b>enableSmoothing</b>
+								
+							</dt>
+								<dd>True to enable smoothing, false to disable. Default is false.</dd>
 						
 						</dl>
 					
@@ -471,15 +544,16 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 					Field Detail
 				</div>
 				
-					<a name="debounceInterval"> </a>
+					<a name="dynamicRange"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Number}</span>
-					<b>debounceInterval</b>
+					<b>dynamicRange</b>
 					
 					</div>
 					<div class="description">
-						The debounce time interval in milliseconds.
+						[read-only] The current range setting of the accelerometer in units 
+of gravity (9.8 m/sec2).
 						
 						
 					</div>
@@ -493,37 +567,16 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 					<hr />
 				
-					<a name=".INTERNAL_PULL_UP"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					
-					<span class="light">BREAKOUT.io.Button.</span><b>INTERNAL_PULL_UP</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="pinNumber"> </a>
+					<a name="rotationX"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Number}</span>
-					<b>pinNumber</b>
+					<b>rotationX</b>
 					
 					</div>
 					<div class="description">
-						[read-only] The pin number of the pin the button is attached to.
+						[read-only] The rotation on the x axis 
+of gravity (9.8 m/sec2).
 						
 						
 					</div>
@@ -537,11 +590,80 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 					<hr />
 				
-					<a name=".PULL_DOWN"> </a>
+					<a name="rotationY"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>rotationY</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The rotation on the y axis 
+of gravity (9.8 m/sec2).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="rotationZ"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>rotationZ</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The rotation on the z axis 
+of gravity (9.8 m/sec2).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="x"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>x</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The x axis of the accelerometer in units 
+of gravity (9.8 m/sec2).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".X_AXIS"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.io.Button.</span><b>PULL_DOWN</b>
+					<span class="light">BREAKOUT.io.AnalogAccelerometer.</span><b>X_AXIS</b>
 					
 					</div>
 					<div class="description">
@@ -559,37 +681,83 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 
 					<hr />
 				
-					<a name=".PULL_UP"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
-					
-					
-					<span class="light">BREAKOUT.io.Button.</span><b>PULL_UP</b>
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sustainedPressInterval"> </a>
+					<a name="y"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Number}</span>
-					<b>sustainedPressInterval</b>
+					<b>y</b>
 					
 					</div>
 					<div class="description">
-						The delay time (in milliseconds) the button must be held before a sustained press event is fired.
+						[read-only] The y axis of the accelerometer in units 
+of gravity (9.8 m/sec2).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".Y_AXIS"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">BREAKOUT.io.AnalogAccelerometer.</span><b>Y_AXIS</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="z"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>z</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The z axis of the accelerometer in units 
+of gravity (9.8 m/sec2).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".Z_AXIS"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">BREAKOUT.io.AnalogAccelerometer.</span><b>Z_AXIS</b>
+					
+					</div>
+					<div class="description">
+						
 						
 						
 					</div>
@@ -606,6 +774,118 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 			
 
 <!-- ============================== method details ========================= -->		
+			
+				<div class="sectionTitle">
+					Method Detail
+				</div>
+				
+					<a name="getCalibratedRange"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Object}</span>
+					<b>getCalibratedRange</b>(minVoltage, maxVoltage, supplyVoltage)
+					
+					</div>
+					<div class="description">
+						Use this method to get the minimum and maximum range values for an axis. Create a new object
+to store the return value and then pass obj.min and obj.max along with the respective axis
+identifier to the setRangeFor method.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>minVoltage</b>
+									
+								</dt>
+								<dd>The minimum value reported on the axis</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>maxVoltage</b>
+									
+								</dt>
+								<dd>The maximum value reported on the axis</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>supplyVoltage</b>
+									
+								</dt>
+								<dd>The supply voltage of the Acceleromter (enter as 3.3, 3.0, 5.0, etc).</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Object}</span> An object containing the min and max range values to be passed to the 
+setRangeFor method.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="setRangeFor"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>setRangeFor</b>(axis, minimum, maximum)
+					
+					</div>
+					<div class="description">
+						Scale the range for the specified axis (from 0 to 1) to (minimum to maximum).
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>axis</b>
+									
+								</dt>
+								<dd>the axis to set new range (AnalogAccelerometer.X_AXIS, 
+AnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS).</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>minimum</b>
+									
+								</dt>
+								<dd>The new minimum value</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>maximum</b>
+									
+								</dt>
+								<dd>The new maximum value</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
 			
 			
 <!-- ============================== event details ========================= -->		

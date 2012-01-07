@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.io.ButtonEvent</title>
+		<title>JsDoc Reference - BREAKOUT.AccelerometerI2CBase</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -258,26 +258,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.io.ButtonEvent
+				Class BREAKOUT.AccelerometerI2CBase
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
 				<br />Extends
-					<a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a>.<br />
+					<a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_Button.js.html">Button.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_AccelerometerI2CBase.js.html">AccelerometerI2CBase.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.ButtonEvent.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.AccelerometerI2CBase.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -290,9 +290,10 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.io.ButtonEvent.html#constructor">BREAKOUT.io.ButtonEvent</a></b>(type)
+								<b><a href="../symbols/BREAKOUT.AccelerometerI2CBase.html#constructor">BREAKOUT.AccelerometerI2CBase</a></b>(board, address, delayUS)
 							</div>
-							<div class="description"></div>
+							<div class="description">A base class for i2c accelerometers to help enforce a common
+interface for all accelerometer implementations.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -303,7 +304,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.ButtonEvent.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.AccelerometerI2CBase.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -314,42 +315,46 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.ButtonEvent.<b><a href="../symbols/BREAKOUT.io.ButtonEvent.html#.LONG_PRESS">LONG_PRESS</a></b>
+								<b><a href="../symbols/BREAKOUT.AccelerometerI2CBase.html#dynamicRange">dynamicRange</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">[read-only] The current range setting of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.ButtonEvent.<b><a href="../symbols/BREAKOUT.io.ButtonEvent.html#.PRESS">PRESS</a></b>
+								<b><a href="../symbols/BREAKOUT.AccelerometerI2CBase.html#x">x</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">[read-only] The x axis of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.ButtonEvent.<b><a href="../symbols/BREAKOUT.io.ButtonEvent.html#.RELEASE">RELEASE</a></b>
+								<b><a href="../symbols/BREAKOUT.AccelerometerI2CBase.html#y">y</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">[read-only] The y axis of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.io.ButtonEvent.<b><a href="../symbols/BREAKOUT.io.ButtonEvent.html#.SUSTAINED_PRESS">SUSTAINED_PRESS</a></b>
+								<b><a href="../symbols/BREAKOUT.AccelerometerI2CBase.html#z">z</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">[read-only] The z axis of the accelerometer in units 
+of gravity (9.8 m/sec2).</div>
 							</td>
 						</tr>
 					
@@ -359,12 +364,21 @@ ul.inheritsList
 				
 				
 				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a>: </dt><dd><a href="../symbols/BREAKOUT.Event.html#target">target</a>, <a href="../symbols/BREAKOUT.Event.html#type">type</a></dd>
+				<dt>Fields borrowed from class <a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a>: </dt><dd><a href="../symbols/BREAKOUT.I2CBase.html#address">address</a></dd>
 				</dl>
 				
 			
 
 <!-- ============================== methods summary ======================== -->
+			
+				
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a>: </dt><dd><a href="../symbols/BREAKOUT.I2CBase.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.I2CBase.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.I2CBase.html#handleI2C">handleI2C</a>, <a href="../symbols/BREAKOUT.I2CBase.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.I2CBase.html#removeEventListener">removeEventListener</a>, <a href="../symbols/BREAKOUT.I2CBase.html#sendI2CRequest">sendI2CRequest</a>, <a href="../symbols/BREAKOUT.I2CBase.html#update">update</a></dd>
+				</dl>
+				
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -377,11 +391,12 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.io.ButtonEvent</b>(type)
+						<b>BREAKOUT.AccelerometerI2CBase</b>(board, address, delayUS)
 				</div>
 				
 				<div class="description">
-					
+					A base class for i2c accelerometers to help enforce a common
+interface for all accelerometer implementations.
 					
 				</div>
 				
@@ -393,10 +408,22 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{String}</span>  <b>type</b>
+								<span class="light fixedFont">{IOBoard}</span>  <b>board</b>
 								
 							</dt>
-								<dd>The event type</dd>
+								<dd>A reference to the IOBoard instance</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>address</b>
+								
+							</dt>
+								<dd>The I2C address of the device</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>delayUS</b>
+								
+							</dt>
+								<dd>The number of microseconds ...</dd>
 						
 						</dl>
 					
@@ -416,15 +443,16 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".LONG_PRESS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="dynamicRange"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.io.ButtonEvent.</span><b>LONG_PRESS</b>
+					<span class="light">{Number}</span>
+					<b>dynamicRange</b>
 					
 					</div>
 					<div class="description">
-						
+						[read-only] The current range setting of the accelerometer in units 
+of gravity (9.8 m/sec2).
 						
 						
 					</div>
@@ -438,15 +466,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".PRESS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="x"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.io.ButtonEvent.</span><b>PRESS</b>
+					<span class="light">{Number}</span>
+					<b>x</b>
 					
 					</div>
 					<div class="description">
-						
+						[read-only] The x axis of the accelerometer in units 
+of gravity (9.8 m/sec2).
 						
 						
 					</div>
@@ -460,15 +489,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".RELEASE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="y"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.io.ButtonEvent.</span><b>RELEASE</b>
+					<span class="light">{Number}</span>
+					<b>y</b>
 					
 					</div>
 					<div class="description">
-						
+						[read-only] The y axis of the accelerometer in units 
+of gravity (9.8 m/sec2).
 						
 						
 					</div>
@@ -482,15 +512,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".SUSTAINED_PRESS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="z"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.io.ButtonEvent.</span><b>SUSTAINED_PRESS</b>
+					<span class="light">{Number}</span>
+					<b>z</b>
 					
 					</div>
 					<div class="description">
-						
+						[read-only] The z axis of the accelerometer in units 
+of gravity (9.8 m/sec2).
 						
 						
 					</div>
@@ -519,7 +550,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jan 06 2012 23:55:09 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jan 06 2012 23:55:08 GMT-0500 (EST)
 		</div>
 	</body>
 </html>
