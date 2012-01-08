@@ -27,13 +27,15 @@ BREAKOUT.I2CBase = (function() {
 
 		if (board == undefined) return;
 
-		this.name = "I2CDevice"; // for testing
+		this.name = "I2CDevice";
+		/** @protected*/
 		this.board = board;
 
 		var _delay = delayUS || 0,
 			_delayInMicrosecondsLSB = _delay & 0xFF,
 			_delayInMicrosecondsMSB = (_delay >> 8) & 0xFF;
 
+		/** @protected */
 		this._address = address;
 		this._evtDispatcher = new EventDispatcher(this);
 		
@@ -63,7 +65,6 @@ BREAKOUT.I2CBase = (function() {
 		/**
 		 * [read-only] The address of the i2c device.
 		 * @name I2CBase#address
-		 * @protected
 		 * @property
 		 * @type Number
 		 */			 

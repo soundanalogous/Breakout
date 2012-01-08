@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>AccelerometerADXL345 Test</title>
+
+<script src="../build/Breakout.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BREAKOUT.IOBoard;
+	var Pin = BREAKOUT.Pin;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var Event = BREAKOUT.Event;
+	var AccelerometerADXL345 = BREAKOUT.io.AccelerometerADXL345;
+
+	var arduino = new IOBoard("localhost", 8887);
+	
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);	
+		
+		// params: IOBoard, dynamicRange, i2cAddress
+		// var accelerometer = new AccelerometerADXL345(
+		// 						arduino, 
+		// 						AccelerometerADXL345.RANGE_2G,
+		// 						AccelerometerADXL345.DEVICE_ID);
+
+		// using default settings
+		var accelerometer = new AccelerometerADXL345(arduino);						
+
+	    // calibrate the accelerometer
+	    // start with 0, 0, 0 and add or subtract in increments
+	    // of 1 until the accelerometer is propery calibrated
+	    // once you find the calibration values for your sensor
+	    accelerometer.setAxisOffset(-2, -2, 6);
+
+	    // start reading the accelerometer
+	    accelerometer.startReading();
+
+	    accelerometer.addEventListener(Event.CHANGE, onAccelerationChange);
+
+	}
+	
+	function onAccelerationChange(event) {
+		var accel = event.target;
+		
+		$('#xVal').html("x = " + accel.x.toFixed(3));
+		$('#yVal').html("y = " + accel.y.toFixed(3));
+		$('#zVal').html("z = " + accel.z.toFixed(3));
+	}
+			
+});
+</script>
+
+</head>
+<body>
+  
+	<div id="xVal" class="text">x =</div>
+	<div id="yVal" class="text">y =</div>
+	<div id="zVal" class="text">z =</div>
+  
+</body>
+</html>​
