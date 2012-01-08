@@ -22,7 +22,7 @@ BREAKOUT.Event = (function() {
 		this.target = null;
 
 		this.name = "Event"; // for testing
-	}
+	};
 
 	/** @constant */
 	Event.CONNECTED = "connected";

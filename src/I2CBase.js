@@ -57,7 +57,7 @@ BREAKOUT.I2CBase = (function() {
 		// call this for each board in case delay is set
 		board.sendSysex(I2CBase.I2C_CONFIG, [_delayInMicrosecondsLSB, _delayInMicrosecondsMSB]);
 			
-	}
+	};
 
 
 	I2CBase.prototype = {

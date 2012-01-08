@@ -24,7 +24,7 @@ BREAKOUT.IOBoardEvent = (function() {
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
-	}
+	};
 
 	// events
 	/** @constant */

@@ -37,7 +37,7 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 		
 		this.startReading();
 
-	}
+	};
 
 	CompassHMC6352.prototype = BREAKOUT.inherit(I2CBase.prototype);
 	CompassHMC6352.prototype.constructor = CompassHMC6352;
@@ -62,21 +62,21 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 			this.dispatchEvent(new Event(Event.CHANGE));
 		}
 		this._lastHeading = this._heading;
-	}
+	};
 	
 	/**
 	 * Start continuous reading of the sensor
 	 */
 	CompassHMC6352.prototype.startReading = function() {
 		this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, 0x7F, 0x02]);
-	}
+	};
 	
 	/**
 	 * Stop continuous reading of the sensor
 	 */
 	CompassHMC6352.prototype.stopReading = function() {
 		this.sendI2CRequest([I2CBase.STOP_READING, this.address]);
-	}
+	};
 
 
 	return CompassHMC6352;

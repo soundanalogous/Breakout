@@ -92,7 +92,7 @@
  	Oscillator.prototype.stop = function() {
  		clearInterval(this._timer);
  		this._timer = null;
- 	}
+ 	};
 
  	/**
  	 * Resets the oscillator.

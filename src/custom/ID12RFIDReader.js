@@ -24,7 +24,7 @@ BREAKOUT.custom.RFIDEvent = (function() {
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
-	}
+	};
 
 	/** @constant */
 	RFIDEvent.ADD_TAG = "addTag";
@@ -81,7 +81,7 @@ BREAKOUT.custom.ID12RFIDReader = (function() {
 		this.READ_EVENT = 1,
 		this.REMOVE_EVENT = 2;
 
-		this.board = board;
+		this._board = board;
 		
 		this._evtDispatcher = new EventDispatcher(this);
 
@@ -118,12 +118,12 @@ BREAKOUT.custom.ID12RFIDReader = (function() {
 		 */
 		processRFIDData: function(data) {
 
-			var tagEvent = this.board.getValueFromTwo7bitBytes(data[1], data[2]);
+			var tagEvent = this._board.getValueFromTwo7bitBytes(data[1], data[2]);
 			var tagEventType = "";
 			var tag = "";
 					
 			for (var i=3, len=data.length; i<len; i+=2) {
-				tag += this.dec2hex(this.board.getValueFromTwo7bitBytes(data[i], data[i+1]));
+				tag += this.dec2hex(this._board.getValueFromTwo7bitBytes(data[i], data[i+1]));
 			}
 
 			// change this to dispatch a single event and handle add or remove in object parameter?

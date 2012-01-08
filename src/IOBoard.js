@@ -984,7 +984,7 @@ BREAKOUT.IOBoard = (function() {
 			return _evtDispatcher.dispatchEvent(event, optionalParams);
 		};
 
-	}
+	};
 
 	return IOBoard;
 

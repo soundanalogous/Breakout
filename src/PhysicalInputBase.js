@@ -23,7 +23,7 @@ BREAKOUT.PhysicalInputBase = (function() {
 		this.name = "PhysicalInputBase"; // for testing
 
 		this._evtDispatcher = new EventDispatcher(this);
-	}
+	};
 
 	PhysicalInputBase.prototype = {
 		/* implement EventDispatcher */

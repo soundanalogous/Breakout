@@ -42,7 +42,7 @@ BREAKOUT.io.Potentiometer = (function() {
 		}
 
 		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
-	}
+	};
 
 	Potentiometer.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
 	Potentiometer.prototype.constructor = Potentiometer;

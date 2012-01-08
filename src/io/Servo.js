@@ -36,7 +36,7 @@ BREAKOUT.io.Servo = (function() {
 		
 		// sendServoAttach will set the pin mode to Pin.SERVO
 		board.sendServoAttach(pinNumber);
-	}
+	};
 
 	Servo.prototype = {
 

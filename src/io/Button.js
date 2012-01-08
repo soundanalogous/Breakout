@@ -22,7 +22,7 @@ BREAKOUT.io.ButtonEvent = (function() {
 		this.name = "ButtonEvent";
 
 		Event.call(this, type);
-	}
+	};
 
 	/** @constant */
 	ButtonEvent.PRESS = "pressed";

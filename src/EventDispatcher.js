@@ -22,7 +22,7 @@ BREAKOUT.EventDispatcher = (function () {
 		this._eventListeners = {};
 		
 		this.name = "EventDispatcher"; // for testing	
-	}
+	};
 
 	EventDispatcher.prototype = {
 
@@ -91,7 +91,7 @@ BREAKOUT.EventDispatcher = (function () {
 		}
 
 
-	}
+	};
 
 	return EventDispatcher;
 
