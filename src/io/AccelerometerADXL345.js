@@ -9,6 +9,16 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 
 	var AccelerometerADXL345;
 
+	// private static constants
+	var POWER_CTL = 0x2D,
+		DATAX0 = 0x32,
+		DATA_FORMAT = 0x31,
+		OFSX = 0x1E,
+		OFSY = 0x1F,
+		OFSZ = 0x20,
+		ALL_AXIS = 	DATAX0 | 0x80,
+		NUM_BYTES = 6;	
+
 	// dependencies
 	var I2CBase = BREAKOUT.I2CBase,
 		Event = BREAKOUT.Event;
@@ -30,16 +40,6 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 		I2CBase.call(this, board, address);
 
 		this.name = "AccelerometerADXL345"; // for testing
-
-		// private constants
-		this.POWER_CTL = 0x2D;
-		this.DATAX0 = 0x32;
-		this.DATA_FORMAT = 0x31;
-		this.OFSX = 0x1E;
-		this.OFSY = 0x1F;
-		this.OFSZ = 0x20;
-		this.ALL_AXIS = this.DATAX0 | 0x80;
-		this.NUM_BYTES = 6;	
 
 		this._dynamicRange = range || AccelerometerADXL345.RANGE_2G;
 		
@@ -191,7 +191,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 		
 		// set full scale bit (3) and range bits (0 - 1)
 		setting |= (0x08 & 0xEC);
-		this.sendI2CRequest([I2CBase.WRITE, this._address, this.DATA_FORMAT, setting]);
+		this.sendI2CRequest([I2CBase.WRITE, this._address, DATA_FORMAT, setting]);
 	};	 
 	
 	/**
@@ -199,16 +199,16 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 	 */
 	AccelerometerADXL345.prototype.handleI2C = function(data) {
 		switch (data[0]) {
-			case this.ALL_AXIS:
+			case ALL_AXIS:
 				this.readAccel(data);
 				break;
-			case this.OFSX:
+			case OFSX:
 				this.debug("offset x = " + data[2]);
 				break;
-			case this.OFSY:
+			case OFSY:
 				this.debug("offset y = " + data[2]);
 				break;
-			case this.OFSZ:
+			case OFSZ:
 				this.debug("offset z = " + data[2]);
 				break;
 		}
@@ -220,7 +220,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 	AccelerometerADXL345.prototype.startReading = function() {
 		if (!this._isReading) {
 			this._isReading = true;
-			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, this.ALL_AXIS, 6]);
+			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, ALL_AXIS, 6]);
 		}
 	};
 	
@@ -241,9 +241,9 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 		this._offset.y = yVal;
 		this._offset.z = zVal;
 		
-		this.sendI2CRequest([I2CBase.WRITE, this.address, this.OFSX, xVal]);
-		this.sendI2CRequest([I2CBase.WRITE, this.address, this.OFSY, yVal]);
-		this.sendI2CRequest([I2CBase.WRITE, this.address, this.OFSZ, zVal]);
+		this.sendI2CRequest([I2CBase.WRITE, this.address, OFSX, xVal]);
+		this.sendI2CRequest([I2CBase.WRITE, this.address, OFSY, yVal]);
+		this.sendI2CRequest([I2CBase.WRITE, this.address, OFSZ, zVal]);
 	};
 	
 	/**
@@ -251,9 +251,9 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 	 */
 	AccelerometerADXL345.prototype.getAxisOffset = function() {
 		// will trace values if debug mode is enabled
-		this.sendI2CRequest([I2CBase.READ, this.address, this.OFSX, 1]);
-		this.sendI2CRequest([I2CBase.READ, this.address, this.OFSY, 1]);
-		this.sendI2CRequest([I2cBase.READ, this.address, this.OFSZ, 1]);
+		this.sendI2CRequest([I2CBase.READ, this.address, OFSX, 1]);
+		this.sendI2CRequest([I2CBase.READ, this.address, OFSY, 1]);
+		this.sendI2CRequest([I2cBase.READ, this.address, OFSZ, 1]);
 		
 		// return the locally stored values because it is not possible
 		// without a more elaborate design to get i2c read values
@@ -270,7 +270,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 			this.stopReading();	
 		}
 		// read data: contents of X, Y, and Z registers
-		this.sendI2CRequest([I2CBase.READ, this.address, this.ALL_AXIS, 6]);
+		this.sendI2CRequest([I2CBase.READ, this.address, ALL_AXIS, 6]);
 	};
 
 	/**
@@ -279,10 +279,10 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 	AccelerometerADXL345.prototype.powerOn = function() {
 
 		// standby mode
-		this.sendI2CRequest([I2CBase.WRITE, this.address, this.POWER_CTL, 0]);
+		this.sendI2CRequest([I2CBase.WRITE, this.address, POWER_CTL, 0]);
 		
 		// set measure bit
-		this.setRegisterBit(this.POWER_CTL, 3, true);
+		this.setRegisterBit(POWER_CTL, 3, true);
 	};
 	
 	/**
@@ -309,7 +309,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 			y_val,
 			z_val;
 
-		if (data.length != this.NUM_BYTES + 1) {
+		if (data.length != NUM_BYTES + 1) {
 			throw new Error("Incorrect number of bytes returned");
 		}
 		
@@ -344,18 +344,19 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 		}
 	};
 	 	
-
-	/** constant */
+	// public static constants
+	
+	/** @constant */
 	AccelerometerADXL345.RANGE_2G = 2;
-	/** constant */
+	/** @constant */
 	AccelerometerADXL345.RANGE_4G = 4;
-	/** constant */
+	/** @constant */
 	AccelerometerADXL345.RANGE_8G = 8;
-	/** constant */
+	/** @constant */
 	AccelerometerADXL345.RANGE_16G = 16;
-	/** constant */
+	/** @constant */
 	AccelerometerADXL345.DEVICE_ID = 0x53;
-	/** constant */
+	/** @constant */
 	AccelerometerADXL345.DEFAULT_SENSITIVITY = 0.00390625;				
 
 	return AccelerometerADXL345;
