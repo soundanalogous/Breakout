@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.I2CBase</title>
+		<title>JsDoc Reference - BREAKOUT.io.AccelerometerADXL345</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -260,24 +260,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.I2CBase
+				Class BREAKOUT.io.AccelerometerADXL345
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_I2CBase.js.html">I2CBase.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_AccelerometerADXL345.js.html">AccelerometerADXL345.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.I2CBase.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.AccelerometerADXL345.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -290,9 +292,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.I2CBase.html#constructor">BREAKOUT.I2CBase</a></b>(board, address, delayUS)
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#constructor">BREAKOUT.io.AccelerometerADXL345</a></b>(board, range, address)
 							</div>
-							<div class="description">Creates a new I2CBase base class</div>
+							<div class="description">Analog Devices ADXL345 3-axis accelerometer</div>
 						</td>
 					</tr>
 				</tbody>
@@ -303,7 +305,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.I2CBase.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.AccelerometerADXL345.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -314,12 +316,22 @@ ul.inheritsList
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.I2CBase.html#address">address</a></b>
+								BREAKOUT.io.AccelerometerADXL345.<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#.DEFAULT_SENSITIVITY">DEFAULT_SENSITIVITY</a></b>
 								</div>
-								<div class="description">[read-only] The address of the i2c device.</div>
+								<div class="description">constant</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BREAKOUT.io.AccelerometerADXL345.<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#.DEVICE_ID">DEVICE_ID</a></b>
+								</div>
+								<div class="description">constant</div>
 							</td>
 						</tr>
 					
@@ -327,79 +339,149 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.I2CBase.html#board">board</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#dynamicRange">dynamicRange</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">[read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor).</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.I2C_CONFIG">I2C_CONFIG</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#isRunning">isRunning</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">[read-only] The state of continuous read mode.</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.I2C_REPLY">I2C_REPLY</a></b>
+								BREAKOUT.io.AccelerometerADXL345.<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#.RANGE_16G">RANGE_16G</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">constant</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.I2C_REQUEST">I2C_REQUEST</a></b>
+								BREAKOUT.io.AccelerometerADXL345.<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#.RANGE_2G">RANGE_2G</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">constant</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.READ">READ</a></b>
+								BREAKOUT.io.AccelerometerADXL345.<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#.RANGE_4G">RANGE_4G</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">constant</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.READ_CONTINUOUS">READ_CONTINUOUS</a></b>
+								BREAKOUT.io.AccelerometerADXL345.<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#.RANGE_8G">RANGE_8G</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">constant</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.STOP_READING">STOP_READING</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#rawX">rawX</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">The raw value of the x axis</div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.I2CBase.<b><a href="../symbols/BREAKOUT.I2CBase.html#.WRITE">WRITE</a></b>
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#rawY">rawY</a></b>
 								</div>
-								<div class="description"></div>
+								<div class="description">The raw value of the y axis</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#rawZ">rawZ</a></b>
+								</div>
+								<div class="description">The raw value of the z axis</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#sensitivityX">sensitivityX</a></b>
+								</div>
+								<div class="description">The sensitivity value for the x axis (default value = 0.0390625).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#sensitivityY">sensitivityY</a></b>
+								</div>
+								<div class="description">The sensitivity value for the y axis (default value = 0.0390625).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#sensitivityZ">sensitivityZ</a></b>
+								</div>
+								<div class="description">The sensitivity value for the z axis (default value = 0.0390625).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#x">x</a></b>
+								</div>
+								<div class="description">[read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#y">y</a></b>
+								</div>
+								<div class="description">[read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#z">z</a></b>
+								</div>
+								<div class="description">[read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.</div>
 							</td>
 						</tr>
 					
@@ -408,13 +490,17 @@ ul.inheritsList
 				
 				
 				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a>: </dt><dd><a href="../symbols/BREAKOUT.I2CBase.html#address">address</a>, <a href="../symbols/BREAKOUT.I2CBase.html#board">board</a></dd>
+				</dl>
+				
 			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.I2CBase.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.io.AccelerometerADXL345.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -427,63 +513,45 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#addEventListener">addEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#getAxisOffset">getAxisOffset</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">get the value of the x, y, and z axis offset</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#dispatchEvent">dispatchEvent</a></b>(type, optionalParams)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#setAxisOffset">setAxisOffset</a></b>(xVal, yVal, zVal)
 								</div>
-								<div class="description"></div>
+								<div class="description">offset the x, y, or z axis output by the respective input value</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#handleI2C">handleI2C</a></b>(data)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#startReading">startReading</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Start continuous reading of the sensor</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#hasEventListener">hasEventListener</a></b>(type)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#stopReading">stopReading</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Stop continuous reading of the sensor</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#removeEventListener">removeEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html#update">update</a></b>()
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#sendI2CRequest">sendI2CRequest</a></b>(command, data)
-								</div>
-								<div class="description">Send an i2c request command to the board</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.I2CBase.html#update">update</a></b>()
-								</div>
-								<div class="description"></div>
+								<div class="description">Sends read request to accelerometer and updates accelerometer values.</div>
 							</td>
 						</tr>
 					
@@ -491,6 +559,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.I2CBase.html">BREAKOUT.I2CBase</a>: </dt><dd><a href="../symbols/BREAKOUT.I2CBase.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.I2CBase.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.I2CBase.html#handleI2C">handleI2C</a>, <a href="../symbols/BREAKOUT.I2CBase.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.I2CBase.html#removeEventListener">removeEventListener</a>, <a href="../symbols/BREAKOUT.I2CBase.html#sendI2CRequest">sendI2CRequest</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -504,11 +576,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.I2CBase</b>(board, address, delayUS)
+						<b>BREAKOUT.io.AccelerometerADXL345</b>(board, range, address)
 				</div>
 				
 				<div class="description">
-					Creates a new I2CBase base class
+					Analog Devices ADXL345 3-axis accelerometer
 					
 				</div>
 				
@@ -523,19 +595,20 @@ ul.inheritsList
 								<span class="light fixedFont">{IOBoard}</span>  <b>board</b>
 								
 							</dt>
-								<dd>A reference to the IOBoard instance</dd>
+								<dd>The IOBoard instance</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>range</b>
+								
+							</dt>
+								<dd>The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
+RANGE_8G, RANGE_16G). Default is RANGE_2G.</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Number}</span>  <b>address</b>
 								
 							</dt>
-								<dd>The I2C address of the device</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>delayUS</b>
-								
-							</dt>
-								<dd>The number of microseconds ...</dd>
+								<dd>The i2c address of the accelerometer (default is 0x53)</dd>
 						
 						</dl>
 					
@@ -555,15 +628,59 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name="address"> </a>
+					<a name=".DEFAULT_SENSITIVITY"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">BREAKOUT.io.AccelerometerADXL345.</span><b>DEFAULT_SENSITIVITY</b>
+					
+					</div>
+					<div class="description">
+						constant
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".DEVICE_ID"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">BREAKOUT.io.AccelerometerADXL345.</span><b>DEVICE_ID</b>
+					
+					</div>
+					<div class="description">
+						constant
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="dynamicRange"> </a>
 					<div class="fixedFont">
 					
 					<span class="light">{Number}</span>
-					<b>address</b>
+					<b>dynamicRange</b>
 					
 					</div>
 					<div class="description">
-						[read-only] The address of the i2c device.
+						[read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
 						
 						
 					</div>
@@ -577,15 +694,16 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="board"> </a>
+					<a name="isRunning"> </a>
 					<div class="fixedFont">
 					
-					
-					<b>board</b>
+					<span class="light">{Boolean}</span>
+					<b>isRunning</b>
 					
 					</div>
 					<div class="description">
-						
+						[read-only] The state of continuous read mode. True if continuous read mode
+is enabled, false if it is disabled.
 						
 						
 					</div>
@@ -599,15 +717,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".I2C_CONFIG"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name=".RANGE_16G"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">BREAKOUT.I2CBase.</span><b>I2C_CONFIG</b>
+					<span class="light">BREAKOUT.io.AccelerometerADXL345.</span><b>RANGE_16G</b>
 					
 					</div>
 					<div class="description">
-						
+						constant
 						
 						
 					</div>
@@ -621,15 +739,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".I2C_REPLY"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name=".RANGE_2G"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">BREAKOUT.I2CBase.</span><b>I2C_REPLY</b>
+					<span class="light">BREAKOUT.io.AccelerometerADXL345.</span><b>RANGE_2G</b>
 					
 					</div>
 					<div class="description">
-						
+						constant
 						
 						
 					</div>
@@ -643,15 +761,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".I2C_REQUEST"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name=".RANGE_4G"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">BREAKOUT.I2CBase.</span><b>I2C_REQUEST</b>
+					<span class="light">BREAKOUT.io.AccelerometerADXL345.</span><b>RANGE_4G</b>
 					
 					</div>
 					<div class="description">
-						
+						constant
 						
 						
 					</div>
@@ -665,15 +783,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".READ"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name=".RANGE_8G"> </a>
+					<div class="fixedFont">&lt;static&gt; 
 					
 					
-					<span class="light">BREAKOUT.I2CBase.</span><b>READ</b>
+					<span class="light">BREAKOUT.io.AccelerometerADXL345.</span><b>RANGE_8G</b>
 					
 					</div>
 					<div class="description">
-						
+						constant
 						
 						
 					</div>
@@ -687,15 +805,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".READ_CONTINUOUS"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="rawX"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>READ_CONTINUOUS</b>
+					<span class="light">{Number}</span>
+					<b>rawX</b>
 					
 					</div>
 					<div class="description">
-						
+						The raw value of the x axis
 						
 						
 					</div>
@@ -709,15 +827,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".STOP_READING"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="rawY"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>STOP_READING</b>
+					<span class="light">{Number}</span>
+					<b>rawY</b>
 					
 					</div>
 					<div class="description">
-						
+						The raw value of the y axis
 						
 						
 					</div>
@@ -731,15 +849,147 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".WRITE"> </a>
-					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					<a name="rawZ"> </a>
+					<div class="fixedFont">
 					
-					
-					<span class="light">BREAKOUT.I2CBase.</span><b>WRITE</b>
+					<span class="light">{Number}</span>
+					<b>rawZ</b>
 					
 					</div>
 					<div class="description">
+						The raw value of the z axis
 						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="sensitivityX"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>sensitivityX</b>
+					
+					</div>
+					<div class="description">
+						The sensitivity value for the x axis (default value = 0.0390625).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="sensitivityY"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>sensitivityY</b>
+					
+					</div>
+					<div class="description">
+						The sensitivity value for the y axis (default value = 0.0390625).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="sensitivityZ"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>sensitivityZ</b>
+					
+					</div>
+					<div class="description">
+						The sensitivity value for the z axis (default value = 0.0390625).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="x"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>x</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="y"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>y</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="z"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>z</b>
+					
+					</div>
+					<div class="description">
+						[read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
 						
 						
 					</div>
@@ -761,38 +1011,21 @@ ul.inheritsList
 					Method Detail
 				</div>
 				
-					<a name="addEventListener"> </a>
+					<a name="getAxisOffset"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>addEventListener</b>(type, listener)
+					<b>getAxisOffset</b>()
 					
 					</div>
 					<div class="description">
-						
+						get the value of the x, y, and z axis offset
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
 						
 						
 						
@@ -803,15 +1036,15 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name="dispatchEvent"> </a>
+					<a name="setAxisOffset"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>dispatchEvent</b>(type, optionalParams)
+					<b>setAxisOffset</b>(xVal, yVal, zVal)
 					
 					</div>
 					<div class="description">
-						
+						offset the x, y, or z axis output by the respective input value
 						
 						
 					</div>
@@ -823,50 +1056,19 @@ ul.inheritsList
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Event}</span> <b>type</b>
+									<b>xVal</b>
 									
 								</dt>
-								<dd>The Event object</dd>
+								<dd></dd>
 							
 								<dt>
-									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
+									<b>yVal</b>
 									
 								</dt>
-								<dd>Optional parameters to assign to the event object.
-return {boolean} True if dispatch is successful, false if not.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="handleI2C"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>handleI2C</b>(data)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
+								<dd></dd>
 							
 								<dt>
-									<b>data</b>
+									<b>zVal</b>
 									
 								</dt>
 								<dd></dd>
@@ -882,33 +1084,21 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 
 					<hr />
 				
-					<a name="hasEventListener"> </a>
+					<a name="startReading"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>hasEventListener</b>(type)
+					<b>startReading</b>()
 					
 					</div>
 					<div class="description">
-						
+						Start continuous reading of the sensor
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type
-return {boolean} True is listener exists for this type, false if not.</dd>
-							
-							</dl>
 						
 						
 						
@@ -919,80 +1109,21 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 
 					<hr />
 				
-					<a name="removeEventListener"> </a>
+					<a name="stopReading"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>removeEventListener</b>(type, listener)
+					<b>stopReading</b>()
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="sendI2CRequest"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>sendI2CRequest</b>(command, data)
-					
-					</div>
-					<div class="description">
-						Send an i2c request command to the board
+						Stop continuous reading of the sensor
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Number}</span> <b>command</b>
-									
-								</dt>
-								<dd></dd>
-							
-								<dt>
-									<span class="light fixedFont">{Number[]}</span> <b>data</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
 						
 						
 						
@@ -1011,7 +1142,7 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 					
 					</div>
 					<div class="description">
-						
+						Sends read request to accelerometer and updates accelerometer values.
 						
 						
 					</div>
