@@ -10,6 +10,42 @@ BREAKOUT.IOBoard = (function() {
 
 	var IOBoard;
 
+	// private static constants:
+
+	// message command bytes (128-255/0x80-0xFF)
+	var	DIGITAL_MESSAGE			= 0x90,
+		ANALOG_MESSAGE			= 0xE0,
+		REPORT_ANALOG			= 0xC0,
+		REPORT_DIGITAL			= 0xD0,
+		SET_PIN_MODE			= 0xF4,
+		REPORT_VERSION			= 0xF9,
+		SYSEX_RESET				= 0xFF,
+		START_SYSEX				= 0xF0,
+		END_SYSEX				= 0xF7;
+	
+	// extended command set using sysex (0-127/0x00-0x7F)
+	var	SERVO_CONFIG			= 0x70,
+		STRING_DATA				= 0x71,
+		SHIFT_DATA				= 0x75,
+		I2C_REQUEST				= 0x76,
+		I2C_REPLY				= 0x77,
+		I2C_CONFIG				= 0x78,
+		EXTENDED_ANALOG			= 0x6F,
+		PIN_STATE_QUERY			= 0x6D,
+		PIN_STATE_RESPONSE		= 0x6E,
+		CAPABILITY_QUERY		= 0x6B,
+		CAPABILITY_RESPONSE		= 0x6C,
+		ANALOG_MAPPING_QUERY	= 0x69,
+		ANALOG_MAPPING_RESPONSE	= 0x6A,
+		REPORT_FIRMWARE			= 0x79,
+		SAMPLING_INTERVAL		= 0x7A,
+		SYSEX_NON_REALTIME		= 0x7E,
+		SYSEX_REALTIME			= 0x7F;
+
+	var MIN_SAMPLING_INTERVAL 	= 10,
+		MAX_SAMPLING_INTERVAL 	= 100;	
+
+
 	// dependencies
 	var Pin = BREAKOUT.Pin,
 		EventDispatcher = BREAKOUT.EventDispatcher,
@@ -21,54 +57,20 @@ BREAKOUT.IOBoard = (function() {
 	/**
 	 * Creates a new IOBoard object representing the digital and analog inputs and
 	 * outputs of the device as well as support for sending strings between the IOBoard
-	 * sketch and your javascript application. Also support for hardware such as controlling
-	 * a servo motor from javascript and additional libraries for an RFID reader with more
-	 * to follow such as Button, Accelerometer, i2c device implementation, etc.
+	 * sketch and your javascript application.
 	 *
 	 * @exports IOBoard as BREAKOUT.IOBoard
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
+	 * @param {Boolean} useSocketIO Set to true if using node.js socket.io. Default = false.
 	 * @param {String} protocol The websockt protocol definition (if necessary).
 	 */
 	IOBoard = function(host, port, useSocketIO, protocol) {
 		"use strict";
 		
 		this.name = "IOBoard";
-				
-		// message command bytes (128-255/0x80-0xFF)
-		var		DIGITAL_MESSAGE			= 0x90,
-				ANALOG_MESSAGE			= 0xE0,
-				REPORT_ANALOG			= 0xC0,
-				REPORT_DIGITAL			= 0xD0,
-				SET_PIN_MODE			= 0xF4,
-				REPORT_VERSION			= 0xF9,
-				SYSEX_RESET				= 0xFF,
-				START_SYSEX				= 0xF0,
-				END_SYSEX				= 0xF7;
-		
-		// extended command set using sysex (0-127/0x00-0x7F)
-		var		SERVO_CONFIG			= 0x70,
-				STRING_DATA				= 0x71,
-				SHIFT_DATA				= 0x75,
-				I2C_REQUEST				= 0x76,
-				I2C_REPLY				= 0x77,
-				I2C_CONFIG				= 0x78,
-				EXTENDED_ANALOG			= 0x6F,
-				PIN_STATE_QUERY			= 0x6D,
-				PIN_STATE_RESPONSE		= 0x6E,
-				CAPABILITY_QUERY		= 0x6B,
-				CAPABILITY_RESPONSE		= 0x6C,
-				ANALOG_MAPPING_QUERY	= 0x69,
-				ANALOG_MAPPING_RESPONSE	= 0x6A,
-				REPORT_FIRMWARE			= 0x79,
-				SAMPLING_INTERVAL		= 0x7A,
-				SYSEX_NON_REALTIME		= 0x7E,
-				SYSEX_REALTIME			= 0x7F;
-
-		var MIN_SAMPLING_INTERVAL = 10,
-			MAX_SAMPLING_INTERVAL = 100;
-		
+						
 		// private properties
 		var _self = this;	// get a reference to this class
 		var _socket;

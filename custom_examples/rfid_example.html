@@ -14,8 +14,9 @@
 
 <title>RFID Example</title>
 
-<!-- order of import is important -->
+<!-- custom io objects are included separately, after Breakout.js -->
 <script src="../build/Breakout.js"></script>
+<script src="../src/custom/ID12RFIDReader.js"></script>
 <script src="libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -25,8 +26,8 @@ $(document).ready(function() {
 	// to type the full namespace
 	var IOBoard = BREAKOUT.IOBoard;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var ID12RFIDReader = BREAKOUT.io.ID12RFIDReader;
-	var RFIDEvent = BREAKOUT.io.RFIDEvent;
+	var ID12RFIDReader = BREAKOUT.custom.ID12RFIDReader;
+	var RFIDEvent = BREAKOUT.custom.RFIDEvent;
 	
 	var ard = new IOBoard("localhost", 8887);
 	

@@ -1,0 +1,3 @@
+The objects in the custom directory require firmware other than StandardFirmata to be uploaded to the IOBoard. Custom objects are not included in the minified Breakout.js file. They must be included separately. See custom_examples for examples of use.
+
+To use ID12RFIDReader.js, you will need to upload RFIDFirmata to your IOBoard. The ID12RFIDReader arduino library can be downloaded or cloned from here: https://github.com/soundanalogous/IDxRFIDReader. Install it in your Arduino/libraries/ directory and find the RFIDFirmata in the examples directory, compile and upload it to your board.

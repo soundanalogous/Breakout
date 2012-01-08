@@ -1,10 +1,10 @@
 /**
- * @author jeff hoefs
+ * @author Jeff Hoefs
  */
 
-BREAKOUT.namespace('BREAKOUT.io.RFIDEvent');
+BREAKOUT.namespace('BREAKOUT.custom.RFIDEvent');
 
-BREAKOUT.io.RFIDEvent = (function() {
+BREAKOUT.custom.RFIDEvent = (function() {
 	"use strict";
 
 	var RFIDEvent;
@@ -13,7 +13,7 @@ BREAKOUT.io.RFIDEvent = (function() {
 	var Event = BREAKOUT.Event;
 
 	/**
-	 * @exports RFIDEvent as BREAKOUT.io.RFIDEvent
+	 * @exports RFIDEvent as BREAKOUT.custom.RFIDEvent
 	 * @constructor
 	 * @augments BREAKOUT.Event
 	 * @param {String} type The event type
@@ -47,9 +47,9 @@ BREAKOUT.io.RFIDEvent = (function() {
 }());
 
 
-BREAKOUT.namespace('BREAKOUT.io.ID12RFIDReader');
+BREAKOUT.namespace('BREAKOUT.custom.ID12RFIDReader');
 
-BREAKOUT.io.ID12RFIDReader = (function() {
+BREAKOUT.custom.ID12RFIDReader = (function() {
 
 	var ID12RFIDReader;
 
@@ -59,9 +59,12 @@ BREAKOUT.io.ID12RFIDReader = (function() {
 		RFIDEvent = BREAKOUT.io.RFIDEvent;
 
 	/**
-	 * Creates a new ID12RFIDReader
+	 * Innovations ID-12 RFID Reader.
+	 * <p>To use this object, RFIDFirmata must be uploaded to the
+	 * IOBoard rather than StandardFirmata. See custom_examples/readme.txt
+	 * for insturctions.</p>
 	 *
-	 * @exports ID12RFIDReader as BREAKOUT.io.ID12RFIDReader
+	 * @exports ID12RFIDReader as BREAKOUT.custom.ID12RFIDReader
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 */
