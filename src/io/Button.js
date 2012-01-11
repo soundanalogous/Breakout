@@ -1,6 +1,7 @@
 /**
- * @author Jeff Hoefs
-  */
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
+ */
 
 BREAKOUT.namespace('BREAKOUT.io.ButtonEvent');
 
@@ -40,6 +41,11 @@ BREAKOUT.io.ButtonEvent = (function() {
 
 }());
 
+
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
+ */
 
 BREAKOUT.namespace('BREAKOUT.io.Button');
 

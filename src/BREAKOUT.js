@@ -1,14 +1,19 @@
 /**
- * @author Jeff Hoefs
- * 
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
  */
 
 /** @namespace Namespace and utility functions for Breakout */
 var BREAKOUT = BREAKOUT || {};
 
+
+/* Utility functions */
+
 /**
- * use this function to safely create a new namespace
- * if a namespace already exists, it won't be recreated
+ * Copied from Stefanov, Stoyan. JavaScript Patterns
+ * 
+ * <p>Use this function to safely create a new namespace
+ * if a namespace already exists, it won't be recreated.</p>
  *
  * @function
  * @param {String} ns_string The namespace as a string.
@@ -34,10 +39,11 @@ BREAKOUT.namespace = function (ns_string) {
 };
 
 /**
- * copied from Flanagan, David. JavaScript: The Definitive Guide
+ * Copied from Flanagan, David. JavaScript: The Definitive Guide
  *
- * Use this method rather than Object.create() directly if
- * browser compatibility is unknow
+ * <p>Use this method rather than Object.create() directly if
+ * browser compatibility is unknown.</p>
+ *
  * @function
  * @param {Object} p The prototype of the object to inherit.
  */
@@ -53,8 +59,9 @@ BREAKOUT.inherit = function(p) {
 	return new f(); // use f() to create an 'heir' of p.
 };
 
-/* Utility functions */
-
+/**
+ * Copied from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+ */
 if (!Function.prototype.bind) {  
 
 	/** add bind for browsers that don't support it (Safari)

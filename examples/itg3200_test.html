@@ -29,18 +29,20 @@ $(document).ready(function() {
 	var GyroEvent = BREAKOUT.io.GyroEvent;
 	var GyroITG3200 = BREAKOUT.io.GyroITG3200;
 
-	var arduino = new IOBoard("localhost", 8887);
+	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+	// with the ITG3200
+	var fio = new IOBoard("localhost", 8887);
 	var gyro;
 	
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+	fio.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);	
+		fio.removeEventListener(IOBoardEvent.READY, onReady);	
 		
 		// params: IOBoard, autoStart, i2cAddress
-		//gyro = new GyroITG3200(arduino, false, GyroITG3200.DEVICE_ID);
-		gyro = new GyroITG3200(arduino);
+		//gyro = new GyroITG3200(fio, false, GyroITG3200.DEVICE_ID);
+		gyro = new GyroITG3200(fio);
 					
 		// calibration
 		// adjust the values until the x, y, and z values

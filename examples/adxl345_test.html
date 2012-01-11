@@ -28,22 +28,24 @@ $(document).ready(function() {
 	var Event = BREAKOUT.Event;
 	var AccelerometerADXL345 = BREAKOUT.io.AccelerometerADXL345;
 
-	var arduino = new IOBoard("localhost", 8887);
+	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+	// with the ADXL345
+	var fio = new IOBoard("localhost", 8887);
 	
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+	fio.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);	
+		fio.removeEventListener(IOBoardEvent.READY, onReady);	
 		
 		// params: IOBoard, dynamicRange, i2cAddress
 		// var accelerometer = new AccelerometerADXL345(
-		// 						arduino, 
+		// 						fio, 
 		// 						AccelerometerADXL345.RANGE_2G,
 		// 						AccelerometerADXL345.DEVICE_ID);
 
 		// using default settings
-		var accelerometer = new AccelerometerADXL345(arduino);						
+		var accelerometer = new AccelerometerADXL345(fio);						
 
 	    // calibrate the accelerometer
 	    // start with 0, 0, 0 and add or subtract in increments

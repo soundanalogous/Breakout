@@ -1,8 +1,10 @@
-// Copyright (C) 2011-2012 Jeff Hoefs.  All rights reserved.
-//
-// based on:
-// Funnel as3 library (http://code.google.com/p/funnel/)
-// and as3glue (http://code.google.com/p/as3glue/)
+/**
+ * Based in part on Arduino.as in as3glue. 
+ * <http://code.google.com/p/as3glue/>
+ *
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
+ */
 
 BREAKOUT.namespace('BREAKOUT.IOBoard');
 
@@ -56,8 +58,8 @@ BREAKOUT.IOBoard = (function() {
 
 	/**
 	 * Creates a new IOBoard object representing the digital and analog inputs and
-	 * outputs of the device as well as support for sending strings between the IOBoard
-	 * sketch and your javascript application.
+	 * outputs of the device as well as support for i2c devices and sending strings 
+	 * between the IOBoard sketch and your javascript application.
 	 *
 	 * @exports IOBoard as BREAKOUT.IOBoard
 	 * @constructor
@@ -93,6 +95,8 @@ BREAKOUT.IOBoard = (function() {
 		var _samplingInterval = 19;
 		
 		var _firmwareVersion = 0;
+
+		var _debugMode = true;
 		
 		var _evtDispatcher = new EventDispatcher(this);
 
@@ -373,7 +377,7 @@ BREAKOUT.IOBoard = (function() {
 			}
 			
 			_numPorts = Math.ceil(pinCounter / 8);
-			console.log("debug: num ports = " + _numPorts);
+			_self.debug("debug: num ports = " + _numPorts);
 			
 			// initialize port values
 			for (var j=0; j<_numPorts; j++) {
@@ -381,7 +385,8 @@ BREAKOUT.IOBoard = (function() {
 			}
 			
 			_totalPins = pinCounter;
-			console.log("debug: num pins = " + _totalPins);
+			_self.debug("debug: num pins = " + _totalPins);
+
 			
 			// map the analog pins to the board pins
 			queryAnalogMapping();
@@ -391,7 +396,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function startup() {
-			console.log("debug: startup");
+			_self.debug("debug: startup");
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
 			_self.enableDigitalPins();
 		}
@@ -451,12 +456,12 @@ BREAKOUT.IOBoard = (function() {
 			
 			// perform a soft reset of the board
 			// the board state will be reset to its default state
-			console.log("debug: system reset");
+			_self.debug("debug: system reset");
 			systemReset();
 
 			// delay to allow systemReset function to execute in StandardFirmata
 			setTimeout(startup, 500);
-			console.log("debug: configured");
+			_self.debug("debug: configured");
 		}
 		
 		/**
@@ -512,7 +517,7 @@ BREAKOUT.IOBoard = (function() {
 						pin.removeEventListener(Event.CHANGE, sendOut);
 					} catch (e) {
 						// pin had reference to other handler, ignore
-						console.log("debug: caught pin removeEventListener exception");
+						_self.debug("debug: caught pin removeEventListener exception");
 					}
 				}
 			}
@@ -948,6 +953,16 @@ BREAKOUT.IOBoard = (function() {
 			console.log("socket = " + _socket);
 			_socket.close();
 		};
+
+		/**
+		 * for debugging
+		 * @private
+		 */
+		this.debug = function(str) {
+			if (_debugMode) {
+				console.log(str); 
+			}
+		};		
 		
 		/* implement EventDispatcher */
 		

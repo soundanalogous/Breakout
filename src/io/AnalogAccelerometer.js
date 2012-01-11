@@ -1,6 +1,12 @@
-/**
- * @author Jeff Hoefs
- * Based on Accelerometer.as in Funnel AS3 library (funnel.cc) by Shigeru Kobayashi
+ /**
+ * Based on Accelerometer.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ *
+ * Released under the MIT license. See LICENSE file for details.
  */
 
 BREAKOUT.namespace('BREAKOUT.io.AnalogAccelerometer');
@@ -217,8 +223,6 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 		
 		// find zero G (average of min and max)
 		var zeroG = (minVoltage + maxVoltage) / 2;
-
-		console.log(this._dynamicRange + " : " + supplyVoltage);
 		
 		range.min = (zeroG - (mVPerG * this._dynamicRange))/supplyVoltage;
 		range.max = (zeroG + (mVPerG * this._dynamicRange))/supplyVoltage;

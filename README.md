@@ -21,9 +21,9 @@ Instructions for using Breakout Server:
 
 1. Wire some hardware components to your board (see schematics included with the examples).
 2. Make sure your board is attached and the StandardFirmata sketch is uploaded. 
-3. You'll find the Breakout Server (Breakout Server.app for OS X or Breakout Server.exe for Windows) in the Breakout/server/. Simply double-click to launch the application.
+3. You'll find the Breakout Server (Breakout Server.app for OS X or Breakout Server.exe for Windows) in Breakout/server/. Simply double-click to launch the application.
 4. Select the serial port for your board from the drop-down. If you wish to use a different network port than 8887 you may change also change it (and use the new port in steps 5 and 6 below).
-5. Click the Connect button. You should see the message "Server started on port: 8887".
+5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/".
 6. Open the example file: hello_world.html (http://localhost:8887/examples/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater).
 
 
@@ -45,7 +45,7 @@ Tested browsers:
 
 - Google Chrome 14 - 16
 - Safari 5 (desktop and mobile)
-- Firefox 7 & 8 (desktop and mobile)
+- Firefox 7 - 9 (desktop and mobile)
 
 Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0):
 
@@ -62,8 +62,3 @@ The following boards should also work (I just don't have them to confirm):
 - Illuminato
 - older Arduinos (Duemilanove, Diecimila, NG)
 - Wiring
-
-The RFID example requires RFID_Firmata and the IDxRFIDReader library for Arduino [get it here](https://github.com/soundanalogous/IDxRFIDReader). RFID_Firmata is included in the Examples directory of the IDxRFIDReader library.
-
-
-

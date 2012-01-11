@@ -1,6 +1,7 @@
 /**
- * @author Jeff Hoefs
-  */
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
+ */
 
 BREAKOUT.namespace('BREAKOUT.io.GyroEvent');
 
@@ -37,10 +38,11 @@ BREAKOUT.io.GyroEvent = (function() {
 }());
 
 
-
 /**
- * @author Jeff Hoefs
  * Based in part on Filipe Vieira'a ITG3200 library for Arduino.
+ *
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
  */
 
 BREAKOUT.namespace('BREAKOUT.io.GyroITG3200');

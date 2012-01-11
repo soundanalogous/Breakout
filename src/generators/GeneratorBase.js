@@ -1,6 +1,12 @@
-/**
- * @author Jeff Hoefs
- * Based on GeneratorEvent.as in Funnel AS3 library (funnel.cc)
+ /**
+ * Based on GeneratorEvent.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ *
+ * Released under the MIT license. See LICENSE file for details.
  */
 
  BREAKOUT.namespace('BREAKOUT.generators.GeneratorEvent');
@@ -38,8 +44,14 @@
 
 
  /**
- * @author Jeff Hoefs
- * Based on IGenerator.as in Funnel AS3 library (funnel.cc)
+ * Based on IGenerator.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs <jeff.hoefs@gmail.com>
+ *
+ * Released under the MIT license. See LICENSE file for details.
  */
 
  BREAKOUT.namespace('BREAKOUT.generators.GeneratorBase');
