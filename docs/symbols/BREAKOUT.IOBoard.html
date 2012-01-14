@@ -243,6 +243,10 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.io.Servo.html">BREAKOUT.io.Servo</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.io.SoftPotEvent.html">BREAKOUT.io.SoftPotEvent</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.IOBoard.html">BREAKOUT.IOBoard</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.IOBoardEvent.html">BREAKOUT.IOBoardEvent</a></li>
@@ -250,6 +254,10 @@ ul.inheritsList
 	<li><a href="../symbols/BREAKOUT.PhysicalInputBase.html">BREAKOUT.PhysicalInputBase</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.Timer.html">BREAKOUT.Timer</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.TimerEvent.html">BREAKOUT.TimerEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.WSocketEvent.html">BREAKOUT.WSocketEvent</a></li>
 	
@@ -297,8 +305,8 @@ ul.inheritsList
 								<b><a href="../symbols/BREAKOUT.IOBoard.html#constructor">BREAKOUT.IOBoard</a></b>(host, port, useSocketIO, protocol)
 							</div>
 							<div class="description">Creates a new IOBoard object representing the digital and analog inputs and
-outputs of the device as well as support for sending strings between the IOBoard
-sketch and your javascript application.</div>
+outputs of the device as well as support for i2c devices and sending strings 
+between the IOBoard sketch and your javascript application.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -356,6 +364,15 @@ sketch and your javascript application.</div>
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#addEventListener">addEventListener</a></b>(type, listener)
 								</div>
 								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#analogToDigital">analogToDigital</a></b>(analogPinNumber)
+								</div>
+								<div class="description">Use this method to obtain the digital pin number equivalent for an analog pin.</div>
 							</td>
 						</tr>
 					
@@ -435,15 +452,6 @@ sketch and your javascript application.</div>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getFirmwareVersion">getFirmwareVersion</a></b>()
-								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#getPin">getPin</a></b>(pinNumber)
 								</div>
 								<div class="description"></div>
 							</td>
@@ -571,8 +579,8 @@ on the IOBoard.</div>
 				
 				<div class="description">
 					Creates a new IOBoard object representing the digital and analog inputs and
-outputs of the device as well as support for sending strings between the IOBoard
-sketch and your javascript application.
+outputs of the device as well as support for i2c devices and sending strings 
+between the IOBoard sketch and your javascript application.
 					
 				</div>
 				
@@ -692,6 +700,57 @@ the sampling interval should not be changed. Default = 19 (ms).
 						
 						
 						
+						
+						
+						
+
+					<hr />
+				
+					<a name="analogToDigital"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>analogToDigital</b>(analogPinNumber)
+					
+					</div>
+					<div class="description">
+						Use this method to obtain the digital pin number equivalent for an analog pin.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">// set analog pin A3 on an Arduino Uno to digital input
+board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
+
+<p>board.analogToDigital(3) returns 17 which is the digital
+equivalent of the analog pin</p></pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<b>analogPinNumber</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The digital pin number equivalent for the specified analog pin number.</dd>
+							
+							</dl>
 						
 						
 						
@@ -1010,49 +1069,6 @@ before you can receive digital pin data from the IOBoard.
 							<dt class="heading">Returns:</dt>
 							
 								<dd><span class="light fixedFont">{String}</span> The version of the Firmata firmware running on the IOBoard.</dd>
-							
-							</dl>
-						
-						
-						
-
-					<hr />
-				
-					<a name="getPin"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{Pin}</span>
-					<b>getPin</b>(pinNumber)
-					
-					</div>
-					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<b>pinNumber</b>
-									
-								</dt>
-								<dd></dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Returns:</dt>
-							
-								<dd><span class="light fixedFont">{Pin}</span> An unmapped reference to the Pin object.</dd>
 							
 							</dl>
 						
@@ -1476,7 +1492,7 @@ analog pin number. For example on an Arduino UNO, analog pin 0 = digital pin 14.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 08 2012 12:13:06 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jan 13 2012 23:40:26 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

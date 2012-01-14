@@ -883,6 +883,7 @@ BREAKOUT.IOBoard = (function() {
 		};
 						
 		/**
+		 * @private
 		 * @return {Pin} An unmapped reference to the Pin object.
 		 */
 		this.getPin = function(pinNumber) {
@@ -904,19 +905,18 @@ BREAKOUT.IOBoard = (function() {
 		};
 
 		/**
-		 * Use this method to obtain the digital pin number equivalent for an analog pin
-		 * when using the analog pin as a digital pin if the digital number is unknown.
+		 * Use this method to obtain the digital pin number equivalent for an analog pin.
 		 *
 		 * @example
 		 * // set analog pin A3 on an Arduino Uno to digital input
-		 * board.setDigitalPinMode(board.analogToDigitalNumber(3), Pin.DIN);
+		 * board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
 		 * 
-		 * <p>board.analogToDigitalNumber(3) returns 17 which is the digital
+		 * <p>board.analogToDigital(3) returns 17 which is the digital
 		 * equivalent of the analog pin</p>
 		 *
 		 * @return {Number} The digital pin number equivalent for the specified analog pin number.
 		 */	
-		this.analogToDigitalNumber = function(analogPinNumber) {
+		this.analogToDigital = function(analogPinNumber) {
 			return _self.getAnalogPin(analogPinNumber).number;	
 		};
 		

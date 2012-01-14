@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.PhysicalInputBase</title>
+		<title>JsDoc Reference - BREAKOUT.Timer</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -272,24 +272,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.PhysicalInputBase
+				Class BREAKOUT.Timer
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_PhysicalInputBase.js.html">PhysicalInputBase.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_Timer.js.html">Timer.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.PhysicalInputBase.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.Timer.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -302,9 +304,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.PhysicalInputBase.html#constructor">BREAKOUT.PhysicalInputBase</a></b>()
+								<b><a href="../symbols/BREAKOUT.Timer.html#constructor">BREAKOUT.Timer</a></b>(delay, repeatCount)
 							</div>
-							<div class="description">A base class for physical inputs.</div>
+							<div class="description">An as3-like Timer object</div>
 						</td>
 					</tr>
 				</tbody>
@@ -313,12 +315,74 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.Timer.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Timer.html#currentCount">currentCount</a></b>
+								</div>
+								<div class="description">[read-only] Returns the current count (number of ticks since timer started).</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Timer.html#delay">delay</a></b>
+								</div>
+								<div class="description">The delay interval in milliseconds.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Timer.html#repeatCount">repeatCount</a></b>
+								</div>
+								<div class="description">The repeat count in milliseconds.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.Timer.html#running">running</a></b>
+								</div>
+								<div class="description">[read-only] Returns true if the timer is running.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+				<dl class="inheritsList">
+				
+				</dl>
+				
+			
 
 <!-- ============================== methods summary ======================== -->
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.PhysicalInputBase.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.Timer.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -331,36 +395,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.PhysicalInputBase.html#addEventListener">addEventListener</a></b>(type, listener)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Timer.html#reset">reset</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Stop the timer and reset the count to zero.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.PhysicalInputBase.html#dispatchEvent">dispatchEvent</a></b>(type, optionalParams)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Timer.html#start">start</a></b>()
 								</div>
-								<div class="description"></div>
+								<div class="description">Start the timer.</div>
 							</td>
 						</tr>
 					
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.PhysicalInputBase.html#hasEventListener">hasEventListener</a></b>(type)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.Timer.html#stop">stop</a></b>()
 								</div>
-								<div class="description"></div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.PhysicalInputBase.html#removeEventListener">removeEventListener</a></b>(type, listener)
-								</div>
-								<div class="description"></div>
+								<div class="description">Stop the timer.</div>
 							</td>
 						</tr>
 					
@@ -368,6 +423,10 @@ ul.inheritsList
 				</table>
 				
 				
+				
+				<dl class="inheritsList">
+				<dt>Methods borrowed from class <a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a>: </dt><dd><a href="../symbols/BREAKOUT.EventDispatcher.html#addEventListener">addEventListener</a>, <a href="../symbols/BREAKOUT.EventDispatcher.html#dispatchEvent">dispatchEvent</a>, <a href="../symbols/BREAKOUT.EventDispatcher.html#hasEventListener">hasEventListener</a>, <a href="../symbols/BREAKOUT.EventDispatcher.html#removeEventListener">removeEventListener</a></dd>
+				</dl>
 				
 			
 <!-- ============================== events summary ======================== -->
@@ -381,18 +440,35 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.PhysicalInputBase</b>()
+						<b>BREAKOUT.Timer</b>(delay, repeatCount)
 				</div>
 				
 				<div class="description">
-					A base class for physical inputs. Treat this class as an abstract base
-class - do not instantiate it directly.
+					An as3-like Timer object
 					
 				</div>
 				
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>delay</b>
+								
+							</dt>
+								<dd>The delay (ms) interval between ticks</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>repeatCount</b>
+								
+							</dt>
+								<dd>The number of number of ticks.
+A value of zero will set the timer to repeat forever. Default = 0</dd>
+						
+						</dl>
 					
 					
 					
@@ -406,6 +482,99 @@ class - do not instantiate it directly.
 
 <!-- ============================== field details ========================== -->		
 			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name="currentCount"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>currentCount</b>
+					
+					</div>
+					<div class="description">
+						[read-only] Returns the current count (number of ticks since timer started).
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="delay"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>delay</b>
+					
+					</div>
+					<div class="description">
+						The delay interval in milliseconds.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="repeatCount"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>repeatCount</b>
+					
+					</div>
+					<div class="description">
+						The repeat count in milliseconds.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="running"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>running</b>
+					
+					</div>
+					<div class="description">
+						[read-only] Returns true if the timer is running.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
 
 <!-- ============================== method details ========================= -->		
 			
@@ -413,38 +582,21 @@ class - do not instantiate it directly.
 					Method Detail
 				</div>
 				
-					<a name="addEventListener"> </a>
+					<a name="reset"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>addEventListener</b>(type, listener)
+					<b>reset</b>()
 					
 					</div>
 					<div class="description">
-						
+						Stop the timer and reset the count to zero.
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
 						
 						
 						
@@ -455,39 +607,21 @@ class - do not instantiate it directly.
 
 					<hr />
 				
-					<a name="dispatchEvent"> </a>
+					<a name="start"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>dispatchEvent</b>(type, optionalParams)
+					<b>start</b>()
 					
 					</div>
 					<div class="description">
-						
+						Start the timer.
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Event}</span> <b>type</b>
-									
-								</dt>
-								<dd>The Event object</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
-									
-								</dt>
-								<dd>Optional parameters to assign to the event object.
-return {boolean} True if dispatch is successful, false if not.</dd>
-							
-							</dl>
 						
 						
 						
@@ -498,75 +632,21 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 
 					<hr />
 				
-					<a name="hasEventListener"> </a>
+					<a name="stop"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>hasEventListener</b>(type)
+					<b>stop</b>()
 					
 					</div>
 					<div class="description">
-						
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type
-return {boolean} True is listener exists for this type, false if not.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="removeEventListener"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>removeEventListener</b>(type, listener)
-					
-					</div>
-					<div class="description">
-						
+						Stop the timer.
 						
 						
 					</div>
 					
 					
 					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
 						
 						
 						

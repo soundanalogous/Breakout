@@ -56,6 +56,9 @@ BREAKOUT.Timer = (function() {
 	/**
 	 * An as3-like Timer object
 	 *
+	 * @exports Timer as BREAKOUT.Timer
+	 * @constructor
+	 * @augments BREAKOUT.EventDispatcher	 
 	 * @param {Number} delay The delay (ms) interval between ticks
 	 * @param {Number} repeatCount The number of number of ticks.
 	 * A value of zero will set the timer to repeat forever. Default = 0
