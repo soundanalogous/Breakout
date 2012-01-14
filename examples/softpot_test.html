@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>SoftPot Test</title>
+
+<script src="../build/Breakout.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BREAKOUT.IOBoard;
+	var Pin = BREAKOUT.Pin;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var Event = BREAKOUT.Event;
+	var SoftPot = BREAKOUT.io.SoftPot;
+	var SoftPotEvent = BREAKOUT.io.SoftPotEvent;
+
+	var arduino = new IOBoard("localhost", 8887);
+	
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+		
+		// params: IOBoard, Pin, softPotLength (in mm)
+		var softPot = new SoftPot(arduino, arduino.getAnalogPin(0), 100);
+		softPot.addEventListener(SoftPotEvent.PRESS, onPotPress);
+		softPot.addEventListener(SoftPotEvent.RELEASE, onPotRelease);
+		//softPot.addEventListener(SoftPotEvent.TAP, onPotTap);
+		//softPot.addEventListener(SoftPotEvent.FLICK_UP, onFlickUp);
+		//softPot.addEventListener(SoftPotEvent.FLICK_DOWN, onFlickDown);
+		softPot.addEventListener(SoftPotEvent.DRAG, onPotDrag);
+
+		console.log("min drag = " + softPot.minDragMovement);
+		console.log("min flick = " + softPot.minFlickMovement);
+	}
+
+	function onPotPress(event) {
+		$('#val').html("value = " + event.target.value.toFixed(3));
+		$('#state').html("pressed");
+	}
+
+	function onPotRelease(event) {
+		$('#val').html("value = " + event.target.value.toFixed(3));
+		$('#state').html("released");
+	}
+
+	function onPotTap(event) {
+		$('#val').html("value = " + event.target.value.toFixed(3));
+		$('#state').html("tapped");
+	}
+
+	function onFlickUp(event) {
+		$('#state').html("flick up");
+	}
+
+	function onFlickDown(event) {
+		$('#state').html("flick down");
+	}
+
+	function onPotDrag(event) {
+		$('#val').html("value = " + event.target.value.toFixed(3));
+		$('#state').html("dragging");
+	}
+				
+});
+</script>
+
+</head>
+<body>
+  
+	<div id="val" class="text">value =</div>
+	<div id="state" class="text"></div>
+  
+</body>
+</html>​

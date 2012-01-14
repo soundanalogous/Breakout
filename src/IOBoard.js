@@ -1,9 +1,9 @@
 /**
- * Based in part on Arduino.as in as3glue. 
- * <http://code.google.com/p/as3glue/>
- *
  * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
+ *
+ * Based in part on Arduino.as in as3glue. 
+ * <http://code.google.com/p/as3glue/>
  */
 
 BREAKOUT.namespace('BREAKOUT.IOBoard');
@@ -901,6 +901,23 @@ BREAKOUT.IOBoard = (function() {
 		 */	
 		this.getDigitalPin = function(pinNumber) {
 			return _ioPins[_digitalPinMapping[pinNumber]];
+		};
+
+		/**
+		 * Use this method to obtain the digital pin number equivalent for an analog pin
+		 * when using the analog pin as a digital pin if the digital number is unknown.
+		 *
+		 * @example
+		 * // set analog pin A3 on an Arduino Uno to digital input
+		 * board.setDigitalPinMode(board.analogToDigitalNumber(3), Pin.DIN);
+		 * 
+		 * <p>board.analogToDigitalNumber(3) returns 17 which is the digital
+		 * equivalent of the analog pin</p>
+		 *
+		 * @return {Number} The digital pin number equivalent for the specified analog pin number.
+		 */	
+		this.analogToDigitalNumber = function(analogPinNumber) {
+			return _self.getAnalogPin(analogPinNumber).number;	
 		};
 		
 		/**
