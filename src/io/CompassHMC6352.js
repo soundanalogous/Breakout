@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.CompassHMC6352');
+JSUTILS.namespace('BREAKOUT.io.CompassHMC6352');
 
 BREAKOUT.io.CompassHMC6352 = (function() {
 
@@ -11,7 +11,7 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 
 	// dependencies
 	var I2CBase = BREAKOUT.I2CBase,
-		Event = BREAKOUT.Event;
+		Event = JSUTILS.Event;
 
 	/**
 	 * HMC6352 digital compass module
@@ -40,7 +40,7 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 
 	};
 
-	CompassHMC6352.prototype = BREAKOUT.inherit(I2CBase.prototype);
+	CompassHMC6352.prototype = JSUTILS.inherit(I2CBase.prototype);
 	CompassHMC6352.prototype.constructor = CompassHMC6352;
 
 	/**

@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.Pin');
+JSUTILS.namespace('BREAKOUT.Pin');
 
 BREAKOUT.Pin = (function() {
 	//"use strict";	// closure compiler doesn't like this... should be fixed soon though
@@ -17,8 +17,8 @@ BREAKOUT.Pin = (function() {
 	var Pin;
 
 	// dependencies
-	var EventDispatcher = BREAKOUT.EventDispatcher,
-		Event = BREAKOUT.Event,
+	var EventDispatcher = JSUTILS.EventDispatcher,
+		Event = JSUTILS.Event,
 		GeneratorEvent = BREAKOUT.generators.GeneratorEvent;
 
 	/**

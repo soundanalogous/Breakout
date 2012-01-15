@@ -3,14 +3,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.ButtonEvent');
+JSUTILS.namespace('BREAKOUT.io.ButtonEvent');
 
 BREAKOUT.io.ButtonEvent = (function() {
 
 	var ButtonEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports ButtonEvent as BREAKOUT.io.ButtonEvent
@@ -34,7 +34,7 @@ BREAKOUT.io.ButtonEvent = (function() {
 	/** @constant */
 	ButtonEvent.SUSTAINED_PRESS = "sustainedPress";
 
-	ButtonEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);
 	ButtonEvent.prototype.constructor = ButtonEvent;
 
 	return ButtonEvent;
@@ -47,7 +47,7 @@ BREAKOUT.io.ButtonEvent = (function() {
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.Button');
+JSUTILS.namespace('BREAKOUT.io.Button');
 
 BREAKOUT.io.Button = (function() {
 
@@ -55,7 +55,7 @@ BREAKOUT.io.Button = (function() {
 
 	// dependencies
 	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
-		Event = BREAKOUT.Event,
+		Event = JSUTILS.Event,
 		Pin = BREAKOUT.Pin,
 		ButtonEvent = BREAKOUT.io.ButtonEvent;
 
@@ -111,7 +111,7 @@ BREAKOUT.io.Button = (function() {
 	};
 
 
-	Button.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
+	Button.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
 	Button.prototype.constructor = Button;
 
 	/**

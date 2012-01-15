@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.filters.TriggerPoint');
+JSUTILS.namespace('BREAKOUT.filters.TriggerPoint');
 
 BREAKOUT.filters.TriggerPoint = (function() {
 	"use strict";
@@ -54,7 +54,7 @@ BREAKOUT.filters.TriggerPoint = (function() {
 	};
 
 
-	TriggerPoint.prototype = BREAKOUT.inherit(FilterBase.prototype);
+	TriggerPoint.prototype = JSUTILS.inherit(FilterBase.prototype);
 	TriggerPoint.prototype.constructor = TriggerPoint;
 
 	/**

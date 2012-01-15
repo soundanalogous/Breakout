@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- BREAKOUT.namespace('BREAKOUT.filters.FilterBase');
+ JSUTILS.namespace('BREAKOUT.filters.FilterBase');
 
  BREAKOUT.filters.FilterBase = (function() {
  	"use strict";

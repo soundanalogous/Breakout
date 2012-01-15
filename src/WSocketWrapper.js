@@ -3,14 +3,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.WSocketEvent');
+JSUTILS.namespace('BREAKOUT.WSocketEvent');
 
 BREAKOUT.WSocketEvent = (function() {
 	
 	var WSocketEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports WSocketEvent as BREAKOUT.WSocketEvent
@@ -34,7 +34,7 @@ BREAKOUT.WSocketEvent = (function() {
 	/** @constant */
 	WSocketEvent.CLOSE = "webSocketClosed";
 
-	WSocketEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
 	WSocketEvent.prototype.constructor = WSocketEvent;	
 
 	return WSocketEvent;
@@ -49,7 +49,7 @@ BREAKOUT.WSocketEvent = (function() {
  * @author jeff hoefs
  */
 
-BREAKOUT.namespace('BREAKOUT.WSocketWrapper');
+JSUTILS.namespace('BREAKOUT.WSocketWrapper');
 
 BREAKOUT.WSocketWrapper = (function() {
 	"use strict";
@@ -57,7 +57,7 @@ BREAKOUT.WSocketWrapper = (function() {
  	var WSocketWrapper;
 
  	// dependencies
- 	var EventDispatcher = BREAKOUT.EventDispatcher,
+ 	var EventDispatcher = JSUTILS.EventDispatcher,
  		WSocketEvent = BREAKOUT.WSocketEvent;
 
 	/**
@@ -87,7 +87,7 @@ BREAKOUT.WSocketWrapper = (function() {
 
 	};
 
-	WSocketWrapper.prototype = BREAKOUT.inherit(EventDispatcher.prototype);
+	WSocketWrapper.prototype = JSUTILS.inherit(EventDispatcher.prototype);
 	WSocketWrapper.prototype.constructor = WSocketWrapper;
 
 	/**

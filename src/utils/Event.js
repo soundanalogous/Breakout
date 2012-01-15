@@ -3,16 +3,16 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.Event');
+JSUTILS.namespace('JSUTILS.Event');
 
-BREAKOUT.Event = (function() {
+JSUTILS.Event = (function() {
 
 	var Event;
 
 	/** 
 	 * Event 'base class' (but it can also be instantiated directly)
 	 *
-	 * @exports Event as BREAKOUT.Event
+	 * @exports Event as JSUTILS.Event
 	 * @constructor
 	 * @param {String} type event type
 	 */

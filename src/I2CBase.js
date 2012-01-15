@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.I2CBase');
+JSUTILS.namespace('BREAKOUT.I2CBase');
 
 BREAKOUT.I2CBase = (function() {
 	"use strict";
@@ -12,7 +12,7 @@ BREAKOUT.I2CBase = (function() {
 
  	// dependencies
  	var Pin = BREAKOUT.Pin,
- 		EventDispatcher = BREAKOUT.EventDispatcher,
+ 		EventDispatcher = JSUTILS.EventDispatcher,
  		IOBoardEvent = BREAKOUT.IOBoardEvent;
 
 	/**

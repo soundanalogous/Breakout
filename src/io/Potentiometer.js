@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.Potentiometer');
+JSUTILS.namespace('BREAKOUT.io.Potentiometer');
 
 BREAKOUT.io.Potentiometer = (function() {
 
@@ -14,8 +14,7 @@ BREAKOUT.io.Potentiometer = (function() {
 		PhysicalInputBase = BREAKOUT.PhysicalInputBase,
 		Scaler = BREAKOUT.filters.Scaler,
 		Convolution = BREAKOUT.filters.Convolution,
-		Event = BREAKOUT.Event,
-		Event = BREAKOUT.Event;
+		Event = JSUTILS.Event;
 
 	/**
 	 * Creates a new Potentiometer. Listen for a change event (Event.CHANGE).
@@ -46,7 +45,7 @@ BREAKOUT.io.Potentiometer = (function() {
 		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
 	};
 
-	Potentiometer.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
+	Potentiometer.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
 	Potentiometer.prototype.constructor = Potentiometer;
 	
 	/**

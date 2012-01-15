@@ -3,14 +3,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.SoftPotEvent');
+JSUTILS.namespace('BREAKOUT.io.SoftPotEvent');
 
 BREAKOUT.io.SoftPotEvent = (function() {
 
 	var SoftPotEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports SoftPotEvent as BREAKOUT.io.SoftPotEvent
@@ -40,7 +40,7 @@ BREAKOUT.io.SoftPotEvent = (function() {
 	/** @constant */
 	SoftPotEvent.TAP = "softPotTap";		
 
-	SoftPotEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
 	SoftPotEvent.prototype.constructor = SoftPotEvent;
 
 	/**
@@ -62,7 +62,7 @@ BREAKOUT.io.SoftPotEvent = (function() {
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.SoftPot');
+JSUTILS.namespace('BREAKOUT.io.SoftPot');
 
 BREAKOUT.io.SoftPot = (function() {
 
@@ -77,10 +77,10 @@ BREAKOUT.io.SoftPot = (function() {
 	// dependencies
 	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
 		Pin = BREAKOUT.Pin,
-		Event = BREAKOUT.Event,
+		Event = JSUTILS.Event,
 		Scaler = BREAKOUT.filters.Scaler,
-		Timer = BREAKOUT.Timer,
-		TimerEvent = BREAKOUT.TimerEvent,
+		Timer = JSUTILS.Timer,
+		TimerEvent = JSUTILS.TimerEvent,
 		SoftPotEvent = BREAKOUT.io.SoftPotEvent;
 
 	/**
@@ -125,7 +125,7 @@ BREAKOUT.io.SoftPot = (function() {
 	};
 
 
-	SoftPot.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
+	SoftPot.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
 	SoftPot.prototype.constructor = SoftPot;
 
 	/**

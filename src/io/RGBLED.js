@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.RGBLED');
+JSUTILS.namespace('BREAKOUT.io.RGBLED');
 
 BREAKOUT.io.RGBLED = (function() {
 

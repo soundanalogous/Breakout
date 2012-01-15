@@ -3,16 +3,16 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.EventDispatcher');
+JSUTILS.namespace('JSUTILS.EventDispatcher');
 
-BREAKOUT.EventDispatcher = (function () {
+JSUTILS.EventDispatcher = (function () {
 
 	var EventDispatcher;
 
 	/**
 	 * An as3-like EventDispatcher class.
 	 *
-	 * @exports EventDispatcher as BREAKOUT.EventDispatcher
+	 * @exports EventDispatcher as JSUTILS.EventDispatcher
 	 * @constructor
 	 * @param {Class} target The instance of the class that implements EventDispatcher
 	 */

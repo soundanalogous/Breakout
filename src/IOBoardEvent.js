@@ -3,14 +3,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.IOBoardEvent');
+JSUTILS.namespace('BREAKOUT.IOBoardEvent');
 
 BREAKOUT.IOBoardEvent = (function() {
 
 	var IOBoardEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports IOBoardEvent as BREAKOUT.IOBoardEvent
@@ -52,7 +52,7 @@ BREAKOUT.IOBoardEvent = (function() {
 	IOBoardEvent.CONNECTED = "arduinoConnected";	
 
 
-	IOBoardEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
 	IOBoardEvent.prototype.constructor = IOBoardEvent;
 
 	return IOBoardEvent;

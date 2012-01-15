@@ -3,19 +3,19 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.TimerEvent');
+JSUTILS.namespace('JSUTILS.TimerEvent');
 
-BREAKOUT.TimerEvent = (function() {
+JSUTILS.TimerEvent = (function() {
 
 	var TimerEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports TimerEvent as BREAKOUT.TimerEvent
+	 * @exports TimerEvent as JSUTILS.TimerEvent
 	 * @constructor
-	 * @augments BREAKOUT.Event
+	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 
 	 */
 	TimerEvent = function(type) {
@@ -30,7 +30,7 @@ BREAKOUT.TimerEvent = (function() {
 	/** @constant */
 	TimerEvent.TIMER_COMPLETE = "timerComplete";
 
-	TimerEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	TimerEvent.prototype = JSUTILS.inherit(Event.prototype);
 	TimerEvent.prototype.constructor = TimerEvent;
 
 	return TimerEvent;
@@ -43,22 +43,22 @@ BREAKOUT.TimerEvent = (function() {
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.Timer');
+JSUTILS.namespace('JSUTILS.Timer');
 
-BREAKOUT.Timer = (function() {
+JSUTILS.Timer = (function() {
 
 	var Timer;
 
 	// dependencies
-	var TimerEvent = BREAKOUT.TimerEvent,
-		EventDispatcher = BREAKOUT.EventDispatcher;
+	var TimerEvent = JSUTILS.TimerEvent,
+		EventDispatcher = JSUTILS.EventDispatcher;
 
 	/**
 	 * An as3-like Timer object
 	 *
-	 * @exports Timer as BREAKOUT.Timer
+	 * @exports Timer as JSUTILS.Timer
 	 * @constructor
-	 * @augments BREAKOUT.EventDispatcher	 
+	 * @augments JSUTILS.EventDispatcher	 
 	 * @param {Number} delay The delay (ms) interval between ticks
 	 * @param {Number} repeatCount The number of number of ticks.
 	 * A value of zero will set the timer to repeat forever. Default = 0
@@ -77,7 +77,7 @@ BREAKOUT.Timer = (function() {
 		this._timer = null;
 	};
 
-	Timer.prototype = BREAKOUT.inherit(EventDispatcher.prototype);
+	Timer.prototype = JSUTILS.inherit(EventDispatcher.prototype);
 	Timer.prototype.constructor = Timer;
 
 

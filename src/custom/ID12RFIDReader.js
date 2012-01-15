@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
  
-BREAKOUT.namespace('BREAKOUT.custom.RFIDEvent');
+JSUTILS.namespace('BREAKOUT.custom.RFIDEvent');
 
 BREAKOUT.custom.RFIDEvent = (function() {
 	"use strict";
@@ -11,7 +11,7 @@ BREAKOUT.custom.RFIDEvent = (function() {
 	var RFIDEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports RFIDEvent as BREAKOUT.custom.RFIDEvent
@@ -32,7 +32,7 @@ BREAKOUT.custom.RFIDEvent = (function() {
 	/** @constant */
 	RFIDEvent.REMOVE_TAG = "removeTag";
 
-	RFIDEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	RFIDEvent.prototype = JSUTILS.inherit(Event.prototype);
 	RFIDEvent.prototype.constructor = RFIDEvent;
 
 	/**
@@ -48,14 +48,14 @@ BREAKOUT.custom.RFIDEvent = (function() {
 }());
 
 
-BREAKOUT.namespace('BREAKOUT.custom.ID12RFIDReader');
+JSUTILS.namespace('BREAKOUT.custom.ID12RFIDReader');
 
 BREAKOUT.custom.ID12RFIDReader = (function() {
 
 	var ID12RFIDReader;
 
 	// dependencies
-	var EventDispatcher = BREAKOUT.EventDispatcher,
+	var EventDispatcher = JSUTILS.EventDispatcher,
 		IOBoardEvent = BREAKOUT.IOBoardEvent,
 		RFIDEvent = BREAKOUT.io.RFIDEvent;
 

@@ -4,30 +4,23 @@
  */
 
 /** @namespace Namespace and utility functions for Breakout */
-var BREAKOUT = BREAKOUT || {};
+var JSUTILS = JSUTILS || {};
 
 
 /* Utility functions */
 
-/**
- * Copied from Stefanov, Stoyan. JavaScript Patterns
- * 
+/** 
  * <p>Use this function to safely create a new namespace
  * if a namespace already exists, it won't be recreated.</p>
  *
  * @function
- * @param {String} ns_string The namespace as a string.
+ * @param {String} namespaceString The namespace as a string.
  */
-BREAKOUT.namespace = function (ns_string) {
-	var parts = ns_string.split('.'),
-		parent = BREAKOUT,
+JSUTILS.namespace = function (namespaceString) {
+	var parts = namespaceString.split('.'),
+		parent = window,
 		i;
-		
-	// strip redundant leading global
-	if (parts[0] === "BREAKOUT") {
-		parts = parts.slice(1);
-	}
-	
+			
 	for (i=0; i<parts.length; i +=1) {
 		// create a property if it doesn't exist
 		if (typeof parent[parts[i]] === "undefined") {
@@ -47,7 +40,7 @@ BREAKOUT.namespace = function (ns_string) {
  * @function
  * @param {Object} p The prototype of the object to inherit.
  */
-BREAKOUT.inherit = function(p) {
+JSUTILS.inherit = function(p) {
 	if (p == null) throw TypeError(); // p must be a non-null object
 	if (Object.create) { // If Object.create() is defined...
 		return Object.create(p); // then just use it

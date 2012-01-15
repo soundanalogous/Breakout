@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.AccelerometerADXL345');
+JSUTILS.namespace('BREAKOUT.io.AccelerometerADXL345');
 
 BREAKOUT.io.AccelerometerADXL345 = (function() {
 	"use strict";
@@ -22,7 +22,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 
 	// dependencies
 	var I2CBase = BREAKOUT.I2CBase,
-		Event = BREAKOUT.Event;
+		Event = JSUTILS.Event;
 
 	/**
 	 * Analog Devices ADXL345 3-axis accelerometer
@@ -70,7 +70,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 
 	};
 
-	AccelerometerADXL345.prototype = BREAKOUT.inherit(I2CBase.prototype);
+	AccelerometerADXL345.prototype = JSUTILS.inherit(I2CBase.prototype);
 	AccelerometerADXL345.prototype.constructor = AccelerometerADXL345;
 
 	/**

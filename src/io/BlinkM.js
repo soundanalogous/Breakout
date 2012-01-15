@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.BlinkM');
+JSUTILS.namespace('BREAKOUT.io.BlinkM');
 
 BREAKOUT.io.BlinkM = (function() {
 
@@ -39,7 +39,7 @@ BREAKOUT.io.BlinkM = (function() {
 
 	};
 
-	BlinkM.prototype = BREAKOUT.inherit(I2CBase.prototype);
+	BlinkM.prototype = JSUTILS.inherit(I2CBase.prototype);
 	BlinkM.prototype.constructor = BlinkM;
 
 

@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.LED');
+JSUTILS.namespace('BREAKOUT.io.LED');
 
 BREAKOUT.io.LED = (function() {
 

@@ -3,14 +3,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.GyroEvent');
+JSUTILS.namespace('BREAKOUT.io.GyroEvent');
 
 BREAKOUT.io.GyroEvent = (function() {
 
 	var GyroEvent;
 
 	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports GyroEvent as BREAKOUT.io.GyroEvent
@@ -30,7 +30,7 @@ BREAKOUT.io.GyroEvent = (function() {
 	GyroEvent.GYRO_READY = "gyroReady";
 	
 
-	GyroEvent.prototype = BREAKOUT.inherit(Event.prototype);
+	GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
 	GyroEvent.prototype.constructor = GyroEvent;
 
 	return GyroEvent;
@@ -45,7 +45,7 @@ BREAKOUT.io.GyroEvent = (function() {
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.GyroITG3200');
+JSUTILS.namespace('BREAKOUT.io.GyroITG3200');
 
 BREAKOUT.io.GyroITG3200 = (function() {
 	"use strict";
@@ -65,7 +65,7 @@ BREAKOUT.io.GyroITG3200 = (function() {
 
 	// dependencies
 	var I2CBase = BREAKOUT.I2CBase,
-		Event = BREAKOUT.Event,
+		Event = JSUTILS.Event,
 		GyroEvent = BREAKOUT.io.GyroEvent;
 
 	/**
@@ -108,7 +108,7 @@ BREAKOUT.io.GyroITG3200 = (function() {
 
 	};
 
-	GyroITG3200.prototype = BREAKOUT.inherit(I2CBase.prototype);
+	GyroITG3200.prototype = JSUTILS.inherit(I2CBase.prototype);
 	GyroITG3200.prototype.constructor = GyroITG3200;
 
 	/**

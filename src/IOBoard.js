@@ -6,7 +6,7 @@
  * <http://code.google.com/p/as3glue/>
  */
 
-BREAKOUT.namespace('BREAKOUT.IOBoard');
+JSUTILS.namespace('BREAKOUT.IOBoard');
 
 BREAKOUT.IOBoard = (function() {
 
@@ -50,8 +50,8 @@ BREAKOUT.IOBoard = (function() {
 
 	// dependencies
 	var Pin = BREAKOUT.Pin,
-		EventDispatcher = BREAKOUT.EventDispatcher,
-		Event = BREAKOUT.Event,
+		EventDispatcher = JSUTILS.EventDispatcher,
+		Event = JSUTILS.Event,
 		WSocketEvent = BREAKOUT.WSocketEvent,
 		WSocketWrapper = BREAKOUT.WSocketWrapper,
 		IOBoardEvent = BREAKOUT.IOBoardEvent;

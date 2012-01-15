@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- BREAKOUT.namespace('BREAKOUT.generators.Oscillator');
+ JSUTILS.namespace('BREAKOUT.generators.Oscillator');
 
  BREAKOUT.generators.Oscillator = (function() {
  	"use strict";
@@ -19,8 +19,8 @@
  	// dependencies
  	var GeneratorBase = BREAKOUT.generators.GeneratorBase,
  		GeneratorEvent = BREAKOUT.generators.GeneratorEvent,
- 		Timer = BREAKOUT.Timer,
- 		TimerEvent = BREAKOUT.TimerEvent;
+ 		Timer = JSUTILS.Timer,
+ 		TimerEvent = JSUTILS.TimerEvent;
 
  	/**
 	 * Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
@@ -62,7 +62,7 @@
  		this.reset();
  	};
 
- 	Oscillator.prototype = BREAKOUT.inherit(GeneratorBase.prototype);
+ 	Oscillator.prototype = JSUTILS.inherit(GeneratorBase.prototype);
  	Oscillator.prototype.constructor = Oscillator;
 
 	/**

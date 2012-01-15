@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.AnalogAccelerometer');
+JSUTILS.namespace('BREAKOUT.io.AnalogAccelerometer');
 
 BREAKOUT.io.AnalogAccelerometer = (function() {
 	"use strict";
@@ -18,7 +18,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 
 		// dependencies
 	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
-		Event = BREAKOUT.Event,
+		Event = JSUTILS.Event,
 		Scaler = BREAKOUT.filters.Scaler,
 		Convolution = BREAKOUT.filters.Convolution;
 
@@ -72,7 +72,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 		
 	};
 
-	AnalogAccelerometer.prototype = BREAKOUT.inherit(PhysicalInputBase.prototype);
+	AnalogAccelerometer.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
 	AnalogAccelerometer.prototype.constructor = AnalogAccelerometer;
 
 	// Implement Acceleromter interface:

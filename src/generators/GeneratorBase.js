@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- BREAKOUT.namespace('BREAKOUT.generators.GeneratorEvent');
+ JSUTILS.namespace('BREAKOUT.generators.GeneratorEvent');
 
  BREAKOUT.generators.GeneratorEvent = (function() {
  	"use strict";
@@ -17,7 +17,7 @@
  	var GeneratorEvent;
 
  	// dependencies
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 
  	/**
  	 * @exports GeneratorEvent as BREAKOUT.generators.GeneratorEvent
@@ -32,7 +32,7 @@
  		this.name = "GeneratorEvent";
  	};
 
- 	GeneratorEvent.prototype = BREAKOUT.inherit(Event.prototype);
+ 	GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
  	GeneratorEvent.prototype.constructor = GeneratorEvent;
 
  	/** @constant */
@@ -54,7 +54,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- BREAKOUT.namespace('BREAKOUT.generators.GeneratorBase');
+ JSUTILS.namespace('BREAKOUT.generators.GeneratorBase');
 
  BREAKOUT.generators.GeneratorBase = (function() {
  	"use strict";
@@ -62,7 +62,7 @@
  	var GeneratorBase;
 
  	// dependencies
-	var EventDispatcher = BREAKOUT.EventDispatcher;
+	var EventDispatcher = JSUTILS.EventDispatcher;
 
  	/**
  	 * A base object for generators.
@@ -81,7 +81,7 @@
 
  	};
 
- 	GeneratorBase.prototype = BREAKOUT.inherit(EventDispatcher.prototype);
+ 	GeneratorBase.prototype = JSUTILS.inherit(EventDispatcher.prototype);
  	GeneratorBase.prototype.constructor = GeneratorBase;
 
 	/**

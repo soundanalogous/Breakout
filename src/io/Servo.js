@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.io.Servo');
+JSUTILS.namespace('BREAKOUT.io.Servo');
 
 BREAKOUT.io.Servo = (function() {
 

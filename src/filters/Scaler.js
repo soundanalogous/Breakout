@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.filters.Scaler');
+JSUTILS.namespace('BREAKOUT.filters.Scaler');
 
 BREAKOUT.filters.Scaler = (function() {
 	"use strict";
@@ -48,7 +48,7 @@ BREAKOUT.filters.Scaler = (function() {
 	};
 
 
-	Scaler.prototype = BREAKOUT.inherit(FilterBase.prototype);
+	Scaler.prototype = JSUTILS.inherit(FilterBase.prototype);
 	Scaler.prototype.constructor = Scaler;
 
 	/**

@@ -9,14 +9,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.PhysicalInputBase');
+JSUTILS.namespace('BREAKOUT.PhysicalInputBase');
 
 BREAKOUT.PhysicalInputBase = (function() {
 
 	var PhysicalInputBase;
 
 	// dependencies
-	var EventDispatcher = BREAKOUT.EventDispatcher;
+	var EventDispatcher = JSUTILS.EventDispatcher;
 
 	/**
 	 * A base class for physical inputs. Treat this class as an abstract base

@@ -9,7 +9,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-BREAKOUT.namespace('BREAKOUT.filters.Convolution');
+JSUTILS.namespace('BREAKOUT.filters.Convolution');
 
 BREAKOUT.filters.Convolution = (function() {
 	"use strict";
@@ -40,7 +40,7 @@ BREAKOUT.filters.Convolution = (function() {
 	};
 
 
-	Convolution.prototype = BREAKOUT.inherit(FilterBase.prototype);
+	Convolution.prototype = JSUTILS.inherit(FilterBase.prototype);
 	Convolution.prototype.constructor = Convolution;
 
 	/**
