@@ -18,7 +18,9 @@
 
  	// dependencies
  	var GeneratorBase = BREAKOUT.generators.GeneratorBase,
- 		GeneratorEvent = BREAKOUT.generators.GeneratorEvent;
+ 		GeneratorEvent = BREAKOUT.generators.GeneratorEvent,
+ 		Timer = BREAKOUT.Timer,
+ 		TimerEvent = BREAKOUT.TimerEvent;
 
  	/**
 	 * Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
@@ -51,8 +53,11 @@
  		this._time;
  		this._startTime;
  		this._lastVal;
- 		this._timer = null;
- 		this._delay = 33;
+ 		// need to do this in order to remove the event listener
+ 		this._autoUpdateCallback = this.autoUpdate.bind(this);
+
+ 		this._timer = new Timer(33);
+ 		this._timer.start();
 
  		this.reset();
  	};
@@ -68,27 +73,21 @@
 	 * @type Number
 	 */ 
  	Oscillator.prototype.__defineSetter__("serviceInterval", function(interval) {
- 		this._delay = interval;
-
- 		// if the timer is running, reset it to apply the new interval
- 		if (this._timer !== null) {
- 			this.start();
- 		}
- 		
+ 		this._timer.delay = interval; 		
  	});
  	Oscillator.prototype.__defineGetter__("serviceInterval", function() {
- 		return this._delay;
+ 		return this._timer.delay;
  	});
 
  	/**
  	 * Starts the oscillator
  	 */
  	Oscillator.prototype.start = function() {
- 		if (this._timer !== null) this.stop();
- 		this._timer = setInterval(this.autoUpdate.bind(this), this._delay);
+ 		this.stop();
+ 		this._timer.addEventListener(TimerEvent.TIMER, this._autoUpdateCallback);
+
  		var date = new Date();
  		this._startTime = date.getTime();
- 		//this._time = 0;
  		this.autoUpdate(null);
  	};
 
@@ -96,8 +95,9 @@
  	 * Stops the oscillator.
  	 */
  	Oscillator.prototype.stop = function() {
- 		clearInterval(this._timer);
- 		this._timer = null;
+ 		if (this._timer.hasEventListener(TimerEvent.TIMER)) {
+ 			this._timer.removeEventListener(TimerEvent.TIMER, this._autoUpdateCallback);
+ 		}
  	};
 
  	/**
@@ -114,9 +114,8 @@
  	 */
  	Oscillator.prototype.update = function(interval) {
  		interval = interval || -1;
- 		if (interval < 0) this._time += this._delay;
+ 		if (interval < 0) this._time += this._timer.delay;
  		else this._time += interval;
-
  		this.computeValue();
  	};
 
@@ -124,10 +123,8 @@
  	 * @private
  	 */
  	Oscillator.prototype.autoUpdate = function(event) {
- 		// to do: use date object instead?
  		var date = new Date();
  		this._time = date.getTime() - this._startTime;
- 		//this._time += this._delay;
  		this.computeValue();
  	};
 

@@ -87,8 +87,6 @@ $(document).ready(function() {
 		// params: board, analogPin, enableSmoothing
 		var pot = new Potentiometer(uno, uno.getAnalogPin(0), true);
 		pot.addEventListener(Event.CHANGE, onPotChange);
-		// scale the range of pot values (0 -> 1) to 0 -> 180
-		pot.setRange(0, 180);
 
 
 		// Digital input example using Pin object:

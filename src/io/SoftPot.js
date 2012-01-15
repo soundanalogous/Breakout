@@ -76,8 +76,8 @@ BREAKOUT.io.SoftPot = (function() {
 
 	// dependencies
 	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
-		Event = BREAKOUT.Event,
 		Pin = BREAKOUT.Pin,
+		Event = BREAKOUT.Event,
 		Scaler = BREAKOUT.filters.Scaler,
 		Timer = BREAKOUT.Timer,
 		TimerEvent = BREAKOUT.TimerEvent,
@@ -260,14 +260,14 @@ BREAKOUT.io.SoftPot = (function() {
 	};
 
 	/**
-	 * Scale the input values from 0.0 -> 1.0 to the specified minimum and maximum values.
+	 * Scale from the minimum and maximum input values to 0.0 -> 1.0.
 	 *
 	 * @param {Number} minimum The minimum value
 	 * @param {Number} maximum The maximum value
 	 */
 	SoftPot.prototype.setRange = function(minimum, maximum) {
 		this._pin.removeAllFilters();
-		this._pin.addFilter(new Scaler(0, 1, minimum, maximum, Scaler.LINEAR));	
+		this._pin.addFilter(new Scaler(mimimum, maximum, 0, 1, Scaler.LINEAR));	
 	};
 
 	/**

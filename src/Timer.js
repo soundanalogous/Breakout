@@ -90,8 +90,10 @@ BREAKOUT.Timer = (function() {
 	Timer.prototype.__defineGetter__("delay", function() { return this._delay; });
 	Timer.prototype.__defineSetter__("delay", function(val) { 
 		this._delay = val;
-		this.stop();
-		this.start(); 
+		if (this._isRunning) {
+			this.stop();
+			this.start();
+		}
 	});	
 
 	/**
@@ -103,8 +105,10 @@ BREAKOUT.Timer = (function() {
 	Timer.prototype.__defineGetter__("repeatCount", function() { return this._repeatCount; });
 	Timer.prototype.__defineSetter__("repeatCount", function(val) { 
 		this._repeatCount = val;
-		this.stop();
-		this.start(); 
+		if (this._isRunning) {
+			this.stop();
+			this.start();
+		}
 	});
 
 	/**

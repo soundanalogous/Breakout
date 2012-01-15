@@ -14,6 +14,7 @@ BREAKOUT.io.Potentiometer = (function() {
 		PhysicalInputBase = BREAKOUT.PhysicalInputBase,
 		Scaler = BREAKOUT.filters.Scaler,
 		Convolution = BREAKOUT.filters.Convolution,
+		Event = BREAKOUT.Event,
 		Event = BREAKOUT.Event;
 
 	/**
@@ -96,9 +97,9 @@ BREAKOUT.io.Potentiometer = (function() {
 	};
 
 	/**
-	 * Scale the potentiometer range (default 0.0 to 1.0) to the new specified range.
-	 * <p>For example, setting the setRange(0, 180) will scale the potentiometer
-	 * values from 0 to 180.</p>
+	 * Scale from the minimum and maximum input values to 0.0 -> 1.0. This is
+	 * useful for sensors such as a flex sensor that may not return the full
+	 * range of 0 to 1. 
 	 *
 	 * @param {Number} minimum The new minimum range (must be less than the maximum).
 	 * @param {Number} maximum The new maximum range.
@@ -106,8 +107,7 @@ BREAKOUT.io.Potentiometer = (function() {
 	Potentiometer.prototype.setRange = function(minimum, maximum) {
 		minimum = minimum || 0;
 		maximum = maximum || 1;
-		//this._pin.filters = [new Scaler(0, 1, minimum, maximum, Scaler.LINEAR)];
-		this._pin.addFilter(new Scaler(0, 1, minimum, maximum, Scaler.LINEAR));
+		this._pin.addFilter(new Scaler(minimum, maximum, 0, 1, Scaler.LINEAR));
 	};
 
 	/**

@@ -22,7 +22,7 @@ BREAKOUT.EventDispatcher = (function () {
 		this._target = target || null;
 		this._eventListeners = {};
 		
-		this.name = "EventDispatcher"; // for testing	
+		this.name = "EventDispatcher";
 	};
 
 	EventDispatcher.prototype = {
@@ -44,7 +44,7 @@ BREAKOUT.EventDispatcher = (function () {
 		 */
 		removeEventListener: function(type, listener) {
 			for (var i=0, len = this._eventListeners[type].length; i<len; i++) {
-				if (this._eventListeners[type][i] == listener) {
+				if (this._eventListeners[type][i] === listener) {
 					this._eventListeners[type].splice(i, 1);
 				}
 			}
@@ -55,8 +55,7 @@ BREAKOUT.EventDispatcher = (function () {
 		 * return {boolean} True is listener exists for this type, false if not.
 		 */
 		hasEventListener: function(type) {
-			// to do: implement this method
-			if (this._eventListeners[type]) {
+			if (this._eventListeners[type] && this._eventListeners[type].length > 0) {
 				return true;
 			} else {
 				return false;

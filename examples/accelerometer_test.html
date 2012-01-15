@@ -23,7 +23,6 @@ $(document).ready(function() {
 	// declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BREAKOUT.IOBoard;
-	var Pin = BREAKOUT.Pin;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
 	var Event = BREAKOUT.Event;
 	var AnalogAccelerometer = BREAKOUT.io.AnalogAccelerometer;
@@ -46,6 +45,8 @@ $(document).ready(function() {
 								arduino.getAnalogPin(2),
 								RANGE_GS,
 								true);
+
+		console.log ("accelerometer created");
 
 	    // Use calibrate_accelerometer.html to obtain the min and max voltage values
 	    // to supply to the getCalibratedRange method below.

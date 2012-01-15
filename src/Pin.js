@@ -49,6 +49,8 @@ BREAKOUT.Pin = (function() {
 		this._numSamples = 0;
 		this._filters = null;
 		this._generator = null;
+
+		this._autoSetValueCallback = this.autoSetValue.bind(this);
 		
 		this._evtDispatcher = new EventDispatcher(this);	
 
@@ -305,7 +307,7 @@ BREAKOUT.Pin = (function() {
 		addGenerator: function(newGenerator) {
 			this.removeGenerator();
 			this._generator = newGenerator;
-			this._generator.addEventListener(GeneratorEvent.UPDATE, this.autoSetValue.bind(this));
+			this._generator.addEventListener(GeneratorEvent.UPDATE, this._autoSetValueCallback);
 		},
 
 		/**
@@ -313,7 +315,7 @@ BREAKOUT.Pin = (function() {
 		 */
 		removeGenerator: function() {
 			if (this._generator !== null) {
-				this._generator.removeEventListener(GeneratorEvent.UPDATE, this.autoSetValue);
+				this._generator.removeEventListener(GeneratorEvent.UPDATE, this._autoSetValueCallback);
 			}
 			this._generator = null;				
 		},

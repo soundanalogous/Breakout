@@ -48,6 +48,8 @@ BREAKOUT.IOBoardEvent = (function() {
 	IOBoardEvent.ANALOG_MAPPING_RESPONSE = "analogMappingResponse";
 	/** @constant */
 	IOBoardEvent.READY = "arduinoReady";
+	/** @constant */
+	IOBoardEvent.CONNECTED = "arduinoConnected";	
 
 
 	IOBoardEvent.prototype = BREAKOUT.inherit(Event.prototype);

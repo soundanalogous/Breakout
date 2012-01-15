@@ -115,7 +115,7 @@ BREAKOUT.IOBoard = (function() {
 		 */
 		function onSocketConnection(event) {
 			console.log("Socket Status: (open)");
-			_self.dispatchEvent(new Event(Event.CONNECTED));
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.CONNECTED));
 			begin();			
 		}
 

@@ -30,10 +30,6 @@ $(document).ready(function() {
 	var Oscillator = BREAKOUT.generators.Oscillator;
 
 	var arduino = new IOBoard("localhost", 8887);
-	
-	var frames = 0;
-	var intensity = 0;
-	var direction = 1;
 	var blinkLED;
 	var fadeLED;
 	var oscSquare;
@@ -64,7 +60,18 @@ $(document).ready(function() {
 		oscSquare = new Oscillator(Oscillator.SQUARE, freq, 1, 0, 0, 0);
 		blinkLED.addGenerator(oscSquare);
 		oscSquare.start();
+
+		setTimeout(stopOsc, 4000);
+		setTimeout(startOsc, 8000);
 				
+	}
+
+	function stopOsc() {
+		oscSquare.stop();
+	}
+
+	function startOsc() {
+		oscSquare.start();
 	}
 			
 });
