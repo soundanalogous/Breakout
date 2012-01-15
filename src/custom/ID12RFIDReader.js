@@ -16,7 +16,7 @@ BREAKOUT.custom.RFIDEvent = (function() {
 	/**
 	 * @exports RFIDEvent as BREAKOUT.custom.RFIDEvent
 	 * @constructor
-	 * @augments BREAKOUT.Event
+	 * @augments JSUTILS.Event
 	 * @param {String} type The event type
 	 * @param {String} tag The RFID tag value (hexadecimal)
 	 */

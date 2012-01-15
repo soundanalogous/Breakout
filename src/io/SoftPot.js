@@ -15,7 +15,7 @@ BREAKOUT.io.SoftPotEvent = (function() {
 	/**
 	 * @exports SoftPotEvent as BREAKOUT.io.SoftPotEvent
 	 * @constructor
-	 * @augments BREAKOUT.Event
+	 * @augments JSUTILS.Event
  	 * @param {String} type The event type
  	 * @param {Number} touchPoint The value where the softpot was touched	 
 	 */

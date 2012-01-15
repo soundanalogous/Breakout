@@ -10,19 +10,19 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> 
-<span class='line'>  6</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.ButtonEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.ButtonEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
 <span class='line'>  8</span> </span><span class="NAME">BREAKOUT.io.ButtonEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> 
 <span class='line'> 10</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ButtonEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 11</span> 
 <span class='line'> 12</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Event</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 14</span> 
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 16</span> 	 * @exports ButtonEvent as BREAKOUT.io.ButtonEvent
 <span class='line'> 17</span> 	 * @constructor
-<span class='line'> 18</span> 	 * @augments BREAKOUT.Event
+<span class='line'> 18</span> 	 * @augments JSUTILS.Event
 <span class='line'> 19</span>  	 * @param {String} type The event type	 
 <span class='line'> 20</span> 	 */</span><span class="WHIT">
 <span class='line'> 21</span> </span><span class="WHIT">	</span><span class="NAME">ButtonEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -41,7 +41,7 @@
 <span class='line'> 34</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
 <span class='line'> 35</span> </span><span class="WHIT">	</span><span class="NAME">ButtonEvent.SUSTAINED_PRESS</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"sustainedPress"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 36</span> 
-<span class='line'> 37</span> </span><span class="WHIT">	</span><span class="NAME">ButtonEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT">	</span><span class="NAME">ButtonEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 38</span> </span><span class="WHIT">	</span><span class="NAME">ButtonEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ButtonEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 39</span> 
 <span class='line'> 40</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">ButtonEvent</span><span class="PUNC">;</span><span class="WHIT">
@@ -54,7 +54,7 @@
 <span class='line'> 47</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 48</span>  */</span><span class="WHIT">
 <span class='line'> 49</span> 
-<span class='line'> 50</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.Button'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.Button'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 51</span> 
 <span class='line'> 52</span> </span><span class="NAME">BREAKOUT.io.Button</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 53</span> 
@@ -62,7 +62,7 @@
 <span class='line'> 55</span> 
 <span class='line'> 56</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 57</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PhysicalInputBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.PhysicalInputBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 58</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Event</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 59</span> </span><span class="WHIT">		</span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 60</span> </span><span class="WHIT">		</span><span class="NAME">ButtonEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.ButtonEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 61</span> 
@@ -118,7 +118,7 @@
 <span class='line'>111</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>112</span> 
 <span class='line'>113</span> 
-<span class='line'>114</span> </span><span class="WHIT">	</span><span class="NAME">Button.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.inherit</span><span class="PUNC">(</span><span class="NAME">PhysicalInputBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">	</span><span class="NAME">Button.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">PhysicalInputBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>115</span> </span><span class="WHIT">	</span><span class="NAME">Button.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Button</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>116</span> 
 <span class='line'>117</span> </span><span class="WHIT">	</span><span class="COMM">/**

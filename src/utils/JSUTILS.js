@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-/** @namespace Namespace and utility functions for Breakout */
+/** @namespace Namespace and utility functions */
 var JSUTILS = JSUTILS || {};
 
 

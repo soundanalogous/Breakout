@@ -27,6 +27,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	 *
 	 * @exports AnalogAccelerometer as BREAKOUT.io.AnalogAccelerometer
 	 * @constructor
+	 * @augments BREAKOUT.PhysicalInputBase	 
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} xPin A reference to the Pin connected to the x axis of the accelerometer
 	 * @param {Pin} yPin A reference to the Pin connected to the y axis of the accelerometer

@@ -15,7 +15,7 @@ BREAKOUT.io.ButtonEvent = (function() {
 	/**
 	 * @exports ButtonEvent as BREAKOUT.io.ButtonEvent
 	 * @constructor
-	 * @augments BREAKOUT.Event
+	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 
 	 */
 	ButtonEvent = function(type) {

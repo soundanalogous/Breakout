@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.TimerEvent</title>
+		<title>JsDoc Reference - JSUTILS.Event</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,15 +193,9 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/BREAKOUT.html">BREAKOUT</a></li>
-	
 	<li><a href="../symbols/BREAKOUT.custom.ID12RFIDReader.html">BREAKOUT.custom.ID12RFIDReader</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.custom.RFIDEvent.html">BREAKOUT.custom.RFIDEvent</a></li>
-	
-	<li><a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a></li>
-	
-	<li><a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.filters.Convolution.html">BREAKOUT.filters.Convolution</a></li>
 	
@@ -255,13 +249,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a></li>
 	
-	<li><a href="../symbols/BREAKOUT.Timer.html">BREAKOUT.Timer</a></li>
-	
-	<li><a href="../symbols/BREAKOUT.TimerEvent.html">BREAKOUT.TimerEvent</a></li>
-	
 	<li><a href="../symbols/BREAKOUT.WSocketEvent.html">BREAKOUT.WSocketEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.WSocketWrapper.html">BREAKOUT.WSocketWrapper</a></li>
+	
+	<li><a href="../symbols/JSUTILS.html">JSUTILS</a></li>
+	
+	<li><a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a></li>
+	
+	<li><a href="../symbols/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+	
+	<li><a href="../symbols/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+	
+	<li><a href="../symbols/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
 	
 </ul>
 <hr />
@@ -272,26 +272,24 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.TimerEvent
+				Class JSUTILS.Event
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
-				<br />Extends
-					<a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_Timer.js.html">Timer.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_utils_Event.js.html">Event.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.TimerEvent.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class JSUTILS.Event.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -304,9 +302,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.TimerEvent.html#constructor">BREAKOUT.TimerEvent</a></b>(type)
+								<b><a href="../symbols/JSUTILS.Event.html#constructor">JSUTILS.Event</a></b>(type)
 							</div>
-							<div class="description"></div>
+							<div class="description">Event 'base class' (but it can also be instantiated directly)</div>
 						</td>
 					</tr>
 				</tbody>
@@ -317,7 +315,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.TimerEvent.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class JSUTILS.Event.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -331,7 +329,7 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.TimerEvent.<b><a href="../symbols/BREAKOUT.TimerEvent.html#.TIMER">TIMER</a></b>
+								JSUTILS.Event.<b><a href="../symbols/JSUTILS.Event.html#.CHANGE">CHANGE</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -341,7 +339,37 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BREAKOUT.TimerEvent.<b><a href="../symbols/BREAKOUT.TimerEvent.html#.TIMER_COMPLETE">TIMER_COMPLETE</a></b>
+								JSUTILS.Event.<b><a href="../symbols/JSUTILS.Event.html#.COMPLETE">COMPLETE</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								JSUTILS.Event.<b><a href="../symbols/JSUTILS.Event.html#.CONNECTED">CONNECTED</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/JSUTILS.Event.html#target">target</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								<b><a href="../symbols/JSUTILS.Event.html#type">type</a></b>
 								</div>
 								<div class="description"></div>
 							</td>
@@ -351,10 +379,6 @@ ul.inheritsList
 				</table>
 				
 				
-				
-				<dl class="inheritsList">
-				<dt>Fields borrowed from class <a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a>: </dt><dd><a href="../symbols/BREAKOUT.Event.html#target">target</a>, <a href="../symbols/BREAKOUT.Event.html#type">type</a></dd>
-				</dl>
 				
 			
 
@@ -371,11 +395,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.TimerEvent</b>(type)
+						<b>JSUTILS.Event</b>(type)
 				</div>
 				
 				<div class="description">
-					
+					Event 'base class' (but it can also be instantiated directly)
 					
 				</div>
 				
@@ -390,7 +414,7 @@ ul.inheritsList
 								<span class="light fixedFont">{String}</span>  <b>type</b>
 								
 							</dt>
-								<dd>The event type</dd>
+								<dd>event type</dd>
 						
 						</dl>
 					
@@ -410,11 +434,11 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".TIMER"> </a>
+					<a name=".CHANGE"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.TimerEvent.</span><b>TIMER</b>
+					<span class="light">JSUTILS.Event.</span><b>CHANGE</b>
 					
 					</div>
 					<div class="description">
@@ -432,11 +456,77 @@ ul.inheritsList
 
 					<hr />
 				
-					<a name=".TIMER_COMPLETE"> </a>
+					<a name=".COMPLETE"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.TimerEvent.</span><b>TIMER_COMPLETE</b>
+					<span class="light">JSUTILS.Event.</span><b>COMPLETE</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".CONNECTED"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">JSUTILS.Event.</span><b>CONNECTED</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="target"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>target</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="type"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>type</b>
 					
 					</div>
 					<div class="description">
@@ -469,7 +559,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jan 13 2012 23:40:26 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 15 2012 02:33:34 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

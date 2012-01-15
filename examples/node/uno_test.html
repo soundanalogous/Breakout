@@ -16,7 +16,7 @@
 
 <!-- order of import is important -->
 <script src="../../socket.io/socket.io.js"></script>
-<script src="../../build/Breakout.js"></script>
+<script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.6.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	var IOBoard = BREAKOUT.IOBoard;
 	var Pin = BREAKOUT.Pin;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var Event = BREAKOUT.Event;
+	var Event = JSUTILS.Event;
 	var BlinkM = BREAKOUT.io.BlinkM;
 	var CompassHMC6352 = BREAKOUT.io.CompassHMC6352;
 	var Button = BREAKOUT.io.Button;

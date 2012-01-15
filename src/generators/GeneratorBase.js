@@ -22,7 +22,7 @@
  	/**
  	 * @exports GeneratorEvent as BREAKOUT.generators.GeneratorEvent
  	 * @constructor
- 	 * @augments BREAKOUT.Event
+ 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type
  	 */
  	GeneratorEvent = function(type) {
@@ -69,7 +69,7 @@
  	 *
  	 * @exports GeneratorBase as BREAKOUT.generators.GeneratorBase
  	 * @constructor
- 	 * @augments BREAKOUT.EventDispatcher
+ 	 * @augments JSUTILS.EventDispatcher
  	 */
  	GeneratorBase = function() {
  		

@@ -13,7 +13,7 @@
 <span class='line'>  6</span>  * &lt;http://code.google.com/p/as3glue/>
 <span class='line'>  7</span>  */</span><span class="WHIT">
 <span class='line'>  8</span> 
-<span class='line'>  9</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.IOBoard'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.IOBoard'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="NAME">BREAKOUT.IOBoard</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 12</span> 
@@ -57,8 +57,8 @@
 <span class='line'> 50</span> 
 <span class='line'> 51</span> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 52</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 53</span> </span><span class="WHIT">		</span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Event</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">		</span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 55</span> </span><span class="WHIT">		</span><span class="NAME">WSocketEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.WSocketEvent</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 56</span> </span><span class="WHIT">		</span><span class="NAME">WSocketWrapper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.WSocketWrapper</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 57</span> </span><span class="WHIT">		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
@@ -122,7 +122,7 @@
 <span class='line'>115</span> 		 */</span><span class="WHIT">
 <span class='line'>116</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">onSocketConnection</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>117</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Socket Status: (open)"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>118</span> </span><span class="WHIT">			</span><span class="NAME">_self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">(</span><span class="NAME">Event.CONNECTED</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">			</span><span class="NAME">_self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.CONNECTED</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>119</span> </span><span class="WHIT">			</span><span class="NAME">begin</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
 <span class='line'>120</span> 		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>121</span> 

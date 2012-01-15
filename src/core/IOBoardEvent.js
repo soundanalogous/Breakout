@@ -15,7 +15,7 @@ BREAKOUT.IOBoardEvent = (function() {
 	/**
 	 * @exports IOBoardEvent as BREAKOUT.IOBoardEvent
 	 * @constructor
-	 * @augments BREAKOUT.Event
+	 * @augments JSUTILS.Event
 	 * @param {String} type The event type
 	 */
 	IOBoardEvent = function(type) {

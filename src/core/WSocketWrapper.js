@@ -15,7 +15,7 @@ BREAKOUT.WSocketEvent = (function() {
 	/**
 	 * @exports WSocketEvent as BREAKOUT.WSocketEvent
 	 * @constructor
-	 * @augments BREAKOUT.Event
+	 * @augments JSUTILS.Event
 	 * @param {String} type The event type
 	 */
 	WSocketEvent = function(type) {

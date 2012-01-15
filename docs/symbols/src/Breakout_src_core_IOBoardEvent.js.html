@@ -10,19 +10,19 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> 
-<span class='line'>  6</span> </span><span class="NAME">BREAKOUT.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.IOBoardEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.IOBoardEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
 <span class='line'>  8</span> </span><span class="NAME">BREAKOUT.IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> 
 <span class='line'> 10</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 11</span> 
 <span class='line'> 12</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Event</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 14</span> 
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 16</span> 	 * @exports IOBoardEvent as BREAKOUT.IOBoardEvent
 <span class='line'> 17</span> 	 * @constructor
-<span class='line'> 18</span> 	 * @augments BREAKOUT.Event
+<span class='line'> 18</span> 	 * @augments JSUTILS.Event
 <span class='line'> 19</span> 	 * @param {String} type The event type
 <span class='line'> 20</span> 	 */</span><span class="WHIT">
 <span class='line'> 21</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
@@ -55,11 +55,13 @@
 <span class='line'> 48</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.ANALOG_MAPPING_RESPONSE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"analogMappingResponse"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 49</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
 <span class='line'> 50</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.READY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"arduinoReady"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 51</span> 
-<span class='line'> 52</span> 
-<span class='line'> 53</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 54</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 55</span> 
-<span class='line'> 56</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.CONNECTED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"arduinoConnected"</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 53</span> 
+<span class='line'> 54</span> 
+<span class='line'> 55</span> 	</span><span class="NAME">IOBoardEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 57</span> 
-<span class='line'> 58</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'> 58</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> 
+<span class='line'> 60</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

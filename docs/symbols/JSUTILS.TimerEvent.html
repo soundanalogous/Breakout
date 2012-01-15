@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT</title>
+		<title>JsDoc Reference - JSUTILS.TimerEvent</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -193,15 +193,9 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/BREAKOUT.html">BREAKOUT</a></li>
-	
 	<li><a href="../symbols/BREAKOUT.custom.ID12RFIDReader.html">BREAKOUT.custom.ID12RFIDReader</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.custom.RFIDEvent.html">BREAKOUT.custom.RFIDEvent</a></li>
-	
-	<li><a href="../symbols/BREAKOUT.Event.html">BREAKOUT.Event</a></li>
-	
-	<li><a href="../symbols/BREAKOUT.EventDispatcher.html">BREAKOUT.EventDispatcher</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.filters.Convolution.html">BREAKOUT.filters.Convolution</a></li>
 	
@@ -255,13 +249,19 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a></li>
 	
-	<li><a href="../symbols/BREAKOUT.Timer.html">BREAKOUT.Timer</a></li>
-	
-	<li><a href="../symbols/BREAKOUT.TimerEvent.html">BREAKOUT.TimerEvent</a></li>
-	
 	<li><a href="../symbols/BREAKOUT.WSocketEvent.html">BREAKOUT.WSocketEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.WSocketWrapper.html">BREAKOUT.WSocketWrapper</a></li>
+	
+	<li><a href="../symbols/JSUTILS.html">JSUTILS</a></li>
+	
+	<li><a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a></li>
+	
+	<li><a href="../symbols/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+	
+	<li><a href="../symbols/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+	
+	<li><a href="../symbols/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
 	
 </ul>
 <hr />
@@ -272,25 +272,27 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Namespace BREAKOUT
+				Class JSUTILS.TimerEvent
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a>.<br />
 				
 			
-				Namespace and utility functions for Breakout
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_BREAKOUT.js.html">BREAKOUT.js</a>.
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_utils_Timer.js.html">Timer.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.">
-				<caption>Namespace Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class JSUTILS.TimerEvent.">
+				<caption>Class Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -302,7 +304,7 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.html#constructor">BREAKOUT</a></b>
+								<b><a href="../symbols/JSUTILS.TimerEvent.html#constructor">JSUTILS.TimerEvent</a></b>(type)
 							</div>
 							<div class="description"></div>
 						</td>
@@ -313,36 +315,35 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-
-<!-- ============================== methods summary ======================== -->
-			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.">
-					<caption>Method Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class JSUTILS.TimerEvent.">
+					<caption>Field Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">BREAKOUT.<b><a href="../symbols/BREAKOUT.html#.inherit">inherit</a></b>(p)
+								<div class="fixedFont">
+								JSUTILS.TimerEvent.<b><a href="../symbols/JSUTILS.TimerEvent.html#.TIMER">TIMER</a></b>
 								</div>
-								<div class="description">Copied from Flanagan, David.</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
 						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">BREAKOUT.<b><a href="../symbols/BREAKOUT.html#.namespace">namespace</a></b>(ns_string)
+								<div class="fixedFont">
+								JSUTILS.TimerEvent.<b><a href="../symbols/JSUTILS.TimerEvent.html#.TIMER_COMPLETE">TIMER_COMPLETE</a></b>
 								</div>
-								<div class="description">Copied from Stefanov, Stoyan.</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -351,6 +352,13 @@ ul.inheritsList
 				
 				
 				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a>: </dt><dd><a href="../symbols/JSUTILS.Event.html#target">target</a>, <a href="../symbols/JSUTILS.Event.html#type">type</a></dd>
+				</dl>
+				
+			
+
+<!-- ============================== methods summary ======================== -->
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -359,11 +367,11 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Namespace Detail
+					Class Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT</b>
+						<b>JSUTILS.TimerEvent</b>(type)
 				</div>
 				
 				<div class="description">
@@ -374,6 +382,17 @@ ul.inheritsList
 				
 				
 				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>type</b>
+								
+							</dt>
+								<dd>The event type</dd>
+						
+						</dl>
 					
 					
 					
@@ -387,45 +406,25 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-
-<!-- ============================== method details ========================= -->		
-			
 				<div class="sectionTitle">
-					Method Detail
+					Field Detail
 				</div>
 				
-					<a name=".inherit"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name=".TIMER"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.</span><b>inherit</b>(p)
+					<span class="light">JSUTILS.TimerEvent.</span><b>TIMER</b>
 					
 					</div>
 					<div class="description">
-						Copied from Flanagan, David. JavaScript: The Definitive Guide
-
-<p>Use this method rather than Object.create() directly if
-browser compatibility is unknown.</p>
+						
 						
 						
 					</div>
 					
 					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>p</b>
-									
-								</dt>
-								<dd>The prototype of the object to inherit.</dd>
-							
-							</dl>
-						
-						
-						
+
 						
 						
 						
@@ -433,38 +432,21 @@ browser compatibility is unknown.</p>
 
 					<hr />
 				
-					<a name=".namespace"> </a>
-					<div class="fixedFont">&lt;static&gt; 
+					<a name=".TIMER_COMPLETE"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BREAKOUT.</span><b>namespace</b>(ns_string)
+					<span class="light">JSUTILS.TimerEvent.</span><b>TIMER_COMPLETE</b>
 					
 					</div>
 					<div class="description">
-						Copied from Stefanov, Stoyan. JavaScript Patterns
-
-<p>Use this function to safely create a new namespace
-if a namespace already exists, it won't be recreated.</p>
+						
 						
 						
 					</div>
 					
 					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>ns_string</b>
-									
-								</dt>
-								<dd>The namespace as a string.</dd>
-							
-							</dl>
-						
-						
-						
+
 						
 						
 						
@@ -472,6 +454,9 @@ if a namespace already exists, it won't be recreated.</p>
 
 					
 				
+			
+
+<!-- ============================== method details ========================= -->		
 			
 			
 <!-- ============================== event details ========================= -->		
@@ -484,7 +469,7 @@ if a namespace already exists, it won't be recreated.</p>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Fri Jan 13 2012 23:40:26 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 15 2012 02:33:34 GMT-0500 (EST)
 		</div>
 	</body>
 </html>
