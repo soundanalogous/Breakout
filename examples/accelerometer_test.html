@@ -22,9 +22,10 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
+	var Event = JSUTILS.Event;
+	
 	var IOBoard = BREAKOUT.IOBoard;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var Event = JSUTILS.Event;
 	var AnalogAccelerometer = BREAKOUT.io.AnalogAccelerometer;
 
 	var arduino = new IOBoard("localhost", 8887);

@@ -29,7 +29,7 @@ BREAKOUT.IOBoardEvent = (function() {
 
 	// events
 	/** @constant */
-	IOBoardEvent.ANALOG_DATA = "analodData";
+	IOBoardEvent.ANALOG_DATA = "analogData";
 	/** @constant */
 	IOBoardEvent.DIGITAL_DATA = "digitalData";
 	/** @constant */
@@ -41,15 +41,11 @@ BREAKOUT.IOBoardEvent = (function() {
 	/** @constant */
 	IOBoardEvent.SYSEX_MESSAGE = "sysexMessage";
 	/** @constant */
-	IOBoardEvent.CAPABILITY_RESPONSE = "capabilityResponse";
-	/** @constant */
 	IOBoardEvent.PIN_STATE_RESPONSE = "pinStateResponse";
 	/** @constant */
-	IOBoardEvent.ANALOG_MAPPING_RESPONSE = "analogMappingResponse";
+	IOBoardEvent.READY = "ioBoardReady";
 	/** @constant */
-	IOBoardEvent.READY = "arduinoReady";
-	/** @constant */
-	IOBoardEvent.CONNECTED = "arduinoConnected";	
+	IOBoardEvent.CONNECTED = "ioBoardConnected";	
 
 
 	IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);

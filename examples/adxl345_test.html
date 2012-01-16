@@ -22,9 +22,10 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
+	var Event = JSUTILS.Event;
+	
 	var IOBoard = BREAKOUT.IOBoard;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var Event = JSUTILS.Event;
 	var AccelerometerADXL345 = BREAKOUT.io.AccelerometerADXL345;
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)

@@ -25,7 +25,7 @@ BREAKOUT.Pin = (function() {
 	 * An object to represent an IOBoard pin
 	 *
 	 * @exports Pin as BREAKOUT.Pin
-	 * @constructor
+	 * @class An object to represent an IOBoard pin
 	 * @param {Number} number The pin number
 	 * @param {Number} type The type of pin
 	 */
@@ -284,6 +284,9 @@ BREAKOUT.Pin = (function() {
 		/**
 		 * Add a new filter to the Pin.
 		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
+		 * @see BREAKOUT.filters.Convolution
+		 * @see BREAKOUT.filters.Scaler
+		 * @see BREAKOUT.filters.TriggerPoint
 		 */
 		addFilter: function(newFilter) {
 
@@ -303,6 +306,7 @@ BREAKOUT.Pin = (function() {
 		 * Assigning a new generator will replace the previously assigned generator.
 		 *
 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
+		 * @see BREAKOUT.generators.Oscillator
 		 */
 		addGenerator: function(newGenerator) {
 			this.removeGenerator();

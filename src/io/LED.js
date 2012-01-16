@@ -30,7 +30,7 @@ BREAKOUT.io.LED = (function() {
 	 * pin, then it is SYNC_DRIVE.</p>
 	 *
 	 * @exports LED as BREAKOUT.io.LED
-	 * @constructor
+	 * @class Creates an LED object.
 	 * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
 	 * @param {Pin} ledPin A reference to the Pin the LED is connected to.
 	 * @param {Number} driveMode The drive mode of the LED. Must be set to LED.SOURCE_MODE

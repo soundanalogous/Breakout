@@ -138,15 +138,15 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function begin() {
-			_self.addEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
+			_self.addEventListener(IOBoardEvent.FIRMWARE_VERSION, onInitialVersionResult);
 			_self.reportVersion();
 		}
 		
 		/**
 		 * @private
 		 */
-		function onVersion(event) {
-			_self.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, onVersion);
+		function onInitialVersionResult(event) {
+			_self.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, onInitialVersionResult);
 			var version = event.version * 10;
 			
 			// make sure the user has uploaded StandardFirmata 2.3 or greater
@@ -436,7 +436,7 @@ BREAKOUT.IOBoard = (function() {
 				pin.value = value;
 			}
 			
-			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pinNumber, type: pinType, value: value});
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
 		}
 		
 		/**
@@ -1017,6 +1017,100 @@ BREAKOUT.IOBoard = (function() {
 		};
 
 	};
+
+	// document events
+
+	/**
+	 * The ioBoardReady event is dispatched when the board is ready to send 
+	 * and receive commands. 
+	 * @name IOBoard#ioBoardReady
+	 * @type BREAKOUT.IOBoardEvent.READY
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 */
+
+	/**
+	 * The ioBoardConnected event is dispatched when the websocket connection
+	 * is established.
+	 * @name IOBoard#ioBoardConnected
+	 * @type BREAKOUT.IOBoardEvent.CONNECTED
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 */
+	 
+	/**
+	 * The stringMessage event is dispatched when a string is received from
+	 * the IOBoard.
+	 * @name IOBoard#stringMessage
+	 * @type BREAKOUT.IOBoardEvent.STRING_MESSAGE
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {String} message The string message received from the IOBoard
+	 */
+
+	/**
+	 * The sysexMessage event is dispatched when a sysex message is 
+	 * received from the IOBoard.
+	 * @name IOBoard#sysexMessage
+	 * @type BREAKOUT.IOBoardEvent.SYSEX_MESSAGE
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {Array} message The sysex data
+	 */
+	 
+	/**
+	 * The firmwareVersion event is dispatched when the results of
+	 * a pin state query (via a call to: queryPinState()) is received.
+	 * @name IOBoard#firmwareVersion
+	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_VERSION
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+	 */
+	 
+	/**
+	 * The firmwareName event is dispatched when the results of
+	 * a pin state query (via a call to: queryPinState()) is received.
+	 * @name IOBoard#firmwareName
+	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_NAME
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {String} name The name of the firmware running on the IOBoard
+	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+	 */	 	 	 
+	 
+	/**
+	 * The pinStateResponse event is dispatched when the results of
+	 * a pin state query (via a call to: queryPinState()) is received.
+	 * @name IOBoard#pinStateResponse
+	 * @type BREAKOUT.IOBoardEvent.PIN_STATE_RESPONSE
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+	 */
+
+	/**
+	 * The analogData event is dispatched when analog data is received
+	 * from the IOBoard.
+	 * @name IOBoard#analogData
+	 * @inner
+	 * @type BREAKOUT.IOBoardEvent.ANALOG_DATA
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+	 */
+	 
+	/**
+	 * The digitalData event is dispatched when digital data is received
+	 * from the IOBoard.
+	 * @name IOBoard#digitalData
+	 * @inner
+	 * @type BREAKOUT.IOBoardEvent.DIGITAL_DATA
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+	 */	 
+	 	 		 	  	 
 
 	return IOBoard;
 

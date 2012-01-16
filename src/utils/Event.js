@@ -10,26 +10,61 @@ JSUTILS.Event = (function() {
 	var Event;
 
 	/** 
-	 * Event 'base class' (but it can also be instantiated directly)
+	 * A base class for the creation of Event objects.
 	 *
+	 * @class A base class for the creation of Event objects.
 	 * @exports Event as JSUTILS.Event
-	 * @constructor
 	 * @param {String} type event type
 	 */
 	Event = function(type) {
-		/** @property {String} type The event type. */
-		this.type = type;
-		/** @property {Object} target The event target. */
-		this.target = null;
 
-		this.name = "Event"; // for testing
+		this._type = type;
+		this._target = null;
+
+		this.name = "Event";
 	};
 
-	/** @constant */
+	Event.prototype = {
+		/**
+		 * The event type
+		 * @name Event#type
+		 * @type String
+		 */ 		
+		get type() {
+			return this._type;
+		},
+		set type(val) {
+			this._type = val;
+		},
+
+		/**
+		 * The event target
+		 * @name Event#target
+		 * @type Object
+		 */ 
+		get target() {
+			return this._target;
+		},
+		set target(val) {
+			this._target = val;
+		}
+
+	};
+
+	/** 
+	 * Description
+	 * @constant
+	 */
 	Event.CONNECTED = "connected";
-	/** @constant */
+	/** 
+	 * Description
+	 * @constant
+	 */
 	Event.CHANGE	= "change";
-	/** @constant */
+	/** 
+	 * Description
+	 * @constant
+	 */
 	Event.COMPLETE	= "complete";
 
 	return Event;

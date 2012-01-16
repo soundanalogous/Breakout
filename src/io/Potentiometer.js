@@ -20,7 +20,7 @@ BREAKOUT.io.Potentiometer = (function() {
 	 * Creates a new Potentiometer. Listen for a change event (Event.CHANGE).
 	 *
 	 * @exports Potentiometer as BREAKOUT.io.Potentiometer
-	 * @constructor
+	 * @class
 	 * @augments BREAKOUT.PhysicalInputBase	 
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} pin A reference to the Pin the potentiometer is connected to.
@@ -116,7 +116,22 @@ BREAKOUT.io.Potentiometer = (function() {
 	Potentiometer.prototype.onPinChange = function(event) {
 		this.dispatchEvent(new Event(Event.CHANGE));
 	};
-	
+
+	// document events
+
+	/**
+	 * The change event is dispatched when the potentiometer value changes.
+	 * @name Potentiometer#change
+	 * @type JSUTILS.Event.CHANGE
+	 * @event
+	 * @example
+	 * pot.addEventListener(Event.CHANGE, onValueChange);
+	 *
+	 * function onValueChange(event) {
+	 *   console.log("value = " + event.target.value);	
+	 * }
+	 * @param {BREAKOUT.Potentiometer} target A reference to the Potentiometer object
+	 */
 
 	return Potentiometer;
 

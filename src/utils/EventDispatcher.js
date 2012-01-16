@@ -12,8 +12,8 @@ JSUTILS.EventDispatcher = (function () {
 	/**
 	 * An as3-like EventDispatcher class.
 	 *
+	 * @class
 	 * @exports EventDispatcher as JSUTILS.EventDispatcher
-	 * @constructor
 	 * @param {Class} target The instance of the class that implements EventDispatcher
 	 */
 	EventDispatcher = function(target) {
@@ -28,6 +28,7 @@ JSUTILS.EventDispatcher = (function () {
 	EventDispatcher.prototype = {
 
 		/**
+		 * Description
 		 * @param {String} type The event type
 		 * @param {Function} listener The function to be called when the event is fired
 		 */
@@ -39,6 +40,7 @@ JSUTILS.EventDispatcher = (function () {
 		},
 		
 		/**
+		 * Description
 		 * @param {String} type The event type
 		 * @param {Function} listener The function to be called when the event is fired
 		 */
@@ -48,9 +50,11 @@ JSUTILS.EventDispatcher = (function () {
 					this._eventListeners[type].splice(i, 1);
 				}
 			}
+			// to do: if no more listeners for a type, delete key?
 		},
 		
 		/**
+		 * Description
 		 * @param {String} type The event type
 		 * return {boolean} True is listener exists for this type, false if not.
 		 */
@@ -63,6 +67,7 @@ JSUTILS.EventDispatcher = (function () {
 		},
 		
 		/**
+		 * Description
 		 * @param {Event} type The Event object.
 		 * @param {Object} optionalParams Optional parameters passed as an object.
 		 * return {boolean} True if dispatch is successful, false if not.

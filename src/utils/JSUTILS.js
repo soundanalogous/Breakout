@@ -1,6 +1,8 @@
 /**
- * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
- * Released under the MIT license. See LICENSE file for details.
+ * This creates a namespace for common javascript utility objects and also
+ * contains a few utility functions.
+ *
+ * inherit() method copied from Flanagan, David. JavaScript: The Definitive Guide.
  */
 
 /** @namespace Namespace and utility functions */
@@ -10,8 +12,8 @@ var JSUTILS = JSUTILS || {};
 /* Utility functions */
 
 /** 
- * <p>Use this function to safely create a new namespace
- * if a namespace already exists, it won't be recreated.</p>
+ * Use this function to safely create a new namespace
+ * if a namespace already exists, it won't be recreated.
  *
  * @function
  * @param {String} namespaceString The namespace as a string.
@@ -32,10 +34,10 @@ JSUTILS.namespace = function (namespaceString) {
 };
 
 /**
- * Copied from Flanagan, David. JavaScript: The Definitive Guide
- *
- * <p>Use this method rather than Object.create() directly if
- * browser compatibility is unknown.</p>
+
+/**
+ * Use this method rather than Object.create() directly if
+ * browser compatibility is unknown.
  *
  * @function
  * @param {Object} p The prototype of the object to inherit.
@@ -52,12 +54,13 @@ JSUTILS.inherit = function(p) {
 	return new f(); // use f() to create an 'heir' of p.
 };
 
-/**
- * Copied from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
- */
+
+// Copied from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
 if (!Function.prototype.bind) {  
 
-	/** add bind for browsers that don't support it (Safari)
+	/** 
+	 * add bind for browsers that don't support it (Safari)
+	 * @function
 	 * @private
 	 */
   	Function.prototype.bind = function (oThis) {  
@@ -68,9 +71,13 @@ if (!Function.prototype.bind) {
   
     var aArgs = Array.prototype.slice.call(arguments, 1),   
         fToBind = this, 
-        /** @private */  
+        /** 
+         * @private
+         */  
         fNOP = function () {},
-        /** @private */  
+        /** 
+         * @private
+         */  
         fBound = function () {  
           return fToBind.apply(this instanceof fNOP  
                                  ? this  
