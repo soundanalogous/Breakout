@@ -42,6 +42,7 @@ pre.code
 	display: block;
 	padding: 8px;
 	border: 1px dashed #ccc;
+	background-color: #F0F8FF;
 }
 
 #index
@@ -215,6 +216,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html">BREAKOUT.io.AccelerometerADXL345</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.io.AccelerometerEvent.html">BREAKOUT.io.AccelerometerEvent</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html">BREAKOUT.io.AnalogAccelerometer</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.BlinkM.html">BREAKOUT.io.BlinkM</a></li>
@@ -222,6 +225,8 @@ ul.inheritsList
 	<li><a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.ButtonEvent.html">BREAKOUT.io.ButtonEvent</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.io.CompassEvent.html">BREAKOUT.io.CompassEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.CompassHMC6352.html">BREAKOUT.io.CompassHMC6352</a></li>
 	
@@ -361,6 +366,17 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
+								<b><a href="../symbols/BREAKOUT.io.SoftPot.html#tapTimeout">tapTimeout</a></b>
+								</div>
+								<div class="description">The maximum time (in milliseconds) between a press and release in order to
+trigger a TAP event.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
 								<b><a href="../symbols/BREAKOUT.io.SoftPot.html#value">value</a></b>
 								</div>
 								<div class="description">The current value.</div>
@@ -412,6 +428,88 @@ ul.inheritsList
 				
 			
 <!-- ============================== events summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the events documented in the class BREAKOUT.io.SoftPot.">
+					<caption>Event Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Event Attributes</th>
+							<th scope="col">Event Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.SoftPot.html#event:softPotDrag">softPotDrag</a></b>
+								</div>
+								<div class="description">The softPotDrag event is dispatched when a drag is detected along 
+the length of the softpot sensor.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.SoftPot.html#event:softPotFlickDown">softPotFlickDown</a></b>
+								</div>
+								<div class="description">The softPotFlickDown event is dispatched when a flick gesture is 
+detected in the direction away from the sensor pins.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.SoftPot.html#event:softPotFlickUp">softPotFlickUp</a></b>
+								</div>
+								<div class="description">The softPotFlickUp event is dispatched when a flick gesture is detected
+in the direction of the sensor pins.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.SoftPot.html#event:softPotPressed">softPotPressed</a></b>
+								</div>
+								<div class="description">The softPotPressed event is dispatched when pressure is applied to 
+the softpot surface.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.SoftPot.html#event:softPotReleased">softPotReleased</a></b>
+								</div>
+								<div class="description">The softPotReleased event is dispatched when pressure is released from 
+the softpot surface.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.SoftPot.html#event:softPotTap">softPotTap</a></b>
+								</div>
+								<div class="description">The softPotTap event is dispatched when a press and release occurs
+in in less than the duration specified by the tapTimeout property.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+				<dl class="inheritsList">
+				
+				</dl>
+				
 			
 
 <!-- ============================== constructor details ==================== -->		
@@ -539,6 +637,29 @@ ul.inheritsList
 
 					<hr />
 				
+					<a name="tapTimeout"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Number}</span>
+					<b>tapTimeout</b>
+					
+					</div>
+					<div class="description">
+						The maximum time (in milliseconds) between a press and release in order to
+trigger a TAP event.
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
 					<a name="value"> </a>
 					<div class="fixedFont">
 					
@@ -615,6 +736,233 @@ ul.inheritsList
 			
 <!-- ============================== event details ========================= -->		
 			
+				<div class="sectionTitle">
+					Event Detail
+				</div>
+				
+					<a name="event:softPotDrag"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.SoftPotEvent.html#.DRAG">BREAKOUT.io.SoftPotEvent.DRAG</a>}</span>
+					<b>softPotDrag</b>
+					
+					</div>
+					<div class="description">
+						The softPotDrag event is dispatched when a drag is detected along 
+the length of the softpot sensor.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the SoftPot object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:softPotFlickDown"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.SoftPotEvent.html#.FLICK_DOWN">BREAKOUT.io.SoftPotEvent.FLICK_DOWN</a>}</span>
+					<b>softPotFlickDown</b>
+					
+					</div>
+					<div class="description">
+						The softPotFlickDown event is dispatched when a flick gesture is 
+detected in the direction away from the sensor pins.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the SoftPot object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:softPotFlickUp"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.SoftPotEvent.html#.FLICK_UP">BREAKOUT.io.SoftPotEvent.FLICK_UP</a>}</span>
+					<b>softPotFlickUp</b>
+					
+					</div>
+					<div class="description">
+						The softPotFlickUp event is dispatched when a flick gesture is detected
+in the direction of the sensor pins.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the SoftPot object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:softPotPressed"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.SoftPotEvent.html#.PRESS">BREAKOUT.io.SoftPotEvent.PRESS</a>}</span>
+					<b>softPotPressed</b>
+					
+					</div>
+					<div class="description">
+						The softPotPressed event is dispatched when pressure is applied to 
+the softpot surface.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the SoftPot object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:softPotReleased"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.SoftPotEvent.html#.RELEASE">BREAKOUT.io.SoftPotEvent.RELEASE</a>}</span>
+					<b>softPotReleased</b>
+					
+					</div>
+					<div class="description">
+						The softPotReleased event is dispatched when pressure is released from 
+the softpot surface.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the SoftPot object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:softPotTap"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.SoftPotEvent.html#.TAP">BREAKOUT.io.SoftPotEvent.TAP</a>}</span>
+					<b>softPotTap</b>
+					
+					</div>
+					<div class="description">
+						The softPotTap event is dispatched when a press and release occurs
+in in less than the duration specified by the tapTimeout property.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.SoftPot.html">BREAKOUT.io.SoftPot</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the SoftPot object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
 			
 			<hr />
 		</div>
@@ -623,7 +971,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 15 2012 02:33:34 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jan 17 2012 00:44:56 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

@@ -22,11 +22,10 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
 	var IOBoard = BREAKOUT.IOBoard;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
 	var AnalogAccelerometer = BREAKOUT.io.AnalogAccelerometer;
+	var AccelerometerEvent = BREAKOUT.io.AccelerometerEvent;	
 
 	var arduino = new IOBoard("localhost", 8887);
 	var RANGE_GS = 3; // +-3 Gs for ADXL335
@@ -47,8 +46,6 @@ $(document).ready(function() {
 								RANGE_GS,
 								true);
 
-		console.log ("accelerometer created");
-
 	    // Use calibrate_accelerometer.html to obtain the min and max voltage values
 	    // to supply to the getCalibratedRange method below.
 
@@ -63,10 +60,10 @@ $(document).ready(function() {
 		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
 		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
 		
-		accelerometer.addEventListener(Event.CHANGE, onAccelerationChange);
+		accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
 	}
 	
-	function onAccelerationChange(event) {
+	function onAccelerationUpdate(event) {
 		var accel = event.target;
 		
 		$('#xVal').html("x = " + accel.x.toFixed(3));

@@ -112,6 +112,7 @@ BREAKOUT.io.SoftPot = (function() {
 		this._distanceFromPressed = 0;
 		this._minFlickMovement = 1.0/softPotLength * 2.5;
 		this._minDragMovement = 1.0/softPotLength * 1.0;
+		this._tapTimeout = TAP_TIMEOUT;
 		
 		this._board = board;
 		board.enableAnalogPin(this._pin.analogNumber);
@@ -197,7 +198,7 @@ BREAKOUT.io.SoftPot = (function() {
 					if (this._pressTimer.running) {
 				
 						// if less than tap timeout, then it is a tap 
-						if (!this._isDrag && this._pressTimer.currentCount <= TAP_TIMEOUT / PRESS_TIMER_INTERVAL) {
+						if (!this._isDrag && this._pressTimer.currentCount <= this._tapTimeout / PRESS_TIMER_INTERVAL) {
 							this.dispatch(SoftPotEvent.TAP);
 						}
 					} 
@@ -334,6 +335,72 @@ BREAKOUT.io.SoftPot = (function() {
 	SoftPot.prototype.__defineGetter__("minDragMovement", function() { return this._minDragMovement; });	
 	SoftPot.prototype.__defineSetter__("minDragMovement", function(min) { this._minDragMovement = min; });
 
+	/**
+	 * The maximum time (in milliseconds) between a press and release in order to
+	 * trigger a TAP event.
+	 * @name SoftPot#tapTimeout
+	 * @property
+	 * @type Number
+	 */ 
+	SoftPot.prototype.__defineGetter__("tapTimeout", function() { return this._tapTimeout; });	
+	SoftPot.prototype.__defineSetter__("tapTimeout", function(t) { this._tapTimeout = t; });
+
+
+	// document events
+
+	/**
+	 * The softPotPressed event is dispatched when pressure is applied to 
+	 * the softpot surface.
+	 * @name SoftPot#softPotPressed
+	 * @type BREAKOUT.io.SoftPotEvent.PRESS
+	 * @event
+	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 */
+
+	/**
+	 * The softPotReleased event is dispatched when pressure is released from 
+	 * the softpot surface.
+	 * @name SoftPot#softPotReleased
+	 * @type BREAKOUT.io.SoftPotEvent.RELEASE
+	 * @event
+	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 */	
+	 
+	/**
+	 * The softPotDrag event is dispatched when a drag is detected along 
+	 * the length of the softpot sensor.
+	 * @name SoftPot#softPotDrag
+	 * @type BREAKOUT.io.SoftPotEvent.DRAG
+	 * @event
+	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 */	
+	 
+	/**
+	 * The softPotFlickUp event is dispatched when a flick gesture is detected
+	 * in the direction of the sensor pins.
+	 * @name SoftPot#softPotFlickUp
+	 * @type BREAKOUT.io.SoftPotEvent.FLICK_UP
+	 * @event
+	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 */	
+	 
+	/**
+	 * The softPotFlickDown event is dispatched when a flick gesture is 
+	 * detected in the direction away from the sensor pins.
+	 * @name SoftPot#softPotFlickDown
+	 * @type BREAKOUT.io.SoftPotEvent.FLICK_DOWN
+	 * @event
+	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 */
+	 
+	/**
+	 * The softPotTap event is dispatched when a press and release occurs
+	 * in in less than the duration specified by the tapTimeout property.
+	 * @name SoftPot#softPotTap
+	 * @type BREAKOUT.io.SoftPotEvent.TAP
+	 * @event
+	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 */		 	 	 	 
 
 	return SoftPot;
 

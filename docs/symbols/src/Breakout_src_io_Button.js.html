@@ -217,7 +217,44 @@
 <span class='line'>210</span> </span><span class="WHIT">	</span><span class="COMM">/** @contstant */</span><span class="WHIT">
 <span class='line'>211</span> </span><span class="WHIT">	</span><span class="NAME">Button.INTERNAL_PULL_UP</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">2</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>212</span> 
-<span class='line'>213</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Button</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>214</span> 
-<span class='line'>215</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>216</span> </span></pre></body></html>
+<span class='line'>213</span> 
+<span class='line'>214</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>215</span> 
+<span class='line'>216</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>217</span> 	 * The pressed event is dispatched when the button is pressed.
+<span class='line'>218</span> 	 * @name Button#pressed
+<span class='line'>219</span> 	 * @type BREAKOUT.io.ButtonEvent.PRESS
+<span class='line'>220</span> 	 * @event
+<span class='line'>221</span> 	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+<span class='line'>222</span> 	 */</span><span class="WHIT">	
+<span class='line'>223</span> 
+<span class='line'>224</span> 	</span><span class="COMM">/**
+<span class='line'>225</span> 	 * The released event is dispatched when the button is released.
+<span class='line'>226</span> 	 * @name Button#released
+<span class='line'>227</span> 	 * @type BREAKOUT.io.ButtonEvent.RELEASE
+<span class='line'>228</span> 	 * @event
+<span class='line'>229</span> 	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+<span class='line'>230</span> 	 */</span><span class="WHIT">	
+<span class='line'>231</span> 	 
+<span class='line'>232</span> 	</span><span class="COMM">/**
+<span class='line'>233</span> 	 * The longPress event is dispatched once when the button has been held for
+<span class='line'>234</span> 	 * the time duration specified by the sustainedPressInterval property.
+<span class='line'>235</span> 	 * @name Button#longPress
+<span class='line'>236</span> 	 * @type BREAKOUT.io.ButtonEvent.LONG_PRESS
+<span class='line'>237</span> 	 * @event
+<span class='line'>238</span> 	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+<span class='line'>239</span> 	 */</span><span class="WHIT">	
+<span class='line'>240</span> 	 
+<span class='line'>241</span> 	</span><span class="COMM">/**
+<span class='line'>242</span> 	 * The sustainedPress event is dispatched continuously at the rate 
+<span class='line'>243</span> 	 * specified by the sustainedPressInterval property while the button is held.
+<span class='line'>244</span> 	 * @name Button#sustainedPress
+<span class='line'>245</span> 	 * @type BREAKOUT.io.ButtonEvent.SUSTAINED_PRESS
+<span class='line'>246</span> 	 * @event
+<span class='line'>247</span> 	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+<span class='line'>248</span> 	 */</span><span class="WHIT">		 	 	 
+<span class='line'>249</span> 
+<span class='line'>250</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Button</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>251</span> 
+<span class='line'>252</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>253</span> </span></pre></body></html>

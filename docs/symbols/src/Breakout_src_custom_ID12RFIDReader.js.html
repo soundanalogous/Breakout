@@ -192,7 +192,28 @@
 <span class='line'>185</span> 
 <span class='line'>186</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>187</span> 
-<span class='line'>188</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">ID12RFIDReader</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>189</span> 
-<span class='line'>190</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>191</span> </span></pre></body></html>
+<span class='line'>188</span> 
+<span class='line'>189</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>190</span> 
+<span class='line'>191</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>192</span> 	 * The addTag event is dispatched when a new tag is read.
+<span class='line'>193</span> 	 * @name ID12RFIDReader#addTag
+<span class='line'>194</span> 	 * @type BREAKOUT.custom.RFIDEvent.ADD_TAG
+<span class='line'>195</span> 	 * @event
+<span class='line'>196</span> 	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+<span class='line'>197</span> 	 * @param {String} tag The RFID tag value.	 
+<span class='line'>198</span> 	 */</span><span class="WHIT">
+<span class='line'>199</span> </span><span class="WHIT">	 
+<span class='line'>200</span> 	</span><span class="COMM">/**
+<span class='line'>201</span> 	 * The removeTag event is dispatched when a tag is removed from the reader.
+<span class='line'>202</span> 	 * @name ID12RFIDReader#removeTag
+<span class='line'>203</span> 	 * @type BREAKOUT.custom.RFIDEvent.REMOVE_TAG
+<span class='line'>204</span> 	 * @event
+<span class='line'>205</span> 	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+<span class='line'>206</span> 	 * @param {String} tag The RFID tag value.	 
+<span class='line'>207</span> 	 */</span><span class="WHIT">		 	
+<span class='line'>208</span> 
+<span class='line'>209</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">ID12RFIDReader</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>210</span> 
+<span class='line'>211</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>212</span> </span></pre></body></html>

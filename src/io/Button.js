@@ -210,6 +210,43 @@ BREAKOUT.io.Button = (function() {
 	/** @contstant */
 	Button.INTERNAL_PULL_UP = 2;
 
+
+	// document events
+
+	/**
+	 * The pressed event is dispatched when the button is pressed.
+	 * @name Button#pressed
+	 * @type BREAKOUT.io.ButtonEvent.PRESS
+	 * @event
+	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 */	
+
+	/**
+	 * The released event is dispatched when the button is released.
+	 * @name Button#released
+	 * @type BREAKOUT.io.ButtonEvent.RELEASE
+	 * @event
+	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 */	
+	 
+	/**
+	 * The longPress event is dispatched once when the button has been held for
+	 * the time duration specified by the sustainedPressInterval property.
+	 * @name Button#longPress
+	 * @type BREAKOUT.io.ButtonEvent.LONG_PRESS
+	 * @event
+	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 */	
+	 
+	/**
+	 * The sustainedPress event is dispatched continuously at the rate 
+	 * specified by the sustainedPressInterval property while the button is held.
+	 * @name Button#sustainedPress
+	 * @type BREAKOUT.io.ButtonEvent.SUSTAINED_PRESS
+	 * @event
+	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 */		 	 	 
+
 	return Button;
 
 }());

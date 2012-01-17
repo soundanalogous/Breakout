@@ -208,9 +208,20 @@
 <span class='line'>201</span>  	 */</span><span class="WHIT">
 <span class='line'>202</span> </span><span class="WHIT"> 	</span><span class="NAME">Oscillator.LINEAR</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">lastVal</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>203</span> </span><span class="WHIT"> 		</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">?</span><span class="WHIT"> </span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>204</span> </span><span class="WHIT"> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT"> 	 	 	 	 	
-<span class='line'>205</span> 
-<span class='line'>206</span>  	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Oscillator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>204</span> </span><span class="WHIT"> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>205</span> </span><span class="WHIT"> 	
+<span class='line'>206</span> 	</span><span class="COMM">// document events</span><span class="WHIT">
 <span class='line'>207</span> 
-<span class='line'>208</span> 
-<span class='line'>209</span> </span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>208</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>209</span> 	 * The update event is dispatched at the rate specified 
+<span class='line'>210</span> 	 * by the serviceInterval parameter (default = 33ms).
+<span class='line'>211</span> 	 * @name Oscillator#update
+<span class='line'>212</span> 	 * @type BREAKOUT.generators.GeneratorEvent.UPDATE
+<span class='line'>213</span> 	 * @event
+<span class='line'>214</span> 	 * @param {BREAKOUT.generators.Oscillator} target A reference to the Oscillator object.
+<span class='line'>215</span> 	 */</span><span class="WHIT">	 		 	
+<span class='line'>216</span> 
+<span class='line'>217</span>  	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Oscillator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>218</span> 
+<span class='line'>219</span> 
+<span class='line'>220</span> </span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

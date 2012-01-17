@@ -135,51 +135,78 @@
 <span class='line'>128</span> </span><span class="WHIT">					</span><span class="KEYW">throw</span><span class="WHIT"> </span><span class="STRN">"Websockets not supported by this browser"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>129</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>130</span> 
-<span class='line'>131</span> </span><span class="WHIT">				</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Starting up..."</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">				</span><span class="NAME">self._socket.onopen</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>132</span> 
-<span class='line'>133</span> </span><span class="WHIT">				</span><span class="NAME">self._socket.onopen</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">					</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WSocketEvent</span><span class="PUNC">(</span><span class="NAME">WSocketEvent.CONNECTED</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>134</span> 
-<span class='line'>135</span> </span><span class="WHIT">					</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WSocketEvent</span><span class="PUNC">(</span><span class="NAME">WSocketEvent.CONNECTED</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>136</span> 
-<span class='line'>137</span> </span><span class="WHIT">					</span><span class="NAME">self._socket.onmessage</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>138</span> </span><span class="WHIT">						</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WSocketEvent</span><span class="PUNC">(</span><span class="NAME">WSocketEvent.MESSAGE</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">msg.data</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>139</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>140</span> 
-<span class='line'>141</span> </span><span class="WHIT">					</span><span class="NAME">self._socket.onclose</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>142</span> </span><span class="WHIT">						</span><span class="NAME">self._readyState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self._socket.readyState</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>143</span> </span><span class="WHIT">						</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WSocketEvent</span><span class="PUNC">(</span><span class="NAME">WSocketEvent.CLOSE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
-<span class='line'>144</span> 					</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>145</span> 
-<span class='line'>146</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>147</span> </span><span class="WHIT">				
-<span class='line'>148</span> 			</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="PUNC">(</span><span class="NAME">exception</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>149</span> </span><span class="WHIT">				</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Error "</span><span class="PUNC">+</span><span class="NAME">exception</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>150</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>151</span> </span><span class="WHIT">				
-<span class='line'>152</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">					</span><span class="NAME">self._socket.onmessage</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">msg</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">						</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WSocketEvent</span><span class="PUNC">(</span><span class="NAME">WSocketEvent.MESSAGE</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">message</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">msg.data</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>138</span> 
+<span class='line'>139</span> </span><span class="WHIT">					</span><span class="NAME">self._socket.onclose</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">						</span><span class="NAME">self._readyState</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">self._socket.readyState</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">						</span><span class="NAME">self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">WSocketEvent</span><span class="PUNC">(</span><span class="NAME">WSocketEvent.CLOSE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>142</span> 					</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>143</span> 
+<span class='line'>144</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>145</span> </span><span class="WHIT">				
+<span class='line'>146</span> 			</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="PUNC">(</span><span class="NAME">exception</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">				</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Error "</span><span class="PUNC">+</span><span class="NAME">exception</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">				
+<span class='line'>150</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>151</span> 
+<span class='line'>152</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>153</span> 
-<span class='line'>154</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>155</span> 
-<span class='line'>156</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>157</span> 	 * Send a message
-<span class='line'>158</span> 	 * @param {String} message The message to send
-<span class='line'>159</span> 	 */</span><span class="WHIT">
-<span class='line'>160</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper.prototype.send</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>161</span> </span><span class="WHIT">		</span><span class="COMM">// to do: ensure socket is not null before trying to send</span><span class="WHIT">
-<span class='line'>162</span> </span><span class="WHIT">		</span><span class="NAME">this._socket.send</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>163</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>155</span> 	 * Send a message
+<span class='line'>156</span> 	 * @param {String} message The message to send
+<span class='line'>157</span> 	 */</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">	</span><span class="NAME">WSocketWrapper.prototype.send</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">		</span><span class="COMM">// to do: ensure socket is not null before trying to send</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">		</span><span class="NAME">this._socket.send</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>161</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>162</span> 
+<span class='line'>163</span> </span><span class="WHIT">	</span><span class="COMM">// to do: ensure socket is not null before trying to get readyState</span><span class="WHIT">
 <span class='line'>164</span> 
-<span class='line'>165</span> </span><span class="WHIT">	</span><span class="COMM">// to do: ensure socket is not null before trying to get readyState</span><span class="WHIT">
-<span class='line'>166</span> 
-<span class='line'>167</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>168</span> 	 * [read-only] Wrapper for the readyState method of the native websocket implementation
-<span class='line'>169</span> 	 * &lt;p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3&lt;/p>
-<span class='line'>170</span> 	 * @name WSocketWrapper#readyState
-<span class='line'>171</span> 	 * @property
-<span class='line'>172</span> 	 * @type String
-<span class='line'>173</span> 	 */</span><span class="WHIT">		 
-<span class='line'>174</span> 	</span><span class="NAME">WSocketWrapper.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"readyState"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._readyState</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>175</span> 
-<span class='line'>176</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">WSocketWrapper</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>177</span> 
-<span class='line'>178</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>165</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>166</span> 	 * [read-only] Wrapper for the readyState method of the native websocket implementation
+<span class='line'>167</span> 	 * &lt;p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3&lt;/p>
+<span class='line'>168</span> 	 * @name WSocketWrapper#readyState
+<span class='line'>169</span> 	 * @property
+<span class='line'>170</span> 	 * @type String
+<span class='line'>171</span> 	 */</span><span class="WHIT">		 
+<span class='line'>172</span> 	</span><span class="NAME">WSocketWrapper.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"readyState"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._readyState</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>173</span> 
+<span class='line'>174</span> 
+<span class='line'>175</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>176</span> 
+<span class='line'>177</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>178</span> 	 * The webSocketConnected event is dispatched when a connection with
+<span class='line'>179</span> 	 * the websocket is established.
+<span class='line'>180</span> 	 * @name WSocketWrapper#webSocketConnected
+<span class='line'>181</span> 	 * @type BREAKOUT.WebsocketEvent.CONNECTED
+<span class='line'>182</span> 	 * @event
+<span class='line'>183</span> 	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object.
+<span class='line'>184</span> 	 */</span><span class="WHIT">	
+<span class='line'>185</span> 
+<span class='line'>186</span> 	</span><span class="COMM">/**
+<span class='line'>187</span> 	 * The webSocketMessage event is dispatched when a websocket message is received.
+<span class='line'>188</span> 	 * @name WSocketWrapper#webSocketMessage
+<span class='line'>189</span> 	 * @type BREAKOUT.WebsocketEvent.MESSAGE
+<span class='line'>190</span> 	 * @event
+<span class='line'>191</span> 	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object.
+<span class='line'>192</span> 	 * @param {String} message The websocket data	 
+<span class='line'>193</span> 	 */</span><span class="WHIT">	
+<span class='line'>194</span> 
+<span class='line'>195</span> 	</span><span class="COMM">/**
+<span class='line'>196</span> 	 * The webSocketClosed event is dispatched the websocket connection is closed.
+<span class='line'>197</span> 	 * @name WSocketWrapper#webSocketClosed
+<span class='line'>198</span> 	 * @type BREAKOUT.WebsocketEvent.CLOSE
+<span class='line'>199</span> 	 * @event
+<span class='line'>200</span> 	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object. 
+<span class='line'>201</span> 	 */</span><span class="WHIT">		 
+<span class='line'>202</span> 
+<span class='line'>203</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">WSocketWrapper</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>204</span> 
+<span class='line'>205</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

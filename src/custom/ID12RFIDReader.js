@@ -185,6 +185,27 @@ BREAKOUT.custom.ID12RFIDReader = (function() {
 
 	};
 
+
+	// document events
+
+	/**
+	 * The addTag event is dispatched when a new tag is read.
+	 * @name ID12RFIDReader#addTag
+	 * @type BREAKOUT.custom.RFIDEvent.ADD_TAG
+	 * @event
+	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+	 * @param {String} tag The RFID tag value.	 
+	 */
+	 
+	/**
+	 * The removeTag event is dispatched when a tag is removed from the reader.
+	 * @name ID12RFIDReader#removeTag
+	 * @type BREAKOUT.custom.RFIDEvent.REMOVE_TAG
+	 * @event
+	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+	 * @param {String} tag The RFID tag value.	 
+	 */		 	
+
 	return ID12RFIDReader;
 
 }());

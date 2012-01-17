@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - JSUTILS.EventDispatcher</title>
+		<title>JsDoc Reference - BREAKOUT.io.CompassEvent</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -277,24 +277,26 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class JSUTILS.EventDispatcher
+				Class BREAKOUT.io.CompassEvent
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				
+				<br />Extends
+					<a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a>.<br />
 				
 			
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_utils_EventDispatcher.js.html">EventDispatcher.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_CompassEvent.js.html">CompassEvent.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class JSUTILS.EventDispatcher.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.CompassEvent.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -307,9 +309,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/JSUTILS.EventDispatcher.html#constructor">JSUTILS.EventDispatcher</a></b>(target)
+								<b><a href="../symbols/BREAKOUT.io.CompassEvent.html#constructor">BREAKOUT.io.CompassEvent</a></b>(type)
 							</div>
-							<div class="description">An as3-like EventDispatcher class.</div>
+							<div class="description"></div>
 						</td>
 					</tr>
 				</tbody>
@@ -318,54 +320,25 @@ ul.inheritsList
 
 <!-- ============================== properties summary ===================== -->
 			
-
-<!-- ============================== methods summary ======================== -->
-			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class JSUTILS.EventDispatcher.">
-					<caption>Method Summary</caption>
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.CompassEvent.">
+					<caption>Field Summary</caption>
 					<thead>
 						<tr>
-							<th scope="col">Method Attributes</th>
-							<th scope="col">Method Name and Description</th>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					
 						<tr>
-							<td class="attributes">&nbsp;</td>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/JSUTILS.EventDispatcher.html#addEventListener">addEventListener</a></b>(type, listener)
+								<div class="fixedFont">
+								BREAKOUT.io.CompassEvent.<b><a href="../symbols/BREAKOUT.io.CompassEvent.html#.UPDATE">UPDATE</a></b>
 								</div>
-								<div class="description">Description</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/JSUTILS.EventDispatcher.html#dispatchEvent">dispatchEvent</a></b>(type, optionalParams)
-								</div>
-								<div class="description">Description</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/JSUTILS.EventDispatcher.html#hasEventListener">hasEventListener</a></b>(type)
-								</div>
-								<div class="description">Description</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/JSUTILS.EventDispatcher.html#removeEventListener">removeEventListener</a></b>(type, listener)
-								</div>
-								<div class="description">Description</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -374,6 +347,13 @@ ul.inheritsList
 				
 				
 				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a>: </dt><dd><a href="../symbols/JSUTILS.Event.html#target">target</a>, <a href="../symbols/JSUTILS.Event.html#type">type</a></dd>
+				</dl>
+				
+			
+
+<!-- ============================== methods summary ======================== -->
 			
 <!-- ============================== events summary ======================== -->
 			
@@ -386,11 +366,11 @@ ul.inheritsList
 				</div>
 				
 				<div class="fixedFont">
-						<b>JSUTILS.EventDispatcher</b>(target)
+						<b>BREAKOUT.io.CompassEvent</b>(type)
 				</div>
 				
 				<div class="description">
-					An as3-like EventDispatcher class.
+					
 					
 				</div>
 				
@@ -402,10 +382,10 @@ ul.inheritsList
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{Class}</span>  <b>target</b>
+								<span class="light fixedFont">{String}</span>  <b>type</b>
 								
 							</dt>
-								<dd>The instance of the class that implements EventDispatcher</dd>
+								<dd>The event type</dd>
 						
 						</dl>
 					
@@ -421,170 +401,25 @@ ul.inheritsList
 
 <!-- ============================== field details ========================== -->		
 			
-
-<!-- ============================== method details ========================= -->		
-			
 				<div class="sectionTitle">
-					Method Detail
+					Field Detail
 				</div>
 				
-					<a name="addEventListener"> </a>
-					<div class="fixedFont">
+					<a name=".UPDATE"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<b>addEventListener</b>(type, listener)
+					<span class="light">BREAKOUT.io.CompassEvent.</span><b>UPDATE</b>
 					
 					</div>
 					<div class="description">
-						Description
+						
 						
 						
 					</div>
 					
 					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
 
-					<hr />
-				
-					<a name="dispatchEvent"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>dispatchEvent</b>(type, optionalParams)
-					
-					</div>
-					<div class="description">
-						Description
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{Event}</span> <b>type</b>
-									
-								</dt>
-								<dd>The Event object.</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
-									
-								</dt>
-								<dd>Optional parameters passed as an object.
-return {boolean} True if dispatch is successful, false if not.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="hasEventListener"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>hasEventListener</b>(type)
-					
-					</div>
-					<div class="description">
-						Description
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type
-return {boolean} True is listener exists for this type, false if not.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="removeEventListener"> </a>
-					<div class="fixedFont">
-					
-					
-					<b>removeEventListener</b>(type, listener)
-					
-					</div>
-					<div class="description">
-						Description
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">Parameters:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>type</b>
-									
-								</dt>
-								<dd>The event type</dd>
-							
-								<dt>
-									<span class="light fixedFont">{Function}</span> <b>listener</b>
-									
-								</dt>
-								<dd>The function to be called when the event is fired</dd>
-							
-							</dl>
-						
-						
-						
 						
 						
 						
@@ -592,6 +427,9 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 
 					
 				
+			
+
+<!-- ============================== method details ========================= -->		
 			
 			
 <!-- ============================== event details ========================= -->		

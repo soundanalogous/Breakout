@@ -114,7 +114,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketConnection(event) {
-			console.log("Socket Status: (open)");
+			_self.debug("debug: Socket Status: (open)");
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.CONNECTED));
 			begin();			
 		}
@@ -130,7 +130,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketClosed(event) {
-			console.log("Socket Status: "+_socket.readyState+' (Closed)');
+			_self.debug("debug: Socket Status: "+_socket.readyState+" (Closed)");
 		}
 						
 								
@@ -396,7 +396,7 @@ BREAKOUT.IOBoard = (function() {
 		 * @private
 		 */
 		function startup() {
-			_self.debug("debug: startup");
+			_self.debug("IOBoard ready");
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
 			_self.enableDigitalPins();
 		}
@@ -1059,8 +1059,8 @@ BREAKOUT.IOBoard = (function() {
 	 */
 	 
 	/**
-	 * The firmwareVersion event is dispatched when the results of
-	 * a pin state query (via a call to: queryPinState()) is received.
+	 * The firmwareVersion event is dispatched when the firmware version is
+	 * received from the IOBoard.
 	 * @name IOBoard#firmwareVersion
 	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_VERSION
 	 * @event
@@ -1069,8 +1069,8 @@ BREAKOUT.IOBoard = (function() {
 	 */
 	 
 	/**
-	 * The firmwareName event is dispatched when the results of
-	 * a pin state query (via a call to: queryPinState()) is received.
+	 * The firmwareName event is dispatched when the firmware name is received
+	 * from the IOBoard.
 	 * @name IOBoard#firmwareName
 	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_NAME
 	 * @event
@@ -1091,9 +1091,10 @@ BREAKOUT.IOBoard = (function() {
 
 	/**
 	 * The analogData event is dispatched when analog data is received
-	 * from the IOBoard.
+	 * from the IOBoard. Use thie event to be notified when any analog
+	 * pin value changes. Use Pin.CHANGE to be notified when a specific
+	 * pin value changes.
 	 * @name IOBoard#analogData
-	 * @inner
 	 * @type BREAKOUT.IOBoardEvent.ANALOG_DATA
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
@@ -1102,9 +1103,10 @@ BREAKOUT.IOBoard = (function() {
 	 
 	/**
 	 * The digitalData event is dispatched when digital data is received
-	 * from the IOBoard.
+	 * from the IOBoard. Use this event to be notified when any digital
+	 * pin value changes. Use Pin.CHANGE to be notified when a specific
+	 * pin value changes.
 	 * @name IOBoard#digitalData
-	 * @inner
 	 * @type BREAKOUT.IOBoardEvent.DIGITAL_DATA
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard

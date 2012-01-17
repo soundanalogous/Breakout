@@ -201,7 +201,18 @@
  	 */
  	Oscillator.LINEAR = function(val, lastVal) {
  		return (val < 1) ? val : 1;
- 	}; 	 	 	 	 	
+ 	};
+ 	
+	// document events
+
+	/**
+	 * The update event is dispatched at the rate specified 
+	 * by the serviceInterval parameter (default = 33ms).
+	 * @name Oscillator#update
+	 * @type BREAKOUT.generators.GeneratorEvent.UPDATE
+	 * @event
+	 * @param {BREAKOUT.generators.Oscillator} target A reference to the Oscillator object.
+	 */	 		 	
 
  	return Oscillator;
 

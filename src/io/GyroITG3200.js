@@ -1,44 +1,4 @@
 /**
- * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
- * Released under the MIT license. See LICENSE file for details.
- */
-
-JSUTILS.namespace('BREAKOUT.io.GyroEvent');
-
-BREAKOUT.io.GyroEvent = (function() {
-
-	var GyroEvent;
-
-	// dependencies
-	var Event = JSUTILS.Event;
-
-	/**
-	 * @exports GyroEvent as BREAKOUT.io.GyroEvent
-	 * @constructor
-	 * @augments JSUTILS.Event
- 	 * @param {String} type The event type	 
-	 */
-	GyroEvent = function(type) {
-
-		Event.call(this, type);
-
-		this.name = "GyroEvent";
-
-	};
-
-	/** @constant */
-	GyroEvent.GYRO_READY = "gyroReady";
-	
-
-	GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
-	GyroEvent.prototype.constructor = GyroEvent;
-
-	return GyroEvent;
-
-}());
-
-
-/**
  * Based in part on Filipe Vieira'a ITG3200 library for Arduino.
  *
  * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
@@ -332,7 +292,7 @@ BREAKOUT.io.GyroITG3200 = (function() {
 			this._z = ((z_val ^ 0xFFFF) + 1) * -1;
 		} else this._z = z_val;	
 		
-		this.dispatchEvent(new Event(Event.CHANGE));	
+		this.dispatchEvent(new GyroEvent(GyroEvent.UPDATE));	
 	};
 	
 	/**
@@ -352,6 +312,17 @@ BREAKOUT.io.GyroITG3200 = (function() {
 	 * @constant 
 	 */
 	GyroITG3200.DEVICE_ID = 0x69;
+
+
+	// document events
+
+	/**
+	 * The update event is dispatched when the accelerometer values are updated.
+	 * @name GyroITG3200#update
+	 * @type BREAKOUT.io.GyroEvent.UPDATE
+	 * @event
+	 * @param {BREAKOUT.io.GyroITG3200} target A reference to the GyroITG3200 object.
+	 */		
 			
 	return GyroITG3200;
 

@@ -128,8 +128,6 @@ BREAKOUT.WSocketWrapper = (function() {
 					throw "Websockets not supported by this browser";
 				}
 
-				console.log("Starting up...");
-
 				self._socket.onopen = function() {
 
 					self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
@@ -172,6 +170,35 @@ BREAKOUT.WSocketWrapper = (function() {
 	 * @type String
 	 */		 
 	WSocketWrapper.prototype.__defineGetter__("readyState", function() { return this._readyState; });
+
+
+	// document events
+
+	/**
+	 * The webSocketConnected event is dispatched when a connection with
+	 * the websocket is established.
+	 * @name WSocketWrapper#webSocketConnected
+	 * @type BREAKOUT.WebsocketEvent.CONNECTED
+	 * @event
+	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object.
+	 */	
+
+	/**
+	 * The webSocketMessage event is dispatched when a websocket message is received.
+	 * @name WSocketWrapper#webSocketMessage
+	 * @type BREAKOUT.WebsocketEvent.MESSAGE
+	 * @event
+	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object.
+	 * @param {String} message The websocket data	 
+	 */	
+
+	/**
+	 * The webSocketClosed event is dispatched the websocket connection is closed.
+	 * @name WSocketWrapper#webSocketClosed
+	 * @type BREAKOUT.WebsocketEvent.CLOSE
+	 * @event
+	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object. 
+	 */		 
 
 	return WSocketWrapper;
 

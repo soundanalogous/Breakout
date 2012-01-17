@@ -21,14 +21,12 @@ $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
-	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
-	var IOBoard = BREAKOUT.IOBoard;
+	// to type the full namespace	
 	var Pin = BREAKOUT.Pin;
+	var IOBoard = BREAKOUT.IOBoard;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var GyroEvent = BREAKOUT.io.GyroEvent;
 	var GyroITG3200 = BREAKOUT.io.GyroITG3200;
+	var GyroEvent = BREAKOUT.io.GyroEvent;	
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ITG3200
@@ -55,7 +53,7 @@ $(document).ready(function() {
 		// or gyro.update();
 		//gyro.addEventListener(GyroEvent.GYRO_READY, onGyroReady);
 
-	    gyro.addEventListener(Event.CHANGE, onGyroUpdate);
+	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
 	}
 
 	// if autoStart is false, you must listen for GYRO_READY

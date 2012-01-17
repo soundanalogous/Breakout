@@ -29,7 +29,7 @@
 <span class='line'> 22</span> 
 <span class='line'> 23</span> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 24</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">AccelerometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.AccelerometerEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 26</span> 
 <span class='line'> 27</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 28</span> 	 * Analog Devices ADXL345 3-axis accelerometer
@@ -339,7 +339,7 @@
 <span class='line'>332</span> </span><span class="WHIT">		</span><span class="NAME">this._y</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._rawY</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">this._sensitivity.y</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>333</span> </span><span class="WHIT">		</span><span class="NAME">this._z</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._rawZ</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NAME">this._sensitivity.z</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>334</span> </span><span class="WHIT">		
-<span class='line'>335</span> 		</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">(</span><span class="NAME">Event.CHANGE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
+<span class='line'>335</span> 		</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">AccelerometerEvent</span><span class="PUNC">(</span><span class="NAME">AccelerometerEvent.UPDATE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
 <span class='line'>336</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>337</span> </span><span class="WHIT">	
 <span class='line'>338</span> 	</span><span class="COMM">/**
@@ -365,8 +365,18 @@
 <span class='line'>358</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
 <span class='line'>359</span> </span><span class="WHIT">	</span><span class="NAME">AccelerometerADXL345.DEVICE_ID</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x53</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>360</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>361</span> </span><span class="WHIT">	</span><span class="NAME">AccelerometerADXL345.DEFAULT_SENSITIVITY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.00390625</span><span class="PUNC">;</span><span class="WHIT">				
-<span class='line'>362</span> 
-<span class='line'>363</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">AccelerometerADXL345</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>361</span> </span><span class="WHIT">	</span><span class="NAME">AccelerometerADXL345.DEFAULT_SENSITIVITY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.00390625</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>362</span> </span><span class="WHIT">	
+<span class='line'>363</span> 	</span><span class="COMM">// document events</span><span class="WHIT">
 <span class='line'>364</span> 
-<span class='line'>365</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>365</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>366</span> 	 * The update event is dispatched when the accelerometer values are updated.
+<span class='line'>367</span> 	 * @name AccelerometerADXL345#update
+<span class='line'>368</span> 	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+<span class='line'>369</span> 	 * @event
+<span class='line'>370</span> 	 * @param {BREAKOUT.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
+<span class='line'>371</span> 	 */</span><span class="WHIT">						
+<span class='line'>372</span> 
+<span class='line'>373</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">AccelerometerADXL345</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>374</span> 
+<span class='line'>375</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

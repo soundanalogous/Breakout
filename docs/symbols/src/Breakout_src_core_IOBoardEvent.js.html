@@ -36,7 +36,7 @@
 <span class='line'> 29</span> 
 <span class='line'> 30</span> </span><span class="WHIT">	</span><span class="COMM">// events</span><span class="WHIT">
 <span class='line'> 31</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 32</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.ANALOG_DATA</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"analodData"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.ANALOG_DATA</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"analogData"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 33</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
 <span class='line'> 34</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.DIGITAL_DATA</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"digitalData"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 35</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
@@ -48,20 +48,16 @@
 <span class='line'> 41</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
 <span class='line'> 42</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.SYSEX_MESSAGE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"sysexMessage"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 43</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 44</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.CAPABILITY_RESPONSE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"capabilityResponse"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.PIN_STATE_RESPONSE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"pinStateResponse"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 45</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 46</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.PIN_STATE_RESPONSE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"pinStateResponse"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.READY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"ioBoardReady"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 47</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 48</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.ANALOG_MAPPING_RESPONSE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"analogMappingResponse"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 49</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 50</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.READY</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"arduinoReady"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 51</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.CONNECTED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"arduinoConnected"</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 48</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.CONNECTED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"ioBoardConnected"</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 49</span> 
+<span class='line'> 50</span> 
+<span class='line'> 51</span> 	</span><span class="NAME">IOBoardEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 53</span> 
-<span class='line'> 54</span> 
-<span class='line'> 55</span> 	</span><span class="NAME">IOBoardEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 56</span> </span><span class="WHIT">	</span><span class="NAME">IOBoardEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 57</span> 
-<span class='line'> 58</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 59</span> 
-<span class='line'> 60</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'> 54</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> 
+<span class='line'> 56</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

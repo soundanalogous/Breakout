@@ -32,7 +32,7 @@
 <span class='line'> 25</span> 	 * An object to represent an IOBoard pin
 <span class='line'> 26</span> 	 *
 <span class='line'> 27</span> 	 * @exports Pin as BREAKOUT.Pin
-<span class='line'> 28</span> 	 * @constructor
+<span class='line'> 28</span> 	 * @class An object to represent an IOBoard pin
 <span class='line'> 29</span> 	 * @param {Number} number The pin number
 <span class='line'> 30</span> 	 * @param {Number} type The type of pin
 <span class='line'> 31</span> 	 */</span><span class="WHIT">
@@ -291,157 +291,172 @@
 <span class='line'>284</span> 		</span><span class="COMM">/**
 <span class='line'>285</span> 		 * Add a new filter to the Pin.
 <span class='line'>286</span> 		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
-<span class='line'>287</span> 		 */</span><span class="WHIT">
-<span class='line'>288</span> </span><span class="WHIT">		</span><span class="NAME">addFilter</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>289</span> 
-<span class='line'>290</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>291</span> </span><span class="WHIT">				</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>292</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>293</span> 
-<span class='line'>294</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>295</span> </span><span class="WHIT">				</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>296</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>297</span> 
-<span class='line'>298</span> </span><span class="WHIT">			</span><span class="NAME">this._filters.push</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>299</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>287</span> 		 * @see BREAKOUT.filters.Convolution
+<span class='line'>288</span> 		 * @see BREAKOUT.filters.Scaler
+<span class='line'>289</span> 		 * @see BREAKOUT.filters.TriggerPoint
+<span class='line'>290</span> 		 */</span><span class="WHIT">
+<span class='line'>291</span> </span><span class="WHIT">		</span><span class="NAME">addFilter</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>292</span> 
+<span class='line'>293</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">				</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>295</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>296</span> 
+<span class='line'>297</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>298</span> </span><span class="WHIT">				</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>299</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>300</span> 
-<span class='line'>301</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>302</span> 		 * Add a new generator to the Pin. A pin can only have one generator assigned. 
-<span class='line'>303</span> 		 * Assigning a new generator will replace the previously assigned generator.
-<span class='line'>304</span> 		 *
-<span class='line'>305</span> 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
-<span class='line'>306</span> 		 */</span><span class="WHIT">
-<span class='line'>307</span> </span><span class="WHIT">		</span><span class="NAME">addGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newGenerator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>308</span> </span><span class="WHIT">			</span><span class="NAME">this.removeGenerator</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>309</span> </span><span class="WHIT">			</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newGenerator</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>310</span> </span><span class="WHIT">			</span><span class="NAME">this._generator.addEventListener</span><span class="PUNC">(</span><span class="NAME">GeneratorEvent.UPDATE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._autoSetValueCallback</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>311</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>312</span> 
-<span class='line'>313</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>314</span> 		 * Removes the generator from the pin.
-<span class='line'>315</span> 		 */</span><span class="WHIT">
-<span class='line'>316</span> </span><span class="WHIT">		</span><span class="NAME">removeGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>317</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>318</span> </span><span class="WHIT">				</span><span class="NAME">this._generator.removeEventListener</span><span class="PUNC">(</span><span class="NAME">GeneratorEvent.UPDATE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._autoSetValueCallback</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>319</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>320</span> </span><span class="WHIT">			</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">				
-<span class='line'>321</span> 		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>322</span> 
-<span class='line'>323</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>324</span> 		 * Sets new filters to the pin
-<span class='line'>325</span> 		 * @param {FilterBase[]} newFilters An array of Filter Objects to be applied to the Pin
-<span class='line'>326</span> 		 */</span><span class="WHIT">
-<span class='line'>327</span> </span><span class="WHIT">		</span><span class="NAME">setFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newFilters</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>328</span> </span><span class="WHIT">			</span><span class="COMM">// use the filters setter</span><span class="WHIT">
-<span class='line'>329</span> </span><span class="WHIT">			</span><span class="NAME">this.filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newFilters</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>330</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>331</span> 
-<span class='line'>332</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>333</span> 		 * Removes all filters from the pin
-<span class='line'>334</span> 		 */</span><span class="WHIT">
-<span class='line'>335</span> </span><span class="WHIT">		</span><span class="NAME">removeAllFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>336</span> </span><span class="WHIT">			</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>337</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>338</span> 
-<span class='line'>339</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>340</span> 		 * @private
-<span class='line'>341</span> 		 */</span><span class="WHIT">
-<span class='line'>342</span> </span><span class="WHIT">		</span><span class="NAME">autoSetValue</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>343</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._generator.value</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>344</span> 
-<span class='line'>345</span> </span><span class="WHIT">			</span><span class="COMM">// scale PWM values to 0 - 255</span><span class="WHIT">
-<span class='line'>346</span> </span><span class="WHIT">			</span><span class="COMM">// if (this._type === Pin.PWM) {</span><span class="WHIT">
-<span class='line'>347</span> </span><span class="WHIT">			</span><span class="COMM">// 	val *= 255.0;</span><span class="WHIT">
-<span class='line'>348</span> </span><span class="WHIT">			</span><span class="COMM">// 	val = (val &lt; 0) ? 0: val;</span><span class="WHIT">
-<span class='line'>349</span> </span><span class="WHIT">			</span><span class="COMM">// 	val = (val > 255) ? 255 : val;</span><span class="WHIT">
-<span class='line'>350</span> </span><span class="WHIT">			</span><span class="COMM">// }</span><span class="WHIT">
-<span class='line'>351</span> </span><span class="WHIT">			</span><span class="COMM">// use the value setter</span><span class="WHIT">
-<span class='line'>352</span> </span><span class="WHIT">			</span><span class="NAME">this.value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>353</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>354</span> 
-<span class='line'>355</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>356</span> 		 * @private
-<span class='line'>357</span> 		 */</span><span class="WHIT">
-<span class='line'>358</span> </span><span class="WHIT">		</span><span class="NAME">applyFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>359</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>360</span> 
-<span class='line'>361</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>362</span> </span><span class="WHIT">			
-<span class='line'>363</span> 			</span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>364</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._filters.length</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>365</span> </span><span class="WHIT">			</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>366</span> </span><span class="WHIT">				</span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._filters</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">processSample</span><span class="PUNC">(</span><span class="NAME">result</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>367</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>368</span> 
-<span class='line'>369</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>370</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>371</span> 
-<span class='line'>372</span> </span><span class="WHIT">		</span><span class="COMM">/* implement EventDispatcher */</span><span class="WHIT">
-<span class='line'>373</span> </span><span class="WHIT">		
-<span class='line'>374</span> 		</span><span class="COMM">/**
-<span class='line'>375</span> 		 * @param {String} type The event type
-<span class='line'>376</span> 		 * @param {Function} listener The function to be called when the event is fired
-<span class='line'>377</span> 		 */</span><span class="WHIT">
-<span class='line'>378</span> </span><span class="WHIT">		</span><span class="NAME">addEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>379</span> </span><span class="WHIT">			</span><span class="NAME">this._evtDispatcher.addEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>380</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>381</span> </span><span class="WHIT">		
-<span class='line'>382</span> 		</span><span class="COMM">/**
-<span class='line'>383</span> 		 * @param {String} type The event type
-<span class='line'>384</span> 		 * @param {Function} listener The function to be called when the event is fired
-<span class='line'>385</span> 		 */</span><span class="WHIT">
-<span class='line'>386</span> </span><span class="WHIT">		</span><span class="NAME">removeEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>387</span> </span><span class="WHIT">			</span><span class="NAME">this._evtDispatcher.removeEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>388</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>389</span> </span><span class="WHIT">		
-<span class='line'>390</span> 		</span><span class="COMM">/**
-<span class='line'>391</span> 		 * @param {String} type The event type
-<span class='line'>392</span> 		 * return {boolean} True is listener exists for this type, false if not.
-<span class='line'>393</span> 		 */</span><span class="WHIT">
-<span class='line'>394</span> </span><span class="WHIT">		</span><span class="NAME">hasEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>395</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._evtDispatcher.hasEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>396</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>397</span> 
-<span class='line'>398</span> </span><span class="WHIT">		</span><span class="COMM">/**
-<span class='line'>399</span> 		 * @param {Event} type The Event object
-<span class='line'>400</span> 		 * @param {Object} optionalParams Optional parameters to assign to the event object.
-<span class='line'>401</span> 		 * return {boolean} True if dispatch is successful, false if not.
-<span class='line'>402</span> 		 */</span><span class="WHIT">	
-<span class='line'>403</span> 		</span><span class="NAME">dispatchEvent</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>404</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._evtDispatcher.dispatchEvent</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>405</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">		
-<span class='line'>406</span> 			
-<span class='line'>407</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>408</span> 
-<span class='line'>409</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>410</span> </span><span class="WHIT">	</span><span class="NAME">Pin.HIGH</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>411</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>412</span> </span><span class="WHIT">	</span><span class="NAME">Pin.LOW</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">			</span><span class="NAME">this._filters.push</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>302</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>303</span> 
+<span class='line'>304</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>305</span> 		 * Add a new generator to the Pin. A pin can only have one generator assigned. 
+<span class='line'>306</span> 		 * Assigning a new generator will replace the previously assigned generator.
+<span class='line'>307</span> 		 *
+<span class='line'>308</span> 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
+<span class='line'>309</span> 		 * @see BREAKOUT.generators.Oscillator
+<span class='line'>310</span> 		 */</span><span class="WHIT">
+<span class='line'>311</span> </span><span class="WHIT">		</span><span class="NAME">addGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newGenerator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>312</span> </span><span class="WHIT">			</span><span class="NAME">this.removeGenerator</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>313</span> </span><span class="WHIT">			</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newGenerator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>314</span> </span><span class="WHIT">			</span><span class="NAME">this._generator.addEventListener</span><span class="PUNC">(</span><span class="NAME">GeneratorEvent.UPDATE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._autoSetValueCallback</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>315</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>316</span> 
+<span class='line'>317</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>318</span> 		 * Removes the generator from the pin.
+<span class='line'>319</span> 		 */</span><span class="WHIT">
+<span class='line'>320</span> </span><span class="WHIT">		</span><span class="NAME">removeGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>321</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>322</span> </span><span class="WHIT">				</span><span class="NAME">this._generator.removeEventListener</span><span class="PUNC">(</span><span class="NAME">GeneratorEvent.UPDATE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._autoSetValueCallback</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>323</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>324</span> </span><span class="WHIT">			</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">				
+<span class='line'>325</span> 		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>326</span> 
+<span class='line'>327</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>328</span> 		 * Sets new filters to the pin
+<span class='line'>329</span> 		 * @param {FilterBase[]} newFilters An array of Filter Objects to be applied to the Pin
+<span class='line'>330</span> 		 */</span><span class="WHIT">
+<span class='line'>331</span> </span><span class="WHIT">		</span><span class="NAME">setFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newFilters</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>332</span> </span><span class="WHIT">			</span><span class="COMM">// use the filters setter</span><span class="WHIT">
+<span class='line'>333</span> </span><span class="WHIT">			</span><span class="NAME">this.filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newFilters</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>334</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>335</span> 
+<span class='line'>336</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>337</span> 		 * Removes all filters from the pin
+<span class='line'>338</span> 		 */</span><span class="WHIT">
+<span class='line'>339</span> </span><span class="WHIT">		</span><span class="NAME">removeAllFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>340</span> </span><span class="WHIT">			</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>341</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>342</span> 
+<span class='line'>343</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>344</span> 		 * @private
+<span class='line'>345</span> 		 */</span><span class="WHIT">
+<span class='line'>346</span> </span><span class="WHIT">		</span><span class="NAME">autoSetValue</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>347</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._generator.value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>348</span> 
+<span class='line'>349</span> </span><span class="WHIT">			</span><span class="COMM">// scale PWM values to 0 - 255</span><span class="WHIT">
+<span class='line'>350</span> </span><span class="WHIT">			</span><span class="COMM">// if (this._type === Pin.PWM) {</span><span class="WHIT">
+<span class='line'>351</span> </span><span class="WHIT">			</span><span class="COMM">// 	val *= 255.0;</span><span class="WHIT">
+<span class='line'>352</span> </span><span class="WHIT">			</span><span class="COMM">// 	val = (val &lt; 0) ? 0: val;</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="WHIT">			</span><span class="COMM">// 	val = (val > 255) ? 255 : val;</span><span class="WHIT">
+<span class='line'>354</span> </span><span class="WHIT">			</span><span class="COMM">// }</span><span class="WHIT">
+<span class='line'>355</span> </span><span class="WHIT">			</span><span class="COMM">// use the value setter</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="WHIT">			</span><span class="NAME">this.value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>357</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>358</span> 
+<span class='line'>359</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>360</span> 		 * @private
+<span class='line'>361</span> 		 */</span><span class="WHIT">
+<span class='line'>362</span> </span><span class="WHIT">		</span><span class="NAME">applyFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>363</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>364</span> 
+<span class='line'>365</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>366</span> </span><span class="WHIT">			
+<span class='line'>367</span> 			</span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>368</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._filters.length</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>369</span> </span><span class="WHIT">			</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>370</span> </span><span class="WHIT">				</span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._filters</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">processSample</span><span class="PUNC">(</span><span class="NAME">result</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>371</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>372</span> 
+<span class='line'>373</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>374</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>375</span> 
+<span class='line'>376</span> </span><span class="WHIT">		</span><span class="COMM">/* implement EventDispatcher */</span><span class="WHIT">
+<span class='line'>377</span> </span><span class="WHIT">		
+<span class='line'>378</span> 		</span><span class="COMM">/**
+<span class='line'>379</span> 		 * @param {String} type The event type
+<span class='line'>380</span> 		 * @param {Function} listener The function to be called when the event is fired
+<span class='line'>381</span> 		 */</span><span class="WHIT">
+<span class='line'>382</span> </span><span class="WHIT">		</span><span class="NAME">addEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>383</span> </span><span class="WHIT">			</span><span class="NAME">this._evtDispatcher.addEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>384</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>385</span> </span><span class="WHIT">		
+<span class='line'>386</span> 		</span><span class="COMM">/**
+<span class='line'>387</span> 		 * @param {String} type The event type
+<span class='line'>388</span> 		 * @param {Function} listener The function to be called when the event is fired
+<span class='line'>389</span> 		 */</span><span class="WHIT">
+<span class='line'>390</span> </span><span class="WHIT">		</span><span class="NAME">removeEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>391</span> </span><span class="WHIT">			</span><span class="NAME">this._evtDispatcher.removeEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>392</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>393</span> </span><span class="WHIT">		
+<span class='line'>394</span> 		</span><span class="COMM">/**
+<span class='line'>395</span> 		 * @param {String} type The event type
+<span class='line'>396</span> 		 * return {boolean} True is listener exists for this type, false if not.
+<span class='line'>397</span> 		 */</span><span class="WHIT">
+<span class='line'>398</span> </span><span class="WHIT">		</span><span class="NAME">hasEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._evtDispatcher.hasEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>400</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>401</span> 
+<span class='line'>402</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>403</span> 		 * @param {Event} type The Event object
+<span class='line'>404</span> 		 * @param {Object} optionalParams Optional parameters to assign to the event object.
+<span class='line'>405</span> 		 * return {boolean} True if dispatch is successful, false if not.
+<span class='line'>406</span> 		 */</span><span class="WHIT">	
+<span class='line'>407</span> 		</span><span class="NAME">dispatchEvent</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>408</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._evtDispatcher.dispatchEvent</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>409</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">		
+<span class='line'>410</span> 			
+<span class='line'>411</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>412</span> 
 <span class='line'>413</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>414</span> </span><span class="WHIT">	</span><span class="NAME">Pin.ON</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>414</span> </span><span class="WHIT">	</span><span class="NAME">Pin.HIGH</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>415</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>416</span> </span><span class="WHIT">	</span><span class="NAME">Pin.OFF</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>417</span> 
-<span class='line'>418</span> </span><span class="WHIT">	</span><span class="COMM">// pin modes</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="WHIT">	</span><span class="NAME">Pin.LOW</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>418</span> </span><span class="WHIT">	</span><span class="NAME">Pin.ON</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>419</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>420</span> </span><span class="WHIT">	</span><span class="NAME">Pin.DIN</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x00</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>421</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>422</span> </span><span class="WHIT">	</span><span class="NAME">Pin.DOUT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x01</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>420</span> </span><span class="WHIT">	</span><span class="NAME">Pin.OFF</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>421</span> 
+<span class='line'>422</span> </span><span class="WHIT">	</span><span class="COMM">// pin modes</span><span class="WHIT">
 <span class='line'>423</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>424</span> </span><span class="WHIT">	</span><span class="NAME">Pin.AIN</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x02</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>424</span> </span><span class="WHIT">	</span><span class="NAME">Pin.DIN</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x00</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>425</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>426</span> </span><span class="WHIT">	</span><span class="NAME">Pin.AOUT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="WHIT">	</span><span class="NAME">Pin.DOUT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x01</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>427</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>428</span> </span><span class="WHIT">	</span><span class="NAME">Pin.PWM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>428</span> </span><span class="WHIT">	</span><span class="NAME">Pin.AIN</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x02</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>429</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>430</span> </span><span class="WHIT">	</span><span class="NAME">Pin.SERVO</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x04</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>430</span> </span><span class="WHIT">	</span><span class="NAME">Pin.AOUT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>431</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>432</span> </span><span class="WHIT">	</span><span class="NAME">Pin.SHIFT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x05</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>432</span> </span><span class="WHIT">	</span><span class="NAME">Pin.PWM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>433</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>434</span> </span><span class="WHIT">	</span><span class="NAME">Pin.I2C</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x06</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>434</span> </span><span class="WHIT">	</span><span class="NAME">Pin.SERVO</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x04</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>435</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'>436</span> </span><span class="WHIT">	</span><span class="NAME">Pin.TOTAL_PIN_MODES</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>437</span> 
-<span class='line'>438</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>439</span> 
-<span class='line'>440</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>436</span> </span><span class="WHIT">	</span><span class="NAME">Pin.SHIFT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x05</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>437</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>438</span> </span><span class="WHIT">	</span><span class="NAME">Pin.I2C</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x06</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>439</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>440</span> </span><span class="WHIT">	</span><span class="NAME">Pin.TOTAL_PIN_MODES</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>441</span> 
+<span class='line'>442</span> 
+<span class='line'>443</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>444</span> 
+<span class='line'>445</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>446</span> 	 * The change event is dispatched when the pin value changes.
+<span class='line'>447</span> 	 * @name Pin#change
+<span class='line'>448</span> 	 * @type JSUTILS.Event.CHANGE
+<span class='line'>449</span> 	 * @event
+<span class='line'>450</span> 	 * @param {BREAKOUT.Pin} target A reference to the Timer object.
+<span class='line'>451</span> 	 */</span><span class="WHIT">	
+<span class='line'>452</span> 
+<span class='line'>453</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>454</span> 
+<span class='line'>455</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>

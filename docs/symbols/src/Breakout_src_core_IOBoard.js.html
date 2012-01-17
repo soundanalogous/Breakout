@@ -121,7 +121,7 @@
 <span class='line'>114</span> 		 * @private
 <span class='line'>115</span> 		 */</span><span class="WHIT">
 <span class='line'>116</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">onSocketConnection</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>117</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Socket Status: (open)"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">			</span><span class="NAME">_self.debug</span><span class="PUNC">(</span><span class="STRN">"debug: Socket Status: (open)"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>118</span> </span><span class="WHIT">			</span><span class="NAME">_self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.CONNECTED</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>119</span> </span><span class="WHIT">			</span><span class="NAME">begin</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
 <span class='line'>120</span> 		</span><span class="PUNC">}</span><span class="WHIT">
@@ -137,7 +137,7 @@
 <span class='line'>130</span> 		 * @private
 <span class='line'>131</span> 		 */</span><span class="WHIT">
 <span class='line'>132</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">onSocketClosed</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>133</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"Socket Status: "</span><span class="PUNC">+</span><span class="NAME">_socket.readyState</span><span class="PUNC">+</span><span class="STRN">' (Closed)'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">			</span><span class="NAME">_self.debug</span><span class="PUNC">(</span><span class="STRN">"debug: Socket Status: "</span><span class="PUNC">+</span><span class="NAME">_socket.readyState</span><span class="PUNC">+</span><span class="STRN">" (Closed)"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>134</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>135</span> </span><span class="WHIT">						
 <span class='line'>136</span> 								
@@ -145,15 +145,15 @@
 <span class='line'>138</span> 		 * @private
 <span class='line'>139</span> 		 */</span><span class="WHIT">
 <span class='line'>140</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">begin</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>141</span> </span><span class="WHIT">			</span><span class="NAME">_self.addEventListener</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.FIRMWARE_VERSION</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">onVersion</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">			</span><span class="NAME">_self.addEventListener</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.FIRMWARE_VERSION</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">onInitialVersionResult</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>142</span> </span><span class="WHIT">			</span><span class="NAME">_self.reportVersion</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>143</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>144</span> </span><span class="WHIT">		
 <span class='line'>145</span> 		</span><span class="COMM">/**
 <span class='line'>146</span> 		 * @private
 <span class='line'>147</span> 		 */</span><span class="WHIT">
-<span class='line'>148</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">onVersion</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>149</span> </span><span class="WHIT">			</span><span class="NAME">_self.removeEventListener</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.FIRMWARE_VERSION</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">onVersion</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">onInitialVersionResult</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">			</span><span class="NAME">_self.removeEventListener</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.FIRMWARE_VERSION</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">onInitialVersionResult</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>150</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">version</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">event.version</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>151</span> </span><span class="WHIT">			
 <span class='line'>152</span> 			</span><span class="COMM">// make sure the user has uploaded StandardFirmata 2.3 or greater</span><span class="WHIT">
@@ -403,7 +403,7 @@
 <span class='line'>396</span> 		 * @private
 <span class='line'>397</span> 		 */</span><span class="WHIT">
 <span class='line'>398</span> </span><span class="WHIT">		</span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">startup</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>399</span> </span><span class="WHIT">			</span><span class="NAME">_self.debug</span><span class="PUNC">(</span><span class="STRN">"debug: startup"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="WHIT">			</span><span class="NAME">_self.debug</span><span class="PUNC">(</span><span class="STRN">"IOBoard ready"</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>400</span> </span><span class="WHIT">			</span><span class="NAME">_self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.READY</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>401</span> </span><span class="WHIT">			</span><span class="NAME">_self.enableDigitalPins</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>402</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
@@ -443,7 +443,7 @@
 <span class='line'>436</span> </span><span class="WHIT">				</span><span class="NAME">pin.value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>437</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>438</span> </span><span class="WHIT">			
-<span class='line'>439</span> 			</span><span class="NAME">_self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.PIN_STATE_RESPONSE</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">pin</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">pinNumber</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">pinType</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>439</span> 			</span><span class="NAME">_self.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">IOBoardEvent</span><span class="PUNC">(</span><span class="NAME">IOBoardEvent.PIN_STATE_RESPONSE</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">pin</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>440</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'>441</span> </span><span class="WHIT">		
 <span class='line'>442</span> 		</span><span class="COMM">/**
@@ -1025,7 +1025,103 @@
 <span class='line'>1018</span> 
 <span class='line'>1019</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>1020</span> 
-<span class='line'>1021</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoard</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1021</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
 <span class='line'>1022</span> 
-<span class='line'>1023</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
-<span class='line'>1024</span> </span></pre></body></html>
+<span class='line'>1023</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1024</span> 	 * The ioBoardReady event is dispatched when the board is ready to send 
+<span class='line'>1025</span> 	 * and receive commands. 
+<span class='line'>1026</span> 	 * @name IOBoard#ioBoardReady
+<span class='line'>1027</span> 	 * @type BREAKOUT.IOBoardEvent.READY
+<span class='line'>1028</span> 	 * @event
+<span class='line'>1029</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1030</span> 	 */</span><span class="WHIT">
+<span class='line'>1031</span> 
+<span class='line'>1032</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1033</span> 	 * The ioBoardConnected event is dispatched when the websocket connection
+<span class='line'>1034</span> 	 * is established.
+<span class='line'>1035</span> 	 * @name IOBoard#ioBoardConnected
+<span class='line'>1036</span> 	 * @type BREAKOUT.IOBoardEvent.CONNECTED
+<span class='line'>1037</span> 	 * @event
+<span class='line'>1038</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1039</span> 	 */</span><span class="WHIT">
+<span class='line'>1040</span> </span><span class="WHIT">	 
+<span class='line'>1041</span> 	</span><span class="COMM">/**
+<span class='line'>1042</span> 	 * The stringMessage event is dispatched when a string is received from
+<span class='line'>1043</span> 	 * the IOBoard.
+<span class='line'>1044</span> 	 * @name IOBoard#stringMessage
+<span class='line'>1045</span> 	 * @type BREAKOUT.IOBoardEvent.STRING_MESSAGE
+<span class='line'>1046</span> 	 * @event
+<span class='line'>1047</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1048</span> 	 * @param {String} message The string message received from the IOBoard
+<span class='line'>1049</span> 	 */</span><span class="WHIT">
+<span class='line'>1050</span> 
+<span class='line'>1051</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1052</span> 	 * The sysexMessage event is dispatched when a sysex message is 
+<span class='line'>1053</span> 	 * received from the IOBoard.
+<span class='line'>1054</span> 	 * @name IOBoard#sysexMessage
+<span class='line'>1055</span> 	 * @type BREAKOUT.IOBoardEvent.SYSEX_MESSAGE
+<span class='line'>1056</span> 	 * @event
+<span class='line'>1057</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1058</span> 	 * @param {Array} message The sysex data
+<span class='line'>1059</span> 	 */</span><span class="WHIT">
+<span class='line'>1060</span> </span><span class="WHIT">	 
+<span class='line'>1061</span> 	</span><span class="COMM">/**
+<span class='line'>1062</span> 	 * The firmwareVersion event is dispatched when the firmware version is
+<span class='line'>1063</span> 	 * received from the IOBoard.
+<span class='line'>1064</span> 	 * @name IOBoard#firmwareVersion
+<span class='line'>1065</span> 	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_VERSION
+<span class='line'>1066</span> 	 * @event
+<span class='line'>1067</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1068</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+<span class='line'>1069</span> 	 */</span><span class="WHIT">
+<span class='line'>1070</span> </span><span class="WHIT">	 
+<span class='line'>1071</span> 	</span><span class="COMM">/**
+<span class='line'>1072</span> 	 * The firmwareName event is dispatched when the firmware name is received
+<span class='line'>1073</span> 	 * from the IOBoard.
+<span class='line'>1074</span> 	 * @name IOBoard#firmwareName
+<span class='line'>1075</span> 	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_NAME
+<span class='line'>1076</span> 	 * @event
+<span class='line'>1077</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1078</span> 	 * @param {String} name The name of the firmware running on the IOBoard
+<span class='line'>1079</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+<span class='line'>1080</span> 	 */</span><span class="WHIT">	 	 	 
+<span class='line'>1081</span> 	 
+<span class='line'>1082</span> 	</span><span class="COMM">/**
+<span class='line'>1083</span> 	 * The pinStateResponse event is dispatched when the results of
+<span class='line'>1084</span> 	 * a pin state query (via a call to: queryPinState()) is received.
+<span class='line'>1085</span> 	 * @name IOBoard#pinStateResponse
+<span class='line'>1086</span> 	 * @type BREAKOUT.IOBoardEvent.PIN_STATE_RESPONSE
+<span class='line'>1087</span> 	 * @event
+<span class='line'>1088</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1089</span> 	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+<span class='line'>1090</span> 	 */</span><span class="WHIT">
+<span class='line'>1091</span> 
+<span class='line'>1092</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1093</span> 	 * The analogData event is dispatched when analog data is received
+<span class='line'>1094</span> 	 * from the IOBoard. Use thie event to be notified when any analog
+<span class='line'>1095</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
+<span class='line'>1096</span> 	 * pin value changes.
+<span class='line'>1097</span> 	 * @name IOBoard#analogData
+<span class='line'>1098</span> 	 * @type BREAKOUT.IOBoardEvent.ANALOG_DATA
+<span class='line'>1099</span> 	 * @event
+<span class='line'>1100</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1101</span> 	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+<span class='line'>1102</span> 	 */</span><span class="WHIT">
+<span class='line'>1103</span> </span><span class="WHIT">	 
+<span class='line'>1104</span> 	</span><span class="COMM">/**
+<span class='line'>1105</span> 	 * The digitalData event is dispatched when digital data is received
+<span class='line'>1106</span> 	 * from the IOBoard. Use this event to be notified when any digital
+<span class='line'>1107</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
+<span class='line'>1108</span> 	 * pin value changes.
+<span class='line'>1109</span> 	 * @name IOBoard#digitalData
+<span class='line'>1110</span> 	 * @type BREAKOUT.IOBoardEvent.DIGITAL_DATA
+<span class='line'>1111</span> 	 * @event
+<span class='line'>1112</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1113</span> 	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+<span class='line'>1114</span> 	 */</span><span class="WHIT">	 
+<span class='line'>1115</span> 	 	 		 	  	 
+<span class='line'>1116</span> 
+<span class='line'>1117</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoard</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1118</span> 
+<span class='line'>1119</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>1120</span> </span></pre></body></html>

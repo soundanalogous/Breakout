@@ -30,6 +30,7 @@ $(document).ready(function() {
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
 	var BlinkM = BREAKOUT.io.BlinkM;
 	var CompassHMC6352 = BREAKOUT.io.CompassHMC6352;
+	var CompassEvent = BREAKOUT.io.CompassEvent;
 	var Button = BREAKOUT.io.Button;
 	var ButtonEvent = BREAKOUT.io.ButtonEvent;
 	var Servo = BREAKOUT.io.Servo;
@@ -99,7 +100,7 @@ $(document).ready(function() {
 		setInterval(randomColor, 2000);
 		
 		compass = new CompassHMC6352(teensy);
-		compass.addEventListener(Event.CHANGE, onHeadingUpdate);
+		compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
 		
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);

@@ -27,7 +27,7 @@
 <span class='line'> 20</span> 	 * Creates a new Potentiometer. Listen for a change event (Event.CHANGE).
 <span class='line'> 21</span> 	 *
 <span class='line'> 22</span> 	 * @exports Potentiometer as BREAKOUT.io.Potentiometer
-<span class='line'> 23</span> 	 * @constructor
+<span class='line'> 23</span> 	 * @class
 <span class='line'> 24</span> 	 * @augments BREAKOUT.PhysicalInputBase	 
 <span class='line'> 25</span> 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 <span class='line'> 26</span> 	 * @param {Pin} pin A reference to the Pin the potentiometer is connected to.
@@ -123,9 +123,24 @@
 <span class='line'>116</span> </span><span class="WHIT">	</span><span class="NAME">Potentiometer.prototype.onPinChange</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>117</span> </span><span class="WHIT">		</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="PUNC">(</span><span class="NAME">Event.CHANGE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>118</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>119</span> </span><span class="WHIT">	
-<span class='line'>120</span> 
-<span class='line'>121</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Potentiometer</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>122</span> 
-<span class='line'>123</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>124</span> </span></pre></body></html>
+<span class='line'>119</span> 
+<span class='line'>120</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>121</span> 
+<span class='line'>122</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>123</span> 	 * The change event is dispatched when the potentiometer value changes.
+<span class='line'>124</span> 	 * @name Potentiometer#change
+<span class='line'>125</span> 	 * @type JSUTILS.Event.CHANGE
+<span class='line'>126</span> 	 * @event
+<span class='line'>127</span> 	 * @example
+<span class='line'>128</span> 	 * pot.addEventListener(Event.CHANGE, onValueChange);
+<span class='line'>129</span> 	 *
+<span class='line'>130</span> 	 * function onValueChange(event) {
+<span class='line'>131</span> 	 *   console.log("value = " + event.target.value);	
+<span class='line'>132</span> 	 * }
+<span class='line'>133</span> 	 * @param {BREAKOUT.Potentiometer} target A reference to the Potentiometer object
+<span class='line'>134</span> 	 */</span><span class="WHIT">
+<span class='line'>135</span> 
+<span class='line'>136</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Potentiometer</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>137</span> 
+<span class='line'>138</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span></pre></body></html>

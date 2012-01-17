@@ -42,6 +42,7 @@ pre.code
 	display: block;
 	padding: 8px;
 	border: 1px dashed #ccc;
+	background-color: #F0F8FF;
 }
 
 #index
@@ -215,6 +216,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html">BREAKOUT.io.AccelerometerADXL345</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.io.AccelerometerEvent.html">BREAKOUT.io.AccelerometerEvent</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html">BREAKOUT.io.AnalogAccelerometer</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.BlinkM.html">BREAKOUT.io.BlinkM</a></li>
@@ -222,6 +225,8 @@ ul.inheritsList
 	<li><a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.ButtonEvent.html">BREAKOUT.io.ButtonEvent</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.io.CompassEvent.html">BREAKOUT.io.CompassEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.CompassHMC6352.html">BREAKOUT.io.CompassHMC6352</a></li>
 	
@@ -564,6 +569,114 @@ on the IOBoard.</div>
 				
 			
 <!-- ============================== events summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the events documented in the class BREAKOUT.IOBoard.">
+					<caption>Event Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Event Attributes</th>
+							<th scope="col">Event Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:analogData">analogData</a></b>
+								</div>
+								<div class="description">The analogData event is dispatched when analog data is received
+from the IOBoard.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:digitalData">digitalData</a></b>
+								</div>
+								<div class="description">The digitalData event is dispatched when digital data is received
+from the IOBoard.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:firmwareName">firmwareName</a></b>
+								</div>
+								<div class="description">The firmwareName event is dispatched when the firmware name is received
+from the IOBoard.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:firmwareVersion">firmwareVersion</a></b>
+								</div>
+								<div class="description">The firmwareVersion event is dispatched when the firmware version is
+received from the IOBoard.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:ioBoardConnected">ioBoardConnected</a></b>
+								</div>
+								<div class="description">The ioBoardConnected event is dispatched when the websocket connection
+is established.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:ioBoardReady">ioBoardReady</a></b>
+								</div>
+								<div class="description">The ioBoardReady event is dispatched when the board is ready to send 
+and receive commands.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:pinStateResponse">pinStateResponse</a></b>
+								</div>
+								<div class="description">The pinStateResponse event is dispatched when the results of
+a pin state query (via a call to: queryPinState()) is received.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:stringMessage">stringMessage</a></b>
+								</div>
+								<div class="description">The stringMessage event is dispatched when a string is received from
+the IOBoard.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.IOBoard.html#event:sysexMessage">sysexMessage</a></b>
+								</div>
+								<div class="description">The sysexMessage event is dispatched when a sysex message is 
+received from the IOBoard.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
 			
 
 <!-- ============================== constructor details ==================== -->		
@@ -1484,6 +1597,396 @@ analog pin number. For example on an Arduino UNO, analog pin 0 = digital pin 14.
 			
 <!-- ============================== event details ========================= -->		
 			
+				<div class="sectionTitle">
+					Event Detail
+				</div>
+				
+					<a name="event:analogData"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.ANALOG_DATA">BREAKOUT.IOBoardEvent.ANALOG_DATA</a>}</span>
+					<b>analogData</b>
+					
+					</div>
+					<div class="description">
+						The analogData event is dispatched when analog data is received
+from the IOBoard. Use thie event to be notified when any analog
+pin value changes. Use Pin.CHANGE to be notified when a specific
+pin value changes.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a>}</span> <b>pin</b>
+									
+								</dt>
+								<dd>A reference to the pin object.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:digitalData"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.DIGITAL_DATA">BREAKOUT.IOBoardEvent.DIGITAL_DATA</a>}</span>
+					<b>digitalData</b>
+					
+					</div>
+					<div class="description">
+						The digitalData event is dispatched when digital data is received
+from the IOBoard. Use this event to be notified when any digital
+pin value changes. Use Pin.CHANGE to be notified when a specific
+pin value changes.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a>}</span> <b>pin</b>
+									
+								</dt>
+								<dd>A reference to the pin object.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:firmwareName"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.FIRMWARE_NAME">BREAKOUT.IOBoardEvent.FIRMWARE_NAME</a>}</span>
+					<b>firmwareName</b>
+					
+					</div>
+					<div class="description">
+						The firmwareName event is dispatched when the firmware name is received
+from the IOBoard.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>name</b>
+									
+								</dt>
+								<dd>The name of the firmware running on the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>version</b>
+									
+								</dt>
+								<dd>The firmware version (where Firmata 2.3 = 23)</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:firmwareVersion"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.FIRMWARE_VERSION">BREAKOUT.IOBoardEvent.FIRMWARE_VERSION</a>}</span>
+					<b>firmwareVersion</b>
+					
+					</div>
+					<div class="description">
+						The firmwareVersion event is dispatched when the firmware version is
+received from the IOBoard.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>version</b>
+									
+								</dt>
+								<dd>The firmware version (where Firmata 2.3 = 23)</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:ioBoardConnected"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.CONNECTED">BREAKOUT.IOBoardEvent.CONNECTED</a>}</span>
+					<b>ioBoardConnected</b>
+					
+					</div>
+					<div class="description">
+						The ioBoardConnected event is dispatched when the websocket connection
+is established.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:ioBoardReady"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.READY">BREAKOUT.IOBoardEvent.READY</a>}</span>
+					<b>ioBoardReady</b>
+					
+					</div>
+					<div class="description">
+						The ioBoardReady event is dispatched when the board is ready to send 
+and receive commands.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:pinStateResponse"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.PIN_STATE_RESPONSE">BREAKOUT.IOBoardEvent.PIN_STATE_RESPONSE</a>}</span>
+					<b>pinStateResponse</b>
+					
+					</div>
+					<div class="description">
+						The pinStateResponse event is dispatched when the results of
+a pin state query (via a call to: queryPinState()) is received.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.Pin.html">BREAKOUT.Pin</a>}</span> <b>pin</b>
+									
+								</dt>
+								<dd>A reference to the pin object.</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:stringMessage"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.STRING_MESSAGE">BREAKOUT.IOBoardEvent.STRING_MESSAGE</a>}</span>
+					<b>stringMessage</b>
+					
+					</div>
+					<div class="description">
+						The stringMessage event is dispatched when a string is received from
+the IOBoard.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{String}</span> <b>message</b>
+									
+								</dt>
+								<dd>The string message received from the IOBoard</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:sysexMessage"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.IOBoardEvent.html#.SYSEX_MESSAGE">BREAKOUT.IOBoardEvent.SYSEX_MESSAGE</a>}</span>
+					<b>sysexMessage</b>
+					
+					</div>
+					<div class="description">
+						The sysexMessage event is dispatched when a sysex message is 
+received from the IOBoard.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{IOBoard}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the IOBoard</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Array}</span> <b>message</b>
+									
+								</dt>
+								<dd>The sysex data</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
 			
 			<hr />
 		</div>
@@ -1492,7 +1995,7 @@ analog pin number. For example on an Arduino UNO, analog pin 0 = digital pin 14.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 15 2012 02:33:34 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jan 17 2012 00:44:56 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

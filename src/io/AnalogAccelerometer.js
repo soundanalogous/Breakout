@@ -19,6 +19,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 		// dependencies
 	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
 		Event = JSUTILS.Event,
+		AccelerometerEvent = BREAKOUT.io.AccelerometerEvent,
 		Scaler = BREAKOUT.filters.Scaler,
 		Convolution = BREAKOUT.filters.Convolution;
 
@@ -236,7 +237,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	 */
 	AnalogAccelerometer.prototype.xAxisChanged = function(event) {
 		this._x = event.target.value;
-		this.dispatchEvent(new Event(Event.CHANGE));
+		this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
 	};
 
 	/**
@@ -244,7 +245,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	 */
 	AnalogAccelerometer.prototype.yAxisChanged = function(event) {
 		this._y = event.target.value;
-		this.dispatchEvent(new Event(Event.CHANGE));
+		this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
 	};
 	
 	/**
@@ -252,7 +253,7 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	 */
 	AnalogAccelerometer.prototype.zAxisChanged = function(event) {
 		this._z = event.target.value;
-		this.dispatchEvent(new Event(Event.CHANGE));
+		this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
 	};		
 
 	/** @constant */
@@ -260,7 +261,18 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	/** @constant */
 	AnalogAccelerometer.Y_AXIS = 1;
 	/** @constant */
-	AnalogAccelerometer.Z_AXIS = 2;	
+	AnalogAccelerometer.Z_AXIS = 2;
+
+
+	// document events
+
+	/**
+	 * The update event is dispatched when the accelerometer values are updated.
+	 * @name AnalogAccelerometer#update
+	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+	 * @event
+	 * @param {BREAKOUT.io.AnalogAccelerometer} target A reference to the AnalogAccelerometer object.
+	 */		
 
 	return AnalogAccelerometer;
 

@@ -439,6 +439,17 @@ BREAKOUT.Pin = (function() {
 	/** @constant */
 	Pin.TOTAL_PIN_MODES = 7;
 
+
+	// document events
+
+	/**
+	 * The change event is dispatched when the pin value changes.
+	 * @name Pin#change
+	 * @type JSUTILS.Event.CHANGE
+	 * @event
+	 * @param {BREAKOUT.Pin} target A reference to the Timer object.
+	 */	
+
 	return Pin;
 
 }());

@@ -42,6 +42,7 @@ pre.code
 	display: block;
 	padding: 8px;
 	border: 1px dashed #ccc;
+	background-color: #F0F8FF;
 }
 
 #index
@@ -215,6 +216,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BREAKOUT.io.AccelerometerADXL345.html">BREAKOUT.io.AccelerometerADXL345</a></li>
 	
+	<li><a href="../symbols/BREAKOUT.io.AccelerometerEvent.html">BREAKOUT.io.AccelerometerEvent</a></li>
+	
 	<li><a href="../symbols/BREAKOUT.io.AnalogAccelerometer.html">BREAKOUT.io.AnalogAccelerometer</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.BlinkM.html">BREAKOUT.io.BlinkM</a></li>
@@ -222,6 +225,8 @@ ul.inheritsList
 	<li><a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.ButtonEvent.html">BREAKOUT.io.ButtonEvent</a></li>
+	
+	<li><a href="../symbols/BREAKOUT.io.CompassEvent.html">BREAKOUT.io.CompassEvent</a></li>
 	
 	<li><a href="../symbols/BREAKOUT.io.CompassHMC6352.html">BREAKOUT.io.CompassHMC6352</a></li>
 	
@@ -410,6 +415,66 @@ ul.inheritsList
 				
 			
 <!-- ============================== events summary ======================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the events documented in the class BREAKOUT.io.Button.">
+					<caption>Event Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Event Attributes</th>
+							<th scope="col">Event Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.Button.html#event:longPress">longPress</a></b>
+								</div>
+								<div class="description">The longPress event is dispatched once when the button has been held for
+the time duration specified by the sustainedPressInterval property.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.Button.html#event:pressed">pressed</a></b>
+								</div>
+								<div class="description">The pressed event is dispatched when the button is pressed.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.Button.html#event:released">released</a></b>
+								</div>
+								<div class="description">The released event is dispatched when the button is released.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.Button.html#event:sustainedPress">sustainedPress</a></b>
+								</div>
+								<div class="description">The sustainedPress event is dispatched continuously at the rate 
+specified by the sustainedPressInterval property while the button is held.</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+				<dl class="inheritsList">
+				
+				</dl>
+				
 			
 
 <!-- ============================== constructor details ==================== -->		
@@ -624,6 +689,157 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 			
 <!-- ============================== event details ========================= -->		
 			
+				<div class="sectionTitle">
+					Event Detail
+				</div>
+				
+					<a name="event:longPress"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.ButtonEvent.html#.LONG_PRESS">BREAKOUT.io.ButtonEvent.LONG_PRESS</a>}</span>
+					<b>longPress</b>
+					
+					</div>
+					<div class="description">
+						The longPress event is dispatched once when the button has been held for
+the time duration specified by the sustainedPressInterval property.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the Button object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:pressed"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.ButtonEvent.html#.PRESS">BREAKOUT.io.ButtonEvent.PRESS</a>}</span>
+					<b>pressed</b>
+					
+					</div>
+					<div class="description">
+						The pressed event is dispatched when the button is pressed.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the Button object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:released"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.ButtonEvent.html#.RELEASE">BREAKOUT.io.ButtonEvent.RELEASE</a>}</span>
+					<b>released</b>
+					
+					</div>
+					<div class="description">
+						The released event is dispatched when the button is released.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the Button object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="event:sustainedPress"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{<a href="../symbols/BREAKOUT.io.ButtonEvent.html#.SUSTAINED_PRESS">BREAKOUT.io.ButtonEvent.SUSTAINED_PRESS</a>}</span>
+					<b>sustainedPress</b>
+					
+					</div>
+					<div class="description">
+						The sustainedPress event is dispatched continuously at the rate 
+specified by the sustainedPressInterval property while the button is held.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">This event has the following properties:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.io.Button.html">BREAKOUT.io.Button</a>}</span> <b>target</b>
+									
+								</dt>
+								<dd>A reference to the Button object</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					
+				
+			
 			
 			<hr />
 		</div>
@@ -632,7 +848,7 @@ using the internal pull-up resistors. Default is PULL_DOWN.</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Jan 15 2012 02:33:34 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Tue Jan 17 2012 00:44:56 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

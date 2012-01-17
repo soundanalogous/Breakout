@@ -21,12 +21,11 @@ $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
-	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
+	// to type the full namespace	
 	var IOBoard = BREAKOUT.IOBoard;
 	var IOBoardEvent = BREAKOUT.IOBoardEvent;
 	var AccelerometerADXL345 = BREAKOUT.io.AccelerometerADXL345;
+	var AccelerometerEvent = BREAKOUT.io.AccelerometerEvent;	
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ADXL345
@@ -56,11 +55,11 @@ $(document).ready(function() {
 	    // start reading the accelerometer
 	    accelerometer.startReading();
 
-	    accelerometer.addEventListener(Event.CHANGE, onAccelerationChange);
+	    accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
 
 	}
 	
-	function onAccelerationChange(event) {
+	function onAccelerationUpdate(event) {
 		var accel = event.target;
 		
 		$('#xVal').html("x = " + accel.x.toFixed(3));

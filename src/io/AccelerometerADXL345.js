@@ -22,7 +22,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 
 	// dependencies
 	var I2CBase = BREAKOUT.I2CBase,
-		Event = JSUTILS.Event;
+		AccelerometerEvent = BREAKOUT.io.AccelerometerEvent;
 
 	/**
 	 * Analog Devices ADXL345 3-axis accelerometer
@@ -332,7 +332,7 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 		this._y = this._rawY * this._sensitivity.y;
 		this._z = this._rawZ * this._sensitivity.z;
 		
-		this.dispatchEvent(new Event(Event.CHANGE));			
+		this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));			
 	};
 	
 	/**
@@ -358,7 +358,17 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 	/** @constant */
 	AccelerometerADXL345.DEVICE_ID = 0x53;
 	/** @constant */
-	AccelerometerADXL345.DEFAULT_SENSITIVITY = 0.00390625;				
+	AccelerometerADXL345.DEFAULT_SENSITIVITY = 0.00390625;
+	
+	// document events
+
+	/**
+	 * The update event is dispatched when the accelerometer values are updated.
+	 * @name AccelerometerADXL345#update
+	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+	 * @event
+	 * @param {BREAKOUT.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
+	 */						
 
 	return AccelerometerADXL345;
 

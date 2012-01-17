@@ -11,7 +11,7 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 
 	// dependencies
 	var I2CBase = BREAKOUT.I2CBase,
-		Event = JSUTILS.Event;
+		CompassEvent = BREAKOUT.io.CompassEvent;
 
 	/**
 	 * HMC6352 digital compass module
@@ -60,7 +60,7 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 		this._heading = Math.floor(((data[1] << 8) | data[2]) / 10.0);
 		
 		if (this._heading != this._lastHeading) {
-			this.dispatchEvent(new Event(Event.CHANGE));
+			this.dispatchEvent(new CompassEvent(CompassEvent.UPDATE));
 		}
 		this._lastHeading = this._heading;
 	};
@@ -79,6 +79,16 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 		this.sendI2CRequest([I2CBase.STOP_READING, this.address]);
 	};
 
+
+	// document events
+
+	/**
+	 * The update event is dispatched when the compass heading is updated.
+	 * @name CompassHMC6352#update
+	 * @type BREAKOUT.io.CompassEvent.UPDATE
+	 * @event
+	 * @param {BREAKOUT.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
+	 */		
 
 	return CompassHMC6352;
 
