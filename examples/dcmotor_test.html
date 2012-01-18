@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>DCMotor Test</title>
+
+<!-- order of import is important -->
+<script src="../dist/Breakout.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace	
+	var IOBoard = BREAKOUT.IOBoard;
+	var IOBoardEvent = BREAKOUT.IOBoardEvent;
+	var DCMotor = BREAKOUT.io.DCMotor;
+	var Timer = JSUTILS.Timer;
+	var TimerEvent = JSUTILS.TimerEvent;
+
+	var arduino = new IOBoard("localhost", 8887);
+	var motor;
+	var timer;
+	var state = -1;
+	
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+					
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// params: forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage
+		motor = new DCMotor(arduino, 
+			arduino.getDigitalPin(10),
+			arduino.getDigitalPin(9), 
+			arduino.getDigitalPin(11), 
+			1,	
+			5, 
+			5);
+
+
+		timer = new Timer(1000);
+		timer.addEventListener(TimerEvent.TIMER, onTimer);
+		timer.start();	
+		
+	}
+
+	function onTimer(event) {
+		state = (state + 1) % 4;
+
+		switch(state) {
+			case 0:
+				motor.forward(0.5);
+				// can alternatively set value directly
+				//motor.value = 0.5;
+				$('#state').html("Forward");
+				break;
+			case 1:
+				motor.despin(true);
+				// can alternatively set value directly
+				//motor.value = 0;
+				$('#state').html("Brake");
+				break;
+			case 2:
+				motor.reverse(0.5);
+				// can alternatively set value directly
+				//motor.value = -0.5;
+				$('#state').html("Reverse");
+				break;
+			case 3:
+				motor.despin(false);
+				// can alternatively set value directly
+				//motor.value = 0;
+				$('#state').html("Standby");
+				break;
+		}
+	}
+			
+});
+
+</script>
+
+</head>
+<body>
+	<div id="state" class="text"></div>    
+</body>
+</html>​

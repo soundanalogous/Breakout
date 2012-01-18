@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - BREAKOUT.WSocketWrapper</title>
+		<title>JsDoc Reference - BREAKOUT.io.DCMotor</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -279,7 +279,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class BREAKOUT.WSocketWrapper
+				Class BREAKOUT.io.DCMotor
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -290,13 +290,13 @@ ul.inheritsList
 				
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_core_WSocketWrapper.js.html">WSocketWrapper.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_DCMotor.js.html">DCMotor.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.WSocketWrapper.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BREAKOUT.io.DCMotor.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -309,9 +309,9 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.WSocketWrapper.html#constructor">BREAKOUT.WSocketWrapper</a></b>(host, port, useSocketIO, protocol)
+								<b><a href="../symbols/BREAKOUT.io.DCMotor.html#constructor">BREAKOUT.io.DCMotor</a></b>(board, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage)
 							</div>
-							<div class="description">Creates a wrapper for various websocket implementations to unify the interface.</div>
+							<div class="description">H-bridge motor control.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -322,7 +322,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.WSocketWrapper.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BREAKOUT.io.DCMotor.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -336,10 +336,9 @@ ul.inheritsList
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								<b><a href="../symbols/BREAKOUT.WSocketWrapper.html#readyState">readyState</a></b>
+								<b><a href="../symbols/BREAKOUT.io.DCMotor.html#value">value</a></b>
 								</div>
-								<div class="description">[read-only] Wrapper for the readyState method of the native websocket implementation
-<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p></div>
+								<div class="description">The value of the motor speed (-1.0 to 1.0).</div>
 							</td>
 						</tr>
 					
@@ -354,7 +353,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.WSocketWrapper.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the methods documented in the class BREAKOUT.io.DCMotor.">
 					<caption>Method Summary</caption>
 					<thead>
 						<tr>
@@ -367,9 +366,27 @@ ul.inheritsList
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.WSocketWrapper.html#send">send</a></b>(message)
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.DCMotor.html#despin">despin</a></b>(useBrake)
 								</div>
-								<div class="description">Send a message</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.DCMotor.html#forward">forward</a></b>(val)
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.io.DCMotor.html#reverse">reverse</a></b>(val)
+								</div>
+								<div class="description"></div>
 							</td>
 						</tr>
 					
@@ -381,52 +398,6 @@ ul.inheritsList
 			
 <!-- ============================== events summary ======================== -->
 			
-				
-				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the events documented in the class BREAKOUT.WSocketWrapper.">
-					<caption>Event Summary</caption>
-					<thead>
-						<tr>
-							<th scope="col">Event Attributes</th>
-							<th scope="col">Event Name and Description</th>
-						</tr>
-					</thead>
-					<tbody>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.WSocketWrapper.html#event:webSocketClosed">webSocketClosed</a></b>
-								</div>
-								<div class="description">The webSocketClosed event is dispatched the websocket connection is closed.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.WSocketWrapper.html#event:webSocketConnected">webSocketConnected</a></b>
-								</div>
-								<div class="description">The webSocketConnected event is dispatched when a connection with
-the websocket is established.</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont"><b><a href="../symbols/BREAKOUT.WSocketWrapper.html#event:webSocketMessage">webSocketMessage</a></b>
-								</div>
-								<div class="description">The webSocketMessage event is dispatched when a websocket message is received.</div>
-							</td>
-						</tr>
-					
-					</tbody>
-				</table>
-				
-				
-				
-			
 
 <!-- ============================== constructor details ==================== -->		
 			
@@ -436,11 +407,17 @@ the websocket is established.</div>
 				</div>
 				
 				<div class="fixedFont">
-						<b>BREAKOUT.WSocketWrapper</b>(host, port, useSocketIO, protocol)
+						<b>BREAKOUT.io.DCMotor</b>(board, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage)
 				</div>
 				
 				<div class="description">
-					Creates a wrapper for various websocket implementations to unify the interface.
+					H-bridge motor control.
+<p>Tested successfully with the following H-bridge: SN754410<br>
+Should also be compatible with the following:<br>
+SN754410<br>
+TA7291P<br>
+TB6612FNG<br>
+BD621F</p>
 					
 				</div>
 				
@@ -452,29 +429,48 @@ the websocket is established.</div>
 						<dt class="heading">Parameters:</dt>
 						
 							<dt>
-								<span class="light fixedFont">{String}</span>  <b>host</b>
+								<span class="light fixedFont">{IOBoard}</span>  <b>board</b>
 								
 							</dt>
-								<dd>The host address of the web server.</dd>
+								<dd>A reference to the IOBoard instance that the servo is attached to.</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Number}</span>  <b>port</b>
+								<span class="light fixedFont">{Pin}</span>  <b>forwardPin</b>
 								
 							</dt>
-								<dd>The port to connect to on the web server.</dd>
+								<dd>A reference to the Pin connected to the forward control of
+the H-bridge.</dd>
 						
 							<dt>
-								<span class="light fixedFont">{Boolean}</span>  <b>useSocketIO</b>
+								<span class="light fixedFont">{Pin}</span>  <b>reversePin</b>
 								
 							</dt>
-								<dd>Set true to use socket.io implementation, set false to use
-native websocket implementation.</dd>
+								<dd>A reference to the Pin connected to the reverse control of 
+the H-bridge.</dd>
 						
 							<dt>
-								<span class="light fixedFont">{String}</span>  <b>protocol</b>
+								<span class="light fixedFont">{Pin}</span>  <b>pwmPin</b>
 								
 							</dt>
-								<dd>The websockt protocol definition (if necessary).</dd>
+								<dd>A reference to the Pin connected to the pwm control of the H-bridge.</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>minVoltage</b>
+								
+							</dt>
+								<dd>The minimum voltage (default = 1).</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>maxVoltage</b>
+								
+							</dt>
+								<dd>The maximum voltage (default = 9).</dd>
+						
+							<dt>
+								<span class="light fixedFont">{Number}</span>  <b>supplyVoltage</b>
+								
+							</dt>
+								<dd>The supply voltage (default = 9).</dd>
 						
 						</dl>
 					
@@ -494,16 +490,15 @@ native websocket implementation.</dd>
 					Field Detail
 				</div>
 				
-					<a name="readyState"> </a>
+					<a name="value"> </a>
 					<div class="fixedFont">
 					
-					<span class="light">{String}</span>
-					<b>readyState</b>
+					<span class="light">{Number}</span>
+					<b>value</b>
 					
 					</div>
 					<div class="description">
-						[read-only] Wrapper for the readyState method of the native websocket implementation
-<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
+						The value of the motor speed (-1.0 to 1.0). A speed of zero stops the motor.
 						
 						
 					</div>
@@ -525,15 +520,15 @@ native websocket implementation.</dd>
 					Method Detail
 				</div>
 				
-					<a name="send"> </a>
+					<a name="despin"> </a>
 					<div class="fixedFont">
 					
 					
-					<b>send</b>(message)
+					<b>despin</b>(useBrake)
 					
 					</div>
 					<div class="description">
-						Send a message
+						
 						
 						
 					</div>
@@ -545,10 +540,82 @@ native websocket implementation.</dd>
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{String}</span> <b>message</b>
+									<span class="light fixedFont">{Boolean}</span> <b>useBrake</b>
 									
 								</dt>
-								<dd>The message to send</dd>
+								<dd>Default = true</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="forward"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>forward</b>(val)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>val</b>
+									
+								</dt>
+								<dd>The new voltage to set (0.0 to 1.0)</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name="reverse"> </a>
+					<div class="fixedFont">
+					
+					
+					<b>reverse</b>(val)
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>val</b>
+									
+								</dt>
+								<dd>The new voltage to set (-1.0 to 0.0)</dd>
 							
 							</dl>
 						
@@ -564,126 +631,6 @@ native websocket implementation.</dd>
 			
 			
 <!-- ============================== event details ========================= -->		
-			
-				<div class="sectionTitle">
-					Event Detail
-				</div>
-				
-					<a name="event:webSocketClosed"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{BREAKOUT.WebsocketEvent.CLOSE}</span>
-					<b>webSocketClosed</b>
-					
-					</div>
-					<div class="description">
-						The webSocketClosed event is dispatched the websocket connection is closed.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">This event has the following properties:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.WSocketWrapper.html">BREAKOUT.WSocketWrapper</a>}</span> <b>target</b>
-									
-								</dt>
-								<dd>A reference to the WSocketWrapper object.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="event:webSocketConnected"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{BREAKOUT.WebsocketEvent.CONNECTED}</span>
-					<b>webSocketConnected</b>
-					
-					</div>
-					<div class="description">
-						The webSocketConnected event is dispatched when a connection with
-the websocket is established.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">This event has the following properties:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.WSocketWrapper.html">BREAKOUT.WSocketWrapper</a>}</span> <b>target</b>
-									
-								</dt>
-								<dd>A reference to the WSocketWrapper object.</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					<hr />
-				
-					<a name="event:webSocketMessage"> </a>
-					<div class="fixedFont">
-					
-					<span class="light">{BREAKOUT.WebsocketEvent.MESSAGE}</span>
-					<b>webSocketMessage</b>
-					
-					</div>
-					<div class="description">
-						The webSocketMessage event is dispatched when a websocket message is received.
-						
-						
-					</div>
-					
-					
-					
-						
-							<dl class="detailList">
-							<dt class="heading">This event has the following properties:</dt>
-							
-								<dt>
-									<span class="light fixedFont">{<a href="../symbols/BREAKOUT.WSocketWrapper.html">BREAKOUT.WSocketWrapper</a>}</span> <b>target</b>
-									
-								</dt>
-								<dd>A reference to the WSocketWrapper object.</dd>
-							
-								<dt>
-									<span class="light fixedFont">{String}</span> <b>message</b>
-									
-								</dt>
-								<dd>The websocket data</dd>
-							
-							</dl>
-						
-						
-						
-						
-						
-						
-						
-
-					
-				
 			
 			
 			<hr />
