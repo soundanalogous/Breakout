@@ -9,9 +9,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- JSUTILS.namespace('BREAKOUT.generators.GeneratorEvent');
+ JSUTILS.namespace('BO.generators.GeneratorEvent');
 
- BREAKOUT.generators.GeneratorEvent = (function() {
+ BO.generators.GeneratorEvent = (function() {
  	"use strict";
 
  	var GeneratorEvent;
@@ -20,7 +20,7 @@
 	var Event = JSUTILS.Event;
 
  	/**
- 	 * @exports GeneratorEvent as BREAKOUT.generators.GeneratorEvent
+ 	 * @exports GeneratorEvent as BO.generators.GeneratorEvent
  	 * @constructor
  	 * @augments JSUTILS.Event
  	 * @param {String} type The event type
@@ -54,9 +54,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- JSUTILS.namespace('BREAKOUT.generators.GeneratorBase');
+ JSUTILS.namespace('BO.generators.GeneratorBase');
 
- BREAKOUT.generators.GeneratorBase = (function() {
+ BO.generators.GeneratorBase = (function() {
  	"use strict";
 
  	var GeneratorBase;
@@ -67,7 +67,7 @@
  	/**
  	 * A base object for generators.
  	 *
- 	 * @exports GeneratorBase as BREAKOUT.generators.GeneratorBase
+ 	 * @exports GeneratorBase as BO.generators.GeneratorBase
  	 * @constructor
  	 * @augments JSUTILS.EventDispatcher
  	 */

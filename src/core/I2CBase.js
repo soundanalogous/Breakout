@@ -3,22 +3,22 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.I2CBase');
+JSUTILS.namespace('BO.I2CBase');
 
-BREAKOUT.I2CBase = (function() {
+BO.I2CBase = (function() {
 	"use strict";
 
  	var I2CBase;
 
  	// dependencies
- 	var Pin = BREAKOUT.Pin,
+ 	var Pin = BO.Pin,
  		EventDispatcher = JSUTILS.EventDispatcher,
- 		IOBoardEvent = BREAKOUT.IOBoardEvent;
+ 		IOBoardEvent = BO.IOBoardEvent;
 
 	/**
 	 * Creates a new I2CBase base class
 	 *
-	 * @exports I2CBase as BREAKOUT.I2CBase
+	 * @exports I2CBase as BO.I2CBase
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Number} address The I2C address of the device

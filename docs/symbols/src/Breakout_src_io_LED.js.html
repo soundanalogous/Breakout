@@ -16,15 +16,15 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.LED'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.LED'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.io.LED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.io.LED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> 
 <span class='line'> 16</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">LED</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 17</span> 
 <span class='line'> 18</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Oscillator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.generators.Oscillator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Oscillator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.generators.Oscillator</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 21</span> 
 <span class='line'> 22</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 23</span> 	 * Creates a LED object.
@@ -36,7 +36,7 @@
 <span class='line'> 29</span> 	 * is SOURCE_DRIVE. If the Cathode is connected to the microcontroller 
 <span class='line'> 30</span> 	 * pin, then it is SYNC_DRIVE.&lt;/p>
 <span class='line'> 31</span> 	 *
-<span class='line'> 32</span> 	 * @exports LED as BREAKOUT.io.LED
+<span class='line'> 32</span> 	 * @exports LED as BO.io.LED
 <span class='line'> 33</span> 	 * @class Creates an LED object.
 <span class='line'> 34</span> 	 * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
 <span class='line'> 35</span> 	 * @param {Pin} ledPin A reference to the Pin the LED is connected to.
@@ -133,7 +133,7 @@
 <span class='line'>126</span> 		 * @param {Number} times The number of times the LED should blink.
 <span class='line'>127</span> 		 * A value of 0 will blink forever.
 <span class='line'>128</span> 		 * @param {Function} wave The waveform to apply (default is Oscillator.SQUARE)
-<span class='line'>129</span> 		 * @see BREAKOUT.generator.Oscillator
+<span class='line'>129</span> 		 * @see BO.generator.Oscillator
 <span class='line'>130</span> 		 */</span><span class="WHIT">
 <span class='line'>131</span> </span><span class="WHIT">		</span><span class="NAME">blink</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">interval</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">times</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">wave</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>132</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">freq</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NAME">interval</span><span class="PUNC">;</span><span class="WHIT">

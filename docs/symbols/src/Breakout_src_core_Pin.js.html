@@ -16,9 +16,9 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.Pin'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.Pin'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">//"use strict";	// closure compiler doesn't like this... should be fixed soon though</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="PUNC">;</span><span class="WHIT">
@@ -26,12 +26,12 @@
 <span class='line'> 19</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 21</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="NAME">GeneratorEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.generators.GeneratorEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="NAME">GeneratorEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.generators.GeneratorEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 23</span> 
 <span class='line'> 24</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 25</span> 	 * An object to represent an IOBoard pin
 <span class='line'> 26</span> 	 *
-<span class='line'> 27</span> 	 * @exports Pin as BREAKOUT.Pin
+<span class='line'> 27</span> 	 * @exports Pin as BO.Pin
 <span class='line'> 28</span> 	 * @class An object to represent an IOBoard pin
 <span class='line'> 29</span> 	 * @param {Number} number The pin number
 <span class='line'> 30</span> 	 * @param {Number} type The type of pin
@@ -291,9 +291,9 @@
 <span class='line'>284</span> 		</span><span class="COMM">/**
 <span class='line'>285</span> 		 * Add a new filter to the Pin.
 <span class='line'>286</span> 		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
-<span class='line'>287</span> 		 * @see BREAKOUT.filters.Convolution
-<span class='line'>288</span> 		 * @see BREAKOUT.filters.Scaler
-<span class='line'>289</span> 		 * @see BREAKOUT.filters.TriggerPoint
+<span class='line'>287</span> 		 * @see BO.filters.Convolution
+<span class='line'>288</span> 		 * @see BO.filters.Scaler
+<span class='line'>289</span> 		 * @see BO.filters.TriggerPoint
 <span class='line'>290</span> 		 */</span><span class="WHIT">
 <span class='line'>291</span> </span><span class="WHIT">		</span><span class="NAME">addFilter</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>292</span> 
@@ -313,7 +313,7 @@
 <span class='line'>306</span> 		 * Assigning a new generator will replace the previously assigned generator.
 <span class='line'>307</span> 		 *
 <span class='line'>308</span> 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
-<span class='line'>309</span> 		 * @see BREAKOUT.generators.Oscillator
+<span class='line'>309</span> 		 * @see BO.generators.Oscillator
 <span class='line'>310</span> 		 */</span><span class="WHIT">
 <span class='line'>311</span> </span><span class="WHIT">		</span><span class="NAME">addGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newGenerator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>312</span> </span><span class="WHIT">			</span><span class="NAME">this.removeGenerator</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -454,7 +454,7 @@
 <span class='line'>447</span> 	 * @name Pin#change
 <span class='line'>448</span> 	 * @type JSUTILS.Event.CHANGE
 <span class='line'>449</span> 	 * @event
-<span class='line'>450</span> 	 * @param {BREAKOUT.Pin} target A reference to the Timer object.
+<span class='line'>450</span> 	 * @param {BO.Pin} target A reference to the Timer object.
 <span class='line'>451</span> 	 */</span><span class="WHIT">	
 <span class='line'>452</span> 
 <span class='line'>453</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="PUNC">;</span><span class="WHIT">

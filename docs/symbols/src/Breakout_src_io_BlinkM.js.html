@@ -16,21 +16,21 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.BlinkM'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.BlinkM'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.io.BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.io.BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> 
 <span class='line'> 16</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BlinkM</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 17</span> 
 <span class='line'> 18</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.I2CBase</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 20</span> 
 <span class='line'> 21</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 22</span> 	 * Creates and BlinkM object
 <span class='line'> 23</span> 	 *
-<span class='line'> 24</span> 	 * @exports BlinkM as BREAKOUT.io.BlinkM
+<span class='line'> 24</span> 	 * @exports BlinkM as BO.io.BlinkM
 <span class='line'> 25</span> 	 * @constructor
-<span class='line'> 26</span> 	 * @augments BREAKOUT.I2CBase 
+<span class='line'> 26</span> 	 * @augments BO.I2CBase 
 <span class='line'> 27</span> 	 * @param {IOBoard} board The IOBoard instance
 <span class='line'> 28</span> 	 * @param {Number} address The i2c address of the BlinkM module
 <span class='line'> 29</span> 	 */</span><span class="WHIT">

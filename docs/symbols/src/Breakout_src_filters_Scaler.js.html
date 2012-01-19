@@ -16,23 +16,23 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.filters.Scaler'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.filters.Scaler'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.filters.Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.filters.Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Scaler</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 18</span> 
 <span class='line'> 19</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">FilterBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.filters.FilterBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">FilterBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.filters.FilterBase</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 21</span> 
 <span class='line'> 22</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 23</span> 	 * Scales up an input value from its min and max range to a specified minimum to maximum range. 
 <span class='line'> 24</span> 	 * A number of scaling functions are provided.	
 <span class='line'> 25</span> 	 *
-<span class='line'> 26</span> 	 * @exports Scaler as BREAKOUT.filters.Scaler
+<span class='line'> 26</span> 	 * @exports Scaler as BO.filters.Scaler
 <span class='line'> 27</span> 	 * @constructor
-<span class='line'> 28</span> 	 * @augments BREAKOUT.filters.FilterBase
+<span class='line'> 28</span> 	 * @augments BO.filters.FilterBase
 <span class='line'> 29</span> 	 * @param {Number} inMin minimum input value
 <span class='line'> 30</span> 	 * @param {Number} inMax maximum input value
 <span class='line'> 31</span> 	 * @param {Number} outMin minimum output value

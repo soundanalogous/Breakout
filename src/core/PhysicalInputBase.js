@@ -9,9 +9,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.PhysicalInputBase');
+JSUTILS.namespace('BO.PhysicalInputBase');
 
-BREAKOUT.PhysicalInputBase = (function() {
+BO.PhysicalInputBase = (function() {
 
 	var PhysicalInputBase;
 
@@ -22,7 +22,7 @@ BREAKOUT.PhysicalInputBase = (function() {
 	 * A base class for physical inputs. Treat this class as an abstract base
 	 * class - do not instantiate it directly.
 	 *
-	 * @exports PhysicalInputBase as BREAKOUT.PhysicalInputBase
+	 * @exports PhysicalInputBase as BO.PhysicalInputBase
 	 * @constructor
 	 */
 	PhysicalInputBase = function() {

@@ -9,16 +9,16 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- JSUTILS.namespace('BREAKOUT.generators.Oscillator');
+ JSUTILS.namespace('BO.generators.Oscillator');
 
- BREAKOUT.generators.Oscillator = (function() {
+ BO.generators.Oscillator = (function() {
  	"use strict";
 
  	var Oscillator;
 
  	// dependencies
- 	var GeneratorBase = BREAKOUT.generators.GeneratorBase,
- 		GeneratorEvent = BREAKOUT.generators.GeneratorEvent,
+ 	var GeneratorBase = BO.generators.GeneratorBase,
+ 		GeneratorEvent = BO.generators.GeneratorEvent,
  		Timer = JSUTILS.Timer,
  		TimerEvent = JSUTILS.TimerEvent;
 
@@ -26,9 +26,9 @@
 	 * Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
 	 * an LED on or off.
 	 *
- 	 * @exports Oscillator as BREAKOUT.generators.Oscillator
+ 	 * @exports Oscillator as BO.generators.Oscillator
  	 * @constructor
- 	 * @augments BREAKOUT.generators.GeneratorBase
+ 	 * @augments BO.generators.GeneratorBase
 	 * @param {Number} wave waveform
 	 * @param {Number} freq frequency
 	 * @param {Number} amplitude amplitude
@@ -209,9 +209,9 @@
 	 * The update event is dispatched at the rate specified 
 	 * by the serviceInterval parameter (default = 33ms).
 	 * @name Oscillator#update
-	 * @type BREAKOUT.generators.GeneratorEvent.UPDATE
+	 * @type BO.generators.GeneratorEvent.UPDATE
 	 * @event
-	 * @param {BREAKOUT.generators.Oscillator} target A reference to the Oscillator object.
+	 * @param {BO.generators.Oscillator} target A reference to the Oscillator object.
 	 */	 		 	
 
  	return Oscillator;

@@ -16,16 +16,16 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="WHIT"> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.generators.Oscillator'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT"> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.generators.Oscillator'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="WHIT"> </span><span class="NAME">BREAKOUT.generators.Oscillator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT"> </span><span class="NAME">BO.generators.Oscillator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT"> 	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Oscillator</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 18</span> 
 <span class='line'> 19</span> </span><span class="WHIT"> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 20</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">GeneratorBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.generators.GeneratorBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 21</span> </span><span class="WHIT"> 		</span><span class="NAME">GeneratorEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.generators.GeneratorEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">GeneratorBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.generators.GeneratorBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT"> 		</span><span class="NAME">GeneratorEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.generators.GeneratorEvent</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 22</span> </span><span class="WHIT"> 		</span><span class="NAME">Timer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Timer</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 23</span> </span><span class="WHIT"> 		</span><span class="NAME">TimerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.TimerEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 24</span> 
@@ -33,9 +33,9 @@
 <span class='line'> 26</span> 	 * Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
 <span class='line'> 27</span> 	 * an LED on or off.
 <span class='line'> 28</span> 	 *
-<span class='line'> 29</span>  	 * @exports Oscillator as BREAKOUT.generators.Oscillator
+<span class='line'> 29</span>  	 * @exports Oscillator as BO.generators.Oscillator
 <span class='line'> 30</span>  	 * @constructor
-<span class='line'> 31</span>  	 * @augments BREAKOUT.generators.GeneratorBase
+<span class='line'> 31</span>  	 * @augments BO.generators.GeneratorBase
 <span class='line'> 32</span> 	 * @param {Number} wave waveform
 <span class='line'> 33</span> 	 * @param {Number} freq frequency
 <span class='line'> 34</span> 	 * @param {Number} amplitude amplitude
@@ -216,9 +216,9 @@
 <span class='line'>209</span> 	 * The update event is dispatched at the rate specified 
 <span class='line'>210</span> 	 * by the serviceInterval parameter (default = 33ms).
 <span class='line'>211</span> 	 * @name Oscillator#update
-<span class='line'>212</span> 	 * @type BREAKOUT.generators.GeneratorEvent.UPDATE
+<span class='line'>212</span> 	 * @type BO.generators.GeneratorEvent.UPDATE
 <span class='line'>213</span> 	 * @event
-<span class='line'>214</span> 	 * @param {BREAKOUT.generators.Oscillator} target A reference to the Oscillator object.
+<span class='line'>214</span> 	 * @param {BO.generators.Oscillator} target A reference to the Oscillator object.
 <span class='line'>215</span> 	 */</span><span class="WHIT">	 		 	
 <span class='line'>216</span> 
 <span class='line'>217</span>  	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Oscillator</span><span class="PUNC">;</span><span class="WHIT">

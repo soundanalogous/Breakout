@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.AccelerometerADXL345');
+JSUTILS.namespace('BO.io.AccelerometerADXL345');
 
-BREAKOUT.io.AccelerometerADXL345 = (function() {
+BO.io.AccelerometerADXL345 = (function() {
 	"use strict";
 
 	var AccelerometerADXL345;
@@ -21,15 +21,15 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 		NUM_BYTES = 6;	
 
 	// dependencies
-	var I2CBase = BREAKOUT.I2CBase,
-		AccelerometerEvent = BREAKOUT.io.AccelerometerEvent;
+	var I2CBase = BO.I2CBase,
+		AccelerometerEvent = BO.io.AccelerometerEvent;
 
 	/**
 	 * Analog Devices ADXL345 3-axis accelerometer
 	 *
-	 * @exports AccelerometerADXL345 as BREAKOUT.io.AccelerometerADXL345
+	 * @exports AccelerometerADXL345 as BO.io.AccelerometerADXL345
 	 * @constructor
-	 * @augments BREAKOUT.I2CBase
+	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
 	 * RANGE_8G, RANGE_16G). Default is RANGE_2G.	 
@@ -365,9 +365,9 @@ BREAKOUT.io.AccelerometerADXL345 = (function() {
 	/**
 	 * The update event is dispatched when the accelerometer values are updated.
 	 * @name AccelerometerADXL345#update
-	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+	 * @type BO.io.AccelerometerEvent.UPDATE
 	 * @event
-	 * @param {BREAKOUT.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
+	 * @param {BO.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
 	 */						
 
 	return AccelerometerADXL345;

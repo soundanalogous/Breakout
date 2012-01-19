@@ -16,14 +16,14 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.DCMotor'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.DCMotor'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.io.DCMotor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.io.DCMotor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> 
 <span class='line'> 16</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">DCMotor</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 17</span> 
 <span class='line'> 18</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 20</span> 
 <span class='line'> 21</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 22</span> 	 * H-bridge motor control.
@@ -34,7 +34,7 @@
 <span class='line'> 27</span> 	 * TB6612FNG&lt;br>
 <span class='line'> 28</span> 	 * BD621F&lt;/p>
 <span class='line'> 29</span> 	 *
-<span class='line'> 30</span> 	 * @exports DCMotor as BREAKOUT.io.DCMotor
+<span class='line'> 30</span> 	 * @exports DCMotor as BO.io.DCMotor
 <span class='line'> 31</span> 	 * @constructor
 <span class='line'> 32</span> 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 <span class='line'> 33</span> 	 * @param {Pin} forwardPin A reference to the Pin connected to the forward control of

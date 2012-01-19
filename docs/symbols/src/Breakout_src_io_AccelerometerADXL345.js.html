@@ -10,9 +10,9 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> 
-<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.AccelerometerADXL345'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.AccelerometerADXL345'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
-<span class='line'>  8</span> </span><span class="NAME">BREAKOUT.io.AccelerometerADXL345</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="NAME">BO.io.AccelerometerADXL345</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">AccelerometerADXL345</span><span class="PUNC">;</span><span class="WHIT">
@@ -28,15 +28,15 @@
 <span class='line'> 21</span> </span><span class="WHIT">		</span><span class="NAME">NUM_BYTES</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">6</span><span class="PUNC">;</span><span class="WHIT">	
 <span class='line'> 22</span> 
 <span class='line'> 23</span> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">AccelerometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.AccelerometerEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">AccelerometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.AccelerometerEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 26</span> 
 <span class='line'> 27</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 28</span> 	 * Analog Devices ADXL345 3-axis accelerometer
 <span class='line'> 29</span> 	 *
-<span class='line'> 30</span> 	 * @exports AccelerometerADXL345 as BREAKOUT.io.AccelerometerADXL345
+<span class='line'> 30</span> 	 * @exports AccelerometerADXL345 as BO.io.AccelerometerADXL345
 <span class='line'> 31</span> 	 * @constructor
-<span class='line'> 32</span> 	 * @augments BREAKOUT.I2CBase
+<span class='line'> 32</span> 	 * @augments BO.I2CBase
 <span class='line'> 33</span> 	 * @param {IOBoard} board The IOBoard instance
 <span class='line'> 34</span> 	 * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
 <span class='line'> 35</span> 	 * RANGE_8G, RANGE_16G). Default is RANGE_2G.	 
@@ -372,9 +372,9 @@
 <span class='line'>365</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'>366</span> 	 * The update event is dispatched when the accelerometer values are updated.
 <span class='line'>367</span> 	 * @name AccelerometerADXL345#update
-<span class='line'>368</span> 	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+<span class='line'>368</span> 	 * @type BO.io.AccelerometerEvent.UPDATE
 <span class='line'>369</span> 	 * @event
-<span class='line'>370</span> 	 * @param {BREAKOUT.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
+<span class='line'>370</span> 	 * @param {BO.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
 <span class='line'>371</span> 	 */</span><span class="WHIT">						
 <span class='line'>372</span> 
 <span class='line'>373</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">AccelerometerADXL345</span><span class="PUNC">;</span><span class="WHIT">

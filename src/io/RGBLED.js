@@ -9,15 +9,15 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.RGBLED');
+JSUTILS.namespace('BO.io.RGBLED');
 
-BREAKOUT.io.RGBLED = (function() {
+BO.io.RGBLED = (function() {
 
 	var RGBLED;
 
 	// dependencies
-	var Pin = BREAKOUT.Pin,
-		LED = BREAKOUT.io.LED;
+	var Pin = BO.Pin,
+		LED = BO.io.LED;
 
 	/**
 	 * The RGB pins of the RGBLED must be connected to PWM pins on the IOBoard.
@@ -29,7 +29,7 @@ BREAKOUT.io.RGBLED = (function() {
 	 * anode is connected to power and the 3 cathode pins are connected to the 
 	 * IOBoard PWM pins via 330 ohm resistors.</p>
 	 *
-	 * @exports RGBLED as BREAKOUT.io.RGBLED
+	 * @exports RGBLED as BO.io.RGBLED
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} redLEDPin A reference to the IOBoard Pin the red led pin is connected to.

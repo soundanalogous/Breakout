@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.IOBoardEvent');
+JSUTILS.namespace('BO.ioBoardEvent');
 
-BREAKOUT.IOBoardEvent = (function() {
+BO.IOBoardEvent = (function() {
 
 	var IOBoardEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.IOBoardEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports IOBoardEvent as BREAKOUT.IOBoardEvent
+	 * @exports IOBoardEvent as BO.IOBoardEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type

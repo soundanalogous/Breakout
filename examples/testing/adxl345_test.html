@@ -14,18 +14,18 @@
 
 <title>AccelerometerADXL345 Test</title>
 
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace	
-	var IOBoard = BREAKOUT.IOBoard;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var AccelerometerADXL345 = BREAKOUT.io.AccelerometerADXL345;
-	var AccelerometerEvent = BREAKOUT.io.AccelerometerEvent;	
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
+	var AccelerometerEvent = BO.io.AccelerometerEvent;	
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ADXL345

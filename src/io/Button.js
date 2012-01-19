@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.ButtonEvent');
+JSUTILS.namespace('BO.io.ButtonEvent');
 
-BREAKOUT.io.ButtonEvent = (function() {
+BO.io.ButtonEvent = (function() {
 
 	var ButtonEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.io.ButtonEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports ButtonEvent as BREAKOUT.io.ButtonEvent
+	 * @exports ButtonEvent as BO.io.ButtonEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 
@@ -47,17 +47,17 @@ BREAKOUT.io.ButtonEvent = (function() {
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.Button');
+JSUTILS.namespace('BO.io.Button');
 
-BREAKOUT.io.Button = (function() {
+BO.io.Button = (function() {
 
 	var Button;
 
 	// dependencies
-	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
+	var PhysicalInputBase = BO.PhysicalInputBase,
 		Event = JSUTILS.Event,
-		Pin = BREAKOUT.Pin,
-		ButtonEvent = BREAKOUT.io.ButtonEvent;
+		Pin = BO.Pin,
+		ButtonEvent = BO.io.ButtonEvent;
 
 	/**
 	 * An object to represent a physical button. The advantage of using the Button class over
@@ -68,9 +68,9 @@ BREAKOUT.io.Button = (function() {
 	 * connected to ground, configuration is PULL_DOWN, if the resistor is connected to power, 
 	 * then the configuration is PULL_UP.</p>
 	 *
-	 * @exports Button as BREAKOUT.io.Button
+	 * @exports Button as BO.io.Button
 	 * @constructor
-	 * @augments BREAKOUT.PhysicalInputBase
+	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} pin A reference to the Pin the button is connected to.
 	 * @param {Number} buttonMode The mode of the button (either Button.PULL_DOWN or 
@@ -216,35 +216,35 @@ BREAKOUT.io.Button = (function() {
 	/**
 	 * The pressed event is dispatched when the button is pressed.
 	 * @name Button#pressed
-	 * @type BREAKOUT.io.ButtonEvent.PRESS
+	 * @type BO.io.ButtonEvent.PRESS
 	 * @event
-	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 * @param {BO.io.Button} target A reference to the Button object
 	 */	
 
 	/**
 	 * The released event is dispatched when the button is released.
 	 * @name Button#released
-	 * @type BREAKOUT.io.ButtonEvent.RELEASE
+	 * @type BO.io.ButtonEvent.RELEASE
 	 * @event
-	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 * @param {BO.io.Button} target A reference to the Button object
 	 */	
 	 
 	/**
 	 * The longPress event is dispatched once when the button has been held for
 	 * the time duration specified by the sustainedPressInterval property.
 	 * @name Button#longPress
-	 * @type BREAKOUT.io.ButtonEvent.LONG_PRESS
+	 * @type BO.io.ButtonEvent.LONG_PRESS
 	 * @event
-	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 * @param {BO.io.Button} target A reference to the Button object
 	 */	
 	 
 	/**
 	 * The sustainedPress event is dispatched continuously at the rate 
 	 * specified by the sustainedPressInterval property while the button is held.
 	 * @name Button#sustainedPress
-	 * @type BREAKOUT.io.ButtonEvent.SUSTAINED_PRESS
+	 * @type BO.io.ButtonEvent.SUSTAINED_PRESS
 	 * @event
-	 * @param {BREAKOUT.io.Button} target A reference to the Button object
+	 * @param {BO.io.Button} target A reference to the Button object
 	 */		 	 	 
 
 	return Button;

@@ -13,9 +13,9 @@
 <span class='line'>  6</span>  * &lt;http://code.google.com/p/as3glue/>
 <span class='line'>  7</span>  */</span><span class="WHIT">
 <span class='line'>  8</span> 
-<span class='line'>  9</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.IOBoard'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  9</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.IOBoard'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
-<span class='line'> 11</span> </span><span class="NAME">BREAKOUT.IOBoard</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="NAME">BO.IOBoard</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 12</span> 
 <span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">IOBoard</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 14</span> 
@@ -56,19 +56,19 @@
 <span class='line'> 49</span> 
 <span class='line'> 50</span> 
 <span class='line'> 51</span> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 53</span> </span><span class="WHIT">		</span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 54</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 55</span> </span><span class="WHIT">		</span><span class="NAME">WSocketEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.WSocketEvent</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 56</span> </span><span class="WHIT">		</span><span class="NAME">WSocketWrapper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.WSocketWrapper</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 57</span> </span><span class="WHIT">		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">		</span><span class="NAME">WSocketEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.WSocketEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">		</span><span class="NAME">WSocketWrapper</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.WSocketWrapper</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 58</span> 
 <span class='line'> 59</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 60</span> 	 * Creates a new IOBoard object representing the digital and analog inputs and
 <span class='line'> 61</span> 	 * outputs of the device as well as support for i2c devices and sending strings 
 <span class='line'> 62</span> 	 * between the IOBoard sketch and your javascript application.
 <span class='line'> 63</span> 	 *
-<span class='line'> 64</span> 	 * @exports IOBoard as BREAKOUT.IOBoard
+<span class='line'> 64</span> 	 * @exports IOBoard as BO.IOBoard
 <span class='line'> 65</span> 	 * @constructor
 <span class='line'> 66</span> 	 * @param {String} host The host address of the web server.
 <span class='line'> 67</span> 	 * @param {Number} port The port to connect to on the web server.
@@ -1031,7 +1031,7 @@
 <span class='line'>1024</span> 	 * The ioBoardReady event is dispatched when the board is ready to send 
 <span class='line'>1025</span> 	 * and receive commands. 
 <span class='line'>1026</span> 	 * @name IOBoard#ioBoardReady
-<span class='line'>1027</span> 	 * @type BREAKOUT.IOBoardEvent.READY
+<span class='line'>1027</span> 	 * @type BO.IOBoardEvent.READY
 <span class='line'>1028</span> 	 * @event
 <span class='line'>1029</span> 	 * @param {IOBoard} target A reference to the IOBoard
 <span class='line'>1030</span> 	 */</span><span class="WHIT">
@@ -1040,7 +1040,7 @@
 <span class='line'>1033</span> 	 * The ioBoardConnected event is dispatched when the websocket connection
 <span class='line'>1034</span> 	 * is established.
 <span class='line'>1035</span> 	 * @name IOBoard#ioBoardConnected
-<span class='line'>1036</span> 	 * @type BREAKOUT.IOBoardEvent.CONNECTED
+<span class='line'>1036</span> 	 * @type BO.IOBoardEvent.CONNECTED
 <span class='line'>1037</span> 	 * @event
 <span class='line'>1038</span> 	 * @param {IOBoard} target A reference to the IOBoard
 <span class='line'>1039</span> 	 */</span><span class="WHIT">
@@ -1049,7 +1049,7 @@
 <span class='line'>1042</span> 	 * The stringMessage event is dispatched when a string is received from
 <span class='line'>1043</span> 	 * the IOBoard.
 <span class='line'>1044</span> 	 * @name IOBoard#stringMessage
-<span class='line'>1045</span> 	 * @type BREAKOUT.IOBoardEvent.STRING_MESSAGE
+<span class='line'>1045</span> 	 * @type BO.IOBoardEvent.STRING_MESSAGE
 <span class='line'>1046</span> 	 * @event
 <span class='line'>1047</span> 	 * @param {IOBoard} target A reference to the IOBoard
 <span class='line'>1048</span> 	 * @param {String} message The string message received from the IOBoard
@@ -1059,7 +1059,7 @@
 <span class='line'>1052</span> 	 * The sysexMessage event is dispatched when a sysex message is 
 <span class='line'>1053</span> 	 * received from the IOBoard.
 <span class='line'>1054</span> 	 * @name IOBoard#sysexMessage
-<span class='line'>1055</span> 	 * @type BREAKOUT.IOBoardEvent.SYSEX_MESSAGE
+<span class='line'>1055</span> 	 * @type BO.IOBoardEvent.SYSEX_MESSAGE
 <span class='line'>1056</span> 	 * @event
 <span class='line'>1057</span> 	 * @param {IOBoard} target A reference to the IOBoard
 <span class='line'>1058</span> 	 * @param {Array} message The sysex data
@@ -1069,7 +1069,7 @@
 <span class='line'>1062</span> 	 * The firmwareVersion event is dispatched when the firmware version is
 <span class='line'>1063</span> 	 * received from the IOBoard.
 <span class='line'>1064</span> 	 * @name IOBoard#firmwareVersion
-<span class='line'>1065</span> 	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_VERSION
+<span class='line'>1065</span> 	 * @type BO.IOBoardEvent.FIRMWARE_VERSION
 <span class='line'>1066</span> 	 * @event
 <span class='line'>1067</span> 	 * @param {IOBoard} target A reference to the IOBoard
 <span class='line'>1068</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
@@ -1079,7 +1079,7 @@
 <span class='line'>1072</span> 	 * The firmwareName event is dispatched when the firmware name is received
 <span class='line'>1073</span> 	 * from the IOBoard.
 <span class='line'>1074</span> 	 * @name IOBoard#firmwareName
-<span class='line'>1075</span> 	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_NAME
+<span class='line'>1075</span> 	 * @type BO.IOBoardEvent.FIRMWARE_NAME
 <span class='line'>1076</span> 	 * @event
 <span class='line'>1077</span> 	 * @param {IOBoard} target A reference to the IOBoard
 <span class='line'>1078</span> 	 * @param {String} name The name of the firmware running on the IOBoard
@@ -1090,10 +1090,10 @@
 <span class='line'>1083</span> 	 * The pinStateResponse event is dispatched when the results of
 <span class='line'>1084</span> 	 * a pin state query (via a call to: queryPinState()) is received.
 <span class='line'>1085</span> 	 * @name IOBoard#pinStateResponse
-<span class='line'>1086</span> 	 * @type BREAKOUT.IOBoardEvent.PIN_STATE_RESPONSE
+<span class='line'>1086</span> 	 * @type BO.IOBoardEvent.PIN_STATE_RESPONSE
 <span class='line'>1087</span> 	 * @event
 <span class='line'>1088</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1089</span> 	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+<span class='line'>1089</span> 	 * @param {BO.Pin} pin A reference to the pin object.
 <span class='line'>1090</span> 	 */</span><span class="WHIT">
 <span class='line'>1091</span> 
 <span class='line'>1092</span> </span><span class="WHIT">	</span><span class="COMM">/**
@@ -1102,10 +1102,10 @@
 <span class='line'>1095</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
 <span class='line'>1096</span> 	 * pin value changes.
 <span class='line'>1097</span> 	 * @name IOBoard#analogData
-<span class='line'>1098</span> 	 * @type BREAKOUT.IOBoardEvent.ANALOG_DATA
+<span class='line'>1098</span> 	 * @type BO.IOBoardEvent.ANALOG_DATA
 <span class='line'>1099</span> 	 * @event
 <span class='line'>1100</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1101</span> 	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+<span class='line'>1101</span> 	 * @param {BO.Pin} pin A reference to the pin object.
 <span class='line'>1102</span> 	 */</span><span class="WHIT">
 <span class='line'>1103</span> </span><span class="WHIT">	 
 <span class='line'>1104</span> 	</span><span class="COMM">/**
@@ -1114,10 +1114,10 @@
 <span class='line'>1107</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
 <span class='line'>1108</span> 	 * pin value changes.
 <span class='line'>1109</span> 	 * @name IOBoard#digitalData
-<span class='line'>1110</span> 	 * @type BREAKOUT.IOBoardEvent.DIGITAL_DATA
+<span class='line'>1110</span> 	 * @type BO.IOBoardEvent.DIGITAL_DATA
 <span class='line'>1111</span> 	 * @event
 <span class='line'>1112</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1113</span> 	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+<span class='line'>1113</span> 	 * @param {BO.Pin} pin A reference to the pin object.
 <span class='line'>1114</span> 	 */</span><span class="WHIT">	 
 <span class='line'>1115</span> 	 	 		 	  	 
 <span class='line'>1116</span> 

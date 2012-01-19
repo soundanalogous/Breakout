@@ -9,23 +9,23 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.filters.TriggerPoint');
+JSUTILS.namespace('BO.filters.TriggerPoint');
 
-BREAKOUT.filters.TriggerPoint = (function() {
+BO.filters.TriggerPoint = (function() {
 	"use strict";
 
 	var TriggerPoint;
 
 	// dependencies
-	var FilterBase = BREAKOUT.filters.FilterBase;
+	var FilterBase = BO.filters.FilterBase;
 
 	/**
 	 * Divides an input to 0 or 1 based on the threshold and hysteresis. You can also
 	 * use multiple points by providing a nested array such as [[0.4, 0.1], [0.7, 0.05]].
 	 *
-	 * @exports TriggerPoint as BREAKOUT.filters.TriggerPoint
+	 * @exports TriggerPoint as BO.filters.TriggerPoint
 	 * @constructor
-	 * @augments BREAKOUT.filters.FilterBase
+	 * @augments BO.filters.FilterBase
 	 * @param {Number[]} points An array of threshold and hysteresis values
 	 * operations for input buffers.
 	 */

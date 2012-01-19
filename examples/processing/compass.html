@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+
+<title>Breakout + processing.js Compass Example</title>
+
+</head>
+<body>
+  
+<canvas id='canvas1'></canvas>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="libs/processing-1.3.6.min.js"></script>
+<script type="text/javascript">
+
+// get a reference to the canvas
+var canvas = document.getElementById("canvas1"); 
+// attach the sketch function to the canvas  
+var processingInstance = new Processing(canvas, sketch);
+
+function sketch(p) {
+  
+  // declare these variables so you don't have to type the full namespace
+  var IOBoard = BO.IOBoard;
+  var IOBoardEvent = BO.IOBoardEvent;
+  var CompassEvent = BO.io.CompassEvent;
+  var CompassHMC6352 = BO.io.CompassHMC6352;
+    
+  var compass,
+      heading,
+      arduino,
+      isReady = false;
+    
+  // Override setup function
+  p.setup = function() {
+      p.size(200, 200);
+      p.smooth();
+      p.strokeWeight(2.0);
+      p.ellipseMode(p.RADIUS);
+      p.fill(230, 230, 230);
+      
+      // create an instance of the IOBoard
+      arduino = new IOBoard("192.168.2.3", 8887);
+      arduino.addEventListener(IOBoardEvent.READY, onReady);
+  };
+  
+  // Override draw function  
+  p.draw = function() {
+      
+      // return if the IOBoard is not yet ready
+      if (!isReady) return;
+      
+      p.pushMatrix();
+      p.background(200, 200, 200);
+      p.translate(p.width/2, p.height/2);
+      
+      p.stroke(10, 10, 40);
+      p.ellipse(0, 0, 85, 85);
+      
+      p.stroke(230, 30, 40);
+      p.line(0, 0, 80*Math.cos(p.radians(0)), 80*Math.sin(p.radians(0)));
+      
+      p.stroke(30, 204, 10);
+      p.line(0, 0, 80*Math.cos(p.radians(heading)), 80*Math.sin(p.radians(heading)));
+      
+      p.popMatrix();
+  };
+  
+  // setup the IOBoard once it is ready
+  var onReady = function(event) {
+      // remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      
+      // we are now ready to communicate with the IOBoard
+      isReady = true;
+      
+      // create a new instance of the compass module
+      compass = new CompassHMC6352(arduino);
+      // listen for a change of the heading
+      compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
+  };
+  
+  var onHeadingUpdate = function(event) {
+      heading = event.target.heading;
+  };
+    
+};
+
+</script>
+
+</body>
+</html>​

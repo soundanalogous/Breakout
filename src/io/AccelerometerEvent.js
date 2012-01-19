@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.AccelerometerEvent');
+JSUTILS.namespace('BO.io.AccelerometerEvent');
 
-BREAKOUT.io.AccelerometerEvent = (function() {
+BO.io.AccelerometerEvent = (function() {
 
 	var AccelerometerEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.io.AccelerometerEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports AccelerometerEvent as BREAKOUT.io.AccelerometerEvent
+	 * @exports AccelerometerEvent as BO.io.AccelerometerEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

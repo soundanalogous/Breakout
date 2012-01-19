@@ -9,7 +9,7 @@
 var JSUTILS = JSUTILS || {};
 
 
-/* Utility functions */
+// Utility functions
 
 /** 
  * Use this function to safely create a new namespace
@@ -32,8 +32,6 @@ JSUTILS.namespace = function (namespaceString) {
 	}
 	return parent;
 };
-
-/**
 
 /**
  * Use this method rather than Object.create() directly if

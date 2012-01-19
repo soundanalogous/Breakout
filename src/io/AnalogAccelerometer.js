@@ -9,26 +9,26 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.AnalogAccelerometer');
+JSUTILS.namespace('BO.io.AnalogAccelerometer');
 
-BREAKOUT.io.AnalogAccelerometer = (function() {
+BO.io.AnalogAccelerometer = (function() {
 	"use strict";
 
 	var AnalogAccelerometer;
 
 		// dependencies
-	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
+	var PhysicalInputBase = BO.PhysicalInputBase,
 		Event = JSUTILS.Event,
-		AccelerometerEvent = BREAKOUT.io.AccelerometerEvent,
-		Scaler = BREAKOUT.filters.Scaler,
-		Convolution = BREAKOUT.filters.Convolution;
+		AccelerometerEvent = BO.io.AccelerometerEvent,
+		Scaler = BO.filters.Scaler,
+		Convolution = BO.filters.Convolution;
 
 	/**
 	 * Creates a new Analog Accelerometer object
 	 *
-	 * @exports AnalogAccelerometer as BREAKOUT.io.AnalogAccelerometer
+	 * @exports AnalogAccelerometer as BO.io.AnalogAccelerometer
 	 * @constructor
-	 * @augments BREAKOUT.PhysicalInputBase	 
+	 * @augments BO.PhysicalInputBase	 
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} xPin A reference to the Pin connected to the x axis of the accelerometer
 	 * @param {Pin} yPin A reference to the Pin connected to the y axis of the accelerometer
@@ -269,9 +269,9 @@ BREAKOUT.io.AnalogAccelerometer = (function() {
 	/**
 	 * The update event is dispatched when the accelerometer values are updated.
 	 * @name AnalogAccelerometer#update
-	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+	 * @type BO.io.AccelerometerEvent.UPDATE
 	 * @event
-	 * @param {BREAKOUT.io.AnalogAccelerometer} target A reference to the AnalogAccelerometer object.
+	 * @param {BO.io.AnalogAccelerometer} target A reference to the AnalogAccelerometer object.
 	 */		
 
 	return AnalogAccelerometer;

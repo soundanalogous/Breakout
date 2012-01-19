@@ -18,9 +18,8 @@
 
 <title>Arduino Mega Test</title>
 
-<!-- order of import is important -->
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -29,13 +28,13 @@ $(document).ready(function() {
 	// to type the full namespace
 	var Event = JSUTILS.Event;
 	
-	var IOBoard = BREAKOUT.IOBoard;
-	var Pin = BREAKOUT.Pin;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var BlinkM = BREAKOUT.io.BlinkM;
-	var CompassHMC6352 = BREAKOUT.io.CompassHMC6352;
-	var Button = BREAKOUT.io.Button;
-	var ButtonEvent = BREAKOUT.io.ButtonEvent;
+	var IOBoard = BO.IOBoard;
+	var Pin = BO.Pin;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var BlinkM = BO.io.BlinkM;
+	var CompassHMC6352 = BO.io.CompassHMC6352;
+	var Button = BO.io.Button;
+	var ButtonEvent = BO.io.ButtonEvent;
 
 	var mega = new IOBoard("localhost", 8887);
 	

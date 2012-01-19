@@ -10,22 +10,22 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> 
-<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.CompassHMC6352'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.CompassHMC6352'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
-<span class='line'>  8</span> </span><span class="NAME">BREAKOUT.io.CompassHMC6352</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="NAME">BO.io.CompassHMC6352</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> 
 <span class='line'> 10</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">CompassHMC6352</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 11</span> 
 <span class='line'> 12</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 14</span> </span><span class="WHIT">		</span><span class="NAME">CompassEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.CompassEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.I2CBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">		</span><span class="NAME">CompassEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.CompassEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 15</span> 
 <span class='line'> 16</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 17</span> 	 * HMC6352 digital compass module
 <span class='line'> 18</span> 	 *
-<span class='line'> 19</span> 	 * @exports CompassHMC6352 as BREAKOUT.io.CompassHMC6352
+<span class='line'> 19</span> 	 * @exports CompassHMC6352 as BO.io.CompassHMC6352
 <span class='line'> 20</span> 	 * @constructor
-<span class='line'> 21</span> 	 * @augments BREAKOUT.I2CBase
+<span class='line'> 21</span> 	 * @augments BO.I2CBase
 <span class='line'> 22</span> 	 * @param {IOBoard} board The IOBoard instance
 <span class='line'> 23</span> 	 * @param {Number} address The i2c address of the compass module
 <span class='line'> 24</span> 	 */</span><span class="WHIT">
@@ -92,9 +92,9 @@
 <span class='line'> 85</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 86</span> 	 * The update event is dispatched when the compass heading is updated.
 <span class='line'> 87</span> 	 * @name CompassHMC6352#update
-<span class='line'> 88</span> 	 * @type BREAKOUT.io.CompassEvent.UPDATE
+<span class='line'> 88</span> 	 * @type BO.io.CompassEvent.UPDATE
 <span class='line'> 89</span> 	 * @event
-<span class='line'> 90</span> 	 * @param {BREAKOUT.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
+<span class='line'> 90</span> 	 * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
 <span class='line'> 91</span> 	 */</span><span class="WHIT">		
 <span class='line'> 92</span> 
 <span class='line'> 93</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">CompassHMC6352</span><span class="PUNC">;</span><span class="WHIT">

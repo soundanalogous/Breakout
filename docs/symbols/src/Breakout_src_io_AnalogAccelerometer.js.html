@@ -16,26 +16,26 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.AnalogAccelerometer'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.AnalogAccelerometer'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.io.AnalogAccelerometer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.io.AnalogAccelerometer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">AnalogAccelerometer</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 18</span> 
 <span class='line'> 19</span> </span><span class="WHIT">		</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PhysicalInputBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.PhysicalInputBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PhysicalInputBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.PhysicalInputBase</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 21</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="NAME">AccelerometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.AccelerometerEvent</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 23</span> </span><span class="WHIT">		</span><span class="NAME">Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.filters.Scaler</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 24</span> </span><span class="WHIT">		</span><span class="NAME">Convolution</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.filters.Convolution</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="NAME">AccelerometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.AccelerometerEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">		</span><span class="NAME">Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.filters.Scaler</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">		</span><span class="NAME">Convolution</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.filters.Convolution</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 25</span> 
 <span class='line'> 26</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 27</span> 	 * Creates a new Analog Accelerometer object
 <span class='line'> 28</span> 	 *
-<span class='line'> 29</span> 	 * @exports AnalogAccelerometer as BREAKOUT.io.AnalogAccelerometer
+<span class='line'> 29</span> 	 * @exports AnalogAccelerometer as BO.io.AnalogAccelerometer
 <span class='line'> 30</span> 	 * @constructor
-<span class='line'> 31</span> 	 * @augments BREAKOUT.PhysicalInputBase	 
+<span class='line'> 31</span> 	 * @augments BO.PhysicalInputBase	 
 <span class='line'> 32</span> 	 * @param {IOBoard} board A reference to the IOBoard instance
 <span class='line'> 33</span> 	 * @param {Pin} xPin A reference to the Pin connected to the x axis of the accelerometer
 <span class='line'> 34</span> 	 * @param {Pin} yPin A reference to the Pin connected to the y axis of the accelerometer
@@ -276,9 +276,9 @@
 <span class='line'>269</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'>270</span> 	 * The update event is dispatched when the accelerometer values are updated.
 <span class='line'>271</span> 	 * @name AnalogAccelerometer#update
-<span class='line'>272</span> 	 * @type BREAKOUT.io.AccelerometerEvent.UPDATE
+<span class='line'>272</span> 	 * @type BO.io.AccelerometerEvent.UPDATE
 <span class='line'>273</span> 	 * @event
-<span class='line'>274</span> 	 * @param {BREAKOUT.io.AnalogAccelerometer} target A reference to the AnalogAccelerometer object.
+<span class='line'>274</span> 	 * @param {BO.io.AnalogAccelerometer} target A reference to the AnalogAccelerometer object.
 <span class='line'>275</span> 	 */</span><span class="WHIT">		
 <span class='line'>276</span> 
 <span class='line'>277</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">AnalogAccelerometer</span><span class="PUNC">;</span><span class="WHIT">

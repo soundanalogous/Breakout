@@ -14,8 +14,8 @@
 
 <title>Accelerometer Calibration</title>
 
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -26,9 +26,9 @@ $(document).ready(function() {
 	// to type the full namespace
 	var Event = JSUTILS.Event;
 	
-	var IOBoard = BREAKOUT.IOBoard;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var AnalogAccelerometer = BREAKOUT.io.AnalogAccelerometer;
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
 
 	var arduino = new IOBoard("localhost", 8887);
 	var RANGE_GS = 3; // +-3 Gs for ADXL335

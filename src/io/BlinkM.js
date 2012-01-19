@@ -9,21 +9,21 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.BlinkM');
+JSUTILS.namespace('BO.io.BlinkM');
 
-BREAKOUT.io.BlinkM = (function() {
+BO.io.BlinkM = (function() {
 
 	var BlinkM;
 
 	// dependencies
-	var I2CBase = BREAKOUT.I2CBase;
+	var I2CBase = BO.I2CBase;
 
 	/**
 	 * Creates and BlinkM object
 	 *
-	 * @exports BlinkM as BREAKOUT.io.BlinkM
+	 * @exports BlinkM as BO.io.BlinkM
 	 * @constructor
-	 * @augments BREAKOUT.I2CBase 
+	 * @augments BO.I2CBase 
 	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Number} address The i2c address of the BlinkM module
 	 */

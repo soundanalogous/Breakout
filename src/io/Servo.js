@@ -9,19 +9,19 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.Servo');
+JSUTILS.namespace('BO.io.Servo');
 
-BREAKOUT.io.Servo = (function() {
+BO.io.Servo = (function() {
 
 	var Servo;
 
 	// dependencies
-	var Pin = BREAKOUT.Pin;
+	var Pin = BO.Pin;
 
 	/**
 	 * Creates a new Servo
 	 *
-	 * @exports Servo as BREAKOUT.io.Servo
+	 * @exports Servo as BO.io.Servo
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} servoPin A reference to the Pin the servo is connected to.

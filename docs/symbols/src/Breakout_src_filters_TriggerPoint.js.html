@@ -16,23 +16,23 @@
 <span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 10</span>  */</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.filters.TriggerPoint'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.filters.TriggerPoint'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 13</span> 
-<span class='line'> 14</span> </span><span class="NAME">BREAKOUT.filters.TriggerPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="NAME">BO.filters.TriggerPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 16</span> 
 <span class='line'> 17</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">TriggerPoint</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 18</span> 
 <span class='line'> 19</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">FilterBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.filters.FilterBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">FilterBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.filters.FilterBase</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 21</span> 
 <span class='line'> 22</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 23</span> 	 * Divides an input to 0 or 1 based on the threshold and hysteresis. You can also
 <span class='line'> 24</span> 	 * use multiple points by providing a nested array such as [[0.4, 0.1], [0.7, 0.05]].
 <span class='line'> 25</span> 	 *
-<span class='line'> 26</span> 	 * @exports TriggerPoint as BREAKOUT.filters.TriggerPoint
+<span class='line'> 26</span> 	 * @exports TriggerPoint as BO.filters.TriggerPoint
 <span class='line'> 27</span> 	 * @constructor
-<span class='line'> 28</span> 	 * @augments BREAKOUT.filters.FilterBase
+<span class='line'> 28</span> 	 * @augments BO.filters.FilterBase
 <span class='line'> 29</span> 	 * @param {Number[]} points An array of threshold and hysteresis values
 <span class='line'> 30</span> 	 * operations for input buffers.
 <span class='line'> 31</span> 	 */</span><span class="WHIT">

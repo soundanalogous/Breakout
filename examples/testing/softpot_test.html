@@ -14,18 +14,18 @@
 
 <title>SoftPot Test</title>
 
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var IOBoard = BREAKOUT.IOBoard;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var SoftPot = BREAKOUT.io.SoftPot;
-	var SoftPotEvent = BREAKOUT.io.SoftPotEvent;
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var SoftPot = BO.io.SoftPot;
+	var SoftPotEvent = BO.io.SoftPotEvent;
 
 	var arduino = new IOBoard("localhost", 8887);
 	

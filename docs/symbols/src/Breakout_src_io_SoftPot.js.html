@@ -10,9 +10,9 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> 
-<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.SoftPotEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.SoftPotEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
-<span class='line'>  8</span> </span><span class="NAME">BREAKOUT.io.SoftPotEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="NAME">BO.io.SoftPotEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> 
 <span class='line'> 10</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 11</span> 
@@ -20,7 +20,7 @@
 <span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 14</span> 
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'> 16</span> 	 * @exports SoftPotEvent as BREAKOUT.io.SoftPotEvent
+<span class='line'> 16</span> 	 * @exports SoftPotEvent as BO.io.SoftPotEvent
 <span class='line'> 17</span> 	 * @constructor
 <span class='line'> 18</span> 	 * @augments JSUTILS.Event
 <span class='line'> 19</span>  	 * @param {String} type The event type
@@ -69,9 +69,9 @@
 <span class='line'> 62</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'> 63</span>  */</span><span class="WHIT">
 <span class='line'> 64</span> 
-<span class='line'> 65</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.io.SoftPot'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 65</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.SoftPot'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 66</span> 
-<span class='line'> 67</span> </span><span class="NAME">BREAKOUT.io.SoftPot</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 67</span> </span><span class="NAME">BO.io.SoftPot</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 68</span> 
 <span class='line'> 69</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">SoftPot</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 70</span> 
@@ -82,20 +82,20 @@
 <span class='line'> 75</span> </span><span class="WHIT">		</span><span class="NAME">DEBOUNCE_TIMEOUT</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">20</span><span class="PUNC">;</span><span class="WHIT">	
 <span class='line'> 76</span> 
 <span class='line'> 77</span> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 78</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PhysicalInputBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.PhysicalInputBase</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 79</span> </span><span class="WHIT">		</span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PhysicalInputBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.PhysicalInputBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">		</span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 80</span> </span><span class="WHIT">		</span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 81</span> </span><span class="WHIT">		</span><span class="NAME">Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.filters.Scaler</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">		</span><span class="NAME">Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.filters.Scaler</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 82</span> </span><span class="WHIT">		</span><span class="NAME">Timer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Timer</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 83</span> </span><span class="WHIT">		</span><span class="NAME">TimerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.TimerEvent</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 84</span> </span><span class="WHIT">		</span><span class="NAME">SoftPotEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">		</span><span class="NAME">SoftPotEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 85</span> 
 <span class='line'> 86</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 87</span> 	 * A softpot analog sensor.
 <span class='line'> 88</span> 	 *
-<span class='line'> 89</span> 	 * @exports SoftPot as BREAKOUT.io.SoftPot
+<span class='line'> 89</span> 	 * @exports SoftPot as BO.io.SoftPot
 <span class='line'> 90</span> 	 * @constructor
-<span class='line'> 91</span> 	 * @augments BREAKOUT.PhysicalInputBase
+<span class='line'> 91</span> 	 * @augments BO.PhysicalInputBase
 <span class='line'> 92</span> 	 * @param {IOBoard} board A reference to the IOBoard instance
 <span class='line'> 93</span> 	 * @param {Pin} pin A reference to the Pin the softpot is connected to.
 <span class='line'> 94</span> 	 * @param {Number} softPotLength The length of the softpot in mm 
@@ -359,54 +359,54 @@
 <span class='line'>352</span> 	 * The softPotPressed event is dispatched when pressure is applied to 
 <span class='line'>353</span> 	 * the softpot surface.
 <span class='line'>354</span> 	 * @name SoftPot#softPotPressed
-<span class='line'>355</span> 	 * @type BREAKOUT.io.SoftPotEvent.PRESS
+<span class='line'>355</span> 	 * @type BO.io.SoftPotEvent.PRESS
 <span class='line'>356</span> 	 * @event
-<span class='line'>357</span> 	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>357</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 <span class='line'>358</span> 	 */</span><span class="WHIT">
 <span class='line'>359</span> 
 <span class='line'>360</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'>361</span> 	 * The softPotReleased event is dispatched when pressure is released from 
 <span class='line'>362</span> 	 * the softpot surface.
 <span class='line'>363</span> 	 * @name SoftPot#softPotReleased
-<span class='line'>364</span> 	 * @type BREAKOUT.io.SoftPotEvent.RELEASE
+<span class='line'>364</span> 	 * @type BO.io.SoftPotEvent.RELEASE
 <span class='line'>365</span> 	 * @event
-<span class='line'>366</span> 	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>366</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 <span class='line'>367</span> 	 */</span><span class="WHIT">	
 <span class='line'>368</span> 	 
 <span class='line'>369</span> 	</span><span class="COMM">/**
 <span class='line'>370</span> 	 * The softPotDrag event is dispatched when a drag is detected along 
 <span class='line'>371</span> 	 * the length of the softpot sensor.
 <span class='line'>372</span> 	 * @name SoftPot#softPotDrag
-<span class='line'>373</span> 	 * @type BREAKOUT.io.SoftPotEvent.DRAG
+<span class='line'>373</span> 	 * @type BO.io.SoftPotEvent.DRAG
 <span class='line'>374</span> 	 * @event
-<span class='line'>375</span> 	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>375</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 <span class='line'>376</span> 	 */</span><span class="WHIT">	
 <span class='line'>377</span> 	 
 <span class='line'>378</span> 	</span><span class="COMM">/**
 <span class='line'>379</span> 	 * The softPotFlickUp event is dispatched when a flick gesture is detected
 <span class='line'>380</span> 	 * in the direction of the sensor pins.
 <span class='line'>381</span> 	 * @name SoftPot#softPotFlickUp
-<span class='line'>382</span> 	 * @type BREAKOUT.io.SoftPotEvent.FLICK_UP
+<span class='line'>382</span> 	 * @type BO.io.SoftPotEvent.FLICK_UP
 <span class='line'>383</span> 	 * @event
-<span class='line'>384</span> 	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>384</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 <span class='line'>385</span> 	 */</span><span class="WHIT">	
 <span class='line'>386</span> 	 
 <span class='line'>387</span> 	</span><span class="COMM">/**
 <span class='line'>388</span> 	 * The softPotFlickDown event is dispatched when a flick gesture is 
 <span class='line'>389</span> 	 * detected in the direction away from the sensor pins.
 <span class='line'>390</span> 	 * @name SoftPot#softPotFlickDown
-<span class='line'>391</span> 	 * @type BREAKOUT.io.SoftPotEvent.FLICK_DOWN
+<span class='line'>391</span> 	 * @type BO.io.SoftPotEvent.FLICK_DOWN
 <span class='line'>392</span> 	 * @event
-<span class='line'>393</span> 	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>393</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 <span class='line'>394</span> 	 */</span><span class="WHIT">
 <span class='line'>395</span> </span><span class="WHIT">	 
 <span class='line'>396</span> 	</span><span class="COMM">/**
 <span class='line'>397</span> 	 * The softPotTap event is dispatched when a press and release occurs
 <span class='line'>398</span> 	 * in in less than the duration specified by the tapTimeout property.
 <span class='line'>399</span> 	 * @name SoftPot#softPotTap
-<span class='line'>400</span> 	 * @type BREAKOUT.io.SoftPotEvent.TAP
+<span class='line'>400</span> 	 * @type BO.io.SoftPotEvent.TAP
 <span class='line'>401</span> 	 * @event
-<span class='line'>402</span> 	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>402</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 <span class='line'>403</span> 	 */</span><span class="WHIT">		 	 	 	 
 <span class='line'>404</span> 
 <span class='line'>405</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">SoftPot</span><span class="PUNC">;</span><span class="WHIT">

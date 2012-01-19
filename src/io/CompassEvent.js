@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.CompassEvent');
+JSUTILS.namespace('BO.io.CompassEvent');
 
-BREAKOUT.io.CompassEvent = (function() {
+BO.io.CompassEvent = (function() {
 
 	var CompassEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.io.CompassEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports CompassEvent as BREAKOUT.io.CompassEvent
+	 * @exports CompassEvent as BO.io.CompassEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

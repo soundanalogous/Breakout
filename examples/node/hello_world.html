@@ -17,18 +17,18 @@
 <!-- order of import is important -->
 <script src="../../socket.io/socket.io.js"></script>
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.6.3.min.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
 	// dependencies:
 	// declare these variables so you don't have
 	// to type the full namespace
-	var IOBoard = BREAKOUT.IOBoard;
-	var Pin = BREAKOUT.Pin;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var Button = BREAKOUT.io.Button;
-	var ButtonEvent = BREAKOUT.io.ButtonEvent;
+	var IOBoard = BO.IOBoard;
+	var Pin = BO.Pin;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Button = BO.io.Button;
+	var ButtonEvent = BO.io.ButtonEvent;
 
 	// replace "localhost" with the address of your server
 	// to use load pages on a compatible mobile device

@@ -9,9 +9,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- JSUTILS.namespace('BREAKOUT.filters.FilterBase');
+ JSUTILS.namespace('BO.filters.FilterBase');
 
- BREAKOUT.filters.FilterBase = (function() {
+ BO.filters.FilterBase = (function() {
  	"use strict";
 
  	var FilterBase;
@@ -19,7 +19,7 @@
  	/**
  	 * An Abstract Base object for filters
  	 *
- 	 * @exports FilterBase as BREAKOUT.filters.FilterBase
+ 	 * @exports FilterBase as BO.filters.FilterBase
  	 * @constructor
  	 */
  	FilterBase = function() {

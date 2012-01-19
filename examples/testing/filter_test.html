@@ -14,8 +14,8 @@
 
 <title>Filter Test</title>
 
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -26,11 +26,11 @@ $(document).ready(function() {
 	// to type the full namespace
 	var Event = JSUTILS.Event;
 
-	var IOBoard = BREAKOUT.IOBoard;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var Scaler = BREAKOUT.filters.Scaler;
-	var Convolution = BREAKOUT.filters.Convolution;
-	var TriggerPoint = BREAKOUT.filters.TriggerPoint;
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Scaler = BO.filters.Scaler;
+	var Convolution = BO.filters.Convolution;
+	var TriggerPoint = BO.filters.TriggerPoint;
 
 	var arduino = new IOBoard("localhost", 8887);
 	var triggerPoint;

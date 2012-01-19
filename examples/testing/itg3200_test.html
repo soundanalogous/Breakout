@@ -14,19 +14,19 @@
 
 <title>GyroITG3200 Test</title>
 
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace	
-	var Pin = BREAKOUT.Pin;
-	var IOBoard = BREAKOUT.IOBoard;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var GyroITG3200 = BREAKOUT.io.GyroITG3200;
-	var GyroEvent = BREAKOUT.io.GyroEvent;	
+	var Pin = BO.Pin;
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var GyroITG3200 = BO.io.GyroITG3200;
+	var GyroEvent = BO.io.GyroEvent;	
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ITG3200

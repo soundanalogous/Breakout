@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.WSocketEvent');
+JSUTILS.namespace('BO.WSocketEvent');
 
-BREAKOUT.WSocketEvent = (function() {
+BO.WSocketEvent = (function() {
 	
 	var WSocketEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.WSocketEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports WSocketEvent as BREAKOUT.WSocketEvent
+	 * @exports WSocketEvent as BO.WSocketEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type
@@ -49,21 +49,21 @@ BREAKOUT.WSocketEvent = (function() {
  * @author jeff hoefs
  */
 
-JSUTILS.namespace('BREAKOUT.WSocketWrapper');
+JSUTILS.namespace('BO.WSocketWrapper');
 
-BREAKOUT.WSocketWrapper = (function() {
+BO.WSocketWrapper = (function() {
 	"use strict";
 
  	var WSocketWrapper;
 
  	// dependencies
  	var EventDispatcher = JSUTILS.EventDispatcher,
- 		WSocketEvent = BREAKOUT.WSocketEvent;
+ 		WSocketEvent = BO.WSocketEvent;
 
 	/**
 	 * Creates a wrapper for various websocket implementations to unify the interface.
 	 *
-	 * @exports WSocketWrapper as BREAKOUT.WSocketWrapper
+	 * @exports WSocketWrapper as BO.WSocketWrapper
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
@@ -101,9 +101,10 @@ BREAKOUT.WSocketWrapper = (function() {
 			self._socket = io.connect("http://"+self._host+":"+self._port);
 
 			try {
+				/** @private */
 				self._socket.on('connect', function() {
 					self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
-
+					/** @private */
 					self._socket.on('message', function(msg) {
 						self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg});
 					});
@@ -127,15 +128,15 @@ BREAKOUT.WSocketWrapper = (function() {
 					console.log("Websockets not supported by this browser");
 					throw "Websockets not supported by this browser";
 				}
-
+				/** @private */
 				self._socket.onopen = function() {
 
 					self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
-
+					/** @private */
 					self._socket.onmessage = function(msg) {
 						self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg.data});
 					};
-
+					/** @private */
 					self._socket.onclose = function() {
 						self._readyState = self._socket.readyState;
 						self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));	
@@ -178,26 +179,26 @@ BREAKOUT.WSocketWrapper = (function() {
 	 * The webSocketConnected event is dispatched when a connection with
 	 * the websocket is established.
 	 * @name WSocketWrapper#webSocketConnected
-	 * @type BREAKOUT.WebsocketEvent.CONNECTED
+	 * @type BO.WebsocketEvent.CONNECTED
 	 * @event
-	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object.
+	 * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
 	 */	
 
 	/**
 	 * The webSocketMessage event is dispatched when a websocket message is received.
 	 * @name WSocketWrapper#webSocketMessage
-	 * @type BREAKOUT.WebsocketEvent.MESSAGE
+	 * @type BO.WebsocketEvent.MESSAGE
 	 * @event
-	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object.
+	 * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
 	 * @param {String} message The websocket data	 
 	 */	
 
 	/**
 	 * The webSocketClosed event is dispatched the websocket connection is closed.
 	 * @name WSocketWrapper#webSocketClosed
-	 * @type BREAKOUT.WebsocketEvent.CLOSE
+	 * @type BO.WebsocketEvent.CLOSE
 	 * @event
-	 * @param {BREAKOUT.WSocketWrapper} target A reference to the WSocketWrapper object. 
+	 * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
 	 */		 
 
 	return WSocketWrapper;

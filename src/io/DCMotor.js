@@ -9,14 +9,14 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.DCMotor');
+JSUTILS.namespace('BO.io.DCMotor');
 
-BREAKOUT.io.DCMotor = (function() {
+BO.io.DCMotor = (function() {
 
 	var DCMotor;
 
 	// dependencies
-	var Pin = BREAKOUT.Pin;
+	var Pin = BO.Pin;
 
 	/**
 	 * H-bridge motor control.
@@ -27,7 +27,7 @@ BREAKOUT.io.DCMotor = (function() {
 	 * TB6612FNG<br>
 	 * BD621F</p>
 	 *
-	 * @exports DCMotor as BREAKOUT.io.DCMotor
+	 * @exports DCMotor as BO.io.DCMotor
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} forwardPin A reference to the Pin connected to the forward control of

@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.GyroEvent');
+JSUTILS.namespace('BO.io.GyroEvent');
 
-BREAKOUT.io.GyroEvent = (function() {
+BO.io.GyroEvent = (function() {
 
 	var GyroEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.io.GyroEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports GyroEvent as BREAKOUT.io.GyroEvent
+	 * @exports GyroEvent as BO.io.GyroEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

@@ -5,9 +5,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.GyroITG3200');
+JSUTILS.namespace('BO.io.GyroITG3200');
 
-BREAKOUT.io.GyroITG3200 = (function() {
+BO.io.GyroITG3200 = (function() {
 	"use strict";
 
 	var GyroITG3200;
@@ -24,16 +24,16 @@ BREAKOUT.io.GyroITG3200 = (function() {
 		NUM_BYTES = 6;	
 
 	// dependencies
-	var I2CBase = BREAKOUT.I2CBase,
+	var I2CBase = BO.I2CBase,
 		Event = JSUTILS.Event,
-		GyroEvent = BREAKOUT.io.GyroEvent;
+		GyroEvent = BO.io.GyroEvent;
 
 	/**
 	 * InvenSense ITG3200 3-axis MEMS gyro
 	 *
-	 * @exports GyroITG3200 as BREAKOUT.io.GyroITG3200
+	 * @exports GyroITG3200 as BO.io.GyroITG3200
 	 * @constructor
-	 * @augments BREAKOUT.I2CBase
+	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
 	 * @param {Number} address The i2c address of the accelerometer (default is 0x69)
@@ -319,9 +319,9 @@ BREAKOUT.io.GyroITG3200 = (function() {
 	/**
 	 * The update event is dispatched when the accelerometer values are updated.
 	 * @name GyroITG3200#update
-	 * @type BREAKOUT.io.GyroEvent.UPDATE
+	 * @type BO.io.GyroEvent.UPDATE
 	 * @event
-	 * @param {BREAKOUT.io.GyroITG3200} target A reference to the GyroITG3200 object.
+	 * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
 	 */		
 			
 	return GyroITG3200;

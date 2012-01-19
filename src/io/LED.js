@@ -9,15 +9,15 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.LED');
+JSUTILS.namespace('BO.io.LED');
 
-BREAKOUT.io.LED = (function() {
+BO.io.LED = (function() {
 
 	var LED;
 
 	// dependencies
-	var Pin = BREAKOUT.Pin;
-	var Oscillator = BREAKOUT.generators.Oscillator;
+	var Pin = BO.Pin;
+	var Oscillator = BO.generators.Oscillator;
 
 	/**
 	 * Creates a LED object.
@@ -29,7 +29,7 @@ BREAKOUT.io.LED = (function() {
 	 * is SOURCE_DRIVE. If the Cathode is connected to the microcontroller 
 	 * pin, then it is SYNC_DRIVE.</p>
 	 *
-	 * @exports LED as BREAKOUT.io.LED
+	 * @exports LED as BO.io.LED
 	 * @class Creates an LED object.
 	 * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
 	 * @param {Pin} ledPin A reference to the Pin the LED is connected to.
@@ -126,7 +126,7 @@ BREAKOUT.io.LED = (function() {
 		 * @param {Number} times The number of times the LED should blink.
 		 * A value of 0 will blink forever.
 		 * @param {Function} wave The waveform to apply (default is Oscillator.SQUARE)
-		 * @see BREAKOUT.generator.Oscillator
+		 * @see BO.generator.Oscillator
 		 */
 		blink: function(interval, times, wave) {
 			var freq = 1000 / interval;

@@ -9,9 +9,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.Pin');
+JSUTILS.namespace('BO.Pin');
 
-BREAKOUT.Pin = (function() {
+BO.Pin = (function() {
 	//"use strict";	// closure compiler doesn't like this... should be fixed soon though
 
 	var Pin;
@@ -19,12 +19,12 @@ BREAKOUT.Pin = (function() {
 	// dependencies
 	var EventDispatcher = JSUTILS.EventDispatcher,
 		Event = JSUTILS.Event,
-		GeneratorEvent = BREAKOUT.generators.GeneratorEvent;
+		GeneratorEvent = BO.generators.GeneratorEvent;
 
 	/**
 	 * An object to represent an IOBoard pin
 	 *
-	 * @exports Pin as BREAKOUT.Pin
+	 * @exports Pin as BO.Pin
 	 * @class An object to represent an IOBoard pin
 	 * @param {Number} number The pin number
 	 * @param {Number} type The type of pin
@@ -284,9 +284,9 @@ BREAKOUT.Pin = (function() {
 		/**
 		 * Add a new filter to the Pin.
 		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
-		 * @see BREAKOUT.filters.Convolution
-		 * @see BREAKOUT.filters.Scaler
-		 * @see BREAKOUT.filters.TriggerPoint
+		 * @see BO.filters.Convolution
+		 * @see BO.filters.Scaler
+		 * @see BO.filters.TriggerPoint
 		 */
 		addFilter: function(newFilter) {
 
@@ -306,7 +306,7 @@ BREAKOUT.Pin = (function() {
 		 * Assigning a new generator will replace the previously assigned generator.
 		 *
 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
-		 * @see BREAKOUT.generators.Oscillator
+		 * @see BO.generators.Oscillator
 		 */
 		addGenerator: function(newGenerator) {
 			this.removeGenerator();
@@ -447,7 +447,7 @@ BREAKOUT.Pin = (function() {
 	 * @name Pin#change
 	 * @type JSUTILS.Event.CHANGE
 	 * @event
-	 * @param {BREAKOUT.Pin} target A reference to the Timer object.
+	 * @param {BO.Pin} target A reference to the Timer object.
 	 */	
 
 	return Pin;

@@ -6,9 +6,9 @@
  * <http://code.google.com/p/as3glue/>
  */
 
-JSUTILS.namespace('BREAKOUT.IOBoard');
+JSUTILS.namespace('BO.IOBoard');
 
-BREAKOUT.IOBoard = (function() {
+BO.IOBoard = (function() {
 
 	var IOBoard;
 
@@ -49,19 +49,19 @@ BREAKOUT.IOBoard = (function() {
 
 
 	// dependencies
-	var Pin = BREAKOUT.Pin,
+	var Pin = BO.Pin,
 		EventDispatcher = JSUTILS.EventDispatcher,
 		Event = JSUTILS.Event,
-		WSocketEvent = BREAKOUT.WSocketEvent,
-		WSocketWrapper = BREAKOUT.WSocketWrapper,
-		IOBoardEvent = BREAKOUT.IOBoardEvent;
+		WSocketEvent = BO.WSocketEvent,
+		WSocketWrapper = BO.WSocketWrapper,
+		IOBoardEvent = BO.IOBoardEvent;
 
 	/**
 	 * Creates a new IOBoard object representing the digital and analog inputs and
 	 * outputs of the device as well as support for i2c devices and sending strings 
 	 * between the IOBoard sketch and your javascript application.
 	 *
-	 * @exports IOBoard as BREAKOUT.IOBoard
+	 * @exports IOBoard as BO.IOBoard
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
@@ -1024,7 +1024,7 @@ BREAKOUT.IOBoard = (function() {
 	 * The ioBoardReady event is dispatched when the board is ready to send 
 	 * and receive commands. 
 	 * @name IOBoard#ioBoardReady
-	 * @type BREAKOUT.IOBoardEvent.READY
+	 * @type BO.IOBoardEvent.READY
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 */
@@ -1033,7 +1033,7 @@ BREAKOUT.IOBoard = (function() {
 	 * The ioBoardConnected event is dispatched when the websocket connection
 	 * is established.
 	 * @name IOBoard#ioBoardConnected
-	 * @type BREAKOUT.IOBoardEvent.CONNECTED
+	 * @type BO.IOBoardEvent.CONNECTED
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 */
@@ -1042,7 +1042,7 @@ BREAKOUT.IOBoard = (function() {
 	 * The stringMessage event is dispatched when a string is received from
 	 * the IOBoard.
 	 * @name IOBoard#stringMessage
-	 * @type BREAKOUT.IOBoardEvent.STRING_MESSAGE
+	 * @type BO.IOBoardEvent.STRING_MESSAGE
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 * @param {String} message The string message received from the IOBoard
@@ -1052,7 +1052,7 @@ BREAKOUT.IOBoard = (function() {
 	 * The sysexMessage event is dispatched when a sysex message is 
 	 * received from the IOBoard.
 	 * @name IOBoard#sysexMessage
-	 * @type BREAKOUT.IOBoardEvent.SYSEX_MESSAGE
+	 * @type BO.IOBoardEvent.SYSEX_MESSAGE
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 * @param {Array} message The sysex data
@@ -1062,7 +1062,7 @@ BREAKOUT.IOBoard = (function() {
 	 * The firmwareVersion event is dispatched when the firmware version is
 	 * received from the IOBoard.
 	 * @name IOBoard#firmwareVersion
-	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_VERSION
+	 * @type BO.IOBoardEvent.FIRMWARE_VERSION
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
@@ -1072,7 +1072,7 @@ BREAKOUT.IOBoard = (function() {
 	 * The firmwareName event is dispatched when the firmware name is received
 	 * from the IOBoard.
 	 * @name IOBoard#firmwareName
-	 * @type BREAKOUT.IOBoardEvent.FIRMWARE_NAME
+	 * @type BO.IOBoardEvent.FIRMWARE_NAME
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 * @param {String} name The name of the firmware running on the IOBoard
@@ -1083,10 +1083,10 @@ BREAKOUT.IOBoard = (function() {
 	 * The pinStateResponse event is dispatched when the results of
 	 * a pin state query (via a call to: queryPinState()) is received.
 	 * @name IOBoard#pinStateResponse
-	 * @type BREAKOUT.IOBoardEvent.PIN_STATE_RESPONSE
+	 * @type BO.IOBoardEvent.PIN_STATE_RESPONSE
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
-	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+	 * @param {BO.Pin} pin A reference to the pin object.
 	 */
 
 	/**
@@ -1095,10 +1095,10 @@ BREAKOUT.IOBoard = (function() {
 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
 	 * pin value changes.
 	 * @name IOBoard#analogData
-	 * @type BREAKOUT.IOBoardEvent.ANALOG_DATA
+	 * @type BO.IOBoardEvent.ANALOG_DATA
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
-	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+	 * @param {BO.Pin} pin A reference to the pin object.
 	 */
 	 
 	/**
@@ -1107,10 +1107,10 @@ BREAKOUT.IOBoard = (function() {
 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
 	 * pin value changes.
 	 * @name IOBoard#digitalData
-	 * @type BREAKOUT.IOBoardEvent.DIGITAL_DATA
+	 * @type BO.IOBoardEvent.DIGITAL_DATA
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
-	 * @param {BREAKOUT.Pin} pin A reference to the pin object.
+	 * @param {BO.Pin} pin A reference to the pin object.
 	 */	 
 	 	 		 	  	 
 

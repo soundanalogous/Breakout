@@ -14,18 +14,17 @@
 
 <title>DCMotor Test</title>
 
-<!-- order of import is important -->
-<script src="../dist/Breakout.js"></script>
-<script src="libs/jquery-1.6.3.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace	
-	var IOBoard = BREAKOUT.IOBoard;
-	var IOBoardEvent = BREAKOUT.IOBoardEvent;
-	var DCMotor = BREAKOUT.io.DCMotor;
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var DCMotor = BO.io.DCMotor;
 	var Timer = JSUTILS.Timer;
 	var TimerEvent = JSUTILS.TimerEvent;
 

@@ -3,25 +3,25 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.Potentiometer');
+JSUTILS.namespace('BO.io.Potentiometer');
 
-BREAKOUT.io.Potentiometer = (function() {
+BO.io.Potentiometer = (function() {
 
 	var Potentiometer;
 
 	// dependencies
-	var Pin = BREAKOUT.Pin,
-		PhysicalInputBase = BREAKOUT.PhysicalInputBase,
-		Scaler = BREAKOUT.filters.Scaler,
-		Convolution = BREAKOUT.filters.Convolution,
+	var Pin = BO.Pin,
+		PhysicalInputBase = BO.PhysicalInputBase,
+		Scaler = BO.filters.Scaler,
+		Convolution = BO.filters.Convolution,
 		Event = JSUTILS.Event;
 
 	/**
 	 * Creates a new Potentiometer. Listen for a change event (Event.CHANGE).
 	 *
-	 * @exports Potentiometer as BREAKOUT.io.Potentiometer
+	 * @exports Potentiometer as BO.io.Potentiometer
 	 * @class
-	 * @augments BREAKOUT.PhysicalInputBase	 
+	 * @augments BO.PhysicalInputBase	 
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} pin A reference to the Pin the potentiometer is connected to.
 	 * @param {Boolean} enableSmoothing True to enable smoothing, false to disable. Default is false.
@@ -130,7 +130,7 @@ BREAKOUT.io.Potentiometer = (function() {
 	 * function onValueChange(event) {
 	 *   console.log("value = " + event.target.value);	
 	 * }
-	 * @param {BREAKOUT.Potentiometer} target A reference to the Potentiometer object
+	 * @param {BO.Potentiometer} target A reference to the Potentiometer object
 	 */
 
 	return Potentiometer;

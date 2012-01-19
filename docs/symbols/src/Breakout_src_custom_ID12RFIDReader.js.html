@@ -10,9 +10,9 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> </span><span class="WHIT"> 
-<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.custom.RFIDEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.custom.RFIDEvent'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
-<span class='line'>  8</span> </span><span class="NAME">BREAKOUT.custom.RFIDEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="NAME">BO.custom.RFIDEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">RFIDEvent</span><span class="PUNC">;</span><span class="WHIT">
@@ -21,7 +21,7 @@
 <span class='line'> 14</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 15</span> 
 <span class='line'> 16</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'> 17</span> 	 * @exports RFIDEvent as BREAKOUT.custom.RFIDEvent
+<span class='line'> 17</span> 	 * @exports RFIDEvent as BO.custom.RFIDEvent
 <span class='line'> 18</span> 	 * @constructor
 <span class='line'> 19</span> 	 * @augments JSUTILS.Event
 <span class='line'> 20</span> 	 * @param {String} type The event type
@@ -55,16 +55,16 @@
 <span class='line'> 48</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 49</span> 
 <span class='line'> 50</span> 
-<span class='line'> 51</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.custom.ID12RFIDReader'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.custom.ID12RFIDReader'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 52</span> 
-<span class='line'> 53</span> </span><span class="NAME">BREAKOUT.custom.ID12RFIDReader</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="NAME">BO.custom.ID12RFIDReader</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 54</span> 
 <span class='line'> 55</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">ID12RFIDReader</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 56</span> 
 <span class='line'> 57</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
 <span class='line'> 58</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 59</span> </span><span class="WHIT">		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.IOBoardEvent</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 60</span> </span><span class="WHIT">		</span><span class="NAME">RFIDEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.io.RFIDEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.IOBoardEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">		</span><span class="NAME">RFIDEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.RFIDEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 61</span> 
 <span class='line'> 62</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 63</span> 	 * Innovations ID-12 RFID Reader.
@@ -72,7 +72,7 @@
 <span class='line'> 65</span> 	 * IOBoard rather than StandardFirmata. See custom_examples/readme.txt
 <span class='line'> 66</span> 	 * for insturctions.&lt;/p>
 <span class='line'> 67</span> 	 *
-<span class='line'> 68</span> 	 * @exports ID12RFIDReader as BREAKOUT.custom.ID12RFIDReader
+<span class='line'> 68</span> 	 * @exports ID12RFIDReader as BO.custom.ID12RFIDReader
 <span class='line'> 69</span> 	 * @constructor
 <span class='line'> 70</span> 	 * @param {IOBoard} board A reference to the IOBoard instance
 <span class='line'> 71</span> 	 */</span><span class="WHIT">
@@ -198,18 +198,18 @@
 <span class='line'>191</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'>192</span> 	 * The addTag event is dispatched when a new tag is read.
 <span class='line'>193</span> 	 * @name ID12RFIDReader#addTag
-<span class='line'>194</span> 	 * @type BREAKOUT.custom.RFIDEvent.ADD_TAG
+<span class='line'>194</span> 	 * @type BO.custom.RFIDEvent.ADD_TAG
 <span class='line'>195</span> 	 * @event
-<span class='line'>196</span> 	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+<span class='line'>196</span> 	 * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
 <span class='line'>197</span> 	 * @param {String} tag The RFID tag value.	 
 <span class='line'>198</span> 	 */</span><span class="WHIT">
 <span class='line'>199</span> </span><span class="WHIT">	 
 <span class='line'>200</span> 	</span><span class="COMM">/**
 <span class='line'>201</span> 	 * The removeTag event is dispatched when a tag is removed from the reader.
 <span class='line'>202</span> 	 * @name ID12RFIDReader#removeTag
-<span class='line'>203</span> 	 * @type BREAKOUT.custom.RFIDEvent.REMOVE_TAG
+<span class='line'>203</span> 	 * @type BO.custom.RFIDEvent.REMOVE_TAG
 <span class='line'>204</span> 	 * @event
-<span class='line'>205</span> 	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+<span class='line'>205</span> 	 * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
 <span class='line'>206</span> 	 * @param {String} tag The RFID tag value.	 
 <span class='line'>207</span> 	 */</span><span class="WHIT">		 	
 <span class='line'>208</span> 

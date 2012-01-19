@@ -9,23 +9,23 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.filters.Scaler');
+JSUTILS.namespace('BO.filters.Scaler');
 
-BREAKOUT.filters.Scaler = (function() {
+BO.filters.Scaler = (function() {
 	"use strict";
 
 	var Scaler;
 
 	// dependencies
-	var FilterBase = BREAKOUT.filters.FilterBase;
+	var FilterBase = BO.filters.FilterBase;
 
 	/**
 	 * Scales up an input value from its min and max range to a specified minimum to maximum range. 
 	 * A number of scaling functions are provided.	
 	 *
-	 * @exports Scaler as BREAKOUT.filters.Scaler
+	 * @exports Scaler as BO.filters.Scaler
 	 * @constructor
-	 * @augments BREAKOUT.filters.FilterBase
+	 * @augments BO.filters.FilterBase
 	 * @param {Number} inMin minimum input value
 	 * @param {Number} inMax maximum input value
 	 * @param {Number} outMin minimum output value

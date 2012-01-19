@@ -10,22 +10,22 @@
 <span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
 <span class='line'>  4</span>  */</span><span class="WHIT">
 <span class='line'>  5</span> 
-<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BREAKOUT.I2CBase'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.I2CBase'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>  7</span> 
-<span class='line'>  8</span> </span><span class="NAME">BREAKOUT.I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  8</span> </span><span class="NAME">BO.I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>  9</span> </span><span class="WHIT">	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 10</span> 
 <span class='line'> 11</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 12</span> 
 <span class='line'> 13</span> </span><span class="WHIT"> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
-<span class='line'> 14</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.Pin</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 15</span> </span><span class="WHIT"> 		</span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'> 16</span> </span><span class="WHIT"> 		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BREAKOUT.IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT"> 		</span><span class="NAME">IOBoardEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.IOBoardEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 17</span> 
 <span class='line'> 18</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 19</span> 	 * Creates a new I2CBase base class
 <span class='line'> 20</span> 	 *
-<span class='line'> 21</span> 	 * @exports I2CBase as BREAKOUT.I2CBase
+<span class='line'> 21</span> 	 * @exports I2CBase as BO.I2CBase
 <span class='line'> 22</span> 	 * @constructor
 <span class='line'> 23</span> 	 * @param {IOBoard} board A reference to the IOBoard instance
 <span class='line'> 24</span> 	 * @param {Number} address The I2C address of the device

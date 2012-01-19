@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.SoftPotEvent');
+JSUTILS.namespace('BO.io.SoftPotEvent');
 
-BREAKOUT.io.SoftPotEvent = (function() {
+BO.io.SoftPotEvent = (function() {
 
 	var SoftPotEvent;
 
@@ -13,7 +13,7 @@ BREAKOUT.io.SoftPotEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports SoftPotEvent as BREAKOUT.io.SoftPotEvent
+	 * @exports SoftPotEvent as BO.io.SoftPotEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type
@@ -62,9 +62,9 @@ BREAKOUT.io.SoftPotEvent = (function() {
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.SoftPot');
+JSUTILS.namespace('BO.io.SoftPot');
 
-BREAKOUT.io.SoftPot = (function() {
+BO.io.SoftPot = (function() {
 
 	var SoftPot;
 
@@ -75,20 +75,20 @@ BREAKOUT.io.SoftPot = (function() {
 		DEBOUNCE_TIMEOUT		= 20;	
 
 	// dependencies
-	var PhysicalInputBase = BREAKOUT.PhysicalInputBase,
-		Pin = BREAKOUT.Pin,
+	var PhysicalInputBase = BO.PhysicalInputBase,
+		Pin = BO.Pin,
 		Event = JSUTILS.Event,
-		Scaler = BREAKOUT.filters.Scaler,
+		Scaler = BO.filters.Scaler,
 		Timer = JSUTILS.Timer,
 		TimerEvent = JSUTILS.TimerEvent,
-		SoftPotEvent = BREAKOUT.io.SoftPotEvent;
+		SoftPotEvent = BO.io.SoftPotEvent;
 
 	/**
 	 * A softpot analog sensor.
 	 *
-	 * @exports SoftPot as BREAKOUT.io.SoftPot
+	 * @exports SoftPot as BO.io.SoftPot
 	 * @constructor
-	 * @augments BREAKOUT.PhysicalInputBase
+	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} pin A reference to the Pin the softpot is connected to.
 	 * @param {Number} softPotLength The length of the softpot in mm 
@@ -352,54 +352,54 @@ BREAKOUT.io.SoftPot = (function() {
 	 * The softPotPressed event is dispatched when pressure is applied to 
 	 * the softpot surface.
 	 * @name SoftPot#softPotPressed
-	 * @type BREAKOUT.io.SoftPotEvent.PRESS
+	 * @type BO.io.SoftPotEvent.PRESS
 	 * @event
-	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 	 */
 
 	/**
 	 * The softPotReleased event is dispatched when pressure is released from 
 	 * the softpot surface.
 	 * @name SoftPot#softPotReleased
-	 * @type BREAKOUT.io.SoftPotEvent.RELEASE
+	 * @type BO.io.SoftPotEvent.RELEASE
 	 * @event
-	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 	 */	
 	 
 	/**
 	 * The softPotDrag event is dispatched when a drag is detected along 
 	 * the length of the softpot sensor.
 	 * @name SoftPot#softPotDrag
-	 * @type BREAKOUT.io.SoftPotEvent.DRAG
+	 * @type BO.io.SoftPotEvent.DRAG
 	 * @event
-	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 	 */	
 	 
 	/**
 	 * The softPotFlickUp event is dispatched when a flick gesture is detected
 	 * in the direction of the sensor pins.
 	 * @name SoftPot#softPotFlickUp
-	 * @type BREAKOUT.io.SoftPotEvent.FLICK_UP
+	 * @type BO.io.SoftPotEvent.FLICK_UP
 	 * @event
-	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 	 */	
 	 
 	/**
 	 * The softPotFlickDown event is dispatched when a flick gesture is 
 	 * detected in the direction away from the sensor pins.
 	 * @name SoftPot#softPotFlickDown
-	 * @type BREAKOUT.io.SoftPotEvent.FLICK_DOWN
+	 * @type BO.io.SoftPotEvent.FLICK_DOWN
 	 * @event
-	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 	 */
 	 
 	/**
 	 * The softPotTap event is dispatched when a press and release occurs
 	 * in in less than the duration specified by the tapTimeout property.
 	 * @name SoftPot#softPotTap
-	 * @type BREAKOUT.io.SoftPotEvent.TAP
+	 * @type BO.io.SoftPotEvent.TAP
 	 * @event
-	 * @param {BREAKOUT.io.SoftPot} target A reference to the SoftPot object
+	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
 	 */		 	 	 	 
 
 	return SoftPot;

@@ -3,22 +3,22 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.io.CompassHMC6352');
+JSUTILS.namespace('BO.io.CompassHMC6352');
 
-BREAKOUT.io.CompassHMC6352 = (function() {
+BO.io.CompassHMC6352 = (function() {
 
 	var CompassHMC6352;
 
 	// dependencies
-	var I2CBase = BREAKOUT.I2CBase,
-		CompassEvent = BREAKOUT.io.CompassEvent;
+	var I2CBase = BO.I2CBase,
+		CompassEvent = BO.io.CompassEvent;
 
 	/**
 	 * HMC6352 digital compass module
 	 *
-	 * @exports CompassHMC6352 as BREAKOUT.io.CompassHMC6352
+	 * @exports CompassHMC6352 as BO.io.CompassHMC6352
 	 * @constructor
-	 * @augments BREAKOUT.I2CBase
+	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Number} address The i2c address of the compass module
 	 */
@@ -85,9 +85,9 @@ BREAKOUT.io.CompassHMC6352 = (function() {
 	/**
 	 * The update event is dispatched when the compass heading is updated.
 	 * @name CompassHMC6352#update
-	 * @type BREAKOUT.io.CompassEvent.UPDATE
+	 * @type BO.io.CompassEvent.UPDATE
 	 * @event
-	 * @param {BREAKOUT.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
+	 * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
 	 */		
 
 	return CompassHMC6352;

@@ -9,23 +9,23 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BREAKOUT.filters.Convolution');
+JSUTILS.namespace('BO.filters.Convolution');
 
-BREAKOUT.filters.Convolution = (function() {
+BO.filters.Convolution = (function() {
 	"use strict";
 
 	var Convolution;
 
 	// dependencies
-	var FilterBase = BREAKOUT.filters.FilterBase;
+	var FilterBase = BO.filters.FilterBase;
 
 	/**
 	 * This class performs a convolution operation of the inputs. A low-pass filter is used to remove fine noise and
 	 * a high pass filter is used to remove drift.
 	 *
-	 * @exports Convolution as BREAKOUT.filters.Convolution
+	 * @exports Convolution as BO.filters.Convolution
 	 * @constructor
-	 * @augments BREAKOUT.filters.FilterBase
+	 * @augments BO.filters.FilterBase
 	 * @param {Number[]} kernel An array of coefficients to be used with product-sum
 	 * operations for input buffers.
 	 */

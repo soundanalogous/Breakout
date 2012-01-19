@@ -3,9 +3,9 @@
  * Released under the MIT license. See LICENSE file for details.
  */
  
-JSUTILS.namespace('BREAKOUT.custom.RFIDEvent');
+JSUTILS.namespace('BO.custom.RFIDEvent');
 
-BREAKOUT.custom.RFIDEvent = (function() {
+BO.custom.RFIDEvent = (function() {
 	"use strict";
 
 	var RFIDEvent;
@@ -14,7 +14,7 @@ BREAKOUT.custom.RFIDEvent = (function() {
 	var Event = JSUTILS.Event;
 
 	/**
-	 * @exports RFIDEvent as BREAKOUT.custom.RFIDEvent
+	 * @exports RFIDEvent as BO.custom.RFIDEvent
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type
@@ -48,16 +48,16 @@ BREAKOUT.custom.RFIDEvent = (function() {
 }());
 
 
-JSUTILS.namespace('BREAKOUT.custom.ID12RFIDReader');
+JSUTILS.namespace('BO.custom.ID12RFIDReader');
 
-BREAKOUT.custom.ID12RFIDReader = (function() {
+BO.custom.ID12RFIDReader = (function() {
 
 	var ID12RFIDReader;
 
 	// dependencies
 	var EventDispatcher = JSUTILS.EventDispatcher,
-		IOBoardEvent = BREAKOUT.IOBoardEvent,
-		RFIDEvent = BREAKOUT.io.RFIDEvent;
+		IOBoardEvent = BO.IOBoardEvent,
+		RFIDEvent = BO.io.RFIDEvent;
 
 	/**
 	 * Innovations ID-12 RFID Reader.
@@ -65,7 +65,7 @@ BREAKOUT.custom.ID12RFIDReader = (function() {
 	 * IOBoard rather than StandardFirmata. See custom_examples/readme.txt
 	 * for insturctions.</p>
 	 *
-	 * @exports ID12RFIDReader as BREAKOUT.custom.ID12RFIDReader
+	 * @exports ID12RFIDReader as BO.custom.ID12RFIDReader
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 */
@@ -191,18 +191,18 @@ BREAKOUT.custom.ID12RFIDReader = (function() {
 	/**
 	 * The addTag event is dispatched when a new tag is read.
 	 * @name ID12RFIDReader#addTag
-	 * @type BREAKOUT.custom.RFIDEvent.ADD_TAG
+	 * @type BO.custom.RFIDEvent.ADD_TAG
 	 * @event
-	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+	 * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
 	 * @param {String} tag The RFID tag value.	 
 	 */
 	 
 	/**
 	 * The removeTag event is dispatched when a tag is removed from the reader.
 	 * @name ID12RFIDReader#removeTag
-	 * @type BREAKOUT.custom.RFIDEvent.REMOVE_TAG
+	 * @type BO.custom.RFIDEvent.REMOVE_TAG
 	 * @event
-	 * @param {BREAKOUT.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
+	 * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
 	 * @param {String} tag The RFID tag value.	 
 	 */		 	
 
