@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>String Test</title>
+
+<script src="../dist/Breakout-core.js"></script>
+<script src="libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var Event = JSUTILS.Event;
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+
+	// params: IPaddress, port
+	var arduino = new IOBoard("localhost", 8887);
+	var counter = 0;
+
+	arduino.addEventListener(IOBoardEvent.CONNECTED, onConnect);
+
+	function onConnect(event) {
+
+		console.log("connected");
+		
+		// remove the listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.CONNECTED, onConnect);		
+
+		// listen for incoming string messages
+		arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+						
+		setInterval(sayHello, 2000);	
+	}
+
+	function sayHello() {
+		arduino.sendString("Hello " + counter++);
+	}
+	
+
+	function onStringMessage(event) {
+		console.log("string received: " + event.message);
+		$('#message').html("message = " + event.message);
+	}
+	
+
+			
+});
+
+</script>
+
+</head>
+<body>
+  
+	<div id="message" class="text"></div>
+  
+</body>
+</html>​

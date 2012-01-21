@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+#textBox{
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>RFID Example with Custom Firmware</title>
+
+<!-- custom io objects are included separately, after Breakout-core.js -->
+<script src="../dist/Breakout-core.js"></script>
+<script src="../src/custom/ID12RFIDReader.js"></script>
+<script src="libs/jquery-1.6.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// This example demonstrates an alternative way to use Breakout.
+	// To run this example, make sure you have installed the IDxRFIDReader
+	// library in your Arduino/libraries folder. Get the IDxRFIDReader
+	// library here: https://github.com/soundanalogous/IDxRFIDReader.
+	// Open the example file: IDx_Reader_Firmata_Example
+	// that is included with the IDxRFIDReader.
+	// The example demonstrates the use of Firmata as a communication
+	// protocol rather than a stand-alone firmware. You can use this
+	// technique to communicate with complex devices via the Arduino
+	// that would otherwise not be possible through StandardFirmata.
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var ID12RFIDReader = BO.custom.ID12RFIDReader;
+	var RFIDEvent = BO.custom.RFIDEvent;
+	
+	var ard = new IOBoard("localhost", 8887);
+	var rfid;
+	
+	// listen for IOBoardEvent.CONNECTED if you are running custom
+	// firmware on the IOBoard rather than StandardFirmata or RFIDFirmata
+	ard.addEventListener(IOBoardEvent.CONNECTED, onConnect);
+
+	function onConnect(event) {
+					
+		ard.removeEventListener(IOBoardEvent.CONNECTED, onConnect);
+			
+		rfid = new ID12RFIDReader(ard);
+		rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);
+		rfid.addEventListener(RFIDEvent.REMOVE_TAG, onRemoveTag);
+	}
+	
+	function onAddTag(event) {
+		$('#textBox').html("Added tag: " + event.tag);
+	}
+	
+	function onRemoveTag(event) {
+		$('#textBox').html("Removed tag: " + event.tag);
+	}
+						
+});
+
+</script>
+
+</head>
+<body>
+  
+<div id="textBox">Read a tag.</div>
+  
+</body>
+</html>​

@@ -1,7 +1,7 @@
-* port additional funnel UI classes to javascript:
-    - DCMotor
-    - SoftPot
-
 * create a few practical examples
 
 * create build script
+
+* enable multiple clients to connect to a single IOBoard?
+
+* enable a single clinet to connect to multiple IOBoards?

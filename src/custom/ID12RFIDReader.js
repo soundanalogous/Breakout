@@ -54,36 +54,39 @@ BO.custom.ID12RFIDReader = (function() {
 
 	var ID12RFIDReader;
 
+	// private static constants:
+	var	ID12_READER = 13,
+		READ_EVENT = 1,
+		REMOVE_EVENT = 2;
+
 	// dependencies
 	var EventDispatcher = JSUTILS.EventDispatcher,
 		IOBoardEvent = BO.IOBoardEvent,
-		RFIDEvent = BO.io.RFIDEvent;
+		RFIDEvent = BO.custom.RFIDEvent;
 
 	/**
 	 * Innovations ID-12 RFID Reader.
-	 * <p>To use this object, RFIDFirmata must be uploaded to the
-	 * IOBoard rather than StandardFirmata. See custom_examples/readme.txt
-	 * for insturctions.</p>
+	 * <p>To use this object with standard io objects in Brea,out, 
+	 * RFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata. 
+	 * See custom_examples/readme.txt for insturctions.</p>
+	 *
+	 * <p>Is is also possible to create a custom application for your
+	 * IOBoard that includes the RFID reader. See IDx_Reader_Firmata_Example
+	 * in the IDxRFIDReader library example files.</p>
 	 *
 	 * @exports ID12RFIDReader as BO.custom.ID12RFIDReader
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance
+	 * @param {Number} readerId The ID assigned to the reader in the firmware
+	 * running on the IOBoard (default = 13)
 	 */
-	ID12RFIDReader = function(board) {
+	ID12RFIDReader = function(board, readerId) {
 		"use strict";
 
 		this.name = "ID12RFIDReader"; 	// for testing
 
-		// to do: object id to be passed in as a param rather than
-		// explicitly set? This would support the ability to use multiple
-		// RFID readers with a single Arduino.
-		// Would also need to update the Arduino library to enable this.
-		this.ID12_READER = 13,
-		this.READ_EVENT = 1,
-		this.REMOVE_EVENT = 2;
-
+		this._readerId = readerId || ID12_READER;
 		this._board = board;
-		
 		this._evtDispatcher = new EventDispatcher(this);
 
 		board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));			
@@ -98,7 +101,7 @@ BO.custom.ID12RFIDReader = (function() {
 		onSysExMessage: function(event) {
 			var message = event.message;
 
-			if (message[0] != this.ID12_READER) {
+			if (message[0] != this._readerId) {
 				return;
 			} else {
 				this.processRFIDData(message);
@@ -128,9 +131,9 @@ BO.custom.ID12RFIDReader = (function() {
 			}
 
 			// change this to dispatch a single event and handle add or remove in object parameter?
-			if (tagEvent == this.READ_EVENT) {
+			if (tagEvent == READ_EVENT) {
 				this.dispatch(new RFIDEvent(RFIDEvent.ADD_TAG, tag));
-			} else if (tagEvent == this.REMOVE_EVENT) {
+			} else if (tagEvent == REMOVE_EVENT) {
 				this.dispatch(new RFIDEvent(RFIDEvent.REMOVE_TAG, tag));
 			} else {
 				// got something else

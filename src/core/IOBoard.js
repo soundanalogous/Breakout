@@ -1,9 +1,6 @@
 /**
  * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
- *
- * Based in part on Arduino.as in as3glue. 
- * <http://code.google.com/p/as3glue/>
  */
 
 JSUTILS.namespace('BO.IOBoard');
@@ -74,31 +71,23 @@ BO.IOBoard = (function() {
 		this.name = "IOBoard";
 						
 		// private properties
-		var _self = this;	// get a reference to this class
-		var _socket;
+		var _self = this,	// get a reference to this class
+			_socket,
+			_inputDataBuffer = [],	
+			_digitalPort = [],
+			_numPorts,
+			_analogPinMapping = [],
+			_digitalPinMapping = [],
+			_i2cPins = [],
+			_ioPins = [],
+			_totalPins = 0,
+			_samplingInterval = 19, // default sampling interval
+			_isReady = false,
+			_firmwareVersion = 0,
+			_evtDispatcher,
+			_debugMode = true;
 		
-		// input processing
-		var _executeMultiByteCommand = 0;
-		var _multiByteChannel = 0;
-		var _storedInputData = [];
-		var _sysExData = [];
-		var _waitForData = 0;
-		
-		var _digitalPort = [];
-		var _numPorts;
-		var _analogPinMapping = [];
-		var _digitalPinMapping = [];
-		var _i2cPins = [];
-		var _ioPins = [];
-		var _totalPins = 0;
-		// default sampling interval
-		var _samplingInterval = 19;
-		
-		var _firmwareVersion = 0;
-
-		var _debugMode = true;
-		
-		var _evtDispatcher = new EventDispatcher(this);
+		_evtDispatcher = new EventDispatcher(this);
 
 		// '/websocket' is required for the Breakout Server
 		if (!useSocketIO && typeof port === "number") port = port+'/websocket';
@@ -114,7 +103,7 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketConnection(event) {
-			_self.debug("debug: Socket Status: (open)");
+			debug("debug: Socket Status: (open)");
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.CONNECTED));
 			begin();			
 		}
@@ -123,14 +112,14 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketMessage(event) {
-			processData(event.message);
+			processInput(event.message);
 		}
 
 		/**
 		 * @private
 		 */
 		function onSocketClosed(event) {
-			_self.debug("debug: Socket Status: "+_socket.readyState+" (Closed)");
+			debug("debug: Socket Status: "+_socket.readyState+" (Closed)");
 		}
 						
 								
@@ -138,132 +127,92 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function begin() {
-			_self.addEventListener(IOBoardEvent.FIRMWARE_VERSION, onInitialVersionResult);
-			_self.reportVersion();
+			_self.addEventListener(IOBoardEvent.FIRMWARE_NAME, onInitialVersionResult);
+			_self.reportFirmware();
 		}
 		
 		/**
 		 * @private
 		 */
 		function onInitialVersionResult(event) {
-			_self.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, onInitialVersionResult);
-			var version = event.version * 10;
+			_self.removeEventListener(IOBoardEvent.FIRMWARE_NAME, onInitialVersionResult);
+			var version = event.version * 10,
+				name = event.name;
+
+			debug("debug: Version = " + event.version + "\tfirmware name = " + name);
 			
 			// make sure the user has uploaded StandardFirmata 2.3 or greater
 			if (version >= 23) {
 				queryCapabilities();
 			} else {
-				throw new Error("You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher");
-			}
-		}	
-			
-		/**
-		 * @private
-		 */
-		function processData(inputData) {
-			inputData *= 1;	// force inputData to integer (is there a better way to do this?)
-			var command;
-			
-			// we have command data
-			if (_waitForData > 0 && inputData < 128) {
-				_waitForData--;
-				// collect the data
-				_storedInputData[_waitForData]=inputData;
-				// we have all data executeMultiByteCommand
-				if (_waitForData == 0) {
-					switch (_executeMultiByteCommand) {
-						case DIGITAL_MESSAGE:
-							processDigitalPortBytes(_multiByteChannel, _storedInputData[1], _storedInputData[0]); //(LSB, MSB)
-							break;
-						case REPORT_VERSION:
-							_firmwareVersion=_storedInputData[1] + _storedInputData[0] / 10;
-							_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
-							break;
-						case ANALOG_MESSAGE:
-							var analogPin = _self.getAnalogPin(_multiByteChannel);
-							// NOTE: is there a better way to handle this? This issue is on browser refresh
-							// the IOBoard board is still sending analog data if analog reporting was set
-							// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
-							// is called. There is not a way to call that method fast enough so the following code is
-							// needed. An alternative would be to set a flag that prevents critical operations
-							// before systemReset has completed.
-							if (analogPin == undefined) {
-								//console.log("analog pin undefined");
-								break;
-							}
-							// map analog input values from 0-1023 to 0.0 to 1.0
-							analogPin.value = _self.getValueFromTwo7bitBytes(_storedInputData[1], _storedInputData[0])/1023;
-							if (analogPin.value != analogPin.lastValue) {
-								_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
-							}
-							break;
-					}
-				}
-			}
-			// we have SysEx command data
-			else if (_waitForData < 0) {
-				// we have all sysex data
-				if (inputData == END_SYSEX) {
-					_waitForData = 0;
-					switch (_sysExData[0]) {
-						case REPORT_FIRMWARE:
-							processQueryFirmwareResult(_sysExData);
-							break;
-						case STRING_DATA:
-							processSysExString(_sysExData);
-							break;
-						case CAPABILITY_RESPONSE:
-							processCapabilitiesResponse(_sysExData);
-							break;
-						case PIN_STATE_RESPONSE:
-							processPinStateResponse(_sysExData);
-							break;
-						case ANALOG_MAPPING_RESPONSE:
-							processAnalogMappingResponse(_sysExData);
-							break;
-						default:
-							// custom sysEx message
-							_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: _sysExData});
-							break;
-					}
-					_sysExData = [];
-				}
-				else {
-					_sysExData.push(inputData);
-				}
-			}
-			// we have a command
-			else {
-				// extract the command and channel info from a byte if it is less than 0xF0
-				if (inputData < 240) {
-					command = inputData & 240;
-					_multiByteChannel = inputData & 15;
-				}
-				else {
-					// commands in the 0xF* range don't use channel data
-					command = inputData;
-				}
-				switch (command) {
-					case REPORT_VERSION:
-					case DIGITAL_MESSAGE:
-					case ANALOG_MESSAGE:
-						_waitForData = 2;	// 2 bytes needed
-						_executeMultiByteCommand = command;
-						break;
-					case START_SYSEX:
-						_waitForData = -1; // n bytes needed
-						_executeMultiByteCommand = command;
-						break;
-					default:
-						break;
-				}
+				var err = "You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
+				console.log(err);
+				//throw err;	
 			}
 		}
 		
 		/**
 		 * @private
 		 */
-		function processDigitalPortBytes(port, bits0_6, bits7_13) {
+	    function processInput(inputData) {
+	    	inputData *= 1; // force inputData to integer (is there a better way to do this?)
+	    	var len;
+
+	    	_inputDataBuffer.push(inputData);
+	    	len = _inputDataBuffer.length;
+	    	
+	    	if (_inputDataBuffer[0] >= 128 && _inputDataBuffer[0] != START_SYSEX) {
+	    		if (len === 3) {
+	    			processMultiByteCommand(_inputDataBuffer);
+	    			// clear buffer
+	    			_inputDataBuffer = [];
+	    		}
+	    	} else if (_inputDataBuffer[0] === START_SYSEX && _inputDataBuffer[len-1] === END_SYSEX) {
+				processSysexCommand(_inputDataBuffer);
+	    		// clear buffer
+	    		_inputDataBuffer = [];
+	    	} else if (inputData >= 128 && _inputDataBuffer[0] < 128) {
+	    		// if for some reason we got a new command and there is already data
+	    		// in the buffer, reset the buffer
+	    		console.log("Warning: malformed input data... resetting buffer");
+	    		_inputDataBuffer = [];
+	    		if (inputData !== END_SYSEX) {
+	    			_inputDataBuffer.push(inputData);
+	    		}
+	    	}
+	    	
+	    }
+	    
+		/**
+		 * @private
+		 */	    
+	    function processMultiByteCommand(commandData) {
+	    	var command = commandData[0],
+	    		channel;
+
+	    	if (command < 0xF0) {
+	    		command = command & 0xF0;
+	    		channel = commandData[0] & 0x0F;
+	    	}
+
+			switch (command) {
+				case DIGITAL_MESSAGE:
+					processDigitalMessage(channel, commandData[1], commandData[2]); //(LSB, MSB)
+					break;
+				case REPORT_VERSION:
+					_firmwareVersion = commandData[1] + commandData[2] / 10;
+					_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
+					break;
+				case ANALOG_MESSAGE:
+					processAnalogMessage(channel, commandData[1], commandData[2]);
+					break;
+			}
+	    }
+
+		/**
+		 * @private
+		 */
+		function processDigitalMessage(port, bits0_6, bits7_13) {
 			var offset = port * 8;
 			var lastPin = offset + 8;
 			var portVal = bits0_6 | (bits7_13 << 7);
@@ -287,14 +236,74 @@ BO.IOBoard = (function() {
 		    	}
 		    	j++;
 		    }
-		}
+		}	    
+
+		/**
+		 * @private
+		 */
+	    function processAnalogMessage(channel, bits0_6, bits7_13) {
+			var analogPin = _self.getAnalogPin(channel);
+
+			// NOTE: is there a better way to handle this? This issue is on browser refresh
+			// the IOBoard board is still sending analog data if analog reporting was set
+			// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
+			// is called. There is not a way to call that method fast enough so the following code is
+			// needed. An alternative would be to set a flag that prevents critical operations
+			// before systemReset has completed.
+			if (analogPin === undefined) {
+				//console.log("analog pin undefined");
+				return;
+			}
+			// map analog input values from 0-1023 to 0.0-1.0
+			// To Do: Add maxADCValue property to Pin or IOBoard object to support ADC values > 1023?
+			// maxADCValue could be set during configuration routine if it's supported by Firmata
+			// in the future.
+			analogPin.value = _self.getValueFromTwo7bitBytes(bits0_6, bits7_13)/1023;
+			if (analogPin.value != analogPin.lastValue) {
+				_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
+			}	    	
+	    }
+
+		/**
+		 * @private
+		 */
+	    function processSysexCommand(sysexData) {
+
+	    	// remove the first and last element from the array
+	    	// since these are the START_SYSEX and END_SYSEX 
+	    	sysexData.shift();
+	    	sysexData.pop();
+
+	    	var command = sysexData[0];
+			switch (command) {
+				case REPORT_FIRMWARE:
+					processQueryFirmwareResult(sysexData);
+					break;
+				case STRING_DATA:
+					processSysExString(sysexData);
+					break;
+				case CAPABILITY_RESPONSE:
+					processCapabilitiesResponse(sysexData);
+					break;
+				case PIN_STATE_RESPONSE:
+					processPinStateResponse(sysexData);
+					break;
+				case ANALOG_MAPPING_RESPONSE:
+					processAnalogMappingResponse(sysexData);
+					break;
+				default:
+					// custom sysEx message
+					_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: sysexData});
+					break;
+			}
+	    }
 		
 		/**
 		 * @private
 		 */
 		function processQueryFirmwareResult(msg) {
-			var fname ="";
-			var data;
+			var fname ="",
+				data;
 			for (var i = 3; i < msg.length; i+=2)
 			{
 				data = String.fromCharCode(msg[i]);
@@ -303,18 +312,19 @@ BO.IOBoard = (function() {
 			}
 			_firmwareVersion=msg[1] + msg[2] / 10;
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: fname, version: _firmwareVersion});
-			
 		}
 		
 		/**
 		 * @private
 		 */
 		function processSysExString(msg) {
-			var str = "";
-			var data;
-			for (var i = 1; i < msg.length; i+=2) {
+			var str = "",
+				data,
+				len = msg.length;
+
+			for (var i = 1; i < len; i+=2) {
 				data = String.fromCharCode(msg[i]);
-				data += String.fromCharCode(msg[i+1]);		
+				data += String.fromCharCode(msg[i+1]);
 				str+=data.charAt(0);
 			}
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
@@ -327,12 +337,13 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processCapabilitiesResponse(msg) {
-			var pinCapabilities = {};
-			var byteCounter = 1; // skip 1st byte because it's the command
-			var pinCounter = 0;
-			var analogPinCounter = 0;
-			var len = msg.length;
-			var type;
+			var pinCapabilities = {},
+				byteCounter = 1, // skip 1st byte because it's the command
+				pinCounter = 0,
+				analogPinCounter = 0,
+				len = msg.length,
+				type,
+				pin;
 					
 			// create default configuration
 			while (byteCounter <= len) {
@@ -353,14 +364,16 @@ BO.IOBoard = (function() {
 						type = Pin.AIN;
 						// map analog input pins
 						_analogPinMapping[analogPinCounter++] = pinCounter;
-					} 
+					}
 					
-					var pin = new Pin(pinCounter, type);
+					pin = new Pin(pinCounter, type);
 					pin.setCapabilities(pinCapabilities);
 					managePinListener(pin);
 					_ioPins[pinCounter] = pin;
 					
 					// store the 2 i2c pin numbers if they exist
+					// To do: allow for more than 2 i2c pins on a board?
+					// How to identify SDA-SCL pairs in that case?
 					if (pin.getCapabilities()[Pin.I2C]) {
 						_i2cPins.push(pin.number);
 					}
@@ -377,7 +390,7 @@ BO.IOBoard = (function() {
 			}
 			
 			_numPorts = Math.ceil(pinCounter / 8);
-			_self.debug("debug: num ports = " + _numPorts);
+			debug("debug: num ports = " + _numPorts);
 			
 			// initialize port values
 			for (var j=0; j<_numPorts; j++) {
@@ -385,10 +398,12 @@ BO.IOBoard = (function() {
 			}
 			
 			_totalPins = pinCounter;
-			_self.debug("debug: num pins = " + _totalPins);
+			debug("debug: num pins = " + _totalPins);
 
 			
 			// map the analog pins to the board pins
+			// this will map the IOBoard analog pin numbers (printed on IOBoard)
+			// to their digital pin number equivalents
 			queryAnalogMapping();
 		}
 		
@@ -396,7 +411,8 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function startup() {
-			_self.debug("IOBoard ready");
+			debug("debug: IOBoard ready");
+			_isReady = true;
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
 			_self.enableDigitalPins();
 		}
@@ -415,11 +431,11 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processPinStateResponse(msg) {
-			var len = msg.length;
-			var pinNumber = msg[1];
-			var pinType = msg[2];
-			var value;
-			var pin = _ioPins[pinNumber];
+			var len = msg.length,
+				pinNumber = msg[1],
+				pinType = msg[2],
+				value,
+				pin = _ioPins[pinNumber];
 			
 			if (len > 4) {
 				// get value
@@ -456,12 +472,12 @@ BO.IOBoard = (function() {
 			
 			// perform a soft reset of the board
 			// the board state will be reset to its default state
-			_self.debug("debug: system reset");
+			debug("debug: system reset");
 			systemReset();
 
 			// delay to allow systemReset function to execute in StandardFirmata
 			setTimeout(startup, 500);
-			_self.debug("debug: configured");
+			debug("debug: configured");
 		}
 		
 		/**
@@ -482,9 +498,9 @@ BO.IOBoard = (function() {
 		 * @param {Event} event A reference to the event object (Pin in this case).
 		 */
 		 function sendOut(event) {
-		 	var type = event.target.getType();
-		 	var pinNum = event.target.number;
-		 	var value = event.target.value;
+		 	var type = event.target.getType(),
+		 		pinNum = event.target.number,
+		 		value = event.target.value;
 		 	
 		 	switch(type) {
 		 		case Pin.DOUT:
@@ -517,7 +533,7 @@ BO.IOBoard = (function() {
 						pin.removeEventListener(Event.CHANGE, sendOut);
 					} catch (e) {
 						// pin had reference to other handler, ignore
-						_self.debug("debug: caught pin removeEventListener exception");
+						debug("debug: caught pin removeEventListener exception");
 					}
 				}
 			}
@@ -631,6 +647,16 @@ BO.IOBoard = (function() {
 			_self.getAnalogPin(pin).setType(Pin.AIN);
 		};
 
+		/**
+		 * for debugging
+		 * @private
+		 */
+		function debug(str) {
+			if (_debugMode) {
+				console.log(str); 
+			}
+		}	
+
 		// getters and setters:
 
 		/**
@@ -650,7 +676,18 @@ BO.IOBoard = (function() {
 				// to do: throw error?
 				console.log("Warning: Sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
 			}
-		});			
+		});
+		
+		/**
+		 * Set to true when the IOBoard is ready. This can be used in place of listening
+		 * for the IOBoardEvent.READY event when creating an app with a draw loop (such
+		 * as when using processing.js or three.js);
+		 *
+		 * @name IOBoard#isReady
+		 * @property
+		 * @type Boolean
+		 */ 
+		this.__defineGetter__("isReady", function() { return _isReady; });				
 		
 		//public methods:
 		
@@ -848,12 +885,12 @@ BO.IOBoard = (function() {
 		 * @param {Number} maxPulse [optional] The maximum pulse width for the servo. Default = 2400.
 		 */
 		this.sendServoAttach = function(pin, minPulse, maxPulse) {
-			var servoPin;
+			var servoPin,
+				servoData = [];
 
 			minPulse = minPulse || 544; 	// default value = 544
 			maxPulse = maxPulse || 2400;	// default value = 2400
 		
-			var servoData = [];
 			servoData[0] = START_SYSEX;
 			servoData[1] = SERVO_CONFIG;
 			servoData[2] = pin;
@@ -971,15 +1008,6 @@ BO.IOBoard = (function() {
 			_socket.close();
 		};
 
-		/**
-		 * for debugging
-		 * @private
-		 */
-		this.debug = function(str) {
-			if (_debugMode) {
-				console.log(str); 
-			}
-		};		
 		
 		/* implement EventDispatcher */
 		

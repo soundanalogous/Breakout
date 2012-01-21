@@ -5,7 +5,7 @@ java -jar compiler/compiler.jar --language_in=ECMASCRIPT5_STRICT --js ../src/cor
 
 core (utils + core):
 
-java -jar compiler/compiler.jar --language_in=ECMASCRIPT5_STRICT --js ../src/utils/JSUTILS.js --js  ../src/utils/Event.js --js  ../src/utils/EventDispatcher.js --js ../src/utils/Timer.js --js ../src/core/IOBoardEvent.js --js  ../src/core/WSocketWrapper.js --js ../src/core/Pin.js --js ../src/core/PhysicalInputBase.js --js ../src/core/I2CBase.js --js ../src/core/IOBoard.js --js_output_file ../dist/Breakout-core.js
+java -jar compiler/compiler.jar --language_in=ECMASCRIPT5_STRICT --js ../src/core/core.js --js ../src/utils/JSUTILS.js --js  ../src/utils/Event.js --js  ../src/utils/EventDispatcher.js --js ../src/utils/Timer.js --js ../src/core/IOBoardEvent.js --js  ../src/core/WSocketWrapper.js --js ../src/generators/GeneratorBase.js --js ../src/core/Pin.js --js ../src/core/PhysicalInputBase.js --js ../src/core/I2CBase.js --js ../src/core/IOBoard.js --js_output_file ../dist/Breakout-core.js
 
 
 header:
