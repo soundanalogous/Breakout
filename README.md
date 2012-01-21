@@ -5,7 +5,7 @@ Breakout enables rapid prototyping of browser-based applications that require ph
 
 Breakout is currently only supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
 
-Breakout is alpha software so the API is not 100% stable so expect changes if you pull future releases. The API should be locked down by mid January.
+Breakout is currently beta software. The API is stable at this point. Additional io components and other features will be added, but the core API is not expected to change going forward.
 
 To use
 ---
@@ -24,7 +24,7 @@ Instructions for using Breakout Server:
 3. You'll find the Breakout Server (Breakout Server.app for OS X or Breakout Server.exe for Windows) in Breakout/server/. Simply double-click to launch the application.
 4. Select the serial port for your board from the drop-down. If you wish to use a different network port than 8887 you may change also change it (and use the new port in steps 5 and 6 below).
 5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/".
-6. Open the example file: hello_world.html (http://localhost:8887/examples/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater).
+6. Open the example file: hello_world.html (http://localhost:8887/examples/getting_started/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater).
 
 
 Test environment (for Breakout Server)
@@ -34,7 +34,7 @@ Tested OS:
 
 - Mac OSX Snow Leopard and Lion
 - Windows 7 ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
-- Linux not yet supported (if you want to help, please let me know)
+- Ubuntu Linux 11.10 Running in 32-bit mode on x86-64 processor
 
 Tested devices:
 
@@ -49,9 +49,9 @@ Tested browsers:
 
 Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0):
 
-- Arduino UNO
+- Arduino UNO, Arduino NG
 - Teensy 2.0
-- Arduino FIO
+- Arduino FIO (including XBee wireless link to computer)
 - Arduino Mega
 
 The following boards should also work (I just don't have them to confirm):
@@ -60,5 +60,5 @@ The following boards should also work (I just don't have them to confirm):
 - Teensy++ 1.0 and 2.0
 - Sanguino
 - Illuminato
-- older Arduinos (Duemilanove, Diecimila, NG)
+- older Arduinos (Duemilanove, Diecimila)
 - Wiring
