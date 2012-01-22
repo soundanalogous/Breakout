@@ -132,7 +132,6 @@ BO.io.AnalogAccelerometer = (function() {
 
 	/**
 	 * [read-only] The rotation on the x axis 
-	 * of gravity (9.8 m/sec2).
 	 * @name AnalogAccelerometer#rotationX
 	 * @property
 	 * @type Number
@@ -144,7 +143,6 @@ BO.io.AnalogAccelerometer = (function() {
 
 	/**
 	 * [read-only] The rotation on the y axis 
-	 * of gravity (9.8 m/sec2).
 	 * @name AnalogAccelerometer#rotationY
 	 * @property
 	 * @type Number
@@ -156,7 +154,6 @@ BO.io.AnalogAccelerometer = (function() {
 
 	/**
 	 * [read-only] The rotation on the z axis 
-	 * of gravity (9.8 m/sec2).
 	 * @name AnalogAccelerometer#rotationZ
 	 * @property
 	 * @type Number

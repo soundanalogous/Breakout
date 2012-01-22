@@ -20,7 +20,7 @@ var mimeTypes = {
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
 // to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbmodemfd121";
+var port = "/dev/tty.usbserial-A1000exQ";
 
 var serialDefaults = {
   baudrate: 57600,
@@ -72,17 +72,17 @@ function handler (request, response) {
     
     // absolute path
     //if (request.url == "/") {
-    //  filename = path.normalize(path.join(__dirname,  "../index.html"));
+    //  filename = path.normalize(path.join(__dirname,  "../../index.html"));
     //} else {
-    //  filename = path.normalize(path.join(__dirname,  ".." + request.url));
+    //  filename = path.normalize(path.join(__dirname,  "../.." + request.url));
     //}
     
     // use relative path (seems to be working... on OSX at least)
     if (request.url == "/") {
       // default to index.html
-      filename = path.normalize("../index.html");
+      filename = path.normalize("../../index.html");
     } else {
-      filename = path.normalize(".." + request.url);
+      filename = path.normalize("../.." + request.url);
     }
     //console.log("debug: filename = " + filename);
 
@@ -119,7 +119,6 @@ io.sockets.on('connection', function (connection) {
 
   connectedSocket = connection;
   console.log("connected");
-  //connection.send('hello world');
 
   connection.on('message', function (data) {
     var message;
