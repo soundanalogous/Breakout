@@ -23,6 +23,7 @@ body {
 <div id="zVal" class="text">z =</div>
 
 <script src="libs/Three.js"></script>
+<script src="js/AccelerometerHandler.js"></script>
 <script src="../../dist/Breakout.js"></script>
 <script type="text/javascript">
 
@@ -35,6 +36,9 @@ body {
 	// Breakout vars
 	var arduino = new IOBoard("localhost", 8887);
 	var accelerometer;
+	var accelHandler;
+	var orientation; // THREE.Vector3
+	var transform; // THREE.Matrix4
 	var RANGE_GS = 3; // +-3 Gs for ADXL335
 	var SUPPLY_V = 3.3; // supply voltage of sensor
 	var isReady = false;
@@ -104,12 +108,24 @@ body {
 		
 		if (!isReady) return;
 
-		// apply the accelerometer rotation to the cube
+		/* Example using accelerometer values */
 		// adjust accelerometer orientation to screen orientation
 		// (that is why cube.rotation.z = accelerometer.y)
-		cube.rotation.x = -accelerometer.x * Math.PI/2;
-		cube.rotation.z = accelerometer.y * Math.PI/2;
-		//cube.rotation.y = accelerometer.z * Math.PI/2;
+		// cube.rotation.x = -accelerometer.x * Math.PI/2;
+		// cube.rotation.z = accelerometer.y * Math.PI/2;
+		// cube.rotation.y = accelerometer.z * Math.PI/2;
+
+		/* Example using orientation vector from AccelerometerHandler */
+		// adjust accelerometer orientation to screen orientation
+		// (that is why cube.rotation.z = orientation.x and cube.rotation.x = orientation.y)
+		// this will vary depending on how your accelerometer is oriented in relation
+		// to the screen.		
+		cube.rotation.z = orientation.x * Math.PI/180;
+		cube.rotation.x = orientation.y * Math.PI/180;
+
+		/* Example using transformation matrix from AccelerometerHandler */
+		// var rotation = transform.extractRotation(transform)
+		// cube.rotation.setRotationFromMatrix(rotation);
 
 		renderer.render(scene, camera);
 	}
@@ -141,6 +157,21 @@ body {
 		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
 		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
 
+		accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelUpdate);
+
+		accelHandler = new AccelerometerHandler();
+
+		//isReady = true;
+	}
+
+	function onAccelUpdate(event) {
+		accelHandler.update(event.target.x, event.target.y, event.target.z);
+
+		// type = THREE.Vector3
+		// orientation y = pitch
+		// orientation x = roll
+		orientation = accelHandler.orientation;
+		transform = accelHandler.transform;
 		isReady = true;
 	}
 	
