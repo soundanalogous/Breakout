@@ -1,12 +1,12 @@
 /***********************************************************************
- * Based on AccelerometerHandler originally written in C++.
+ * Based on AccelerometerHandler originally written in C++ by Memo Akten
  * See copyright below.
  *
  * Ported to JavaScript by Jeff Hoefs
  * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
  *
- *Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
- *** The Mega Super Awesome Visuals Company ***
+ * Copyright (c) 2008, 2009, Memo Akten, www.memo.tv
+ * The Mega Super Awesome Visuals Company
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,10 +58,10 @@ AccelerometerHandler = function() {
 	this._orientDirty;
 	this._transformDirty;
 
-	this._accelForce = new THREE.Vector3();
-	this._accelReal = new THREE.Vector3();
-	this._accelOrientation = new THREE.Vector3();
-	this._orientation = new THREE.Vector3();
+	this._accelForce = new THREE.Vector4();
+	this._accelReal = new THREE.Vector4();
+	this._accelOrientation = new THREE.Vector4();
+	this._orientation = new THREE.Vector4();
 	this._transform = new THREE.Matrix4();
 };
 
@@ -148,19 +148,15 @@ AccelerometerHandler.prototype = {
 		this._accelReal.y = y;
 		this._accelReal.z = z;
 
-		var lerpFactor = 0.0;
+		var lerpFactor;
 
 		if (this._forceSmoothing) {
 			lerpFactor = 1.0 - this._forceSmoothing;
 			if (lerpFactor > 1.0) lerpFactor = 1.0;
 			else if (lerpFactor < 0.01) lerpFactor = 0.01;
 
-			var tempForce = {};
-			tempForce = this._accelReal;
-			tempForce.subSelf(this._accelForce);
-			tempForce.multiplyScalar(lerpFactor);
-			tempForce.addSelf(this._accelForce);
-			this._accelForce.copy(tempForce);
+			// accelForce += (accelReal - accelForce) * lerpFactor
+			this._accelForce.lerpSelf(this._accelReal, lerpFactor);
 		} else {
 			this._accelForce.x = x;
 			this._accelForce.y = y;
@@ -172,13 +168,8 @@ AccelerometerHandler.prototype = {
 			if (lerpFactor > 1.0) lerpFactor = 1.0;
 			else if (lerpFactor < 0.01) lerpFactor = 0.01;
 
-			var tempOrientation = {};
-			tempOrientation = this._accelReal;
-			tempOrientation.subSelf(this._accelOrientation);
-			tempOrientation.multiplyScalar(lerpFactor);
-
-			tempOrientation.addSelf(this._accelOrientation);
-			this._accelOrientation.copy(tempOrientation);
+			// accelOrientation += (accelReal - accelOrientation) * lerpFactor;
+			this._accelOrientation.lerpSelf(this._accelReal, lerpFactor);
 		} else {
 			this._accelOrientation.x = x;
 			this._accelOrientation.y = y;
@@ -215,6 +206,7 @@ AccelerometerHandler.prototype = {
 		var v = new Array(16);
 		// clear matrix to be used to rotate from the current referential to one based on the gravity vector
 		this._transform.identity();
+		
 		v[15] = 1.0;
 		
 		// setup first matrix column as gravity vector
@@ -236,14 +228,15 @@ AccelerometerHandler.prototype = {
 		// setup third matrix column as the cross product of the first two	
 		v[8] = v[1] * v[6] - v[2] * v[5];
 		v[9] = v[4] * v[2] - v[6] * v[0];
-		v[10] = v[0] * v[5] - v[1] * v[4];	
+		v[10] = v[0] * v[5] - v[1] * v[4];
 
 		this._transform.set (
 			v[0], v[1], v[2], v[3],
 			v[4], v[5], v[6], v[7],
 			v[8], v[9], v[10], v[11],
 			v[12], v[13], v[14], v[15]
-		);		
+		);	
+	
 	}
 
 };

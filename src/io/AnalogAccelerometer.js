@@ -16,6 +16,9 @@ BO.io.AnalogAccelerometer = (function() {
 
 	var AnalogAccelerometer;
 
+	// private static constants
+	var RAD_TO_DEG = 180 / Math.PI;
+
 		// dependencies
 	var PhysicalInputBase = BO.PhysicalInputBase,
 		Event = JSUTILS.Event,
@@ -115,6 +118,29 @@ BO.io.AnalogAccelerometer = (function() {
 	 */ 
 	AnalogAccelerometer.prototype.__defineGetter__("z", function() { return this._z; });
 
+	/**
+	 * [read-only] The pitch value in degrees 
+	 * @name AnalogAccelerometer#pitch
+	 * @property
+	 * @type Number
+	 */ 
+	AnalogAccelerometer.prototype.__defineGetter__("pitch", function() { 
+		//var xAdj = Math.min(Math.max(this._x, -1), 1);
+		//var zAdj = Math.min(Math.max(this._z, -1), 1);
+		return Math.atan2(this._x, -this._z) * RAD_TO_DEG;
+	});
+	
+	/**
+	 * [read-only] The roll value in degrees 
+	 * @name AnalogAccelerometer#roll
+	 * @property
+	 * @type Number
+	 */ 
+	AnalogAccelerometer.prototype.__defineGetter__("roll", function() { 
+		//var yAdj = Math.min(Math.max(this._y, -1), 1);
+		//var zAdj = Math.min(Math.max(this._z, -1), 1);
+		return Math.atan2(this._y, -this._z) * RAD_TO_DEG;
+	});	
 
 	// Methods specific to this Accelerometer type:
 
@@ -129,40 +155,7 @@ BO.io.AnalogAccelerometer = (function() {
 	AnalogAccelerometer.prototype.__defineGetter__("zPin", function() { 
 		return this._zPin;
 	});			
-
-	/**
-	 * [read-only] The rotation on the x axis 
-	 * @name AnalogAccelerometer#rotationX
-	 * @property
-	 * @type Number
-	 */ 
-	AnalogAccelerometer.prototype.__defineGetter__("rotationX", function() { 
-		var sinX = Math.min(Math.max(this._x, -1), 1);
-		return Math.asin(sinX) / Math.PI * 180;
-	});	
-
-	/**
-	 * [read-only] The rotation on the y axis 
-	 * @name AnalogAccelerometer#rotationY
-	 * @property
-	 * @type Number
-	 */ 
-	AnalogAccelerometer.prototype.__defineGetter__("rotationY", function() { 
-		var sinY = Math.min(Math.max(this._y, -1), 1);
-		return Math.asin(sinY) / Math.PI * 180;
-	});	
-
-	/**
-	 * [read-only] The rotation on the z axis 
-	 * @name AnalogAccelerometer#rotationZ
-	 * @property
-	 * @type Number
-	 */ 
-	AnalogAccelerometer.prototype.__defineGetter__("rotationZ", function() { 
-		var sinZ = Math.min(Math.max(this._z, -1), 1);
-		return Math.asin(sinZ) / Math.PI * 180;
-	});		
-
+	
 	/**
 	 * Scale the range for the specified axis (from 0 to 1) to (minimum to maximum).
 	 * 

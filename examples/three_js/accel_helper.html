@@ -23,18 +23,22 @@ body {
 <div id="zVal" class="text">z =</div>
 
 <script src="libs/Three.js"></script>
+<script src="js/AccelerometerHandler.js"></script>
 <script src="../../dist/Breakout.js"></script>
 <script type="text/javascript">
 
 	// Breakout dependencies
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
-	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
+	var AnalogAccelerometer = BO.io.AnalogAccelerometer;	
 	var AccelerometerEvent = BO.io.AccelerometerEvent;
 
 	// Breakout vars
 	var arduino = new IOBoard("localhost", 8887);
 	var accelerometer;
+	var accelHandler;
+	var orientation; // THREE.Vector4
+	var transform; // THREE.Matrix4
 	var RANGE_GS = 3; // +-3 Gs for ADXL335
 	var SUPPLY_V = 3.3; // supply voltage of sensor
 	var isReady = false;
@@ -104,8 +108,17 @@ body {
 		
 		if (!isReady) return;
 
-		cube.rotation.z = accelerometer.roll * Math.PI/180;
-		cube.rotation.x = accelerometer.pitch * Math.PI/180;		
+		/* Example using orientation vector from AccelerometerHandler */
+		// adjust accelerometer orientation to screen orientation
+		// (that is why cube.rotation.z = orientation.x and cube.rotation.x = orientation.y)
+		// this will vary depending on how your accelerometer is oriented in relation
+		// to the screen.		
+		cube.rotation.z = orientation.x * Math.PI/180;
+		cube.rotation.x = orientation.y * Math.PI/180;
+
+		/* Example using transformation matrix from AccelerometerHandler */
+		// var rotation = transform.extractRotation(transform)
+		// cube.rotation.setRotationFromMatrix(rotation);
 
 		renderer.render(scene, camera);
 	}
@@ -137,6 +150,22 @@ body {
 		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
 		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
 
+		accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelUpdate);
+
+		accelHandler = new AccelerometerHandler();
+
+	}
+
+	function onAccelUpdate(event) {
+		accelHandler.update(event.target.x, event.target.y, event.target.z);
+
+		// type = THREE.Vector4
+		// orientation y = pitch
+		// orientation x = roll
+		orientation = accelHandler.orientation;
+
+		// type = THREE.Matrix4
+		transform = accelHandler.transform;
 		isReady = true;
 	}
 	

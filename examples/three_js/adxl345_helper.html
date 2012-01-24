@@ -23,20 +23,22 @@ body {
 <div id="zVal" class="text">z =</div>
 
 <script src="libs/Three.js"></script>
+<script src="js/AccelerometerHandler.js"></script>
 <script src="../../dist/Breakout.js"></script>
 <script type="text/javascript">
 
 	// Breakout dependencies
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
-	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
+	var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
 	var AccelerometerEvent = BO.io.AccelerometerEvent;
 
 	// Breakout vars
 	var arduino = new IOBoard("localhost", 8887);
 	var accelerometer;
-	var RANGE_GS = 3; // +-3 Gs for ADXL335
-	var SUPPLY_V = 3.3; // supply voltage of sensor
+	var accelHandler;
+	var orientation; // THREE.Vector4
+	var transform; // THREE.Matrix4
 	var isReady = false;
 
 	// 3D scene vars
@@ -104,8 +106,17 @@ body {
 		
 		if (!isReady) return;
 
-		cube.rotation.z = accelerometer.roll * Math.PI/180;
-		cube.rotation.x = accelerometer.pitch * Math.PI/180;		
+		/* Example using orientation vector from AccelerometerHandler */
+		// adjust accelerometer orientation to screen orientation
+		// (that is why cube.rotation.z = orientation.x and cube.rotation.x = orientation.y)
+		// this will vary depending on how your accelerometer is oriented in relation
+		// to the screen.		
+		cube.rotation.z = orientation.x * Math.PI/180;
+		cube.rotation.x = orientation.y * Math.PI/180;
+
+		/* Example using transformation matrix from AccelerometerHandler */
+		// var rotation = transform.extractRotation(transform)
+		// cube.rotation.setRotationFromMatrix(rotation);
 
 		renderer.render(scene, camera);
 	}
@@ -114,29 +125,40 @@ body {
 
 		arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);				
 
-		// params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
-		accelerometer = new AnalogAccelerometer(
-								arduino, 
-								arduino.getAnalogPin(0), 
-								arduino.getAnalogPin(1), 
-								arduino.getAnalogPin(2),
-								RANGE_GS,
-								true);
+		// params: IOBoard, dynamicRange, i2cAddress
+		// var accelerometer = new AccelerometerADXL345(
+		// 						fio, 
+		// 						AccelerometerADXL345.RANGE_2G,
+		// 						AccelerometerADXL345.DEVICE_ID);
 
-	    // Use calibrate_accelerometer.html to obtain the min and max voltage values
-	    // to supply to the getCalibratedRange method below.
+		// using default settings
+		accelerometer = new AccelerometerADXL345(arduino);						
 
-	    // calibration settings for an ADXL335 at 3.3v
-	    // params: minimum voltage on the axis, max voltage on the axis, supply voltage
-		var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
-		var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
-		var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
+	    // calibrate the accelerometer
+	    // start with 0, 0, 0 and add or subtract in increments
+	    // of 1 until the accelerometer is propery calibrated
+	    // once you find the calibration values for your sensor
+	    accelerometer.setAxisOffset(-2, -2, 6);
 
-		// params: axis, minimum range, maximum range
-		accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
-		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
-		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
+	    // start reading the accelerometer
+	    accelerometer.startReading();
 
+		accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelUpdate);
+
+		accelHandler = new AccelerometerHandler();
+
+	}
+
+	function onAccelUpdate(event) {
+		accelHandler.update(event.target.x, event.target.y, event.target.z);
+
+		// type = THREE.Vector4
+		// orientation y = pitch
+		// orientation x = roll
+		orientation = accelHandler.orientation;
+
+		// type = THREE.Matrix4
+		transform = accelHandler.transform;
 		isReady = true;
 	}
 	
