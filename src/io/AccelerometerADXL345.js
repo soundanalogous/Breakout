@@ -295,7 +295,6 @@ BO.io.AccelerometerADXL345 = (function() {
 	 * Sends read request to accelerometer and updates accelerometer values.
 	 */
 	AccelerometerADXL345.prototype.update = function() {
-		
 		if (this._isReading) {
 			this.stopReading();	
 		}

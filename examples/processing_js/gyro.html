@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Breakout + processing.js Gyro Example</title>
+</head>
+<body>
+<canvas id='canvas1'></canvas> 
+
+<script src="libs/processing-1.3.6-api.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script type="text/javascript">
+
+// dependencies
+// declare these variables so you don't have
+// to type the full namespace	
+var IOBoard = BO.IOBoard;
+var IOBoardEvent = BO.IOBoardEvent;
+var GyroITG3200 = BO.io.GyroITG3200;
+var GyroEvent = BO.io.GyroEvent;
+var Button = BO.io.Button;
+var ButtonEvent = BO.io.ButtonEvent;
+
+var sketch = new Processing.Sketch();
+// define 3D context
+sketch.use3DContext = true;
+// preload the images
+sketch.imageCache.add("images/pjs.png");
+// attach function 
+sketch.attachFunction = function(p) {
+
+	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+	// with the ITG3200 and ADXL345 sensors
+	var fio,
+		gyro,
+		xRot = 0,
+		yRot = 0,
+		zRot = 0,
+		lastX = 0,
+		lastY = 0,
+		lastZ = 0,
+		interval,
+		SMOOTHING = 0.5,
+		accelOrientation,
+		accelReal,
+		isReady = false;
+
+    p.setup = function() {
+        p.size(640, 360, p.P3D);
+        texture = p.loadImage("images/pjs.png");
+        p.textureMode(p.NORMALIZED);
+        p.fill(255);
+        p.stroke(p.color(44,48,32));
+
+        font = p.createFont("Arial");
+        p.textFont(font, 18);
+
+        accelOrientation = new p.PVector();
+        accelReal = new p.PVector();
+
+        fio = new IOBoard("localhost", 8887);
+        fio.addEventListener(IOBoardEvent.READY, onFioReady);
+        interval = fio.samplingInterval/1000 * 2;
+    };
+
+    p.draw = function() {
+        // don't draw until the Arduino is ready
+        if (!isReady) return;
+
+        p.background(0);
+
+        p.noStroke();
+        p.pushMatrix();
+        p.translate(p.width/2.0, p.height/2.0, -100);
+
+        p.rotateX(toRadians(xRot));
+        p.rotateY(toRadians(zRot));
+        p.rotateZ(-toRadians(yRot));
+        p.scale(90);        
+        texturedCube(texture);
+        p.popMatrix();
+
+        p.fill(255, 255, 255);
+        p.text("gyro x = " + accelOrientation.x.toFixed(3), 10, 10);
+        p.text("gyro y = " + accelOrientation.y.toFixed(3), 10, 35);
+        p.text("gyro z = " + accelOrientation.z.toFixed(3), 10, 60);
+    }
+
+    function texturedCube(texture) {
+        p.beginShape(p.QUADS);
+        p.texture(texture);
+
+        // Given one texture and six faces, we can easily set up the uv coordinates
+        // such that four of the faces tile "perfectly" along either u or v, but the other
+        // two faces cannot be so aligned.  This code tiles "along" u, "around" the X/Z faces
+        // and fudges the Y faces - the Y faces are arbitrarily aligned such that a
+        // rotation along the X axis will put the "top" of either texture at the "top"
+        // of the screen, but is not otherwised aligned with the X/Z faces. (This
+        // just affects what type of symmetry is required if you need seamless
+        // tiling all the way around the cube)
+
+        // +Z "front" face
+        p.vertex(-1, -1,  1, 0, 0);
+        p.vertex( 1, -1,  1, 1, 0);
+        p.vertex( 1,  1,  1, 1, 1);
+        p.vertex(-1,  1,  1, 0, 1);
+
+        // -Z "back" face
+        p.vertex( 1, -1, -1, 0, 0);
+        p.vertex(-1, -1, -1, 1, 0);
+        p.vertex(-1,  1, -1, 1, 1);
+        p.vertex( 1,  1, -1, 0, 1);
+
+        // +Y "bottom" face
+        p.vertex(-1,  1,  1, 0, 0);
+        p.vertex( 1,  1,  1, 1, 0);
+        p.vertex( 1,  1, -1, 1, 1);
+        p.vertex(-1,  1, -1, 0, 1);
+
+        // -Y "top" face
+        p.vertex(-1, -1, -1, 0, 0);
+        p.vertex( 1, -1, -1, 1, 0);
+        p.vertex( 1, -1,  1, 1, 1);
+        p.vertex(-1, -1,  1, 0, 1);
+
+        // +X "right" face
+        p.vertex( 1, -1,  1, 0, 0);
+        p.vertex( 1, -1, -1, 1, 0);
+        p.vertex( 1,  1, -1, 1, 1);
+        p.vertex( 1,  1,  1, 0, 1);
+
+        // -X "left" face
+        p.vertex(-1, -1, -1, 0, 0);
+        p.vertex(-1, -1,  1, 1, 0);
+        p.vertex(-1,  1,  1, 1, 1);
+        p.vertex(-1,  1, -1, 0, 1);
+
+        p.endShape();
+    }
+
+	function onFioReady(event) {
+
+		fio.removeEventListener(IOBoardEvent.READY, onFioReady);
+
+		initGyro();
+
+		var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
+        button.addEventListener(ButtonEvent.PRESS, onBtnPress);
+	}
+
+	function initGyro() {
+		gyro = new GyroITG3200(fio);
+		// adjust the offset values until gyro x, y and z
+		// values are around zero when the gyro is not moving
+	    gyro.setOffsets(-2.0, 4.0, -3.6);
+	    gyro.startReading();
+		gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
+		isReady = true;	
+	}
+
+	function onGyroUpdate(event) {
+		var xVal = Math.floor(event.target.x);
+		var yVal = Math.floor(event.target.y);
+		var zVal = Math.floor(event.target.z);
+
+		smooth(xVal, yVal, zVal);
+
+		xRot = accelOrientation.x * interval;
+		yRot = accelOrientation.y * interval;
+		zRot = accelOrientation.z * interval;
+
+		xRot = (xRot + lastX) % 360;
+		yRot = (yRot + lastY) % 360;
+		zRot = (zRot + lastZ) % 360;
+
+		lastX = xRot;
+		lastY = yRot;
+		lastZ = zRot;
+	}
+
+	function onBtnPress(event) {
+		reset();
+	}
+
+	function reset() {
+		xRot = yRot = zRot = 0;
+		lastX = lastY = lastZ = 0;
+		accelOrientation.set(0, 0, 0);
+	}
+
+	function smooth(x, y, z) {
+		var lerpFactor;
+
+		accelReal.set(x, y, z);
+
+		lerpFactor = 1.0 - SMOOTHING;
+		if (lerpFactor > 1.0) lerpFactor = 1.0;
+		else if(lerpFactor < 0.01) lerpFactor = 0.01;
+
+		accelReal.sub(accelOrientation);
+		accelReal.mult(lerpFactor);
+		accelOrientation.add(accelReal);
+	}
+
+	function toRadians(decimalVal) {
+		return decimalVal * Math.PI/180;
+	}
+
+	function toDegrees(radianVal) {
+		return radianVal * (180/Math.PI);
+	}
+
+};
+
+var canvas = document.getElementById("canvas1");
+// attaching the sketch to the canvas
+var p = new Processing(canvas, sketch);
+			
+</script>
+
+
+
+</body>
+</html>​

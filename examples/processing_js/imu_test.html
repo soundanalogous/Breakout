@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Breakout + processing.js IMU Test</title>
+</head>
+<body>
+<canvas id='canvas1'></canvas> 
+
+<script src="libs/processing-1.3.6-api.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script src="js/IMUFilter.js"></script>
+<script type="text/javascript">
+
+// dependencies
+// declare these variables so you don't have
+// to type the full namespace	
+var IOBoard = BO.IOBoard;
+var IOBoardEvent = BO.IOBoardEvent;
+var GyroITG3200 = BO.io.GyroITG3200;
+var GyroEvent = BO.io.GyroEvent;
+var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
+var AccelerometerEvent = BO.io.AccelerometerEvent;
+var Timer = JSUTILS.Timer;
+var TimerEvent = JSUTILS.TimerEvent;
+var IMUFilter = BO.IMUFilter;
+var Button = BO.io.Button;
+var ButtonEvent = BO.io.ButtonEvent;
+
+var sketch = new Processing.Sketch();
+// define 3D context
+sketch.use3DContext = true;
+// preload the images
+sketch.imageCache.add("images/pjs.png");
+// attach function 
+sketch.attachFunction = function(p) {
+
+	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+	// with the ITG3200 and ADXL345 sensors
+	var fio;
+	var gyro;
+	var accelerometer;
+	var imuFilter;
+	var imuFilterTick;
+	var gotGyro = false;
+	var gotAccel = false;
+	var UPDATE_INTERVAL = 100;
+	var FILTER_RATE = 0.1;
+	var GRAVITY = 9.812865328;	// /m/s/s
+	//var GRAVITY = 1.0;
+
+	var isReady = false;
+
+    p.setup = function() {
+        p.size(640, 360, p.P3D);
+        texture = p.loadImage("images/pjs.png");
+        p.textureMode(p.NORMALIZED);
+        p.fill(255);
+        p.stroke(p.color(44,48,32));
+
+        fio = new IOBoard("localhost", 8887);
+        fio.addEventListener(IOBoardEvent.READY, onFioReady);
+    };
+
+    p.draw = function() {
+        // don't draw until the Arduino is ready
+        if (!isReady) return;
+
+        p.background(0);
+        p.noStroke();
+        p.translate(p.width/2.0, p.height/2.0, -100);
+
+        //console.log(imuFilter.pitch);
+        p.rotateX(imuFilter.roll);
+        p.rotateY(imuFilter.yaw);
+        p.rotateZ(-imuFilter.pitch);
+        p.scale(90);
+        
+        texturedCube(texture);
+    }
+
+    function texturedCube(texture) {
+        p.beginShape(p.QUADS);
+        p.texture(texture);
+
+        // Given one texture and six faces, we can easily set up the uv coordinates
+        // such that four of the faces tile "perfectly" along either u or v, but the other
+        // two faces cannot be so aligned.  This code tiles "along" u, "around" the X/Z faces
+        // and fudges the Y faces - the Y faces are arbitrarily aligned such that a
+        // rotation along the X axis will put the "top" of either texture at the "top"
+        // of the screen, but is not otherwised aligned with the X/Z faces. (This
+        // just affects what type of symmetry is required if you need seamless
+        // tiling all the way around the cube)
+
+        // +Z "front" face
+        p.vertex(-1, -1,  1, 0, 0);
+        p.vertex( 1, -1,  1, 1, 0);
+        p.vertex( 1,  1,  1, 1, 1);
+        p.vertex(-1,  1,  1, 0, 1);
+
+        // -Z "back" face
+        p.vertex( 1, -1, -1, 0, 0);
+        p.vertex(-1, -1, -1, 1, 0);
+        p.vertex(-1,  1, -1, 1, 1);
+        p.vertex( 1,  1, -1, 0, 1);
+
+        // +Y "bottom" face
+        p.vertex(-1,  1,  1, 0, 0);
+        p.vertex( 1,  1,  1, 1, 0);
+        p.vertex( 1,  1, -1, 1, 1);
+        p.vertex(-1,  1, -1, 0, 1);
+
+        // -Y "top" face
+        p.vertex(-1, -1, -1, 0, 0);
+        p.vertex( 1, -1, -1, 1, 0);
+        p.vertex( 1, -1,  1, 1, 1);
+        p.vertex(-1, -1,  1, 0, 1);
+
+        // +X "right" face
+        p.vertex( 1, -1,  1, 0, 0);
+        p.vertex( 1, -1, -1, 1, 0);
+        p.vertex( 1,  1, -1, 1, 1);
+        p.vertex( 1,  1,  1, 0, 1);
+
+        // -X "left" face
+        p.vertex(-1, -1, -1, 0, 0);
+        p.vertex(-1, -1,  1, 1, 0);
+        p.vertex(-1,  1,  1, 1, 1);
+        p.vertex(-1,  1, -1, 0, 1);
+
+        p.endShape();
+    }	
+
+	function onFioReady(event) {
+
+		fio.removeEventListener(IOBoardEvent.READY, onFioReady);	
+		
+		initGyro();
+		initAccelerometer();
+
+		imuFilter = new IMUFilter(FILTER_RATE, 0.3);
+
+		imuFilterTick = new Timer(UPDATE_INTERVAL, 0);
+		imuFilterTick.addEventListener(TimerEvent.TIMER, onImuFilterTick);
+		imuFilterTick.start();
+
+		var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
+        button.addEventListener(ButtonEvent.PRESS, onBtnPress);
+
+		//isReady = true;
+	}
+
+	function initGyro() {
+		// params: IOBoard, autoStart, i2cAddress
+		//gyro = new GyroITG3200(fio, false, GyroITG3200.DEVICE_ID);
+		gyro = new GyroITG3200(fio, false);
+	    gyro.setOffsets(-3, 4.0, -4.1);
+	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);		
+	}
+
+	function initAccelerometer() {
+		// params: IOBoard, dynamicRange, i2cAddress
+		// var accelerometer = new AccelerometerADXL345(
+		// 						fio, 
+		// 						AccelerometerADXL345.RANGE_2G,
+		// 						AccelerometerADXL345.DEVICE_ID);
+		accelerometer = new AccelerometerADXL345(fio);						
+	    accelerometer.setAxisOffset(-2, -2, 6);
+	    accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
+	}
+
+	function onAccelerationUpdate(event) {
+		gotAccel = true;
+
+		if (gotGyro === true) {
+			process();
+		}
+
+	}
+
+	function onGyroUpdate(event) {
+		gotGyro = true;
+
+		if (gotAccel === true) {
+			process();
+		}
+	}
+
+	function process() {		
+		gotGyro = false;
+		gotAccel = false;
+
+		imuFilter.updateFilter(toRadians(gyro.x), toRadians(gyro.y), toRadians(gyro.z),
+								accelerometer.x * GRAVITY, 
+								accelerometer.y * GRAVITY, 
+								accelerometer.z * GRAVITY);
+
+		imuFilter.computeEuler();
+
+		isReady = true;
+	}
+
+	function onBtnPress(event) {
+		imuFilter.reset();
+	}
+
+	function onImuFilterTick(event) {
+
+		if (accelerometer === undefined || gyro === undefined) return;
+
+		accelerometer.update();
+		gyro.update();
+	}
+
+	function toRadians(decimalVal) {
+		return decimalVal * Math.PI/180;
+	}
+
+	function toDegrees(radianVal) {
+		return radianVal * (180/Math.PI);
+	}
+
+};
+
+var canvas = document.getElementById("canvas1");
+// attaching the sketch to the canvas
+var p = new Processing(canvas, sketch);
+			
+</script>
+
+
+
+</body>
+</html>​
