@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>MagnetoMeterHMC5883 Test</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace	
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var MagnetoMeterHMC5883 = BO.io.MagnetoMeterHMC5883;
+	var Event = JSUTILS.Event;	
+
+	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+	// with the ADXL345
+	var fio = new IOBoard("localhost", 8887);
+	
+	fio.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+
+		fio.removeEventListener(IOBoardEvent.READY, onReady);
+		
+		
+		//params: IOBoard, i2cAddress, numSamples, outputRate
+		var magnetometer = new MagnetoMeterHMC5883(
+								fio, 
+								MagnetoMeterHMC5883.DEVICE_ID,
+								MagnetoMeterHMC5883.SAMPLES_1,
+								MagnetoMeterHMC5883.HZ_30);							
+
+		// using default settings
+		//var magnetometer = new MagnetoMeterHMC5883(fio);						
+
+	    // start reading the accelerometer
+	    magnetometer.startReading();
+
+	    magnetometer.addEventListener(Event.CHANGE, onUpdate);
+
+	}
+	
+	function onUpdate(event) {
+		var data = event.target;
+		
+		$('#xVal').html("x = " + data.x.toFixed(3));
+		$('#yVal').html("y = " + data.y.toFixed(3));
+		$('#zVal').html("z = " + data.z.toFixed(3));
+		$('#heading').html("heading = " + data.heading.toFixed(3));
+	}
+			
+});
+</script>
+
+</head>
+<body>
+  
+	<div id="xVal" class="text">x =</div>
+	<div id="yVal" class="text">y =</div>
+	<div id="zVal" class="text">z =</div>
+	<div id="heading" class="text">heading =</div>
+  
+</body>
+</html>​
