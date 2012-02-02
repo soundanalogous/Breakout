@@ -100,8 +100,9 @@ body {
 		
 		if (!isReady) return;
 
+		// adjust sensor orientation to screen orientation
 		cube.rotation.z = accelerometer.roll * Math.PI/180;
-		cube.rotation.x = accelerometer.pitch * Math.PI/180;		
+		cube.rotation.x = -accelerometer.pitch * Math.PI/180;		
 
 		renderer.render(scene, camera);
 	}

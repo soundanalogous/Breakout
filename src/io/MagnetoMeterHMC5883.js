@@ -10,7 +10,9 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	var MagnetoMeterHMC5883;
 
 		// private static constants
-	var ADDRESS = 0x1E,
+	var RAD_TO_DEG = 180 / Math.PI,
+		DEG_TO_RAD = Math.PI/180,
+		ADDRESS = 0x1E,
 		CRA = 0x00,
 		CRB = 0x01,
 		MODE = 0x02,
@@ -76,20 +78,11 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	 * @type Number
 	 */ 	 
 	MagnetoMeterHMC5883.prototype.__defineGetter__("heading", function() {
-		var heading = 0.0; 
-
-		// algorithm from Honeywell AN-203:
-		// Compass Heading Using Magnetometers
-		if (this._y > 0) heading = 90.0 - Math.atan(this._x/this._y) * 180/Math.PI;
-		else if (this._y < 0) heading = 270.0 - Math.atan(this._x/this._y) * 180/Math.PI;
-		else if (this._y === 0 && this._x < 0) heading = 180.0;
-		else if (this._y === 0 && this._x > 0) heading = 0.0;
-
-		return heading;
+		return this.getHeading(this._x, this._y);
 	});
 
 	/**
-	 * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
+	 * [read-only] The x-axis measurement
 	 * @name MagnetoMeterHMC5883#x
 	 * @property
 	 * @type Number
@@ -97,7 +90,7 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	MagnetoMeterHMC5883.prototype.__defineGetter__("x", function() { return this._x; });
 
 	/**
-	 * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
+	 * [read-only] The y-axis measurement
 	 * @name MagnetoMeterHMC5883#y
 	 * @property
 	 * @type Number
@@ -105,7 +98,7 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	MagnetoMeterHMC5883.prototype.__defineGetter__("y", function() { return this._y; });
 	
 	/**
-	 * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
+	 * [read-only] The z-axis measurement
 	 * @name MagnetoMeterHMC5883#z
 	 * @property
 	 * @type Number
@@ -143,6 +136,51 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 		} else {
 			console.log("Warning: MagnetoMeterHMC5883 received data from unknown register");
 		}
+	};
+
+	/**
+	 * @private
+	 */
+	MagnetoMeterHMC5883.prototype.getHeading = function(x, y) {
+		var heading = 0.0;
+
+		// algorithm from Applications of Magnetoresistive Sensors in Navigation Systems
+		// by Michael J. Caruso of Honeywell Inc.
+		if (y > 0) heading = 90.0 - Math.atan(x/y) * 180/Math.PI;
+		else if (y < 0) heading = 270.0 - Math.atan(x/y) * 180/Math.PI;
+		else if (y === 0 && x < 0) heading = 180.0;
+		else if (y === 0 && x > 0) heading = 0.0;
+
+		return heading;
+
+		// heading = Math.atan2(y, x);
+		// if (heading < 0) heading += 2*Math.PI;
+		// if (heading > 2*Math.PI) heading -= 2*Math.PI;
+		// return heading * RAD_TO_DEG;		
+	};
+
+	/**
+	 * Get a tilt-compensated heading. Pitch and roll values from an accelerometer
+	 * must be passed to this method.
+	 *
+	 * @param {Number} pitch The pitch value (supplied by an accelerometer)
+	 * @param {Number} roll The roll value (supplied by an accelerometer)
+	 * @return {Number} tilt-compensated heading direction
+	 */
+	MagnetoMeterHMC5883.prototype.getTiltCompensatedHeading = function(pitch, roll) {
+
+		pitch = pitch * DEG_TO_RAD;
+		roll = roll * DEG_TO_RAD;
+
+		//var xH = this._x * Math.cos(pitch) + this._z * Math.sin(pitch);
+		//var yH = this._x * Math.sin(roll) * Math.sin(pitch) + this._y * Math.cos(roll) - this._z * Math.sin(roll) * Math.cos(pitch);
+		//var zH = -this._x * Math.cos(roll) * Math.sin(pitch) + this._y * Math.sin(roll) + this._z * Math.cos(roll) * Math.cos(pitch);
+
+		var xH = this._x * Math.cos(pitch) + this._y * Math.sin(roll) * Math.sin(pitch) - this._z * Math.cos(roll) * Math.sin(pitch);
+		var yH = this._y * Math.cos(roll) + this._z * Math.sin(roll);
+
+		return this.getHeading(xH, yH);
+
 	};
 	
 	/**

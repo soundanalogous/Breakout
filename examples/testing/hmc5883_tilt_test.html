@@ -12,7 +12,7 @@
 }
 </style>
 
-<title>MagnetoMeterHMC5883 Test</title>
+<title>MagnetoMeterHMC5883 Tilt-compensated Test</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
@@ -25,7 +25,9 @@ $(document).ready(function() {
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var MagnetoMeterHMC5883 = BO.io.MagnetoMeterHMC5883;
-	var Event = JSUTILS.Event;	
+	var Event = JSUTILS.Event;
+	var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
+	var AccelerometerEvent = BO.io.AccelerometerEvent;		
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ADXL345
@@ -37,6 +39,17 @@ $(document).ready(function() {
 	function onReady(event) {
 
 		fio.removeEventListener(IOBoardEvent.READY, onReady);
+
+		accelerometer = new AccelerometerADXL345(fio);						
+
+	    // calibrate the accelerometer
+	    // start with 0, 0, 0 and add or subtract in increments
+	    // of 1 until the accelerometer is propery calibrated
+	    // once you find the calibration values for your sensor
+	    accelerometer.setAxisOffset(-2, -2, 6);
+
+	    // start reading the accelerometer
+	    accelerometer.startReading();
 		
 		//params: IOBoard, i2cAddress, numSamples, outputRate
 		var magnetometer = new MagnetoMeterHMC5883(
@@ -63,6 +76,7 @@ $(document).ready(function() {
 		$('#yVal').html("y = " + data.y.toFixed(3));
 		$('#zVal').html("z = " + data.z.toFixed(3));
 		$('#heading').html("heading = " + data.heading.toFixed(3));
+		$('#adjustedHeading').html("tilt-compensated heading = " + data.getTiltCompensatedHeading(accelerometer.pitch, accelerometer.roll).toFixed(3));
 
 	}
 
@@ -77,6 +91,7 @@ $(document).ready(function() {
 	<div id="yVal" class="text">y =</div>
 	<div id="zVal" class="text">z =</div>
 	<div id="heading" class="text">heading =</div>
+	<div id="adjustedHeading" class="text">tilt-compensated heading =</div>
   
 </body>
 </html>​

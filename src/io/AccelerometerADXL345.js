@@ -11,7 +11,8 @@ BO.io.AccelerometerADXL345 = (function() {
 	var AccelerometerADXL345;
 
 	// private static constants
-	var POWER_CTL = 0x2D,
+	var RAD_TO_DEG = 180 / Math.PI,
+		POWER_CTL = 0x2D,
 		DATAX0 = 0x32,
 		DATA_FORMAT = 0x31,
 		OFSX = 0x1E,
@@ -115,9 +116,10 @@ BO.io.AccelerometerADXL345 = (function() {
 	 * @type Number
 	 */ 
 	AccelerometerADXL345.prototype.__defineGetter__("pitch", function() { 
-		//var xAdj = Math.min(Math.max(this._x, -1), 1);
-		//var zAdj = Math.min(Math.max(this._z, -1), 1);
-		return Math.atan2(this._x, -this._z) * RAD_TO_DEG;
+		// -180 to 180
+		//return Math.atan2(this._x, this._z) * RAD_TO_DEG;
+		// -90 to 90
+		return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
 	});
 	
 	/**
@@ -127,9 +129,10 @@ BO.io.AccelerometerADXL345 = (function() {
 	 * @type Number
 	 */ 
 	AccelerometerADXL345.prototype.__defineGetter__("roll", function() { 
-		//var yAdj = Math.min(Math.max(this._y, -1), 1);
-		//var zAdj = Math.min(Math.max(this._z, -1), 1);
-		return Math.atan2(this._y, -this._z) * RAD_TO_DEG;
+		// -180 to 180
+		//return Math.atan2(this._y, this._z) * RAD_TO_DEG;
+		// -90 to 90
+		return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
 	});
 	
 	// Methods specific to this Accelerometer type:		
