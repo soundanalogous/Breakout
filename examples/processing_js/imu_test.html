@@ -27,6 +27,9 @@ var IMUFilter = BO.IMUFilter;
 var Button = BO.io.Button;
 var ButtonEvent = BO.io.ButtonEvent;
 
+// NOTE: you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+// with the ITG3200 and ADXL345 sensors
+
 var sketch = new Processing.Sketch();
 // define 3D context
 sketch.use3DContext = true;
@@ -35,8 +38,6 @@ sketch.imageCache.add("images/pjs.png");
 // attach function 
 sketch.attachFunction = function(p) {
 
-	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
-	// with the ITG3200 and ADXL345 sensors
 	var fio;
 	var gyro;
 	var accelerometer;
@@ -47,7 +48,6 @@ sketch.attachFunction = function(p) {
 	var UPDATE_INTERVAL = 100;
 	var FILTER_RATE = 0.1;
 	var GRAVITY = 9.812865328;	// /m/s/s
-	//var GRAVITY = 1.0;
 
 	var isReady = false;
 
@@ -146,13 +146,10 @@ sketch.attachFunction = function(p) {
 
 		var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
         button.addEventListener(ButtonEvent.PRESS, onBtnPress);
-
-		//isReady = true;
 	}
 
 	function initGyro() {
 		// params: IOBoard, autoStart, i2cAddress
-		//gyro = new GyroITG3200(fio, false, GyroITG3200.DEVICE_ID);
 		gyro = new GyroITG3200(fio, false);
 	    gyro.setOffsets(-3, 4.0, -4.1);
 	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);		
@@ -160,10 +157,6 @@ sketch.attachFunction = function(p) {
 
 	function initAccelerometer() {
 		// params: IOBoard, dynamicRange, i2cAddress
-		// var accelerometer = new AccelerometerADXL345(
-		// 						fio, 
-		// 						AccelerometerADXL345.RANGE_2G,
-		// 						AccelerometerADXL345.DEVICE_ID);
 		accelerometer = new AccelerometerADXL345(fio);						
 	    accelerometer.setAxisOffset(-2, -2, 6);
 	    accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
@@ -190,7 +183,9 @@ sketch.attachFunction = function(p) {
 		gotGyro = false;
 		gotAccel = false;
 
-		imuFilter.updateFilter(toRadians(gyro.x), toRadians(gyro.y), toRadians(gyro.z),
+		imuFilter.updateFilter(toRadians(gyro.x), 
+								toRadians(gyro.y), 
+								toRadians(gyro.z),
 								accelerometer.x * GRAVITY, 
 								accelerometer.y * GRAVITY, 
 								accelerometer.z * GRAVITY);

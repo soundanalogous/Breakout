@@ -12,7 +12,7 @@
 }
 </style>
 
-<title>MagnetoMeterHMC5883 Tilt-compensated Test</title>
+<title>MagnetometerHMC5883 Tilt-compensated Test</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
@@ -24,8 +24,8 @@ $(document).ready(function() {
 	// to type the full namespace	
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
-	var MagnetoMeterHMC5883 = BO.io.MagnetoMeterHMC5883;
-	var Event = JSUTILS.Event;
+	var MagnetometerHMC5883 = BO.io.MagnetometerHMC5883;
+	var MagnetometerEvent = BO.io.MagnetometerEvent;
 	var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
 	var AccelerometerEvent = BO.io.AccelerometerEvent;		
 
@@ -45,32 +45,30 @@ $(document).ready(function() {
 	    // calibrate the accelerometer
 	    // start with 0, 0, 0 and add or subtract in increments
 	    // of 1 until the accelerometer is propery calibrated
-	    // once you find the calibration values for your sensor
 	    accelerometer.setAxisOffset(-2, -2, 6);
 
 	    // start reading the accelerometer
 	    accelerometer.startReading();
 		
 		//params: IOBoard, i2cAddress, numSamples, outputRate
-		var magnetometer = new MagnetoMeterHMC5883(
+		var magnetometer = new MagnetometerHMC5883(
 								fio, 
-								MagnetoMeterHMC5883.DEVICE_ID,
-								MagnetoMeterHMC5883.SAMPLES_1,
-								MagnetoMeterHMC5883.HZ_30);							
+								MagnetometerHMC5883.DEVICE_ID,
+								MagnetometerHMC5883.SAMPLES_1,
+								MagnetometerHMC5883.HZ_30);							
 
 		// using default settings
-		//var magnetometer = new MagnetoMeterHMC5883(fio);						
+		//var magnetometer = new MagnetometerHMC5883(fio);						
 
 	    // start reading the accelerometer
 	    magnetometer.startReading();
 
-	    magnetometer.addEventListener(Event.CHANGE, onMagnetoUpdate);
+	    magnetometer.addEventListener(MagnetometerEvent.UPDATE, onMagnetoUpdate);
 	    
 	}
 	
 	function onMagnetoUpdate(event) {
 		var data = event.target;
-
 		
 		$('#xVal').html("x = " + data.x.toFixed(3));
 		$('#yVal').html("y = " + data.y.toFixed(3));

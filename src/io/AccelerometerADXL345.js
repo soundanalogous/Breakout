@@ -253,7 +253,7 @@ BO.io.AccelerometerADXL345 = (function() {
 	AccelerometerADXL345.prototype.startReading = function() {
 		if (!this._isReading) {
 			this._isReading = true;
-			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, ALL_AXIS, 6]);
+			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, ALL_AXIS, NUM_BYTES]);
 		}
 	};
 	
@@ -302,7 +302,7 @@ BO.io.AccelerometerADXL345 = (function() {
 			this.stopReading();	
 		}
 		// read data: contents of X, Y, and Z registers
-		this.sendI2CRequest([I2CBase.READ, this.address, ALL_AXIS, 6]);
+		this.sendI2CRequest([I2CBase.READ, this.address, ALL_AXIS, NUM_BYTES]);
 	};
 
 	/**

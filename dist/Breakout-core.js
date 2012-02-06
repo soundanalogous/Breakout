@@ -1,3 +1,9 @@
+/***
+	Breakout - 0.1.0.beta
+
+	Breakout is licensed under the MIT License, see LICENSE.
+	http.//breakoutjs.com
+***/
 'use strict';var BO=BO||{},BREAKOUT=BREAKOUT||BO;BREAKOUT.VERSION="0.1.0.beta";var JSUTILS=JSUTILS||{};JSUTILS.namespace=function(a){var a=a.split("."),f=window,h;for(h=0;h<a.length;h+=1)"undefined"===typeof f[a[h]]&&(f[a[h]]={}),f=f[a[h]];return f};JSUTILS.inherit=function(a){function f(){}if(null==a)throw TypeError();if(Object.create)return Object.create(a);var h=typeof a;if("object"!==h&&"function"!==h)throw TypeError();f.prototype=a;return new f};
 if(!Function.prototype.bind)Function.prototype.bind=function(a){if("function"!==typeof this)throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var f=Array.prototype.slice.call(arguments,1),h=this,k=function(){},g=function(){return h.apply(this instanceof k?this:a||window,f.concat(Array.prototype.slice.call(arguments)))};k.prototype=this.prototype;g.prototype=new k;return g};JSUTILS.namespace("JSUTILS.Event");JSUTILS.Event=function(){var a;a=function(a){this._type=a;this._target=null;this.name="Event"};a.prototype={get type(){return this._type},set type(a){this._type=a},get target(){return this._target},set target(a){this._target=a}};a.CONNECTED="connected";a.CHANGE="change";a.COMPLETE="complete";return a}();JSUTILS.namespace("JSUTILS.EventDispatcher");
 JSUTILS.EventDispatcher=function(){var a;a=function(a){this._target=a||null;this._eventListeners={};this.name="EventDispatcher"};a.prototype={addEventListener:function(a,h){this._eventListeners[a]||(this._eventListeners[a]=[]);this._eventListeners[a].push(h)},removeEventListener:function(a,h){for(var k=0,g=this._eventListeners[a].length;k<g;k++)this._eventListeners[a][k]===h&&this._eventListeners[a].splice(k,1)},hasEventListener:function(a){return this._eventListeners[a]&&0<this._eventListeners[a].length?

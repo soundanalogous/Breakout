@@ -66,7 +66,7 @@ BO.custom.ID12RFIDReader = (function() {
 
 	/**
 	 * Innovations ID-12 RFID Reader.
-	 * <p>To use this object with standard io objects in Brea,out, 
+	 * <p>To use this object with standard io objects in Breakout, 
 	 * RFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata. 
 	 * See custom_examples/readme.txt for insturctions.</p>
 	 *

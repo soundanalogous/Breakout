@@ -177,7 +177,7 @@ BO.io.GyroITG3200 = (function() {
 	GyroITG3200.prototype.startReading = function() {
 		if (!this._isReading) {
 			this._isReading = true;
-			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, GYRO_XOUT, 6]);
+			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, GYRO_XOUT, NUM_BYTES]);
 		}
 	};
 	
@@ -199,7 +199,7 @@ BO.io.GyroITG3200 = (function() {
 			this.stopReading();	
 		}
 		// read data: contents of X, Y, and Z registers
-		this.sendI2CRequest([I2CBase.READ, this.address, GYRO_XOUT, 6]);
+		this.sendI2CRequest([I2CBase.READ, this.address, GYRO_XOUT, NUM_BYTES]);
 	};	
 
 	/**

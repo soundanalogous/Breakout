@@ -3,11 +3,11 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BO.io.MagnetoMeterHMC5883');
+JSUTILS.namespace('BO.io.MagnetometerHMC5883');
 
-BO.io.MagnetoMeterHMC5883 = (function() {
+BO.io.MagnetometerHMC5883 = (function() {
 
-	var MagnetoMeterHMC5883;
+	var MagnetometerHMC5883;
 
 		// private static constants
 	var RAD_TO_DEG = 180 / Math.PI,
@@ -16,31 +16,32 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 		CRA = 0x00,
 		CRB = 0x01,
 		MODE = 0x02,
-		DATAX0 = 0x03;
+		DATAX0 = 0x03,
+		NUM_BYTES = 6;
 
 	// dependencies
 	var I2CBase = BO.I2CBase,
-		Event = JSUTILS.Event;
+		MagnetometerEvent = BO.io.MagnetometerEvent;
 
 	/**
 	 * HMC6352 digital compass module
 	 *
-	 * @exports MagnetoMeterHMC5883 as BO.io.MagnetoMeterHMC5883
+	 * @exports MagnetometerHMC5883 as BO.io.MagnetometerHMC5883
 	 * @constructor
 	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Number} address The i2c address of the compass module
 	 * @param {Number} numSamples The number of samples averaged per 
-	 * measurement output. Options are: MagnetoMeterHMC5883.SAMPLES_1,
-	 * MagnetoMeterHMC5883.SAMPLES_2, MagnetoMeterHMC5883.SAMPLES_4
-	 * MagnetoMeterHMC5883.SAMPLES_8 (default = MagnetoMeterHMC5883.SAMPLES_1)
+	 * measurement output. Options are: MagnetometerHMC5883.SAMPLES_1,
+	 * MagnetometerHMC5883.SAMPLES_2, MagnetometerHMC5883.SAMPLES_4
+	 * MagnetometerHMC5883.SAMPLES_8 (default = MagnetometerHMC5883.SAMPLES_1)
 	 * @param {Number} outputRate The data output rate in Hz 
-	 * (default = MagnetoMeterHMC5883.HZ_30)
+	 * (default = MagnetometerHMC5883.HZ_30)
 	 */
-	MagnetoMeterHMC5883 = function(board, address, numSamples, outputRate) {
-		address = address || MagnetoMeterHMC5883.DEVICE_ID;
-		numSamples = numSamples || MagnetoMeterHMC5883.SAMPLES_1;
-		outputRate = outputRate || MagnetoMeterHMC5883.HZ_30;
+	MagnetometerHMC5883 = function(board, address, numSamples, outputRate) {
+		address = address || MagnetometerHMC5883.DEVICE_ID;
+		numSamples = numSamples || MagnetometerHMC5883.SAMPLES_1;
+		outputRate = outputRate || MagnetometerHMC5883.HZ_30;
 
 		I2CBase.call(this, board, address);
 
@@ -54,7 +55,7 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 		this._isReading = false;
 		this._debugMode = true;
 
-		this.name = "MagnetoMeterHMC5883";
+		this.name = "MagnetometerHMC5883";
 		
 		var measurement = 0x00;
 		var CRAVal = (numSamples << 5) | (outputRate << 2)  | measurement;
@@ -68,47 +69,47 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 
 	};
 
-	MagnetoMeterHMC5883.prototype = JSUTILS.inherit(I2CBase.prototype);
-	MagnetoMeterHMC5883.prototype.constructor = MagnetoMeterHMC5883;
+	MagnetometerHMC5883.prototype = JSUTILS.inherit(I2CBase.prototype);
+	MagnetometerHMC5883.prototype.constructor = MagnetometerHMC5883;
 
 	/**
 	 * [read-only] The heading in degrees.
-	 * @name MagnetoMeterHMC5883#heading
+	 * @name MagnetometerHMC5883#heading
 	 * @property
 	 * @type Number
 	 */ 	 
-	MagnetoMeterHMC5883.prototype.__defineGetter__("heading", function() {
+	MagnetometerHMC5883.prototype.__defineGetter__("heading", function() {
 		return this.getHeading(this._x, this._y);
 	});
 
 	/**
 	 * [read-only] The x-axis measurement
-	 * @name MagnetoMeterHMC5883#x
+	 * @name MagnetometerHMC5883#x
 	 * @property
 	 * @type Number
 	 */ 	 
-	MagnetoMeterHMC5883.prototype.__defineGetter__("x", function() { return this._x; });
+	MagnetometerHMC5883.prototype.__defineGetter__("x", function() { return this._x; });
 
 	/**
 	 * [read-only] The y-axis measurement
-	 * @name MagnetoMeterHMC5883#y
+	 * @name MagnetometerHMC5883#y
 	 * @property
 	 * @type Number
 	 */ 	 
-	MagnetoMeterHMC5883.prototype.__defineGetter__("y", function() { return this._y; });
+	MagnetometerHMC5883.prototype.__defineGetter__("y", function() { return this._y; });
 	
 	/**
 	 * [read-only] The z-axis measurement
-	 * @name MagnetoMeterHMC5883#z
+	 * @name MagnetometerHMC5883#z
 	 * @property
 	 * @type Number
 	 */ 	 
-	MagnetoMeterHMC5883.prototype.__defineGetter__("z", function() { return this._z; });	
+	MagnetometerHMC5883.prototype.__defineGetter__("z", function() { return this._z; });	
 	
 	/**
 	 * @private
 	 */
-	MagnetoMeterHMC5883.prototype.handleI2C = function(data) {
+	MagnetometerHMC5883.prototype.handleI2C = function(data) {
 		var xVal,
 			yVal,
 			zVal;
@@ -132,16 +133,16 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 
 			// a value of -4096 indicates an ADC overflow or underflow
 		
-			this.dispatchEvent(new Event(Event.CHANGE));
+			this.dispatchEvent(new MagnetometerEvent(MagnetometerEvent.UPDATE));
 		} else {
-			console.log("Warning: MagnetoMeterHMC5883 received data from unknown register");
+			console.log("Warning: MagnetometerHMC5883 received data from unknown register");
 		}
 	};
 
 	/**
 	 * @private
 	 */
-	MagnetoMeterHMC5883.prototype.getHeading = function(x, y) {
+	MagnetometerHMC5883.prototype.getHeading = function(x, y) {
 		var heading = 0.0;
 
 		// algorithm from Applications of Magnetoresistive Sensors in Navigation Systems
@@ -151,23 +152,27 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 		else if (y === 0 && x < 0) heading = 180.0;
 		else if (y === 0 && x > 0) heading = 0.0;
 
-		return heading;
-
+		// alternate algorithm
 		// heading = Math.atan2(y, x);
 		// if (heading < 0) heading += 2*Math.PI;
 		// if (heading > 2*Math.PI) heading -= 2*Math.PI;
-		// return heading * RAD_TO_DEG;		
+		// return heading * RAD_TO_DEG;	
+
+		return heading;
 	};
 
 	/**
 	 * Get a tilt-compensated heading. Pitch and roll values from an accelerometer
 	 * must be passed to this method.
 	 *
+	 * Note: this method is not working properly. Marking it private until resolved
+	 * @private
+	 * 
 	 * @param {Number} pitch The pitch value (supplied by an accelerometer)
 	 * @param {Number} roll The roll value (supplied by an accelerometer)
 	 * @return {Number} tilt-compensated heading direction
 	 */
-	MagnetoMeterHMC5883.prototype.getTiltCompensatedHeading = function(pitch, roll) {
+	MagnetometerHMC5883.prototype.getTiltCompensatedHeading = function(pitch, roll) {
 
 		pitch = pitch * DEG_TO_RAD;
 		roll = roll * DEG_TO_RAD;
@@ -176,6 +181,8 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 		//var yH = this._x * Math.sin(roll) * Math.sin(pitch) + this._y * Math.cos(roll) - this._z * Math.sin(roll) * Math.cos(pitch);
 		//var zH = -this._x * Math.cos(roll) * Math.sin(pitch) + this._y * Math.sin(roll) + this._z * Math.cos(roll) * Math.cos(pitch);
 
+		// algorithm from: Applications of Magnetoresistive Sensors in Navigation Systems
+		// by Michael J. Caruso, Honeywell Inc.
 		var xH = this._x * Math.cos(pitch) + this._y * Math.sin(roll) * Math.sin(pitch) - this._z * Math.cos(roll) * Math.sin(pitch);
 		var yH = this._y * Math.cos(roll) + this._z * Math.sin(roll);
 
@@ -186,7 +193,7 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	/**
 	 * Start continuous reading of the sensor
 	 */
-	MagnetoMeterHMC5883.prototype.startReading = function() {
+	MagnetometerHMC5883.prototype.startReading = function() {
 		if (!this._isReading) {
 			this._isReading = true;
 			this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, DATAX0, 6]);
@@ -196,7 +203,7 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	/**
 	 * Stop continuous reading of the sensor
 	 */
-	MagnetoMeterHMC5883.prototype.stopReading = function() {
+	MagnetometerHMC5883.prototype.stopReading = function() {
 		this._isReading = false;
 		this.sendI2CRequest([I2CBase.STOP_READING, this.address]);
 		// set idle mode?
@@ -206,19 +213,19 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	/** 
 	 * Sends read request to magnetometer and updates magnetometer values.
 	 */
-	MagnetoMeterHMC5883.prototype.update = function() {
+	MagnetometerHMC5883.prototype.update = function() {
 		if (this._isReading) {
 			this.stopReading();	
 		}
 		// read data: contents of X, Y, and Z registers
-		this.sendI2CRequest([I2CBase.READ, this.address, DATAX0, 6]);
+		this.sendI2CRequest([I2CBase.READ, this.address, DATAX0, NUM_BYTES]);
 	};
 
 	/**
 	 * for debugging
 	 * @private
 	 */
-	MagnetoMeterHMC5883.prototype.debug = function(str) {
+	MagnetometerHMC5883.prototype.debug = function(str) {
 		if (this._debugMode) {
 			console.log(str); 
 		}
@@ -227,43 +234,43 @@ BO.io.MagnetoMeterHMC5883 = (function() {
 	// public static constants
 
 	/** @constant */
-	MagnetoMeterHMC5883.DEVICE_ID = 0x1E;	
+	MagnetometerHMC5883.DEVICE_ID = 0x1E;	
 	
 	/** @constant */
-	MagnetoMeterHMC5883.SAMPLES_1 = 0;
+	MagnetometerHMC5883.SAMPLES_1 = 0;
 	/** @constant */
-	MagnetoMeterHMC5883.SAMPLES_2 = 1;
+	MagnetometerHMC5883.SAMPLES_2 = 1;
 	/** @constant */
-	MagnetoMeterHMC5883.SAMPLES_4 = 2;
+	MagnetometerHMC5883.SAMPLES_4 = 2;
 	/** @constant */
-	MagnetoMeterHMC5883.SAMPLES_8 = 3;	
+	MagnetometerHMC5883.SAMPLES_8 = 3;	
 	
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_0_75 = 0x00;
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_1_5 = 0x01;
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_3 = 0x02;
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_7_5 = 0x03;
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_15 = 0x04;
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_30 = 0x05;
-	/** @constant */
-	MagnetoMeterHMC5883.HZ_75 = 0x06;		
+	/** 0.75 Hz @constant */
+	MagnetometerHMC5883.HZ_0_75 = 0x00;
+	/** 1.5 Hz @constant */
+	MagnetometerHMC5883.HZ_1_5 = 0x01;
+	/** 3 Hz @constant */
+	MagnetometerHMC5883.HZ_3 = 0x02;
+	/** 7.5 Hz @constant */
+	MagnetometerHMC5883.HZ_7_5 = 0x03;
+	/** 15 Hz @constant */
+	MagnetometerHMC5883.HZ_15 = 0x04;
+	/** 30 Hz @constant */
+	MagnetometerHMC5883.HZ_30 = 0x05;
+	/** 75 Hz @constant */
+	MagnetometerHMC5883.HZ_75 = 0x06;		
 
 
 	// document events
 
 	/**
 	 * The update event is dispatched when the compass heading is updated.
-	 * @name CompassHMC6352#update
-	 * @type BO.io.CompassEvent.UPDATE
+	 * @name MagnetometerHMC5883#update
+	 * @type BO.io.MagnetometerEvent.UPDATE
 	 * @event
-	 * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
+	 * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
 	 */		
 
-	return MagnetoMeterHMC5883;
+	return MagnetometerHMC5883;
 
 }());

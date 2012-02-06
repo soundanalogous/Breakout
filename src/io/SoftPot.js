@@ -91,7 +91,7 @@ BO.io.SoftPot = (function() {
 	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} pin A reference to the Pin the softpot is connected to.
-	 * @param {Number} softPotLength The length of the softpot in mm 
+	 * @param {Number} softPotLength The length of the softpot in mm. Default = 100. 
 	 *
 	 */
 	SoftPot = function(board, pin, softPotLength) {

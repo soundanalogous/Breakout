@@ -78,28 +78,28 @@ BO.filters.Scaler = (function() {
 	 * y = x * x
 	 */
 	Scaler.prototype.SQUARE = function(val) {
-		return val;
+		return val * val;
 	};
 
 	/**
 	 * y = sqrt(x)
 	 */
 	Scaler.prototype.SQUARE_ROOT = function(val) {
-		return val;
+		return Math.pow(val, 0.5);
 	};
 	
 	/**
 	 * y = x^4
 	 */
 	Scaler.prototype.CUBE = function(val) {
-		return val;
+		return val * val * val * val;
 	};
 	
 	/**
 	 * y = pow(x, 1/4)
 	 */
 	Scaler.prototype.CUBE_ROOT = function(val) {
-		return val;
+		return Math.pow(val, 0.25);
 	};			
 
 

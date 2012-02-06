@@ -42,7 +42,8 @@ BO.IOBoard = (function() {
 		SYSEX_REALTIME			= 0x7F;
 
 	var MIN_SAMPLING_INTERVAL 	= 10,
-		MAX_SAMPLING_INTERVAL 	= 100;	
+		MAX_SAMPLING_INTERVAL 	= 100,
+		MULTI_CLIENT = "multiClient";	
 
 
 	// dependencies
@@ -85,6 +86,8 @@ BO.IOBoard = (function() {
 			_isReady = false,
 			_firmwareVersion = 0,
 			_evtDispatcher,
+			_isMultiClientEnabled = false,
+			_isConfigured = false,
 			_debugMode = true;
 		
 		_evtDispatcher = new EventDispatcher(this);
@@ -112,7 +115,17 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketMessage(event) {
-			processInput(event.message);
+			var pattern = /status/;
+			var message = "";
+
+			// check for status messages from the server
+			if (event.message.match(pattern) ) {
+				message = event.message.substr(event.message.indexOf(':') + 2);
+				processStatusMessage(message);
+			} else {
+				// we have data from the IOBoard
+				processInput(event.message);
+			}
 		}
 
 		/**
@@ -148,6 +161,17 @@ BO.IOBoard = (function() {
 				var err = "You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
 				console.log(err);
 				//throw err;	
+			}
+		}
+
+		/**
+		 * Process a status message from the websocket server
+		 * @private
+		 */
+		function processStatusMessage(message) {
+			if (message === MULTI_CLIENT) {
+				debug("debug: multi-client mode enabled");
+				_isMultiClientEnabled = true;
 			}
 		}
 		
@@ -213,11 +237,11 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processDigitalMessage(port, bits0_6, bits7_13) {
-			var offset = port * 8;
-			var lastPin = offset + 8;
-			var portVal = bits0_6 | (bits7_13 << 7);
-			var pinVal;
-			var pin = {};
+			var offset = port * 8,
+				lastPin = offset + 8,
+				portVal = bits0_6 | (bits7_13 << 7),
+				pinVal,
+				pin = {};
 			
 			if (lastPin >= _totalPins) lastPin = _totalPins;
 			
@@ -251,7 +275,6 @@ BO.IOBoard = (function() {
 			// needed. An alternative would be to set a flag that prevents critical operations
 			// before systemReset has completed.
 			if (analogPin === undefined) {
-				//console.log("analog pin undefined");
 				return;
 			}
 			// map analog input values from 0-1023 to 0.0-1.0
@@ -337,6 +360,10 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processCapabilitiesResponse(msg) {
+			// if running in multi-client mode and this client is already configured
+			// ignore capabilities response
+			if (_isConfigured) return;
+
 			var pinCapabilities = {},
 				byteCounter = 1, // skip 1st byte because it's the command
 				pinCounter = 0,
@@ -406,7 +433,66 @@ BO.IOBoard = (function() {
 			// to their digital pin number equivalents
 			queryAnalogMapping();
 		}
+
+		/**
+		 * Map map analog pins to board pin numbers. Need to do this because
+		 * the capability query does not provide the correct order of analog pins.
+		 *
+		 * @private
+		 */
+		function processAnalogMappingResponse(msg) {
+			// if running in multi-client mode and this client is already configured
+			// ignore analog mapping response
+			if (_isConfigured) return;
+
+			var len = msg.length;
+			for (var i=1; i<len; i++) {
+				if (msg[i] != 127) {
+					_analogPinMapping[msg[i]] = i - 1;
+					_self.getPin(i-1).setAnalogNumber(msg[i]);
+				}
+			}
+			
+			if (!_isMultiClientEnabled) {
+				startupInSingleClientMode();
+			} else {
+				startupInMultiClientMode()
+			}
+		}
+
+		/**
+		 * Single client mode is the default mode.
+		 * Checking the "Enable multi-client" box in the
+		 * Breakout Server UI to enable multi-client mode.
+		 * @private
+		 */
+		function startupInSingleClientMode() {
+			// perform a soft reset of the board
+			// the board state will be reset to its default state
+			debug("debug: system reset");
+			systemReset();
+
+			// delay to allow systemReset function to execute in StandardFirmata
+			setTimeout(startup, 500);			
+		}			
 		
+		/**
+		 * Single client mode is the default mode.
+		 * Checking the "Enable multi-client" box in the
+		 * Breakout Server UI to enable multi-client mode.
+		 * @private
+		 */		
+		function startupInMultiClientMode() {
+			// populate pin values with the current IOBoard state
+			for (var i=0; i < _self.getPinCount(); i++) {
+				queryPinState(_self.getDigitalPin(i));
+			}
+
+			// wait for the pin states to finish updating
+			setTimeout(startup, 500);
+			_isConfigured = true;
+		}	
+				
 		/**
 		 * @private
 		 */
@@ -431,12 +517,16 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processPinStateResponse(msg) {
+			// if running in multi-client mode and this client is already configured
+			// ignore pin state response
+			if (_isConfigured) return;
+						
 			var len = msg.length,
 				pinNumber = msg[1],
 				pinType = msg[2],
 				value,
 				pin = _ioPins[pinNumber];
-			
+
 			if (len > 4) {
 				// get value
 				value = _self.getValueFromTwo7bitBytes(msg[3], msg[4]);
@@ -452,34 +542,10 @@ BO.IOBoard = (function() {
 				pin.value = value;
 			}
 			
+			
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
 		}
-		
-		/**
-		 * Map map analog pins to board pin numbers. Need to do this because
-		 * the capability query does not provide the correct order of analog pins.
-		 *
-		 * @private
-		 */
-		function processAnalogMappingResponse(msg) {
-			var len = msg.length;
-			for (var i=1; i<len; i++) {
-				if (msg[i] != 127) {
-					_analogPinMapping[msg[i]] = i - 1;
-					_self.getPin(i-1).setAnalogNumber(msg[i]);
-				}
-			}
-			
-			// perform a soft reset of the board
-			// the board state will be reset to its default state
-			debug("debug: system reset");
-			systemReset();
-
-			// delay to allow systemReset function to execute in StandardFirmata
-			setTimeout(startup, 500);
-			debug("debug: configured");
-		}
-		
+				
 		/**
 		 * convert char to decimal value
 		 * @private
@@ -632,7 +698,19 @@ BO.IOBoard = (function() {
 		 */
 		function queryAnalogMapping() {
 			_self.send([START_SYSEX,ANALOG_MAPPING_QUERY,END_SYSEX]);
-		};		
+		};
+		
+		/**
+		 * Query the current configuration and state of any pin. Making this private for now.
+		 * 
+		 * @private
+		 * @param {Pin} pin The Pin to be queried
+		 */
+		function queryPinState(pin) {
+			// to do: ensure that pin is a Pin object
+			var pinNumber = pin.number;
+			_self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
+		};			
 		
 		/**
 		 * Call this method to enable or disable analog input for the specified pin.
@@ -905,18 +983,6 @@ BO.IOBoard = (function() {
 			servoPin = _self.getDigitalPin(pin);
 			servoPin.setType(Pin.SERVO);
 			managePinListener(servoPin);	
-		};
-					
-		/**
-		 * Query the current configuration and state of any pin. Making this private for now.
-		 * 
-		 * @private
-		 * @param {Pin} pin The Pin to be queried
-		 */
-		this.queryPinState = function(pin) {
-			// to do: ensure that pin is a Pin object
-			var pinNumber = pin.number;
-			_self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
 		};
 						
 		/**
