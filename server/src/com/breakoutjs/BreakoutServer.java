@@ -121,15 +121,15 @@ public class BreakoutServer extends JFrame implements ActionListener {
 				
 		webRootField = new JTextField(webRoot);
 		webRootField.setEditable(false);
-		webRootField.setColumns(5);
+		//webRootField.setColumns(5);
 		webRootField.setHorizontalAlignment(JTextField.LEADING);
-		webRootLabel = new JLabel("Webserver Root:");
+		webRootLabel = new JLabel("Webserver Root Directory:");
 		webRootField.addActionListener(this);
 		
 		rootBtn = new JButton("Choose New Webserver Root");
 		rootBtn.addActionListener(this);
 		
-		serialLabel = new JLabel("Serial Port");
+		serialLabel = new JLabel("Serial");
 		serialPorts = new JComboBox();
 		createPortList();
 
@@ -139,7 +139,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		portField.setColumns(5);
 		portField.addActionListener(this);
 		
-		portLabel = new JLabel("Network Port:");
+		portLabel = new JLabel("Port");
 		
 		multiClientCB = new JCheckBox("Enable Multi-Client Connections");
 		multiClientCB.addActionListener(this);
@@ -148,12 +148,11 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		connectBtn.addActionListener(this);
 		connectBtn.setActionCommand("connect");
 		connectBtn.setMaximumSize(new Dimension(350, 25));
-		//connectBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		portSelectionPane.add(serialLabel);
 		portSelectionPane.add(serialPorts);
-//		portSelectionPane.add(portLabel);
-//		portSelectionPane.add(portField);
+		portSelectionPane.add(portLabel);
+		portSelectionPane.add(portField);
 
 		webRootField.setAlignmentX(Component.LEFT_ALIGNMENT);
 		webRootField.setMaximumSize(new Dimension(450, 20));
@@ -164,13 +163,10 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		settingsPane.setBorder(BorderFactory.createEmptyBorder(15, 10, 10, 10));
 		settingsPane.add(webRootLabel);
 		settingsPane.add(webRootField);
+		settingsPane.add(Box.createRigidArea(new Dimension(0, 5)));
 		settingsPane.add(rootBtn);
 		settingsPane.add(Box.createRigidArea(new Dimension(0, 30)));
-		settingsPane.add(portLabel);
-		settingsPane.add(portField);
-		settingsPane.add(Box.createRigidArea(new Dimension(0, 30)));
 		settingsPane.add(multiClientCB);
-		settingsPane.add(Box.createVerticalGlue());
 		
 		statusPane.add(portSelectionPane, BorderLayout.NORTH);
 
@@ -183,9 +179,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		
-		startPortListTimer();
-		
-		//System.out.println(System.getProperty("user.home"));				
+		startPortListTimer();			
 	}
 	
 	/**
@@ -266,7 +260,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 					webRoot = file.getAbsolutePath();
 					// store new webRoot value in persistent preferences
 					prefs.put(ROOT_KEY, webRoot);
-					System.out.println("selected " + webRoot);
+					//System.out.println("selected " + webRoot);
 				}  catch (SecurityException e) {
 					e.printStackTrace();
 				}
@@ -274,7 +268,6 @@ public class BreakoutServer extends JFrame implements ActionListener {
 				webRootField.setText(webRoot);
 			} else {
 				// user canceled file chooser dialog
-				System.out.println("canceled");
 			}
 		}
 		else if ("connect".equals(event.getActionCommand())) {			
@@ -286,7 +279,6 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			}
 				
 			bridge = new SerialBridge(netPort, this, webRoot, isMultiClientEnabled);
-			//printMessage("Server started on port: " + bridge.getPort());
 			
 			bridge.begin(serialPort, 57600);
 						

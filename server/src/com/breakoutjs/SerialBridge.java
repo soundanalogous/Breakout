@@ -257,7 +257,7 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 		
 		// if multi-client connection is enabled, report status to client
 		if (isMultiClientEnabled) {
-			connection.send("status: " + MULTI_CLIENT);
+			connection.send("config: " + MULTI_CLIENT);
 			connections.add(connection);
 		} else {
 			this.singleConnection = connection;
