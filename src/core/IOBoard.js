@@ -115,10 +115,10 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function onSocketMessage(event) {
-			var pattern = /status/;
+			var pattern = /config/;
 			var message = "";
 
-			// check for status messages from the server
+			// check for config messages from the server
 			if (event.message.match(pattern) ) {
 				message = event.message.substr(event.message.indexOf(':') + 2);
 				processStatusMessage(message);

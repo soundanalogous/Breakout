@@ -1,8 +1,16 @@
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
 var app = require('http').createServer(handler),
   io = require('socket.io').listen(app),
   fs = require('fs'),
   path = require('path'),
-  connectedSocket = null;
+  connectedSocket = null,
+  isConnected = false,
+  connections = [],
+  enableMultiConnect = false;  // set to true to enable multiple clients to connect
 
 // are any additional mime types needed?
 var mimeTypes = {
@@ -20,7 +28,7 @@ var mimeTypes = {
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
 // to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbserial-A1000exQ";
+var port = "/dev/tty.usbmodemfd121";
 
 var serialDefaults = {
   baudrate: 57600,
@@ -34,9 +42,12 @@ var serial = new serialPort(port , serialDefaults);
 serial.on( "data", function( data ) {
     
   if ( data[0] >= 0 ) {
-    if(connectedSocket != null) {
+    if(isConnected) {
       // relay serial data to websocket
       connectedSocket.send(String(data[0]));
+      if (enableMultiConnect) {
+        connectedSocket.broadcast.send(String(data[0]));
+      }        
     }
   }
 
@@ -47,6 +58,11 @@ serial.on( "error", function( msg ) {
     console.log("serial error: " + msg );
 });
 
+io.configure(function() {
+  // suppress socket.io debug output
+  io.set('log level', 1);
+  io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+});
   
 io.configure('production', function() {
 	io.enable('browser client etag');
@@ -61,7 +77,7 @@ io.configure('production', function() {
 });
 
 io.configure('development', function() {
-	io.set('transports', ['websocket', 'xhr-polling']);
+	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
 });
 
 app.listen(8080);
@@ -118,7 +134,15 @@ function handler (request, response) {
 io.sockets.on('connection', function (connection) {
 
   connectedSocket = connection;
-  console.log("connected");
+  isConnected = true;
+
+  //console.log("num clients = " + Object.keys(connection.manager.roomClients).length);
+
+  if (enableMultiConnect) {
+    connection.send("config: multiClient");
+  }
+
+  console.log("connected: " + connection.id);
 
   connection.on('message', function (data) {
     var message;
@@ -137,7 +161,15 @@ io.sockets.on('connection', function (connection) {
 
   });
   connection.on('disconnect', function() {
-  	console.log("disconnected");
-    connectedSocket = null;
+    var numRemaining = Object.keys(connection.manager.roomClients).length - 1;
+  	console.log("disconnected " + connection.id);
+    //console.log("num remaining = " + numRemaining);
+
+    if (!enableMultiConnect || numRemaining < 1) {
+      connectedSocket = null;
+      isConnected = false;
+      console.log("all clients disconnected");
+    } 
+
   });
 });
