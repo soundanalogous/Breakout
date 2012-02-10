@@ -72,17 +72,17 @@ function handler (request, response) {
     
     // absolute path
     //if (request.url == "/") {
-    //  filename = path.normalize(path.join(__dirname,  "../../index.html"));
+    //  filename = path.normalize(path.join(__dirname,  "../index.html"));
     //} else {
-    //  filename = path.normalize(path.join(__dirname,  "../.." + request.url));
+    //  filename = path.normalize(path.join(__dirname,  ".." + request.url));
     //}
     
     // use relative path (seems to be working... on OSX at least)
     if (request.url == "/") {
       // default to index.html
-      filename = path.normalize("../../index.html");
+      filename = path.normalize("../index.html");
     } else {
-      filename = path.normalize("../.." + request.url);
+      filename = path.normalize(".." + request.url);
     }
     //console.log("debug: filename = " + filename);
 
