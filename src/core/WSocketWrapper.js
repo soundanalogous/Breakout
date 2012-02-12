@@ -19,7 +19,7 @@ BO.WSocketEvent = (function() {
 	 * @param {String} type The event type
 	 */
 	WSocketEvent = function(type) {
-		this.name = "WSocketEvent"; // for testing
+		this.name = "WSocketEvent";
 		
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
@@ -72,7 +72,7 @@ BO.WSocketWrapper = (function() {
 	 * @param {String} protocol The websockt protocol definition (if necessary).
 	 */
 	WSocketWrapper = function(host, port, useSocketIO, protocol) {
-		this.name = "WSocketWrapper"; // for testing
+		this.name = "WSocketWrapper";
 
 		EventDispatcher.call(this, this);
 

@@ -59,7 +59,7 @@ $(document).ready(function() {
 		fadeLED = new LED(ard, ard.getDigitalPin(11));
 		// use a sine wave to fade the led on and off every second
 		// params: interval, times (0 = forever), waveform
-		fadeLED.blink(1000, 0, Oscillator.SINE);
+		fadeLED.blink(1000, 0, Oscillator.SIN);
 
 	
 		// create a new button

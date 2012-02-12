@@ -31,7 +31,7 @@ BO.io.BlinkM = (function() {
 
 		address = address || 0x09;	// default i2c address for BlinkM
 
-		this.name = "BlinkM"; // for testing
+		this.name = "BlinkM";
 		
 		// call super class
 		I2CBase.call(this, board, address);

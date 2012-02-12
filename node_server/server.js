@@ -9,7 +9,6 @@ var app = require('http').createServer(handler),
   path = require('path'),
   connectedSocket = null,
   isConnected = false,
-  connections = [],
   enableMultiConnect = false;  // set to true to enable multiple clients to connect
 
 // are any additional mime types needed?

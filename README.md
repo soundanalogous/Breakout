@@ -1,11 +1,12 @@
-Breakout
+About
 ===
 
-Breakout enables rapid prototyping of browser-based applications that require physical inputs and outputs. Simply load StandardFirmata on your Arduino (or Arduino-compatible board) once and then write javascript to use physical I/O with your web apps. You can also load pages on capable tablets and phones if they are on the same wi-fi network as the computer running the Breakout server.
+Breakout is a prototyping tool for exploring the visualization of data from physical inputs and controlling physical outputs from a web-based interface. The popular [Arduino](http://arduino.cc) platform and the [Firmata](http://firmata.org) protocol are leveraged to enable users to access physical input and output purely from javascript. This makes it easy for anyone familiar with javascript and basic web development to explore the possibilities of using physical I/O in their web applications. Furthermore, the Breakout frameworks includes a growing library of hardware abstractions of physical components such as buttons, leds, servo motors, accelerometers, gyros, etc enabling the user to easily interface with a range of sensors and actuators with just a few lines of javascript code.
 
-Breakout is supported for Arduino 1.0 and higher. [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
+Breakout grew out of a need for a simple platform to enable designers to prototype visual interfaces to the physical world. It is based largely on the [Funnel](http://funnel.cc) toolkit and informed by the experiences of the developers of both Funnel and Breakout as designers, technologists and educators.
 
-Breakout is currently beta software. Additional io components and other features may be added, but the core API is relatively stable at this point.
+Breakout is currently beta software. The API is stable, but bugs are possible. Please create an issue if you suspect a bug. Additional examples and hardware abstractions (Breakout/io/) will be added over the next few weeks.
+
 
 To use
 ---
@@ -19,46 +20,50 @@ The first step is to upload StandardFirmata to your Arduino (or Arduino-compatib
 The next step is to run the Breakout Server application:
 
 1. Make sure your board is attached and the StandardFirmata sketch is uploaded. 
-2. You'll find the Breakout Server (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in Breakout/server/. Simply double-click to launch the application.
-3. Select the serial port for your board from the drop-down. If you wish to use a different network port than 8887 you may change also change it (and use the new port in steps 5 and 6 below).
+2. You'll find Breakout Server (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in Breakout/server/. Simply double-click to launch the application. Note: 64-bit linux users need to launch BreakoutServer.jar as a 32-bit application using the -d32 argument.
+3. Select the serial port for your board from the drop-down if it is not the current port displayed. If you wish to use a different network port than 8887 you may change also change it (and use the new port in steps 5 and 6 below).
 4. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/".
 5. Open the example file: hello_world.html (http://localhost:8887/examples/getting_started/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater).
 
-As an alternative to Breakout Server application, a node.js-based server is also included. See the [wiki](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.  
+For more information on using Breakout Server, including enabling multiple client connections and changing the webserver root directory, or using Breakout Server as a general purpose serial to websocket bridge, see [Using Breakout Server](https://github.com/soundanalogous/Breakout/wiki/Using-Breakout-Server).
+
+As an alternative to the Breakout Server application, a node.js-based server is also included. See the [Using the node.js server](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.  
 
 
-Test environment
+Requirements
 ---
 
-Tested OS:
+Breakout is only supported for Arduino 1.0 and higher [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
 
-- Mac OSX Snow Leopard and Lion
+You will need an Arduino or Arduino-compatible I/O board:
+
+- All Arduino boards (and clones) version NG or newer are supported
+- Arduino-compatible boards:
+  - All [Teensy](http://www.pjrc.com/teensy/) boards
+  - Support for additional arduino-compatible boards will be added in the future
+- See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
+
+OS:
+
+- Mac OS X 10.6 or higher
 - Windows 7 ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
-- Ubuntu Linux 11.10 Running in 32-bit mode on x86-64 processor
+- Has been tested successfuly on Ubuntu 11.10 running in 32-bit mode on x86-64 processor
+- May work on older versions of OS X and Windows as well but has not been tested
+- May work on other Linux distributions but has not been tested
 
-Tested devices:
+Desktop Browsers:
 
-- iPhone 3GS, iPhone4, iPhone4S
-- Android 2.3.3 and 3.1 (using Firefox 8 browser in Andriod). Native Android browser does not yet support websockets (you can use the node.js-based server and socket.io will use Flash or xhr polling).
+- Chrome version 14 or higher
+- Firefox version 7 or higher
+- Safari version 5 or higher
 
-Tested browsers:
+Mobile Browsers (browser must support websockets):
 
-- Google Chrome 14 - 16
-- Safari 5 (desktop and mobile)
-- Firefox 7 - 9 (desktop and mobile)
+- Safari mobile
+- Firefox mobile version 8 or higher
+- See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for list of tested phones and tablets
 
-Tested boards (running StandardFirmata from Firmata -> Examples in Arduino 1.0):
+Know Issues and Limitations
+---
 
-- Arduino UNO, Arduino NG
-- Teensy 2.0
-- Arduino FIO (including XBee wireless link to computer)
-- Arduino Mega
-
-The following boards should also work (I just don't have them to confirm):
-
-- Teensy 1.0
-- Teensy++ 1.0 and 2.0
-- Sanguino
-- Illuminato
-- other Arduinos (Duemilanove, Diecimila)
-- Wiring
+The use of StandardFirmata covers a wide variety of digital and analog components, but does not enable all types of components to be used with Breakout. For example, SPI devices are not supported (but many SPI devices also have an I2C mode which is supported by StandardFirmata), serial devics (such as a sensor that connects to an I/O board via a serial connection) are not supported, you can only transfer data at the rate of 57600 baud so high speed operations such as generating an IR remote signal or clocking mp3 data from an encoder are not supported. However, there is also more advanced use of Breakout which does not depend on StandardFirmata that enables users send any type of data between the I/O board and Breakout. See the [Using Custom Firmware with Breakout](https://github.com/soundanalogous/Breakout/wiki/Using-Custom-Firmware-with-Breakout) for details.

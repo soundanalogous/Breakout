@@ -24,7 +24,7 @@ BO.io.MagnetometerHMC5883 = (function() {
 		MagnetometerEvent = BO.io.MagnetometerEvent;
 
 	/**
-	 * HMC6352 digital compass module
+	 * HMC5883 3-axis magnetometer
 	 *
 	 * @exports MagnetometerHMC5883 as BO.io.MagnetometerHMC5883
 	 * @constructor

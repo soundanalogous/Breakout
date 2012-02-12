@@ -39,7 +39,7 @@ BO.io.LED = (function() {
 	LED = function(board, ledPin, driveMode) {
 		"use strict";
 		
-		this.name = "LED"; // for testing
+		this.name = "LED";
 
 		this._driveMode = driveMode || LED.SOURCE_DRIVE;
 		this._pin = ledPin;

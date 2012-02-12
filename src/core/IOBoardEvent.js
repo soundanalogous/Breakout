@@ -20,7 +20,7 @@ BO.IOBoardEvent = (function() {
 	 */
 	IOBoardEvent = function(type) {
 
-		this.name = "IOBoardEvent"; // for testing
+		this.name = "IOBoardEvent";
 		
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor

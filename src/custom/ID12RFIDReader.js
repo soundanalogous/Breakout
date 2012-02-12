@@ -25,6 +25,8 @@ BO.custom.RFIDEvent = (function() {
 		// call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
+
+		this.name = "RFIDEvent";
 	};
 
 	/** @constant */
@@ -83,7 +85,7 @@ BO.custom.ID12RFIDReader = (function() {
 	ID12RFIDReader = function(board, readerId) {
 		"use strict";
 
-		this.name = "ID12RFIDReader"; 	// for testing
+		this.name = "ID12RFIDReader";
 
 		this._readerId = readerId || ID12_READER;
 		this._board = board;

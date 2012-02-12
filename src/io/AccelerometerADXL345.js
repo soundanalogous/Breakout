@@ -41,7 +41,7 @@ BO.io.AccelerometerADXL345 = (function() {
 		address = address || AccelerometerADXL345.DEVICE_ID;
 		I2CBase.call(this, board, address);
 
-		this.name = "AccelerometerADXL345"; // for testing
+		this.name = "AccelerometerADXL345";
 
 		this._dynamicRange = range || AccelerometerADXL345.RANGE_2G;
 		

@@ -27,7 +27,7 @@ BO.PhysicalInputBase = (function() {
 	 */
 	PhysicalInputBase = function() {
 
-		this.name = "PhysicalInputBase"; // for testing
+		this.name = "PhysicalInputBase";
 
 		this._evtDispatcher = new EventDispatcher(this);
 	};

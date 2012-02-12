@@ -41,7 +41,9 @@
  		// call super class
  		GeneratorBase.call(this);
 
- 		this._wave = wave || Oscillator.SINE;
+ 		this.name = "Oscillator";
+
+ 		this._wave = wave || Oscillator.SIN;
  		this._freq = freq || 1;
  		this._amplitude = amplitude || 1;
  		this._offset = offset || 0;
@@ -156,7 +158,7 @@
  	 * sine wave
  	 * @static
  	 */
- 	Oscillator.SINE = function(val, lastVal) {
+ 	Oscillator.SIN = function(val, lastVal) {
  		return 0.5 * (1 + Math.sin(2 * Math.PI * (val - 0.25)));
  	};
 

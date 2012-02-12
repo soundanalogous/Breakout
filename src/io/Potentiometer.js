@@ -17,7 +17,8 @@ BO.io.Potentiometer = (function() {
 		Event = JSUTILS.Event;
 
 	/**
-	 * Creates a new Potentiometer. Listen for a change event (Event.CHANGE).
+	 * The Potentiometer object can be used for any generic analog input. It provides a higher
+	 * level of abstraction around an analog input pin.
 	 *
 	 * @exports Potentiometer as BO.io.Potentiometer
 	 * @class

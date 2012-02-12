@@ -28,7 +28,7 @@ BO.io.CompassHMC6352 = (function() {
 		this._heading = 0;
 		this._lastHeading = 0;
 
-		this.name = "CompassHMC6352"; // for testing
+		this.name = "CompassHMC6352";
 		
 		I2CBase.call(this, board, address);
 			

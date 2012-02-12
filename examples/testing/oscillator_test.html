@@ -47,7 +47,7 @@ $(document).ready(function() {
 		arduino.setDigitalPinMode(11, Pin.PWM);
 		fadeLED = arduino.getDigitalPin(11);
 		// create a new generator
-		oscSin = new Oscillator(Oscillator.SINE, freq, 1, 0, 0, 0);
+		oscSin = new Oscillator(Oscillator.SIN, freq, 1, 0, 0, 0);
 		// add the generator to the pin
 		fadeLED.addGenerator(oscSin);
 		// start the generator

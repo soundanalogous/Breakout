@@ -28,7 +28,7 @@ BO.I2CBase = (function() {
 
 		if (board == undefined) return;
 
-		this.name = "I2CDevice";
+		this.name = "I2CBase";
 		/** @protected*/
 		this.board = board;
 

@@ -45,7 +45,7 @@ BO.io.GyroITG3200 = (function() {
 		
 		I2CBase.call(this, board, address);
 
-		this.name = "GyroITG3200"; // for testing
+		this.name = "GyroITG3200";
 
 		// private properties
 		this._autoStart = autoStart;		
