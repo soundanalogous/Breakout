@@ -5,9 +5,9 @@
 	<key>CFBundleName</key>
 	<string>Breakout Server</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</string>
+	<string>com.breakoutjs</string>
 	<key>CFBundleVersion</key>
-	<string>100.0</string>
+	<string>0.1.0</string>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<string>true</string>
 	<key>CFBundleExecutable</key>
@@ -18,14 +18,16 @@
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleGetInfoString</key>
+	<string>0.1.0 Copyright Breakout Authors</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleIconFile</key>
-	<string>GenericApp.icns</string>
+	<string>BreakoutLogo.icns</string>
 	<key>Java</key>
 	<dict>
 		<key>MainClass</key>
-		<string>org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader</string>
+		<string>com.breakoutjs.BreakoutServer</string>
 		<key>JVMVersion</key>
 		<string>1.5+</string>
 		<key>ClassPath</key>
