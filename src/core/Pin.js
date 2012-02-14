@@ -44,7 +44,6 @@ BO.Pin = (function() {
 		this._average = 0;
 		this._minimum = Math.pow(2, 16);
 		this._maximum = 0;
-		//this._avg = 0;
 		this._sum = 0;
 		this._numSamples = 0;
 		this._filters = null;
@@ -447,7 +446,7 @@ BO.Pin = (function() {
 	 * @name Pin#change
 	 * @type JSUTILS.Event.CHANGE
 	 * @event
-	 * @param {BO.Pin} target A reference to the Timer object.
+	 * @param {BO.Pin} target A reference to the Pin object.
 	 */	
 
 	return Pin;
