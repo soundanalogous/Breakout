@@ -21,6 +21,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	// this is the version of Hello World for the node.js server
+
 	// dependencies:
 	// declare these variables so you don't have
 	// to type the full namespace
@@ -32,10 +34,9 @@ $(document).ready(function() {
 	var LED = BO.io.LED;
 	var Oscillator = BO.generators.Oscillator;
 
-	// replace "localhost" with the IP address of the computer
-	// the IOboard is connected to in order to load pages on a
-	// phone or tablet (eg. "192.168.2.3", 8887).
-	// Set 3rd parameter to true to use the socket.io server	
+	// To use the node.js server, set the 3rd parameter to true
+	// also make sure the network port in this file matches
+	// the network port you are listen on in the server.js
 	var ard = new IOBoard("localhost", 8080, true);
 	var onboardLED;
 	var fadeLED;

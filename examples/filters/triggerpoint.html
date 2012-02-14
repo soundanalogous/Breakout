@@ -12,7 +12,7 @@
 }
 </style>
 
-<title>Filter Test</title>
+<title>TriggerPoint Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
@@ -28,8 +28,6 @@ $(document).ready(function() {
 
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
-	var Scaler = BO.filters.Scaler;
-	var Convolution = BO.filters.Convolution;
 	var TriggerPoint = BO.filters.TriggerPoint;
 
 	var arduino = new IOBoard("localhost", 8887);
@@ -46,16 +44,15 @@ $(document).ready(function() {
 		// need to enable an analog pin in order to read it
 		arduino.enableAnalogPin(0);
 		var pot = arduino.getAnalogPin(0);
-		//pot.addFilter(new Convolution(Convolution.MOVING_AVERAGE))
-		//pot.addFilter(new Scaler(0, 1, 0, 10, Scaler.LINEAR));
+
 		pot.addFilter(triggerPoint);		
 		//pot.addFilter(new TriggerPoint([0.5, 0.1]));
 		//pot.addFilter(new TriggerPoint());	
 		pot.addEventListener(Event.CHANGE, onPotChange);
 
-		//setTimeout(addPoint, 4000);
-		//setTimeout(removePoint, 8000);
-		//setTimeout(removeAllPoints, 12000);
+		setTimeout(addPoint, 4000);
+		setTimeout(removePoint, 8000);
+		setTimeout(removeAllPoints, 12000);
 				
 	}
 	
