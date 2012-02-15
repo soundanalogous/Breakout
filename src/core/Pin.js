@@ -244,6 +244,12 @@ BO.Pin = (function() {
 		detectChange: function(oldValue, newValue) {
 			if (oldValue === newValue) return;
 			this.dispatchEvent(new Event(Event.CHANGE));
+
+			if (oldValue === 0 && newValue !== 0) {
+				this.dispatchEvent(new PinEvent(Event.RISING_EDGE));
+			} else if (oldValue !== 0 && newValue ===0) {
+				this.dispatchEvent(new PinEvent(Event.FALLING_EDGE));
+			}
 		},
 		
 		/**
