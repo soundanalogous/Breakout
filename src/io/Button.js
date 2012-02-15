@@ -3,50 +3,6 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BO.io.ButtonEvent');
-
-BO.io.ButtonEvent = (function() {
-
-	var ButtonEvent;
-
-	// dependencies
-	var Event = JSUTILS.Event;
-
-	/**
-	 * @exports ButtonEvent as BO.io.ButtonEvent
-	 * @constructor
-	 * @augments JSUTILS.Event
- 	 * @param {String} type The event type	 
-	 */
-	ButtonEvent = function(type) {
-
-		this.name = "ButtonEvent";
-
-		Event.call(this, type);
-	};
-
-	/** @constant */
-	ButtonEvent.PRESS = "pressed";
-	/** @constant */
-	ButtonEvent.RELEASE = "released";
-	/** @constant */
-	ButtonEvent.LONG_PRESS = "longPress";
-	/** @constant */
-	ButtonEvent.SUSTAINED_PRESS = "sustainedPress";
-
-	ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);
-	ButtonEvent.prototype.constructor = ButtonEvent;
-
-	return ButtonEvent;
-
-}());
-
-
-/**
- * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
- * Released under the MIT license. See LICENSE file for details.
- */
-
 JSUTILS.namespace('BO.io.Button');
 
 BO.io.Button = (function() {
@@ -55,7 +11,7 @@ BO.io.Button = (function() {
 
 	// dependencies
 	var PhysicalInputBase = BO.PhysicalInputBase,
-		Event = JSUTILS.Event,
+		PinEvent = BO.PinEvent,
 		Pin = BO.Pin,
 		ButtonEvent = BO.io.ButtonEvent;
 
@@ -105,9 +61,12 @@ BO.io.Button = (function() {
 			board.enablePullUp(pinNumber);
 			// set value to high to avoid initial change event
 			this._pin.value = Pin.HIGH;
+		} else if (this.buttonMode === Button.PULL_UP) {
+			// set value to high to avoid initial change event
+			this._pin.value = Pin.HIGH;
 		}
 				
-		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));	
+		this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));	
 	};
 
 

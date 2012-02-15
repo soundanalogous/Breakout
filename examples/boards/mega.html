@@ -26,13 +26,13 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
-	var IOBoard = BO.IOBoard;
 	var Pin = BO.Pin;
+	var PinEvent = BO.PinEvent;
+	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var BlinkM = BO.io.BlinkM;
 	var CompassHMC6352 = BO.io.CompassHMC6352;
+	var CompassEvent = BO.io.CompassEvent;
 	var Button = BO.io.Button;
 	var ButtonEvent = BO.io.ButtonEvent;
 
@@ -74,14 +74,14 @@ $(document).ready(function() {
 		// enable reporting for an analog pin
 		//mega.enableAnalogPin(0);
 		//var pot = mega.getAnalogPin(0);
-		//pot.addEventListener(Event.CHANGE, onPotChange);
+		//pot.addEventListener(PinEvent.CHANGE, onPotChange);
 		// disable reporting for an analog pin
 		//mega.disableAnalogPin(0);
 		
 		// set analog pin to digital input
 		mega.setDigitalPinMode(54, Pin.DIN);
 		var button02 = mega.getDigitalPin(54);
-		button02.addEventListener(Event.CHANGE, onButtonChange);
+		button02.addEventListener(PinEvent.CHANGE, onButtonChange);
 		
 		// set a pin to PWM
 		mega.setDigitalPinMode(11, Pin.PWM);
@@ -98,7 +98,7 @@ $(document).ready(function() {
 		//setInterval(randomColor, 2000);
 		
 		//compass = new CompassHMC6352(mega);
-		//compass.addEventListener(Event.CHANGE, onHeadingUpdate);
+		//compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
 		
 	}
 	

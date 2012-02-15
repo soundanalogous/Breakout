@@ -22,10 +22,9 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
-	var IOBoard = BO.IOBoard;
 	var Pin = BO.Pin;
+	var PinEvent = BO.PinEvent;
+	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var BlinkM = BO.io.BlinkM;
 	var CompassHMC6352 = BO.io.CompassHMC6352;
@@ -77,14 +76,14 @@ $(document).ready(function() {
 		var pot = teensy.getAnalogPin(2);
 		console.log("pin number = " + pot.number);
 		console.log("analog number = " + pot.analogNumber);
-		pot.addEventListener(Event.CHANGE, onPotChange);
+		pot.addEventListener(PinEvent.CHANGE, onPotChange);
 		// disable reporting for an analog pin
 		//teensy.disableAnalogPin(0);
 		
 		// set analog pin to digital input
 		teensy.setDigitalPinMode(16, Pin.DIN);
 		var button02 = teensy.getDigitalPin(16);
-		button02.addEventListener(Event.CHANGE, onButtonChange);
+		button02.addEventListener(PinEvent.CHANGE, onButtonChange);
 		
 		// set a pin to PWM
 		teensy.setDigitalPinMode(10, Pin.PWM);

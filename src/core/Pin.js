@@ -18,7 +18,7 @@ BO.Pin = (function() {
 
 	// dependencies
 	var EventDispatcher = JSUTILS.EventDispatcher,
-		Event = JSUTILS.Event,
+		PinEvent = BO.PinEvent,
 		GeneratorEvent = BO.generators.GeneratorEvent;
 
 	/**
@@ -243,12 +243,12 @@ BO.Pin = (function() {
 		 */
 		detectChange: function(oldValue, newValue) {
 			if (oldValue === newValue) return;
-			this.dispatchEvent(new Event(Event.CHANGE));
+			this.dispatchEvent(new PinEvent(PinEvent.CHANGE));
 
-			if (oldValue === 0 && newValue !== 0) {
-				this.dispatchEvent(new PinEvent(Event.RISING_EDGE));
-			} else if (oldValue !== 0 && newValue ===0) {
-				this.dispatchEvent(new PinEvent(Event.FALLING_EDGE));
+			if (oldValue <= 0 && newValue !== 0) {
+				this.dispatchEvent(new PinEvent(PinEvent.RISING_EDGE));
+			} else if (oldValue !== 0 && newValue <=0) {
+				this.dispatchEvent(new PinEvent(PinEvent.FALLING_EDGE));
 			}
 		},
 		
@@ -350,14 +350,6 @@ BO.Pin = (function() {
 		 */
 		autoSetValue: function(event) {
 			var val = this._generator.value;
-
-			// scale PWM values to 0 - 255
-			// if (this._type === Pin.PWM) {
-			// 	val *= 255.0;
-			// 	val = (val < 0) ? 0: val;
-			// 	val = (val > 255) ? 255 : val;
-			// }
-			// use the value setter
 			this.value = val;
 		},
 
@@ -405,7 +397,7 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * @param {Event} type The Event object
+		 * @param {PinEvent} type The Event object
 		 * @param {Object} optionalParams Optional parameters to assign to the event object.
 		 * return {boolean} True if dispatch is successful, false if not.
 		 */	
@@ -450,7 +442,7 @@ BO.Pin = (function() {
 	/**
 	 * The change event is dispatched when the pin value changes.
 	 * @name Pin#change
-	 * @type JSUTILS.Event.CHANGE
+	 * @type BO.PinEvent.CHANGE
 	 * @event
 	 * @param {BO.Pin} target A reference to the Pin object.
 	 */	

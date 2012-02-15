@@ -49,7 +49,7 @@ BO.IOBoard = (function() {
 	// dependencies
 	var Pin = BO.Pin,
 		EventDispatcher = JSUTILS.EventDispatcher,
-		Event = JSUTILS.Event,
+		PinEvent = BO.PinEvent,
 		WSocketEvent = BO.WSocketEvent,
 		WSocketWrapper = BO.WSocketWrapper,
 		IOBoardEvent = BO.IOBoardEvent;
@@ -590,13 +590,13 @@ BO.IOBoard = (function() {
 		 */	 
 		function managePinListener(pin) {
 			if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
-				if (!pin.hasEventListener(Event.CHANGE)) {
-					pin.addEventListener(Event.CHANGE, sendOut);
+				if (!pin.hasEventListener(PinEvent.CHANGE)) {
+					pin.addEventListener(PinEvent.CHANGE, sendOut);
 				}
 			} else {
-				if (pin.hasEventListener(Event.CHANGE)) {
+				if (pin.hasEventListener(PinEvent.CHANGE)) {
 					try {
-						pin.removeEventListener(Event.CHANGE, sendOut);
+						pin.removeEventListener(PinEvent.CHANGE, sendOut);
 					} catch (e) {
 						// pin had reference to other handler, ignore
 						debug("debug: caught pin removeEventListener exception");

@@ -14,7 +14,8 @@ BO.io.Potentiometer = (function() {
 		PhysicalInputBase = BO.PhysicalInputBase,
 		Scaler = BO.filters.Scaler,
 		Convolution = BO.filters.Convolution,
-		Event = JSUTILS.Event;
+		PinEvent = BO.PinEvent,
+		PotEvent = BO.io.PotEvent;
 
 	/**
 	 * The Potentiometer object can be used for any generic analog input. It provides a higher
@@ -44,7 +45,7 @@ BO.io.Potentiometer = (function() {
 			this._pin.addFilter(new Convolution(Convolution.MOVING_AVERAGE));
 		}
 
-		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
+		this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
 	};
 
 	Potentiometer.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
@@ -115,7 +116,7 @@ BO.io.Potentiometer = (function() {
 	 * @private
 	 */
 	Potentiometer.prototype.onPinChange = function(event) {
-		this.dispatchEvent(new Event(Event.CHANGE));
+		this.dispatchEvent(new PotEvent(PotEvent.CHANGE));
 	};
 
 	// document events
@@ -123,10 +124,10 @@ BO.io.Potentiometer = (function() {
 	/**
 	 * The change event is dispatched when the potentiometer value changes.
 	 * @name Potentiometer#change
-	 * @type JSUTILS.Event.CHANGE
+	 * @type BO.io.PotEvent.CHANGE
 	 * @event
 	 * @example
-	 * pot.addEventListener(Event.CHANGE, onValueChange);
+	 * pot.addEventListener(PotEvent.CHANGE, onValueChange);
 	 *
 	 * function onValueChange(event) {
 	 *   console.log("value = " + event.target.value);	

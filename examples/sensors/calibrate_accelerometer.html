@@ -21,12 +21,11 @@ $(document).ready(function() {
 
 	// dependencies
 	// declare these variables so you don't have
-	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
+	// to type the full namespace	
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
+	var AccelerometerEvent = BO.io.AccelerometerEvent;
 
 	var arduino = new IOBoard("localhost", 8887);
 	var RANGE_GS = 3; // +-3 Gs for ADXL335
@@ -48,7 +47,7 @@ $(document).ready(function() {
 								RANGE_GS,
 								false);
 		
-		accelerometer.addEventListener(Event.CHANGE, showUncalibratedValues);
+		accelerometer.addEventListener(AccelerometerEvent.UPDATE, showUncalibratedValues);
 	}
 
 	function showUncalibratedValues(event) {

@@ -199,4 +199,3 @@ BO.I2CBase = (function() {
 	return I2CBase;
 
 }());
-

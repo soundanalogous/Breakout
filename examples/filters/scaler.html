@@ -24,7 +24,7 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Event = JSUTILS.Event;
+	var PinEvent = BO.PinEvent;
 
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
@@ -43,12 +43,12 @@ $(document).ready(function() {
 		var pot = arduino.getAnalogPin(0);
 
 		pot.addFilter(new Scaler(0, 1, 0, 10, Scaler.LINEAR));
-		pot.addEventListener(Event.CHANGE, onPotChange);				
+		pot.addEventListener(PinEvent.CHANGE, onPotChange);				
 	}
 	
 	function onPotChange(event) {
 		var pin = event.target;
-		var analogData = "pot value: " + pin.value.toFixed(3) + 
+		var analogData = "filtered value: " + pin.value.toFixed(3) + 
 			"\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
 			pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
 		
@@ -63,7 +63,7 @@ $(document).ready(function() {
 </head>
 <body>
   
-	<div id="potData" class="text">pot value:</div>
+	<div id="potData" class="text">filtered value:</div>
 	<div id="preFilterData" class="text">pre-filter value:</div>
   
 </body>

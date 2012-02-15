@@ -3,65 +3,6 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BO.io.SoftPotEvent');
-
-BO.io.SoftPotEvent = (function() {
-
-	var SoftPotEvent;
-
-	// dependencies
-	var Event = JSUTILS.Event;
-
-	/**
-	 * @exports SoftPotEvent as BO.io.SoftPotEvent
-	 * @constructor
-	 * @augments JSUTILS.Event
- 	 * @param {String} type The event type
- 	 * @param {Number} touchPoint The value where the softpot was touched	 
-	 */
-	SoftPotEvent = function(type, touchPoint) {
-
-		this.name = "SoftPotEvent";
-
-		Event.call(this, type);
-		this._touchPoint = touchPoint;
-	};
-
-	/** @constant */
-	SoftPotEvent.PRESS = "softPotPressed";
-	/** @constant */
-	SoftPotEvent.RELEASE = "softPotRelease";
-	/** @constant */
-	SoftPotEvent.DRAG = "softPotDrag";
-	/** @constant */
-	SoftPotEvent.FLICK_UP = "softPotFlickUp";
-	/** @constant */
-	SoftPotEvent.FLICK_DOWN = "softPotFlickDown";
-	/** @constant */
-	SoftPotEvent.TAP = "softPotTap";		
-
-	SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
-	SoftPotEvent.prototype.constructor = SoftPotEvent;
-
-	/**
-	 * The value of the softpot.
-	 * @name SoftPotEvent#value
-	 * @property
-	 * @type Number
-	 */ 
-	SoftPotEvent.prototype.__defineGetter__("value", function() { return this._touchPoint; });	
-	SoftPotEvent.prototype.__defineSetter__("value", function(val) { this._touchPoint = val; });
-
-	return SoftPotEvent;
-
-}());
-
-
-/**
- * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
- * Released under the MIT license. See LICENSE file for details.
- */
-
 JSUTILS.namespace('BO.io.SoftPot');
 
 BO.io.SoftPot = (function() {
@@ -72,12 +13,13 @@ BO.io.SoftPot = (function() {
 	var	TAP_TIMEOUT				= 200,
 		FLICK_TIMEOUT			= 200,
 		PRESS_TIMER_INTERVAL	= 10,
+		MIN_VALUE				= 0.01,
 		DEBOUNCE_TIMEOUT		= 20;	
 
 	// dependencies
 	var PhysicalInputBase = BO.PhysicalInputBase,
 		Pin = BO.Pin,
-		Event = JSUTILS.Event,
+		PinEvent = BO.PinEvent,
 		Scaler = BO.filters.Scaler,
 		Timer = JSUTILS.Timer,
 		TimerEvent = JSUTILS.TimerEvent,
@@ -113,13 +55,14 @@ BO.io.SoftPot = (function() {
 		this._minFlickMovement = 1.0/softPotLength * 2.5;
 		this._minDragMovement = 1.0/softPotLength * 1.0;
 		this._tapTimeout = TAP_TIMEOUT;
+		this._minValue = MIN_VALUE;
 		
 		this._board = board;
 		board.enableAnalogPin(this._pin.analogNumber);
 
 		this._debugMode = false;
 						
-		this._pin.addEventListener(Event.CHANGE, this.onPinChange.bind(this));
+		this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
 
 		this._pressTimer = new Timer(PRESS_TIMER_INTERVAL, 0);
 		this._flickTimer = new Timer(FLICK_TIMEOUT, 1);
@@ -131,14 +74,16 @@ BO.io.SoftPot = (function() {
 
 	/**
 	 * @private
-	 * @param {Event} evt Event.CHANGE
+	 * @param {Event} evt PinEvent.CHANGE
 	 */
 	SoftPot.prototype.onPinChange = function(evt) {
 		var val = evt.target.value;
 
-		if (val === 0) {
+		// _minValue is the minimum value required to set the release state
+		// should be as close to zero as possible
+		if (this._isTouched && val < this._minValue) {
 			this.onRelease();
-		} else {
+		} else if (val >= this._minValue) {
 			if (!this._isTouched) {
 				this.startTouch(val);
 				this._lastMovePoint = val;
@@ -344,6 +289,17 @@ BO.io.SoftPot = (function() {
 	 */ 
 	SoftPot.prototype.__defineGetter__("tapTimeout", function() { return this._tapTimeout; });	
 	SoftPot.prototype.__defineSetter__("tapTimeout", function(t) { this._tapTimeout = t; });
+
+	/**
+	 * The minimum value required to set the Release state. This number should be as
+	 * close to zero as possible. Increase this value if you are noticing fluttering 
+	 * between the Pressed and Released states. Default value = 0.01;
+	 * @name SoftPot#minValue
+	 * @property
+	 * @type Number
+	 */ 
+	SoftPot.prototype.__defineGetter__("minValue", function() { return this._minValue; });	
+	SoftPot.prototype.__defineSetter__("minValue", function(val) { this._minValue = val; });	
 
 
 	// document events

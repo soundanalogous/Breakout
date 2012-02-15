@@ -3,7 +3,7 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace('BO.ioBoardEvent');
+JSUTILS.namespace('BO.IOBoardEvent');
 
 BO.IOBoardEvent = (function() {
 

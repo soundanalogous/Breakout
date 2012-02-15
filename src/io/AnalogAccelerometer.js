@@ -21,7 +21,7 @@ BO.io.AnalogAccelerometer = (function() {
 
 		// dependencies
 	var PhysicalInputBase = BO.PhysicalInputBase,
-		Event = JSUTILS.Event,
+		PinEvent = BO.PinEvent,
 		AccelerometerEvent = BO.io.AccelerometerEvent,
 		Scaler = BO.filters.Scaler,
 		Convolution = BO.filters.Convolution;
@@ -64,15 +64,15 @@ BO.io.AnalogAccelerometer = (function() {
 		this._z = 0;
 
 		if (this._xPin !== null) {
-			this._xPin.addEventListener(Event.CHANGE, this.xAxisChanged.bind(this));
+			this._xPin.addEventListener(PinEvent.CHANGE, this.xAxisChanged.bind(this));
 		}
 
 		if (this._yPin !== null) {
-			this._yPin.addEventListener(Event.CHANGE, this.yAxisChanged.bind(this));
+			this._yPin.addEventListener(PinEvent.CHANGE, this.yAxisChanged.bind(this));
 		}
 		
 		if (this._zPin !== null) {
-			this._zPin.addEventListener(Event.CHANGE, this.zAxisChanged.bind(this));
+			this._zPin.addEventListener(PinEvent.CHANGE, this.zAxisChanged.bind(this));
 		}
 		
 	};

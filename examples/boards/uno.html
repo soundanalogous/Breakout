@@ -22,10 +22,9 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Event = JSUTILS.Event;
-	
-	var IOBoard = BO.IOBoard;
 	var Pin = BO.Pin;
+	var PinEvent = BO.PinEvent;
+	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var BlinkM = BO.io.BlinkM;
 	var CompassHMC6352 = BO.io.CompassHMC6352;
@@ -36,6 +35,7 @@ $(document).ready(function() {
 	var LED = BO.io.LED;
 	var Oscillator = BO.generators.Oscillator;
 	var Potentiometer = BO.io.Potentiometer;
+	var PotEvent = BO.io.PotEvent;
 	var RGBLED = BO.io.RGBLED;
 
 	// params: IPaddress, port
@@ -77,24 +77,25 @@ $(document).ready(function() {
 		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
 		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 
-
 		// Analog input example using Pin object:
 		// need to enable an analog pin in order to read it
 		//uno.enableAnalogPin(0);
 		//var pot = uno.getAnalogPin(0);
-		//pot.addEventListener(Event.CHANGE, onPotChange);
+		//pot.addEventListener(PinEvent.CHANGE, onPotChange);
 
 		// Analog input example using Potentiometer object:
 		// params: board, analogPin, enableSmoothing
 		var pot = new Potentiometer(uno, uno.getAnalogPin(0), true);
-		pot.addEventListener(Event.CHANGE, onPotChange);
+		pot.addEventListener(PotEvent.CHANGE, onPotChange);
 
 
 		// Digital input example using Pin object:
 		// set analog pin to digital input
 		uno.setDigitalPinMode(16, Pin.DIN);
 		var button02 = uno.getDigitalPin(16);
-		button02.addEventListener(Event.CHANGE, onButtonChange);
+		//button02.addEventListener(PinEvent.CHANGE, onButtonChange);
+		button02.addEventListener(PinEvent.RISING_EDGE, onRisingEdge);
+		button02.addEventListener(PinEvent.FALLING_EDGE, onFallingEdge);
 		
 
 		// create a new LED
@@ -177,19 +178,28 @@ $(document).ready(function() {
 
 	function onButtonPress(event) {
 		var btn = event.target;
-		$('#button').html("button: pin = " + btn.pinNumber + " pressed");
+		$('#button1').html("button: pin = " + btn.pinNumber + " pressed");
 	}
 
 	function onButtonRelease(event) {
 		var btn = event.target;
-		$('#button').html("button: pin = " + btn.pinNumber + " released");
+		$('#button1').html("button: pin = " + btn.pinNumber + " released");
 	}
 	
 	function onButtonChange(event) {
 		var pin = event.target;
+		$('#button2').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
+	}
 
-		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
-	}	
+	function onRisingEdge(event) {
+		var pin = event.target;
+		$('#button2').html("button: pin = " + pin.number + " rising edge");
+	}
+
+	function onFallingEdge(event) {
+		var pin = event.target;
+		$('#button2').html("button: pin = " + pin.number + " falling edge");
+	}
 			
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
@@ -224,7 +234,8 @@ $(document).ready(function() {
   
 	<div id="potData" class="text">pot value:</div>
 	<div id="heading" class="text">heading:</div>
-	<div id="button" class="text">button:</div>
+	<div id="button1" class="text">button:</div>
+	<div id="button2" class="text">button:</div>
   
 </body>
 </html>​

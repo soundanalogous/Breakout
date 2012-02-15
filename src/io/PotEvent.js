@@ -1,0 +1,39 @@
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace('BO.io.PotEvent');
+
+BO.io.PotEvent = (function() {
+
+	var PotEvent;
+
+	// dependencies
+	var Event = JSUTILS.Event;
+
+	/**
+	 * @exports PotEvent as BO.io.PotEvent
+	 * @constructor
+	 * @augments JSUTILS.Event
+	 * @param {String} type The event type
+	 */
+	PotEvent = function(type) {
+
+		this.name = "PotEvent";
+		
+		// call the super class
+		// 2nd parameter is passed to EventDispatcher constructor
+		Event.call(this, type);
+	};
+
+	// events
+	/** @constant */
+	PotEvent.CHANGE = "potChange";	
+
+	PotEvent.prototype = JSUTILS.inherit(Event.prototype);
+	PotEvent.prototype.constructor = PotEvent;
+
+	return PotEvent;
+
+}());

@@ -24,7 +24,7 @@ $(document).ready(function() {
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
-	var Event = JSUTILS.Event;
+	var PinEvent = BO.PinEvent;
 
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
@@ -48,11 +48,12 @@ $(document).ready(function() {
 		pot.addFilter(triggerPoint);		
 		//pot.addFilter(new TriggerPoint([0.5, 0.1]));
 		//pot.addFilter(new TriggerPoint());	
-		pot.addEventListener(Event.CHANGE, onPotChange);
+		pot.addEventListener(PinEvent.CHANGE, onPotChange);
 
+		// after 4 seconds, add another point
 		setTimeout(addPoint, 4000);
-		setTimeout(removePoint, 8000);
-		setTimeout(removeAllPoints, 12000);
+		//setTimeout(removePoint, 8000);
+		//setTimeout(removeAllPoints, 12000);
 				
 	}
 	
