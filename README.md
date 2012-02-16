@@ -28,7 +28,7 @@ The next step is to run the Breakout Server application:
 5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/".
 6. Open the example file: hello_world.html (http://localhost:8887/examples/getting_started/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater). If you changed the network port in step 4, update it on line 36 of the hello_world.html example.
 
-For more information on using Breakout Server, including enabling multiple client connections and changing the webserver root directory see [Using Breakout Server](https://github.com/soundanalogous/Breakout/wiki/Using-Breakout-Server).
+For more information on using Breakout Server, including enabling multiple client connections and changing the webserver root directory see [Using Breakout Server](http://breakoutjs.com/?page_id=136).
 
 As an alternative to the Breakout Server application, a node.js-based server is also included. See the [Using the node.js server](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.  
 
