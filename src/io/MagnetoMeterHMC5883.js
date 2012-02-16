@@ -53,7 +53,7 @@ BO.io.MagnetometerHMC5883 = (function() {
 		this._scale = 0.92; // mG/LSb
 
 		this._isReading = false;
-		this._debugMode = true;
+		this._debugMode = BO.enableDebugging;
 
 		this.name = "MagnetometerHMC5883";
 		

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>RGB Led Example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Button = BO.io.Button;
+	var ButtonEvent = BO.io.ButtonEvent;
+	var RGBLED = BO.io.RGBLED;
+
+	// params: IPaddress, port
+	var uno = new IOBoard("localhost", 8887);
+	var rbgLED;
+	
+	uno.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		
+		// remove the listener because it is no longer needed
+		uno.removeEventListener(IOBoardEvent.READY, onReady);
+
+		
+		// Digital input using Button object:
+		// params: board, pin, mode
+		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
+		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+
+
+		// RGBLED example using RGBLED object:
+		// NOTE: the r, g, b pins of the LED must be connected to PWM pins on the IOBoard
+		// params: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
+		rgbLED = new RGBLED(
+			uno, 
+			uno.getDigitalPin(3), 
+			uno.getDigitalPin(5), 
+			uno.getDigitalPin(6), 
+			RGBLED.COMMON_CATHODE);
+
+		rgbLED.setColor(128, 255, 0);
+				
+	}
+	
+	// fade the RGB led to a random color
+	function randomColor() {
+		var red = Math.floor(Math.random() * 255);
+		var green = Math.floor(Math.random() * 255);
+		var blue = Math.floor(Math.random() * 255);
+		
+		// fade rgb led to random color in .5 seconds
+		rgbLED.fadeTo(red, green, blue, 500);
+	}	
+
+	function onButtonPress(event) {
+		randomColor();
+	}
+			
+});
+
+</script>
+
+</head>
+<body>
+  
+	<div class="text">Press button to fade to random color.</div>
+  
+</body>
+</html>​

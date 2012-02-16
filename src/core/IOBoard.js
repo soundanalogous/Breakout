@@ -88,7 +88,7 @@ BO.IOBoard = (function() {
 			_evtDispatcher,
 			_isMultiClientEnabled = false,
 			_isConfigured = false,
-			_debugMode = true;
+			_debugMode = BO.enableDebugging;
 		
 		_evtDispatcher = new EventDispatcher(this);
 

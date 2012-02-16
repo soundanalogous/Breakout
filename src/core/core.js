@@ -18,3 +18,11 @@ var BO = BO || {};
 var BREAKOUT = BREAKOUT || BO;
 
 BREAKOUT.VERSION = '0.1.0.beta';
+
+// global flags
+/**
+ * Set to true to enable debugging for all objects. Debug
+ * messages will be printed to the console.
+ * @property {Boolean} Set to true to enable debugging. Default is false.
+ */
+BREAKOUT.enableDebugging = false;

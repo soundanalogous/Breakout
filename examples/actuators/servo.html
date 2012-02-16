@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>Servo Example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Servo = BO.io.Servo;
+	var Potentiometer = BO.io.Potentiometer;
+	var PotEvent = BO.io.PotEvent;
+
+	// Set to true to enable debugging. Must set before creating new IOBoard.
+	BO.enableDebugging = false;
+
+	// params: IPaddress, port
+	var uno = new IOBoard("localhost", 8887);
+	var servoDir = true;
+	var servo;
+	
+	uno.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		
+		// remove the listener because it is no longer needed
+		uno.removeEventListener(IOBoardEvent.READY, onReady);
+
+
+		// Analog input example using Potentiometer object:
+		// params: board, analogPin, enableSmoothing
+		var pot = new Potentiometer(uno, uno.getAnalogPin(0), true);
+		pot.addEventListener(PotEvent.CHANGE, onPotChange);
+
+				
+		// Servo example using Servo object:
+		// params: board, pin
+		servo = new Servo(uno, uno.getDigitalPin(9));
+		//setInterval(servoTest, 5000);
+		// NOTE: running a servo can interfere with analog inputs, creating jitter in the signal
+				
+	}
+	
+	
+	function onPotChange(event) {
+		// multiply by 180.0 to scale to the range of 0 to 180
+		// target is a reference to the potentiometer that fired the CHANGE event
+		var angle = event.target.value * 180.0;
+		
+		servo.angle = angle;
+	}
+
+	
+	// rotate the servo head		
+	function servoTest() {
+		if (servoDir) {
+			servo.angle = 0;
+		} else {
+			servo.angle = 180;
+		}
+		servoDir = !servoDir;
+	}
+	
+			
+});
+
+</script>
+
+</head>
+<body>
+  
+	<div class="text">Turn the potentiometer rotate the servo head.</div>
+
+  
+</body>
+</html>​

@@ -52,7 +52,7 @@ BO.io.GyroITG3200 = (function() {
 		this._isReading = false;
 		this._tempOffsets = {};
 		this._startupTimer = null;		
-		this._debugMode = true;
+		this._debugMode = BO.enableDebugging;
 		
 		this._x = 0;
 		this._y = 0;

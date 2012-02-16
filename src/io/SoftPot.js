@@ -60,7 +60,7 @@ BO.io.SoftPot = (function() {
 		this._board = board;
 		board.enableAnalogPin(this._pin.analogNumber);
 
-		this._debugMode = false;
+		this._debugMode = BO.enableDebugging;
 						
 		this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
 

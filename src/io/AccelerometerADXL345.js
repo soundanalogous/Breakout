@@ -54,7 +54,7 @@ BO.io.AccelerometerADXL345 = (function() {
 		this._offset = {x:0, y:0, z:0};
 
 		this._isReading = false;
-		this._debugMode = true;
+		this._debugMode = BO.enableDebugging;
 
 		this._x = 0;
 		this._y = 0;

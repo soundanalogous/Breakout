@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>BlinkM Example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var BlinkM = BO.io.BlinkM;
+	var Button = BO.io.Button;
+	var ButtonEvent = BO.io.ButtonEvent;
+
+	// params: IPaddress, port
+	var uno = new IOBoard("localhost", 8887);
+	var blinkM;
+	
+	uno.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		
+		// remove the listener because it is no longer needed
+		uno.removeEventListener(IOBoardEvent.READY, onReady);
+		
+		// Digital input using Button object:
+		// params: board, pin, mode
+		var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
+		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
+
+
+		// i2c module example: BlinkM module
+		blinkM = new BlinkM(uno);
+		blinkM.stopScript();
+		setInterval(randomColor, 4000);
+				
+	}
+	
+	
+	// set a random color on the BlinkM module
+	function randomColor() {
+		var red = Math.floor(Math.random() * 255);
+		var green = Math.floor(Math.random() * 255);
+		var blue = Math.floor(Math.random() * 255);
+		
+		blinkM.goToRGBColorNow([red, green, blue]);
+		//blinkM.fadeToRGBColor([red, green, blue]);
+	}	
+	
+
+	function onButtonPress(event) {
+		randomColor();
+	}
+
+			
+});
+
+</script>
+
+</head>
+<body>
+  
+	<div class="text">Press button to set random color.</div>
+  
+</body>
+</html>​
