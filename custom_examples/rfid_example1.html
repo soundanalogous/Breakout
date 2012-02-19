@@ -28,6 +28,9 @@ $(document).ready(function() {
 	var IOBoardEvent = BO.IOBoardEvent;
 	var ID12RFIDReader = BO.custom.ID12RFIDReader;
 	var RFIDEvent = BO.custom.RFIDEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
 	
 	var ard = new IOBoard("localhost", 8887);
 	var rfid;

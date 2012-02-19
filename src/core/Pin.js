@@ -440,12 +440,28 @@ BO.Pin = (function() {
 	// document events
 
 	/**
-	 * The change event is dispatched when the pin value changes.
-	 * @name Pin#change
+	 * The pinChange event is dispatched when the pin value changes.
+	 * @name Pin#pinChange
 	 * @type BO.PinEvent.CHANGE
 	 * @event
 	 * @param {BO.Pin} target A reference to the Pin object.
+	 */
+
+	/**
+	 * The risingEdge event is dispatched when the pin value increased (from 0 to 1).
+	 * @name Pin#risingEdge
+	 * @type BO.PinEvent.RISING_EDGE
+	 * @event
+	 * @param {BO.Pin} target A reference to the Pin object.
 	 */	
+	 
+	/**
+	 * The change event is dispatched when the pin value decreased (from 1 to 0).
+	 * @name Pin#fallingEdge
+	 * @type BO.PinEvent.FALLING_EDGE
+	 * @event
+	 * @param {BO.Pin} target A reference to the Pin object.
+	 */		 	 
 
 	return Pin;
 

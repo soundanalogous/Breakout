@@ -19,12 +19,17 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	// Note, this example is buggy.
+
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
 	var Event = JSUTILS.Event;
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
 
 	// params: IPaddress, port
 	var arduino = new IOBoard("localhost", 8887);
@@ -42,6 +47,7 @@ $(document).ready(function() {
 		// listen for incoming string messages
 		arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 						
+	    // send a string message to the I/O board
 		setInterval(sayHello, 2000);	
 	}
 
@@ -50,6 +56,7 @@ $(document).ready(function() {
 	}
 	
 
+	// called when a new string message is received from the I/O board
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
 		$('#message').html("message = " + event.message);

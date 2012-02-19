@@ -28,6 +28,9 @@ $(document).ready(function() {
 	var GyroITG3200 = BO.io.GyroITG3200;
 	var GyroEvent = BO.io.GyroEvent;	
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;
+
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ITG3200
 	var fio = new IOBoard("localhost", 8887);
@@ -40,7 +43,7 @@ $(document).ready(function() {
 		fio.removeEventListener(IOBoardEvent.READY, onReady);	
 		
 		// params: IOBoard, autoStart, i2cAddress
-		//gyro = new GyroITG3200(fio, false, GyroITG3200.DEVICE_ID);
+		//gyro = new GyroITG3200(fio, false, GyroITG3200.ID_AD0_VDD);
 		gyro = new GyroITG3200(fio);
 					
 		// calibration

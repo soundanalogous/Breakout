@@ -25,10 +25,12 @@ $(document).ready(function() {
 	// declare these variables so you don't have
 	// to type the full namespace
 	var PinEvent = BO.PinEvent;
-
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var Scaler = BO.filters.Scaler;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
 
 	var arduino = new IOBoard("localhost", 8887);
 	

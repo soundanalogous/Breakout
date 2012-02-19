@@ -7,7 +7,7 @@ Breakout grew out of a need for a simple platform to enable designers to prototy
 
 Breakout is currently beta software. The API is stable, but bugs are possible. Please create an issue if you suspect a bug. Additional examples and hardware abstractions (Breakout/io/) will be added over the next few weeks.
 
-See [breakoutjs.com](http://breakoutjs.com) for more information, including tutorials.
+See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other helpful information.
 
 
 To use
@@ -17,7 +17,7 @@ The first step is to upload StandardFirmata to your Arduino (or Arduino-compatib
 
 1. Launch Arduino 1.0 and navigate to File -> Examples -> Firmata -> StandardFirmata
 2. Compile StandardFirmata for your board and upload.
-3. Wire up a button and led to you I/O board as illustrated in Breakout/examples/getting_started/hello_world_schematic.pdf
+3. Wire up a button and led to you I/O board as illustrated on page 2 in Breakout/examples/schematics.pdf
 
 The next step is to run the Breakout Server application:
 
@@ -63,5 +63,6 @@ Mobile Browsers (browser must support websockets):
 
 - Safari mobile
 - Firefox mobile version 8 or higher
+- Chrome Beta (for Android 4.0 and higher)
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for list of tested phones and tablets
 

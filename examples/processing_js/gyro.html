@@ -13,13 +13,16 @@
 
 // dependencies
 // declare these variables so you don't have
-// to type the full namespace	
+// to type the full namespace   
 var IOBoard = BO.IOBoard;
 var IOBoardEvent = BO.IOBoardEvent;
 var GyroITG3200 = BO.io.GyroITG3200;
 var GyroEvent = BO.io.GyroEvent;
 var Button = BO.io.Button;
 var ButtonEvent = BO.io.ButtonEvent;
+
+// set to true to print debug messages to console
+BO.enableDebugging = true;
 
 var sketch = new Processing.Sketch();
 // define 3D context
@@ -29,21 +32,21 @@ sketch.imageCache.add("images/pjs.png");
 // attach function 
 sketch.attachFunction = function(p) {
 
-	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
-	// with the ITG3200 and ADXL345 sensors
-	var fio,
-		gyro,
-		xRot = 0,
-		yRot = 0,
-		zRot = 0,
-		lastX = 0,
-		lastY = 0,
-		lastZ = 0,
-		interval,
-		SMOOTHING = 0.5,
-		accelOrientation,
-		accelReal,
-		isReady = false;
+    // note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+    // with the ITG3200 and ADXL345 sensors
+    var fio,
+        gyro,
+        xRot = 0,
+        yRot = 0,
+        zRot = 0,
+        lastX = 0,
+        lastY = 0,
+        lastZ = 0,
+        interval,
+        SMOOTHING = 0.5,
+        accelOrientation,
+        accelReal,
+        isReady = false;
 
     p.setup = function() {
         p.size(640, 360, p.P3D);
@@ -138,84 +141,84 @@ sketch.attachFunction = function(p) {
         p.endShape();
     }
 
-	function onFioReady(event) {
+    function onFioReady(event) {
 
-		fio.removeEventListener(IOBoardEvent.READY, onFioReady);
+        fio.removeEventListener(IOBoardEvent.READY, onFioReady);
 
-		initGyro();
+        initGyro();
 
-		var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
+        var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
         button.addEventListener(ButtonEvent.PRESS, onBtnPress);
-	}
+    }
 
-	function initGyro() {
-		gyro = new GyroITG3200(fio);
-		// adjust the offset values until gyro x, y and z
-		// values are around zero when the gyro is not moving
-	    gyro.setOffsets(-2.0, 4.0, -3.6);
-	    gyro.startReading();
-		gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
-		isReady = true;	
-	}
+    function initGyro() {
+        gyro = new GyroITG3200(fio);
+        // adjust the offset values until gyro x, y and z
+        // values are around zero when the gyro is not moving
+        gyro.setOffsets(-2.0, 4.0, -3.6);
+        gyro.startReading();
+        gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
+        isReady = true; 
+    }
 
-	function onGyroUpdate(event) {
-		var xVal = Math.floor(event.target.x);
-		var yVal = Math.floor(event.target.y);
-		var zVal = Math.floor(event.target.z);
+    function onGyroUpdate(event) {
+        var xVal = Math.floor(event.target.x);
+        var yVal = Math.floor(event.target.y);
+        var zVal = Math.floor(event.target.z);
 
-		smooth(xVal, yVal, zVal);
+        smooth(xVal, yVal, zVal);
 
-		xRot = accelOrientation.x * interval;
-		yRot = accelOrientation.y * interval;
-		zRot = accelOrientation.z * interval;
+        xRot = accelOrientation.x * interval;
+        yRot = accelOrientation.y * interval;
+        zRot = accelOrientation.z * interval;
 
-		xRot = (xRot + lastX) % 360;
-		yRot = (yRot + lastY) % 360;
-		zRot = (zRot + lastZ) % 360;
+        xRot = (xRot + lastX) % 360;
+        yRot = (yRot + lastY) % 360;
+        zRot = (zRot + lastZ) % 360;
 
-		lastX = xRot;
-		lastY = yRot;
-		lastZ = zRot;
-	}
+        lastX = xRot;
+        lastY = yRot;
+        lastZ = zRot;
+    }
 
-	function onBtnPress(event) {
-		reset();
-	}
+    function onBtnPress(event) {
+        reset();
+    }
 
-	function reset() {
-		xRot = yRot = zRot = 0;
-		lastX = lastY = lastZ = 0;
-		accelOrientation.set(0, 0, 0);
-	}
+    function reset() {
+        xRot = yRot = zRot = 0;
+        lastX = lastY = lastZ = 0;
+        accelOrientation.set(0, 0, 0);
+    }
 
-	function smooth(x, y, z) {
-		var lerpFactor;
+    function smooth(x, y, z) {
+        var lerpFactor;
 
-		accelReal.set(x, y, z);
+        accelReal.set(x, y, z);
 
-		lerpFactor = 1.0 - SMOOTHING;
-		if (lerpFactor > 1.0) lerpFactor = 1.0;
-		else if(lerpFactor < 0.01) lerpFactor = 0.01;
+        lerpFactor = 1.0 - SMOOTHING;
+        if (lerpFactor > 1.0) lerpFactor = 1.0;
+        else if(lerpFactor < 0.01) lerpFactor = 0.01;
 
-		accelReal.sub(accelOrientation);
-		accelReal.mult(lerpFactor);
-		accelOrientation.add(accelReal);
-	}
+        accelReal.sub(accelOrientation);
+        accelReal.mult(lerpFactor);
+        accelOrientation.add(accelReal);
+    }
 
-	function toRadians(decimalVal) {
-		return decimalVal * Math.PI/180;
-	}
+    function toRadians(decimalVal) {
+        return decimalVal * Math.PI/180;
+    }
 
-	function toDegrees(radianVal) {
-		return radianVal * (180/Math.PI);
-	}
+    function toDegrees(radianVal) {
+        return radianVal * (180/Math.PI);
+    }
 
 };
 
 var canvas = document.getElementById("canvas1");
 // attaching the sketch to the canvas
 var p = new Processing(canvas, sketch);
-			
+            
 </script>
 
 

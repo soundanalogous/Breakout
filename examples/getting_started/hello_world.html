@@ -19,18 +19,18 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	console.log("gets here");
-
 	// dependencies:
 	// declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
-	var Pin = BO.Pin;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var Button = BO.io.Button;
 	var ButtonEvent = BO.io.ButtonEvent;
 	var LED = BO.io.LED;
 	var Oscillator = BO.generators.Oscillator;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;
 
 	// replace "localhost" with the IP address of the computer
 	// the IOboard is connected to in order to load pages on a

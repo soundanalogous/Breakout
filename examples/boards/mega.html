@@ -36,6 +36,9 @@ $(document).ready(function() {
 	var Button = BO.io.Button;
 	var ButtonEvent = BO.io.ButtonEvent;
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	var mega = new IOBoard("localhost", 8887);
 	
 	var frames = 0;

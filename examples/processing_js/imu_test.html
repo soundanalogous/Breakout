@@ -27,6 +27,9 @@ var IMUFilter = BO.IMUFilter;
 var Button = BO.io.Button;
 var ButtonEvent = BO.io.ButtonEvent;
 
+// set to true to print debug messages to console
+BO.enableDebugging = true;
+
 // NOTE: you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 // with the ITG3200 and ADXL345 sensors
 
@@ -150,6 +153,7 @@ sketch.attachFunction = function(p) {
 
 	function initGyro() {
 		// params: IOBoard, autoStart, i2cAddress
+		// disable autoStart (2nd param) because we want to update manually
 		gyro = new GyroITG3200(fio, false);
 	    gyro.setOffsets(-3, 4.0, -4.1);
 	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);		
@@ -203,6 +207,7 @@ sketch.attachFunction = function(p) {
 
 		if (accelerometer === undefined || gyro === undefined) return;
 
+		// update the accelerometer and gyro manually
 		accelerometer.update();
 		gyro.update();
 	}

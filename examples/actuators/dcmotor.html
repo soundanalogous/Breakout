@@ -28,6 +28,9 @@ $(document).ready(function() {
 	var Timer = JSUTILS.Timer;
 	var TimerEvent = JSUTILS.TimerEvent;
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	var arduino = new IOBoard("localhost", 8887);
 	var motor;
 	var timer;

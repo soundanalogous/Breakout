@@ -27,6 +27,9 @@ $(document).ready(function() {
 	var IOBoardEvent = BO.IOBoardEvent;
 	var Oscillator = BO.generators.Oscillator;
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	var arduino = new IOBoard("localhost", 8887);
 	var blinkLED;
 	var fadeLED;
@@ -39,27 +42,34 @@ $(document).ready(function() {
 					
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 		
-		var freq = 1; // time in seconds
+		var freq = 1.0; // time in seconds
 	
 		// set a pin to PWM
 		arduino.setDigitalPinMode(11, Pin.PWM);
+		// get a reference to the Pin object
 		fadeLED = arduino.getDigitalPin(11);
 		// create a new generator
+		// params: wave, freq, amplitude, offset, phase, times (0 = forever)
 		oscSin = new Oscillator(Oscillator.SIN, freq, 1, 0, 0, 0);
-		// add the generator to the pin
+		// add the sine wave oscillator to the pin
 		fadeLED.addGenerator(oscSin);
 		// start the generator
 		oscSin.start();
 
-		// set digital pin 13 to output
-		arduino.setDigitalPinMode(13, Pin.DOUT);
-		// get a reference to the pin
-		blinkLED = arduino.getDigitalPin(13);
+		// set digital pin 10 to output
+		arduino.setDigitalPinMode(10, Pin.DOUT);
+		// get a reference to the Pin object
+		blinkLED = arduino.getDigitalPin(10);
+		// params: wave, freq, amplitude, offset, phase, times (0 = forever)
 		oscSquare = new Oscillator(Oscillator.SQUARE, freq, 1, 0, 0, 0);
+		// add the square wave oscillator to the pin
 		blinkLED.addGenerator(oscSquare);
+		// start the generator
 		oscSquare.start();
 
+		// stop the square wave oscillator after 4 seconds
 		setTimeout(stopOsc, 4000);
+		// restart the square wave osciallator after 8 seconds
 		setTimeout(startOsc, 8000);
 				
 	}

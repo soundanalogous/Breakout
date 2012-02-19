@@ -25,7 +25,10 @@ $(document).ready(function() {
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var MagnetometerHMC5883 = BO.io.MagnetometerHMC5883;
-	var MagnetometerEvent = BO.io.MagnetometerEvent;	
+	var MagnetometerEvent = BO.io.MagnetometerEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
 
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ADXL345

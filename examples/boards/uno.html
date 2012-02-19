@@ -38,6 +38,9 @@ $(document).ready(function() {
 	var PotEvent = BO.io.PotEvent;
 	var RGBLED = BO.io.RGBLED;
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
 	

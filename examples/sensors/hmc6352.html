@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #00AEEF;
+	padding:20px;
+}
+</style>
+
+<title>HMC6352 Compass Example Example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// dependencies
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var CompassHMC6352 = BO.io.CompassHMC6352;
+	var CompassEvent = BO.io.CompassEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;
+
+	// params: IPaddress, port
+	var uno = new IOBoard("localhost", 8887);
+	var compass;
+	
+	uno.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		
+		// remove the listener because it is no longer needed
+		uno.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// i2c module example:	HMC6352 digital compass module	
+		compass = new CompassHMC6352(uno);
+		compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
+		
+		setTimeout(stopReading, 1000);
+		setTimeout(startReading, 3000);
+				
+	}
+	
+	// test compass stopReading method
+	function stopReading() {
+		compass.stopReading();
+	}
+	
+	// test compass startReading method
+	function startReading() {
+		compass.startReading();
+	}	
+	
+	function onHeadingUpdate(evt) {
+		$('#heading').html("heading: " + evt.target.heading);
+	}	
+			
+});
+
+</script>
+
+</head>
+<body>
+  
+	<div id="heading" class="text">heading:</div>
+
+</body>
+</html>​

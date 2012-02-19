@@ -27,6 +27,9 @@ $(document).ready(function() {
 	var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
 	var AccelerometerEvent = BO.io.AccelerometerEvent;	
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ADXL345
 	var fio = new IOBoard("localhost", 8887);

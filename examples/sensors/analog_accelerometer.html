@@ -25,7 +25,10 @@ $(document).ready(function() {
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
-	var AccelerometerEvent = BO.io.AccelerometerEvent;	
+	var AccelerometerEvent = BO.io.AccelerometerEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
 
 	var arduino = new IOBoard("localhost", 8887);
 	var RANGE_GS = 3; // +-3 Gs for ADXL335

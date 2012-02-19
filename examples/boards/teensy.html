@@ -33,6 +33,9 @@ $(document).ready(function() {
 	var ButtonEvent = BO.io.ButtonEvent;
 	var Servo = BO.io.Servo;
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	var teensy = new IOBoard("localhost", 8887);
 	
 	var frames = 0;

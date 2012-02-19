@@ -36,12 +36,14 @@ BO.io.GyroITG3200 = (function() {
 	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance
 	 * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
-	 * @param {Number} address The i2c address of the accelerometer (default is 0x69)
+	 * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
+	 * GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND, then use GyroITG3200.ID_AD0_GND. 
+	 * Default = GyroITG3200.ID_AD0_VDD
 	 */
 	GyroITG3200 = function(board, autoStart, address) {
 
-		address = address || GyroITG3200.DEVICE_ID;
 		if (autoStart === undefined) autoStart = true;
+		address = address || GyroITG3200.ID_AD0_VDD;
 		
 		I2CBase.call(this, board, address);
 
@@ -308,10 +310,12 @@ BO.io.GyroITG3200 = (function() {
 	// public static constants
 
 	/** 
-	 * ID = 0x69 if pin 9 is tied to VCC, else 0x68 if pin is tied to GND
+	 * ID = 0x69 if sensor pin 9 (AD0) is tied to Power, 
+	 * else ID = 0x68 if pin 9 is tied to Ground
 	 * @constant 
 	 */
-	GyroITG3200.DEVICE_ID = 0x69;
+	GyroITG3200.ID_AD0_VDD = 0x69;
+	GyroITG3200.ID_AD0_GND = 0x68;
 
 
 	// document events

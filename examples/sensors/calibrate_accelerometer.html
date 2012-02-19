@@ -27,6 +27,9 @@ $(document).ready(function() {
 	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
 	var AccelerometerEvent = BO.io.AccelerometerEvent;
 
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
 	var arduino = new IOBoard("localhost", 8887);
 	var RANGE_GS = 3; // +-3 Gs for ADXL335
 	var SUPPLY_V = 3.3; // supply voltage of sensor
