@@ -1,4 +1,5 @@
 .DS_Store
+release.sh
 
 node_server/node_modules/
 release/

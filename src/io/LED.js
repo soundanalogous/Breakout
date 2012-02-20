@@ -20,7 +20,6 @@ BO.io.LED = (function() {
 	var Oscillator = BO.generators.Oscillator;
 
 	/**
-	 * Creates a LED object.
 	 * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
 	 * than Oscillator.SQUARE the LED must be connected to a PWM pin.</p>
 	 *
