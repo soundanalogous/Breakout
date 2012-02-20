@@ -19,7 +19,7 @@ The first step is to upload StandardFirmata to your Arduino (or Arduino-compatib
 
 1. Launch Arduino 1.0 and navigate to File -> Examples -> Firmata -> StandardFirmata
 2. Compile StandardFirmata for your board and upload.
-3. Wire up a button and led to you I/O board as illustrated on page 2 in Breakout/examples/schematics.pdf (or downlaod [here](http://breakoutjs.com/examples/schematics.pdf)).
+3. Wire up a button and led to you I/O board as illustrated on page 2 in Breakout/examples/schematics.pdf (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
 
 The next step is to run the Breakout Server application:
 

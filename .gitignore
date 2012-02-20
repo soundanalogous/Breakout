@@ -1,6 +1,9 @@
 .DS_Store
+
 release.sh
+release/build.bat
+release/BreakoutLogo.icns
+release/BreakoutLogo.ico
 
 node_server/node_modules/
-release/
 examples/tests/
