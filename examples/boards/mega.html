@@ -16,7 +16,7 @@
 }
 </style>
 
-<title>Arduino Mega Example</title>
+<title>Arduino Mega 2560 Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
@@ -35,23 +35,18 @@ $(document).ready(function() {
 	var CompassEvent = BO.io.CompassEvent;
 	var Button = BO.io.Button;
 	var ButtonEvent = BO.io.ButtonEvent;
+	var Servo = BO.io.Servo;
+	var LED = BO.io.LED;
+	var Oscillator = BO.generators.Oscillator;
 
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
 	var mega = new IOBoard("localhost", 8887);
-	
-	var frames = 0;
-	var intensity = 0;
-	var direction = .01;
 	var servoDir = true;
 	var blinkM;
 	var compass;
 	var servo;
-	var blinkLED;
-	var fadeLED;
-
-	console.log("name = " + mega.name);
 	
 	mega.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -60,48 +55,60 @@ $(document).ready(function() {
 		mega.removeEventListener(IOBoardEvent.READY, onReady);
 					
 		// listen for incoming string messages
+		// when using StandardFirmata, error messages will be sent
+		// from the I/O board as strings.
 		mega.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+
+		var blinkLED = new LED(mega, mega.getDigitalPin(13));
+		blinkLED.blink(1000, 0);
+
+		// Digital input using Button object:
+		// params: board, pin, mode
+		var button01 = new Button(mega, mega.getDigitalPin(37), Button.PULL_DOWN);
+		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+		button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
 		
-		// set digital pin 13 to output
-		mega.setDigitalPinMode(13, Pin.DOUT);
-		// get a reference to the pin
-		blinkLED = mega.getDigitalPin(13);
-		blinkLED.value = Pin.LOW;	
-		setInterval(blink, 3000);
-			
-		// get a reference to the pin and listen for Change event
-		//var button01 = new Button(mega, mega.getDigitalPin(2), Button.PULL_DOWN);
-		//button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
-		//button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+		// Demonstrates reading values on an analog pin
+		// enable the analog pin to be read
+		mega.enableAnalogPin(15);
+		// get a reference to the pin object
+		var pot = mega.getAnalogPin(15);
+		// listen for the CHANGE event to be notified when the analog
+		// value has changed.
+		pot.addEventListener(PinEvent.CHANGE, onPotChange);
 		
-		// enable reporting for an analog pin
-		//mega.enableAnalogPin(0);
-		//var pot = mega.getAnalogPin(0);
-		//pot.addEventListener(PinEvent.CHANGE, onPotChange);
-		// disable reporting for an analog pin
-		//mega.disableAnalogPin(0);
-		
-		// set analog pin to digital input
-		mega.setDigitalPinMode(54, Pin.DIN);
-		var button02 = mega.getDigitalPin(54);
+
+		// Digital input example using Pin object:
+		// Demonstrates how to use an analog pin as a digital pin
+		// analog pin A2 is also digital pin 56
+		// either of the 2 following lines can be used:
+		//mega.setDigitalPinMode(56, Pin.DIN);
+		mega.setDigitalPinMode(mega.analogToDigital(2), Pin.DIN);
+
+		// either of the following 2 lines can be used:
+		//var button02 = mega.getDigitalPin(56);
+		var button02 = mega.getAnalogPin(2);
+
 		button02.addEventListener(PinEvent.CHANGE, onButtonChange);
 		
-		// set a pin to PWM
-		mega.setDigitalPinMode(11, Pin.PWM);
-		fadeLED = mega.getDigitalPin(11);
-		setInterval(fade, 11);			
+
+		// create a new LED
+		// params: board, pin		
+		var fadeLED = new LED(mega, mega.getDigitalPin(11));
+		// use a sine wave to fade the led on and off every 2 seconds
+		fadeLED.blink(2000, 0, Oscillator.SIN);			
 		
-		// set a pin to SERVO
-		mega.setDigitalPinMode(9, Pin.SERVO);
-		servo = mega.getDigitalPin(9);
-		//setInterval(servoTest, 5000);
+		servo = new Servo(mega, mega.getDigitalPin(4));
+		setInterval(servoTest, 5000);
 		
-		//blinkM = new BlinkM(mega);
-		//blinkM.stopScript();
-		//setInterval(randomColor, 2000);
+		// i2c module example: BlinkM module
+		blinkM = new BlinkM(mega);
+		blinkM.stopScript();
+		setInterval(randomColor, 2000);
 		
-		//compass = new CompassHMC6352(mega);
-		//compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
+		// i2c module example:	HMC6352 digital compass module
+		compass = new CompassHMC6352(mega);
+		compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
 		
 	}
 	
@@ -145,41 +152,18 @@ $(document).ready(function() {
 		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
 		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
-	
-	function onFirmwareVersion(event) {
-		console.log("firmware version: " + event.version);
-	}
-	
-	function onFirmwareName(event) {
-		console.log("firmware name: " + event.name + " version: " + event.version);
-	}
-	
+		
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
 	}
 	
-	function fade() {
-		fadeLED.value = (intensity += direction);
-		if (intensity >= 1.0) direction = -0.01;
-		else if (intensity <= 0.0) direction = 0.01;
-	}
-	
 	function servoTest() {
 		if (servoDir) {
-			servo.value = 0;
+			servo.angle = 0;
 		} else {
-			servo.value = 180;
+			servo.angle = 180;
 		}
 		servoDir = !servoDir;
-	}
-	
-	function blink() {
-		frames++;
-		if (frames % 2 == 0) {
-			blinkLED.value = Pin.LOW;
-		} else {
-			blinkLED.value = Pin.HIGH;
-		}
 	}
 			
 });

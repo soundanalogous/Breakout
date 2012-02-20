@@ -32,23 +32,17 @@ $(document).ready(function() {
 	var Button = BO.io.Button;
 	var ButtonEvent = BO.io.ButtonEvent;
 	var Servo = BO.io.Servo;
+	var LED = BO.io.LED;
+	var Oscillator = BO.generators.Oscillator;	
 
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
 	var teensy = new IOBoard("localhost", 8887);
-	
-	var frames = 0;
-	var intensity = 0;
-	var direction = 0.01;
 	var servoDir = true;
 	var blinkM;
 	var compass;
 	var servo;
-	var blinkLED;
-	var fadeLED;
-
-	console.log("name = " + teensy.name);
 	
 	teensy.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -59,12 +53,9 @@ $(document).ready(function() {
 		// listen for incoming string messages
 		teensy.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 
-		// set digital pin 4 to output
-		teensy.setDigitalPinMode(4, Pin.DOUT);
-		// get a reference to the pin
-		blinkLED = teensy.getDigitalPin(4);
-		blinkLED.value = Pin.LOW;	
-		setInterval(blink, 3000);
+		// blink the on for 1 second and off for 1 second
+		var blinkLED = new LED(teensy, teensy.getDigitalPin(4));
+		blinkLED.blink(1000, 0);
 	
 		//set digital pin 2 to input
 		teensy.setDigitalPinMode(2, Pin.DIN);
@@ -87,13 +78,13 @@ $(document).ready(function() {
 		teensy.setDigitalPinMode(16, Pin.DIN);
 		var button02 = teensy.getDigitalPin(16);
 		button02.addEventListener(PinEvent.CHANGE, onButtonChange);
-		
-		// set a pin to PWM
-		teensy.setDigitalPinMode(10, Pin.PWM);
-		fadeLED = teensy.getDigitalPin(10);
-		setInterval(fade, 10);			
-		
+
+		// fade the LED on and off over a 2 second duration
+		var fadeLED = new LED(teensy, teensy.getDigitalPin(10));
+		fadeLED.blink(2000, 0, Oscillator.SIN);		
+
 		servo = new Servo(teensy, teensy.getDigitalPin(9));
+		// rotate the servo head ever 5 seconds
 		setInterval(servoTest, 5000);
 		
 		blinkM = new BlinkM(teensy);
@@ -156,43 +147,18 @@ $(document).ready(function() {
 		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
 		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
-	
-	function onFirmwareVersion(event) {
-		console.log("firmware version: " + event.version);
-	}
-	
-	function onFirmwareName(event) {
-		console.log("firmware name: " + event.name + " version: " + event.version);
-	}
 		
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
 	}
 	
-	function fade() {
-		fadeLED.value = (intensity += direction);
-		if (intensity >= 1.0) direction = -0.01;
-		else if (intensity <= 0.0) direction = 0.01;
-	}
-	
 	function servoTest() {
 		if (servoDir) {
-			//servo.value = 0;
 			servo.angle = 0;
 		} else {
-			//servo.value = 180;
 			servo.angle = 180;
 		}
 		servoDir = !servoDir;
-	}
-	
-	function blink() {
-		frames++;
-		if (frames % 2 == 0) {
-			blinkLED.value = Pin.LOW;
-		} else {
-			blinkLED.value = Pin.HIGH;
-		}
 	}
 			
 });

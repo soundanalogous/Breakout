@@ -65,7 +65,8 @@ $(document).ready(function() {
 		// listen for incoming string messages
 		uno.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 		
-
+		// Demonstrates using a pin object to set a LED value
+		// rather than using an LED object.
 		// set digital pin 13 to output
 		uno.setDigitalPinMode(13, Pin.DOUT);
 		// get a reference to the pin
