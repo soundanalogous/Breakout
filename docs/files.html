@@ -24,7 +24,6 @@ a
 a:hover
 {
 	color: #FF6623;
-	font-weight: bold;
 }
 
 #header
@@ -37,6 +36,7 @@ a:hover
 .header_links
 {
 	padding-left: 15px;
+	font-weight: normal;
 }
 
 #links
@@ -99,6 +99,7 @@ pre.code
 #content
 {
 	/*margin-left: 190px;*/
+	color: #000000;
 	margin-left: 250px;
 	width: 600px;
 }
@@ -106,6 +107,10 @@ pre.code
 #content a
 {
 	color: #FF6623;
+}
+
+#content #class_desc {
+
 }
 
 .classList
@@ -151,11 +156,6 @@ div.sectionTitle
 
 .summaryTable thead { display: none; }
 
-.summaryTable a:hover
-{
-	font-weight: normal;
-}
-
 .summaryTable td
 {
 	vertical-align: top;
@@ -175,8 +175,7 @@ div.sectionTitle
 td.attributes, .fixedFont
 {
 	line-height: 15px;
-	/*color: #002EBE;*/
-	color: #333333;
+	color: #111111;
 	font-family: "Courier New",Courier,monospace;
 	font-size: 13px;
 }
@@ -219,7 +218,7 @@ ul.inheritsList
 
 .light, td.attributes, .light a:link, .light a:visited
 {
-	color: #777;
+	color: #333333;
 	font-style: italic;
 }
 
@@ -233,8 +232,9 @@ ul.inheritsList
 	
 	<body>
 		<div id="header">
-<img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png">
-<div id="links"><a class="header_links" href="http://breakoutjs.com/?page_id=5">About</a>
+<a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+<div id="links">
+<a class="header_links" href="http://breakoutjs.com/?page_id=5">About</a>
 <a class="header_links" href="http://breakoutjs.com/?page_id=20">Guides</a>
 <a class="header_links" href="http://breakoutjs.com/?forum=breakout-forum">Forum</a>
 <a class="header_links" href="https://github.com/soundanalogous/Breakout">Github</a>
@@ -302,6 +302,8 @@ ul.inheritsList
 	
 	<li><a href="symbols/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
 	
+	<li><a href="symbols/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+	
 	<li><a href="symbols/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
 	
 	<li><a href="symbols/BO.io.Servo.html">BO.io.Servo</a></li>
@@ -317,6 +319,8 @@ ul.inheritsList
 	<li><a href="symbols/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
 	
 	<li><a href="symbols/BO.Pin.html">BO.Pin</a></li>
+	
+	<li><a href="symbols/BO.PinEvent.html">BO.PinEvent</a></li>
 	
 	<li><a href="symbols/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
 	
@@ -413,6 +417,30 @@ ul.inheritsList
 			<hr />
 			
 			<div>
+				<h2><a href="symbols/src/Breakout_src_core_PinEvent.js.html">../Breakout/src/core/PinEvent.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_core_WSocketEvent.js.html">../Breakout/src/core/WSocketEvent.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
 				<h2><a href="symbols/src/Breakout_src_core_WSocketWrapper.js.html">../Breakout/src/core/WSocketWrapper.js</a></h2>
 				
 				<dl>
@@ -426,6 +454,18 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/src/Breakout_src_custom_ID12RFIDReader.js.html">../Breakout/src/custom/ID12RFIDReader.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_custom_RFIDEvent.js.html">../Breakout/src/custom/RFIDEvent.js</a></h2>
 				
 				<dl>
 					
@@ -486,6 +526,18 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/src/Breakout_src_generators_GeneratorBase.js.html">../Breakout/src/generators/GeneratorBase.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_generators_GeneratorEvent.js.html">../Breakout/src/generators/GeneratorEvent.js</a></h2>
 				
 				<dl>
 					
@@ -558,6 +610,18 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/src/Breakout_src_io_Button.js.html">../Breakout/src/io/Button.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_io_ButtonEvent.js.html">../Breakout/src/io/ButtonEvent.js</a></h2>
 				
 				<dl>
 					
@@ -653,7 +717,7 @@ ul.inheritsList
 			<hr />
 			
 			<div>
-				<h2><a href="symbols/src/Breakout_src_io_MagnetoMeterHMC5883.js.html">../Breakout/src/io/MagnetoMeterHMC5883.js</a></h2>
+				<h2><a href="symbols/src/Breakout_src_io_MagnetometerHMC5883.js.html">../Breakout/src/io/MagnetometerHMC5883.js</a></h2>
 				
 				<dl>
 					
@@ -666,6 +730,18 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/src/Breakout_src_io_Potentiometer.js.html">../Breakout/src/io/Potentiometer.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_io_PotEvent.js.html">../Breakout/src/io/PotEvent.js</a></h2>
 				
 				<dl>
 					
@@ -702,6 +778,18 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/src/Breakout_src_io_SoftPot.js.html">../Breakout/src/io/SoftPot.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_io_SoftPotEvent.js.html">../Breakout/src/io/SoftPotEvent.js</a></h2>
 				
 				<dl>
 					
@@ -760,11 +848,23 @@ ul.inheritsList
 			</div>
 			<hr />
 			
+			<div>
+				<h2><a href="symbols/src/Breakout_src_utils_TimerEvent.js.html">../Breakout/src/utils/TimerEvent.js</a></h2>
+				
+				<dl>
+					
+					
+					
+					
+				</dl>
+			</div>
+			<hr />
+			
 			
 		</div>
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.4.0 on Sun Feb 12 2012 18:19:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.4.0 on Mon Feb 20 2012 20:44:19 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

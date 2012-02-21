@@ -21,26 +21,28 @@
 <span class='line'> 14</span> 
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 16</span> 	 * @exports MagnetometerEvent as BO.io.MagnetometerEvent
-<span class='line'> 17</span> 	 * @constructor
-<span class='line'> 18</span> 	 * @augments JSUTILS.Event
-<span class='line'> 19</span>  	 * @param {String} type The event type	 
-<span class='line'> 20</span> 	 */</span><span class="WHIT">
-<span class='line'> 21</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 22</span> 
-<span class='line'> 23</span> </span><span class="WHIT">		</span><span class="NAME">Event.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> 	 * @class An Event object to be dispatched (fired) by a Magnetometer
+<span class='line'> 18</span> 	 * object.	 
+<span class='line'> 19</span> 	 * @constructor
+<span class='line'> 20</span> 	 * @augments JSUTILS.Event
+<span class='line'> 21</span>  	 * @param {String} type The event type	 
+<span class='line'> 22</span> 	 */</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 24</span> 
-<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"MagnetometerEvent"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">Event.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 26</span> 
-<span class='line'> 27</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"MagnetometerEvent"</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 28</span> 
-<span class='line'> 29</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
-<span class='line'> 30</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerEvent.UPDATE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"update"</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 31</span> </span><span class="WHIT">	
-<span class='line'> 32</span> 
-<span class='line'> 33</span> 	</span><span class="NAME">MagnetometerEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 34</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">MagnetometerEvent</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 35</span> 
-<span class='line'> 36</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MagnetometerEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 30</span> 
+<span class='line'> 31</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerEvent.UPDATE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"update"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">	
+<span class='line'> 34</span> 
+<span class='line'> 35</span> 	</span><span class="NAME">MagnetometerEvent.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">Event.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerEvent.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">MagnetometerEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 37</span> 
-<span class='line'> 38</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 39</span> </span></pre></body></html>
+<span class='line'> 38</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MagnetometerEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 39</span> 
+<span class='line'> 40</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> </span></pre></body></html>

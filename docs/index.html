@@ -24,7 +24,6 @@ a
 a:hover
 {
 	color: #FF6623;
-	font-weight: bold;
 }
 
 #header
@@ -37,6 +36,7 @@ a:hover
 .header_links
 {
 	padding-left: 15px;
+	font-weight: normal;
 }
 
 #links
@@ -99,6 +99,7 @@ pre.code
 #content
 {
 	/*margin-left: 190px;*/
+	color: #000000;
 	margin-left: 250px;
 	width: 600px;
 }
@@ -106,6 +107,10 @@ pre.code
 #content a
 {
 	color: #FF6623;
+}
+
+#content #class_desc {
+
 }
 
 .classList
@@ -151,11 +156,6 @@ div.sectionTitle
 
 .summaryTable thead { display: none; }
 
-.summaryTable a:hover
-{
-	font-weight: normal;
-}
-
 .summaryTable td
 {
 	vertical-align: top;
@@ -175,8 +175,7 @@ div.sectionTitle
 td.attributes, .fixedFont
 {
 	line-height: 15px;
-	/*color: #002EBE;*/
-	color: #333333;
+	color: #111111;
 	font-family: "Courier New",Courier,monospace;
 	font-size: 13px;
 }
@@ -219,7 +218,7 @@ ul.inheritsList
 
 .light, td.attributes, .light a:link, .light a:visited
 {
-	color: #777;
+	color: #333333;
 	font-style: italic;
 }
 
@@ -233,8 +232,9 @@ ul.inheritsList
 	
 	<body>
 		<div id="header">
-<img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png">
-<div id="links"><a class="header_links" href="http://breakoutjs.com/?page_id=5">About</a>
+<a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+<div id="links">
+<a class="header_links" href="http://breakoutjs.com/?page_id=5">About</a>
 <a class="header_links" href="http://breakoutjs.com/?page_id=20">Guides</a>
 <a class="header_links" href="http://breakoutjs.com/?forum=breakout-forum">Forum</a>
 <a class="header_links" href="https://github.com/soundanalogous/Breakout">Github</a>
@@ -302,6 +302,8 @@ ul.inheritsList
 	
 	<li><a href="symbols/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
 	
+	<li><a href="symbols/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+	
 	<li><a href="symbols/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
 	
 	<li><a href="symbols/BO.io.Servo.html">BO.io.Servo</a></li>
@@ -317,6 +319,8 @@ ul.inheritsList
 	<li><a href="symbols/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
 	
 	<li><a href="symbols/BO.Pin.html">BO.Pin</a></li>
+	
+	<li><a href="symbols/BO.PinEvent.html">BO.PinEvent</a></li>
 	
 	<li><a href="symbols/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
 	
@@ -354,211 +358,238 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></h2>
-				
+				Creates an interface to an ID-12 RFID Reader.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></h2>
-				
+				An Event object to be dispatched when an RFID tag
+is read or when an RFID tag is removed from a reader.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.filters.Convolution.html">BO.filters.Convolution</a></h2>
-				
+				The Convolution object performs low-pass, high-pass and moving average filtering
+on an analog input.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.filters.FilterBase.html">BO.filters.FilterBase</a></h2>
-				
+				A base object to be extended by all Filter objects.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.filters.Scaler.html">BO.filters.Scaler</a></h2>
-				
+				Scales up an input value from its min and max range to a specified 
+minimum to maximum range.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></h2>
-				
+				Divides an input to 0 or 1 based on the threshold and hysteresis.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></h2>
-				
+				A base object to be extended by all Generator objects.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a Generator
+object when its value has updated.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.generators.Oscillator.html">BO.generators.Oscillator</a></h2>
-				
+				The Oscillator object can be attached to a Pin or LED object to output
+a waveform.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.I2CBase.html">BO.I2CBase</a></h2>
-				
+				A base class for I2C objects.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></h2>
-				
+				Creates an interface to an ADXL345 3-axis accelerometer.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by an Accelerometer
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></h2>
-				
+				Creates an interface to an analog accelerometer.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.BlinkM.html">BO.io.BlinkM</a></h2>
-				
+				Creates an interface to a BlinkM RGB Led module.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.Button.html">BO.io.Button</a></h2>
-				
+				Creates and interface to a physical button.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a Button
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.CompassEvent.html">BO.io.CompassEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a Compass
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></h2>
-				
+				Creates an interface to an HMC6352 Digital Compass module.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.DCMotor.html">BO.io.DCMotor</a></h2>
-				
+				Creates an interface to an H-bridge to control the
+direction of rotation of a motor shaft.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.GyroEvent.html">BO.io.GyroEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a Gyroscope
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></h2>
-				
+				Creates an interface to an ITG3200 3-axis gyroscope.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.LED.html">BO.io.LED</a></h2>
-				Creates an LED object.
+				Creates an interface to an LED.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a Magnetometer
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></h2>
-				
+				Creates an interface to an HMC5883 3-axis magnetometer.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.Potentiometer.html">BO.io.Potentiometer</a></h2>
-				
+				Creates an interface to an analog input sensor.
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/BO.io.PotEvent.html">BO.io.PotEvent</a></h2>
+				An Event object to be dispatched (fired) by a Potentiometer
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.RGBLED.html">BO.io.RGBLED</a></h2>
-				
+				Creates an interface to an RGB Led.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.Servo.html">BO.io.Servo</a></h2>
-				
+				Creates an interface to a Servo motor.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.SoftPot.html">BO.io.SoftPot</a></h2>
-				
+				Creates an interface to a SoftPot sensor.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a SoftPot
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.IOBoard.html">BO.IOBoard</a></h2>
-				
+				Creates an interface to the I/O board.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.IOBoardEvent.html">BO.IOBoardEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by the IOBoard object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></h2>
-				
+				A base class for physical input objects.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.Pin.html">BO.Pin</a></h2>
-				An object to represent an IOBoard pin
+				Each analog and digital pin of the physical I/O board is represented by a Pin object.
+			</div>
+			<hr />
+			
+			<div>
+				<h2><a href="symbols/BO.PinEvent.html">BO.PinEvent</a></h2>
+				An Event object to be dispatched (fired) by a Pin
+object.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.WSocketEvent.html">BO.WSocketEvent</a></h2>
-				
+				Dispatches Websocket events: Connected (onopen), Message (onmessge) 
+and Closed (onclose) objects.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/BO.WSocketWrapper.html">BO.WSocketWrapper</a></h2>
-				
+				Creates a wrapper for various websocket implementations to unify the interface.
 			</div>
 			<hr />
 			
@@ -576,19 +607,22 @@ ul.inheritsList
 			
 			<div>
 				<h2><a href="symbols/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></h2>
-				
+				The EventDispatcher class mimics the DOM event dispatcher model so the 
+user can add and remove event listeners in a familiar way.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/JSUTILS.Timer.html">JSUTILS.Timer</a></h2>
-				
+				The Timer object wraps the window.setInterval() method to provide
+an as3-like Timer interface.
 			</div>
 			<hr />
 			
 			<div>
 				<h2><a href="symbols/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></h2>
-				
+				An Event object to be dispatched (fired) by a Timer
+object.
 			</div>
 			<hr />
 			
@@ -596,7 +630,7 @@ ul.inheritsList
 		</div>
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.4.0 on Sun Feb 12 2012 18:19:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blankt">JsDoc Toolkit</a> 2.4.0 on Mon Feb 20 2012 20:44:19 GMT-0500 (EST)
 		</div>
 	</body>
 </html>

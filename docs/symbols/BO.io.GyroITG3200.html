@@ -24,7 +24,6 @@ a
 a:hover
 {
 	color: #FF6623;
-	font-weight: bold;
 }
 
 #header
@@ -37,6 +36,7 @@ a:hover
 .header_links
 {
 	padding-left: 15px;
+	font-weight: normal;
 }
 
 #links
@@ -99,6 +99,7 @@ pre.code
 #content
 {
 	/*margin-left: 190px;*/
+	color: #000000;
 	margin-left: 250px;
 	width: 600px;
 }
@@ -106,6 +107,10 @@ pre.code
 #content a
 {
 	color: #FF6623;
+}
+
+#content #class_desc {
+
 }
 
 .classList
@@ -151,11 +156,6 @@ div.sectionTitle
 
 .summaryTable thead { display: none; }
 
-.summaryTable a:hover
-{
-	font-weight: normal;
-}
-
 .summaryTable td
 {
 	vertical-align: top;
@@ -175,8 +175,7 @@ div.sectionTitle
 td.attributes, .fixedFont
 {
 	line-height: 15px;
-	/*color: #002EBE;*/
-	color: #333333;
+	color: #111111;
 	font-family: "Courier New",Courier,monospace;
 	font-size: 13px;
 }
@@ -219,7 +218,7 @@ ul.inheritsList
 
 .light, td.attributes, .light a:link, .light a:visited
 {
-	color: #777;
+	color: #333333;
 	font-style: italic;
 }
 
@@ -235,8 +234,9 @@ ul.inheritsList
 <!-- ============================== header ================================= -->	
 		<!-- begin static/header.html -->
 		<div id="header">
-<img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png">
-<div id="links"><a class="header_links" href="http://breakoutjs.com/?page_id=5">About</a>
+<a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+<div id="links">
+<a class="header_links" href="http://breakoutjs.com/?page_id=5">About</a>
 <a class="header_links" href="http://breakoutjs.com/?page_id=20">Guides</a>
 <a class="header_links" href="http://breakoutjs.com/?forum=breakout-forum">Forum</a>
 <a class="header_links" href="https://github.com/soundanalogous/Breakout">Github</a>
@@ -307,6 +307,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
 	
+	<li><a href="../symbols/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+	
 	<li><a href="../symbols/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
 	
 	<li><a href="../symbols/BO.io.Servo.html">BO.io.Servo</a></li>
@@ -322,6 +324,8 @@ ul.inheritsList
 	<li><a href="../symbols/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
 	
 	<li><a href="../symbols/BO.Pin.html">BO.Pin</a></li>
+	
+	<li><a href="../symbols/BO.PinEvent.html">BO.PinEvent</a></li>
 	
 	<li><a href="../symbols/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
 	
@@ -356,7 +360,11 @@ ul.inheritsList
 					<a href="../symbols/BO.I2CBase.html">BO.I2CBase</a>.<br />
 				
 			
-				
+				<div id="class_desc">Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
+angular acceleration around the x, y, and z axis. This object provides
+the angular velocity of each axis. Proper calibration is required for an accurate
+reading. See Breakout/examples/sensors/itg3200.html and 
+Breakout/examples/processing_js/gyro.html for example applications.</div>
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_GyroITG3200.js.html">GyroITG3200.js</a>.
@@ -405,9 +413,10 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								BO.io.GyroITG3200.<b><a href="../symbols/BO.io.GyroITG3200.html#.DEVICE_ID">DEVICE_ID</a></b>
+								BO.io.GyroITG3200.<b><a href="../symbols/BO.io.GyroITG3200.html#.ID_AD0_VDD">ID_AD0_VDD</a></b>
 								</div>
-								<div class="description">ID = 0x69 if pin 9 is tied to VCC, else 0x68 if pin is tied to GND</div>
+								<div class="description">ID = 0x69 if sensor pin 9 (AD0) is tied to Power, 
+else ID = 0x68 if pin 9 is tied to Ground</div>
 							</td>
 						</tr>
 					
@@ -643,7 +652,9 @@ ul.inheritsList
 								<span class="light fixedFont">{Number}</span>  <b>address</b>
 								
 							</dt>
-								<dd>The i2c address of the accelerometer (default is 0x69)</dd>
+								<dd>The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
+GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND, then use GyroITG3200.ID_AD0_GND. 
+Default = GyroITG3200.ID_AD0_VDD</dd>
 						
 						</dl>
 					
@@ -663,15 +674,16 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".DEVICE_ID"> </a>
+					<a name=".ID_AD0_VDD"> </a>
 					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
 					
 					
-					<span class="light">BO.io.GyroITG3200.</span><b>DEVICE_ID</b>
+					<span class="light">BO.io.GyroITG3200.</span><b>ID_AD0_VDD</b>
 					
 					</div>
 					<div class="description">
-						ID = 0x69 if pin 9 is tied to VCC, else 0x68 if pin is tied to GND
+						ID = 0x69 if sensor pin 9 (AD0) is tied to Power, 
+else ID = 0x68 if pin 9 is tied to Ground
 						
 						
 					</div>
@@ -1120,7 +1132,7 @@ is enabled, false if it is disabled.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sun Feb 12 2012 18:19:12 GMT-0500 (EST)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Feb 20 2012 20:44:19 GMT-0500 (EST)
 		</div>
 	</body>
 </html>
