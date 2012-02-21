@@ -143,10 +143,16 @@ sketch.attachFunction = function(p) {
 
 		imuFilter = new IMUFilter(FILTER_RATE, 0.3);
 
+		// create a tick interval at which to update the sensor
+		// values. This is not as efficient as performing the IMU calculations
+		// directly on the microcontroller since there is less control
+		// over timing going through StandardFirmata
 		imuFilterTick = new Timer(UPDATE_INTERVAL, 0);
 		imuFilterTick.addEventListener(TimerEvent.TIMER, onImuFilterTick);
 		imuFilterTick.start();
 
+		// create a button to use to recalibrate the sensor
+		// you must recalibrate often
 		var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
         button.addEventListener(ButtonEvent.PRESS, onBtnPress);
 	}
@@ -155,6 +161,9 @@ sketch.attachFunction = function(p) {
 		// params: IOBoard, autoStart, i2cAddress
 		// disable autoStart (2nd param) because we want to update manually
 		gyro = new GyroITG3200(fio, false);
+		// need to adjust these values until the gyro x, y, and z
+		// values are each as close to zero as possible
+		// the close to zero you get the, the less drift you will notice
 	    gyro.setOffsets(-3, 4.0, -4.1);
 	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);		
 	}
@@ -169,6 +178,8 @@ sketch.attachFunction = function(p) {
 	function onAccelerationUpdate(event) {
 		gotAccel = true;
 
+		// do not call process until we have updated
+		// values from both the gyro and the accelerometer
 		if (gotGyro === true) {
 			process();
 		}
@@ -178,6 +189,8 @@ sketch.attachFunction = function(p) {
 	function onGyroUpdate(event) {
 		gotGyro = true;
 
+		// do not call process until we have updated
+		// values from both the gyro and the accelerometer
 		if (gotAccel === true) {
 			process();
 		}
@@ -187,6 +200,7 @@ sketch.attachFunction = function(p) {
 		gotGyro = false;
 		gotAccel = false;
 
+		// apply the gyro and accelerometer data to the IMU filter
 		imuFilter.updateFilter(toRadians(gyro.x), 
 								toRadians(gyro.y), 
 								toRadians(gyro.z),
@@ -194,17 +208,22 @@ sketch.attachFunction = function(p) {
 								accelerometer.y * GRAVITY, 
 								accelerometer.z * GRAVITY);
 
+		// computer the euler angles to get pitch, roll and yaw values
 		imuFilter.computeEuler();
 
+		// signal that it is now safe to draw
 		isReady = true;
 	}
 
 	function onBtnPress(event) {
+		// reset the IMU filter. need to call this to 
+		// recalibrate the sensor.
 		imuFilter.reset();
 	}
 
 	function onImuFilterTick(event) {
-
+		// don't do anything until the accelerometer and gyro have
+		// been initialized
 		if (accelerometer === undefined || gyro === undefined) return;
 
 		// update the accelerometer and gyro manually

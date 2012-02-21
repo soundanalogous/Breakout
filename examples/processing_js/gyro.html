@@ -44,8 +44,8 @@ sketch.attachFunction = function(p) {
         lastZ = 0,
         interval,
         SMOOTHING = 0.5,
-        accelOrientation,
-        accelReal,
+        smoothedVelocity,
+        realVelocity,
         isReady = false;
 
     p.setup = function() {
@@ -58,11 +58,15 @@ sketch.attachFunction = function(p) {
         font = p.createFont("Arial");
         p.textFont(font, 18);
 
-        accelOrientation = new p.PVector();
-        accelReal = new p.PVector();
+        // create 2 vectors to hold velocity data from the gyro
+        smoothedVelocity = new p.PVector();
+        realVelocity = new p.PVector();
 
         fio = new IOBoard("localhost", 8887);
         fio.addEventListener(IOBoardEvent.READY, onFioReady);
+        // get the sampling interval (this is how often the gyro
+        // data will be reported). We will need this to translate
+        // angular velocity into and angle
         interval = fio.samplingInterval/1000 * 2;
     };
 
@@ -76,6 +80,10 @@ sketch.attachFunction = function(p) {
         p.pushMatrix();
         p.translate(p.width/2.0, p.height/2.0, -100);
 
+        // apply the rotation computed from the gyro
+        // to the object in the scene
+        // note how y and z are flipped in order to orient
+        // the gyro to the screen
         p.rotateX(toRadians(xRot));
         p.rotateY(toRadians(zRot));
         p.rotateZ(-toRadians(yRot));
@@ -84,9 +92,10 @@ sketch.attachFunction = function(p) {
         p.popMatrix();
 
         p.fill(255, 255, 255);
-        p.text("gyro x = " + accelOrientation.x.toFixed(3), 10, 10);
-        p.text("gyro y = " + accelOrientation.y.toFixed(3), 10, 35);
-        p.text("gyro z = " + accelOrientation.z.toFixed(3), 10, 60);
+        // print the current orientation values to the screen
+        p.text("gyro x = " + smoothedVelocity.x.toFixed(3), 10, 10);
+        p.text("gyro y = " + smoothedVelocity.y.toFixed(3), 10, 35);
+        p.text("gyro z = " + smoothedVelocity.z.toFixed(3), 10, 60);
     }
 
     function texturedCube(texture) {
@@ -147,6 +156,8 @@ sketch.attachFunction = function(p) {
 
         initGyro();
 
+        // create a button to use to recalibrate the sensor.
+        // you will have to press the button to recalibrate often
         var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
         button.addEventListener(ButtonEvent.PRESS, onBtnPress);
     }
@@ -156,8 +167,11 @@ sketch.attachFunction = function(p) {
         // adjust the offset values until gyro x, y and z
         // values are around zero when the gyro is not moving
         gyro.setOffsets(-2.0, 4.0, -3.6);
+        // start continuous reading of the gyro
         gyro.startReading();
         gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
+
+        // signal that we can not start drawing
         isReady = true; 
     }
 
@@ -168,9 +182,14 @@ sketch.attachFunction = function(p) {
 
         smooth(xVal, yVal, zVal);
 
-        xRot = accelOrientation.x * interval;
-        yRot = accelOrientation.y * interval;
-        zRot = accelOrientation.z * interval;
+        // translate the angular velocity into rotation
+        // note this is not as accurate as it would be if this
+        // calculation was performed directly on the microcontroller
+        // this is a limitation of Breakout in these types of
+        // timing critical operations.
+        xRot = smoothedVelocity.x * interval;
+        yRot = smoothedVelocity.y * interval;
+        zRot = smoothedVelocity.z * interval;
 
         xRot = (xRot + lastX) % 360;
         yRot = (yRot + lastY) % 360;
@@ -185,30 +204,36 @@ sketch.attachFunction = function(p) {
         reset();
     }
 
+    // reset the vectors
+    // this is important to recalibrate because
+    // the sensor will drift quickly
     function reset() {
         xRot = yRot = zRot = 0;
         lastX = lastY = lastZ = 0;
-        accelOrientation.set(0, 0, 0);
+        smoothedVelocity.set(0, 0, 0);
     }
 
+    // smooth the sensor values
     function smooth(x, y, z) {
         var lerpFactor;
 
-        accelReal.set(x, y, z);
+        realVelocity.set(x, y, z);
 
         lerpFactor = 1.0 - SMOOTHING;
         if (lerpFactor > 1.0) lerpFactor = 1.0;
         else if(lerpFactor < 0.01) lerpFactor = 0.01;
 
-        accelReal.sub(accelOrientation);
-        accelReal.mult(lerpFactor);
-        accelOrientation.add(accelReal);
+        realVelocity.sub(smoothedVelocity);
+        realVelocity.mult(lerpFactor);
+        smoothedVelocity.add(realVelocity);
     }
 
+    // convert degrees to radians
     function toRadians(decimalVal) {
         return decimalVal * Math.PI/180;
     }
 
+    // convert radians to degrees
     function toDegrees(radianVal) {
         return radianVal * (180/Math.PI);
     }

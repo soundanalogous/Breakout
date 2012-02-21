@@ -51,11 +51,12 @@ $(document).ready(function() {
 
 	    // calibrate the accelerometer
 	    // start with 0, 0, 0 and add or subtract in increments
-	    // of 1 until the accelerometer is propery calibrated
-	    // once you find the calibration values for your sensor
+	    // of 1 until the accelerometer is propery calibrated.
+	    // with the accelerometer lying flat, the z value should be 1 if right-side up
+	    // or -1 if upside-down and the x and y values should be zero.
 	    accelerometer.setAxisOffset(-2, -2, 6);
 
-	    // start reading the accelerometer
+	    // start continuous reading of the accelerometer
 	    accelerometer.startReading();
 
 	    accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
@@ -65,6 +66,7 @@ $(document).ready(function() {
 	function onAccelerationUpdate(event) {
 		var accel = event.target;
 		
+		// display the accelerometer values in the browser
 		$('#xVal').html("x = " + accel.x.toFixed(3));
 		$('#yVal').html("y = " + accel.y.toFixed(3));
 		$('#zVal').html("z = " + accel.z.toFixed(3));

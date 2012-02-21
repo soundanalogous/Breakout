@@ -43,6 +43,7 @@ $(document).ready(function() {
 		// need to enable an analog pin in order to read it
 		arduino.enableAnalogPin(0);
 		var pot = arduino.getAnalogPin(0);
+		// add a moving average filter to smooth the input data
 		pot.addFilter(new Convolution(Convolution.MOVING_AVERAGE))
 		pot.addEventListener(PinEvent.CHANGE, onPotChange);
 				

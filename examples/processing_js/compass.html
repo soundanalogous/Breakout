@@ -27,7 +27,9 @@ BO.enableDebugging = true;
 // get a reference to the Processing sketch object
 var sketch = new Processing.Sketch();
 
-// preload images
+// preload images so they are available when the
+// sketch begins. Setup won't be called until all images
+// and external fonts have been loaded.
 sketch.imageCache.add("images/compass_img.png");
 sketch.imageCache.add("images/needle.png");
 
@@ -73,6 +75,8 @@ sketch.attachFunction = function(p) {
 
       p.pushMatrix();
       p.translate(p.width/2, p.height/2);
+      // set the rotation to the heading value 
+      // (need to convert from degrees to radians)
       p.rotate(p.radians(heading));
       p.image(needle, -100, -100);
       p.popMatrix();
@@ -94,6 +98,7 @@ sketch.attachFunction = function(p) {
   };
   
   var onHeadingUpdate = function(event) {
+      // update the heading value
       heading = event.target.heading;
   };
     

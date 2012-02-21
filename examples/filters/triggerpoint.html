@@ -41,15 +41,16 @@ $(document).ready(function() {
 					
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);		
 
-		triggerPoint = new TriggerPoint([[0.15, 0],[0.8, 0]]);
-
 		// need to enable an analog pin in order to read it
 		arduino.enableAnalogPin(0);
 		var pot = arduino.getAnalogPin(0);
 
-		pot.addFilter(triggerPoint);		
+		/// create a new trigger point at 0.15 and another at 0.8
+		triggerPoint = new TriggerPoint([[0.15, 0],[0.8, 0]]);
+		// attach the trigger point filter to the pin object
+		pot.addFilter(triggerPoint);
+		// another way to add a trigger point	
 		//pot.addFilter(new TriggerPoint([0.5, 0.1]));
-		//pot.addFilter(new TriggerPoint());	
 		pot.addEventListener(PinEvent.CHANGE, onPotChange);
 
 		// after 4 seconds, add another point
@@ -70,14 +71,17 @@ $(document).ready(function() {
 	}
 
 	function addPoint() {
+		// add another point to the triggerpoint filter
 		triggerPoint.addPoint(0.5, 0.05);
 	}
 
 	function removePoint() {
+		// remove a point from the triggerpoint filter
 		triggerPoint.removePoint(0.15);
 	}
 
 	function removeAllPoints() {
+		// remove all points from the triggerpoint filter
 		triggerPoint.removeAllPoints();
 	}
 			

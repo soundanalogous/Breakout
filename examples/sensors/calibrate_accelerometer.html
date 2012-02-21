@@ -19,6 +19,15 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	// To get the calibration values, slowly and carefully
+	// rotate the accelerometer around all axis until the min
+	// and max values in the browser are no longer changing.
+	// any sudden movements will throw off the values. Also
+	// set the sensor down carefully when you have finished.
+	// record the min and max values for each axis and pass
+	// them to the getCalibratedRange method of the
+	// AnalogAccelerometer object.
+
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace	

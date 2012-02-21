@@ -31,7 +31,7 @@ body {
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
-	// Breakout vars
+	// create an instance of the IOBoard
 	var arduino = new IOBoard("localhost", 8887);
 	var accelerometer;
 	var RANGE_GS = 3; // +-3 Gs for ADXL335
@@ -48,6 +48,7 @@ body {
 	init();
 	animate();
 	
+	// listen for the READY event
 	arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
 
 	// initiate the 3D scene
@@ -100,10 +101,13 @@ body {
 
 	// render the 3D scene
 	function render() {
-		
+		// only begin rendering once the the IOBoard is ready
 		if (!isReady) return;
 
-		// adjust sensor orientation to screen orientation
+		// apply the accelerometer pitch and roll data to the cube
+		// not that the axis of the cube that relates to roll and pitch
+		// from the accelerometer depends on the orientation of the
+		// accelerometer in relation to the screen.
 		cube.rotation.z = accelerometer.roll * Math.PI/180;
 		cube.rotation.x = -accelerometer.pitch * Math.PI/180;		
 
@@ -114,6 +118,7 @@ body {
 
 		arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);				
 
+		// create an intance of the AnalogAccelerometer object
 		// params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
 		accelerometer = new AnalogAccelerometer(
 								arduino, 
@@ -124,7 +129,10 @@ body {
 								true);
 
 	    // Use calibrate_accelerometer.html to obtain the min and max voltage values
-	    // to supply to the getCalibratedRange method below.
+	    // to supply to the getCalibratedRange method below. Once you obtain the
+	    // calibration data for a particular sensor you should not have to recalibrate.
+	    // however you will need to use those values in the getCalibratedRange method
+	    // each time you use the Accelerometer.
 
 	    // calibration settings for an ADXL335 at 3.3v
 	    // params: minimum voltage on the axis, max voltage on the axis, supply voltage
@@ -137,6 +145,8 @@ body {
 		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
 		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
 
+		// indicate that the IOBoard and accelerometer are initialized and it's now
+		// safe to render
 		isReady = true;
 	}
 	

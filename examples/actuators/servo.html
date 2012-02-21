@@ -19,6 +19,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	// to do: update to provide servo control from browser
+
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
@@ -30,9 +32,6 @@ $(document).ready(function() {
 
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
-
-	// Set to true to enable debugging. Must set before creating new IOBoard.
-	BO.enableDebugging = false;
 
 	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
@@ -89,7 +88,7 @@ $(document).ready(function() {
 </head>
 <body>
   
-	<div class="text">Turn the potentiometer rotate the servo head.</div>
+	<div class="text">Turn the potentiometer to rotate the servo head.</div>
 
   
 </body>

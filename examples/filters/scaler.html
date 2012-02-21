@@ -43,7 +43,8 @@ $(document).ready(function() {
 		// need to enable an analog pin in order to read it
 		arduino.enableAnalogPin(0);
 		var pot = arduino.getAnalogPin(0);
-
+		
+		// scale the input from the range of 0.0 to 1.0 to the range of 0.0 to 10.0
 		pot.addFilter(new Scaler(0, 1, 0, 10, Scaler.LINEAR));
 		pot.addEventListener(PinEvent.CHANGE, onPotChange);				
 	}

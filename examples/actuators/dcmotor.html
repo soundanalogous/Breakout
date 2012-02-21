@@ -42,7 +42,7 @@ $(document).ready(function() {
 					
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// params: forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage
+		// params: IOBoard, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage
 		motor = new DCMotor(arduino, 
 			arduino.getDigitalPin(10),
 			arduino.getDigitalPin(9), 
@@ -51,8 +51,9 @@ $(document).ready(function() {
 			5, 
 			5);
 
-
+		// create a new timer instance with a 1 second tick interval
 		timer = new Timer(1000);
+		// listen for the TIMER event which will be fired every second
 		timer.addEventListener(TimerEvent.TIMER, onTimer);
 		timer.start();	
 		

@@ -19,6 +19,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+	// to do: update to enable color picking from browser
+
 	// dependencies
 	// declare these variables so you don't have
 	// to type the full namespace
@@ -50,8 +52,9 @@ $(document).ready(function() {
 
 		// i2c module example: BlinkM module
 		blinkM = new BlinkM(uno);
+		// stop the built-in light script
 		blinkM.stopScript();
-		setInterval(randomColor, 4000);
+		//setInterval(randomColor, 4000);
 				
 	}
 	

@@ -53,15 +53,17 @@ $(document).ready(function() {
 		ard.removeEventListener(IOBoardEvent.READY, onReady);
 		
 		// create a new LED
+		// params: IOBoard, reference to the pin object the LED is attached to
 		onboardLED = new LED(ard, ard.getDigitalPin(13));
 		// blink the on for 2 seconds then off for 2 seconds 100 times
+		// params: interval (how often the blink lasts), number of times to blink (0 = forever)
 		onboardLED.blink(2000, 100);
 		
 
 		// create a new LED
 		fadeLED = new LED(ard, ard.getDigitalPin(11));
 		// use a sine wave to fade the led on and off every second
-		// params: interval, times (0 = forever), waveform
+		// params: interval, times (0 = forever), waveform to apply
 		fadeLED.blink(1000, 0, Oscillator.SIN);
 
 	
