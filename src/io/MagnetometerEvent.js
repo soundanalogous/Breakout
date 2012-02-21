@@ -14,8 +14,8 @@ BO.io.MagnetometerEvent = (function() {
 
 	/**
 	 * @exports MagnetometerEvent as BO.io.MagnetometerEvent
-	 * @class An Event object to be dispatched (fired) by Magnetometer
-	 * objects.	 
+	 * @class An Event object to be dispatched (fired) by a Magnetometer
+	 * object.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

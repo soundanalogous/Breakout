@@ -30,7 +30,7 @@
  	 * @class The Oscillator object can be attached to a Pin or LED object to output
  	 * a waveform. This is useful for blinking an LED or fading it on and off. In
  	 * most cases (unless you are simply using it to blink and LED on or off), 
- 	 * the Osciallator should be attached to a Pin or LED object associated with
+ 	 * the Oscillator should be attached to a Pin or LED object associated with
  	 * a PWM pin on the I/O board. See Breakout/examples/generators/oscillator.html
  	 * for an example application.
  	 * @constructor

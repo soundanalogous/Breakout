@@ -30,7 +30,7 @@ BO.io.AnalogAccelerometer = (function() {
 	 * Creates a new Analog Accelerometer object
 	 *
 	 * @exports AnalogAccelerometer as BO.io.AnalogAccelerometer
-	 * @class Creates an interface for an analog accelerometer. Use the
+	 * @class Creates an interface to an analog accelerometer. Use the
 	 * accelerometer to read the acceleration along the x, y, and z axis of an 
 	 * object it is attached to. You can also obtain the pitch and roll. This
 	 * object should interface with most analog accelerometers.	See

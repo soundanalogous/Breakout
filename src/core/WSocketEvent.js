@@ -14,8 +14,8 @@ BO.WSocketEvent = (function() {
 
 	/**
 	 * @exports WSocketEvent as BO.WSocketEvent
-	 * @class Dispatches Websocket events: Connected, Message and Closed.
-	 * objects.	 
+	 * @class Dispatches Websocket events: Connected (onopen), Message (onmessge) 
+	 * and Closed (onclose) objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type

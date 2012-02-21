@@ -20,7 +20,7 @@ BO.filters.Scaler = (function() {
 	var FilterBase = BO.filters.FilterBase;
 
 	/**
-	 * Scales up an input value from its min and max range to a specified minimum to maximum range. 
+	 * Scales an input value from its min and max range to a specified minimum to maximum range. 
 	 * A number of scaling functions are provided.	
 	 *
 	 * @exports Scaler as BO.filters.Scaler

@@ -14,8 +14,8 @@ BO.io.AccelerometerEvent = (function() {
 
 	/**
 	 * @exports AccelerometerEvent as BO.io.AccelerometerEvent
-	 * @class An Event object to be dispatched (fired) by Accelerometer
-	 * objects.
+	 * @class An Event object to be dispatched (fired) by an Accelerometer
+	 * object.
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

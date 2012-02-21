@@ -30,7 +30,7 @@ BO.io.RGBLED = (function() {
 	 * IOBoard PWM pins via 330 ohm resistors.</p>
 	 *
 	 * @exports RGBLED as BO.io.RGBLED
-	 * @class Creates an interface to an RGB Led. This interface is RGB Leds
+	 * @class Creates an interface to an RGB Led. This interface is for the type of RGB Led
 	 * with 4 legs. One leg is connected to power or ground (depending on the type
 	 * of LED - common anode or common cathode) and the other 3 legs are connected
 	 * to PWM pins on the I/O board. See Breakout/examples/schematics.pdf for wiring

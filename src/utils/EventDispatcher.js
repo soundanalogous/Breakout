@@ -14,8 +14,8 @@ JSUTILS.EventDispatcher = (function () {
 	 *
 	 * @class The EventDispatcher class mimics the DOM event dispatcher model so the 
 	 * user can add and remove event listeners in a familiar way. Event bubbling is
-	 * not available because events are dispatched in relation to stage changes of
-	 * physical components instead of layered graphics.
+	 * not available because events are dispatched in relation to state changes of
+	 * physical components instead of layered graphics so there is nothing to bubble up.
 	 * @exports EventDispatcher as JSUTILS.EventDispatcher
 	 * @param {Class} target The instance of the class that implements EventDispatcher
 	 */

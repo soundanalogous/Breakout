@@ -16,8 +16,8 @@ JSUTILS.Timer = (function() {
 	/**
 	 * An as3-like Timer object
 	 *
-	 * @class The Timer object wraps the setInterval method to provide
-	 * and as3-like Timer object interface.
+	 * @class The Timer object wraps the window.setInterval() method to provide
+	 * an as3-like Timer interface.
 	 * @exports Timer as JSUTILS.Timer
 	 * @extends JSUTILS.EventDispatcher	 
 	 * @param {Number} delay The delay (ms) interval between ticks

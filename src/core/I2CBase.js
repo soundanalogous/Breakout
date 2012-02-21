@@ -20,8 +20,8 @@ BO.I2CBase = (function() {
 	 *
 	 * @exports I2CBase as BO.I2CBase
 	 * @class A base class for I2C objects. Extend this class
-	 * when creating an interface for a new I2C device. Do not
-	 * instantiate I2CBase.
+	 * when creating an interface for a new I2C device. I2CBase should
+	 * not be instantiated directly.
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Number} address The I2C address of the device

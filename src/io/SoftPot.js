@@ -29,7 +29,7 @@ BO.io.SoftPot = (function() {
 	 * A softpot analog sensor.
 	 *
 	 * @exports SoftPot as BO.io.SoftPot
-	 * @class Creates and interface to a SoftPot sensor. A softpot is a type of
+	 * @class Creates an interface to a SoftPot sensor. A softpot is a type of
 	 * analog resistive sensor that acts as a type of slider input. There are 
 	 * straight and curved variations. This object provides a number of useful 
 	 * events such as Press, Release, Drag, Tap and capturing Flick gestures.
