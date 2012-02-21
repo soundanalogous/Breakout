@@ -14,7 +14,8 @@ JSUTILS.TimerEvent = (function() {
 
 	/**
 	 * TimerEvent Description
-	 * @class
+	 * @class An Event object to be dispatched (fired) by Timer
+	 * objects.	
 	 * @exports TimerEvent as JSUTILS.TimerEvent	 
 	 * @extends JSUTILS.Event
  	 * @param {String} type The event type	 

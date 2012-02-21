@@ -24,6 +24,9 @@ BO.filters.Scaler = (function() {
 	 * A number of scaling functions are provided.	
 	 *
 	 * @exports Scaler as BO.filters.Scaler
+	 * @class Scales up an input value from its min and max range to a specified 
+	 * minimum to maximum range. See Breakout/examples/filters/scaler.html for an
+	 * example application.
 	 * @constructor
 	 * @augments BO.filters.FilterBase
 	 * @param {Number} inMin minimum input value

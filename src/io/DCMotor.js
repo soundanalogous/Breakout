@@ -28,6 +28,9 @@ BO.io.DCMotor = (function() {
 	 * BD621F</p>
 	 *
 	 * @exports DCMotor as BO.io.DCMotor
+	 * @class Creates an interface to an H-bridge. This is used to control the
+	 * direction of rotation of a motor shaft. You can rotate forward (clockwise), reverse
+	 * or apply a brake. See Breakout/examples/actuators/dcmotor.html for an exmple application.
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} forwardPin A reference to the Pin connected to the forward control of

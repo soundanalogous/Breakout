@@ -14,6 +14,8 @@ BO.io.ButtonEvent = (function() {
 
 	/**
 	 * @exports ButtonEvent as BO.io.ButtonEvent
+	 * @class An Event object to be dispatched (fired) by Button
+	 * objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

@@ -22,7 +22,9 @@ BO.io.Potentiometer = (function() {
 	 * level of abstraction around an analog input pin.
 	 *
 	 * @exports Potentiometer as BO.io.Potentiometer
-	 * @class
+	 * @class Creates an interface to an analog input sensor. This may be a potentiometer
+	 * (dial) or any other analog input that is connected to a single analog pin.
+	 * @constructor
 	 * @augments BO.PhysicalInputBase	 
 	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
 	 * @param {Pin} pin A reference to the Pin the potentiometer is connected to.

@@ -29,6 +29,10 @@ BO.io.AccelerometerADXL345 = (function() {
 	 * Analog Devices ADXL345 3-axis accelerometer
 	 *
 	 * @exports AccelerometerADXL345 as BO.io.AccelerometerADXL345
+	 * @class Creates an interface to an ADXL345 3-axis accelerometer. Use the
+	 * accelerometer to read the acceleration along the x, y, and z axis of an 
+	 * object it is attached to. You can also obtain the pitch and roll. See the
+	 * example in Breakout/examples/sensors/adxl345.html.
 	 * @constructor
 	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance

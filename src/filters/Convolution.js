@@ -24,6 +24,8 @@ BO.filters.Convolution = (function() {
 	 * a high pass filter is used to remove drift.
 	 *
 	 * @exports Convolution as BO.filters.Convolution
+	 * @class The Convolution object performs low-pass, high-pass and moving average filtering
+	 * on an analog input. See Breakout/examples/filters/convolution.html for an example application.
 	 * @constructor
 	 * @augments BO.filters.FilterBase
 	 * @param {Number[]} kernel An array of coefficients to be used with product-sum

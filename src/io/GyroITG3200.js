@@ -32,6 +32,11 @@ BO.io.GyroITG3200 = (function() {
 	 * InvenSense ITG3200 3-axis MEMS gyro
 	 *
 	 * @exports GyroITG3200 as BO.io.GyroITG3200
+	 * @class Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
+	 * angular acceleration around the x, y, and z axis. This object provides
+	 * the angular velocity of each axis. Proper calibration is required for an accurate
+	 * reading. See Breakout/examples/sensors/itg3200.html and 
+	 * Breakout/examples/processing_js/gyro.html for example applications.
 	 * @constructor
 	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance

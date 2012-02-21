@@ -14,6 +14,8 @@ BO.io.GyroEvent = (function() {
 
 	/**
 	 * @exports GyroEvent as BO.io.GyroEvent
+	 * @class An Event object to be dispatched (fired) by Gyroscope
+	 * objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

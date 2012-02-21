@@ -22,6 +22,10 @@ BO.io.BlinkM = (function() {
 	 * Creates and BlinkM object
 	 *
 	 * @exports BlinkM as BO.io.BlinkM
+	 * @class Creates an interface to a BlinkM RGB Led module. This
+	 * object allows you to change the color of the led, fade between
+	 * colors and run preprogrammed light scripts.
+	 * See Breakout/examples/actuators/blinkM.html for an example application.
 	 * @constructor
 	 * @augments BO.I2CBase 
 	 * @param {IOBoard} board The IOBoard instance

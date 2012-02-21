@@ -15,6 +15,8 @@ BO.custom.RFIDEvent = (function() {
 
 	/**
 	 * @exports RFIDEvent as BO.custom.RFIDEvent
+	 * @class An Event object to be dispatched when an RFID tag
+	 * is read or when an RFID tag is removed from a reader.
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type

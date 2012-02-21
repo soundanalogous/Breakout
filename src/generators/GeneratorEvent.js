@@ -21,6 +21,8 @@
 
  	/**
  	 * @exports GeneratorEvent as BO.generators.GeneratorEvent
+	 * @class An Event object to be dispatched (fired) by Generator
+	 * objects when their value has updated.	 	 
  	 * @constructor
  	 * @augments JSUTILS.Event
  	 * @param {String} type The event type

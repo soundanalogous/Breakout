@@ -25,7 +25,10 @@ BO.Pin = (function() {
 	 * An object to represent an IOBoard pin
 	 *
 	 * @exports Pin as BO.Pin
-	 * @class An object to represent an IOBoard pin
+	 * @class Each data pin of the physical I/O board is represented by a Pin object.
+	 * The Pin object is the foundation for many of the io objects and is also very
+	 * useful on its own. See the Using The Pin Object Guide on http://breakoutjs.com
+	 * for a detailed overview.
 	 * @param {Number} number The pin number
 	 * @param {Number} type The type of pin
 	 */

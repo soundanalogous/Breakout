@@ -23,6 +23,9 @@ BO.PhysicalInputBase = (function() {
 	 * class - do not instantiate it directly.
 	 *
 	 * @exports PhysicalInputBase as BO.PhysicalInputBase
+	 * @class A base class for physical input objects. Extend this class to
+	 * create new digital or analog input objects. Treat this class as
+	 * an abstract base class. It should not be instantiated directly.
 	 * @constructor
 	 */
 	PhysicalInputBase = function() {

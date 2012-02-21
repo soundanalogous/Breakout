@@ -14,6 +14,8 @@ BO.io.CompassEvent = (function() {
 
 	/**
 	 * @exports CompassEvent as BO.io.CompassEvent
+	 * @class An Event object to be dispatched (fired) by Compass
+	 * objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type	 

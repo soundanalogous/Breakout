@@ -27,6 +27,10 @@ BO.io.MagnetometerHMC5883 = (function() {
 	 * HMC5883 3-axis magnetometer
 	 *
 	 * @exports MagnetometerHMC5883 as BO.io.MagnetometerHMC5883
+	 * @class Creates an interface to an HMC5883 3-axis magnetometer. Use the
+	 * magnetometer to obtain a compass heading or rotation in relation to
+	 * a fixed point. See Breakout/examples/sensors/hmc5883.html for an example
+	 * application.
 	 * @constructor
 	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance

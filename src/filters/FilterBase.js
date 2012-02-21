@@ -20,6 +20,8 @@
  	 * An Abstract Base object for filters
  	 *
  	 * @exports FilterBase as BO.filters.FilterBase
+ 	 * @class A base object to be extended by all Filter objects. This object
+ 	 * should not be instantiated directly.
  	 * @constructor
  	 */
  	FilterBase = function() {

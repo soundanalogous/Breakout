@@ -30,6 +30,11 @@ BO.custom.ID12RFIDReader = (function() {
 	 * in the IDxRFIDReader library example files.</p>
 	 *
 	 * @exports ID12RFIDReader as BO.custom.ID12RFIDReader
+	 * @class Creates an interface to an ID-12 RFID Reader. Other Innovations
+	 * RFID readers will likely work but have not been tested. This object
+	 * requires firmware other than StandardFirmata to be uploaded to the I/O board.
+	 * See Breakout/custom_examples/rfid_example1.html and rfid_example2.html for
+	 * example applications.
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Number} readerId The ID assigned to the reader in the firmware

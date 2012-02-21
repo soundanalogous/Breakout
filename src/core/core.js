@@ -19,10 +19,13 @@ var BREAKOUT = BREAKOUT || BO;
 
 BREAKOUT.VERSION = '0.1.0.beta';
 
-// global flags
 /**
- * Set to true to enable debugging for all objects. Debug
- * messages will be printed to the console.
- * @property {Boolean} Set to true to enable debugging. Default is false.
+ * The BO.enableDebugging flag can be set to true in an application
+ * to print debug messages from various Breakout objects to the
+ * console. By default it is false and only needs to be included
+ * in an application if you intend to set it to true
+ * @name BO#enableDebugging
+ * @type {Boolean}
  */
-BREAKOUT.enableDebugging = false;
+
+BO.enableDebugging = false;

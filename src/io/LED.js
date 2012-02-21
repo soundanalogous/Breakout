@@ -29,7 +29,9 @@ BO.io.LED = (function() {
 	 * pin, then it is SYNC_DRIVE.</p>
 	 *
 	 * @exports LED as BO.io.LED
-	 * @class Creates an LED object.
+	 * @class Creates an interface to an LED. This object provides helpful methods
+	 * for blinking and fading leds. To use the fading methods, the LED must
+	 * be connected to a PWM pin on the I/O board.
 	 * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
 	 * @param {Pin} ledPin A reference to the Pin the LED is connected to.
 	 * @param {Number} driveMode The drive mode of the LED. Must be set to LED.SOURCE_MODE

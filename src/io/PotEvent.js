@@ -14,6 +14,8 @@ BO.io.PotEvent = (function() {
 
 	/**
 	 * @exports PotEvent as BO.io.PotEvent
+	 * @class An Event object to be dispatched (fired) by Potentiometer
+	 * objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type

@@ -18,6 +18,7 @@ BO.WSocketWrapper = (function() {
 	 * Creates a wrapper for various websocket implementations to unify the interface.
 	 *
 	 * @exports WSocketWrapper as BO.WSocketWrapper
+	 * @class Creates a wrapper for various websocket implementations to unify the interface.
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.

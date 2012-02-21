@@ -9,6 +9,8 @@ Breakout is currently beta software. The API is stable, but bugs are possible. P
 
 See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other helpful information.
 
+Contributors are welcome. If you have any ideas, suggestions for improvements, examples to share, or anything else you'd like to contribute please get in touch.
+
 
 Quick Start
 ---
@@ -67,6 +69,18 @@ Mobile Browsers (browser must support websockets):
 - Firefox mobile version 7 or higher
 - Chrome Beta (for Android 4.0 and higher)
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for list of tested phones and tablets
+
+Credits
+---
+Breakout is developed by Jeff Hoefs
+
+Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). The author is also a contributor of the Funnel as3 library.
+
+Logo and icon designed by Claire Lin
+
+Breakout Server uses [webbit](https://github.com/webbit/webbit)
+
+
 
 Change Log
 ---

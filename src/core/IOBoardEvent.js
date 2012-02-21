@@ -14,6 +14,10 @@ BO.IOBoardEvent = (function() {
 
 	/**
 	 * @exports IOBoardEvent as BO.IOBoardEvent
+	 * @class An Event object to be dispatched (fired) by the IOBoard object.
+	 * The most important event is the READY event which signifies that the
+	 * I/O board is ready to receive commands from the application. Many of the
+	 * other IOBoard events are used when creating new io component objects.
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type

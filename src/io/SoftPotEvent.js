@@ -14,6 +14,8 @@ BO.io.SoftPotEvent = (function() {
 
 	/**
 	 * @exports SoftPotEvent as BO.io.SoftPotEvent
+	 * @class An Event object to be dispatched (fired) by SoftPot
+	 * objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
  	 * @param {String} type The event type

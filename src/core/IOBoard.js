@@ -60,6 +60,12 @@ BO.IOBoard = (function() {
 	 * between the IOBoard sketch and your javascript application.
 	 *
 	 * @exports IOBoard as BO.IOBoard
+	 * @class Creates an interface to the I/O board. The IOBoard object brokers the
+	 * communication between your application and the physical I/O board. Currently
+	 * you can only connect to a single I/O board per computer. However you could 
+	 * connect to multiple I/O boards if they are attached to multiple computers on
+	 * your network. In that case you would create a separate IOBoard instance for
+	 * each board you are connecting to in your network.
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.

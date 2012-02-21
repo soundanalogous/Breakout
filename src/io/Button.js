@@ -25,6 +25,9 @@ BO.io.Button = (function() {
 	 * then the configuration is PULL_UP.</p>
 	 *
 	 * @exports Button as BO.io.Button
+	 * @class Creates and interface to a physical button. The Button object provides dispatches
+	 * events on state changes such as Pressed, Released and Sustained Press. The Button object
+	 * also handles debouncing.
 	 * @constructor
 	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
