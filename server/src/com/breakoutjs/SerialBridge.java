@@ -39,32 +39,32 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	private boolean isConnected = false;
 	private boolean isMultiClientEnabled = false;
 	private int count = 1;
+	private int numConnections = 0;
 	
 	/**
 	 * 
 	 * @param port The network port number to connect on
 	 * @param parent A reference to the BreakoutServer instance
 	 * @param webRoot A relative path to the webserver root (default = "../")
-	 * @param isEnabled True if multiclient mode is enabled
+	 * @param isEnabled True if multi-client mode is enabled
 	 */
-	public SerialBridge(int port, BreakoutServer parent, String webRoot, boolean isEnabled) {
+	public SerialBridge(int port, BreakoutServer parent, String webRoot, boolean isMultiClientEnabled) {
 		
 		connections = new HashSet<WebSocketConnection>();
 
 		// this isn't too smart, but it works for now... need to refactor
 		this.parent = parent;		
 		this.netPort = port;
-		this.isMultiClientEnabled = isEnabled;
+		this.isMultiClientEnabled = isMultiClientEnabled;
 		
-		if (isEnabled) {
+		if (isMultiClientEnabled) {
 			parent.printMessage("Multi-client mode enabled");
 		}
 		
-		// to do: enable user to set the file handler location
 		webServer = WebServers.createWebServer(port)
 			.add("/websocket", this)
 			.add(new StaticFileHandler(webRoot));
-		
+
 		this.start();
 		
 	}
@@ -149,20 +149,30 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	}
 	
 	synchronized public void serialEvent(SerialPortEvent serialEvent) {
-		if (serialEvent.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
-			try {
-				while (input.available() > 0) {
-					int inputData = input.read();
-					
-					// only send serial data when at least one client is connected
-					if (isConnected) {
-						processInput(inputData);
-					}
-				}
-			} catch (IOException e) {
-				
-			}
+		switch(serialEvent.getEventType()) {
+			case SerialPortEvent.DATA_AVAILABLE:
+				dataAvailable(serialEvent);
+				break;
+			default:
+				//System.out.println("other serial event: " + serialEvent);
+				break;
 		}
+
+	}
+	
+	private void dataAvailable(SerialPortEvent serialEvent) {
+		try {
+			while (input.available() > 0) {
+				int inputData = input.read();
+				
+				// only send serial data when at least one client is connected
+				if (isConnected) {
+					processInput(inputData);
+				}
+			}
+		} catch (IOException e) {
+			
+		}		
 	}
 	
 	public void dispose() {
@@ -221,13 +231,21 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	@Override
 	public void onClose(WebSocketConnection connection) {
 		parent.printMessage("Client " + connection.data("id") + " closed");
+		//parent.printMessage("Client closed");
+		numConnections--;
 		
 		if (isMultiClientEnabled) {
 			connections.remove(connection);
-			if (connections.isEmpty()) isConnected = false;
+			if (connections.isEmpty()) {
+				isConnected = false;
+				numConnections = 0;
+				count = 1;
+			}
+			parent.printMessage("Number of active connections = " + numConnections);
 		} else {
 			this.singleConnection = null;
 			isConnected = false;
+			count = 1;
 		}
 	}
 
@@ -252,19 +270,21 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	@Override
 	public void onOpen(WebSocketConnection connection) {
 		connection.data("id", count++);
-		
 		parent.printMessage("Client " + connection.data("id") + " connected");
+		//parent.printMessage("Client connected");
+
+		numConnections++;
 		
 		// if multi-client connection is enabled, report status to client
 		if (isMultiClientEnabled) {
 			connection.send("config: " + MULTI_CLIENT);
 			connections.add(connection);
+			parent.printMessage("Number of active connections = " + numConnections);
 		} else {
 			this.singleConnection = connection;
 		}
 		
 		isConnected = true;
-
 	}
 
 	@Override

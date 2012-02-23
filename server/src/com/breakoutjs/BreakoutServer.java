@@ -66,11 +66,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 	private JFileChooser fc;
 	
 	private boolean isMultiClientEnabled = false;
-	
-	private static final int UPDATE_FREQ = 1000;
-	private ActionListener listUpdater;
-	private javax.swing.Timer timer;
-	
+		
 	private Preferences prefs;
 	
 	static public String serialPort = null;	
@@ -85,6 +81,10 @@ public class BreakoutServer extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		});
+		
+		// prevents version info from printing
+		//PipedOutputStream pipeOut = new PipedOutputStream();
+		//System.setOut(new PrintStream(pipeOut));
 				
 		fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);	
@@ -92,7 +92,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		// get a references to the user preferences
 		prefs = Preferences.userRoot().node(this.getClass().getName());
 		netPort = prefs.getInt(PORT_KEY, DEFAULT_PORT);
-		webRoot = prefs.get(ROOT_KEY, DEFAULT_ROOT);		
+		webRoot = prefs.get(ROOT_KEY, DEFAULT_ROOT);	
 		
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
@@ -177,9 +177,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		contentPane.add(connectBtn, BorderLayout.AFTER_LAST_LINE);		
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setVisible(true);
-		
-		startPortListTimer();			
+		setVisible(true);	
 	}
 	
 	/**
@@ -200,15 +198,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
-	}
-	
-	/**
-	 * Update the serial port drop-down list
-	 */
-	private void updatePortList() {
-		serialPorts.removeAllItems();
-		createPortList();
+		}
 	}
 	
 	/**
@@ -223,7 +213,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			}
 		});
 	}
-	
+
 	/**
 	 * Handle UI component events.
 	 */
@@ -285,9 +275,6 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			connectBtn.setText("Disconnect");
 			connectBtn.setActionCommand("disconnect");
 			
-			if (timer != null) {
-				stopPortListTimer();
-			}
 		}
 		else if ("disconnect".equals(event.getActionCommand())) {
 			// to do: stop the websocket server?
@@ -300,35 +287,10 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			
 			connectBtn.setText("Connect");
 			connectBtn.setActionCommand("connect");
-			
-			startPortListTimer();
+
 		}
 	}
 	
-	/**
-	 * When the server is not connected, update the serial port list
-	 * at the rate specified by UPDATE_FREQ.
-	 */
-	private void startPortListTimer() {
-		listUpdater = new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				updatePortList();
-			}
-		};
-		timer = new javax.swing.Timer(UPDATE_FREQ, listUpdater);
-		timer.start();
-	}
-	
-	/**
-	 * Stop updating the serial port list while the server
-	 * is connected.
-	 */
-	private void stopPortListTimer() {
-		timer.stop();
-		timer.removeActionListener(listUpdater);
-		listUpdater = null;
-		timer = null;
-	}
 		
 	/**
 	 * The name of the selected serial port
