@@ -23,6 +23,7 @@ BO.io.DCMotor = (function() {
 	 * <p>Tested successfully with the following H-bridge: SN754410<br>
 	 * Should also be compatible with the following:<br>
 	 * SN754410<br>
+	 * L293NE<br>
 	 * TA7291P<br>
 	 * TB6612FNG<br>
 	 * BD621F</p>

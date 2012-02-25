@@ -15,7 +15,7 @@ Contributors are welcome. If you have any ideas, suggestions for improvements, e
 Quick Start
 ---
 
-See the detailed [Getting Started guide](http://breakoutjs.com/?page_id=28) on breakoutjs.com or the quickstart guide below.
+See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/) on breakoutjs.com or the quickstart guide below.
 
 The first step is to upload StandardFirmata to your Arduino (or Arduino-compatible) board and wire up some components:
 
@@ -32,7 +32,7 @@ The next step is to run the Breakout Server application:
 5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/".
 6. Open http://localhost:8887/examples/getting_started/hello_world.html in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater). If you changed the network port in step 4, update it on line 36 of the hello_world.html example and in the url above.
 
-For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/?page_id=136).
+For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
 
 As an alternative to the Breakout Server application, a node.js-based server is also included. See the [Using the node.js server](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.  
 
@@ -45,7 +45,7 @@ Breakout is only supported for Arduino 1.0 and higher [Download Arduino 1.0](htt
 You will need one of the following I/O boards:
 
 - An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, etc). 
-- Any of the [Teensy Boards](http://www.pjrc.com/teensy/)
+- [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy++ 1.0 or 2.0
 - Many Arduino clones / variants should also work
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
 
@@ -80,11 +80,10 @@ Logo and icon designed by Claire Lin
 
 Breakout Server uses [webbit](https://github.com/webbit/webbit)
 
-
+License
+---
+Breakout is distributed under the terms of the MIT License. See the [LICENSE](https://raw.github.com/soundanalogous/Breakout/master/LICENSE) file.
 
 Change Log
 ---
-2012.02.20 Version 0.1.0
-
-- First public beta
-
+See the [ChangeLog](https://github.com/soundanalogous/Breakout/blob/master/ChangeLog) file.

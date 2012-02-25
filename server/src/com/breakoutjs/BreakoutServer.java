@@ -14,6 +14,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.PipedOutputStream;
+import java.io.PrintStream;
 import java.util.Enumeration;
 import java.util.prefs.Preferences;
 
@@ -39,7 +41,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = -7512833780087238386L;
 	
-	private static final String buildName = "Breakout Server v0.1.0.beta";
+	private static final String buildName = "Breakout Server v0.1.1.beta";
 	
 	private static final int WIDTH = 480;
 	private static final int HEIGHT = 360;
@@ -66,10 +68,15 @@ public class BreakoutServer extends JFrame implements ActionListener {
 	private JFileChooser fc;
 	
 	private boolean isMultiClientEnabled = false;
-		
+	
+	private static final int UPDATE_FREQ = 1000;
+	private ActionListener listUpdater;
+	private javax.swing.Timer timer;
+	
 	private Preferences prefs;
 	
-	static public String serialPort = null;	
+	static public String serialPort = null;
+	private int serialPortCount = 0;
 	
 	public BreakoutServer() {
 		super();
@@ -83,8 +90,9 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		});
 		
 		// prevents version info from printing
-		//PipedOutputStream pipeOut = new PipedOutputStream();
-		//System.setOut(new PrintStream(pipeOut));
+		// comment these out when debugging
+		PipedOutputStream pipeOut = new PipedOutputStream();
+		System.setOut(new PrintStream(pipeOut));
 				
 		fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);	
@@ -177,7 +185,9 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		contentPane.add(connectBtn, BorderLayout.AFTER_LAST_LINE);		
 		
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		setVisible(true);	
+		setVisible(true);
+		
+		startPortListTimer();			
 	}
 	
 	/**
@@ -191,6 +201,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 
 				if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
 					String name = portId.getName();
+					// ignore /dev/tty to prevent duplicate serial port listings (/dev/tty and /dev/cu)
 					if (!name.startsWith("/dev/tty.")) {
 						serialPorts.addItem(name);
 					}
@@ -199,6 +210,43 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Update the serial port drop-down list
+	 */
+	private void updatePortList() {
+		serialPorts.removeAllItems();
+		createPortList();
+	}
+	
+	/**
+	 * Check if the serial port list has changed
+	 */
+	private void checkPortList() {
+		serialPortCount = 0;
+		
+		try {
+			Enumeration<?> portList = CommPortIdentifier.getPortIdentifiers();
+			while (portList.hasMoreElements()) {
+				CommPortIdentifier portId = (CommPortIdentifier) portList.nextElement();
+
+				if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+					String name = portId.getName();
+					if (!name.startsWith("/dev/tty.")) {
+						serialPortCount++;
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (serialPortCount != serialPorts.getItemCount()) {
+			// an I/O board was added or removed so update the list
+			updatePortList();
+		}
+		
 	}
 	
 	/**
@@ -275,6 +323,9 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			connectBtn.setText("Disconnect");
 			connectBtn.setActionCommand("disconnect");
 			
+			if (timer != null) {
+				stopPortListTimer();
+			}
 		}
 		else if ("disconnect".equals(event.getActionCommand())) {
 			// to do: stop the websocket server?
@@ -287,10 +338,35 @@ public class BreakoutServer extends JFrame implements ActionListener {
 			
 			connectBtn.setText("Connect");
 			connectBtn.setActionCommand("connect");
-
+			
+			startPortListTimer();
 		}
 	}
 	
+	/**
+	 * When the server is not connected, update the serial port list
+	 * at the rate specified by UPDATE_FREQ.
+	 */
+	private void startPortListTimer() {
+		listUpdater = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				checkPortList();
+			}
+		};
+		timer = new javax.swing.Timer(UPDATE_FREQ, listUpdater);
+		timer.start();
+	}
+	
+	/**
+	 * Stop updating the serial port list while the server
+	 * is connected.
+	 */
+	private void stopPortListTimer() {
+		timer.stop();
+		timer.removeActionListener(listUpdater);
+		listUpdater = null;
+		timer = null;
+	}
 		
 	/**
 	 * The name of the selected serial port
