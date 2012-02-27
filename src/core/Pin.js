@@ -187,15 +187,11 @@ BO.Pin = (function() {
 			return this._filters;
 		},
 		set filters(filterArray) {
-			if (filterArray === null || filterArray.length ===0) {
-				this._filters = filterArray;
-				return;
-			}
 			this._filters = filterArray;
 		},
 
 		/**
-		 * Get a reference to the current generator.
+		 * [read-only] Get a reference to the current generator.
 		 * @name Pin#generator
 		 * @property
 		 * @type GeneratorBase
@@ -330,15 +326,6 @@ BO.Pin = (function() {
 				this._generator.removeEventListener(GeneratorEvent.UPDATE, this._autoSetValueCallback);
 			}
 			this._generator = null;				
-		},
-
-		/**
-		 * Sets new filters to the pin
-		 * @param {FilterBase[]} newFilters An array of Filter Objects to be applied to the Pin
-		 */
-		setFilters: function(newFilters) {
-			// use the filters setter
-			this.filters = newFilters;
 		},
 
 		/**
