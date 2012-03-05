@@ -3,12 +3,44 @@
 <head>
 
 <meta charset=utf-8 />
+<link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
+
 <style type="text/css">
-.text {
-	font-family: "Arial";
+body {
+	margin: 20px;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: #666;
+	width: 600px;
+}
+h2 {
 	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+	padding-bottom: 10px;
+	color: #00AEFF;
+}
+label {
+	font-size: 14px;
+}
+.pickerContainer {	
+	float: left;
+	margin-bottom: 20px;
+}
+.hoverBox {
+	float: left;
+	margin-right: 40px;
+}
+p.note {
+	font-size: 12px;
+}
+#duration {
+	width: 50px;
+}
+
+.fadeControls {
+	background-color: #f7f7f7;
+	padding: 10px;
+	border: 1px dotted #CCC;	
+	float: left;
 }
 </style>
 
@@ -16,6 +48,7 @@
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -33,7 +66,31 @@ $(document).ready(function() {
 
 	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
-	var rbgLED;
+	var rgbLED;
+	var duration = 500;
+	var initialColor = '#80FF00';
+
+	// initialize the color picker
+	$('#colorPicker').wColorPicker({
+		initColor: initialColor,
+		onSelect: gotoColor, 
+		mode: 'flat', 
+		effect: 'none', 
+		color: 'white',
+		opacity: '1.0',
+		buttonSize: '50'
+	});
+
+	// initialize the color picker
+	$('#fadeColorPicker').wColorPicker({
+		initColor: initialColor,
+		onSelect: fadeToColor, 
+		mode: 'flat', 
+		effect: 'none', 
+		color: 'white',
+		opacity: '1.0',
+		buttonSize: '50'
+	});		
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -45,8 +102,8 @@ $(document).ready(function() {
 		
 		// Digital input using Button object:
 		// params: board, pin, mode
-		var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
-		button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+		var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
+		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
 
 		// RGBLED example using RGBLED object:
@@ -61,6 +118,21 @@ $(document).ready(function() {
 
 		// set a color
 		rgbLED.setColor(128, 255, 0);
+
+		$('#duration').change(function(evt) {
+			var val = this.value;
+			if (val >= 0) {
+				duration = val;
+			}
+		});
+
+		$('button#fadeIn').on('click', function() {
+			rgbLED.fadeIn(duration);
+		});
+
+		$('button#fadeOut').on('click', function() {
+			rgbLED.fadeOut(duration);
+		});		
 				
 	}
 	
@@ -77,6 +149,29 @@ $(document).ready(function() {
 	function onButtonPress(event) {
 		randomColor();
 	}
+
+	function getRGBColor(color) {
+		var hexColor = parseInt(color.replace(/#/, "0x"));
+		var rgbColor = {
+			red: hexColor >> 16,
+			green: (hexColor >> 8) & 0x0000FF,
+			blue: hexColor & 0x0000FF
+		};
+
+		return rgbColor;	
+	}	
+
+	function gotoColor(color) {
+		if (rgbLED === undefined) return;
+		var c = getRGBColor(color);
+		rgbLED.setColor(c.red, c.green, c.blue);	
+	}
+
+	function fadeToColor(color) {
+		if (rgbLED === undefined) return;
+		var c = getRGBColor(color);
+		rgbLED.fadeTo(c.red, c.green, c.blue, duration);		
+	}	
 			
 });
 
@@ -85,7 +180,28 @@ $(document).ready(function() {
 </head>
 <body>
   
-	<div class="text">Press button to fade to random color.</div>
+  	<h2>RGB LED Example</h2>
+
+  	<div class="pickerContainer">
+		<div class="hoverBox">
+			<p>Fade to color:</p>
+			<div id="fadeColorPicker"></div>
+			<label for="duration">Fade duration in milliseconds: </label>
+			<input id="duration" type="number" value="500" min="0" step="100" />
+		</div>		
+		<div class="hoverBox">
+			<p>Go to color:</p>
+			<div id="colorPicker"></div>
+			<p class="note"><em>Go to selected color immediately</em></p>
+		</div>
+	</div>
+
+<p>Fade out to black, fade in to white:</p>
+	<div class="fadeControls">
+		
+		<button type="button" id="fadeOut">Fade Out</button>
+		<button type="button" id="fadeIn">Fade In</button>
+	</div>
   
 </body>
 </html>​

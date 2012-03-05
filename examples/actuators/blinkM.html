@@ -3,19 +3,42 @@
 <head>
 
 <meta charset=utf-8 />
+<link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
+
 <style type="text/css">
-.text {
-	font-family: "Arial";
+body {
+	margin: 20px;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: #666;
+}
+h2 {
 	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+	padding-bottom: 10px;
+	color: #00AEFF;
+}
+label {
+	font-size: 14px;
+}
+.hoverBox {
+	float: left;
+	margin-right: 40px;
+}
+p.note {
+	font-size: 12px;
+}
+#speed {
+	width: 60px;
+	margin-bottom: 20px;
 }
 </style>
+
 
 <title>BlinkM Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -36,6 +59,29 @@ $(document).ready(function() {
 	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
 	var blinkM;
+	var initialColor = '#FF0000';
+
+	// initialize the color picker
+	$('#colorPicker').wColorPicker({
+		initColor: initialColor,
+		onSelect: gotoColor, 
+		mode: 'flat', 
+		effect: 'none', 
+		color: 'white',
+		opacity: '1.0',
+		buttonSize: '50'
+	});
+
+	// initialize the color picker
+	$('#fadeColorPicker').wColorPicker({
+		initColor: initialColor,
+		onSelect: fadeToColor, 
+		mode: 'flat', 
+		effect: 'none', 
+		color: 'white',
+		opacity: '1.0',
+		buttonSize: '50'
+	});	
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -49,13 +95,25 @@ $(document).ready(function() {
 		var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
 		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
+		var fadeSpeed = 15;
 
 		// i2c module example: BlinkM module
 		blinkM = new BlinkM(uno);
 		// stop the built-in light script
 		blinkM.stopScript();
-		//setInterval(randomColor, 4000);
-				
+		blinkM.setFadeSpeed(fadeSpeed);
+
+		// set the initial color
+		gotoColor(initialColor);
+
+		$('#speed').change(function(evt) {
+			var val = this.value;
+			if (val <= 255 && val >= 1) {
+				speed = val;
+				blinkM.setFadeSpeed(speed);
+			}
+		});
+
 	}
 	
 	
@@ -65,8 +123,7 @@ $(document).ready(function() {
 		var green = Math.floor(Math.random() * 255);
 		var blue = Math.floor(Math.random() * 255);
 		
-		blinkM.goToRGBColorNow([red, green, blue]);
-		//blinkM.fadeToRGBColor([red, green, blue]);
+		blinkM.fadeToRGBColor([red, green, blue]);
 	}	
 	
 
@@ -74,15 +131,49 @@ $(document).ready(function() {
 		randomColor();
 	}
 
-			
+	function getRGBColor(color) {
+		var hexColor = parseInt(color.replace(/#/, "0x"));
+		var rgbColor = {
+			red: hexColor >> 16,
+			green: (hexColor >> 8) & 0x0000FF,
+			blue: hexColor & 0x0000FF
+		};
+
+		return rgbColor;	
+	}
+
+	function gotoColor(color) {
+		if (blinkM === undefined) return;
+		var c = getRGBColor(color);
+		blinkM.goToRGBColorNow([c.red, c.green, c.blue]);	
+	}
+
+	function fadeToColor(color) {
+		if (blinkM === undefined) return;
+		var c = getRGBColor(color);
+		blinkM.fadeToRGBColor([c.red, c.green, c.blue]);		
+	}
+	
 });
 
 </script>
 
 </head>
 <body>
-  
-	<div class="text">Press button to set random color.</div>
+  	<h2>BlinkM Example</h2>
+	<div class="pickerContainer">
+		<div class="hoverBox">
+			<p>Fade to color:</p>
+			<div id="fadeColorPicker"></div>
+			<p class="note"><em>1 is slowest, 255 is fastest</em></p>
+			<label for="speed">Fade Speed (1 - 255): </label><input id="speed" type="number" value="15" min="1" max="255" step="1" />
+		</div>		
+		<div class="hoverBox">
+			<p>Go to color:</p>
+			<div id="colorPicker"></div>
+			<p class="note"><em>Go to selected color immediately</em></p>
+		</div>
+	</div>
   
 </body>
 </html>​

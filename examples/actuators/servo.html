@@ -4,12 +4,33 @@
 
 <meta charset=utf-8 />
 <style type="text/css">
-.text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+body {
+	margin: 20px;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: #00AEFF;
+	width: 350px;
 }
+h2 {
+	font-size: 22px;
+	padding-bottom: 10px;
+}
+label {
+	font-size: 14px;
+}
+button {
+	margin-right: 10px;
+}
+.controls {
+	background-color: #f7f7f7;
+	padding: 10px;
+	border: 1px dotted #CCC;
+	margin-bottom: 40px;
+}
+.btnContainer {
+	margin-top: 20px;
+}
+
 </style>
 
 <title>Servo Example</title>
@@ -37,6 +58,7 @@ $(document).ready(function() {
 	var uno = new IOBoard("localhost", 8887);
 	var servoDir = true;
 	var servo;
+	var usePot = false;
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -57,6 +79,43 @@ $(document).ready(function() {
 		servo = new Servo(uno, uno.getDigitalPin(9));
 		//setInterval(servoTest, 5000);
 		// NOTE: running a servo can interfere with analog inputs, creating jitter in the signal
+		servo.angle = 90;
+
+		$('button#_45').on('click', function() {
+			// can alternatively set value directly
+			//motor.value = 0.5;
+			servo.angle = 45;
+		});
+
+		$('button#_90').on('click', function() {
+			// can alternatively set value directly
+			//motor.value = 0.5;
+			servo.angle = 90;
+		});
+
+		$('button#_135').on('click', function() {
+			// can alternatively set value directly
+			//motor.value = 0.5;
+			servo.angle = 135;
+		});
+
+		$('#angle').change(function(evt) {
+			var val = this.value;
+			if (val <= 180 && val >= 0) {
+				servo.angle = val;
+			}
+		});	
+
+		$('#usePot').change(function(evt) {
+			
+			if ($(this).attr('checked')) {
+				console.log("on");
+				usePot = true;
+			} else {
+				usePot = false;
+			}
+		
+		});		
 				
 	}
 	
@@ -66,7 +125,7 @@ $(document).ready(function() {
 		// target is a reference to the potentiometer that fired the CHANGE event
 		var angle = event.target.value * 180.0;
 		
-		servo.angle = angle;
+		if (usePot) servo.angle = angle;
 	}
 
 	
@@ -88,7 +147,24 @@ $(document).ready(function() {
 </head>
 <body>
   
-	<div class="text">Turn the potentiometer to rotate the servo head.</div>
+  	<h2>Servo Example</h2>
+	<p>Enter or click on a value below:</p>
+
+	<div class="controls">
+		<label for="angle">Angle (0 - 180): </label><input id="angle" type="number" value="90" min="0" max="180" step="1" />
+
+		<div class="btnContainer">
+			<button type="button" id="_45">45 degrees</button>
+			<button type="button" id="_90">90 degrees</button>
+			<button type="button" id="_135">135 degrees</button>
+		</div>
+	</div>
+
+	<p>Check the box below to use the potentiometer to set the servo angle.</p>
+	<div class="controls">
+
+		<label for="usePot">Use Pot: </label><input id="usePot" type="checkbox" />
+	</div>
 
   
 </body>

@@ -4,12 +4,36 @@
 
 <meta charset=utf-8 />
 <style type="text/css">
-.text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+body {
+	margin: 20px;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: #00AEFF;
 }
+button {
+	margin-right: 10px;
+}
+label {
+	font-size: 14px;
+}
+h2 {
+	font-size: 22px;
+	padding-bottom: 10px;
+}
+p.status {
+	margin-top: 30px;
+}
+#btnContainer {
+	background-color: #f7f7f7;
+	padding: 10px;
+	border: 1px dotted #CCC;
+	width: 275px;
+}
+#speed {
+	width: 50px;
+	margin-bottom: 20px;
+}
+
 </style>
 
 <title>DCMotor Example</title>
@@ -25,16 +49,11 @@ $(document).ready(function() {
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var DCMotor = BO.io.DCMotor;
-	var Timer = JSUTILS.Timer;
-	var TimerEvent = JSUTILS.TimerEvent;
 
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
 	var arduino = new IOBoard("localhost", 8887);
-	var motor;
-	var timer;
-	var state = -1;
 	
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -43,7 +62,7 @@ $(document).ready(function() {
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// params: IOBoard, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage
-		motor = new DCMotor(arduino, 
+		var motor = new DCMotor(arduino, 
 			arduino.getDigitalPin(10),
 			arduino.getDigitalPin(9), 
 			arduino.getDigitalPin(11), 
@@ -51,43 +70,41 @@ $(document).ready(function() {
 			5, 
 			5);
 
-		// create a new timer instance with a 1 second tick interval
-		timer = new Timer(1000);
-		// listen for the TIMER event which will be fired every second
-		timer.addEventListener(TimerEvent.TIMER, onTimer);
-		timer.start();	
+		var status = $('.status');
+		var speed = 0.5;
+
+		motor.despin(false);
+		status.text("State: Standby");
+
+		$('button#reverse').on('click', function() {
+			// can alternatively set value directly
+			// motor.value = -0.5;
+			motor.reverse(speed);
+			status.text("State: Reverse");
+		});
+
+		$('button#brake').on('click', function() {
+			// can alternatively set value directly
+			// motor.value = 0;
+			// true = apply brake
+			motor.despin(true);
+			status.text("State: Brake");
+		});
+
+		$('button#forward').on('click', function() {
+			// can alternatively set value directly
+			//motor.value = 0.5;
+			motor.forward(speed);
+			status.text("State: Forward");
+		});
+
+		$('#speed').change(function(evt) {
+			var val = this.value;
+			if (val <= 1.0 && val >= 0.1) {
+				speed = val;
+			}
+		});
 		
-	}
-
-	function onTimer(event) {
-		state = (state + 1) % 4;
-
-		switch(state) {
-			case 0:
-				motor.forward(0.5);
-				// can alternatively set value directly
-				//motor.value = 0.5;
-				$('#state').html("Forward");
-				break;
-			case 1:
-				motor.despin(true);
-				// can alternatively set value directly
-				//motor.value = 0;
-				$('#state').html("Brake");
-				break;
-			case 2:
-				motor.reverse(0.5);
-				// can alternatively set value directly
-				//motor.value = -0.5;
-				$('#state').html("Reverse");
-				break;
-			case 3:
-				motor.despin(false);
-				// can alternatively set value directly
-				//motor.value = 0;
-				$('#state').html("Standby");
-				break;
-		}
 	}
 			
 });
@@ -96,6 +113,16 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<div id="state" class="text"></div>    
+	<h2>DC Motor Control Example</h2>
+	<div id="btnContainer">
+		<label for="speed">Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
+		<div>
+			<button type="button" id="reverse">Reverse</button>
+			<button type="button" id="brake">Brake</button>
+			<button type="button" id="forward">Forward</button>
+		</div>
+	</div>
+
+	<p class="status">State: </p>    
 </body>
 </html>​
