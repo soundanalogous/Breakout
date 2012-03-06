@@ -45,7 +45,7 @@ BO.filters.Scaler = (function() {
 		this._inMax = inMax || 1;
 		this._outMin = outMin || 0;
 		this._outMax = outMax || 1;
-		this._type = type || this.LINEAR;
+		this._type = type || Scaler.LINEAR;
 		this._limiter = limiter || true;
 
 	};
@@ -73,35 +73,35 @@ BO.filters.Scaler = (function() {
 	/**
 	 * y = x
 	 */
-	Scaler.prototype.LINEAR = function(val) {
+	Scaler.LINEAR = function(val) {
 		return val;
 	};
 
 	/**
 	 * y = x * x
 	 */
-	Scaler.prototype.SQUARE = function(val) {
+	Scaler.SQUARE = function(val) {
 		return val * val;
 	};
 
 	/**
 	 * y = sqrt(x)
 	 */
-	Scaler.prototype.SQUARE_ROOT = function(val) {
+	Scaler.SQUARE_ROOT = function(val) {
 		return Math.pow(val, 0.5);
 	};
 	
 	/**
 	 * y = x^4
 	 */
-	Scaler.prototype.CUBE = function(val) {
+	Scaler.CUBE = function(val) {
 		return val * val * val * val;
 	};
 	
 	/**
 	 * y = pow(x, 1/4)
 	 */
-	Scaler.prototype.CUBE_ROOT = function(val) {
+	Scaler.CUBE_ROOT = function(val) {
 		return Math.pow(val, 0.25);
 	};			
 

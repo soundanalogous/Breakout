@@ -1,3 +1,13 @@
+<date> Version 0.1.1
+
+* Fixed jQuery library mismatch for custom_examples (issue #2)
+* Fixed serial port selection issue in Breakout Server (issue #3)
+* Fixed ability to use scaler equations in Scaler.js (issue #4)
+* Updated actuator examples to use in-browser controls
+* Added signal viewer (SignalScope.js) to filter examples
+* Updated documentation
+* Updated readme
+
 2012.02.20 Version 0.1.0
 
 * First public beta
