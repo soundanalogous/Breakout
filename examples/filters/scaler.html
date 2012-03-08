@@ -58,8 +58,8 @@ p.scopeLabel {
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
-<script src="js/requestAnimFrame.js"></script>
-<script src="js/SignalScope.js"></script>
+<script src="../libs/requestAnimFrame.js"></script>
+<script src="../libs/SignalScope.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -183,11 +183,11 @@ $(document).ready(function() {
 
 		<div class="scopeContainer clear">
 			<canvas id="scope2" class="scope" width="200" height="100"></canvas>
-			<span class="labelContainer">
+			<div class="labelContainer">
 				<p id="scope2Label" class="scopeLabel">LINEAR</p>
 				<p id="scope2Value" class="scopeLabel">Filtered value: </p>
 				<label for="maxVal">Max value: </label><input id="maxVal" type="number" value="1" min="1.0" step="1.0" />
-			</span>
+			</div>
 		</div>
 	</div>
 

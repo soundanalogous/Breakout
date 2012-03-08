@@ -48,14 +48,15 @@ p.scopeLabel {
 .clear {display: inline-block;}
 * html .clear {height: 1%;}
 .clear {display: block;}
+
 </style>
 
 <title>TriggerPoint Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
-<script src="js/requestAnimFrame.js"></script>
-<script src="js/SignalScope.js"></script>
+<script src="../libs/requestAnimFrame.js"></script>
+<script src="../libs/SignalScope.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -178,7 +179,6 @@ $(document).ready(function() {
 
 	<div id="containers" style="width:400px;">
 
-
 		<label for="selector">Set number of points: </label>	
 		<select id="selector" name="numPoints">
 			<option value="1">1</option>
@@ -189,11 +189,11 @@ $(document).ready(function() {
 
 		<div class="scopeContainer clear">
 			<canvas id="scope1" class="scope" width="200" height="100"></canvas>
-			<span class="labelContainer">
-				<p id="scope1Label" class="scopeLabel">1 Point</p>
+			<div class="labelContainer">
+				<p id="scope1Label" class="scopeLabel">1 Points</p>
 				<p id="preFilterValue" class="scopeLabel">Pre-filtered value: </p>
 				<p id="filteredValue" class="scopeLabel">Filtered value: </p>
-			</span>
+			</div>
 		</div>
 
 		<p id="printPoints" class="scopeLabel">Points = [[0.5, 0.05]]</p>

@@ -4,18 +4,59 @@
 
 <meta charset=utf-8 />
 <style type="text/css">
-.text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+body {
+	margin: 20px;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: #666;
 }
+h2 {
+	font-size: 22px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+label {
+	font-size: 14px;
+}
+.scopeContainer {
+	margin-bottom: 20px;
+}
+.scope {
+	float: left;
+	border: 1px solid #666;
+}
+.labelContainer {
+	float: left;
+	padding-left: 10px;
+}
+p.scopeLabel {
+	margin: 0;
+	padding-bottom: 10px;
+	font-size: 16px;
+}
+#eqSelector {
+	margin-bottom: 10px;
+}
+
+.clear:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+.clear {display: inline-block;}
+* html .clear {height: 1%;}
+.clear {display: block;}
+
 </style>
 
 <title>Convolution Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/requestAnimFrame.js"></script>
+<script src="../libs/SignalScope.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -33,6 +74,11 @@ $(document).ready(function() {
 	BO.enableDebugging = true;	
 
 	var arduino = new IOBoard("localhost", 8887);
+	var pot;
+
+	var ch1Color = '#FF0000';
+	var ch2Color = '#00AEFF';
+	var scope = new SignalScope("scope1", 200, 100, 0, 1, ch1Color, ch2Color);
 	
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -42,22 +88,56 @@ $(document).ready(function() {
 
 		// need to enable an analog pin in order to read it
 		arduino.enableAnalogPin(0);
-		var pot = arduino.getAnalogPin(0);
+		pot = arduino.getAnalogPin(0);
 		// add a moving average filter to smooth the input data
 		pot.addFilter(new Convolution(Convolution.MOVING_AVERAGE))
 		pot.addEventListener(PinEvent.CHANGE, onPotChange);
+
+		initGUIListeners();
+
+		animate();		
 				
 	}
 	
 	function onPotChange(event) {
 		var pin = event.target;
-		var analogData = "filtered value: " + pin.value.toFixed(3) + 
-			"\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
-			pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
-		
-		$('#potData').html(analogData);	
-		$('#preFilterData').html("pre-filter value: " + pin.preFilterValue.toFixed(3));
+
+		$('#preFilterVal').text('Pre-filtered value: ' + pin.preFilterValue.toFixed(3));
+		$('#filteredVal').text('Filtered value: ' + pin.value.toFixed(3));
 	}
+
+	function initGUIListeners() {
+		$('select').on('change', function(evt) {
+			pot.removeAllFilters();
+			switch(this.value) {
+				case 'moving_average':
+					addFilter(Convolution.MOVING_AVERAGE, "MOVING_AVERAGE");
+					break;
+				case 'lpf':
+					addFilter(Convolution.LPF, "LPF");
+					break;
+				case 'hpf':
+					//addFilter(Convolution.HPF, "HPF");
+					break;
+			}
+		});
+
+		// set value text color to channel color
+		$('#preFilterVal').css('color', ch1Color);
+		$('#filteredVal').css('color', ch2Color);
+	}
+
+	function addFilter(type, label) {
+		pot.addFilter(new Convolution(type));
+		$('#scope1Label').text(label);
+	}
+	
+	function animate() {
+
+		scope.update(pot.preFilterValue, pot.value);
+
+		requestAnimFrame(animate);
+	}	
 			
 });
 </script>
@@ -65,8 +145,25 @@ $(document).ready(function() {
 </head>
 <body>
   
-	<div id="potData" class="text">filtered value:</div>
-	<div id="preFilterData" class="text">pre-filter value:</div>
+  	<h2>Convolution Example</h2>
+
+	<div id="containers" style="width:400px;">
+
+		<select id="eqSelector" name="equations">
+			<option value="moving_average">MOVING_AVERAGE</option>
+			<option value="lpf">LPF</option>
+			<!--<option value="hpf">HPF</option>-->
+		</select>
+
+		<div class="scopeContainer clear">
+			<canvas id="scope1" class="scope" width="200" height="100"></canvas>
+			<div class="labelContainer">
+				<p id="scope1Label" class="scopeLabel">MOVING_AVERAGE</p>
+				<p id="preFilterVal" class="scopeLabel">Pre-filtered value: </p>
+				<p id="filteredVal" class="scopeLabel">Filtered value: </p>
+			</div>
+		</div>
+	</div>
   
 </body>
 </html>​
