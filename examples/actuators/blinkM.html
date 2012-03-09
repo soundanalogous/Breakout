@@ -10,15 +10,15 @@ body {
 	margin: 20px;
 	font-family: sans-serif;
 	font-size: 20px;
-	color: #666;
+	color: #00AEFF;
 }
 h2 {
 	font-size: 22px;
 	padding-bottom: 10px;
-	color: #00AEFF;
 }
 label {
 	font-size: 14px;
+	color: #666;
 }
 .hoverBox {
 	float: left;
@@ -165,13 +165,12 @@ $(document).ready(function() {
 		<div class="hoverBox">
 			<p>Fade to color:</p>
 			<div id="fadeColorPicker"></div>
-			<p class="note"><em>1 is slowest, 255 is fastest</em></p>
 			<label for="speed">Fade Speed (1 - 255): </label><input id="speed" type="number" value="15" min="1" max="255" step="1" />
 		</div>		
 		<div class="hoverBox">
 			<p>Go to color:</p>
 			<div id="colorPicker"></div>
-			<p class="note"><em>Go to selected color immediately</em></p>
+			<label>Go to selected color immediately</label>
 		</div>
 	</div>
   

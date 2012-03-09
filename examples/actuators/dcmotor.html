@@ -3,6 +3,7 @@
 <head>
 
 <meta charset=utf-8 />
+<link type="text/css" href="../libs/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	margin: 20px;
@@ -15,23 +16,29 @@ button {
 }
 label {
 	font-size: 14px;
+	color: #666;
 }
 h2 {
 	font-size: 22px;
 	padding-bottom: 10px;
 }
 p.status {
-	margin-top: 30px;
+	margin-top: 20px;
 }
-#btnContainer {
+.container {
 	background-color: #f7f7f7;
 	padding: 10px;
 	border: 1px dotted #CCC;
 	width: 275px;
+	margin-bottom: 20px;
 }
 #speed {
 	width: 50px;
 	margin-bottom: 20px;
+}
+#slider {
+	margin-top: 20px;
+	width: 275px;
 }
 
 </style>
@@ -40,6 +47,7 @@ p.status {
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -77,31 +85,55 @@ $(document).ready(function() {
 		status.text("State: Standby");
 
 		$('button#reverse').on('click', function() {
-			// can alternatively set value directly
-			// motor.value = -0.5;
 			motor.reverse(speed);
 			status.text("State: Reverse");
+			$('#motorSpeed').text(speed * -1);
+			$('#slider').slider({
+				value: speed * -1
+			});			
 		});
 
 		$('button#brake').on('click', function() {
-			// can alternatively set value directly
-			// motor.value = 0;
 			// true = apply brake
 			motor.despin(true);
 			status.text("State: Brake");
+			$('#motorSpeed').text(0.0);
+			$('#slider').slider({
+				value: 0.0
+			});
 		});
 
 		$('button#forward').on('click', function() {
-			// can alternatively set value directly
-			//motor.value = 0.5;
 			motor.forward(speed);
 			status.text("State: Forward");
+			$('#motorSpeed').text(speed);
+			$('#slider').slider({
+				value: speed
+			});			
 		});
 
 		$('#speed').change(function(evt) {
 			var val = this.value;
 			if (val <= 1.0 && val >= 0.1) {
 				speed = val;
+			}
+		});
+
+		$('#slider').slider({
+			min: -1.0,
+			max: 1.0,
+			step: 0.01,
+			slide: function(event, ui) {
+				var motorSpeed = ui.value;
+				motor.value = motorSpeed;
+				if (motorSpeed < 0) {
+					status.text("State: Reverse");
+				} else if (motorSpeed > 0) {
+					status.text("State: Forward");
+				} else {
+					status.text("State: Brake");
+				}
+				$('#motorSpeed').text(motorSpeed);
 			}
 		});
 		
@@ -114,8 +146,9 @@ $(document).ready(function() {
 </head>
 <body>
 	<h2>DC Motor Control Example</h2>
-	<div id="btnContainer">
-		<label for="speed">Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
+
+	<div id="btnContainer" class="container">
+		<label for="speed">Constant Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
 		<div>
 			<button type="button" id="reverse">Reverse</button>
 			<button type="button" id="brake">Brake</button>
@@ -123,6 +156,13 @@ $(document).ready(function() {
 		</div>
 	</div>
 
+	<div class="container">
+		<label>Variable Motor Speed: </label><label id="motorSpeed">0.0</label>
+		<div id="slider"></div>
+	</div>
+
 	<p class="status">State: </p>    
+
+
 </body>
 </html>​
