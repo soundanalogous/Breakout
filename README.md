@@ -29,7 +29,7 @@ The next step is to run the Breakout Server application:
 2. You'll find Breakout Server (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in Breakout/server/. Simply double-click to launch the application. Note: Linux users need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
-5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/".
+5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/" followed by "Connected to IOBoard on: <serial port name>".
 6. Open http://localhost:8887/examples/getting_started/hello_world.html in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater). If you changed the network port in step 4, update it on line 36 of the hello_world.html example and in the url above.
 
 For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
