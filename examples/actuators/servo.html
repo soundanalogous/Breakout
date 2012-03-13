@@ -31,6 +31,9 @@ button {
 .btnContainer {
 	margin-top: 20px;
 }
+#angle {
+	width: 50px;
+}
 
 </style>
 
@@ -40,8 +43,6 @@ button {
 <script src="../libs/jquery-1.7.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// to do: update to provide servo control from browser
 
 	// dependencies
 	// declare these variables so you don't have
@@ -57,7 +58,6 @@ $(document).ready(function() {
 
 	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
-	var servoDir = true;
 	var servo;
 	var usePot = false;
 	
@@ -68,79 +68,58 @@ $(document).ready(function() {
 		// remove the listener because it is no longer needed
 		uno.removeEventListener(IOBoardEvent.READY, onReady);
 
-
 		// Analog input example using Potentiometer object:
 		// params: board, analogPin, enableSmoothing
 		var pot = new Potentiometer(uno, uno.getAnalogPin(0), true);
 		pot.addEventListener(PotEvent.CHANGE, onPotChange);
 
-				
-		// Servo example using Servo object:
 		// params: board, pin
 		servo = new Servo(uno, uno.getDigitalPin(9));
-		//setInterval(servoTest, 5000);
-		// NOTE: running a servo can interfere with analog inputs, creating jitter in the signal
+		// NOTE: running a servo can interfere with analog 
+		// inputs, creating jitter in the signal
+
+		// set initial angle to 90 degrees
 		servo.angle = 90;
 
-		$('button#_45').on('click', function() {
-			// can alternatively set value directly
-			//motor.value = 0.5;
-			servo.angle = 45;
-		});
-
-		$('button#_90').on('click', function() {
-			// can alternatively set value directly
-			//motor.value = 0.5;
-			servo.angle = 90;
-		});
-
-		$('button#_135').on('click', function() {
-			// can alternatively set value directly
-			//motor.value = 0.5;
-			servo.angle = 135;
-		});
-
-		$('#angle').change(function(evt) {
-			var val = this.value;
-			if (val <= 180 && val >= 0) {
-				servo.angle = val;
-			}
-		});	
-
-		$('#usePot').change(function(evt) {
-			
-			if ($(this).attr('checked')) {
-				console.log("on");
-				usePot = true;
-			} else {
-				usePot = false;
-			}
-		
-		});		
-				
+		initGUIListeners();
+					
 	}
 	
 	
 	function onPotChange(event) {
 		// multiply by 180.0 to scale to the range of 0 to 180
-		// target is a reference to the potentiometer that fired the CHANGE event
+		// target is a reference to the potentiometer that fired 
+		// the CHANGE event
 		var angle = event.target.value * 180.0;
 		
+		// only use the potentiometer to rotate the servo head
+		// if the Use Pot checkbox is checked
 		if (usePot) servo.angle = angle;
 	}
 
 	
-	// rotate the servo head		
-	function servoTest() {
-		if (servoDir) {
-			servo.angle = 0;
-		} else {
-			servo.angle = 180;
-		}
-		servoDir = !servoDir;
+	function initGUIListeners() {
+		$('button').on('click', function() {
+			servo.angle = $(this).data('angle');
+		});
+
+		$('#angle').change(function(evt) {
+			var val = this.value;
+			if (val <= 180 && val >= 0) {
+				// rotate the servo head to the specified angle
+				servo.angle = val;
+			}
+		});	
+
+		$('#usePot').change(function(evt) {
+			if ($(this).attr('checked')) {
+				usePot = true;
+			} else {
+				usePot = false;
+			}
+		});	
 	}
 	
-			
 });
 
 </script>
@@ -155,18 +134,16 @@ $(document).ready(function() {
 		<label for="angle">Angle (0 - 180): </label><input id="angle" type="number" value="90" min="0" max="180" step="1" />
 
 		<div class="btnContainer">
-			<button type="button" id="_45">45 degrees</button>
-			<button type="button" id="_90">90 degrees</button>
-			<button type="button" id="_135">135 degrees</button>
+			<button type="button" data-angle="45">45 degrees</button>
+			<button type="button" data-angle="90">90 degrees</button>
+			<button type="button" data-angle="135">135 degrees</button>
 		</div>
 	</div>
 
 	<p>Check the box below to use the potentiometer to set the servo angle.</p>
 	<div class="controls">
-
 		<label for="usePot">Use Pot: </label><input id="usePot" type="checkbox" />
 	</div>
 
-  
 </body>
 </html>​

@@ -3,6 +3,7 @@
 <head>
 
 <meta charset=utf-8 />
+
 <link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
 
 <style type="text/css">
@@ -24,9 +25,6 @@ label {
 	float: left;
 	margin-right: 40px;
 }
-p.note {
-	font-size: 12px;
-}
 #speed {
 	width: 60px;
 	margin-bottom: 20px;
@@ -41,8 +39,6 @@ p.note {
 <script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// to do: update to enable color picking from browser
 
 	// dependencies
 	// declare these variables so you don't have
@@ -59,28 +55,23 @@ $(document).ready(function() {
 	// params: IPaddress, port
 	var uno = new IOBoard("localhost", 8887);
 	var blinkM;
+	var fadeSpeed;
 	var initialColor = '#FF0000';
 
-	// initialize the color picker
+	// initialize color picker
 	$('#colorPicker').wColorPicker({
 		initColor: initialColor,
 		onSelect: gotoColor, 
 		mode: 'flat', 
-		effect: 'none', 
 		color: 'white',
-		opacity: '1.0',
-		buttonSize: '50'
 	});
 
-	// initialize the color picker
+	// initialize color picker
 	$('#fadeColorPicker').wColorPicker({
 		initColor: initialColor,
 		onSelect: fadeToColor, 
 		mode: 'flat', 
-		effect: 'none', 
 		color: 'white',
-		opacity: '1.0',
-		buttonSize: '50'
 	});	
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
@@ -95,27 +86,35 @@ $(document).ready(function() {
 		var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
 		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
-		var fadeSpeed = 15;
-
 		// i2c module example: BlinkM module
 		blinkM = new BlinkM(uno);
 		// stop the built-in light script
 		blinkM.stopScript();
+
+		// set the initial fade speed
+		fadeSpeed = 15;
 		blinkM.setFadeSpeed(fadeSpeed);
 
 		// set the initial color
 		gotoColor(initialColor);
 
+		initGUIListeners();
+
+	}
+
+	function initGUIListeners() {
 		$('#speed').change(function(evt) {
 			var val = this.value;
 			if (val <= 255 && val >= 1) {
-				speed = val;
-				blinkM.setFadeSpeed(speed);
+				fadeSpeed = val;
+				blinkM.setFadeSpeed(fadeSpeed);
 			}
-		});
-
+		});		
 	}
 	
+	function onButtonPress(event) {
+		randomColor();
+	}	
 	
 	// set a random color on the BlinkM module
 	function randomColor() {
@@ -125,11 +124,6 @@ $(document).ready(function() {
 		
 		blinkM.fadeToRGBColor([red, green, blue]);
 	}	
-	
-
-	function onButtonPress(event) {
-		randomColor();
-	}
 
 	function getRGBColor(color) {
 		var hexColor = parseInt(color.replace(/#/, "0x"));

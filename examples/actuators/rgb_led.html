@@ -9,7 +9,7 @@
 body {
 	margin: 20px;
 	font-family: sans-serif;
-	font-size: 20px;
+	font-size: 18px;
 	color: #00AEFF;
 	width: 600px;
 }
@@ -28,9 +28,7 @@ label {
 .hoverBox {
 	float: left;
 	margin-right: 40px;
-}
-p.note {
-	font-size: 12px;
+	margin-bottom: 20px;
 }
 #duration {
 	width: 50px;
@@ -69,26 +67,18 @@ $(document).ready(function() {
 	var duration = 500;
 	var initialColor = '#80FF00';
 
-	// initialize the color picker
+	// initialize color picker
 	$('#colorPicker').wColorPicker({
 		initColor: initialColor,
 		onSelect: gotoColor, 
-		mode: 'flat', 
-		effect: 'none', 
-		color: 'white',
-		opacity: '1.0',
-		buttonSize: '50'
+		color: 'white'
 	});
 
-	// initialize the color picker
+	// initialize color picker
 	$('#fadeColorPicker').wColorPicker({
 		initColor: initialColor,
 		onSelect: fadeToColor, 
-		mode: 'flat', 
-		effect: 'none', 
-		color: 'white',
-		opacity: '1.0',
-		buttonSize: '50'
+		color: 'white'
 	});		
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);
@@ -98,12 +88,10 @@ $(document).ready(function() {
 		// remove the listener because it is no longer needed
 		uno.removeEventListener(IOBoardEvent.READY, onReady);
 
-		
 		// Digital input using Button object:
 		// params: board, pin, mode
 		var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
 		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
-
 
 		// RGBLED example using RGBLED object:
 		// NOTE: the r, g, b pins of the LED must be connected to PWM pins on the IOBoard
@@ -115,9 +103,18 @@ $(document).ready(function() {
 			uno.getDigitalPin(6), 
 			RGBLED.COMMON_CATHODE);
 
-		// set a color
+		// set initial color
 		rgbLED.setColor(128, 255, 0);
 
+		initGUIListeners();
+
+	}
+
+	function onButtonPress(event) {
+		randomColor();
+	}	
+
+	function initGUIListeners() {
 		$('#duration').change(function(evt) {
 			var val = this.value;
 			if (val >= 0) {
@@ -131,8 +128,7 @@ $(document).ready(function() {
 
 		$('button#fadeOut').on('click', function() {
 			rgbLED.fadeOut(duration);
-		});		
-				
+		});			
 	}
 	
 	// fade the RGB led to a random color
@@ -144,10 +140,6 @@ $(document).ready(function() {
 		// fade rgb led to random color in .5 seconds
 		rgbLED.fadeTo(red, green, blue, 500);
 	}	
-
-	function onButtonPress(event) {
-		randomColor();
-	}
 
 	function getRGBColor(color) {
 		var hexColor = parseInt(color.replace(/#/, "0x"));
@@ -195,7 +187,7 @@ $(document).ready(function() {
 		</div>
 	</div>
 
-<p>Fade out to black, fade in to white:</p>
+	<p>Fade out to black, fade in to white:</p>
 	<div class="fadeControls">
 		
 		<button type="button" id="fadeOut">Fade Out</button>

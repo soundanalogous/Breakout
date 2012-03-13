@@ -22,9 +22,6 @@ h2 {
 	font-size: 22px;
 	padding-bottom: 10px;
 }
-p.status {
-	margin-top: 20px;
-}
 .container {
 	background-color: #f7f7f7;
 	padding: 10px;
@@ -78,14 +75,24 @@ $(document).ready(function() {
 			5, 
 			5);
 
-		var status = $('.status');
+		// set the initial motor speed
 		var speed = 0.5;
 
+		// stop the motor
 		motor.despin(false);
+
+		initGUIListeners();
+		
+	}
+
+	function initGUIListeners() {
+		var status = $('.status');
 		status.text("State: Standby");
 
 		$('button#reverse').on('click', function() {
+			// reverse speed if between 0.0 and 1.0
 			motor.reverse(speed);
+
 			status.text("State: Reverse");
 			$('#motorSpeed').text(speed * -1);
 			$('#slider').slider({
@@ -96,6 +103,7 @@ $(document).ready(function() {
 		$('button#brake').on('click', function() {
 			// true = apply brake
 			motor.despin(true);
+
 			status.text("State: Brake");
 			$('#motorSpeed').text(0.0);
 			$('#slider').slider({
@@ -104,7 +112,9 @@ $(document).ready(function() {
 		});
 
 		$('button#forward').on('click', function() {
+			// forward speed is between 0.0 and 1.0
 			motor.forward(speed);
+
 			status.text("State: Forward");
 			$('#motorSpeed').text(speed);
 			$('#slider').slider({
@@ -125,6 +135,7 @@ $(document).ready(function() {
 			step: 0.01,
 			slide: function(event, ui) {
 				var motorSpeed = ui.value;
+				// set the motor value (between -1.0 and 1.0)
 				motor.value = motorSpeed;
 				if (motorSpeed < 0) {
 					status.text("State: Reverse");
@@ -136,7 +147,6 @@ $(document).ready(function() {
 				$('#motorSpeed').text(motorSpeed);
 			}
 		});
-		
 	}
 			
 });
