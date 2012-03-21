@@ -1073,7 +1073,7 @@
 <span class='line'>1066</span> 		 * @param {Number[]} message Message data to be sent to the IOBoard
 <span class='line'>1067</span> 		 */</span><span class="WHIT">
 <span class='line'>1068</span> </span><span class="WHIT">		</span><span class="NAME">this.send</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1069</span> </span><span class="WHIT">			</span><span class="NAME">_socket.send</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1069</span> </span><span class="WHIT">			</span><span class="NAME">_socket.sendString</span><span class="PUNC">(</span><span class="NAME">message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>1070</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>1071</span> </span><span class="WHIT">		
 <span class='line'>1072</span> 		</span><span class="COMM">/**
@@ -1083,145 +1083,144 @@
 <span class='line'>1076</span> 		 * @private
 <span class='line'>1077</span> 		 */</span><span class="WHIT">
 <span class='line'>1078</span> </span><span class="WHIT">		</span><span class="NAME">this.close</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1079</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"socket = "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">_socket</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1080</span> </span><span class="WHIT">			</span><span class="NAME">_socket.close</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1081</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1082</span> 
-<span class='line'>1083</span> </span><span class="WHIT">		
-<span class='line'>1084</span> 		</span><span class="COMM">/* implement EventDispatcher */</span><span class="WHIT">
-<span class='line'>1085</span> </span><span class="WHIT">		
-<span class='line'>1086</span> 		</span><span class="COMM">/**
-<span class='line'>1087</span> 		 * @param {String} type The event type
-<span class='line'>1088</span> 		 * @param {Function} listener The function to be called when the event is fired
-<span class='line'>1089</span> 		 */</span><span class="WHIT">
-<span class='line'>1090</span> </span><span class="WHIT">		</span><span class="NAME">this.addEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1091</span> </span><span class="WHIT">			</span><span class="NAME">_evtDispatcher.addEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1092</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1093</span> </span><span class="WHIT">		
-<span class='line'>1094</span> 		</span><span class="COMM">/**
-<span class='line'>1095</span> 		 * @param {String} type The event type
-<span class='line'>1096</span> 		 * @param {Function} listener The function to be called when the event is fired
-<span class='line'>1097</span> 		 */</span><span class="WHIT">
-<span class='line'>1098</span> </span><span class="WHIT">		</span><span class="NAME">this.removeEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1099</span> </span><span class="WHIT">			</span><span class="NAME">_evtDispatcher.removeEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1100</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1101</span> </span><span class="WHIT">		
-<span class='line'>1102</span> 		</span><span class="COMM">/**
-<span class='line'>1103</span> 		 * @param {String} type The event type
-<span class='line'>1104</span> 		 * return {boolean} True is listener exists for this type, false if not.
-<span class='line'>1105</span> 		 */</span><span class="WHIT">
-<span class='line'>1106</span> </span><span class="WHIT">		</span><span class="NAME">this.hasEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1107</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher.hasEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1108</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1109</span> </span><span class="WHIT">		
-<span class='line'>1110</span> 		</span><span class="COMM">/**
-<span class='line'>1111</span> 		 * @param {Event} type The Event object
-<span class='line'>1112</span> 		 * @param {Object} optionalParams Optional parameters to assign to the event object.
-<span class='line'>1113</span> 		 * return {boolean} True if dispatch is successful, false if not.
-<span class='line'>1114</span> 		 */</span><span class="WHIT">		
-<span class='line'>1115</span> 		</span><span class="NAME">this.dispatchEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'>1116</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher.dispatchEvent</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1117</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1118</span> 
-<span class='line'>1119</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1120</span> 
-<span class='line'>1121</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
-<span class='line'>1122</span> 
-<span class='line'>1123</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>1124</span> 	 * The ioBoardReady event is dispatched when the board is ready to send 
-<span class='line'>1125</span> 	 * and receive commands. 
-<span class='line'>1126</span> 	 * @name IOBoard#ioBoardReady
-<span class='line'>1127</span> 	 * @type BO.IOBoardEvent.READY
-<span class='line'>1128</span> 	 * @event
-<span class='line'>1129</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1130</span> 	 */</span><span class="WHIT">
-<span class='line'>1131</span> 
-<span class='line'>1132</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>1133</span> 	 * The ioBoardConnected event is dispatched when the websocket connection
-<span class='line'>1134</span> 	 * is established.
-<span class='line'>1135</span> 	 * @name IOBoard#ioBoardConnected
-<span class='line'>1136</span> 	 * @type BO.IOBoardEvent.CONNECTED
-<span class='line'>1137</span> 	 * @event
-<span class='line'>1138</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1139</span> 	 */</span><span class="WHIT">
-<span class='line'>1140</span> </span><span class="WHIT">	 
-<span class='line'>1141</span> 	</span><span class="COMM">/**
-<span class='line'>1142</span> 	 * The stringMessage event is dispatched when a string is received from
-<span class='line'>1143</span> 	 * the IOBoard.
-<span class='line'>1144</span> 	 * @name IOBoard#stringMessage
-<span class='line'>1145</span> 	 * @type BO.IOBoardEvent.STRING_MESSAGE
-<span class='line'>1146</span> 	 * @event
-<span class='line'>1147</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1148</span> 	 * @param {String} message The string message received from the IOBoard
-<span class='line'>1149</span> 	 */</span><span class="WHIT">
-<span class='line'>1150</span> 
-<span class='line'>1151</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>1152</span> 	 * The sysexMessage event is dispatched when a sysex message is 
-<span class='line'>1153</span> 	 * received from the IOBoard.
-<span class='line'>1154</span> 	 * @name IOBoard#sysexMessage
-<span class='line'>1155</span> 	 * @type BO.IOBoardEvent.SYSEX_MESSAGE
-<span class='line'>1156</span> 	 * @event
-<span class='line'>1157</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1158</span> 	 * @param {Array} message The sysex data
-<span class='line'>1159</span> 	 */</span><span class="WHIT">
-<span class='line'>1160</span> </span><span class="WHIT">	 
-<span class='line'>1161</span> 	</span><span class="COMM">/**
-<span class='line'>1162</span> 	 * The firmwareVersion event is dispatched when the firmware version is
-<span class='line'>1163</span> 	 * received from the IOBoard.
-<span class='line'>1164</span> 	 * @name IOBoard#firmwareVersion
-<span class='line'>1165</span> 	 * @type BO.IOBoardEvent.FIRMWARE_VERSION
-<span class='line'>1166</span> 	 * @event
-<span class='line'>1167</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1168</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
-<span class='line'>1169</span> 	 */</span><span class="WHIT">
-<span class='line'>1170</span> </span><span class="WHIT">	 
-<span class='line'>1171</span> 	</span><span class="COMM">/**
-<span class='line'>1172</span> 	 * The firmwareName event is dispatched when the firmware name is received
-<span class='line'>1173</span> 	 * from the IOBoard.
-<span class='line'>1174</span> 	 * @name IOBoard#firmwareName
-<span class='line'>1175</span> 	 * @type BO.IOBoardEvent.FIRMWARE_NAME
-<span class='line'>1176</span> 	 * @event
-<span class='line'>1177</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1178</span> 	 * @param {String} name The name of the firmware running on the IOBoard
-<span class='line'>1179</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
-<span class='line'>1180</span> 	 */</span><span class="WHIT">	 	 	 
-<span class='line'>1181</span> 	 
-<span class='line'>1182</span> 	</span><span class="COMM">/**
-<span class='line'>1183</span> 	 * The pinStateResponse event is dispatched when the results of
-<span class='line'>1184</span> 	 * a pin state query (via a call to: queryPinState()) is received.
-<span class='line'>1185</span> 	 * @name IOBoard#pinStateResponse
-<span class='line'>1186</span> 	 * @type BO.IOBoardEvent.PIN_STATE_RESPONSE
-<span class='line'>1187</span> 	 * @event
-<span class='line'>1188</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1189</span> 	 * @param {BO.Pin} pin A reference to the pin object.
-<span class='line'>1190</span> 	 */</span><span class="WHIT">
-<span class='line'>1191</span> 
-<span class='line'>1192</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>1193</span> 	 * The analogData event is dispatched when analog data is received
-<span class='line'>1194</span> 	 * from the IOBoard. Use thie event to be notified when any analog
-<span class='line'>1195</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
-<span class='line'>1196</span> 	 * pin value changes.
-<span class='line'>1197</span> 	 * @name IOBoard#analogData
-<span class='line'>1198</span> 	 * @type BO.IOBoardEvent.ANALOG_DATA
-<span class='line'>1199</span> 	 * @event
-<span class='line'>1200</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1201</span> 	 * @param {BO.Pin} pin A reference to the pin object.
-<span class='line'>1202</span> 	 */</span><span class="WHIT">
-<span class='line'>1203</span> </span><span class="WHIT">	 
-<span class='line'>1204</span> 	</span><span class="COMM">/**
-<span class='line'>1205</span> 	 * The digitalData event is dispatched when digital data is received
-<span class='line'>1206</span> 	 * from the IOBoard. Use this event to be notified when any digital
-<span class='line'>1207</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
-<span class='line'>1208</span> 	 * pin value changes.
-<span class='line'>1209</span> 	 * @name IOBoard#digitalData
-<span class='line'>1210</span> 	 * @type BO.IOBoardEvent.DIGITAL_DATA
-<span class='line'>1211</span> 	 * @event
-<span class='line'>1212</span> 	 * @param {IOBoard} target A reference to the IOBoard
-<span class='line'>1213</span> 	 * @param {BO.Pin} pin A reference to the pin object.
-<span class='line'>1214</span> 	 */</span><span class="WHIT">	 
-<span class='line'>1215</span> 	 	 		 	  	 
-<span class='line'>1216</span> 
-<span class='line'>1217</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoard</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>1218</span> 
-<span class='line'>1219</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
-<span class='line'>1220</span> </span></pre></body></html>
+<span class='line'>1079</span> </span><span class="WHIT">			</span><span class="NAME">_socket.close</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1080</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1081</span> 
+<span class='line'>1082</span> </span><span class="WHIT">		
+<span class='line'>1083</span> 		</span><span class="COMM">/* implement EventDispatcher */</span><span class="WHIT">
+<span class='line'>1084</span> </span><span class="WHIT">		
+<span class='line'>1085</span> 		</span><span class="COMM">/**
+<span class='line'>1086</span> 		 * @param {String} type The event type
+<span class='line'>1087</span> 		 * @param {Function} listener The function to be called when the event is fired
+<span class='line'>1088</span> 		 */</span><span class="WHIT">
+<span class='line'>1089</span> </span><span class="WHIT">		</span><span class="NAME">this.addEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1090</span> </span><span class="WHIT">			</span><span class="NAME">_evtDispatcher.addEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1091</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1092</span> </span><span class="WHIT">		
+<span class='line'>1093</span> 		</span><span class="COMM">/**
+<span class='line'>1094</span> 		 * @param {String} type The event type
+<span class='line'>1095</span> 		 * @param {Function} listener The function to be called when the event is fired
+<span class='line'>1096</span> 		 */</span><span class="WHIT">
+<span class='line'>1097</span> </span><span class="WHIT">		</span><span class="NAME">this.removeEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1098</span> </span><span class="WHIT">			</span><span class="NAME">_evtDispatcher.removeEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1099</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1100</span> </span><span class="WHIT">		
+<span class='line'>1101</span> 		</span><span class="COMM">/**
+<span class='line'>1102</span> 		 * @param {String} type The event type
+<span class='line'>1103</span> 		 * return {boolean} True is listener exists for this type, false if not.
+<span class='line'>1104</span> 		 */</span><span class="WHIT">
+<span class='line'>1105</span> </span><span class="WHIT">		</span><span class="NAME">this.hasEventListener</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1106</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher.hasEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1107</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1108</span> </span><span class="WHIT">		
+<span class='line'>1109</span> 		</span><span class="COMM">/**
+<span class='line'>1110</span> 		 * @param {Event} type The Event object
+<span class='line'>1111</span> 		 * @param {Object} optionalParams Optional parameters to assign to the event object.
+<span class='line'>1112</span> 		 * return {boolean} True if dispatch is successful, false if not.
+<span class='line'>1113</span> 		 */</span><span class="WHIT">		
+<span class='line'>1114</span> 		</span><span class="NAME">this.dispatchEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>1115</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">_evtDispatcher.dispatchEvent</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1116</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1117</span> 
+<span class='line'>1118</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1119</span> 
+<span class='line'>1120</span> </span><span class="WHIT">	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>1121</span> 
+<span class='line'>1122</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1123</span> 	 * The ioBoardReady event is dispatched when the board is ready to send 
+<span class='line'>1124</span> 	 * and receive commands. 
+<span class='line'>1125</span> 	 * @name IOBoard#ioBoardReady
+<span class='line'>1126</span> 	 * @type BO.IOBoardEvent.READY
+<span class='line'>1127</span> 	 * @event
+<span class='line'>1128</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1129</span> 	 */</span><span class="WHIT">
+<span class='line'>1130</span> 
+<span class='line'>1131</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1132</span> 	 * The ioBoardConnected event is dispatched when the websocket connection
+<span class='line'>1133</span> 	 * is established.
+<span class='line'>1134</span> 	 * @name IOBoard#ioBoardConnected
+<span class='line'>1135</span> 	 * @type BO.IOBoardEvent.CONNECTED
+<span class='line'>1136</span> 	 * @event
+<span class='line'>1137</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1138</span> 	 */</span><span class="WHIT">
+<span class='line'>1139</span> </span><span class="WHIT">	 
+<span class='line'>1140</span> 	</span><span class="COMM">/**
+<span class='line'>1141</span> 	 * The stringMessage event is dispatched when a string is received from
+<span class='line'>1142</span> 	 * the IOBoard.
+<span class='line'>1143</span> 	 * @name IOBoard#stringMessage
+<span class='line'>1144</span> 	 * @type BO.IOBoardEvent.STRING_MESSAGE
+<span class='line'>1145</span> 	 * @event
+<span class='line'>1146</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1147</span> 	 * @param {String} message The string message received from the IOBoard
+<span class='line'>1148</span> 	 */</span><span class="WHIT">
+<span class='line'>1149</span> 
+<span class='line'>1150</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1151</span> 	 * The sysexMessage event is dispatched when a sysex message is 
+<span class='line'>1152</span> 	 * received from the IOBoard.
+<span class='line'>1153</span> 	 * @name IOBoard#sysexMessage
+<span class='line'>1154</span> 	 * @type BO.IOBoardEvent.SYSEX_MESSAGE
+<span class='line'>1155</span> 	 * @event
+<span class='line'>1156</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1157</span> 	 * @param {Array} message The sysex data
+<span class='line'>1158</span> 	 */</span><span class="WHIT">
+<span class='line'>1159</span> </span><span class="WHIT">	 
+<span class='line'>1160</span> 	</span><span class="COMM">/**
+<span class='line'>1161</span> 	 * The firmwareVersion event is dispatched when the firmware version is
+<span class='line'>1162</span> 	 * received from the IOBoard.
+<span class='line'>1163</span> 	 * @name IOBoard#firmwareVersion
+<span class='line'>1164</span> 	 * @type BO.IOBoardEvent.FIRMWARE_VERSION
+<span class='line'>1165</span> 	 * @event
+<span class='line'>1166</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1167</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+<span class='line'>1168</span> 	 */</span><span class="WHIT">
+<span class='line'>1169</span> </span><span class="WHIT">	 
+<span class='line'>1170</span> 	</span><span class="COMM">/**
+<span class='line'>1171</span> 	 * The firmwareName event is dispatched when the firmware name is received
+<span class='line'>1172</span> 	 * from the IOBoard.
+<span class='line'>1173</span> 	 * @name IOBoard#firmwareName
+<span class='line'>1174</span> 	 * @type BO.IOBoardEvent.FIRMWARE_NAME
+<span class='line'>1175</span> 	 * @event
+<span class='line'>1176</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1177</span> 	 * @param {String} name The name of the firmware running on the IOBoard
+<span class='line'>1178</span> 	 * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+<span class='line'>1179</span> 	 */</span><span class="WHIT">	 	 	 
+<span class='line'>1180</span> 	 
+<span class='line'>1181</span> 	</span><span class="COMM">/**
+<span class='line'>1182</span> 	 * The pinStateResponse event is dispatched when the results of
+<span class='line'>1183</span> 	 * a pin state query (via a call to: queryPinState()) is received.
+<span class='line'>1184</span> 	 * @name IOBoard#pinStateResponse
+<span class='line'>1185</span> 	 * @type BO.IOBoardEvent.PIN_STATE_RESPONSE
+<span class='line'>1186</span> 	 * @event
+<span class='line'>1187</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1188</span> 	 * @param {BO.Pin} pin A reference to the pin object.
+<span class='line'>1189</span> 	 */</span><span class="WHIT">
+<span class='line'>1190</span> 
+<span class='line'>1191</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>1192</span> 	 * The analogData event is dispatched when analog data is received
+<span class='line'>1193</span> 	 * from the IOBoard. Use thie event to be notified when any analog
+<span class='line'>1194</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
+<span class='line'>1195</span> 	 * pin value changes.
+<span class='line'>1196</span> 	 * @name IOBoard#analogData
+<span class='line'>1197</span> 	 * @type BO.IOBoardEvent.ANALOG_DATA
+<span class='line'>1198</span> 	 * @event
+<span class='line'>1199</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1200</span> 	 * @param {BO.Pin} pin A reference to the pin object.
+<span class='line'>1201</span> 	 */</span><span class="WHIT">
+<span class='line'>1202</span> </span><span class="WHIT">	 
+<span class='line'>1203</span> 	</span><span class="COMM">/**
+<span class='line'>1204</span> 	 * The digitalData event is dispatched when digital data is received
+<span class='line'>1205</span> 	 * from the IOBoard. Use this event to be notified when any digital
+<span class='line'>1206</span> 	 * pin value changes. Use Pin.CHANGE to be notified when a specific
+<span class='line'>1207</span> 	 * pin value changes.
+<span class='line'>1208</span> 	 * @name IOBoard#digitalData
+<span class='line'>1209</span> 	 * @type BO.IOBoardEvent.DIGITAL_DATA
+<span class='line'>1210</span> 	 * @event
+<span class='line'>1211</span> 	 * @param {IOBoard} target A reference to the IOBoard
+<span class='line'>1212</span> 	 * @param {BO.Pin} pin A reference to the pin object.
+<span class='line'>1213</span> 	 */</span><span class="WHIT">	 
+<span class='line'>1214</span> 	 	 		 	  	 
+<span class='line'>1215</span> 
+<span class='line'>1216</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">IOBoard</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>1217</span> 
+<span class='line'>1218</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>1219</span> </span></pre></body></html>

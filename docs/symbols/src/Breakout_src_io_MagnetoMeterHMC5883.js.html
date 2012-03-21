@@ -256,32 +256,46 @@
 <span class='line'>249</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
 <span class='line'>250</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.SAMPLES_8</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">3</span><span class="PUNC">;</span><span class="WHIT">	
 <span class='line'>251</span> 	
-<span class='line'>252</span> 	</span><span class="COMM">/** 0.75 Hz @constant */</span><span class="WHIT">
-<span class='line'>253</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_0_75</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x00</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>254</span> </span><span class="WHIT">	</span><span class="COMM">/** 1.5 Hz @constant */</span><span class="WHIT">
-<span class='line'>255</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_1_5</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x01</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>256</span> </span><span class="WHIT">	</span><span class="COMM">/** 3 Hz @constant */</span><span class="WHIT">
-<span class='line'>257</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_3</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x02</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>258</span> </span><span class="WHIT">	</span><span class="COMM">/** 7.5 Hz @constant */</span><span class="WHIT">
-<span class='line'>259</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_7_5</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>260</span> </span><span class="WHIT">	</span><span class="COMM">/** 15 Hz @constant */</span><span class="WHIT">
-<span class='line'>261</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_15</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x04</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>262</span> </span><span class="WHIT">	</span><span class="COMM">/** 30 Hz @constant */</span><span class="WHIT">
-<span class='line'>263</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_30</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x05</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>264</span> </span><span class="WHIT">	</span><span class="COMM">/** 75 Hz @constant */</span><span class="WHIT">
-<span class='line'>265</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_75</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x06</span><span class="PUNC">;</span><span class="WHIT">		
-<span class='line'>266</span> 
-<span class='line'>267</span> 
-<span class='line'>268</span> 	</span><span class="COMM">// document events</span><span class="WHIT">
-<span class='line'>269</span> 
-<span class='line'>270</span> </span><span class="WHIT">	</span><span class="COMM">/**
-<span class='line'>271</span> 	 * The update event is dispatched when the compass heading is updated.
-<span class='line'>272</span> 	 * @name MagnetometerHMC5883#update
-<span class='line'>273</span> 	 * @type BO.io.MagnetometerEvent.UPDATE
-<span class='line'>274</span> 	 * @event
-<span class='line'>275</span> 	 * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
-<span class='line'>276</span> 	 */</span><span class="WHIT">		
-<span class='line'>277</span> 
-<span class='line'>278</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MagnetometerHMC5883</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>279</span> 
-<span class='line'>280</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
+<span class='line'>252</span> 	</span><span class="COMM">/** 0.75 Hz
+<span class='line'>253</span> 	 * @constant 
+<span class='line'>254</span> 	 */</span><span class="WHIT">
+<span class='line'>255</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_0_75</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x00</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>256</span> </span><span class="WHIT">	</span><span class="COMM">/** 1.5 Hz 
+<span class='line'>257</span> 	 * @constant 
+<span class='line'>258</span> 	 */</span><span class="WHIT">
+<span class='line'>259</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_1_5</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x01</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>260</span> </span><span class="WHIT">	</span><span class="COMM">/** 3 Hz 
+<span class='line'>261</span> 	 * @constant 
+<span class='line'>262</span> 	 */</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_3</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x02</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">	</span><span class="COMM">/** 7.5 Hz 
+<span class='line'>265</span> 	* @constant 
+<span class='line'>266</span> 	*/</span><span class="WHIT">
+<span class='line'>267</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_7_5</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">	</span><span class="COMM">/** 15 Hz 
+<span class='line'>269</span> 	* @constant 
+<span class='line'>270</span> 	*/</span><span class="WHIT">
+<span class='line'>271</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_15</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x04</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>272</span> </span><span class="WHIT">	</span><span class="COMM">/** 30 Hz 
+<span class='line'>273</span> 	 * @constant 
+<span class='line'>274</span> 	 */</span><span class="WHIT">
+<span class='line'>275</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_30</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x05</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="WHIT">	</span><span class="COMM">/** 75 Hz 
+<span class='line'>277</span> 	 * @constant 
+<span class='line'>278</span> 	 */</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">	</span><span class="NAME">MagnetometerHMC5883.HZ_75</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x06</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>280</span> 
+<span class='line'>281</span> 
+<span class='line'>282</span> 	</span><span class="COMM">// document events</span><span class="WHIT">
+<span class='line'>283</span> 
+<span class='line'>284</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>285</span> 	 * The update event is dispatched when the compass heading is updated.
+<span class='line'>286</span> 	 * @name MagnetometerHMC5883#update
+<span class='line'>287</span> 	 * @type BO.io.MagnetometerEvent.UPDATE
+<span class='line'>288</span> 	 * @event
+<span class='line'>289</span> 	 * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
+<span class='line'>290</span> 	 */</span><span class="WHIT">		
+<span class='line'>291</span> 
+<span class='line'>292</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">MagnetometerHMC5883</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>293</span> 
+<span class='line'>294</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
