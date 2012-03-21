@@ -52,15 +52,15 @@ You will need one of the following I/O boards:
 OS:
 
 - Mac OS X 10.6 or higher
-- Windows 7 ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
+- Windows 7 or XP ([32-bit Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
 - Has been tested successfuly on Ubuntu 11.10 running in 64-bit mode on an x86-64 processor
 - May work on older versions of OS X and Windows as well but has not been tested
 - May work on other Linux distributions but has not been tested
 
 Desktop Browsers:
 
-- Chrome version 14 or higher
-- Firefox version 7 or higher
+- Chrome version 14 - 17
+- Firefox version 7 - 11
 - Safari version 5 or higher
 
 Mobile Browsers (browser must support websockets):

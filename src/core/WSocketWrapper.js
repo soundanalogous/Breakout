@@ -74,6 +74,7 @@ BO.WSocketWrapper = (function() {
 			try {
 
 				if ("MozWebSocket" in window) {
+					// MozWebSocket is no longer used in Firefox 11 and higher
 					self._socket = new MozWebSocket("ws://"+self._host+":"+self._port, self._protocol);
 				} else if ("WebSocket" in window) {
 					// Safari doesn't like protocol parameter
@@ -109,12 +110,25 @@ BO.WSocketWrapper = (function() {
 
 	/**
 	 * Send a message
+	 * TO DO: support sending ArrayBuffers and Blobs
+	 * for now, forward any calls to sendString
+	 * @private
 	 * @param {String} message The message to send
 	 */
 	WSocketWrapper.prototype.send = function(message) {
 		// to do: ensure socket is not null before trying to send
-		this._socket.send(message);
+		//this._socket.send();
+		this.sendString(message);
 	};
+
+	/**
+	 * Send a message
+	 * @param {String} message The message to send
+	 */
+	WSocketWrapper.prototype.sendString = function(message) {
+		// to do: ensure socket is not null before trying to send
+		this._socket.send(message.toString());
+	};	
 
 	// to do: ensure socket is not null before trying to get readyState
 

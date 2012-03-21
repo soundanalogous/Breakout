@@ -1066,7 +1066,7 @@ BO.IOBoard = (function() {
 		 * @param {Number[]} message Message data to be sent to the IOBoard
 		 */
 		this.send = function(message) {
-			_socket.send(message);
+			_socket.sendString(message);
 		};
 		
 		/**
@@ -1076,7 +1076,6 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		this.close = function() {
-			console.log("socket = " + _socket);
 			_socket.close();
 		};
 

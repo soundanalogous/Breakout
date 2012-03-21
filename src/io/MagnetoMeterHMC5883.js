@@ -249,19 +249,33 @@ BO.io.MagnetometerHMC5883 = (function() {
 	/** @constant */
 	MagnetometerHMC5883.SAMPLES_8 = 3;	
 	
-	/** 0.75 Hz @constant */
+	/** 0.75 Hz
+	 * @constant 
+	 */
 	MagnetometerHMC5883.HZ_0_75 = 0x00;
-	/** 1.5 Hz @constant */
+	/** 1.5 Hz 
+	 * @constant 
+	 */
 	MagnetometerHMC5883.HZ_1_5 = 0x01;
-	/** 3 Hz @constant */
+	/** 3 Hz 
+	 * @constant 
+	 */
 	MagnetometerHMC5883.HZ_3 = 0x02;
-	/** 7.5 Hz @constant */
+	/** 7.5 Hz 
+	* @constant 
+	*/
 	MagnetometerHMC5883.HZ_7_5 = 0x03;
-	/** 15 Hz @constant */
+	/** 15 Hz 
+	* @constant 
+	*/
 	MagnetometerHMC5883.HZ_15 = 0x04;
-	/** 30 Hz @constant */
+	/** 30 Hz 
+	 * @constant 
+	 */
 	MagnetometerHMC5883.HZ_30 = 0x05;
-	/** 75 Hz @constant */
+	/** 75 Hz 
+	 * @constant 
+	 */
 	MagnetometerHMC5883.HZ_75 = 0x06;		
 
 
