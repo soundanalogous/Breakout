@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<style type="text/css">
+body {
+	margin: 20px;
+	width: 300px;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: #666;
+}
+h2 {
+	font-weight: normal;
+	font-size: 28px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+#btn {
+	padding: 10px;
+	font-size: 22px;
+	width: 280px;
+	color: #00AEFF;
+}
+</style>
+
+<title>Breakout Template</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var LED = BO.io.LED;
+
+	// If you want to load this example on a smartphone or tablet,
+	// replace "localhost" with the IP address of the computer
+	// the IOboard is connected to (eg. "192.168.2.3", 8887)
+	var arduino = new IOBoard("localhost", 8887);
+	var led;
+
+	// listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		
+		// remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// create an LED object to interface with the LED 
+		// on the Arduino board (connected to pin 13)
+		led = new LED(arduino, arduino.getDigitalPin(13));
+		
+		// use jQuery to get a reference to the button 
+		// and listen for a click event
+		$('#btn').on('click', toggleLED);
+	}
+
+	function toggleLED(evt) {
+		led.toggle();
+	}
+
+});
+
+</script>
+
+</head>
+<body>
+
+  <h2>Breakout Template</h2>
+
+  <p>Press the button to toggle the LED on the Arduino board.</p>
+  
+  <button id="btn" type="button">Toggle LED</button>
+  
+</body>
+</html>​

@@ -1,5 +1,5 @@
 /***
-	Breakout - 0.1.2.beta
+	Breakout - 0.1.3.beta
 
     Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
     Released under the MIT license. See LICENSE file for details.

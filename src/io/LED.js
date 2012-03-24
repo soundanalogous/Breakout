@@ -66,6 +66,9 @@ BO.io.LED = (function() {
 			board.setDigitalPinMode(this._pin.number, Pin.DOUT);
 			this._supportsPWM = false;
 		}
+
+		// start in the off state
+		this.off();
 	};
 
 	LED.prototype = {
