@@ -59,6 +59,8 @@ $(document).ready(function() {
 	BO.enableDebugging = true;	
 
 	var arduino = new IOBoard("localhost", 8887);
+	var motor;
+	var speed;
 	
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
@@ -67,7 +69,7 @@ $(document).ready(function() {
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// params: IOBoard, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage
-		var motor = new DCMotor(arduino, 
+		motor = new DCMotor(arduino, 
 			arduino.getDigitalPin(10),
 			arduino.getDigitalPin(9), 
 			arduino.getDigitalPin(11), 
@@ -76,7 +78,7 @@ $(document).ready(function() {
 			5);
 
 		// set the initial motor speed
-		var speed = 0.5;
+		speed = 0.5;
 
 		// stop the motor
 		motor.despin(false);

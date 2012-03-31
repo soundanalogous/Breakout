@@ -37,6 +37,7 @@ $(document).ready(function() {
 	var Potentiometer = BO.io.Potentiometer;
 	var PotEvent = BO.io.PotEvent;
 	var RGBLED = BO.io.RGBLED;
+	var Scaler = BO.filters.Scaler;
 
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
@@ -89,7 +90,9 @@ $(document).ready(function() {
 
 		// Analog input example using Potentiometer object:
 		// params: board, analogPin, enableSmoothing
-		var pot = new Potentiometer(uno, uno.getAnalogPin(0), true);
+		var anPin = uno.getAnalogPin(0);
+		//anPin.addFilter(new Scaler(0, 1, 0, 5));
+		var pot = new Potentiometer(uno, anPin, true);
 		pot.addEventListener(PotEvent.CHANGE, onPotChange);
 
 

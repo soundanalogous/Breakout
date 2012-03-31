@@ -74,7 +74,7 @@ Credits
 ---
 Breakout is developed by Jeff Hoefs
 
-Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). The author is also a contributor of the Funnel as3 library.
+Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). The author is also a contributor to the Funnel as3 library.
 
 Logo and icon designed by Claire Lin
 

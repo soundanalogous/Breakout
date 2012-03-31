@@ -1,0 +1,91 @@
+<html> 
+<head> 
+<title>Breakout + processing.js Template 3D</title> 
+</head> 
+<body> 
+<canvas id='canvas1'></canvas> 
+
+<script src="libs/processing-1.3.6-api.min.js"></script>
+<script src="../../dist/Breakout.js"></script>
+<script type="text/javascript">
+
+// Breakout dependencies
+var IOBoard = BO.IOBoard;
+var IOBoardEvent = BO.IOBoardEvent;
+
+var sketch = new Processing.Sketch();
+
+// define 3D context
+sketch.use3DContext = true;
+
+// preload images (if you are using any)
+sketch.imageCache.add("images/pjs.png");
+
+// attach function 
+sketch.attachFunction = function(p) {
+
+    // Breakout vars
+    var arduino,
+        isReady = false;
+     
+    p.setup = function() {
+        p.size(200, 200, p.P3D);
+
+        // write you setup code here:
+
+
+
+        // create an instance of the IOBoard
+        arduino = new IOBoard("localhost", 8887);
+        // listen for the READY event
+        arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
+    };
+
+    p.draw = function() {
+        p.background(150);
+        // don't draw until the Arduino is ready
+        if (!isReady) return;
+
+        // write your draw code here:
+
+
+
+    };
+
+    p.mouseClicked = function() {
+        // handle mouse click events here:
+
+    };
+
+    p.mousePressed = function() {
+        // handle mouse press events here:
+
+    };
+
+    p.mouseReleased = function() {   
+        // handle mouse release events here:
+
+    };   
+
+    function onArduinoReady(event) {
+        // remove the READY event listener. Must always to this.
+        arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);
+
+        // initialize Pin and I/O objects here:
+
+
+
+        // signal that the Arduino is ready so processing.js can start
+        // drawing with the accelerometer data
+        isReady = true;
+    }    
+
+};
+
+var canvas = document.getElementById("canvas1");
+// attaching the sketch to the canvas
+var p = new Processing(canvas, sketch);
+
+</script> 
+</body> 
+</html> 

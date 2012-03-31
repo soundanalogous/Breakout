@@ -41,16 +41,13 @@ $(document).ready(function() {
 	function onReady(event) {
 					
 		ard.removeEventListener(IOBoardEvent.READY, onReady);
-		console.log("gets here");
+
 		rfid = new ID12RFIDReader(ard);
-		console.log("reader created");
 		rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);
 		rfid.addEventListener(RFIDEvent.REMOVE_TAG, onRemoveTag);
-		console.log("end of constructor");
 	}
 	
 	function onAddTag(event) {
-		console.log("got tag");
 		$('#textBox').html("Added tag: " + event.tag);
 	}
 	

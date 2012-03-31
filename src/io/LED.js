@@ -165,7 +165,7 @@ BO.io.LED = (function() {
 		 * @param {Number} time The fade-in time (in milliseconds).
 		 */
 		fadeIn: function(time) {
-			this.fadeTo(1, time);
+			this.fadeTo(this._onValue, time);
 		},
 
 		/**
@@ -174,7 +174,7 @@ BO.io.LED = (function() {
 		 * @param {Number} time The fade-out time (in milliseconds).
 		 */
 		fadeOut: function(time) {
-			this.fadeTo(0, time);
+			this.fadeTo(this._offValue, time);
 		},
 
 		/**
@@ -190,6 +190,12 @@ BO.io.LED = (function() {
 				return;
 			}
 
+			if (to === 1) {
+				to = this._onValue;
+			} else {
+				to = this._offValue;
+			}
+
 			time = time || 1000;
 			var freq = 1000 / time;
 			if (this._pin.value !== to) {
@@ -197,7 +203,7 @@ BO.io.LED = (function() {
 				this._pin.generator.start();
 			} else {
 				this._pin.removeGenerator();
-			}
+			}		
 		}
 			
 	};

@@ -150,10 +150,10 @@ BO.Pin = (function() {
 			return this._value;
 		},
 		set value(val) {
-			this.calculateMinMaxAndMean(val);
 			this._lastValue = this._value;
 			this._preFilterValue = val;
 			this._value = this.applyFilters(val);
+			this.calculateMinMaxAndMean(this._value);
 			this.detectChange(this._lastValue, this._value);
 		},
 		

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+
+<style>
+@font-face { 
+  font-family: "tradeGothicBold"; 
+  src: local("TradeGothicLTStd-Bold"),
+       url("fonts/TradeGothicLTStd-Bold.otf") format('opentype'); 
+}
+</style>
+
+<title>Breakout + processing.js Button + LED example</title>
+
+</head>
+<body>
+  
+<canvas id='canvas1'></canvas>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="libs/processing-1.3.6-api.min.js"></script>
+<script type="text/javascript">
+
+// declare these variables so you don't have to type the full namespace
+var IOBoard = BO.IOBoard;
+var IOBoardEvent = BO.IOBoardEvent;
+var Button = BO.io.Button;
+var ButtonEvent = BO.io.ButtonEvent;
+var LED = BO.io.LED;
+
+// get a reference to the Processing sketch object
+var sketch = new Processing.Sketch();
+sketch.options.crispLines = true;
+
+// preload images so they are available when the
+// sketch begins. Setup won't be called until all images
+// and external fonts have been loaded.
+sketch.imageCache.add("images/pjs.png");
+
+// get a reference to the canvas
+var canvas = document.getElementById("canvas1");
+
+// get a reference to the Processing object, passing a ref to 
+// the canvas and sketch object
+var pjs = new Processing(canvas, sketch);
+
+// attach the sketch function to the canvas 
+// write the code for your sketch within this function
+sketch.attachFunction = function(p) {
+  
+  // declare global variables for your sketch (just like you 
+  // would at the top of a regular Processing sketch)
+  var arduino,
+      isPressed = false,
+      pjsLogo,
+      tradeGothic,
+      helvetica,
+      led,
+      isMousePressed = false,
+      isReady = false;
+    
+  // Override setup function
+  p.setup = function() {
+      p.size(400, 400);
+
+      // load images
+      pjsLogo = p.loadImage("images/pjs.png");
+
+      // to include an external font, use the @font-face
+      // style to import the font (see the style secton)
+      // at the top of this file)
+      tradeGothic = p.createFont("tradeGothicBold");
+
+      // to include a system font, simply reference it by name
+      helvetica = p.createFont("Helvetica");
+      
+      // create an instance of the IOBoard
+      arduino = new IOBoard("localhost", 8887);
+      arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+  };
+  
+  // Override draw function  
+  p.draw = function() {
+      
+      // return if the IOBoard is not yet ready
+      if (!isReady) return;
+      
+      // set background to medium gray
+      p.background(150);
+
+      // set font color to dark gray
+      p.fill(33, 33, 33);
+      p.textFont(tradeGothic, 24);
+      p.text("Breakout + processing.js", 20, 40);
+
+      drawSwitch();
+
+      drawButton();
+
+      // set font color to white
+      p.fill(255, 255, 255);
+      p.textFont(helvetica, 16);
+      p.text("Toggle LED", 215, 135);
+
+  };
+
+  p.mousePressed = function() {
+     isMousePressed = true;
+  };
+
+  p.mouseReleased = function() {   
+    isMousePressed = false;
+  };
+
+  // draw the on-screen representation of the physical button
+  function drawSwitch() {
+      var yVal;
+
+      if (isPressed) {
+        yVal = 100;
+
+        // display an image
+        p.image(pjsLogo, 20, 180);
+      } else {
+        yVal = 90;
+      }      
+
+      p.noStroke();
+      p.fill(255, 0, 0);
+      p.rect(30, yVal, 100, 50);
+
+      // draw button base
+      p.noStroke();
+      p.fill(0, 0, 0);
+      p.rect(20, 110, 120, 40);      
+  }
+
+  // draw an on-screen button to control the LED
+  // the LED turns on when the Toggle LED button is pressed
+  // and off when the button is released
+  function drawButton() {
+     var medGray = p.color(66, 66, 66);
+     var darkGray = p.color(33, 33, 33);
+     var strokeColor = darkGray;
+     var fillColor = medGray;
+
+     // invert colors if the button is pressed
+     if (isMousePressed) {
+        // check if the mouse pointer is over the button
+        if (p.mouseX > 200 && p.mouseX < 310 && p.mouseY > 110 && p.mouseY < 150) {
+          strokeColor = medGray;
+          fillColor = darkGray;
+          // if so, turn the led on
+          led.on();
+        }
+     } else {
+        led.off();
+     }
+
+     p.stroke(strokeColor);
+     p.strokeWeight(4);
+     p.fill(fillColor);
+     p.rect(200, 110, 110, 40, 10);
+
+  }
+  
+  // setup the IOBoard once it is ready
+  function onReady(event) {
+      // remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      
+      // create a new instance of a Button object
+      var btn = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
+      // listen for PRESS and RELEASE events
+      btn.addEventListener(ButtonEvent.PRESS, onPress);
+      btn.addEventListener(ButtonEvent.RELEASE, onRelease);
+
+      led = new LED(arduino, arduino.getDigitalPin(11));
+
+      // we are now ready to communicate with the IOBoard
+      isReady = true;
+  }
+
+  // handle physical button PRESS event
+  function onPress(event) {
+      // update the button state
+      isPressed = true;
+  }
+
+  // handle physical button RELEASE event
+  function onRelease(event) {
+      // update the button state
+      isPressed = false;
+  }
+      
+};
+
+
+</script>
+
+</body>
+</html>​

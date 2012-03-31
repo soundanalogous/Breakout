@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+
+<title>Breakout + processing.js Template 2D</title>
+
+</head>
+<body>
+  
+<canvas id='canvas1'></canvas>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="libs/processing-1.3.6-api.min.js"></script>
+<script type="text/javascript">
+
+// declare these variables so you don't have to type the full namespace
+var IOBoard = BO.IOBoard;
+var IOBoardEvent = BO.IOBoardEvent;
+
+// get a reference to the Processing sketch object
+var sketch = new Processing.Sketch();
+//sketch.options.crispLines = true;
+
+// preload images so they are available when the
+// sketch begins. Setup won't be called until all images
+// and external fonts have been loaded.
+sketch.imageCache.add("images/pjs.png");
+
+// get a reference to the canvas
+var canvas = document.getElementById("canvas1");
+
+// get a reference to the Processing object, passing a ref to 
+// the canvas and sketch object
+var pjs = new Processing(canvas, sketch);
+
+// attach the sketch function to the canvas 
+// write the code for your sketch within this function
+sketch.attachFunction = function(p) {
+  
+  // declare global variables for your sketch (just like you 
+  // would at the top of a regular Processing sketch)
+  var arduino,
+      isReady = false;
+    
+  // Override setup function
+  p.setup = function() {
+      p.size(200, 200);
+
+      // write you setup code here:
+
+
+      
+      // create an instance of the IOBoard
+      arduino = new IOBoard("localhost", 8887);
+      arduino.addEventListener(IOBoardEvent.READY, onReady);
+  };
+  
+  // Override draw function  
+  p.draw = function() {
+      p.background(150);
+      // return if the IOBoard is not yet ready
+      if (!isReady) return;
+
+      // write your draw code here:
+
+
+
+  };
+
+  p.mouseClicked = function() {
+      // handle mouse click events here:
+
+  };
+
+  p.mousePressed = function() {
+      // handle mouse press events here:
+
+  };
+
+  p.mouseReleased = function() {   
+      // handle mouse release events here:
+
+  };
+  
+  // setup the IOBoard once it is ready
+  function onReady(event) {
+      // remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+      // initialize Pin and I/O objects here:
+      
+
+      // we are now ready to communicate with the IOBoard
+      isReady = true;
+  }
+      
+};
+
+</script>
+
+</body>
+</html>​

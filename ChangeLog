@@ -1,3 +1,15 @@
+2012.03.31 Version 0.1.3
+* Min, max and average pin values are now calculated after any filters are applied (issue #11).
+* Common Anode RGB LEDs now work properly (issue #8)
+* Changed R, G, and B pins in rgb_led example to match pins in the schematics.pdf document (issue #10).
+* Fixed dcmotor example (issue #9)
+* Fixed LED toggle (issue #7)
+* Created new hello_world example to better demonstrate basic input and output.
+* Added a template example that can be used as a starting point for new projects.
+* Added basic processing_js example and templates for starting new 2d and 3d processing_js projects with Breakout.
+* Added examples of flex, FSR (pressure), IR proximity, temperature and sonar sensors.
+* Updated schematics to add new sensor examples and dcmotor with external power supply.
+
 2012.03.20 Version 0.1.2
 
 * Updated for Firefox 11 compatibility
