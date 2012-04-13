@@ -1140,7 +1140,7 @@ BO.IOBoard = (function() {
 
 	/**
 	 * The ioBoardDisconnected event is dispatched when the websocket connection
-	 * is established.
+	 * is closed.
 	 * @name IOBoard#ioBoardDisconnected
 	 * @type BO.IOBoardEvent.DISCONNECTED
 	 * @event
