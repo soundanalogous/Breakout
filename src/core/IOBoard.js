@@ -139,6 +139,7 @@ BO.IOBoard = (function() {
 		 */
 		function onSocketClosed(event) {
 			debug("debug: Socket Status: "+_socket.readyState+" (Closed)");
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DISCONNECTED));
 		}
 						
 								
@@ -1136,6 +1137,15 @@ BO.IOBoard = (function() {
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 */
+
+	/**
+	 * The ioBoardDisconnected event is dispatched when the websocket connection
+	 * is established.
+	 * @name IOBoard#ioBoardDisconnected
+	 * @type BO.IOBoardEvent.DISCONNECTED
+	 * @event
+	 * @param {IOBoard} target A reference to the IOBoard
+	 */	 
 	 
 	/**
 	 * The stringMessage event is dispatched when a string is received from

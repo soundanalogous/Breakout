@@ -1,3 +1,7 @@
+2012.04.12 Version 0.1.4
+* Fixed Pin bug that was causing pins on same port to trigger false events (issue #14)
+* Added DISCONNECTED event to IOBoardEvent that is fired when the server is disconnected (issue #12)
+
 2012.03.31 Version 0.1.3
 * Min, max and average pin values are now calculated after any filters are applied (issue #11).
 * Common Anode RGB LEDs now work properly (issue #8)

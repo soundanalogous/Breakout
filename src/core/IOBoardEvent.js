@@ -49,7 +49,9 @@ BO.IOBoardEvent = (function() {
 	/** @constant */
 	IOBoardEvent.READY = "ioBoardReady";
 	/** @constant */
-	IOBoardEvent.CONNECTED = "ioBoardConnected";	
+	IOBoardEvent.CONNECTED = "ioBoardConnected";
+	/** @constant */
+	IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";		
 
 
 	IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);

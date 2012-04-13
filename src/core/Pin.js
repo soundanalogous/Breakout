@@ -41,7 +41,7 @@ BO.Pin = (function() {
 		this._number = number;
 		this._analogNumber = undefined;
 		this._maxPWMValue = 255;
-		this._value = -1;
+		this._value = 0;
 		this._lastValue = -1;
 		this._preFilterValue;
 		this._average = 0;
