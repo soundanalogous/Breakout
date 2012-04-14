@@ -777,8 +777,6 @@ BO.IOBoard = (function() {
 		//public methods:
 		
 		/**
-		 * To do: make this a static method
-		 *
 		 * A utility class to assemble a single value from the 2 bytes returned from the
 		 * IOBoard (since data is passed in 7 bit Bytes rather than 8 bit it must be 
 		 * reassembled. This is to be used as a protected method and should not be needed

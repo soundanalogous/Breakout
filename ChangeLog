@@ -1,5 +1,6 @@
-2012.04.12 Version 0.1.4
-* Fixed Pin bug that was causing pins on same port to trigger false events (issue #14)
+2012.04.14 Version 0.1.4
+* Fixed LED and RGBLED fadeTo issue (issue #8)
+* Fixed Pin / Button bug that was causing pins on same port to trigger false events (issue #14)
 * Added DISCONNECTED event to IOBoardEvent that is fired when the server is disconnected (issue #12)
 
 2012.03.31 Version 0.1.3

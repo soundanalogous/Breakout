@@ -190,10 +190,8 @@ BO.io.LED = (function() {
 				return;
 			}
 
-			if (to === 1) {
-				to = this._onValue;
-			} else {
-				to = this._offValue;
+			if (this._driveMode === LED.SYNC_DRIVE) {
+				to = 1 - to;
 			}
 
 			time = time || 1000;
