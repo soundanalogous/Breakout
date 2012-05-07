@@ -16,12 +16,10 @@
 * Updated schematics to add new sensor examples and dcmotor with external power supply.
 
 2012.03.20 Version 0.1.2
-
 * Updated for Firefox 11 compatibility
 * Updated readme
 
 2012.03.12 Version 0.1.1
-
 * Fixed jQuery library mismatch for custom_examples (issue #2)
 * Fixed serial port selection issue in Breakout Server (issue #3)
 * Fixed ability to use scaler equations in Scaler.js (issue #4)
@@ -32,5 +30,4 @@
 * Updated readme
 
 2012.02.20 Version 0.1.0
-
 * First public beta
