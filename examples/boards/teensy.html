@@ -47,6 +47,9 @@ $(document).ready(function() {
 	teensy.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
+
+		// log the board capabilities to the browser console
+		teensy.reportCapabilities();
 					
 		teensy.removeEventListener(IOBoardEvent.READY, onReady);
 					
@@ -96,8 +99,7 @@ $(document).ready(function() {
 		
 		setTimeout(stopReading, 1000);
 		setTimeout(startReading, 3000);
-		
-		teensy.addEventListener(IOBoardEvent.PIN_STATE_RESPONSE, onPinStateResponse);		
+				
 	}
 	
 	function stopReading() {
@@ -109,7 +111,6 @@ $(document).ready(function() {
 	}	
 	
 	function onHeadingUpdate(evt) {
-		//console.log("heading = " + evt.target.heading);
 		$('#heading').html("heading: " + evt.target.heading);
 	}	
 	
@@ -128,7 +129,6 @@ $(document).ready(function() {
 			"\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
 			pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
 		
-		//console.log(analogData);
 		$('#potData').html(analogData);	
 	}
 
@@ -144,7 +144,6 @@ $(document).ready(function() {
 	
 	function onButtonChange(event) {
 		var pin = event.target;
-		//console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
 		$('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);	
 	}	
 		

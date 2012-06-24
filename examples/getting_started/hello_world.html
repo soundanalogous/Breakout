@@ -72,6 +72,9 @@ $(document).ready(function() {
 	var arduino = new IOBoard("localhost", 8887);
 	var led;
 
+	// handle showing and hiding the schematic
+	$('#schematicBtn').on('click', toggleSchematicView);	
+
 	// listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
@@ -95,11 +98,7 @@ $(document).ready(function() {
 		// use jQuery to get a reference to the buttons
 		// and listen for click events 
 		$('#btnLeft').on('click', turnLedOff);
-		$('#btnRight').on('click', turnLedOn);
-
-		// handle showing and hiding the schematic
-		$('#schematicBtn').on('click', toggleSchematicView);
-		
+		$('#btnRight').on('click', turnLedOn);		
 	}
 
 	function onPress(evt) {

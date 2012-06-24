@@ -40,7 +40,7 @@ As an alternative to the Breakout Server application, a node.js-based server is 
 Requirements
 ---
 
-Breakout is only supported for Arduino 1.0 and higher [Download Arduino 1.0](http://arduino.cc/en/Main/Software).
+Breakout is only supported for Arduino 1.0 and higher [Download Arduino](http://arduino.cc/en/Main/Software).
 
 You will need one of the following I/O boards:
 
@@ -59,8 +59,8 @@ OS:
 
 Desktop Browsers:
 
-- Chrome version 14 - 18
-- Firefox version 7 - 12 (version 11 or higher is recommended)
+- Chrome version 14 - 19
+- Firefox version 7 - 13 (version 11 or higher is recommended)
 - Safari version 5 or higher
 
 Mobile Browsers (browser must support websockets):

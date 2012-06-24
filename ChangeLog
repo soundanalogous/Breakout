@@ -1,3 +1,7 @@
+2012.00.00 Version 0.1.5
+* Added example for Arduino Leonardo board
+* Added build script to minify files
+
 2012.04.14 Version 0.1.4
 * Fixed LED and RGBLED fadeTo issue (issue #8)
 * Fixed Pin / Button bug that was causing pins on same port to trigger false events (issue #14)
