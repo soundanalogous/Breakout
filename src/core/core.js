@@ -5,7 +5,7 @@
 
 
 /** 
- * @version 0.1.4
+ * @version 0.1.5
  * @namespace
  *
  * <p>Namespace for Breakout objects.</p>
