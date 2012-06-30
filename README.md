@@ -49,6 +49,8 @@ You will need one of the following I/O boards:
 - Many Arduino clones / variants should also work
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
 
+Note: In order to use Breakout with an Arduino Leonardo board, you need to update the Firmata library in your Arduino application. [Please refer to the instructions here.](https://github.com/soundanalogous/Breakout/wiki/Updating-Firmata-in-Arduino).
+
 OS:
 
 - Mac OS X 10.6 or higher

@@ -17,7 +17,7 @@ var BO = BO || {};
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.1.4';
+BREAKOUT.VERSION = '0.1.5';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application
