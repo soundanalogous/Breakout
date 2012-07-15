@@ -3,12 +3,13 @@
 <head>
 
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link type="text/css" href="../libs/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
 <style type="text/css">
 body {
-	margin: 20px;
+	margin: 10px;
 	font-family: sans-serif;
-	font-size: 20px;
+	font-size: 16px;
 	color: #00AEFF;
 }
 button {
@@ -26,7 +27,7 @@ h2 {
 	background-color: #f7f7f7;
 	padding: 10px;
 	border: 1px dotted #CCC;
-	width: 275px;
+	width: 280px;
 	margin-bottom: 20px;
 }
 #speed {
@@ -35,7 +36,7 @@ h2 {
 }
 #slider {
 	margin-top: 20px;
-	width: 275px;
+	width: 280px;
 }
 
 </style>
@@ -43,7 +44,7 @@ h2 {
 <title>DCMotor Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
 <script src="../libs/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -58,7 +59,11 @@ $(document).ready(function() {
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
-	var arduino = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var arduino = new IOBoard(location.hostname , 8887);
 	var motor;
 	var speed;
 	

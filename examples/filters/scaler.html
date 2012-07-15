@@ -57,7 +57,7 @@ p.scopeLabel {
 <title>Scaler Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
 <script src="../libs/requestAnimFrame.js"></script>
 <script src="../libs/SignalScope.js"></script>
 <script type="text/javascript">
@@ -74,7 +74,11 @@ $(document).ready(function() {
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
-	var arduino = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
 	var pot;
 
 	var scope1 = new SignalScope("scope1", 200, 100, 0, 1);

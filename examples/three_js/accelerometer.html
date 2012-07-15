@@ -31,6 +31,9 @@ body {
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
+    // Please note: threejs cannot run on mobile devices 
+    // because WebGL is not yet supported on mobile devices
+
 	// create an instance of the IOBoard
 	var arduino = new IOBoard("localhost", 8887);
 	var accelerometer;

@@ -38,13 +38,15 @@ sketch.attachFunction = function(p) {
     var roty = Math.PI/4;
 
     p.setup = function() {
+        // Please note: processingjs cannot run on mobile devices in 
+        // 3D mode because WebGL is not yet supported on mobile devices
         p.size(640, 360, p.P3D);
         texture = p.loadImage("images/pjs.png");
         p.textureMode(p.NORMALIZED);
         p.fill(255);
         p.stroke(p.color(44,48,32));
 
-        // create an instance of the IOBoard
+        // create an instance of the IOBoard    
         arduino = new IOBoard("localhost", 8887);
         // listen for the READY event
         arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);

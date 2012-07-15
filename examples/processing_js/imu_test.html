@@ -61,7 +61,11 @@ sketch.attachFunction = function(p) {
         p.fill(255);
         p.stroke(p.color(44,48,32));
 
-        fio = new IOBoard("localhost", 8887);
+		// If you are not serving this file from the same computer
+		// that the Arduino board is connected to, replace
+		// location.hostname with the IP address or hostname
+		// of the computer that the Arduino board is connected to.
+        fio = new IOBoard(location.hostname, 8887);
         fio.addEventListener(IOBoardEvent.READY, onFioReady);
     };
 

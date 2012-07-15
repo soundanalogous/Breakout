@@ -3,13 +3,14 @@
 <head>
 
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
 body {
-	margin: 20px;
+	margin: 10px;
 	font-family: sans-serif;
-	font-size: 20px;
+	font-size: 16px;
 	color: #00AEFF;
-	width: 350px;
+	width: 300px;
 }
 h2 {
 	font-size: 22px;
@@ -20,7 +21,7 @@ label {
 	color: #666;
 }
 button {
-	margin-right: 10px;
+	/*margin-right: 5px;*/
 }
 .controls {
 	background-color: #f7f7f7;
@@ -40,7 +41,7 @@ button {
 <title>Servo Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -57,7 +58,11 @@ $(document).ready(function() {
 	BO.enableDebugging = true;	
 
 	// params: IPaddress, port
-	var uno = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.	
+	var uno = new IOBoard(location.hostname, 8887);
 	var servo;
 	var usePot = false;
 	

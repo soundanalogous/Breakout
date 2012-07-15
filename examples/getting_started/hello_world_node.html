@@ -56,7 +56,7 @@ h2 {
 <!-- order of import is important -->
 <script src="../../socket.io/socket.io.js"></script>
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -68,14 +68,15 @@ $(document).ready(function() {
 	var Button = BO.io.Button;
 	var ButtonEvent = BO.io.ButtonEvent;
 
-	// If you want to load this example on a smartphone or tablet,
-	// replace "localhost" with the IP address of the computer
-	// the IOboard is connected to (eg. "192.168.2.3", 8887)
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
 
 	// To use the node.js server, set the 3rd parameter to true
 	// also make sure the network port in this file matches
 	// the network port you are listen on in the server.js	
-	var ard = new IOBoard("localhost", 8080, true);
+	var ard = new IOBoard(location.hostname, 8080, true);
 	var led;
 
 	// listen for the IOBoard READY event which indicates the IOBoard

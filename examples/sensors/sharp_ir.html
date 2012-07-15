@@ -24,7 +24,7 @@ h2 {
 <title>Sharp IR Proximity Sensor</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -35,10 +35,11 @@ $(document).ready(function() {
 	var Pin = BO.Pin;
 	var PinEvent = BO.PinEvent;
 
-	// If you want to load this example on a smartphone or tablet,
-	// replace "localhost" with the IP address of the computer
-	// the IOboard is connected to (eg. "192.168.2.3", 8887)
-	var arduino = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
 
 	var RANGE_80CM = 80;	// Sharp GP2Y0A21YK
 	var RANGE_150CM = 150;	// Sharp GP2Y0A02YK0F

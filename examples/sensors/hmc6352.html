@@ -15,7 +15,7 @@
 <title>HMC6352 Compass Example Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.min.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -31,7 +31,11 @@ $(document).ready(function() {
 	BO.enableDebugging = true;
 
 	// params: IPaddress, port
-	var uno = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var uno = new IOBoard(location.hostname, 8887);
 	var compass;
 	
 	uno.addEventListener(IOBoardEvent.READY, onReady);

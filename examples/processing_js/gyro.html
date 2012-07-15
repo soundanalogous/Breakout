@@ -62,7 +62,11 @@ sketch.attachFunction = function(p) {
         smoothedVelocity = new p.PVector();
         realVelocity = new p.PVector();
 
-        fio = new IOBoard("localhost", 8887);
+        // If you are not serving this file from the same computer
+        // that the Arduino board is connected to, replace
+        // location.hostname with the IP address or hostname
+        // of the computer that the Arduino board is connected to.
+        fio = new IOBoard(location.hostname, 8887);
         fio.addEventListener(IOBoardEvent.READY, onFioReady);
         // get the sampling interval (this is how often the gyro
         // data will be reported). We will need this to translate

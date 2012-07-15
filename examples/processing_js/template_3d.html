@@ -29,13 +29,15 @@ sketch.attachFunction = function(p) {
         isReady = false;
      
     p.setup = function() {
+        // Please note: processingjs cannot run on mobile devices in 
+        // 3D mode because WebGL is not yet supported on mobile devices
         p.size(200, 200, p.P3D);
 
         // write you setup code here:
 
 
 
-        // create an instance of the IOBoard
+        // create an instance of the IOBoard       
         arduino = new IOBoard("localhost", 8887);
         // listen for the READY event
         arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
