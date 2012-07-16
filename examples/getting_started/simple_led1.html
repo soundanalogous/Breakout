@@ -52,8 +52,8 @@ $(document).ready(function() {
 	// If you want to load this example on a smartphone or tablet,
 	// replace "localhost" with the IP address of the computer
 	// the IOboard is connected to (eg. "192.168.2.3", 8887)
-	// var arduino = new IOBoard(location.hostname, 8887);
-	var arduino = new IOBoard("localhost", 8887);
+	//var arduino = new IOBoard("localhost", 8887);
+	var arduino = new IOBoard(location.hostname, 8887);
 	var led;
 
 	// Listen for the IOBoard READY event which indicates the IOBoard
@@ -68,8 +68,7 @@ $(document).ready(function() {
 		// to the I/O board
 		led = new LED(arduino, arduino.getDigitalPin(13));
 		
-		// Use jQuery to get a reference to the buttons
-		// and listen for click events
+		// jQuery part for the button
 		$('#button').click(function(){
 			if ($(this).text()=="LED On") {
 				$(this).text("LED Off");
