@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<style type="text/css">
+body {
+	margin: 20px;
+	width: 400px;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: #666;
+}
+h2 {
+	font-weight: normal;
+	font-size: 28px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+</style>
+
+<title>Analog Input</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
+<!-- Only needed for the visualization (progress bar) -->
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// Declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Pin = BO.Pin;
+	var PinEvent = BO.PinEvent;
+
+	// If you want to load this example on a smartphone or tablet,
+	// replace "localhost" with the IP address of the computer
+	// the IOboard is connected to (eg. "192.168.2.3", 8887)
+	// var arduino = new IOBoard(location.hostname, 8887);
+	var arduino = new IOBoard("localhost", 8887);
+
+
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		// Remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// Enable the analog pin so we can read its value
+		arduino.enableAnalogPin(0);
+		var sensor = arduino.getAnalogPin(0);
+		sensor.addEventListener(PinEvent.CHANGE, onChange);
+	}
+
+	function onChange(evt) {
+		// The potentiometer gives back a value between 0 and 1024
+		var valueIn = evt.target.value;
+		var value = valueIn * 100;
+
+		$('#value').text("Value = " + value.toFixed(0));
+		$("#progressbar").progressbar({ value: value });
+	}
+});
+
+</script>
+
+</head>
+<body>
+
+  <h2>Reading analog input</h2>
+
+  <p id="value"></p>
+  <p id="progressbar"></p>
+  <canvas id="data" width="500" height="100"></canvas>
+  
+</body>
+</html>
