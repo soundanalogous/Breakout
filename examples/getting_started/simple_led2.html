@@ -55,8 +55,8 @@ $(document).ready(function() {
 	// If you want to load this example on a smartphone or tablet,
 	// replace "localhost" with the IP address of the computer
 	// the IOboard is connected to (eg. "192.168.2.3", 8887)
-	// var arduino = new IOBoard(location.hostname, 8887);
-	var arduino = new IOBoard("localhost", 8887);
+	// var arduino = new IOBoard("localhost", 8887);
+	var arduino = new IOBoard(location.hostname, 8887);
 	var led;
 
 	// Listen for the IOBoard READY event which indicates the IOBoard
