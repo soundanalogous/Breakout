@@ -57,7 +57,6 @@ sketch.attachFunction = function(p) {
         if (!isReady) return;
 
         p.background(0);
-        p.noStroke();
         p.translate(p.width/2.0, p.height/2.0, -100);
 
         // each time through the draw loop, set the x and y rotation
@@ -65,11 +64,11 @@ sketch.attachFunction = function(p) {
         // you may need to adjust which access pitch and roll apply to
         // depending on the orientation of your accelerometer to the
         // screen.
-        p.rotateX(accelerometer.pitch * Math.PI/180);
+        p.rotateX(-accelerometer.pitch * Math.PI/180);
         p.rotateZ(accelerometer.roll * Math.PI/180);
         p.scale(90);
         
-        texturedCube(texture);
+        texturedCube(texture);      
     }
 
     function texturedCube(texture) {
