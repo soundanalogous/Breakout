@@ -11,6 +11,7 @@ body {
 	font-size: 16px;
 	line-height: 1.5em;
 	color: #666;
+	width: 300px;
 }
 h2 {
 	padding-left: 0px;
@@ -18,10 +19,10 @@ h2 {
 	font-size: 28px;
 	color: #00AEFF;
 }
-.ledBtns {
+.btn {
 	padding: 10px;
 	font-size: 22px;
-	width: 130px;
+	width: 270px;
 	color: #00AEFF;
 	margin-bottom: 20px;
 }
@@ -32,9 +33,6 @@ h2 {
 	border: 1px dotted #CCC;
 	width: 280px;
 	margin-top: 20px;
-}
-.spacer {
-	margin-left: 5px;
 }
 
 </style>
@@ -52,10 +50,11 @@ $(document).ready(function() {
 	var IOBoardEvent = BO.IOBoardEvent;
 	var LED = BO.io.LED;
 
-	// If you want to load this example on a smartphone or tablet,
-	// replace "localhost" with the IP address of the computer
-	// the IOboard is connected to (eg. "192.168.2.3", 8887)
-	// var arduino = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	//var arduino = new IOBoard("localhost", 8887);
 	var arduino = new IOBoard(location.hostname, 8887);
 	var led;
 
@@ -71,20 +70,16 @@ $(document).ready(function() {
 		// to the I/O board
 		led = new LED(arduino, arduino.getDigitalPin(13));
 		
-		// Use jQuery to get a reference to the buttons
-		// and listen for click events
-		$('#btnOff').on('click', turnLedOff);
-		$('#btnOn').on('click', turnLedOn);
-	}
-
-	function turnLedOn(evt) {
-		// Turn the LED on
-		led.on();
-	}
-
-	function turnLedOff(evt) {
-		// Turn the LED off
-		led.off();	
+		// jQuery part for the button
+		$('#button').click(function(){
+			if ($(this).text()=="LED On") {
+				$(this).text("LED Off");
+				led.toggle();
+			} else {
+			$(this).text("LED On");
+				led.toggle();
+			}
+		});
 	}
 });
 
@@ -93,16 +88,12 @@ $(document).ready(function() {
 </head>
 <body>
 
-  <h2>Simple LED example 2</h2>
-  <p>For this example no further hardware than an Arduino UNO is needed.</p>
-  <small>Other hardware (e. g. Arduino Diecimila, Arduino MEGA, or clones) may work but was not tested.</small>
+  <h2>Simple LED example</h2>
+  <p>For this example no further hardware than an Arduino is needed.</p>
   <div class="container">
-	<p><strong>Output:</strong> Use the buttons below to turn the internal LED on or off.</p>
-  	<button id="btnOff" class="ledBtns" type="button">LED Off</button>
-  	<span class="spacer"></span>
-  	<button id="btnOn" class="ledBtns" type="button">LED On</button>
+	<p><strong>Output:</strong> Use the button below to turn the internal LED on or off.</p>
+  	<button id="button" class="btn" type="button">LED On</button>
   </div>
   
-</div>  
 </body>
 </html>​

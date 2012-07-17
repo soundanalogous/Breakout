@@ -7,8 +7,8 @@
 
 <style type="text/css">
 body {
-	margin: 20px;
-	width: 400px;
+	margin: 10px;
+	width: 300px;
 	font-family: sans-serif;
 	font-size: 18px;
 	color: #666;
@@ -59,7 +59,7 @@ $(document).ready(function() {
 	}
 
 	function onChange(evt) {
-		// The potentiometer gives back a value between 0 and 1024
+		// The potentiometer gives back a value between 0 and 1.0
 		var valueIn = evt.target.value;
 		var value = valueIn * 100;
 
@@ -77,7 +77,6 @@ $(document).ready(function() {
 
   <p id="value"></p>
   <p id="progressbar"></p>
-  <canvas id="data" width="500" height="100"></canvas>
   
 </body>
 </html>
