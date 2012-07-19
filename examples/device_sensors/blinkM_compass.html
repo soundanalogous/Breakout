@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<style type="text/css">
+html, body, p {
+	padding: 0;
+	margin: 0;
+}
+body {
+	padding: 10px;
+	font-family: sans-serif;
+	font-size: 14px;
+	color: #333;
+	width: 300px;
+}
+h2 {
+	font-size: 18px;
+	color: #00AEFF;
+}
+.data {
+	margin-bottom: 20px;
+}
+#incoming {
+	margin-top: 20px;
+	padding: 10px;
+	background-color: #F7F7F7;
+}
+</style>
+
+<title>Device Sensor Demo</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var BlinkM = BO.io.BlinkM;	
+
+	var arduino = new IOBoard(location.hostname, 8887);
+	var blinkM;
+
+	var compassData = $('#compassStatus');
+
+	document.addEventListener("touchmove", preventBehavior, false);	
+
+	// listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		
+		// remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// i2c module example: BlinkM module
+		blinkM = new BlinkM(arduino);
+		blinkM.stopScript();
+
+		// listen for DeviceOrientation events
+		// your mobile device must support the DeviceOrientation API
+		window.addEventListener("deviceorientation", onOrientationChange);
+		
+	}
+
+	// handle orientation change events from the mobile device
+	function onOrientationChange(event) {
+		var heading = event.webkitCompassHeading;
+		// use the device compass heading to rotate through the hues of the blinkM
+		blinkM.fadeToHSBColor([Math.floor(heading/360.0 * 255), 255, 200], 255);
+
+		compassData.html('Compass data: <br />' +
+						'heading = ' + heading.toFixed(3));
+	}
+
+    /**
+     * Prevent dragging
+     */
+	function preventBehavior(evt) { 
+      evt.preventDefault(); 
+    }	
+
+});
+
+</script>
+
+</head>
+<body>
+
+  <h2>DeviceOrientation Demo</h2>
+  	<p>This example demonstrates how to use the HTML5 DeviceOrientation API to
+  		rotate throught he hue values on a blinkM RGBLED module from a mobile device</p>
+	<div id="incoming">
+		<div class="data">
+			<p id="compassStatus"></p>
+		</div>
+	</div>
+  
+</body>
+</html>​

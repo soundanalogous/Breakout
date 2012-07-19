@@ -1,11 +1,11 @@
 /***
-	Breakout - 0.1.5
+	Breakout - 0.1.6
 
     Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
     Released under the MIT license. See LICENSE file for details.
 	http.//breakoutjs.com
 	***/
-'use strict';var BO=BO||{},BREAKOUT=BREAKOUT||BO;BREAKOUT.VERSION="0.1.5";BO.enableDebugging=!1;var JSUTILS=JSUTILS||{};JSUTILS.namespace=function(a){var a=a.split("."),b=window,e;for(e=0;e<a.length;e+=1)"undefined"===typeof b[a[e]]&&(b[a[e]]={}),b=b[a[e]];return b};JSUTILS.inherit=function(a){function b(){}if(null==a)throw TypeError();if(Object.create)return Object.create(a);var e=typeof a;if("object"!==e&&"function"!==e)throw TypeError();b.prototype=a;return new b};
+'use strict';var BO=BO||{},BREAKOUT=BREAKOUT||BO;BREAKOUT.VERSION="0.1.6";BO.enableDebugging=!1;var JSUTILS=JSUTILS||{};JSUTILS.namespace=function(a){var a=a.split("."),b=window,e;for(e=0;e<a.length;e+=1)"undefined"===typeof b[a[e]]&&(b[a[e]]={}),b=b[a[e]];return b};JSUTILS.inherit=function(a){function b(){}if(null==a)throw TypeError();if(Object.create)return Object.create(a);var e=typeof a;if("object"!==e&&"function"!==e)throw TypeError();b.prototype=a;return new b};
 if(!Function.prototype.bind)Function.prototype.bind=function(a){if("function"!==typeof this)throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var b=Array.prototype.slice.call(arguments,1),e=this,j=function(){},c=function(){return e.apply(this instanceof j?this:a||window,b.concat(Array.prototype.slice.call(arguments)))};j.prototype=this.prototype;c.prototype=new j;return c};JSUTILS.namespace("JSUTILS.Event");
 JSUTILS.Event=function(){var a;a=function(a){this._type=a;this._target=null;this.name="Event"};a.prototype={get type(){return this._type},set type(a){this._type=a},get target(){return this._target},set target(a){this._target=a}};a.CONNECTED="connected";a.CHANGE="change";a.COMPLETE="complete";return a}();JSUTILS.namespace("JSUTILS.EventDispatcher");
 JSUTILS.EventDispatcher=function(){var a;a=function(a){this._target=a||null;this._eventListeners={};this.name="EventDispatcher"};a.prototype={addEventListener:function(a,e){this._eventListeners[a]||(this._eventListeners[a]=[]);this._eventListeners[a].push(e)},removeEventListener:function(a,e){for(var j=0,c=this._eventListeners[a].length;j<c;j++)this._eventListeners[a][j]===e&&this._eventListeners[a].splice(j,1)},hasEventListener:function(a){return this._eventListeners[a]&&0<this._eventListeners[a].length?
