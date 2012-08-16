@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+}
+.ledBtns {
+	padding: 10px;
+	font-size: 22px;
+	width: 130px;
+	color: #00AEFF;
+	margin-bottom: 20px;
+}
+#state {
+	color: #00AEFF;
+	font-size: 22px;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+.spacer {
+	margin-left: 5px;
+}
+
+</style>
+
+<title>LED digital</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// Declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Pin = BO.Pin;
+
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	//var arduino = new IOBoard("localhost", 8887);
+	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
+	var led;
+	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		// Remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// Set Pin 11 to Digital out (DOUT)
+		arduino.setDigitalPinMode(11, Pin.DOUT);
+
+		// Create an LED object to interface with the LED wired
+		// to the I/O board
+		led = arduino.getDigitalPin(11);
+		
+		// Use jQuery to get a reference to the buttons
+		// and listen for click events 
+		$('#btnOff').on('click', turnLedOff);
+		$('#btnOn').on('click', turnLedOn);		
+	}
+
+	function turnLedOn(evt) {
+		// Turn the LED on
+		led.value = Pin.HIGH;
+	}
+
+	function turnLedOff(evt) {
+		// Turn the LED off
+		led.value = Pin.LOW;
+	}
+});
+
+</script>
+
+</head>
+<body>
+	<h2>LED digital</h2>
+		<div class="container">
+			<p>For this example an Arduino, a resistor, and a LED is needed. Connect the LED with the resistor between Pin 11 and GRD. More details can be found at the <a href="http://breakoutjs.com/guides/the-pin-object/">'Using the Pin Object'</a> page.</p>
+		</div>
+
+	<div class="container">
+		<p>Use the buttons below to turn the LED on or off.</p>
+		<button id="btnOn" class="ledBtns" type="button">On</button>
+		<span class="spacer"></span>
+		<button id="btnOff" class="ledBtns" type="button">Off</button>
+	</div>
+</body>
+</html>
