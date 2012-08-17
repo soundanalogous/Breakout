@@ -72,6 +72,13 @@ li {
     	"uno.html"
     );
     
+    // List all files from the 'device_sensors' folder
+	var devices = new Array(
+    	"blinkM_accel.html",
+    	"blinkM_compass.html",
+    	"rgbled_accel.html"
+    );
+    
 	// List all files from the filters folder
 	var filters = new Array(
 		"convolution.html",
@@ -147,13 +154,13 @@ li {
 			<tr valign="top">
 				<td><script type="text/javascript">linkDisplay("Filters", "filters", filters);</script></td>
 				<td><script type="text/javascript">linkDisplay("Generators", "generators", generators);</script></td>
-				<td><script type="text/javascript">linkDisplay("Processing.js", "processing", processing);</script></td>
+				<td><script type="text/javascript">linkDisplay("Processing.js", "processing_js", processing);</script></td>
 		
 			</tr>
 			<tr valign="top">
 				<td><script type="text/javascript">linkDisplay("Sensors", "sensors", sensors);</script></td>
-				<td><script type="text/javascript">linkDisplay("Three.js", "three", three);</script></td>
-				<td>&nbsp;</td>
+				<td><script type="text/javascript">linkDisplay("Three.js", "three_js", three);</script></td>
+				<td><script type="text/javascript">linkDisplay("Device sensors", "device_sensors", devices);</script></td>
 			</tr>
 		</table>
 		<small>Breakout is distributed under the terms of the MIT License. See the <a href="https://raw.github.com/soundanalogous/Breakout/master/LICENSE">LICENSE</a> file.</small>
