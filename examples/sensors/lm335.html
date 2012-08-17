@@ -19,16 +19,28 @@ h2 {
 	padding-bottom: 20px;
 	color: #00AEFF;
 }
+.text {
+	font-family: "Arial";
+	font-size: 20px;
+	color: #00AEEF;
+	padding:20px;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
 </style>
 
-<title>Temperature Sensor</title>
+<title>LM335 Temperature Sensor</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// declare these variables so you don't have
+	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
@@ -41,23 +53,22 @@ $(document).ready(function() {
 	// of the computer that the Arduino board is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
 
-	// listen for the IOBoard READY event which indicates the IOBoard
+	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-		
-		// remove the event listener because it is no longer needed
+		// Remove the event listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
-
-		// enable the analog pin so we can read its value
+		
+		// Enable the analog pin so we can read its value
 		arduino.enableAnalogPin(0);
 		var sensor = arduino.getAnalogPin(0);
 		sensor.addEventListener(PinEvent.CHANGE, onChange);
 	}
 
 	function onChange(evt) {
-		// the LM335 measures temperature in degrees Kelvin
+		// The LM335 measures temperature in degrees Kelvin
 		// a value of 0.0 is 0 degrees Kelvin and the temperature
 		// value increases 1 degree kelvin per 10 millivolts
 		var val = evt.target.value;
@@ -70,21 +81,17 @@ $(document).ready(function() {
 		$('#kelvin').text("Degrees Kelvin = " + tempK.toFixed(0));
 		$('#celsius').text("Degrees Celsius = " + tempC.toFixed(0));
 		$('#fahrenheit').text("Degrees Fahrenheit = " + tempF.toFixed(0));
-
 	}
-
 });
-
 </script>
 
 </head>
 <body>
-
-  <h2>LM335 Temperature Sensor</h2>
-
-  <p id="kelvin"></p>
-  <p id="celsius"></p>
-  <p id="fahrenheit"></p>
-  
+	<h2>LM335 Temperature Sensor</h2>
+		<div class="container">
+			<p id="kelvin" class="text"></p>
+			<p id="celsius" class="text"></p>
+			<p id="fahrenheit" class="text"></p>
+		</div>
 </body>
 </html>​
