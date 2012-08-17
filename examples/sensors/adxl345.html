@@ -3,7 +3,28 @@
 <head>
 
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
 .text {
 	font-family: "Arial";
 	font-size: 22px;
@@ -19,18 +40,17 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace	
+	// Declare these variables so you don't have
+	// to type the full namespace
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
 	var AccelerometerEvent = BO.io.AccelerometerEvent;	
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;	
+	// Set to true to print debug messages to console
+	BO.enableDebugging = false;	
 
-	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+	// Note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
 	// with the ADXL345
 	
 	// If you are not serving this file from the same computer
@@ -39,29 +59,31 @@ $(document).ready(function() {
 	// of the computer that the Arduino board is connected to.
 	var fio = new IOBoard(location.hostname, 8887);
 	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
 	fio.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-
+		// Remove the event listener because it is no longer needed
 		fio.removeEventListener(IOBoardEvent.READY, onReady);	
 		
-		// params: IOBoard, dynamicRange, i2cAddress
+		// Params: IOBoard, dynamicRange, i2cAddress
 		// var accelerometer = new AccelerometerADXL345(
 		// 						fio, 
 		// 						AccelerometerADXL345.RANGE_2G,
 		// 						AccelerometerADXL345.DEVICE_ID);
 
-		// using default settings
+		// Using default settings
 		var accelerometer = new AccelerometerADXL345(fio);						
 
-	    // calibrate the accelerometer
+	    // Calibrate the accelerometer
 	    // start with 0, 0, 0 and add or subtract in increments
 	    // of 1 until the accelerometer is propery calibrated.
 	    // with the accelerometer lying flat, the z value should be 1 if right-side up
 	    // or -1 if upside-down and the x and y values should be zero.
 	    accelerometer.setAxisOffset(-2, -2, 6);
 
-	    // start continuous reading of the accelerometer
+	    // Start continuous reading of the accelerometer
 	    accelerometer.startReading();
 
 	    accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
@@ -71,25 +93,25 @@ $(document).ready(function() {
 	function onAccelerationUpdate(event) {
 		var accel = event.target;
 		
-		// display the accelerometer values in the browser
+		// Display the accelerometer values in the browser
 		$('#xVal').html("x = " + accel.x.toFixed(3));
 		$('#yVal').html("y = " + accel.y.toFixed(3));
 		$('#zVal').html("z = " + accel.z.toFixed(3));
 		$('#pitch').html("pitch = " + accel.pitch.toFixed(3));
 		$('#roll').html("roll = " + accel.roll.toFixed(3));
-	}
-			
+	}		
 });
 </script>
 
 </head>
 <body>
-  
-	<div id="xVal" class="text">x =</div>
-	<div id="yVal" class="text">y =</div>
-	<div id="zVal" class="text">z =</div>
-	<div id="pitch" class="text">pitch =</div>
-	<div id="roll" class="text">roll =</div>
-  
+	<h2>ADXL345 Accelerometer</h2>
+		<div class="container">
+			<div id="xVal" class="text">x =</div>
+			<div id="yVal" class="text">y =</div>
+			<div id="zVal" class="text">z =</div>
+			<div id="pitch" class="text">pitch =</div>
+			<div id="roll" class="text">roll =</div>
+		</div>
 </body>
 </html>​
