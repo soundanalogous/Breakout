@@ -1,5 +1,14 @@
+2012.07.18 Version 0.1.6
+* Added examples demonstrating use of DeviceMotion and DeviceOrientation APIs with Breakout
+* Added fritzing files to Breakout/examples/schematics_src/fritzing/
+* Updated examples to be more mobile friendly
+* Added simple_led and analog_input examples (contributed by Fabian Affolter)
+* Updated schematics.pdf to include analog_input example
+* Fixed issued in processingJS accelerometer example
+
 2012.06.30 Version 0.1.5
 * Added example for Arduino Leonardo board
+* Added Leonardo wiring diagram to schematics.pdf
 * Added build script to minify files
 
 2012.04.14 Version 0.1.4
