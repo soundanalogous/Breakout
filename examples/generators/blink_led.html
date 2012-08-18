@@ -25,10 +25,6 @@ h2 {
 	color: #00AEFF;
 	margin-bottom: 20px;
 }
-#state {
-	color: #00AEFF;
-	font-size: 22px;
-}
 .container {
 	background-color: #f7f7f7;
 	padding-left: 10px;
@@ -39,16 +35,14 @@ h2 {
 .spacer {
 	margin-left: 5px;
 }
-
 </style>
 
-<title>Blinking LED with Generator</title>
+<title>Blink LED with Generator Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
 	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
@@ -98,18 +92,23 @@ $(document).ready(function() {
 
 		// Use jQuery to get a reference to the buttons
 		// and listen for click events
-		$('#btnStart').on('click', turnLedOn);
-		$('#btnStop').on('click', turnLedOff);
+		$('#btnStart').on('click', LedStart);
+		$('#btnStop').on('click', LedStop);
 	}
 	
-	function turnLedOn(evt) {
+	function LedStart(evt) {
 		// Start the oscillator
 		blink.start();
 	}
 	
-	function turnLedOff(evt) {
-		// Stop the oscillator
+	function LedStop(evt) {
+		// Stop the oscillator. Keep in mind that this stops the blink
+		// process only and doesn't switch of the pin to low if it was
+		// high
 		blink.stop();
+		// If you want to make sure that the pin is low at the end,
+		// set to manually
+		//led.value = Pin.LOW;
 	}
 });
 
@@ -117,13 +116,14 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<h2>Blinking LED with Generator</h2>
+	<h2>Blink LED with Generator</h2>
 		<div class="container">
 			<p>For this example an Arduino, a resistor, and a LED is needed. Connect the LED with the resistor between Pin 11 and GRD. More details can be found at the <a href="http://breakoutjs.com/guides/the-pin-object/">'Using the Pin Object'</a> page.</p>
 		</div>
 		<div class="container">
 			<p>Use the buttons below to start and stop the blinking.</p>
 			<button id="btnStart" class="ledBtns" type="button">Start</button>
+			<span class="spacer"></span>
 			<button id="btnStop" class="ledBtns" type="button">Stop</button>
 		</div>
 </body>
