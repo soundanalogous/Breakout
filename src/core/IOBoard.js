@@ -90,6 +90,7 @@ BO.IOBoard = (function() {
 			_totalPins = 0,
 			_samplingInterval = 19, // default sampling interval
 			_isReady = false,
+			_firmwareName = "",
 			_firmwareVersion = 0,
 			_evtDispatcher,
 			_isMultiClientEnabled = false,
@@ -124,12 +125,12 @@ BO.IOBoard = (function() {
 			var pattern = /config/;
 			var message = "";
 
-			// check for config messages from the server
+			// Check for config messages from the server
 			if (event.message.match(pattern) ) {
 				message = event.message.substr(event.message.indexOf(':') + 2);
 				processStatusMessage(message);
 			} else {
-				// we have data from the IOBoard
+				// We have data from the IOBoard
 				processInput(event.message);
 			}
 		}
@@ -141,8 +142,7 @@ BO.IOBoard = (function() {
 			debug("debug: Socket Status: "+_socket.readyState+" (Closed)");
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DISCONNECTED));
 		}
-						
-								
+			
 		/**
 		 * @private
 		 */
@@ -161,7 +161,7 @@ BO.IOBoard = (function() {
 
 			debug("debug: Firmware name = " + name + "\tFirmware version = "+ event.version);
 			
-			// make sure the user has uploaded StandardFirmata 2.3 or greater
+			// Make sure the user has uploaded StandardFirmata 2.3 or greater
 			if (version >= 23) {
 				queryCapabilities();
 			} else {
@@ -330,16 +330,15 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processQueryFirmwareResult(msg) {
-			var fname = "",
-				data;
-			for (var i = 3; i < msg.length; i+=2)
+			var	data;
+			for (var i = 3; i < msg.length; i += 2)
 			{
 				data = String.fromCharCode(msg[i]);
 				data += String.fromCharCode(msg[i+1]);
-				fname += data;
+				_firmwareName += data;
 			}
-			_firmwareVersion=msg[1] + msg[2] / 10;
-			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: fname, version: _firmwareVersion});
+			_firmwareVersion = msg[1] + msg[2] / 10;
+			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: _firmwareName, version: _firmwareVersion});
 		}
 		
 		/**
@@ -350,10 +349,10 @@ BO.IOBoard = (function() {
 				data,
 				len = msg.length;
 
-			for (var i = 1; i < len; i+=2) {
+			for (var i = 1; i < len; i += 2) {
 				data = String.fromCharCode(msg[i]);
 				data += String.fromCharCode(msg[i+1]);
-				str+=data.charAt(0);
+				str += data.charAt(0);
 			}
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
 		}
@@ -425,12 +424,12 @@ BO.IOBoard = (function() {
 			debug("debug: Num ports = " + _numPorts);
 			
 			// Initialize port values
-			for (var j=0; j<_numPorts; j++) {
+			for (var j = 0; j < _numPorts; j++) {
 				_digitalPort[j] = 0;
 			}
 			
 			_totalPins = pinCounter;
-			debug("debug: num pins = " + _totalPins);
+			debug("debug: Num pins = " + _totalPins);
 
 			// Map the analog pins to the board pins
 			// this will map the IOBoard analog pin numbers (printed on IOBoard)
@@ -450,7 +449,7 @@ BO.IOBoard = (function() {
 			if (_isConfigured) return;
 
 			var len = msg.length;
-			for (var i=1; i<len; i++) {
+			for (var i = 1; i < len; i++) {
 				if (msg[i] != 127) {
 					_analogPinMapping[msg[i]] = i - 1;
 					_self.getPin(i-1).setAnalogNumber(msg[i]);
@@ -488,7 +487,7 @@ BO.IOBoard = (function() {
 		 */		
 		function startupInMultiClientMode() {
 			// Populate pin values with the current IOBoard state
-			for (var i=0; i < _self.getPinCount(); i++) {
+			for (var i = 0; i < _self.getPinCount(); i++) {
 				queryPinState(_self.getDigitalPin(i));
 			}
 
@@ -814,7 +813,7 @@ BO.IOBoard = (function() {
 		 * Disables digital pin reporting for all digital pins
 		 */
 		this.disableDigitalPins = function() {
-			for (var i=0; i <_numPorts; i++) {
+			for (var i = 0; i < _numPorts; i++) {
 				_self.sendDigitalPortReporting(i, Pin.OFF);
 			}
 		};
@@ -824,7 +823,7 @@ BO.IOBoard = (function() {
 		 * before you can receive digital pin data from the IOBoard.
 		 */
 		this.enableDigitalPins = function() {
-			for (var i=0; i<_numPorts; i++) {
+			for (var i = 0; i < _numPorts; i++) {
 				_self.sendDigitalPortReporting(i, Pin.ON);
 			}
 		};
@@ -844,7 +843,6 @@ BO.IOBoard = (function() {
 		 */
 		this.enableAnalogPin = function(pin) {
 			setAnalogPinReporting(pin, Pin.ON);
-
 		};
 
 		/**
@@ -872,12 +870,24 @@ BO.IOBoard = (function() {
 		};
 
 		/**
-		 * Enable the internal pull-up resistor for the specified pin number
+		 * Enable the internal pull-up resistor for the specified pin number.
 		 *
 		 * @param {Number} pinNum The number of the input pin to enable the pull-up resistor.
 		 */
 		this.enablePullUp = function(pinNum) {
 			sendDigitalData(pinNum, Pin.HIGH);
+		};
+
+		/**
+		 * @return {String} The name of the firmware running on the IOBoard.
+		 */
+		this.getFirmwareName = function() {
+			// To Do: It seams that Firmata is reporting the Firmware
+			// name malformed.
+			//return _firmwareName;
+			// The IOBoard is working, so we can assume that Standard
+			// Firmata is installed
+			return "StandardFirmata";
 		};
 		
 		/**
@@ -1215,4 +1225,4 @@ BO.IOBoard = (function() {
 	 
 	return IOBoard;
 
-}());	
+}());
