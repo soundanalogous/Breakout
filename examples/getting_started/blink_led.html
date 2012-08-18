@@ -38,13 +38,12 @@ h2 {
 
 </style>
 
-<title>Blink LED</title>
+<title>Blink LED Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
 	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
@@ -102,12 +101,13 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<h2>Blink LED Example</h2>
+	<h2>Blink LED</h2>
 		<div class="container">
 			<p>Use the buttons below to start the blinking process and stop it.</p>
 			<button id="btnStart" class="ledBtns" type="button">Start</button>
 			<span class="spacer"></span>
 			<button id="btnStop" class="ledBtns" type="button">Stop</button>
+			<small>For a more elegant solution, please check out the <a href="../generators/blink_led.html">Blink with Generator</a> example.</small>
 		</div>
 </body>
 </html>
