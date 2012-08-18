@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+}
+.ledBtns {
+	padding: 10px;
+	font-size: 22px;
+	width: 130px;
+	color: #00AEFF;
+	margin-bottom: 20px;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+</style>
+
+<title>Firmware and Board details</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	// Declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = true;
+
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
+	var firmware;
+	var firmwarever;
+	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    
+    // Default status message
+    //$('#status').text("Board is not connected.");
+	//if (IOBoardEvent.READY) {
+	//	$('#status').text("Board is connected.");
+	//}
+
+	function onReady(event) {
+		// Remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+		
+		// Get the data from the IOBoard
+		firmware = arduino.getFirmwareName();
+		firmwarever = arduino.getFirmwareVersion();
+		
+		// Report capabilities of the board all data are going to the 
+		// console
+		arduino.reportFirmware();
+        arduino.reportVersion();
+		arduino.reportCapabilities();
+
+		// jQuery fields
+		$('#firmware').text(firmware);
+		$('#firmwarever').text(firmwarever);
+	}
+});
+
+</script>
+
+</head>
+<body>
+	<h2>Firmware and Board details</h2>
+		<div class="container">
+			<p>Firmware Name: <strong id="firmware"></strong></p>
+			<p>Firmware Version: <strong id="firmwarever"></strong></p>
+		</div>
+</body>
+</html>
