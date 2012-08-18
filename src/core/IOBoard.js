@@ -159,13 +159,13 @@ BO.IOBoard = (function() {
 			var version = event.version * 10,
 				name = event.name;
 
-			debug("debug: Version = " + event.version + "\tfirmware name = " + name);
+			debug("debug: Firmware name = " + name + "\tFirmware version = "+ event.version);
 			
 			// make sure the user has uploaded StandardFirmata 2.3 or greater
 			if (version >= 23) {
 				queryCapabilities();
 			} else {
-				var err = "You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
+				var err = "error: You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
 				console.log(err);
 				//throw err;	
 			}
@@ -177,7 +177,7 @@ BO.IOBoard = (function() {
 		 */
 		function processStatusMessage(message) {
 			if (message === MULTI_CLIENT) {
-				debug("debug: multi-client mode enabled");
+				debug("debug: Multi-client mode enabled");
 				_isMultiClientEnabled = true;
 			}
 		}
@@ -186,7 +186,7 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 	    function processInput(inputData) {
-	    	inputData *= 1; // force inputData to integer (is there a better way to do this?)
+	    	inputData *= 1; // Force inputData to integer (is there a better way to do this?)
 	    	var len;
 
 	    	_inputDataBuffer.push(inputData);
@@ -195,23 +195,22 @@ BO.IOBoard = (function() {
 	    	if (_inputDataBuffer[0] >= 128 && _inputDataBuffer[0] != START_SYSEX) {
 	    		if (len === 3) {
 	    			processMultiByteCommand(_inputDataBuffer);
-	    			// clear buffer
+	    			// Clear buffer
 	    			_inputDataBuffer = [];
 	    		}
 	    	} else if (_inputDataBuffer[0] === START_SYSEX && _inputDataBuffer[len-1] === END_SYSEX) {
 				processSysexCommand(_inputDataBuffer);
-	    		// clear buffer
+	    		// Clear buffer
 	    		_inputDataBuffer = [];
 	    	} else if (inputData >= 128 && _inputDataBuffer[0] < 128) {
-	    		// if for some reason we got a new command and there is already data
+	    		// If for some reason we got a new command and there is already data
 	    		// in the buffer, reset the buffer
-	    		console.log("Warning: malformed input data... resetting buffer");
+	    		console.log("warning: Malformed input data... resetting buffer");
 	    		_inputDataBuffer = [];
 	    		if (inputData !== END_SYSEX) {
 	    			_inputDataBuffer.push(inputData);
 	    		}
 	    	}
-	    	
 	    }
 	    
 		/**
@@ -255,7 +254,7 @@ BO.IOBoard = (function() {
 			var j=0;
 			for (var i=offset; i<lastPin; i++) {
 				pin = _self.getDigitalPin(i);
-				// ignore data send on Firmata startup
+				// Ignore data send on Firmata startup
 				if (pin == undefined) return;
 				
 				if (pin.getType() == Pin.DIN) {
@@ -275,7 +274,7 @@ BO.IOBoard = (function() {
 	    function processAnalogMessage(channel, bits0_6, bits7_13) {
 			var analogPin = _self.getAnalogPin(channel);
 
-			// NOTE: is there a better way to handle this? This issue is on browser refresh
+			// NOTE: Is there a better way to handle this? This issue is on browser refresh
 			// the IOBoard board is still sending analog data if analog reporting was set
 			// before the refresh. Analog reporting won't be disabled by systemReset systemReset()
 			// is called. There is not a way to call that method fast enough so the following code is
@@ -284,7 +283,7 @@ BO.IOBoard = (function() {
 			if (analogPin === undefined) {
 				return;
 			}
-			// map analog input values from 0-1023 to 0.0-1.0
+			// Map analog input values from 0-1023 to 0.0-1.0
 			// To Do: Add maxADCValue property to Pin or IOBoard object to support ADC values > 1023?
 			// maxADCValue could be set during configuration routine if it's supported by Firmata
 			// in the future.
@@ -298,8 +297,7 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 	    function processSysexCommand(sysexData) {
-
-	    	// remove the first and last element from the array
+	    	// Remove the first and last element from the array
 	    	// since these are the START_SYSEX and END_SYSEX 
 	    	sysexData.shift();
 	    	sysexData.pop();
@@ -322,7 +320,7 @@ BO.IOBoard = (function() {
 					processAnalogMappingResponse(sysexData);
 					break;
 				default:
-					// custom sysEx message
+					// Custom sysEx message
 					_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: sysexData});
 					break;
 			}
@@ -332,7 +330,7 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processQueryFirmwareResult(msg) {
-			var fname ="",
+			var fname = "",
 				data;
 			for (var i = 3; i < msg.length; i+=2)
 			{
@@ -367,36 +365,36 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processCapabilitiesResponse(msg) {
-			// if running in multi-client mode and this client is already configured
+			// If running in multi-client mode and this client is already configured
 			// ignore capabilities response
 			if (_isConfigured) return;
 
 			var pinCapabilities = {},
-				byteCounter = 1, // skip 1st byte because it's the command
+				byteCounter = 1, // Skip 1st byte because it's the command
 				pinCounter = 0,
 				analogPinCounter = 0,
 				len = msg.length,
 				type,
 				pin;
 					
-			// create default configuration
+			// Create default configuration
 			while (byteCounter <= len) {
 				// 127 denotes end of pin's modes
 				if (msg[byteCounter] == 127) {
 					
-					// is digital pin mapping even necessary anymore?
+					// Is digital pin mapping even necessary anymore?
 					_digitalPinMapping[pinCounter] = pinCounter;
 					type = undefined;
 					
-					// assign default types
+					// Assign default types
 					if (pinCapabilities[Pin.DOUT]) {
-						// map digital pins
+						// Map digital pins
 						type = Pin.DOUT;
 					}
 					
 					if (pinCapabilities[Pin.AIN]) {
 						type = Pin.AIN;
-						// map analog input pins
+						// Map analog input pins
 						_analogPinMapping[analogPinCounter++] = pinCounter;
 					}
 					
@@ -405,8 +403,8 @@ BO.IOBoard = (function() {
 					managePinListener(pin);
 					_ioPins[pinCounter] = pin;
 					
-					// store the 2 i2c pin numbers if they exist
-					// To do: allow for more than 2 i2c pins on a board?
+					// Store the 2 i2c pin numbers if they exist
+					// To Do: allow for more than 2 i2c pins on a board?
 					// How to identify SDA-SCL pairs in that case?
 					if (pin.getCapabilities()[Pin.I2C]) {
 						_i2cPins.push(pin.number);
@@ -416,7 +414,7 @@ BO.IOBoard = (function() {
 					pinCounter++;
 					byteCounter++;
 				} else {
-					// create capabilities object (mode: resolution) for each  mode
+					// Create capabilities object (mode: resolution) for each  mode
 					// supported by each pin
 					pinCapabilities[msg[byteCounter]] = msg[byteCounter + 1];
 					byteCounter += 2;
@@ -424,9 +422,9 @@ BO.IOBoard = (function() {
 			}
 			
 			_numPorts = Math.ceil(pinCounter / 8);
-			debug("debug: num ports = " + _numPorts);
+			debug("debug: Num ports = " + _numPorts);
 			
-			// initialize port values
+			// Initialize port values
 			for (var j=0; j<_numPorts; j++) {
 				_digitalPort[j] = 0;
 			}
@@ -434,8 +432,7 @@ BO.IOBoard = (function() {
 			_totalPins = pinCounter;
 			debug("debug: num pins = " + _totalPins);
 
-			
-			// map the analog pins to the board pins
+			// Map the analog pins to the board pins
 			// this will map the IOBoard analog pin numbers (printed on IOBoard)
 			// to their digital pin number equivalents
 			queryAnalogMapping();
@@ -448,8 +445,8 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processAnalogMappingResponse(msg) {
-			// if running in multi-client mode and this client is already configured
-			// ignore analog mapping response
+			// If running in multi-client mode and this client is 
+			// already configured ignore analog mapping response
 			if (_isConfigured) return;
 
 			var len = msg.length;
@@ -474,12 +471,12 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function startupInSingleClientMode() {
-			// perform a soft reset of the board
+			// Perform a soft reset of the board
 			// the board state will be reset to its default state
-			debug("debug: system reset");
+			debug("debug: System reset");
 			systemReset();
 
-			// delay to allow systemReset function to execute in StandardFirmata
+			// Delay to allow systemReset function to execute in StandardFirmata
 			setTimeout(startup, 500);			
 		}			
 		
@@ -490,12 +487,12 @@ BO.IOBoard = (function() {
 		 * @private
 		 */		
 		function startupInMultiClientMode() {
-			// populate pin values with the current IOBoard state
+			// Populate pin values with the current IOBoard state
 			for (var i=0; i < _self.getPinCount(); i++) {
 				queryPinState(_self.getDigitalPin(i));
 			}
 
-			// wait for the pin states to finish updating
+			// Wait for the pin states to finish updating
 			setTimeout(startup, 500);
 			_isConfigured = true;
 		}	
@@ -524,8 +521,8 @@ BO.IOBoard = (function() {
 		 * @private
 		 */
 		function processPinStateResponse(msg) {
-			// if running in multi-client mode and this client is already configured
-			// ignore pin state response
+			// If running in multi-client mode and this client is 
+			// already configured ignore pin state response
 			if (_isConfigured) return;
 						
 			var len = msg.length,
@@ -535,7 +532,7 @@ BO.IOBoard = (function() {
 				pin = _ioPins[pinNumber];
 
 			if (len > 4) {
-				// get value
+				// Get value
 				value = _self.getValueFromTwo7bitBytes(msg[3], msg[4]);
 			} else if (len > 3) {
 				value = msg[3];
@@ -548,7 +545,6 @@ BO.IOBoard = (function() {
 			if (pin.value != value) {
 				pin.value = value;
 			}
-			
 			
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
 		}
@@ -586,7 +582,6 @@ BO.IOBoard = (function() {
 		 			sendServoData(pinNum, value);
 		 		break;
 		 	}
-
 		 }
 		 
 		/**
@@ -605,8 +600,8 @@ BO.IOBoard = (function() {
 					try {
 						pin.removeEventListener(PinEvent.CHANGE, sendOut);
 					} catch (e) {
-						// pin had reference to other handler, ignore
-						debug("debug: caught pin removeEventListener exception");
+						// Pin had reference to other handler, ignore
+						debug("debug: Caught pin removeEventListener exception");
 					}
 				}
 			}
@@ -635,9 +630,9 @@ BO.IOBoard = (function() {
 		function sendExtendedAnalogData(pin, value) {
 			var analogData = [];
 			
-			// if > 16 bits
+			// If > 16 bits
 			if (value > Math.pow(2, 16)) {
-				var err = "Extended Analog values > 16 bits are not currently supported by StandardFirmata";
+				var err = "error: Extended Analog values > 16 bits are not currently supported by StandardFirmata";
 				console.log(err);
 				throw err;
 			}
@@ -646,9 +641,9 @@ BO.IOBoard = (function() {
 			analogData[1] = EXTENDED_ANALOG;
 			analogData[2] = pin;
 			analogData[3] = value & 0x007F;
-		 	analogData[4] = (value >> 7) & 0x007F;	// up to 14 bits
+		 	analogData[4] = (value >> 7) & 0x007F;	// Up to 14 bits
 					
-		 	// if > 14 bits
+		 	// If > 14 bits
 		 	if (value >= Math.pow(2, 14)) {
 		 		analogData[5] = (value >> 14) & 0x007F;
 		 	}
@@ -664,16 +659,16 @@ BO.IOBoard = (function() {
 			var portNum = Math.floor(pin / 8);
 
 			if (value == Pin.HIGH) {
-				// set the bit
+				// Set the bit
 				_digitalPort[portNum] |= (value << (pin % 8));
 			}
 			else if (value == Pin.LOW) {
-				// clear the bit
+				// Clear the bit
 				_digitalPort[portNum] &= ~(1 << (pin % 8));
 			}
 			else {
-				console.log("Warning: Invalid value passed to sendDigital, value must be 0 or 1.");
-				return; // invalid value
+				console.log("warning: Invalid value passed to sendDigital, value must be 0 or 1.");
+				return; // Invalid value
 			}
 			
 			_self.sendDigitalPort(portNum, _digitalPort[portNum]);	
@@ -714,7 +709,7 @@ BO.IOBoard = (function() {
 		 * @param {Pin} pin The Pin to be queried
 		 */
 		function queryPinState(pin) {
-			// to do: ensure that pin is a Pin object
+			// To Do: Ensure that pin is a Pin object
 			var pinNumber = pin.number;
 			_self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
 		};			
@@ -742,7 +737,7 @@ BO.IOBoard = (function() {
 			}
 		}	
 
-		// getters and setters:
+		// Getters and setters:
 
 		/**
 		 * Get or set the sampling interval (how often to run the main loop on the IOBoard). Normally
@@ -758,8 +753,8 @@ BO.IOBoard = (function() {
 				_samplingInterval = interval;
 				_self.send([START_SYSEX,SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
 			} else {
-				// to do: throw error?
-				console.log("Warning: Sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
+				// To Do: Throw error?
+				console.log("warning: Sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
 			}
 		});
 		
@@ -774,7 +769,7 @@ BO.IOBoard = (function() {
 		 */ 
 		this.__defineGetter__("isReady", function() { return _isReady; });				
 		
-		//public methods:
+		// Public methods:
 		
 		/**
 		 * A utility class to assemble a single value from the 2 bytes returned from the
@@ -870,7 +865,6 @@ BO.IOBoard = (function() {
 		 * @param {Number} mode Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO, Pin.SHIFT, or Pin.I2c
 		 */
 		this.setDigitalPinMode = function(pinNumber, mode) {
-			
 			_self.getDigitalPin(pinNumber).setType(mode);
 			managePinListener(_self.getDigitalPin(pinNumber));
 			
@@ -917,13 +911,13 @@ BO.IOBoard = (function() {
 		 * @param {String} str The string message to send to the IOBoard
 		 */
 		this.sendString = function(str) {
-			// convert chars to decimal values
+			// Convert chars to decimal values
 			var decValues = [];
 			for (var i=0, len=str.length; i<len; i++) {
 				decValues.push(toDec(str[i]) & 0x007F);
 				decValues.push((toDec(str[i]) >> 7) & 0x007F);
 			}
-			// data > 7 bits in length must be split into 2 bytes and packed into an
+			// Data > 7 bits in length must be split into 2 bytes and packed into an
 			// array before passing to the sendSysex method
 			this.sendSysex(STRING_DATA, decValues);
 		};
@@ -942,7 +936,7 @@ BO.IOBoard = (function() {
 			var sysexData = [];
 			sysexData[0] = START_SYSEX;
 			sysexData[1] = command;
-			// this would be problematic since the sysex message format does not enforce
+			// This would be problematic since the sysex message format does not enforce
 			// splitting all bytes after the command byte
 			//for (var i=0, len=data.length; i<len; i++) {
 			//	sysexData.push(data[i] & 0x007F);
@@ -971,8 +965,8 @@ BO.IOBoard = (function() {
 			var servoPin,
 				servoData = [];
 
-			minPulse = minPulse || 544; 	// default value = 544
-			maxPulse = maxPulse || 2400;	// default value = 2400
+			minPulse = minPulse || 544; 	// Default value = 544
+			maxPulse = maxPulse || 2400;	// Default value = 2400
 		
 			servoData[0] = START_SYSEX;
 			servoData[1] = SERVO_CONFIG;
@@ -1051,7 +1045,7 @@ BO.IOBoard = (function() {
 			var modeNames = {0:"input", 1:"output", 2:"analog", 3:"pwm", 4:"servo", 5:"shift", 6:"i2c"};
 			for (var i=0, len=_ioPins.length; i<len; i++) {
 				for (var mode in _ioPins[i].getCapabilities()) {
-					console.log("pin " + i + "\tmode: " + modeNames[mode] + "\tresolution (# of bits): " + _ioPins[i].getCapabilities()[mode]);
+					console.log("Pin " + i + "\tMode: " + modeNames[mode] + "\tResolution (# of bits): " + _ioPins[i].getCapabilities()[mode]);
 				}
 			}
 		};
@@ -1079,7 +1073,7 @@ BO.IOBoard = (function() {
 		};
 
 		
-		/* implement EventDispatcher */
+		// Implement EventDispatcher
 		
 		/**
 		 * @param {String} type The event type
@@ -1113,10 +1107,9 @@ BO.IOBoard = (function() {
 		this.dispatchEvent = function(event, optionalParams) {
 			return _evtDispatcher.dispatchEvent(event, optionalParams);
 		};
-
 	};
 
-	// document events
+	// Document events
 
 	/**
 	 * The ioBoardReady event is dispatched when the board is ready to send 
@@ -1218,9 +1211,8 @@ BO.IOBoard = (function() {
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
 	 * @param {BO.Pin} pin A reference to the pin object.
-	 */	 
-	 	 		 	  	 
-
+	 */
+	 
 	return IOBoard;
 
 }());	
