@@ -15,7 +15,7 @@ BO.io.LED = (function() {
 
 	var LED;
 
-	// dependencies
+	// Dependencies
 	var Pin = BO.Pin;
 	var Oscillator = BO.generators.Oscillator;
 
@@ -30,7 +30,7 @@ BO.io.LED = (function() {
 	 *
 	 * @exports LED as BO.io.LED
 	 * @class Creates an interface to an LED. This object provides helpful methods
-	 * for blinking and fading leds. To use the fading methods, the LED must
+	 * for blinking and fading LEDs. To use the fading methods, the LED must
 	 * be connected to a PWM pin on the I/O board.
 	 * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
 	 * @param {Pin} ledPin A reference to the Pin the LED is connected to.
@@ -58,7 +58,7 @@ BO.io.LED = (function() {
 			throw "driveMode should be LED.SOURCE_DRIVE or LED.SYNC_DRIVE";
 		}
 
-		// if the pin supports PWM, set PWM mode else set DOUT mode
+		// If the pin supports PWM, set PWM mode else set DOUT mode
 		if (this._pin.getCapabilities()[Pin.PWM]) {
 			board.setDigitalPinMode(this._pin.number, Pin.PWM);
 			this._supportsPWM = true;
@@ -67,7 +67,7 @@ BO.io.LED = (function() {
 			this._supportsPWM = false;
 		}
 
-		// start in the off state
+		// Start in the off state
 		this.off();
 	};
 
@@ -83,7 +83,7 @@ BO.io.LED = (function() {
 			return this._pin.value;
 		},
 		set intensity(val) {
-			// if the pin does not support PWM, force the value to 1 or 0
+			// If the pin does not support PWM, force the value to 1 or 0
 			if (!this._supportsPWM) {
 				if (val < 0.5) val = 0;
 				else val = 1;
@@ -138,8 +138,8 @@ BO.io.LED = (function() {
 			wave = wave || Oscillator.SQUARE;
 
 			if (!this._supportsPWM && wave !== Oscillator.SQUARE) {
-				console.log("Warning: Only Oscillator.SQUARE may be used on a non-PWM pin.");
-				console.log("Setting wave to Oscillator.SQUARE.");
+				console.log("warning: Only Oscillator.SQUARE may be used on a non-PWM pin.");
+				console.log("debug: Setting wave to Oscillator.SQUARE.");
 				wave = Oscillator.SQUARE;
 			}
 
@@ -186,7 +186,7 @@ BO.io.LED = (function() {
 		fadeTo: function(to, time) {
 
 			if (!this._supportsPWM) {
-				console.log("Warning: Fade methods can only be used for LEDs connected to PWM pins.")
+				console.log("warning: Fade methods can only be used for LEDs connected to PWM pins.")
 				return;
 			}
 
@@ -202,13 +202,11 @@ BO.io.LED = (function() {
 			} else {
 				this._pin.removeGenerator();
 			}		
-		}
-			
+		}	
 	};
 
 	LED.SOURCE_DRIVE = 0;
 	LED.SYNC_DRIVE = 1;
 
 	return LED;
-
 }());
