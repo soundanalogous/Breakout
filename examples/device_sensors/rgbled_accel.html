@@ -37,34 +37,34 @@ h2 {
 <script src="../libs/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// declare these variables so you don't have
+	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var RGBLED = BO.io.RGBLED;
 
-	// constants
-	var RAD_TO_DEG = 180 / Math.PI;
-	var GRAVITY = 9.8; // m/s/s
-
-	// If you want to load this example on a smartphone or tablet,
-	// replace "localhost" with the IP address of the computer
-	// the IOboard is connected to (eg. "192.168.2.3", 8887)
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
-	var rgbLED;
+	
+	// Constants
+	var RAD_TO_DEG = 180 / Math.PI;
+	var GRAVITY = 9.8; // m/s/s	
 
+	// Variables 
+	var rgbLED;
 	var accelData = $('#accelStatus');
 
 	document.addEventListener("touchmove", preventBehavior, false);	
 
-	// listen for the IOBoard READY event which indicates the IOBoard
+	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-		
-		// remove the event listener because it is no longer needed
+		// Remove the event listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		rgbLED = new RGBLED(
@@ -76,11 +76,9 @@ $(document).ready(function() {
 
 		rgbLED.setColor(0, 0, 0);
 
-
-		// listen for DeviceMotion events
+		// Listen for DeviceMotion events
 		// your mobile device must support the DeviceMotion API
-		window.addEventListener("devicemotion", onDeviceMotion);
-		
+		window.addEventListener("devicemotion", onDeviceMotion);		
 	}
 
 	/**
@@ -97,8 +95,10 @@ $(document).ready(function() {
 		return Math.atan2(accel.y, Math.sqrt(accel.x * accel.x + accel.z * accel.z)) * RAD_TO_DEG;
 	}	
 
-	// handle devicemotion events from the mobile device
-	function onDeviceMotion(event) {
+    /**
+     * Handle orientation change events from the mobile device
+     */
+     function onDeviceMotion(event) {
 		var acc = event.accelerationIncludingGravity;		
 		var squared = "2";
 		var x, y, z, pitch, roll;
@@ -114,7 +114,7 @@ $(document).ready(function() {
 		g = Math.abs(y) < 1.0 ? Math.abs(y) : 1.0;
 		b = Math.abs(z) < 1.0 ? Math.abs(z) : 1.0;
 
-		// use the device accelerometer values to set the RGB values of the LED
+		// Use the device accelerometer values to set the RGB values of the LED
 		rgbLED.setColor(r * 255, g * 255, b * 255);
 
 		squared = squared.sup();
@@ -124,7 +124,6 @@ $(document).ready(function() {
 								'z = ' + z.toFixed(3) + '<br />' +
 								'pitch = ' + pitch.toFixed(3) + '<br />' +
 								'roll = ' + roll.toFixed(3) + '<br />');
-
 	}
 
     /**
@@ -133,22 +132,18 @@ $(document).ready(function() {
 	function preventBehavior(evt) { 
       evt.preventDefault(); 
     }	
-
 });
-
 </script>
 
 </head>
 <body>
-
-  <h2>DeviceMotion Demo</h2>
-  	<p>This example demonstrates how to use the HTML5 DeviceMotion API to
+	<h2>DeviceMotion Demo</h2>
+		<p>This example demonstrates how to use the HTML5 DeviceMotion API to
   		set the values of an RGBLED from a mobile device</p>  
-	<div id="incoming">
-		<div class="data">
-			<p id="accelStatus"></p>
+		<div id="incoming">
+			<div class="data">
+				<p id="accelStatus"></p>
+			</div>
 		</div>
-	</div>
-  
 </body>
 </html>​
