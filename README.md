@@ -5,7 +5,7 @@ Breakout is a prototyping tool for exploring the intersection of the web and the
 
 Breakout grew out of a need for a simple platform to enable designers to prototype functional web-based interfaces to the physical world. It is based largely on the [Funnel](http://funnel.cc) toolkit and informed by the experiences of the developers of both Funnel and Breakout as designers, technologists and educators.
 
-Breakout is currently beta software. The API is stable, but bugs are possible. Please create an issue if you suspect a bug. Additional examples and hardware abstractions (Breakout/src/io/) will likely be added.
+Breakout is currently beta software. The API is stable, but bugs are possible. Please create an issue if you suspect a bug. Additional examples and hardware abstractions (*Breakout/src/io/*) will likely be added.
 
 See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other helpful information.
 
@@ -13,26 +13,26 @@ See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other
 Quick Start
 ---
 
-See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/) on breakoutjs.com or the quickstart guide below.
+See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/) on [breakoutjs.com](breakoutjs.com) or the quickstart guide below.
 
-The first step is to upload StandardFirmata to your Arduino (or Arduino-compatible) board and wire up some components:
+The first step is to upload **StandardFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
 
-1. Launch Arduino 1.0 and navigate to File -> Examples -> Firmata -> StandardFirmata
-2. Compile StandardFirmata for your board and upload.
-3. Wire up a button and led to you I/O board as illustrated on page 2 in Breakout/examples/schematics.pdf (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
+1. Launch Arduino 1.0 and navigate to *File* -> *Examples* -> *Firmata* -> *StandardFirmata*
+2. Compile *StandardFirmata* for your board and upload.
+3. Wire up a button and led to you I/O board as illustrated on page 2 in *Breakout/examples/schematics.pdf* (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
 
 The next step is to run the Breakout Server application:
 
-1. Make sure your I/O board is attached and the StandardFirmata sketch is uploaded. 
-2. You'll find Breakout Server (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in Breakout/server/. Simply double-click to launch the application. Note: Linux users need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
+1. Make sure your I/O board is attached and the *StandardFirmata* sketch is uploaded. 
+2. You'll find **Breakout Server** (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in *Breakout/server/*. Simply double-click to launch the application. Note: Linux users need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: <your server name>: 8887/" followed by "Connected to IOBoard on: <serial port name>".
-6. Open http://localhost:8887/examples/getting_started/hello_world.html in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater). If you changed the network port in step 4, update it on line 36 of the hello_world.html example and in the url above.
+6. Open [http://localhost:8887/examples/getting_started/hello_world.html](http://localhost:8887/examples/getting_started/hello_world.html) in Chrome (v14 or greater), Firefox (v7 or greater), or Safari (v5 or greater). If you changed the network port in step 4, update it on line 71 of the hello_world.html example and in the url above.
 
 For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
 
-As an alternative to the Breakout Server application, a node.js-based server is also included. See the [Using the node.js server](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.  
+As an alternative to the Breakout Server application, a node.js-based server is also included. See the [Using the node.js server](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.
 
 
 Requirements
@@ -42,7 +42,7 @@ Breakout is only supported for Arduino 1.0 and higher [Download Arduino](http://
 
 You will need one of the following I/O boards:
 
-- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, etc). 
+- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonandro, etc). 
 - [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy++ 1.0 or 2.0
 - Many Arduino clones / variants should also work
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
@@ -60,7 +60,7 @@ OS:
 Desktop Browsers:
 
 - Chrome version 14 - 20
-- Firefox version 7 - 13 (version 11 or higher is recommended)
+- Firefox version 7 - 14 (version 11 or higher is recommended)
 - Safari version 5 or higher
 
 Mobile Browsers (browser must support websockets):
@@ -74,15 +74,15 @@ Contributing
 ---
 Contributors are welcome. If you have any ideas, suggestions for improvements, examples to share, or anything else you'd like to contribute please get in touch.
 
-Please submit pull requests against the dev branch.
+Please submit pull requests against the *dev* branch.
 
 Credits
 ---
-Breakout is developed by Jeff Hoefs
+Breakout is developed by Jeff Hoefs.
 
 Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). The author is also a contributor to the Funnel as3 library.
 
-Logo and icon designed by Claire Lin
+Logo and icon designed by Claire Lin.
 
 Breakout Server uses [webbit](https://github.com/webbit/webbit)
 
