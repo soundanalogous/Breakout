@@ -53,7 +53,7 @@ JSUTILS.EventDispatcher = (function () {
 					this._eventListeners[type].splice(i, 1);
 				}
 			}
-			// to do: if no more listeners for a type, delete key?
+			// To Do: If no more listeners for a type, delete key?
 		},
 		
 		/**
@@ -80,7 +80,7 @@ JSUTILS.EventDispatcher = (function () {
 			event.target = this._target;
 			var isSuccess = false;		
 
-			// add any optional params to the Event object
+			// Add any optional params to the Event object
 			for (var obj in optionalParams) {
 				event[obj.toString()] = optionalParams[obj];
 			}
@@ -91,14 +91,12 @@ JSUTILS.EventDispatcher = (function () {
 						this._eventListeners[event.type][j].call(this, event);
 						isSuccess = true;
 					} catch(e) {
-						// to do: handle error
+						// To Do: Handle error
 					}
 				}
 			}
 			return isSuccess;	
 		}
-
-
 	};
 
 	return EventDispatcher;

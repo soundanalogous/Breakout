@@ -9,13 +9,13 @@ JSUTILS.TimerEvent = (function() {
 
 	var TimerEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
-	 * TimerEvent Description
-	 * @class An Event object to be dispatched (fired) by a Timer
-	 * object.	
+	 * TimerEvent Description.
+	 * 
+	 * @class An Event object to be dispatched (fired) by a Timer object.	
 	 * @exports TimerEvent as JSUTILS.TimerEvent	 
 	 * @extends JSUTILS.Event
  	 * @param {String} type The event type	 
