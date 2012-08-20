@@ -39,7 +39,6 @@ h2 {
 .spacer {
 	margin-left: 5px;
 }
-
 </style>
 
 <title>LED digital</title>
@@ -48,7 +47,6 @@ h2 {
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
 	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
@@ -59,7 +57,6 @@ $(document).ready(function() {
 	// that the Arduino board is connected to, replace
 	// location.hostname with the IP address or hostname
 	// of the computer that the Arduino board is connected to.
-	//var arduino = new IOBoard("localhost", 8887);
 	var arduino = new IOBoard(location.hostname, 8887);
 	
 	// Variables
