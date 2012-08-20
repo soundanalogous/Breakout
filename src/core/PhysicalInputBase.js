@@ -15,7 +15,7 @@ BO.PhysicalInputBase = (function() {
 
 	var PhysicalInputBase;
 
-	// dependencies
+	// Dependencies
 	var EventDispatcher = JSUTILS.EventDispatcher;
 
 	/**
@@ -36,7 +36,7 @@ BO.PhysicalInputBase = (function() {
 	};
 
 	PhysicalInputBase.prototype = {
-		/* implement EventDispatcher */
+		// Implement EventDispatcher
 		
 		/**
 		 * @param {String} type The event type
