@@ -9,7 +9,7 @@ BO.IOBoardEvent = (function() {
 
 	var IOBoardEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
@@ -26,12 +26,12 @@ BO.IOBoardEvent = (function() {
 
 		this.name = "IOBoardEvent";
 		
-		// call the super class
+		// Call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
 	};
 
-	// events
+	// Events
 	/** @constant */
 	IOBoardEvent.ANALOG_DATA = "analogData";
 	/** @constant */
@@ -52,7 +52,6 @@ BO.IOBoardEvent = (function() {
 	IOBoardEvent.CONNECTED = "ioBoardConnected";
 	/** @constant */
 	IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";		
-
 
 	IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
 	IOBoardEvent.prototype.constructor = IOBoardEvent;
