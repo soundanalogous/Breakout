@@ -14,6 +14,11 @@ Or you can call the build script manually:
 
 $ python build.py [Release Number]
 
+Updating the documentation
+--------------------------
+The documentation uses JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/)
+to be build.
+
 Cleaning-up
 -----------
 Too much temp files in your directories, get rid of them.
