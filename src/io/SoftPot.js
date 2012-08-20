@@ -38,8 +38,8 @@ BO.io.SoftPot = (function() {
 	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} pin A reference to the Pin the softpot is connected to.
-	 * @param {Number} softPotLength The length of the softpot in mm. Default = 100. 
-	 *
+	 * @param {Number} softPotLength The length of the softpot in mm. 
+	 * Default = 100. 
 	 */
 	SoftPot = function(board, pin, softPotLength) {
 		"use strict";
@@ -100,7 +100,8 @@ BO.io.SoftPot = (function() {
 
 	/**
 	 * @private
-	 * @param {Number} touchPoint The value where the touch is occuring on the strip
+	 * @param {Number} touchPoint The value where the touch is occuring on the
+	 * strip
 	 */
 	SoftPot.prototype.setMinFlickMovement = function(num) {
 		this._minFlickMovement = num;	
@@ -143,11 +144,10 @@ BO.io.SoftPot = (function() {
 				} 
 							
 				if (!dispatchedFlick) {
-			
-					// check for presses  
+					// Check for presses  
 					if (this._pressTimer.running) {
 				
-						// if less than tap timeout, then it is a tap 
+						// If less than tap timeout, then it is a tap 
 						if (!this._isDrag && this._pressTimer.currentCount <= this._tapTimeout / PRESS_TIMER_INTERVAL) {
 							this.dispatch(SoftPotEvent.TAP);
 						}
@@ -162,16 +162,16 @@ BO.io.SoftPot = (function() {
 	
 	/**
 	 * @private
-	 * @param {Number} touchPoint The value where the touch is occuring on the strip
+	 * @param {Number} touchPoint The value where the touch is occuring on the
+	 * strip
 	 */
 	SoftPot.prototype.onMove = function(touchPoint) {		
 	
 		this._touchPoint = touchPoint;		
-					
-		// save current point 		
-		var curMovePoint = touchPoint; 
+		// Save current point
+		var curMovePoint = touchPoint;
 		
-		// flick handeling 			
+		// Flick handeling 
 		this._flickDistance = Math.abs(curMovePoint - this._lastMovePoint) 
 		
 		if (!this._isDrag && this._flickDistance > this._minFlickMovement ) {
@@ -189,8 +189,8 @@ BO.io.SoftPot = (function() {
 		
 		var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);				
 
-		// dragging handler 
-		// dont check when flick timer is running
+		// Dragging handler 
+		// Don't check when flick timer is running
 		//console.log("min drag = " + this._minDragMovement);
 		if ((dragDistance > this._minDragMovement) && (this._flickTimer.running === false)) {
 			this._isDrag = true; 
@@ -204,10 +204,8 @@ BO.io.SoftPot = (function() {
 		this.debug("SoftPot: distance traveled flick is " + this._flickDistance); 
 		this.debug("SoftPot: distance traveled drag is " + dragDistance); 
 
-		
-		// reuse for next 
+		// Reuse for next 
 		this._lastMovePoint = curMovePoint; 
-			
 	};
 
 	/**
@@ -231,7 +229,7 @@ BO.io.SoftPot = (function() {
 	};
 
 	/**
-	 * reset whenever you need the next Touch point
+	 * Reset whenever you need the next Touch point.
 	 * @private
 	 */
 	SoftPot.prototype.resetForNext = function() {
@@ -242,7 +240,8 @@ BO.io.SoftPot = (function() {
 	};
 
 	/**
-	 * for debugging
+	 * For debugging.
+	 * 
 	 * @private
 	 */
 	SoftPot.prototype.debug = function(str) {
@@ -253,6 +252,7 @@ BO.io.SoftPot = (function() {
 	
 	/**
 	 * The current value.
+	 * 
 	 * @name SoftPot#value
 	 * @property
 	 * @type Number
@@ -261,6 +261,7 @@ BO.io.SoftPot = (function() {
 	
 	/**
 	 * The current distance from the press point.
+	 * 
 	 * @name SoftPot#distanceFromPressed
 	 * @property
 	 * @type Number
@@ -268,7 +269,9 @@ BO.io.SoftPot = (function() {
 	SoftPot.prototype.__defineGetter__("distanceFromPressed", function() { return this._distanceFromPressed; });
 	
 	/**
-	 * The minimum distance required to trigger a flick event. Change this value to fine tune the flick gesture.
+	 * The minimum distance required to trigger a flick event. Change this
+	 * value to fine tune the flick gesture.
+	 * 
 	 * @name SoftPot#minFlickMovement
 	 * @property
 	 * @type Number
@@ -277,7 +280,9 @@ BO.io.SoftPot = (function() {
 	SoftPot.prototype.__defineSetter__("minFlickMovement", function(min) { this._minFlickMovement = min; });		
 	
 	/**
-	 * The minimum distance required to trigger a drag event. Change this value to fine tune the drag response.
+	 * The minimum distance required to trigger a drag event. Change this
+	 * value to fine tune the drag response.
+	 * 
 	 * @name SoftPot#minDragMovement
 	 * @property
 	 * @type Number
@@ -286,8 +291,8 @@ BO.io.SoftPot = (function() {
 	SoftPot.prototype.__defineSetter__("minDragMovement", function(min) { this._minDragMovement = min; });
 
 	/**
-	 * The maximum time (in milliseconds) between a press and release in order to
-	 * trigger a TAP event.
+	 * The maximum time (in milliseconds) between a press and release in
+	 * order to trigger a TAP event.
 	 * @name SoftPot#tapTimeout
 	 * @property
 	 * @type Number
@@ -296,9 +301,10 @@ BO.io.SoftPot = (function() {
 	SoftPot.prototype.__defineSetter__("tapTimeout", function(t) { this._tapTimeout = t; });
 
 	/**
-	 * The minimum value required to set the Release state. This number should be as
-	 * close to zero as possible. Increase this value if you are noticing fluttering 
-	 * between the Pressed and Released states. Default value = 0.01;
+	 * The minimum value required to set the Release state. This number should
+	 * be as close to zero as possible. Increase this value if you are noticing
+	 * fluttering between the Pressed and Released states. Default value = 0.01;
+	 * 
 	 * @name SoftPot#minValue
 	 * @property
 	 * @type Number
@@ -307,7 +313,7 @@ BO.io.SoftPot = (function() {
 	SoftPot.prototype.__defineSetter__("minValue", function(val) { this._minValue = val; });	
 
 
-	// document events
+	// Document events
 
 	/**
 	 * The softPotPressed event is dispatched when pressure is applied to 

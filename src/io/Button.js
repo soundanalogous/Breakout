@@ -16,27 +16,29 @@ BO.io.Button = (function() {
 		ButtonEvent = BO.io.ButtonEvent;
 
 	/**
-	 * An object to represent a physical button. The advantage of using the Button class over
-	 * listening for pin change events on a Pin object, is that the Button class handles debouncing 
-	 * and provides helpful button events: Pressed, Released, Long Press and Sustained Press
+	 * An object to represent a physical button. The advantage of using the 
+	 * Button class over listening for pin change events on a Pin object, is 
+	 * that the Button class handles debouncing and provides helpful button
+	 * events: Pressed, Released, Long Press and Sustained Press
 	 *
-	 * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to the button is 
-	 * connected to ground, configuration is PULL_DOWN, if the resistor is connected to power, 
-	 * then the configuration is PULL_UP.</p>
+	 * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to
+	 * the button is connected to ground, configuration is PULL_DOWN, if the 
+	 * resistor is connected to power, then the configuration is PULL_UP.</p>
 	 *
 	 * @exports Button as BO.io.Button
-	 * @class Creates and interface to a physical button. The Button object dispatches
-	 * events on state changes such as Pressed, Released and Sustained Press. The Button object
-	 * also handles debouncing.
+	 * @class Creates and interface to a physical button. The Button object
+	 * dispatches events on state changes such as Pressed, Released and 
+	 * Sustained Press. The Button object also handles debouncing.
 	 * @constructor
 	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
 	 * @param {Pin} pin A reference to the Pin the button is connected to.
-	 * @param {Number} buttonMode The mode of the button (either Button.PULL_DOWN or 
-	 * Button.PULL_UP if wired with external resistors or Button.INTERNAL_PULL_UP if
-	 * using the internal pull-up resistors. Default is PULL_DOWN.
-	 * @param {Number} sustainedPressInterval The delay time in milliseconds before a sustained press event is fired.
-	 *
+	 * @param {Number} buttonMode The mode of the button (either 
+	 * Button.PULL_DOWN or Button.PULL_UP if wired with external resistors or 
+	 * Button.INTERNAL_PULL_UP if using the internal pull-up resistors. Default
+	 * is PULL_DOWN.
+	 * @param {Number} sustainedPressInterval The delay time in milliseconds 
+	 * before a sustained press event is fired.
 	 */
 	Button = function(board, pin, buttonMode, sustainedPressInterval) {
 		"use strict";
@@ -60,18 +62,16 @@ BO.io.Button = (function() {
 		board.setDigitalPinMode(pinNumber, Pin.DIN);
 
 		if (this.buttonMode === Button.INTERNAL_PULL_UP) {
-			// enable internal pull up resistor
+			// Enable internal pull up resistor
 			board.enablePullUp(pinNumber);
-			// set value to high to avoid initial change event
+			// Set value to high to avoid initial change event
 			this._pin.value = Pin.HIGH;
 		} else if (this.buttonMode === Button.PULL_UP) {
-			// set value to high to avoid initial change event
+			// Set value to high to avoid initial change event
 			this._pin.value = Pin.HIGH;
 		}
-				
 		this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));	
 	};
-
 
 	Button.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
 	Button.prototype.constructor = Button;
@@ -149,7 +149,9 @@ BO.io.Button = (function() {
 	Button.prototype.__defineSetter__("debounceInterval", function(interval) { this._debounceInterval = interval; });
 	
 	/**
-	 * The delay time (in milliseconds) the button must be held before a sustained press event is fired.
+	 * The delay time (in milliseconds) the button must be held before a
+	 * sustained press event is fired.
+	 * 
 	 * @name Button#sustainedPressInterval
 	 * @property
 	 * @type Number
@@ -159,6 +161,7 @@ BO.io.Button = (function() {
 
 	/**
 	 * [read-only] The pin number of the pin the button is attached to.
+	 * 
 	 * @name Button#pinNumber
 	 * @property
 	 * @type Number
@@ -173,7 +176,7 @@ BO.io.Button = (function() {
 	Button.INTERNAL_PULL_UP = 2;
 
 
-	// document events
+	// Document events
 
 	/**
 	 * The pressed event is dispatched when the button is pressed.
@@ -202,7 +205,8 @@ BO.io.Button = (function() {
 	 
 	/**
 	 * The sustainedPress event is dispatched continuously at the rate 
-	 * specified by the sustainedPressInterval property while the button is held.
+	 * specified by the sustainedPressInterval property while the button is
+	 * held.
 	 * @name Button#sustainedPress
 	 * @type BO.io.ButtonEvent.SUSTAINED_PRESS
 	 * @event

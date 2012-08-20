@@ -15,7 +15,7 @@ BO.io.DCMotor = (function() {
 
 	var DCMotor;
 
-	// dependencies
+	// Dependencies
 	var Pin = BO.Pin;
 
 	/**
@@ -30,15 +30,18 @@ BO.io.DCMotor = (function() {
 	 *
 	 * @exports DCMotor as BO.io.DCMotor
 	 * @class Creates an interface to an H-bridge to control the
-	 * direction of rotation of a motor shaft. You can rotate forward (clockwise), reverse
-	 * or apply a brake. See Breakout/examples/actuators/dcmotor.html for an example application.
+	 * direction of rotation of a motor shaft. You can rotate forward
+	 * (clockwise), reverse or apply a brake. See 
+	 * Breakout/examples/actuators/dcmotor.html for an example application.
 	 * @constructor
-	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
-	 * @param {Pin} forwardPin A reference to the Pin connected to the forward control of
-	 * the H-bridge.
-	 * @param {Pin} reversePin A reference to the Pin connected to the reverse control of 
-	 * the H-bridge.
-	 * @param {Pin} pwmPin A reference to the Pin connected to the pwm control of the H-bridge.
+	 * @param {IOBoard} board A reference to the IOBoard instance that the
+	 * servo is attached to.
+	 * @param {Pin} forwardPin A reference to the Pin connected to the forward
+	 * control of the H-bridge.
+	 * @param {Pin} reversePin A reference to the Pin connected to the reverse
+	 * control of the H-bridge.
+	 * @param {Pin} pwmPin A reference to the Pin connected to the pwm control
+	 * of the H-bridge.
 	 * @param {Number} minVoltage The minimum voltage (default = 1).
 	 * @param {Number} maxVoltage The maximum voltage (default = 9).
 	 * @param {Number} supplyVoltage The supply voltage (default = 9).
@@ -65,7 +68,7 @@ BO.io.DCMotor = (function() {
 			if (this._pwmPin.getCapabilities()[Pin.PWM]) {
 				board.setDigitalPinMode(this._pwmPin.number, Pin.PWM);
 			} else {
-				console.log("Warning: PWM is not available for the PWM pin");
+				console.log("warning: PWM is not available for the PWM pin");
 				board.setDigitalPinMode(this._pwmPin.number, Pin.DOUT);
 			}			
 		}
@@ -73,14 +76,14 @@ BO.io.DCMotor = (function() {
 		if (this._forwardPin.getCapabilities()[Pin.PWM]) {
 			board.setDigitalPinMode(this._forwardPin.number, Pin.PWM);
 		} else {
-			console.log("Warning: PWM is not available for the forward pin");
+			console.log("warning: PWM is not available for the forward pin");
 			board.setDigitalPinMode(this._forwardPin.number, Pin.DOUT);			
 		}
 
 		if (this._reversePin.getCapabilities()[Pin.PWM]) {
 			board.setDigitalPinMode(this._reversePin.number, Pin.PWM);			
 		} else {
-			console.log("Warning: PWM is not available for the reverse pin");
+			console.log("warning: PWM is not available for the reverse pin");
 			board.setDigitalPinMode(this._reversePin.number, Pin.DOUT);
 		}
 
@@ -94,7 +97,9 @@ BO.io.DCMotor = (function() {
 	DCMotor.prototype = {
 
 		/**
-		 * The value of the motor speed (-1.0 to 1.0). A speed of zero stops the motor.
+		 * The value of the motor speed (-1.0 to 1.0). A speed of zero stops
+		 * the motor.
+		 * 
 		 * @name DCMotor#value
 		 * @property
 		 * @type Number
