@@ -9,9 +9,9 @@ BO.IOBoard = (function() {
 
 	var IOBoard;
 
-	// private static constants:
+	// Private static constants:
 
-	// message command bytes (128-255/0x80-0xFF)
+	// Message command bytes (128-255/0x80-0xFF)
 	var	DIGITAL_MESSAGE			= 0x90,
 		ANALOG_MESSAGE			= 0xE0,
 		REPORT_ANALOG			= 0xC0,
@@ -22,7 +22,7 @@ BO.IOBoard = (function() {
 		START_SYSEX				= 0xF0,
 		END_SYSEX				= 0xF7;
 	
-	// extended command set using sysex (0-127/0x00-0x7F)
+	// Extended command set using sysex (0-127/0x00-0x7F)
 	var	SERVO_CONFIG			= 0x70,
 		STRING_DATA				= 0x71,
 		SHIFT_DATA				= 0x75,
@@ -46,7 +46,7 @@ BO.IOBoard = (function() {
 		MULTI_CLIENT = "multiClient";	
 
 
-	// dependencies
+	// Dependencies
 	var Pin = BO.Pin,
 		EventDispatcher = JSUTILS.EventDispatcher,
 		PinEvent = BO.PinEvent,
@@ -79,8 +79,8 @@ BO.IOBoard = (function() {
 		
 		this.name = "IOBoard";
 						
-		// private properties
-		var _self = this,	// get a reference to this class
+		// Private properties
+		var _self = this,	// Get a reference to this class
 			_socket,
 			_inputDataBuffer = [],	
 			_digitalPort = [],
@@ -90,7 +90,7 @@ BO.IOBoard = (function() {
 			_i2cPins = [],
 			_ioPins = [],
 			_totalPins = 0,
-			_samplingInterval = 19, // default sampling interval
+			_samplingInterval = 19, // Default sampling interval
 			_isReady = false,
 			_firmwareName = "",
 			_firmwareVersion = 0,
@@ -109,7 +109,7 @@ BO.IOBoard = (function() {
 		_socket.addEventListener(WSocketEvent.MESSAGE, onSocketMessage);
 		_socket.addEventListener(WSocketEvent.CLOSE, onSocketClosed);
 
-		// private methods:
+		// Private methods:
 
 		/**
 		 * @private
@@ -161,7 +161,7 @@ BO.IOBoard = (function() {
 			var version = event.version * 10,
 				name = event.name;
 
-			debug("debug: Firmware name = " + name + "\tFirmware version = "+ event.version);
+			debug("debug: Firmware name = " + name + "\t, Firmware version = "+ event.version);
 			
 			// Make sure the user has uploaded StandardFirmata 2.3 or greater
 			if (version >= 23) {
@@ -910,12 +910,44 @@ BO.IOBoard = (function() {
 		};
 		
 		/**
-		 * @return {String} The version of the firmware running on the IOBoard.
+		 * @return {String} The version of the firmware running on the
+		 * IOBoard.
 		 */
 		this.getFirmwareVersion = function() {
 			return _firmwareVersion;
 		};
-				
+
+		/**
+		 * @return {Array} The capabilities of the Pins on the IOBoard.
+		 */
+		this.getCapabilities = function() {
+			var capabilities = [];
+			var modeNames = {
+				0:"input",
+				1:"output",
+				2:"analog",
+				3:"pwm",
+				4:"servo",
+				5:"shift",
+				6:"i2c"
+				};
+			for (var i = 0; i < _ioPins.length; i++) {
+				var pinElements = [];
+				var j = 0;
+				for (var mode in _ioPins[i].getCapabilities()) {
+					var pinElement = [];
+					if (mode >= 0) {
+						pinElement[0] = modeNames[mode];
+						pinElement[1] = _ioPins[i].getCapabilities()[mode];
+					}
+					pinElements[j] = pinElement;
+					j++;
+				}
+				capabilities[i] =  pinElements;
+			}
+			return capabilities;
+		};
+
 		/**
 		 * Send the digital values for a port. Making this private for now.
 		 *
@@ -948,8 +980,9 @@ BO.IOBoard = (function() {
 				decValues.push(toDec(str[i]) & 0x007F);
 				decValues.push((toDec(str[i]) >> 7) & 0x007F);
 			}
-			// Data > 7 bits in length must be split into 2 bytes and packed 
-			// into an array before passing to the sendSysex method
+			// Data > 7 bits in length must be split into 2 bytes and  
+			// packed into an array before passing to the sendSysex
+			// method
 			this.sendSysex(STRING_DATA, decValues);
 		};
 		
@@ -969,7 +1002,7 @@ BO.IOBoard = (function() {
 			var sysexData = [];
 			sysexData[0] = START_SYSEX;
 			sysexData[1] = command;
-			// This would be problematic since the sysex message format does
+			// This would be problematic since the sysEx message format does
 			// not enforce splitting all bytes after the command byte
 			//for (var i=0, len=data.length; i<len; i++) {
 			//	sysexData.push(data[i] & 0x007F);
@@ -1093,14 +1126,13 @@ BO.IOBoard = (function() {
 				5:"shift",
 				6:"i2c"
 				};
-			var capabilities = [];
 			for (var i = 0; i < _ioPins.length; i++) {
 				for (var mode in _ioPins[i].getCapabilities()) {
 					console.log("Pin " + i + "\tMode: " + modeNames[mode] + "\tResolution (# of bits): " + _ioPins[i].getCapabilities()[mode]);
 				}
 			}
 		};
-		
+
 		/**
 		 * A wrapper for the send method of the WebSocket
 		 * I'm not sure there is a case for the user to call this method
@@ -1203,13 +1235,13 @@ BO.IOBoard = (function() {
 	 */
 
 	/**
-	 * The sysexMessage event is dispatched when a sysex message is 
+	 * The sysexMessage event is dispatched when a sysEx message is 
 	 * received from the IOBoard.
 	 * @name IOBoard#sysexMessage
 	 * @type BO.IOBoardEvent.SYSEX_MESSAGE
 	 * @event
 	 * @param {IOBoard} target A reference to the IOBoard
-	 * @param {Array} message The sysex data
+	 * @param {Array} message The sysEx data
 	 */
 	 
 	/**
