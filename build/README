@@ -32,7 +32,7 @@ update. This should happen after the jQuery files under 'libs' in the example
 directory are updated.
 
 Change the working directory to 'examples', tweak the command below, and
-execute it. Using only the release number 
+execute it. Using only the release number is possible but not recommended.
 
 $ find . -type f -name "*.html" | xargs sed -ie 's|jquery-1.7.2|jquery-1.8.0|g'
 
