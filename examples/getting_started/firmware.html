@@ -56,8 +56,8 @@ $(document).ready(function() {
 	// is ready to send and receive data
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
     
-    // Standard values for the jQuery elements
-    $('#firmware').text("unkown");
+	// Standard values for the jQuery elements
+	$('#firmware').text("unkown");
 	$('#firmwarever').text("unknown");
     
 	function onReady(event) {
@@ -74,13 +74,17 @@ $(document).ready(function() {
 		//arduino.reportFirmware();
 		//arduino.reportVersion();
 		//arduino.reportCapabilities();
+				
+		// Transforming the array to a nice output format
+		for (var pin in capabilities) {
+			if (capabilities[pin] != "") {
+				$("#capabilities").append("Pin " + pin + " : " + "<br/>");
+				$.each(capabilities[pin], function(j, entries) {
+					$("#capabilities").append(" - Mode: " + entries[0] + ", Resolution (# of bits): " + entries[1] + "<br/>");
+			});
+			}
+		}
 		
-		// Looping the array
-		// To Do: Add more loops for a decent output
-		$.each(capabilities, function(i, val) {
-			$("#capabilities").append("Pin " + i + " : " + val + "<br/>");
-		});
-	
 		// jQuery elements
 		$('#firmware').text(firmware);
 		$('#firmwarever').text(firmwarever);
