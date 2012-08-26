@@ -9,9 +9,9 @@ var app = require('http').createServer(handler),
   path = require('path'),
   connectedSocket = null,
   isConnected = false,
-  enableMultiConnect = false;  // set to true to enable multiple clients to connect
+  enableMultiConnect = false;  // Set to true to enable multiple clients to connect
 
-// are any additional mime types needed?
+// Are any additional mime types needed?
 var mimeTypes = {
   "html": "text/html",
   "ico": "image/x-icon",
@@ -22,12 +22,18 @@ var mimeTypes = {
   "manifest" : "text/cache-manifest",
   "css": "text/css"};
 
-/* SERIAL */
+/* Commandline options */
+var program = require('commander');
+program
+  .version('0.1.6')
+  .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
+  .option('-s, --server <port>', 'Specify the port [8080]', Number, 8080)
+  .parse(process.argv);
 
+/* Serial */
 var serialport = require("serialport");
 var serialPort = serialport.SerialPort;
-// to do: pass port as arg or read from text file?
-var port = "/dev/tty.usbmodemfd121";
+var port = program.port;
 
 var serialDefaults = {
   baudrate: 57600,
@@ -37,28 +43,24 @@ var serialDefaults = {
 // Create new serialport pointer
 var serial = new serialPort(port , serialDefaults);
 
-
 serial.on( "data", function( data ) {
-    
   if ( data[0] >= 0 ) {
     if(isConnected) {
-      // relay serial data to websocket
+      // Relay serial data to websocket
       connectedSocket.send(String(data[0]));
       if (enableMultiConnect) {
         connectedSocket.broadcast.send(String(data[0]));
       }        
     }
   }
-
 });
-
 
 serial.on( "error", function( msg ) {
     console.log("serial error: " + msg );
 });
 
 io.configure(function() {
-  // suppress socket.io debug output
+  // Suppress socket.io debug output
   io.set('log level', 1);
   io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
 });
@@ -79,20 +81,22 @@ io.configure('development', function() {
 	io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
 });
 
-app.listen(8080);
+var serverPort = program.server;
+app.listen(parseInt(serverPort, 10));
+console.log("Server is running at: http://localhost:" + serverPort + " -> CTRL + C to shutdown");
 
 function handler (request, response) {
   if(request.method == "GET"){
     var filename;
     
-    // absolute path
+    // Absolute path
     //if (request.url == "/") {
     //  filename = path.normalize(path.join(__dirname,  "../index.html"));
     //} else {
     //  filename = path.normalize(path.join(__dirname,  ".." + request.url));
     //}
     
-    // use relative path (seems to be working... on OSX at least)
+    // Use relative path (seems to be working... on OSX at least)
     if (request.url == "/") {
       // default to index.html
       filename = path.normalize("../index.html");
@@ -155,10 +159,11 @@ io.sockets.on('connection', function (connection) {
       msgData = message;
     }
 
-    // relay websocket data to serial port
+    // Relay websocket data to serial port
     serial.write(msgData);
 
   });
+
   connection.on('disconnect', function() {
     var numRemaining = Object.keys(connection.manager.roomClients).length - 1;
   	console.log("disconnected " + connection.id);
@@ -169,6 +174,5 @@ io.sockets.on('connection', function (connection) {
       isConnected = false;
       console.log("all clients disconnected");
     } 
-
   });
 });
