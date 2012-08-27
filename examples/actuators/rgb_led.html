@@ -111,8 +111,9 @@ $(document).ready(function() {
 		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
 		// RGBLED example using RGBLED object:
-		// NOTE: the r, g, b pins of the LED must be connected to PWM pins on
-		// the IOBoard
+		// NOTE: The r, g, b pins of the LED must be connected to PWM pins on
+		// the IOBoard.
+		// Change COMMON_CATHODE to COMMON_ANODE according to your LED type
 		// Parameters: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
 		rgbLED = new RGBLED(
 			arduino, 
@@ -121,7 +122,7 @@ $(document).ready(function() {
 			arduino.getDigitalPin(11), 
 			RGBLED.COMMON_CATHODE);
 
-		// Set initial color COMMON_ANODE
+		// Set initial color
 		rgbLED.setColor(128, 255, 0);
 
 		initGUIListeners();
