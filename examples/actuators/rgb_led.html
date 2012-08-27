@@ -33,11 +33,19 @@ label {
 #duration {
 	width: 50px;
 }
-.fadeControls {
+.container {
 	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+.Btns {
 	padding: 10px;
-	border: 1px dotted #CCC;	
-	float: left;
+	font-size: 16px;
+	width: 80px;
+	color: #00AEFF;
+	margin-bottom: 20px;
 }
 </style>
 
@@ -49,8 +57,7 @@ label {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// dependencies
-	// declare these variables so you don't have
+	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
@@ -58,56 +65,63 @@ $(document).ready(function() {
 	var ButtonEvent = BO.io.ButtonEvent;
 	var RGBLED = BO.io.RGBLED;
 
-	// set to true to print debug messages to console
+	// Set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
-	// params: IPaddress, port
 	// If you are not serving this file from the same computer
 	// that the Arduino board is connected to, replace
 	// location.hostname with the IP address or hostname
 	// of the computer that the Arduino board is connected to.	
-	var uno = new IOBoard(location.hostname, 8887);
+	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
 	var rgbLED;
+	var button;
 	var duration = 500;
 	var initialColor = '#80FF00';
 
-	// initialize color picker
+	// Initialize color picker
 	$('#colorPicker').wColorPicker({
 		initColor: initialColor,
 		onSelect: gotoColor, 
 		color: 'white'
 	});
 
-	// initialize color picker
+	// Initialize color picker
 	$('#fadeColorPicker').wColorPicker({
 		initColor: initialColor,
 		onSelect: fadeToColor, 
 		color: 'white'
 	});		
 	
-	uno.addEventListener(IOBoardEvent.READY, onReady);
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 		
-		// remove the listener because it is no longer needed
-		uno.removeEventListener(IOBoardEvent.READY, onReady);
+		// Remove the listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// Digital input using Button object:
-		// params: board, pin, mode
-		var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
+		// Parameters: board, pin, mode
+		button = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
+		
+		// Listen for events		
 		button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
 		// RGBLED example using RGBLED object:
-		// NOTE: the r, g, b pins of the LED must be connected to PWM pins on the IOBoard
-		// params: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
+		// NOTE: the r, g, b pins of the LED must be connected to PWM pins on
+		// the IOBoard
+		// Parameters: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
 		rgbLED = new RGBLED(
-			uno, 
-			uno.getDigitalPin(9), 
-			uno.getDigitalPin(10), 
-			uno.getDigitalPin(11), 
+			arduino, 
+			arduino.getDigitalPin(9), 
+			arduino.getDigitalPin(10), 
+			arduino.getDigitalPin(11), 
 			RGBLED.COMMON_CATHODE);
 
-		// set initial color
+		// Set initial color COMMON_ANODE
 		rgbLED.setColor(128, 255, 0);
 
 		initGUIListeners();
@@ -135,13 +149,13 @@ $(document).ready(function() {
 		});			
 	}
 	
-	// fade the RGB led to a random color
+	// Fade the RGB LED to a random color
 	function randomColor() {
 		var red = Math.floor(Math.random() * 255);
 		var green = Math.floor(Math.random() * 255);
 		var blue = Math.floor(Math.random() * 255);
 		
-		// fade rgb led to random color in .5 seconds
+		// Fade RGB LED to random color in 0.5 seconds
 		rgbLED.fadeTo(red, green, blue, 500);
 	}	
 
@@ -152,7 +166,6 @@ $(document).ready(function() {
 			green: (hexColor >> 8) & 0x0000FF,
 			blue: hexColor & 0x0000FF
 		};
-
 		return rgbColor;	
 	}	
 
@@ -174,10 +187,8 @@ $(document).ready(function() {
 
 </head>
 <body>
-  
-  	<h2>RGB LED Example</h2>
-
-  	<div class="pickerContainer">
+	<h2>RGB LED Example</h2>
+		<div class="pickerContainer">
 		<div class="hoverBox">
 			<p>Fade to color:</p>
 			<div id="fadeColorPicker"></div>
@@ -192,11 +203,9 @@ $(document).ready(function() {
 	</div>
 
 	<p>Fade out to black, fade in to white:</p>
-	<div class="fadeControls">
-		
-		<button type="button" id="fadeOut">Fade Out</button>
-		<button type="button" id="fadeIn">Fade In</button>
+	<div class="container">
+		<button type="button" class="Btns" id="fadeOut">Fade Out</button>
+		<button type="button" class="Btns" id="fadeIn">Fade In</button>
 	</div>
-  
 </body>
 </html>​
