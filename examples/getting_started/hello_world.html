@@ -72,6 +72,7 @@ $(document).ready(function() {
 	
 	// Variables
 	var led;
+	var button;
 
 	// Handle showing and hiding the schematic
 	$('#schematicBtn').on('click', toggleSchematicView);	
@@ -90,7 +91,7 @@ $(document).ready(function() {
 
 		// Create a new Button object to interface with the physical
 		// button wired to the I/O board
-		var button = new Button(arduino, arduino.getDigitalPin(2));
+		button = new Button(arduino, arduino.getDigitalPin(2));
 		
 		// Listen for button press and release events
 		button.addEventListener(ButtonEvent.PRESS, onPress);
@@ -160,4 +161,4 @@ $(document).ready(function() {
 		<img id="schematic" src="images/hello_world_schematic.png">
 		<button id="schematicBtn" data-state="hidden">Show Schematic</button>
 </body>
-</html>​
+</html>
