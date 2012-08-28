@@ -91,11 +91,12 @@ $(document).ready(function() {
 		$('#btnStop').click(function() { changeLed(0.0); });
 		$('#btnFull').click(function() { changeLed(1.0); });
 		$('#btnHalf').click(function() { changeLed(0.5); });
-		
-		$("#slider").slider();
-    	$("#slider").slider( "option", "step", 0.05 );
-    	$("#slider").slider( "option", "min", 0.0 );
-    	$("#slider").slider( "option", "max", 1.0 );
+
+    	$("#slider").slider({
+			step: 0.05,
+			min : 0.0,
+			max : 1.0
+			});
 
 		$('#value').text("Value: 0.0");
 	}
@@ -106,10 +107,10 @@ $(document).ready(function() {
         led.value = value;
 	})
 	
-	function changeLed(brightness) {
-		led.value = brightness;
-		$("#slider").slider( "option", "value", brightness);
-		$('#value').text("Value: " + brightness);
+	function changeLed(intensity) {
+		led.value = intensity;
+		$("#slider").slider( "option", "value", intensity);
+		$('#value').text("Value: " + intensity);
 	}
 	
 /* If you want to switch the LED to an given brightness	
@@ -128,17 +129,14 @@ $(document).ready(function() {
 <body>
 	<h2>LED PWM</h2>
 		<div class="container">
-			<p>For this example an Arduino, a resistor, and a LED is needed. Connect the LED with the resistor between Pin 11 and GRD. More details can be found at the <a href="http://breakoutjs.com/guides/the-pin-object/">'Using the Pin Object'</a> page.</p>
-		</div>
-		<div class="container">
-			<p>Use the buttons below to switch the LED to 50 %, 100 %, or switch it off.</p>
+			<p>Use the buttons below to switch the LED to 50 %, 100 %, or off.</p>
 			<button id="btnHalf" class="ledBtns" type="button">50 %</button>
 			<button id="btnFull" class="ledBtns" type="button">100 %</button>
 			<button id="btnStop" class="ledBtns" type="button">Off</button>
 		</div>
   
 		<div class="container">
-			<p>Use the slider to set the brightness of the LED.</p>
+			<p>Use the slider to set the intensity of the LED.</p>
 			<p id="slider"></p>
 			<small id="value"></small>
 		</div>
