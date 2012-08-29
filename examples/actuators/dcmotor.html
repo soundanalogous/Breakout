@@ -4,16 +4,20 @@
 
 <meta charset=utf-8 />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link type="text/css" href="../libs/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.css" rel="stylesheet" />
+<link type="text/css" href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	margin: 10px;
 	font-family: sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	color: #00AEFF;
 }
-button {
-	margin-right: 10px;
+.Btns {
+	padding: 5px;
+	font-size: 16px;
+	width: 80px;
+	color: #00AEFF;
+	margin-bottom: 20px;
 }
 label {
 	font-size: 14px;
@@ -38,42 +42,45 @@ h2 {
 	margin-top: 20px;
 	width: 280px;
 }
-
 </style>
 
 <title>DCMotor Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.2.min.js"></script>
-<script src="../libs/jquery-ui-1.8.18.custom/jquery-ui-1.8.18.custom.min.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
+<script src="../libs/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace	
+	// Declare these variables so you don't have
+	// to type the full namespace
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var DCMotor = BO.io.DCMotor;
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;	
+	// Set to true to print debug messages to console
+	BO.enableDebugging = false;	
 
 	// If you are not serving this file from the same computer
 	// that the Arduino board is connected to, replace
 	// location.hostname with the IP address or hostname
 	// of the computer that the Arduino board is connected to.
 	var arduino = new IOBoard(location.hostname , 8887);
+	
+	// Variables
 	var motor;
 	var speed;
 	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data	
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-					
+		// Remove the event listener because it is no longer needed					
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// params: IOBoard, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage
+		// Parameters: IOBoard, forwardPin, reversePin, pwmPin, 
+		//             minVoltage, maxVoltage, supplyVoltage
 		motor = new DCMotor(arduino, 
 			arduino.getDigitalPin(10),
 			arduino.getDigitalPin(9), 
@@ -82,10 +89,10 @@ $(document).ready(function() {
 			5, 
 			5);
 
-		// set the initial motor speed
+		// Set the initial motor speed
 		speed = 0.5;
 
-		// stop the motor
+		// Stop the motor
 		motor.despin(false);
 
 		initGUIListeners();
@@ -97,7 +104,7 @@ $(document).ready(function() {
 		status.text("State: Standby");
 
 		$('button#reverse').on('click', function() {
-			// reverse speed if between 0.0 and 1.0
+			// Reverse speed if between 0.0 and 1.0
 			motor.reverse(speed);
 
 			status.text("State: Reverse");
@@ -119,7 +126,7 @@ $(document).ready(function() {
 		});
 
 		$('button#forward').on('click', function() {
-			// forward speed is between 0.0 and 1.0
+			// Forward speed is between 0.0 and 1.0
 			motor.forward(speed);
 
 			status.text("State: Forward");
@@ -142,7 +149,7 @@ $(document).ready(function() {
 			step: 0.01,
 			slide: function(event, ui) {
 				var motorSpeed = ui.value;
-				// set the motor value (between -1.0 and 1.0)
+				// Set the motor value (between -1.0 and 1.0)
 				motor.value = motorSpeed;
 				if (motorSpeed < 0) {
 					status.text("State: Reverse");
@@ -155,7 +162,6 @@ $(document).ready(function() {
 			}
 		});
 	}
-			
 });
 
 </script>
@@ -167,9 +173,9 @@ $(document).ready(function() {
 	<div id="btnContainer" class="container">
 		<label for="speed">Constant Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
 		<div>
-			<button type="button" id="reverse">Reverse</button>
-			<button type="button" id="brake">Brake</button>
-			<button type="button" id="forward">Forward</button>
+			<button type="button" class="Btns" id="reverse">Reverse</button>
+			<button type="button" class="Btns" id="brake">Brake</button>
+			<button type="button" class="Btns" id="forward">Forward</button>
 		</div>
 	</div>
 
@@ -178,8 +184,6 @@ $(document).ready(function() {
 		<div id="slider"></div>
 	</div>
 
-	<p class="status">State: </p>    
-
-
+	<p class="status">State: </p>
 </body>
-</html>​
+</html>

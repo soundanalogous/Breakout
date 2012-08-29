@@ -9,7 +9,7 @@ BO.PinEvent = (function() {
 
 	var PinEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
@@ -24,12 +24,12 @@ BO.PinEvent = (function() {
 
 		this.name = "PinEvent";
 		
-		// call the super class
+		// Call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
 	};
 
-	// events
+	// Events
 	/** @constant */
 	PinEvent.CHANGE = "pinChange";
 	/** @constant */

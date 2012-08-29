@@ -1,0 +1,51 @@
+This file contains details about the maintanance task which occurs in the
+development process of Breakout.
+
+Building a new release
+----------------------
+If you make changes in the core of Breakout, a new build is needed to test the
+features. In the 'build' directory are scripts for different operating system
+available to ease this task.
+
+Windows: build.bat
+Linux:   build.sh
+
+Or you can call the build script manually:
+
+$ python build.py [Release Number]
+
+Updating the documentation
+--------------------------
+The documentation uses JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/)
+to be build.
+
+Cleaning-up
+-----------
+Too much temp files in your directories, get rid of them.
+
+$ find . -type f -name "*~" -print0 | xargs -0 rm
+
+Updating to another jQuery release
+----------------------------------
+Whenever a switch to a new jQuery release happens, all example files need an
+update. This should happen after the jQuery files under 'libs' in the example 
+directory are updated.
+
+Change the working directory to 'examples', tweak the command below, and
+execute it. Using only the release number is possible but not recommended.
+
+$ find . -type f -name "*.html" | xargs sed -ie 's|jquery-1.7.2|jquery-1.8.0|g'
+
+Don't forget to commit all example files to the dev branch of your Breakout
+fork and open a pull request on Github.
+
+Updating to another jQuery UI release
+-------------------------------------
+This is happens the same way as a jQuery update. To avoid issues it's re-
+commanded to use the name and the release.
+
+$ find . -type f -name "*.html" | xargs sed -ie 's|jquery-ui-1.8.23|jquery-ui-1.8.24|g'
+
+License
+-------
+Breakout is distributed under the terms of the MIT License.

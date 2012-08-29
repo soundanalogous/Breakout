@@ -9,7 +9,7 @@ BO.io.SoftPotEvent = (function() {
 
 	var SoftPotEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
@@ -47,6 +47,7 @@ BO.io.SoftPotEvent = (function() {
 
 	/**
 	 * The value of the softpot.
+	 * 
 	 * @name SoftPotEvent#value
 	 * @property
 	 * @type Number

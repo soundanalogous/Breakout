@@ -51,7 +51,7 @@ JSUTILS.Event = (function() {
 
 	};
 
-	// generic events
+	// Generic events
 
 	/** 
 	 * Description

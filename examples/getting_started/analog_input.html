@@ -19,18 +19,28 @@ h2 {
 	padding-bottom: 20px;
 	color: #00AEFF;
 }
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+.progressbar {
+	background-color: #f7f7f7;
+	width: 260px;
+}
 </style>
 
 <title>Analog Input</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.2.min.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
 <!-- Only needed for the visualization (progress bar) -->
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="../libs/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
+<link href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 $(document).ready(function() {
-
 	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
@@ -38,10 +48,10 @@ $(document).ready(function() {
 	var Pin = BO.Pin;
 	var PinEvent = BO.PinEvent;
 
-	// If you want to load this example on a smartphone or tablet,
-	// replace "localhost" with the IP address of the computer
-	// the IOboard is connected to (eg. "192.168.2.3", 8887)
-	// var arduino = new IOBoard("localhost", 8887);
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
 
 	// Listen for the IOBoard READY event which indicates the IOBoard
@@ -67,16 +77,14 @@ $(document).ready(function() {
 		$("#progressbar").progressbar({ value: value });
 	}
 });
-
 </script>
 
 </head>
 <body>
-
-  <h2>Reading analog input</h2>
-
-  <p id="value"></p>
-  <p id="progressbar"></p>
-  
+	<h2>Reading analog input</h2>
+		<div class="container">
+			<p id="value"></p>
+			<p id="progressbar" class="progressbar"></p>
+		</div>
 </body>
 </html>

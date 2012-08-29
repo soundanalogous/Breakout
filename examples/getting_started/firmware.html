@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+</style>
+
+<title>Firmware and Board details</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	// Declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+
+	// set to true to print debug messages to console
+	BO.enableDebugging = false;
+
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
+	var firmware;
+	var firmwarever;
+	var capabilities;
+	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    
+	// Standard values for the jQuery elements
+	$('#firmware').text("unkown");
+	$('#firmwarever').text("unknown");
+    
+	function onReady(event) {
+		// Remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+		
+		// Get the data from the IOBoard
+		firmware = arduino.getFirmwareName();
+		firmwarever = arduino.getFirmwareVersion();
+		capabilities = arduino.getCapabilities();
+		
+		// Report capabilities of the board all data are going to the 
+		// console
+		//arduino.reportFirmware();
+		//arduino.reportVersion();
+		//arduino.reportCapabilities();
+				
+		// Transforming the array to a nice output format
+		for (var pin in capabilities) {
+			if (capabilities[pin] != "") {
+				$("#capabilities").append("Pin " + pin + " : " + "<br/>");
+				$.each(capabilities[pin], function(j, entries) {
+					$("#capabilities").append(" - Mode: " + entries[0] + ", Resolution (# of bits): " + entries[1] + "<br/>");
+			});
+			}
+		}
+		
+		// jQuery elements
+		$('#firmware').text(firmware);
+		$('#firmwarever').text(firmwarever);
+	}
+});
+
+</script>
+
+</head>
+<body>
+	<h2>Firmware and Board details</h2>
+		<div class="container">
+			<p>Firmware name: <strong id="firmware"></strong></p>
+			<p>Firmware version: <strong id="firmwarever"></strong></p>
+			<p>Hardware details: </br> <small id="capabilities"></small></p>
+		</div>
+</body>
+</html>

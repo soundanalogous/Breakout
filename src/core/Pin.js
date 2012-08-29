@@ -89,8 +89,8 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * The maximum PWM value supported for this pin. This value should normally
-		 * be set internally.
+		 * The maximum PWM value supported for this pin. This value should
+		 * normally be set internally.
 		 * @private
 		 */
 		setMaxPWMValue: function(val) {
@@ -201,8 +201,9 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * The type/mode of the pin (eg. Pin.DIN, Pin.DOUT, etc). Use IOBoard.setDigitalPinMode(pinNumber) 
-		 * to set the pin type.
+		 * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT, 
+		 * 4: PWM, 5: SERVO, 6: SHIFT, 7: I2C). Use 
+		 * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
 		 * @return {Number} The pin type/mode
 		 */	
 		getType: function() {
@@ -210,11 +211,11 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * Set the pin type. This method should only be used internaly.
+		 * Set the pin type. This method should only be used internally.
 		 * @private
 		 */
 		setType: function(pinType) {
-			// ensure pin type is valid
+			// Ensure pin type is valid
 			if (pinType >= 0 && pinType < Pin.TOTAL_PIN_MODES) {
 				this._type = pinType;
 			}
@@ -306,8 +307,10 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * Add a new generator to the Pin. A pin can only have one generator assigned. 
-		 * Assigning a new generator will replace the previously assigned generator.
+		 * Add a new generator to the Pin. A pin can only have one generator
+		 * assigned. 
+		 * Assigning a new generator will replace the previously assigned 
+		 * generator.
 		 *
 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
 		 * @see BO.generators.Oscillator
@@ -329,7 +332,7 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * Removes all filters from the pin
+		 * Removes all filters from the pin.
 		 */
 		removeAllFilters: function() {
 			this._filters = null;
@@ -360,7 +363,7 @@ BO.Pin = (function() {
 			return result;
 		},
 
-		/* implement EventDispatcher */
+		// Implement EventDispatcher
 		
 		/**
 		 * @param {String} type The event type
@@ -406,7 +409,7 @@ BO.Pin = (function() {
 	/** @constant */
 	Pin.OFF = 0;
 
-	// pin modes
+	// Pin modes
 	/** @constant */
 	Pin.DIN = 0x00;
 	/** @constant */
@@ -427,7 +430,7 @@ BO.Pin = (function() {
 	Pin.TOTAL_PIN_MODES = 7;
 
 
-	// document events
+	// Document events
 
 	/**
 	 * The pinChange event is dispatched when the pin value changes.

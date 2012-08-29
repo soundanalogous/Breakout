@@ -9,7 +9,7 @@ BO.io.PotEvent = (function() {
 
 	var PotEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
@@ -24,12 +24,12 @@ BO.io.PotEvent = (function() {
 
 		this.name = "PotEvent";
 		
-		// call the super class
+		// Call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);
 	};
 
-	// events
+	// Events
 	/** @constant */
 	PotEvent.CHANGE = "potChange";	
 

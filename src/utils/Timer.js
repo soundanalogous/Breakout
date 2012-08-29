@@ -9,12 +9,12 @@ JSUTILS.Timer = (function() {
 
 	var Timer;
 
-	// dependencies
+	// Dependencies
 	var TimerEvent = JSUTILS.TimerEvent,
 		EventDispatcher = JSUTILS.EventDispatcher;
 
 	/**
-	 * An as3-like Timer object
+	 * An as3-like Timer object.
 	 *
 	 * @class The Timer object wraps the window.setInterval() method to provide
 	 * an as3-like Timer interface.
@@ -44,6 +44,7 @@ JSUTILS.Timer = (function() {
 
 	/**
 	 * The delay interval in milliseconds.
+	 * 
 	 * @name Timer#delay
 	 * @type Number
 	 */ 
@@ -58,6 +59,7 @@ JSUTILS.Timer = (function() {
 
 	/**
 	 * The repeat count in milliseconds.
+	 * 
 	 * @name Timer#repeatCount
 	 * @type Number
 	 */ 
@@ -72,13 +74,16 @@ JSUTILS.Timer = (function() {
 
 	/**
 	 * [read-only] Returns true if the timer is running.
+	 * 
 	 * @name Timer#running
 	 * @type Number
 	 */ 
 	Timer.prototype.__defineGetter__("running", function() { return this._isRunning; });
 
 	/**
-	 * [read-only] Returns the current count (number of ticks since timer started).
+	 * [read-only] Returns the current count (number of ticks since timer
+	 * started).
+	 * 
 	 * @name Timer#currentCount
 	 * @type Number
 	 */ 
@@ -127,7 +132,7 @@ JSUTILS.Timer = (function() {
 		}
 	};
 
-	// document events
+	// Document events
 
 	/**
 	 * The timerTick event is dispatched at the rate specified 
@@ -150,4 +155,3 @@ JSUTILS.Timer = (function() {
 	return Timer;
 
 }());
-

@@ -9,7 +9,7 @@ BO.io.ButtonEvent = (function() {
 
 	var ButtonEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**

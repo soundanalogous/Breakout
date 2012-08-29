@@ -19,18 +19,21 @@ BO.io.Servo = (function() {
 	var Pin = BO.Pin;
 
 	/**
-	 * Creates a new Servo
+	 * Creates a new Servo.
 	 *
 	 * @exports Servo as BO.io.Servo
-	 * @class Creates an interface to a Servo motor. Use this object to set the angle of the
-	 * servo head. You can simply specify and angle between 0 and 180 degrees and the
-	 * servo head will rotate to that angle. See Breakout/examples/actuators/servo.html for an
-	 * example application.
+	 * @class Creates an interface to a Servo motor. Use this object to set
+	 * the angle of the servo head. You can simply specify and angle between
+	 * 0 and 180 degrees and the servo head will rotate to that angle. See
+	 * Breakout/examples/actuators/servo.html for an example application.
 	 * @constructor
-	 * @param {IOBoard} board A reference to the IOBoard instance that the servo is attached to.
+	 * @param {IOBoard} board A reference to the IOBoard instance that the 
+	 * servo is attached to.
 	 * @param {Pin} servoPin A reference to the Pin the servo is connected to.
-	 * @param {Number} minAngle The minimum angle the server can rotate to (default = 0).
-	 * @param {Number} maxAngle The maximum angle the server can rotate to (default = 180).
+	 * @param {Number} minAngle The minimum angle the server can rotate to
+	 * (default = 0).
+	 * @param {Number} maxAngle The maximum angle the server can rotate to
+	 * (default = 180).
 	 */
 	Servo = function(board, servoPin, minAngle, maxAngle) {
 		"use strict";
@@ -52,6 +55,7 @@ BO.io.Servo = (function() {
 
 		/**
 		 * Set the angle (in degrees) to rotate the server head to.
+		 * 
 		 * @name Servo#angle
 		 * @property
 		 * @type Number

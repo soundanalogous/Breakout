@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+}
+h3 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 18px;
+	color: #00AEFF;
+}
+li {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 12px;
+}
+</style>
+
+<title>Breakout.js examples index</title>
+<script type="text/javascript">
+	// List all files from the 'actuators' folder
+	var actuators = new Array(
+		"blinkM.html",
+		"dcmotor.html",
+		"rgb_led.html",
+		"servo.html"
+		);
+	
+	// List all files from the 'boards' folder
+	var boards = new Array(
+		"leonardo.html",
+		"mega.html",
+		"teensy.html",
+		"uno.html"
+		);
+    
+    // List all files from the 'device_sensors' folder
+	var devices = new Array(
+		"blinkM_accel.html",
+		"blinkM_compass.html",
+		"rgbled_accel.html"
+		);
+    
+	// List all files from the filters folder
+	var filters = new Array(
+		"convolution.html",
+		"scaler.html",
+		"triggerpoint.html"
+		);
+    
+	// List all files from the 'generators' folder
+	var generators = new Array(
+		"blink_led.html",
+		"oscillator.html"
+		);
+
+	// List all files from the 'getting_started' folder
+	var getting_started = new Array(
+		"firmware.html",
+		"simple_led.html",
+		"analog_input.html",
+		"analog_input_scope.html",
+		"analog_input_smoothie.html",
+		"digital_led.html",
+		"pwm_led.html",
+		"delay_led.html",
+		"duo_led.html",
+		"blink_led.html"
+		);
+
+	// List all files from the 'processing_js' folder
+	var processing = new Array(
+		"basic_example.html",
+		"accelerometer.html",
+		"compass.html",
+		"gyro.html",
+		"imu_test.html"
+		);
+    
+	// List all files from the 'sensors' folder
+	var sensors = new Array(
+		"adxl345.html",
+		"analog_accelerometer.html",
+		"calibrate_accelerometer.html",
+		"flex.html",
+		"fsr.html",
+		"hmc5883.html",
+		"hmc6352.html",
+		"itg3200.html",
+		"sharp_ir.html",
+		"softpot.html",
+		"sonar.html",
+		"lm335.html"
+		);
+
+	// List all files from the 'three.js' folder
+	var three = new Array(
+		"accelerometer.html"
+		);
+
+	function linkDisplay(name, path, examples) {
+		document.write("<h3>" + name + "</h3>");
+		document.write("<ul>");
+		for (i = 0; i < examples.length; i++) {
+			document.write("<li>" + examples[i].split('.')[0].link(path + "/" + examples[i]) + "</li>");
+		}
+		document.write("</ul>");
+	}
+</script>
+
+</head>
+<body>
+	<center>
+	<a href="http://breakoutjs.com/"><img src="../release/BreakoutLogo.png" alt="Breakout Logo"/></a>
+	<h2>Breakout.js examples index</h2>
+	<p>A 'Hello world' example is available <a href="getting_started/hello_world.html">here</a>.</p>
+	<p>All schematics for the examples are collected in the <a href="schematics.pdf">Schematics</a> file.</p>
+	<p>To get started, please refer to the <a href="http://breakoutjs.com/getting-started/">'Getting started'</a> page or the <a href="http://breakoutjs.com/guides/">guides</a>. If you need more information, check out the <a href="http://breakoutjs.com/docs/">Docs</a>.</p>
+
+		<table halign="center" cellpadding="2" cellspacing="2">
+			<tr valign="top">
+				<td width="200px"><script type="text/javascript">linkDisplay("Getting started", "getting_started", getting_started);</script></td>
+				<td width="200px"><script type="text/javascript">linkDisplay("Actuators", "actuators", actuators);</script></td>
+				<td width="200px"><script type="text/javascript">linkDisplay("Sensors", "sensors", sensors);</script></td>
+			</tr>
+			<tr valign="top">
+				<td><script type="text/javascript">linkDisplay("Filters", "filters", filters);</script></td>
+				<td><script type="text/javascript">linkDisplay("Generators", "generators", generators);</script></td>
+				<td ><script type="text/javascript">linkDisplay("Boards", "boards", boards);</script></td>
+			</tr>
+			<tr valign="top">
+				<td><script type="text/javascript">linkDisplay("Processing.js", "processing_js", processing);</script></td>
+				<td><script type="text/javascript">linkDisplay("Three.js", "three_js", three);</script></td>
+				<td><script type="text/javascript">linkDisplay("Device sensors", "device_sensors", devices);</script></td>
+			</tr>
+		</table>
+		<small>Breakout is distributed under the terms of the MIT License. See the <a href="https://raw.github.com/soundanalogous/Breakout/master/LICENSE">LICENSE</a> file.</small>
+	</center>
+</body>
+</html>

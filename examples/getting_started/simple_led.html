@@ -26,7 +26,6 @@ h2 {
 	color: #00AEFF;
 	margin-bottom: 20px;
 }
-
 .container {
 	background-color: #f7f7f7;
 	padding-left: 10px;
@@ -34,13 +33,12 @@ h2 {
 	width: 280px;
 	margin-top: 20px;
 }
-
 </style>
 
 <title>Simple LED example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.7.2.min.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -54,7 +52,7 @@ $(document).ready(function() {
 	// that the Arduino board is connected to, replace
 	// location.hostname with the IP address or hostname
 	// of the computer that the Arduino board is connected to.
-	//var arduino = new IOBoard("localhost", 8887);
+	// var arduino = new IOBoard("localhost", 8887);
 	var arduino = new IOBoard(location.hostname, 8887);
 	var led;
 
@@ -87,13 +85,11 @@ $(document).ready(function() {
 
 </head>
 <body>
-
-  <h2>Simple LED example</h2>
-  <p>For this example no further hardware than an Arduino is needed.</p>
-  <div class="container">
-	<p><strong>Output:</strong> Use the button below to turn the internal LED on or off.</p>
-  	<button id="button" class="btn" type="button">LED On</button>
-  </div>
-  
+	<h2>Simple LED example</h2>
+		<p>For this example no further hardware than an Arduino is needed.</p>
+		<div class="container">
+			<p><strong>Output:</strong> Use the button below to turn the internal LED on or off.</p>
+			<button id="button" class="btn" type="button">LED On</button>
+		</div>
 </body>
 </html>​

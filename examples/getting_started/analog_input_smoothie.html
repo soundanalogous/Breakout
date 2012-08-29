@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<style type="text/css">
+body {
+	margin: 20px;
+	width: 400px;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: #666;
+}
+h2 {
+	font-weight: normal;
+	font-size: 28px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+</style>
+
+<title>Analog Input and Visualisation</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
+<!-- Only needed for the visualization (chart) -->
+<script type="text/javascript" src="http://github.com/joewalnes/smoothie/raw/master/smoothie.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// Declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Pin = BO.Pin;
+	var PinEvent = BO.PinEvent;
+    var sensor;
+    var value;
+    
+	// If you want to load this example on a smartphone or tablet,
+	// replace "localhost" with the IP address of the computer
+	// the IOboard is connected to (eg. "192.168.2.3", 8887)
+	// var arduino = new IOBoard("localhost", 8887);
+	var arduino = new IOBoard(location.hostname, 8887);
+
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+    // Initial content
+    $('#value').text("Value = " + "not data available");
+    
+    var line1 = new TimeSeries();
+    
+	function onReady(event) {
+        // Remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// Enable the analog pin so we can read its value
+		arduino.enableAnalogPin(0);
+		sensor = arduino.getAnalogPin(0);
+		sensor.addEventListener(PinEvent.CHANGE, onChange);
+	}
+
+	function onChange(evt) {
+		// The potentiometer gives back a value between 0 and 1.0
+		var valueIn = evt.target.value;
+		var value = (valueIn * 100).toFixed(0);
+		$('#value').text("Value = " + value);
+	}
+
+       (function() {
+        setInterval(function() {
+        var timestamp = new Date().getTime();
+          line1.append(timestamp, (sensor.value * 100).toFixed(0));}, 1000);
+
+        var timeline = new SmoothieChart({
+          minValue: 0.0,
+          maxValue: 100.0,
+          millisPerPixel: 20,
+          grid: { 
+              strokeStyle: 'rgb(127, 127, 127)', 
+              fillStyle: 'rgb(229, 229, 229)',
+              lineWidth: 1, 
+              millisPerLine: 500, 
+              verticalSections: 4,
+              },
+          labels: { fillStyle:'rgb(0, 0, 0)' }
+          });
+        timeline.addTimeSeries(line1, { 
+            strokeStyle: 'rgb(0, 0, 255)', 
+            fillStyle: 'rgba(0, 0, 0, 0)',
+            lineWidth: 2 });
+        timeline.streamTo(document.getElementById("graph"), 1000);
+      })();
+});
+</script>
+
+</head>
+<body>
+	<h2>Reading analog input and chart</h2>
+		<p>This example uses <a href="http://smoothiecharts.org/">Smoothie Charts</a> for the chart.</p>
+		<canvas id="graph" width="400" height="100"></canvas>
+		<small id="value"></small>
+</body>
+</html>
