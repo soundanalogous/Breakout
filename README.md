@@ -59,9 +59,9 @@ OS:
 
 Desktop Browsers:
 
-- Chrome version 14 - 20
-- Firefox version 7 - 13 (version 11 or higher is recommended)
-- Safari version 5 or higher
+- Chrome version 14 - 21
+- Firefox version 7 - 14 (version 11 or higher is recommended)
+- Safari version 5 - 6
 
 Mobile Browsers (browser must support websockets):
 

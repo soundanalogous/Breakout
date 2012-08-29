@@ -72,10 +72,10 @@ $(document).ready(function() {
 		
 		// Demonstrates using a pin object to set a LED value
 		// rather than using an LED object.
-		// set digital pin 13 to output
-		uno.setDigitalPinMode(13, Pin.DOUT);
+		// set digital pin 10 to output
+		uno.setDigitalPinMode(10, Pin.DOUT);
 		// get a reference to the pin
-		blinkLED = uno.getDigitalPin(13);
+		blinkLED = uno.getDigitalPin(10);
 		blinkLED.value = Pin.LOW;	
 		setInterval(blink, 3000);
 		
