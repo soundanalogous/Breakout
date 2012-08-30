@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# based on Three.js build script
+# Based on Three.js build script
 
 import os
 import tempfile
@@ -44,13 +44,14 @@ ALL_FILES = [
 'io/Servo.js',
 'io/DCMotor.js',
 'io/LED.js',
+'io/DUOLED.js',
 'io/RGBLED.js',
 'io/SoftPotEvent.js',
 'io/SoftPot.js',
 'core/IOBoard.js'
 ]
 
-# everything except the io modules
+# Everything except the io modules
 # import only the io modules you need in you app
 WITHOUT_IO = [
 'core/core.js',
