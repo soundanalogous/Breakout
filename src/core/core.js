@@ -14,7 +14,7 @@
  */
 var BO = BO || {};
 
-// allow either namespace BO or BREAKOUT
+// Allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
 BREAKOUT.VERSION = '0.1.6';
