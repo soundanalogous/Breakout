@@ -9,36 +9,40 @@ BO.io.Button = (function() {
 
 	var Button;
 
-	// dependencies
+	// Dependencies
 	var PhysicalInputBase = BO.PhysicalInputBase,
 		PinEvent = BO.PinEvent,
 		Pin = BO.Pin,
 		ButtonEvent = BO.io.ButtonEvent;
 
 	/**
-	 * An object to represent a physical button. The advantage of using the 
-	 * Button class over listening for pin change events on a Pin object, is 
-	 * that the Button class handles debouncing and provides helpful button
-	 * events: Pressed, Released, Long Press and Sustained Press
+	 * An object to represent a physical button. The advantage of using
+	 * the Button class over listening for pin change events on a Pin
+	 * object, is that the Button class handles debouncing and provides
+	 * helpful button events: Pressed, Released, Long Press, and
+	 * Sustained Press.
 	 *
-	 * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to
-	 * the button is connected to ground, configuration is PULL_DOWN, if the 
-	 * resistor is connected to power, then the configuration is PULL_UP.</p>
+	 * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor
+	 * connected to the button is connected to ground, configuration
+	 * is PULL_DOWN, if the resistor is connected to power, then the
+	 * configuration is PULL_UP.</p>
 	 *
 	 * @exports Button as BO.io.Button
-	 * @class Creates and interface to a physical button. The Button object
-	 * dispatches events on state changes such as Pressed, Released and 
-	 * Sustained Press. The Button object also handles debouncing.
+	 * @class Creates and interface to a physical button. The Button
+	 * object dispatches events on state changes such as Pressed,
+	 * Released and Sustained Press. The Button object also handles
+	 * debouncing.
 	 * @constructor
 	 * @augments BO.PhysicalInputBase
 	 * @param {IOBoard} board A reference to the IOBoard instance
-	 * @param {Pin} pin A reference to the Pin the button is connected to.
+	 * @param {Pin} pin A reference to the Pin the button is connected
+	 * to.
 	 * @param {Number} buttonMode The mode of the button (either 
-	 * Button.PULL_DOWN or Button.PULL_UP if wired with external resistors or 
-	 * Button.INTERNAL_PULL_UP if using the internal pull-up resistors. Default
-	 * is PULL_DOWN.
-	 * @param {Number} sustainedPressInterval The delay time in milliseconds 
-	 * before a sustained press event is fired.
+	 * Button.PULL_DOWN or Button.PULL_UP if wired with external
+	 * resistors or Button.INTERNAL_PULL_UP if using the internal
+	 * pull-up resistors. Default is PULL_DOWN.
+	 * @param {Number} sustainedPressInterval The delay time in
+	 * milliseconds before a sustained press event is fired.
 	 */
 	Button = function(board, pin, buttonMode, sustainedPressInterval) {
 		"use strict";
@@ -149,8 +153,8 @@ BO.io.Button = (function() {
 	Button.prototype.__defineSetter__("debounceInterval", function(interval) { this._debounceInterval = interval; });
 	
 	/**
-	 * The delay time (in milliseconds) the button must be held before a
-	 * sustained press event is fired.
+	 * The delay time (in milliseconds) the button must be held before
+	 * a sustained press event is fired.
 	 * 
 	 * @name Button#sustainedPressInterval
 	 * @property
@@ -195,8 +199,9 @@ BO.io.Button = (function() {
 	 */	
 	 
 	/**
-	 * The longPress event is dispatched once when the button has been held for
-	 * the time duration specified by the sustainedPressInterval property.
+	 * The longPress event is dispatched once when the button has
+	 * been held for the time duration specified by the
+	 * sustainedPressInterval property.
 	 * @name Button#longPress
 	 * @type BO.io.ButtonEvent.LONG_PRESS
 	 * @event
@@ -205,8 +210,8 @@ BO.io.Button = (function() {
 	 
 	/**
 	 * The sustainedPress event is dispatched continuously at the rate 
-	 * specified by the sustainedPressInterval property while the button is
-	 * held.
+	 * specified by the sustainedPressInterval property while the
+	 * button is held.
 	 * @name Button#sustainedPress
 	 * @type BO.io.ButtonEvent.SUSTAINED_PRESS
 	 * @event

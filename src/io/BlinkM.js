@@ -15,7 +15,7 @@ BO.io.BlinkM = (function() {
 
 	var BlinkM;
 
-	// dependencies
+	// Dependencies
 	var I2CBase = BO.I2CBase;
 
 	/**
@@ -25,7 +25,8 @@ BO.io.BlinkM = (function() {
 	 * @class Creates an interface to a BlinkM RGB Led module. This
 	 * object allows you to change the color of the led, fade between
 	 * colors and run preprogrammed light scripts.
-	 * See Breakout/examples/actuators/blinkM.html for an example application.
+	 * See Breakout/examples/actuators/blinkM.html for an example
+	 * application.
 	 * @constructor
 	 * @augments BO.I2CBase 
 	 * @param {IOBoard} board The IOBoard instance
@@ -33,11 +34,11 @@ BO.io.BlinkM = (function() {
 	 */
 	BlinkM = function(board, address) {
 
-		address = address || 0x09;	// default i2c address for BlinkM
+		address = address || 0x09;	// Default i2c address for BlinkM
 
 		this.name = "BlinkM";
 		
-		// call super class
+		// Call super class
 		I2CBase.call(this, board, address);
 		
 
@@ -58,8 +59,8 @@ BO.io.BlinkM = (function() {
 	
 	/**
 	 * Fades to the specified RGB color in the specified time duration. 
-	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
-	 * 255 is the fastest.
+	 * The fade speed range is from 1 to 255, where 1 is the slowest
+	 * time and 255 is the fastest.
 	 *
 	 * @param {Number[]} color An array containing the RGB values.
 	 * color[0] = R, color[1] = G, color[2] = B
@@ -75,12 +76,14 @@ BO.io.BlinkM = (function() {
 
 	/**
 	 * Fade to a random RGB color.
-	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
-	 * 255 is the fastest.
+	 * The fade speed range is from 1 to 255, where 1 is the slowest
+	 * time and 255 is the fastest.
 	 *
-	 * @param {Number[]} colorRange An array containing a range for each color
+	 * @param {Number[]} colorRange An array containing a range for
+	 * each color
 	 * value.
-	 * colorRange[0] = range for Red (0-255), colorRange[1] = range for Green, etc.
+	 * colorRange[0] = range for Red (0-255), colorRange[1] = range for
+	 * Green, etc.
 	 * @param {Number} speed The fade speed. Default value is 15.
 	 */
 	BlinkM.prototype.fadeToRandomRGBColor = function (colorRange, speed) {
@@ -93,8 +96,8 @@ BO.io.BlinkM = (function() {
 
 	/**
 	 * Fades to the specified HSB color in the specified time duration. 
-	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
-	 * 255 is the fastest.
+	 * The fade speed range is from 1 to 255, where 1 is the slowest
+	 * time and 255 is the fastest.
 	 *
 	 * @param {Number[]} color An array containing the HSB values.
 	 * color[0] = H, color[1] = S, color[2] = B
@@ -110,11 +113,11 @@ BO.io.BlinkM = (function() {
 	
 	/**
 	 * Fade to a random HSB color.
-	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
-	 * 255 is the fastest.
+	 * The fade speed range is from 1 to 255, where 1 is the slowest
+	 * time and 255 is the fastest.
 	 *
-	 * @param {Number[]} colorRange An array containing a range for each color
-	 * value.
+	 * @param {Number[]} colorRange An array containing a range for
+	 * each color value.
 	 * colorRange[0] = range for Hue (0-255), colorRange[1] = range for
 	 * Saturation, etc.
 	 * @param {Number} speed The fade speed. Default value is 15.
@@ -128,8 +131,9 @@ BO.io.BlinkM = (function() {
 	};
 
 	/**
-	 * Set the rate at which color fading happens. The range is from 1 to 255,
-	 * where 1 is the slowest and 255 is the fastest (immediate).
+	 * Set the rate at which color fading happens. The range is from
+	 * 1 to 255, where 1 is the slowest and 255 is the fastest
+	 * (immediate).
 	 *
 	 * @param {Number} speed
 	 */
@@ -138,13 +142,15 @@ BO.io.BlinkM = (function() {
 	};
 	
 	/**
-	 * Play a predefined light script. See the BlinkM datasheet page 20 for a
-	 * list and description of the predefined scripts.
+	 * Play a predefined light script. See the BlinkM datasheet page
+	 * 20 for a list and description of the predefined scripts.
 	 *
-	 * @param {Number} scriptId The id of the light script (from 0 to 18).
-	 * @param {Number} theNumberOfRepeats The number of times the script should
-	 * repeat.
-	 * @param {Number} lineNumber The line number to begin the script from.
+	 * @param {Number} scriptId The id of the light script (from 0 to
+	 * 18).
+	 * @param {Number} theNumberOfRepeats The number of times the
+	 * script should repeat.
+	 * @param {Number} lineNumber The line number to begin the script
+	 * from.
 	 */
 	BlinkM.prototype.playLightScript = function(scriptId, theNumberOfRepeats, lineNumber) {
 		var theNumberOfRepeats = theNumberOfRepeats || 1;
@@ -163,7 +169,7 @@ BO.io.BlinkM = (function() {
 	 * @private
 	 */
 	BlinkM.prototype.handleI2C = function(data) {
-		// TODO: implement if needed
+		// To Do: Implement if needed
 		console.log("BlinkM: " + data);
 	};
 
