@@ -7,7 +7,7 @@
 
 <style type="text/css">
 body {
-	margin: 20px;
+	margin: 10px;
 	width: 300px;
 	font-family: sans-serif;
 	font-size: 18px;
@@ -19,11 +19,20 @@ h2 {
 	padding-bottom: 20px;
 	color: #00AEFF;
 }
-#btn {
-	padding: 10px;
-	font-size: 22px;
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
 	width: 280px;
+	margin-top: 20px;
+}
+.Btns {
+	padding: 10px;
+	font-size: 16px;
+	width: 140px;
 	color: #00AEFF;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 </style>
 
@@ -34,35 +43,37 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// declare these variables so you don't have
-	// to type the full namespace
+	// Declare these variables so you don't have to type the full
+	// namespace.
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var LED = BO.io.LED;
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
+	// If you are not serving this file from the same computer that 
+	// the IOBoard is connected to, replace location.hostname  with
+	// the IP address or hostname of the computer that the IOBoard
+	// is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
 	var led;
 
-	// listen for the IOBoard READY event which indicates the IOBoard
+	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
 		
-		// remove the event listener because it is no longer needed
+		// Remove the event listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// create an LED object to interface with the LED 
+		// Create an LED object to interface with the LED 
 		// on the Arduino board (connected to pin 13)
 		led = new LED(arduino, arduino.getDigitalPin(13));
 		
-		// use jQuery to get a reference to the button 
+		// Use jQuery to get a reference to the button 
 		// and listen for a click event
-		$('#btn').on('click', toggleLED);
+		$('button#Toggle').on('click', toggleLED);
 	}
 
 	function toggleLED(evt) {
@@ -75,12 +86,10 @@ $(document).ready(function() {
 
 </head>
 <body>
-
-  <h2>Breakout Template</h2>
-
-  <p>Press the button to toggle the LED on the Arduino board.</p>
-  
-  <button id="btn" type="button">Toggle LED</button>
-  
+	<h2>Breakout Template</h2>
+	<div class="container">
+		<p>Press the button to toggle the LED on the Arduino board.</p>
+		<button type="button" class="Btns" id="Toggle">Toggle LED</button>
+	</div>  
 </body>
 </html>​
