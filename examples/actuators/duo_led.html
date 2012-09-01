@@ -49,9 +49,8 @@ label {
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// Declare these variables so you don't have
-	// to type the full namespace
+	// Declare these variables so you don't have to type the full
+	// namespace.
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var DUOLED = BO.io.DUOLED;
@@ -59,10 +58,10 @@ $(document).ready(function() {
 	// Set to true to print debug messages to console
 	BO.enableDebugging = false;	
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.	
+	// If you are not serving this file from the same computer that 
+	// the IOBoard is connected to, replace location.hostname  with
+	// the IP address or hostname of the computer that the IOBoard
+	// is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
 	
 	// Variables
@@ -73,15 +72,15 @@ $(document).ready(function() {
 	// is ready to send and receive data
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		
+	function onReady(event) {	
 		// Remove the listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// Duo LED example using DUOLED object:
 		// NOTE: The r and g pins of the LED must be connected to PWM
-		// pins on the IOBoard.
-		// Change COMMON_CATHODE to COMMON_ANODE according to your LED type
+		// pins on the IOBoard (eg. 11, 10, 9, 6, 5, or 3).
+		// Change COMMON_CATHODE to COMMON_ANODE according to your LED
+		// type
 		// Parameters: board, redLEDPin, greenLEDPin, driveMode
 		duoLED = new DUOLED(
 			arduino, 
@@ -89,11 +88,8 @@ $(document).ready(function() {
 			arduino.getDigitalPin(11),
 			DUOLED.COMMON_CATHODE);
 
-		// Set initial color
-		//duoLED.setColor(128, 128, 0);
-
+		// Listener for GUI events
 		initGUIListeners();
-
 	}
 
 	function onButtonPress(event) {
@@ -117,7 +113,7 @@ $(document).ready(function() {
 		});
 		
 		$('button#Random').on('click', function() {
-			randomColor();
+			randomColor(duration);
 		});
 		
 		$('button#Off').on('click', function() {
@@ -129,8 +125,6 @@ $(document).ready(function() {
 	function randomColor(duration) {
 		var red = Math.floor(Math.random() * 255);
 		var green = Math.floor(Math.random() * 255);
-		
-		// Fade Duo LED to random color
 		duoLED.fadeTo(red, green, duration);
 	}			
 });
@@ -141,7 +135,7 @@ $(document).ready(function() {
 <body>
 	<h2>Duo LED Example</h2>
 
-	<p>Fade out to black, fade in to white:</p>
+	<p>Choose the color </p>
 	<div class="container">
 		<button type="button" class="Btns" id="Red">Red</button>
 		<span class="spacer"></span>
