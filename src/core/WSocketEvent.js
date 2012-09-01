@@ -9,13 +9,13 @@ BO.WSocketEvent = (function() {
 	
 	var WSocketEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
 	 * @exports WSocketEvent as BO.WSocketEvent
-	 * @class Dispatches Websocket events: Connected (onopen), Message (onmessge) 
-	 * and Closed (onclose) objects.	 
+	 * @class Dispatches Websocket events: Connected (onopen), Message
+	 * (onmessge) and Closed (onclose) objects.	 
 	 * @constructor
 	 * @augments JSUTILS.Event
 	 * @param {String} type The event type
@@ -23,12 +23,12 @@ BO.WSocketEvent = (function() {
 	WSocketEvent = function(type) {
 		this.name = "WSocketEvent";
 		
-		// call the super class
+		// Call the super class
 		// 2nd parameter is passed to EventDispatcher constructor
 		Event.call(this, type);		
 	};
 
-	// events
+	// Events
 	/** @constant */
 	WSocketEvent.CONNECTED = "webSocketConnected";
 	/** @constant */
