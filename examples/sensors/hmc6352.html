@@ -3,47 +3,63 @@
 <head>
 
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <style type="text/css">
-.text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+body {
+	margin: 10px;
+	width: 300px;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: #666;
+}
+h2 {
+	font-weight: normal;
+	font-size: 28px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
 }
 </style>
 
-<title>HMC6352 Compass Example Example</title>
+<title>HMC6352 Compass Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace
+	// Declare these variables so you don't have to type the full
+	// namespace.
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var CompassHMC6352 = BO.io.CompassHMC6352;
 	var CompassEvent = BO.io.CompassEvent;
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;
+	// Set to true to print debug messages to console
+	BO.enableDebugging = false;
 
-	// params: IPaddress, port
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var uno = new IOBoard(location.hostname, 8887);
+	// If you are not serving this file from the same computer that 
+	// the IOBoard is connected to, replace location.hostname  with
+	// the IP address or hostname of the computer that the IOBoard
+	// is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
 	var compass;
 	
-	uno.addEventListener(IOBoardEvent.READY, onReady);
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-		
-		// remove the listener because it is no longer needed
-		uno.removeEventListener(IOBoardEvent.READY, onReady);
+		// Remove the listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// i2c module example:	HMC6352 digital compass module	
 		compass = new CompassHMC6352(uno);
@@ -54,18 +70,18 @@ $(document).ready(function() {
 				
 	}
 	
-	// test compass stopReading method
+	// Test compass stopReading method
 	function stopReading() {
 		compass.stopReading();
 	}
 	
-	// test compass startReading method
+	// Test compass startReading method
 	function startReading() {
 		compass.startReading();
 	}	
 	
 	function onHeadingUpdate(evt) {
-		$('#heading').html("heading: " + evt.target.heading);
+		$('#heading').html("Heading: " + evt.target.heading);
 	}	
 			
 });
@@ -74,8 +90,9 @@ $(document).ready(function() {
 
 </head>
 <body>
-  
-	<div id="heading" class="text">heading:</div>
-
+	<h2>HMC6352 Compass Example</h2>
+		<div class="container">
+			<p id="heading">Heading: </p>
+		</div>
 </body>
 </html>​
