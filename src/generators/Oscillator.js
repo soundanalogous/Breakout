@@ -16,22 +16,23 @@
 
  	var Oscillator;
 
- 	// dependencies
+ 	// Dependencies
  	var GeneratorBase = BO.generators.GeneratorBase,
  		GeneratorEvent = BO.generators.GeneratorEvent,
  		Timer = JSUTILS.Timer,
  		TimerEvent = JSUTILS.TimerEvent;
 
  	/**
-	 * Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
-	 * an LED on or off.
+	 * Osc outputs a waveform on the associated PWM pin. For example, 
+	 * this can be used to blink or fade an LED on or off.
 	 *
  	 * @exports Oscillator as BO.generators.Oscillator
- 	 * @class The Oscillator object can be attached to a Pin or LED object to output
- 	 * a waveform. This is useful for blinking an LED or fading it on and off. In
- 	 * most cases (unless you are simply using it to blink and LED on or off), 
- 	 * the Oscillator should be attached to a Pin or LED object associated with
- 	 * a PWM pin on the I/O board. See Breakout/examples/generators/oscillator.html
+ 	 * @class The Oscillator object can be attached to a Pin or LED
+ 	 * object to output a waveform. This is useful for blinking an LED
+ 	 * or fading it on and off. In most cases (unless you are simply
+ 	 * using it to blink and LED on or off), the Oscillator should be
+ 	 * attached to a Pin or LED object associated with a PWM pin on
+ 	 * the I/O board. See Breakout/examples/generators/oscillator.html
  	 * for an example application.
  	 * @constructor
  	 * @augments BO.generators.GeneratorBase
@@ -61,7 +62,7 @@
  		this._time;
  		this._startTime;
  		this._lastVal;
- 		// need to do this in order to remove the event listener
+ 		// Need to do this in order to remove the event listener
  		this._autoUpdateCallback = this.autoUpdate.bind(this);
 
  		this._timer = new Timer(33);
@@ -88,7 +89,7 @@
  	});
 
  	/**
- 	 * Starts the oscillator
+ 	 * Starts the oscillator.
  	 */
  	Oscillator.prototype.start = function() {
  		this.stop();
@@ -117,7 +118,9 @@
  	};
 
  	/**
- 	 * By default the interval is 33 milliseconds. The Osc is updated every 33ms.
+ 	 * By default the interval is 33 milliseconds. The Osc is updated
+ 	 * every 33ms.
+ 	 * 
  	 * @param {Number} interval The update interval in milliseconds.
  	 */
  	Oscillator.prototype.update = function(interval) {
@@ -211,7 +214,7 @@
  		return (val < 1) ? val : 1;
  	};
  	
-	// document events
+	// Document events
 
 	/**
 	 * The update event is dispatched at the rate specified 
@@ -219,10 +222,9 @@
 	 * @name Oscillator#update
 	 * @type BO.generators.GeneratorEvent.UPDATE
 	 * @event
-	 * @param {BO.generators.Oscillator} target A reference to the Oscillator object.
+	 * @param {BO.generators.Oscillator} target A reference to the
+	 * Oscillator object.
 	 */	 		 	
 
  	return Oscillator;
-
-
  }());
