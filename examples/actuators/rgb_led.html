@@ -57,9 +57,8 @@ label {
 <script src="../libs/wColorPicker/wColorPicker.1.2.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// Declare these variables so you don't have
-	// to type the full namespace
+	// Declare these variables so you don't have to type the full
+	// namespace.
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var Button = BO.io.Button;
@@ -69,10 +68,10 @@ $(document).ready(function() {
 	// Set to true to print debug messages to console
 	BO.enableDebugging = true;	
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.	
+	// If you are not serving this file from the same computer that 
+	// the IOBoard is connected to, replace location.hostname  with
+	// the IP address or hostname of the computer that the IOBoard
+	// is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
 	
 	// Variables
