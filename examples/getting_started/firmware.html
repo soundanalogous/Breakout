@@ -67,7 +67,7 @@ $(document).ready(function() {
 		// Get the data from the IOBoard
 		firmware = arduino.getFirmwareName();
 		firmwarever = arduino.getFirmwareVersion();
-		capabilities = arduino.getCapabilities();
+		capabilities = arduino.getPinCapabilities();
 		
 		// Report capabilities of the board all data are going to the 
 		// console
