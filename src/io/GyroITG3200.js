@@ -12,7 +12,7 @@ BO.io.GyroITG3200 = (function() {
 
 	var GyroITG3200;
 
-	// private static constants
+	// Private static constants
 	var STARTUP_DELAY = 70,
 		SMPLRT_DIV = 0x15,
 		DLPF_FS = 0x16,
@@ -23,7 +23,7 @@ BO.io.GyroITG3200 = (function() {
 		PWR_MGM = 0x3E,
 		NUM_BYTES = 6;	
 
-	// dependencies
+	// Dependencies
 	var I2CBase = BO.I2CBase,
 		Event = JSUTILS.Event,
 		GyroEvent = BO.io.GyroEvent;
@@ -32,18 +32,22 @@ BO.io.GyroITG3200 = (function() {
 	 * InvenSense ITG3200 3-axis MEMS gyro
 	 *
 	 * @exports GyroITG3200 as BO.io.GyroITG3200
-	 * @class Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
-	 * angular acceleration around the x, y, and z axis. This object provides
-	 * the angular velocity of each axis. Proper calibration is required for an accurate
-	 * reading. See Breakout/examples/sensors/itg3200.html and 
-	 * Breakout/examples/processing_js/gyro.html for example applications.
+	 * @class Creates an interface to an ITG3200 3-axis gyroscope.
+	 * This gyro measures angular acceleration around the x, y, and
+	 * z axis. This object provides the angular velocity of each axis.
+	 * Proper calibration is required for an accurate reading. 
+	 * See Breakout/examples/sensors/itg3200.html and 
+	 * Breakout/examples/processing_js/gyro.html for example
+	 * applications.
 	 * @constructor
 	 * @augments BO.I2CBase
 	 * @param {IOBoard} board The IOBoard instance
-	 * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
-	 * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
-	 * GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND, then use GyroITG3200.ID_AD0_GND. 
-	 * Default = GyroITG3200.ID_AD0_VDD
+	 * @param {Boolean} autoStart True if read continuous mode should
+	 * start automatically upon instantiation (default is true)
+	 * @param {Number} address The i2c address of the accelerometer.
+	 * If pin 9 (AD0) of the module is tied to VDD, then use
+	 * GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND,
+	 * then use GyroITG3200.ID_AD0_GND. Default = GyroITG3200.ID_AD0_VDD
 	 */
 	GyroITG3200 = function(board, autoStart, address) {
 
@@ -79,8 +83,8 @@ BO.io.GyroITG3200 = (function() {
 	GyroITG3200.prototype.constructor = GyroITG3200;
 
 	/**
-	 * [read-only] The state of continuous read mode. True if continuous read mode
-	 * is enabled, false if it is disabled.
+	 * [read-only] The state of continuous read mode. True if
+	 * continuous read mode is enabled, false if it is disabled.
 	 * @name GyroITG3200#isRunning
 	 * @property
 	 * @type Boolean
@@ -198,7 +202,8 @@ BO.io.GyroITG3200 = (function() {
 
 
 	/** 
-	 * Sends read request to accelerometer and updates accelerometer values.
+	 * Sends read request to accelerometer and updates accelerometer
+	 * values.
 	 */
 	GyroITG3200.prototype.update = function() {
 
@@ -326,11 +331,13 @@ BO.io.GyroITG3200 = (function() {
 	// document events
 
 	/**
-	 * The update event is dispatched when the accelerometer values are updated.
+	 * The update event is dispatched when the accelerometer values
+	 * are updated.
 	 * @name GyroITG3200#update
 	 * @type BO.io.GyroEvent.UPDATE
 	 * @event
-	 * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
+	 * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200
+	 * object.
 	 */		
 			
 	return GyroITG3200;

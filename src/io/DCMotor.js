@@ -32,16 +32,17 @@ BO.io.DCMotor = (function() {
 	 * @class Creates an interface to an H-bridge to control the
 	 * direction of rotation of a motor shaft. You can rotate forward
 	 * (clockwise), reverse or apply a brake. See 
-	 * Breakout/examples/actuators/dcmotor.html for an example application.
+	 * Breakout/examples/actuators/dcmotor.html for an example
+	 * application.
 	 * @constructor
-	 * @param {IOBoard} board A reference to the IOBoard instance that the
-	 * servo is attached to.
-	 * @param {Pin} forwardPin A reference to the Pin connected to the forward
+	 * @param {IOBoard} board A reference to the IOBoard instance that
+	 * the servo is attached to.
+	 * @param {Pin} forwardPin A reference to the Pin connected to the
+	 * forward control of the H-bridge.
+	 * @param {Pin} reversePin A reference to the Pin connected to the
+	 * reverse control of the H-bridge.
+	 * @param {Pin} pwmPin A reference to the Pin connected to the pwm
 	 * control of the H-bridge.
-	 * @param {Pin} reversePin A reference to the Pin connected to the reverse
-	 * control of the H-bridge.
-	 * @param {Pin} pwmPin A reference to the Pin connected to the pwm control
-	 * of the H-bridge.
 	 * @param {Number} minVoltage The minimum voltage (default = 1).
 	 * @param {Number} maxVoltage The maximum voltage (default = 9).
 	 * @param {Number} supplyVoltage The supply voltage (default = 9).
@@ -97,8 +98,8 @@ BO.io.DCMotor = (function() {
 	DCMotor.prototype = {
 
 		/**
-		 * The value of the motor speed (-1.0 to 1.0). A speed of zero stops
-		 * the motor.
+		 * The value of the motor speed (-1.0 to 1.0). A speed of zero
+		 * stops the motor.
 		 * 
 		 * @name DCMotor#value
 		 * @property

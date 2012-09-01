@@ -19,7 +19,7 @@ BO.io.AnalogAccelerometer = (function() {
 	// Private static constants
 	var RAD_TO_DEG = 180 / Math.PI;
 
-		// Dependencies
+	// Dependencies
 	var PhysicalInputBase = BO.PhysicalInputBase,
 		PinEvent = BO.PinEvent,
 		AccelerometerEvent = BO.io.AccelerometerEvent,

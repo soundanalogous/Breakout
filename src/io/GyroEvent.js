@@ -9,7 +9,7 @@ BO.io.GyroEvent = (function() {
 
 	var GyroEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**
