@@ -56,7 +56,6 @@ p.scopeLabel {
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script src="../libs/requestAnimFrame.js"></script>
-<script src="../libs/SignalScope.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -67,6 +66,7 @@ $(document).ready(function() {
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var TriggerPoint = BO.filters.TriggerPoint;
+	var SignalScope = JSUTILS.SignalScope;
 
 	// set to true to print debug messages to console
 	BO.enableDebugging = true;	

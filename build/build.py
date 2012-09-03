@@ -13,6 +13,7 @@ ALL_FILES = [
 'utils/EventDispatcher.js',
 'utils/TimerEvent.js',
 'utils/Timer.js',
+'utils/SignalScope.js',
 'core/IOBoardEvent.js',
 'core/WSocketEvent.js',
 'core/WSocketWrapper.js',
@@ -59,6 +60,7 @@ WITHOUT_IO = [
 'utils/EventDispatcher.js',
 'utils/TimerEvent.js',
 'utils/Timer.js',
+'utils/SignalScope.js',
 'core/IOBoardEvent.js',
 'core/WSocketEvent.js',
 'core/WSocketWrapper.js',
@@ -84,6 +86,7 @@ CORE_FILES = [
 'utils/EventDispatcher.js',
 'utils/TimerEvent.js',
 'utils/Timer.js',
+'utils/SignalScope.js',
 'core/IOBoardEvent.js',
 'core/WSocketEvent.js',
 'core/WSocketWrapper.js',
@@ -167,7 +170,7 @@ def main(argv=None):
 	if len(sys.argv) > 1:
 		version = sys.argv[1]
 	else:
-		version = "0.1.5"
+		version = "0.1.6"
 
 	min_files = [
 	['Breakout', ALL_FILES],
