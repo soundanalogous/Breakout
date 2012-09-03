@@ -9,7 +9,7 @@ BO.io.CompassEvent = (function() {
 
 	var CompassEvent;
 
-	// dependencies
+	// Dependencies
 	var Event = JSUTILS.Event;
 
 	/**

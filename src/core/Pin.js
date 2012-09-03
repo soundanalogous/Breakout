@@ -12,7 +12,8 @@
 JSUTILS.namespace('BO.Pin');
 
 BO.Pin = (function() {
-	//"use strict";	// closure compiler doesn't like this... should be fixed soon though
+	//"use strict";	// closure compiler doesn't like this... should be 
+	// fixed soon though
 
 	var Pin;
 
@@ -25,9 +26,10 @@ BO.Pin = (function() {
 	 * An object to represent an IOBoard pin
 	 *
 	 * @exports Pin as BO.Pin
-	 * @class Each analog and digital pin of the physical I/O board is represented by a Pin object.
-	 * The Pin object is the foundation for many of the io objects and is also very
-	 * useful on its own. See the Using The Pin Object Guide on http://breakoutjs.com
+	 * @class Each analog and digital pin of the physical I/O board is
+	 * represented by a Pin object. The Pin object is the foundation
+	 * for many of the io objects and is also very useful on its own.
+	 * See the Using The Pin Object Guide on http://breakoutjs.com
 	 * for a detailed overview.
 	 * @param {Number} number The pin number
 	 * @param {Number} type The type of pin
@@ -69,7 +71,8 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * [read-only] The analog pin number used by the IOBoard (printed on board or datasheet).
+		 * [read-only] The analog pin number used by the IOBoard 
+		 * (printed on board or datasheet).
 		 * @name Pin#analogNumber
 		 * @property
 		 * @type Number
@@ -79,7 +82,8 @@ BO.Pin = (function() {
 		},		
 
 		/**
-		 * [read-only] The pin number corresponding to the Arduino documentation for the type of board.
+		 * [read-only] The pin number corresponding to the Arduino 
+		 * documentation for the type of board.
 		 * @name Pin#number
 		 * @property
 		 * @type Number
@@ -89,8 +93,8 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * The maximum PWM value supported for this pin. This value should
-		 * normally be set internally.
+		 * The maximum PWM value supported for this pin. This value 
+		 * should normally be set internally.
 		 * @private
 		 */
 		setMaxPWMValue: function(val) {
@@ -99,8 +103,9 @@ BO.Pin = (function() {
 
 		/**
 		 * [read-only] The maximum PWM value supported for this pin.
-		 * <p> This is the max PWM value supported by Arduino (currently 255) rather 
-		 * than the max PWM value specified by the microcontroller datasheet.</p>
+		 * <p> This is the max PWM value supported by Arduino
+		 * (currently 255) rather than the max PWM value specified by
+		 * the microcontroller datasheet.</p>
 		 *
 		 * @name Pin#maxPWMValue
 		 * @property
@@ -111,7 +116,8 @@ BO.Pin = (function() {
 		},		
 		
 		/**
-		 * [read-only] The average value of the pin over time. Call clear() to reset.
+		 * [read-only] The average value of the pin over time. Call
+		 * clear() to reset.
 		 * @name Pin#average
 		 * @property
 		 * @type Number
@@ -121,7 +127,8 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * [read-only] The minimum value of the pin over time. Call clear() to reset.
+		 * [read-only] The minimum value of the pin over time. Call
+		 * clear() to reset.
 		 * @name Pin#minimum
 		 * @property
 		 * @type Number
@@ -131,7 +138,8 @@ BO.Pin = (function() {
 		},
 		
 		/**
-		 * [read-only] The maximum value of the pin over time. Call clear() to reset.
+		 * [read-only] The maximum value of the pin over time. Call
+		 * clear() to reset.
 		 * @name Pin#maximum
 		 * @property
 		 * @type Number
@@ -223,7 +231,8 @@ BO.Pin = (function() {
 
 		/**
 		 * An object storing the capabilities of the pin.
-		 * @return {Object} An object describing the capabilities of this Pin.
+		 * @return {Object} An object describing the capabilities of
+		 * this Pin.
 		 */	
 		getCapabilities: function() {
 			return this._capabilities;
@@ -279,7 +288,8 @@ BO.Pin = (function() {
 		},
 			
 		/**
-		 * Resets the minimum, maximum, average and lastValue of the pin.
+		 * Resets the minimum, maximum, average and lastValue of the
+		 * pin.
 		 */
 		clear: function() {
 			this._minimum = this._maximum = this._average = this._lastValue = this._preFilterValue;
@@ -288,7 +298,8 @@ BO.Pin = (function() {
 		
 		/**
 		 * Add a new filter to the Pin.
-		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
+		 * @param {FilterBase} newFilter A filter object that extends
+		 * FilterBase.
 		 * @see BO.filters.Convolution
 		 * @see BO.filters.Scaler
 		 * @see BO.filters.TriggerPoint
@@ -307,12 +318,13 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * Add a new generator to the Pin. A pin can only have one generator
-		 * assigned. 
-		 * Assigning a new generator will replace the previously assigned 
-		 * generator.
+		 * Add a new generator to the Pin. A pin can only have one
+		 * generator assigned. 
+		 * Assigning a new generator will replace the previously
+		 * assigned generator.
 		 *
-		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
+		 * @param {GeneratorBase} newGenerator A generator object that
+		 * extends GeneratorBase.
 		 * @see BO.generators.Oscillator
 		 */
 		addGenerator: function(newGenerator) {
@@ -367,7 +379,8 @@ BO.Pin = (function() {
 		
 		/**
 		 * @param {String} type The event type
-		 * @param {Function} listener The function to be called when the event is fired
+		 * @param {Function} listener The function to be called when
+		 * the event is fired
 		 */
 		addEventListener: function(type, listener) {
 			this._evtDispatcher.addEventListener(type, listener);
@@ -375,7 +388,8 @@ BO.Pin = (function() {
 		
 		/**
 		 * @param {String} type The event type
-		 * @param {Function} listener The function to be called when the event is fired
+		 * @param {Function} listener The function to be called when
+		 * the event is fired
 		 */
 		removeEventListener: function(type, listener) {
 			this._evtDispatcher.removeEventListener(type, listener);
@@ -383,7 +397,8 @@ BO.Pin = (function() {
 		
 		/**
 		 * @param {String} type The event type
-		 * return {boolean} True is listener exists for this type, false if not.
+		 * return {boolean} True is listener exists for this type,
+		 * false if not.
 		 */
 		hasEventListener: function(type) {
 			return this._evtDispatcher.hasEventListener(type);
@@ -391,8 +406,10 @@ BO.Pin = (function() {
 
 		/**
 		 * @param {PinEvent} type The Event object
-		 * @param {Object} optionalParams Optional parameters to assign to the event object.
-		 * return {boolean} True if dispatch is successful, false if not.
+		 * @param {Object} optionalParams Optional parameters to assign
+		 * to the event object.
+		 * return {boolean} True if dispatch is successful, false if
+		 * not.
 		 */	
 		dispatchEvent: function(event, optionalParams) {
 			return this._evtDispatcher.dispatchEvent(event, optionalParams);
@@ -441,7 +458,8 @@ BO.Pin = (function() {
 	 */
 
 	/**
-	 * The risingEdge event is dispatched when the pin value increased (from 0 to 1).
+	 * The risingEdge event is dispatched when the pin value increased
+	 * (from 0 to 1).
 	 * @name Pin#risingEdge
 	 * @type BO.PinEvent.RISING_EDGE
 	 * @event
@@ -449,7 +467,8 @@ BO.Pin = (function() {
 	 */	
 	 
 	/**
-	 * The change event is dispatched when the pin value decreased (from 1 to 0).
+	 * The change event is dispatched when the pin value decreased
+	 * (from 1 to 0).
 	 * @name Pin#fallingEdge
 	 * @type BO.PinEvent.FALLING_EDGE
 	 * @event

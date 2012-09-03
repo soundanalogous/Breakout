@@ -10,21 +10,24 @@ BO.WSocketWrapper = (function() {
 
  	var WSocketWrapper;
 
- 	// dependencies
+ 	// Dependencies
  	var EventDispatcher = JSUTILS.EventDispatcher,
  		WSocketEvent = BO.WSocketEvent;
 
 	/**
-	 * Creates a wrapper for various websocket implementations to unify the interface.
+	 * Creates a wrapper for various websocket implementations to unify
+	 * the interface.
 	 *
 	 * @exports WSocketWrapper as BO.WSocketWrapper
-	 * @class Creates a wrapper for various websocket implementations to unify the interface.
+	 * @class Creates a wrapper for various websocket implementations
+	 * to unify the interface.
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
-	 * @param {Boolean} useSocketIO Set true to use socket.io implementation, set false to use
-	 * native websocket implementation.
-	 * @param {String} protocol The websockt protocol definition (if necessary).
+	 * @param {Boolean} useSocketIO Set true to use socket.io
+	 * implementation, set false to use native websocket implementation.
+	 * @param {String} protocol The websockt protocol definition
+	 * (if necessary).
 	 */
 	WSocketWrapper = function(host, port, useSocketIO, protocol) {
 		this.name = "WSocketWrapper";
@@ -36,7 +39,7 @@ BO.WSocketWrapper = (function() {
 		this._protocol = protocol || "default-protocol";
 		this._useSocketIO = useSocketIO || false;
 		this._socket = null;
-		this._readyState = ""; // only applies to native WebSocket implementations
+		this._readyState = ""; // Only applies to native WebSocket implementations
 
 		this.init(this);
 
@@ -109,7 +112,7 @@ BO.WSocketWrapper = (function() {
 	};
 
 	/**
-	 * Send a message
+	 * Send a message.
 	 * TO DO: support sending ArrayBuffers and Blobs
 	 * for now, forward any calls to sendString
 	 * @private
@@ -122,7 +125,7 @@ BO.WSocketWrapper = (function() {
 	};
 
 	/**
-	 * Send a message
+	 * Send a message.
 	 * @param {String} message The message to send
 	 */
 	WSocketWrapper.prototype.sendString = function(message) {
@@ -133,7 +136,8 @@ BO.WSocketWrapper = (function() {
 	// to do: ensure socket is not null before trying to get readyState
 
 	/**
-	 * [read-only] Wrapper for the readyState method of the native websocket implementation
+	 * [read-only] Wrapper for the readyState method of the native
+	 * websocket implementation
 	 * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
 	 * @name WSocketWrapper#readyState
 	 * @property
@@ -142,7 +146,7 @@ BO.WSocketWrapper = (function() {
 	WSocketWrapper.prototype.__defineGetter__("readyState", function() { return this._readyState; });
 
 
-	// document events
+	// Document events
 
 	/**
 	 * The webSocketConnected event is dispatched when a connection with
@@ -150,24 +154,29 @@ BO.WSocketWrapper = (function() {
 	 * @name WSocketWrapper#webSocketConnected
 	 * @type BO.WebsocketEvent.CONNECTED
 	 * @event
-	 * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+	 * @param {BO.WSocketWrapper} target A reference to the 
+	 * WSocketWrapper object.
 	 */	
 
 	/**
-	 * The webSocketMessage event is dispatched when a websocket message is received.
+	 * The webSocketMessage event is dispatched when a websocket
+	 * message is received.
 	 * @name WSocketWrapper#webSocketMessage
 	 * @type BO.WebsocketEvent.MESSAGE
 	 * @event
-	 * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+	 * @param {BO.WSocketWrapper} target A reference to the
+	 * WSocketWrapper object.
 	 * @param {String} message The websocket data	 
 	 */	
 
 	/**
-	 * The webSocketClosed event is dispatched the websocket connection is closed.
+	 * The webSocketClosed event is dispatched the websocket connection
+	 * is closed.
 	 * @name WSocketWrapper#webSocketClosed
 	 * @type BO.WebsocketEvent.CLOSE
 	 * @event
-	 * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
+	 * @param {BO.WSocketWrapper} target A reference to the
+	 * WSocketWrapper object. 
 	 */		 
 
 	return WSocketWrapper;

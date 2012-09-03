@@ -20,22 +20,25 @@ BO.io.LED = (function() {
 	var Oscillator = BO.generators.Oscillator;
 
 	/**
-	 * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
-	 * than Oscillator.SQUARE the LED must be connected to a PWM pin.</p>
+	 * <p>PLEASE NOTE: To use the fade methods, or to use an waveform
+	 * other than Oscillator.SQUARE the LED must be connected to a PWM
+	 * pin.</p>
 	 *
 	 * <p>SOURCE_DRIVE vs SYNC_DRIVE. If the Anode (longer LED pin) is
-	 * connected to the microcontroller pin, then it is SOURCE_DRIVE. If the
-	 * Cathode is connected to the microcontroller pin, then it is 
-	 * SYNC_DRIVE.</p>
+	 * connected to the microcontroller pin, then it is SOURCE_DRIVE. 
+	 * If the Cathode is connected to the microcontroller pin, then it
+	 * is SYNC_DRIVE.</p>
 	 *
 	 * @exports LED as BO.io.LED
-	 * @class Creates an interface to an LED. This object provides helpful
-	 * methods for blinking and fading LEDs. To use the fading methods, the
-	 * LED must be connected to a PWM pin on the I/O board.
-	 * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
-	 * @param {Pin} ledPin A reference to the Pin the LED is connected to.
-	 * @param {Number} driveMode The drive mode of the LED. Must be set to
-	 * LED.SOURCE_MODE or LED.SYNC_MODE. SOURCE_MODE is default.
+	 * @class Creates an interface to an LED. This object provides
+	 * helpful methods for blinking and fading LEDs. To use the fading
+	 * methods, the LED must be connected to a PWM pin on the I/O board.
+	 * @param {IOBoard} board A reference to the IOBoard the LED is
+	 * attached to.
+	 * @param {Pin} ledPin A reference to the Pin the LED is connected
+	 * to.
+	 * @param {Number} driveMode The drive mode of the LED. Must be set
+	 * to LED.SOURCE_MODE or LED.SYNC_MODE. SOURCE_MODE is default.
 	 */
 	LED = function(board, ledPin, driveMode) {
 		"use strict";
@@ -121,7 +124,7 @@ BO.io.LED = (function() {
 		},
 
 		/**
-		 * Toggle the LED on or off
+		 * Toggle the LED on or off.
 		 */
 		toggle: function() {
 			this._pin.value = 1 - this._pin.value;
@@ -129,9 +132,10 @@ BO.io.LED = (function() {
 
 		/**
 		 * @param {Number} interval The time interval to blink the LED.
-		 * @param {Number} times The number of times the LED should blink.
-		 * A value of 0 will blink forever.
-		 * @param {Function} wave The waveform to apply (default is Oscillator.SQUARE)
+		 * @param {Number} times The number of times the LED should
+		 * blink. A value of 0 will blink forever.
+		 * @param {Function} wave The waveform to apply (default is
+		 * Oscillator.SQUARE)
 		 * @see BO.generator.Oscillator
 		 */
 		blink: function(interval, times, wave) {

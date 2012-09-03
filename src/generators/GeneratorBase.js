@@ -16,15 +16,15 @@
 
  	var GeneratorBase;
 
- 	// dependencies
+ 	// Dependencies
 	var EventDispatcher = JSUTILS.EventDispatcher;
 
  	/**
  	 * A base object for generators.
  	 *
  	 * @exports GeneratorBase as BO.generators.GeneratorBase
- 	 * @class A base object to be extended by all Generator objects. This
- 	 * object should not be instantiated directly.
+ 	 * @class A base object to be extended by all Generator objects.
+ 	 * This object should not be instantiated directly.
  	 * @constructor
  	 * @augments JSUTILS.EventDispatcher
  	 */
@@ -61,6 +61,5 @@
 	});	
 
  	return GeneratorBase;
-
 
  }());

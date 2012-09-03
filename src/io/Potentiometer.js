@@ -18,21 +18,22 @@ BO.io.Potentiometer = (function() {
 		PotEvent = BO.io.PotEvent;
 
 	/**
-	 * The Potentiometer object can be used for any generic analog input. It
-	 * provides a higher level of abstraction around an analog input pin.
+	 * The Potentiometer object can be used for any generic analog
+	 * input. It provides a higher level of abstraction around an
+	 * analog input pin.
 	 *
 	 * @exports Potentiometer as BO.io.Potentiometer
-	 * @class Creates an interface to an analog input sensor. This may be a
-	 * potentiometer (dial) or any other analog input that is connected to a
-	 * single analog pin.
+	 * @class Creates an interface to an analog input sensor. This may
+	 * be a potentiometer (dial) or any other analog input that is
+	 * connected to a single analog pin.
 	 * @constructor
 	 * @augments BO.PhysicalInputBase	 
-	 * @param {IOBoard} board A reference to the IOBoard instance that the
-	 * servo is attached to.
-	 * @param {Pin} pin A reference to the Pin the potentiometer is connected
-	 * to.
-	 * @param {Boolean} enableSmoothing True to enable smoothing, false to
-	 * disable. Default is false.
+	 * @param {IOBoard} board A reference to the IOBoard instance that
+	 * the servo is attached to.
+	 * @param {Pin} pin A reference to the Pin the potentiometer is
+	 * connected  to.
+	 * @param {Boolean} enableSmoothing True to enable smoothing, false
+	 * to disable. Default is false.
 	 */
 	Potentiometer = function(board, pin, enableSmoothing) {
 		"use strict";
@@ -66,7 +67,8 @@ BO.io.Potentiometer = (function() {
 	Potentiometer.prototype.__defineGetter__("value", function() { return this._pin.value; });
 
 	/**
-	 * [read-only] Get the (pre-filtered) average value of the potentiometer.
+	 * [read-only] Get the (pre-filtered) average value of the
+	 * potentiometer.
 	 * 
 	 * @name Potentiometer#average
 	 * @property
@@ -75,8 +77,8 @@ BO.io.Potentiometer = (function() {
 	Potentiometer.prototype.__defineGetter__("average", function() { return this._pin.average; });
 
 	/**
-	 * [read-only] Get the value of the potentiometer before filters are
-	 * applied.
+	 * [read-only] Get the value of the potentiometer before filters
+	 * are applied.
 	 * 
 	 * @name Potentiometer#preFilterValue
 	 * @property
@@ -112,11 +114,12 @@ BO.io.Potentiometer = (function() {
 	};
 
 	/**
-	 * Scale from the minimum and maximum input values to 0.0 -> 1.0. This is
-	 * useful for sensors such as a flex sensor that may not return the full
-	 * range of 0 to 1. 
+	 * Scale from the minimum and maximum input values to 0.0 -> 1.0.
+	 * This is useful for sensors such as a flex sensor that may not
+	 * return the full range of 0 to 1. 
 	 *
-	 * @param {Number} minimum The new minimum range (must be less than the maximum).
+	 * @param {Number} minimum The new minimum range (must be less than
+	 * the maximum).
 	 * @param {Number} maximum The new maximum range.
 	 */
 	Potentiometer.prototype.setRange = function(minimum, maximum) {
@@ -135,7 +138,8 @@ BO.io.Potentiometer = (function() {
 	// Document events
 
 	/**
-	 * The change event is dispatched when the potentiometer value changes.
+	 * The change event is dispatched when the potentiometer value
+	 * changes.
 	 * @name Potentiometer#change
 	 * @type BO.io.PotEvent.CHANGE
 	 * @event
@@ -145,7 +149,8 @@ BO.io.Potentiometer = (function() {
 	 * function onValueChange(event) {
 	 *   console.log("value = " + event.target.value);	
 	 * }
-	 * @param {BO.Potentiometer} target A reference to the Potentiometer object
+	 * @param {BO.Potentiometer} target A reference to the
+	 * Potentiometer object
 	 */
 
 	return Potentiometer;

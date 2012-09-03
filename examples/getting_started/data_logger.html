@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<style type="text/css">
+body {
+	margin: 10px;
+	width: 300px;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: #666;
+}
+h2 {
+	font-weight: normal;
+	font-size: 28px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+td {
+	font-weight: normal;
+	font-size: 10px;
+}
+.Btns {
+	padding: 10px;
+	font-size: 12px;
+	color: #00AEFF;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+.spacer {
+	margin-left: 5px;
+	margin-bottom: 10px;
+}
+</style>
+
+<title>Data logging example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
+<!-- Only needed for the visualization (progress bar) -->
+<script src="../libs/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
+<link href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css"/>
+<script src="../libs/flexigrid/flexigrid.pack.js"></script>
+<link href="../libs/flexigrid/flexigrid.pack.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+$(document).ready(function() {
+	// Declare these variables so you don't have to type the full
+	// namespace.
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Pin = BO.Pin;
+	var PinEvent = BO.PinEvent;
+	var Potentiometer = BO.io.Potentiometer;
+	var PotEvent = BO.io.PotEvent;
+
+	// Variables
+	var sensor;
+	var valueIn;
+	var value;
+	var pot;
+	var timeout = 5000;
+	var usePot = false;
+	var savedValues;
+	
+	// If you are not serving this file from the same computer that 
+	// the IOBoard is connected to, replace location.hostname  with
+	// the IP address or hostname of the computer that the IOBoard
+	// is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
+
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+
+	// Handle showing and hiding the schematic
+	
+	// Hide element which should be displayed at startup
+	$('div.showhide, #textarea').hide();
+	$('div.showhide, #table').hide();
+	$('div.showhide, #panel').hide();
+
+	function onReady(event) {
+		// Remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// Enable the analog pin so we can read its value
+		//arduino.enableAnalogPin(0);
+		//sensor = arduino.getAnalogPin(0);
+		//sensor.addEventListener(PinEvent.CHANGE, onPotChange);
+		
+		var anPin = arduino.getAnalogPin(0);
+		pot = new Potentiometer(arduino, anPin, true);
+		pot.addEventListener(PotEvent.CHANGE, onPotChange);
+		
+		// Listener for GUI events
+		initGUIListeners();
+
+		// Writes a time stamp and the sensor data to the console
+		//if (usePot) {
+			setInterval(consolLogger, timeout);
+		//}
+		
+		// Writes the data to the table below the current values
+		setInterval(toTable, timeout);	
+
+		// Writes the data to the text area
+		setInterval(toTextArea, timeout);
+		
+		// Writes the data to the container
+		setInterval(toPanel, timeout);
+
+	}
+	
+	function onPotChange(event) {
+		var data = event.target;
+		$('#value').text("Current value = " + data.value.toFixed(2));
+		$('#filter').text("Pre filter = " + data.preFilterValue.toFixed(2));
+		$('#min').text("min = " + data.minimum.toFixed(2));
+		$('#max').text("max = " + data.maximum.toFixed(2));
+		$('#avg').text("avg = " + data.average.toFixed(2));
+	}
+	
+	function toTable() {
+			$('#data > tbody').append(
+				"<tr><td>" + 
+				timeStamp() + 
+				"</td><td>" + 
+				pot.value.toFixed(2) + 
+				"</td></tr>");
+	}
+	
+	function consolLogger() {
+		console.log(timeStamp() + " : " + pot.value.toFixed(2));		
+	}
+	
+	//function saveValues() {
+	//	saveValues = saveValues + "\n" + timeStamp() + " : " + pot.value.toFixed(2));		
+	//}
+	
+	function toTextArea() {
+		$('textarea').val($('textarea').val() + 
+			"\n" + 
+			timeStamp() + 
+			" : " 
+			+ pot.value.toFixed(2))
+	}
+	
+	function toPanel() {
+		$('#panelData').append(timeStamp() + 
+			" : " + 
+			pot.value.toFixed(2) + 
+			"<br/>");
+	}
+	
+	// Flexigrid for table formatting
+	$('#data').flexigrid();
+
+	function initGUIListeners() {
+		$('#usePot').change(function() {
+			if ($(this).attr('checked')) {
+				usePot = true;
+				console.log("true");
+			} else {
+				usePot = false;
+				console.log("false");
+			}
+		});
+		
+		// Show and hide
+		$('#hideTable').click( function() {
+			$('div.showhide, #table').toggle();
+		});	
+		
+		$('#hideTextarea').click( function() {
+			$('div.showhide, #textarea').toggle();
+		});
+		
+		$('#hidePanel').click( function() {
+			$('div.showhide, #panel').toggle();
+		});	
+		
+		// Cleaning tables, fields, etc.
+		// Text area
+		$('button#textArea').on('click', function() {
+			$('textarea').val("");
+		});
+		// onFocus delete Textarea content
+		//$('textarea').one("focus", function() {
+		//	$(this).val("");
+		///});
+		
+		// Panel
+		$('button#panel').on('click', function() {
+			$("p").empty();
+
+		});
+
+	}
+	
+	// Helper functions
+	function timeStamp() {
+		var currentTime = new Date()
+		// Date
+		var month = currentTime.getMonth() + 1
+		var day = currentTime.getDate()
+		var year = currentTime.getFullYear()
+		// Time
+		var hours = currentTime.getHours()
+		var minutes = currentTime.getMinutes()
+		var seconds = currentTime.getSeconds()
+		return year + "-" + month + "-" + day  + ", " + hours + ":" + minutes + ":" + seconds; 
+	}
+});
+</script>
+
+</head>
+<body>
+	<h2>Data logging example</h2>
+		<div class="container">
+			 <p id="value"></p>
+			 <!--<p id="filter"></p>
+			 <p id="min"></p>
+			 <p id="max"></p>
+			 <p id="avg"></p>-->
+		</div>
+		<!-- Console -->
+		<div class="container">
+			<label for="usePot">Log to console: </label>
+			<input id="usePot" type="checkbox" />
+		</div>
+		<!-- Show/hide buttons -->
+		<div class="container" id="button">
+			<button type="button" class="Btns" id="hideTable">Show/Hide Table</button>
+			<button type="button" class="Btns" id="hideTextarea">Show/Hide Text area</button>
+			<button type="button" class="Btns" id="hidePanel">Show/Hide Panel</button>
+			<!--<button type="button" class="Btns" id="hideH2">Show H2</button>-->
+		</div>		
+		<!-- Table -->
+		<div class="container" id="table">
+			<table id=data>
+			<tbody>
+			<tr>
+				<td>Date</td>
+				<td>Temperature</td>
+			</tr>
+			</tbody>
+			</table>
+		</div>
+		<!-- Text area -->
+		<div class="container" id="textarea">
+			<button type="button" class="Btns" id="textArea">Clear</button>
+			<textarea rows="10" cols="30"></textarea>
+		</div>
+		<!-- Panel -->
+		<div class="container" id="panel">
+			<button type="button" class="Btns" id="panel">Clear</button>
+			<span class="spacer"></span>
+			<p id="panelData"></p>
+		</div>
+</body>
+</html>

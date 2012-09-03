@@ -3,12 +3,28 @@
 <head>
 
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <style type="text/css">
-.text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+body {
+	margin: 10px;
+	width: 300px;
+	font-family: sans-serif;
+	font-size: 18px;
+	color: #666;
+}
+h2 {
+	font-weight: normal;
+	font-size: 28px;
+	padding-bottom: 20px;
+	color: #00AEFF;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
 }
 </style>
 
@@ -18,73 +34,71 @@
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace	
+	// Declare these variables so you don't have to type the full
+	// namespace.
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var MagnetometerHMC5883 = BO.io.MagnetometerHMC5883;
 	var MagnetometerEvent = BO.io.MagnetometerEvent;
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;	
+	// Set to true to print debug messages to console
+	BO.enableDebugging = false;	
 
-	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
-	// with the ADXL345
+	// Note: You must use a 3.3v or lower IOBoard (such as the Arduino
+	// Fio) with the ADXL345
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.	
-	var fio = new IOBoard(location.hostname, 8887),
-		accelerometer;
+	// If you are not serving this file from the same computer that 
+	// the IOBoard is connected to, replace location.hostname  with
+	// the IP address or hostname of the computer that the IOBoard
+	// is connected to.
+	var fio = new IOBoard(location.hostname, 8887);
 	
+	// Variables
+	var accelerometer;
+	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data
 	fio.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-
+		// Remove the listener because it is no longer needed
 		fio.removeEventListener(IOBoardEvent.READY, onReady);
 		
-		//params: IOBoard, i2cAddress, numSamples, outputRate
+		// Parameters: IOBoard, i2cAddress, numSamples, outputRate
 		var magnetometer = new MagnetometerHMC5883(
 								fio, 
 								MagnetometerHMC5883.DEVICE_ID,
 								MagnetometerHMC5883.SAMPLES_1,
 								MagnetometerHMC5883.HZ_30);							
 
-		// using default settings
+		// Using default settings
 		//var magnetometer = new MagnetometerHMC5883(fio);						
 
-	    // start reading the accelerometer
+	    // Start reading the accelerometer
 	    magnetometer.startReading();
 
 	    magnetometer.addEventListener(MagnetometerEvent.UPDATE, onMagnetoUpdate);
-	    
 	}
 	
 	function onMagnetoUpdate(event) {
 		var data = event.target;
 
-		
 		$('#xVal').html("x = " + data.x.toFixed(3));
 		$('#yVal').html("y = " + data.y.toFixed(3));
 		$('#zVal').html("z = " + data.z.toFixed(3));
-		$('#heading').html("heading = " + data.heading.toFixed(3));
-
+		$('#heading').html("Heading = " + data.heading.toFixed(3));
 	}
-
-			
 });
 </script>
 
 </head>
 <body>
-  
-	<div id="xVal" class="text">x =</div>
-	<div id="yVal" class="text">y =</div>
-	<div id="zVal" class="text">z =</div>
-	<div id="heading" class="text">heading =</div>
-  
+	<h2>HMC5883 Magnetometer Example</h2>
+		<div class="container">
+			<p id="xVal">x =</p>
+			<p id="yVal">y =</p>
+			<p id="zVal">z =</p>
+			<p id="heading">Heading =</p>
+		</div>
 </body>
 </html>​

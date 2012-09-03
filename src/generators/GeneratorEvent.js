@@ -16,7 +16,7 @@
 
  	var GeneratorEvent;
 
- 	// dependencies
+ 	// Dependencies
 	var Event = JSUTILS.Event;
 
  	/**

@@ -16,8 +16,8 @@ JSUTILS.Timer = (function() {
 	/**
 	 * An as3-like Timer object.
 	 *
-	 * @class The Timer object wraps the window.setInterval() method to provide
-	 * an as3-like Timer interface.
+	 * @class The Timer object wraps the window.setInterval() method to
+	 * provide an as3-like Timer interface.
 	 * @exports Timer as JSUTILS.Timer
 	 * @extends JSUTILS.EventDispatcher	 
 	 * @param {Number} delay The delay (ms) interval between ticks
@@ -81,8 +81,8 @@ JSUTILS.Timer = (function() {
 	Timer.prototype.__defineGetter__("running", function() { return this._isRunning; });
 
 	/**
-	 * [read-only] Returns the current count (number of ticks since timer
-	 * started).
+	 * [read-only] Returns the current count (number of ticks since
+	 * timer started).
 	 * 
 	 * @name Timer#currentCount
 	 * @type Number

@@ -24,7 +24,7 @@ JSUTILS.namespace = function (namespaceString) {
 		i;
 			
 	for (i=0; i<parts.length; i +=1) {
-		// create a property if it doesn't exist
+		// Create a property if it doesn't exist
 		if (typeof parent[parts[i]] === "undefined") {
 			parent[parts[i]] = {};
 		}
