@@ -21,9 +21,9 @@ h2 {
 .Btns {
 	padding: 5px;
 	font-size: 16px;
-	width: 80px;
+	width: 85px;
 	color: #00AEFF;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 .container {
 	background-color: #f7f7f7;
@@ -40,7 +40,7 @@ h2 {
 }
 </style>
 
-<title>Duo LED</title>
+<title>Bi-color LED</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
@@ -65,7 +65,6 @@ $(document).ready(function() {
 	var arduino = new IOBoard(location.hostname, 8887);
 	
 	// Variables
-	var led;
 	var ledGreen;
 	var ledRed;
 	var mixColors = false;
@@ -79,14 +78,12 @@ $(document).ready(function() {
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
 		// Set Pins to PWM
-		arduino.setDigitalPinMode(9, Pin.PWM);
 		arduino.setDigitalPinMode(10, Pin.PWM);
 		arduino.setDigitalPinMode(11, Pin.PWM);
 
 
 		// Create an LED object to interface with the LED wired
 		// to the I/O board
-		ledYellow = arduino.getDigitalPin(9);
 		ledGreen = arduino.getDigitalPin(10);
 		ledRed = arduino.getDigitalPin(11);
 
@@ -154,13 +151,13 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<h2>Duo LED</h2>
+	<h2>Bi-color LED</h2>
 
 		<div class="container">
 			<p>Use the buttons below to switch the colors or the LED off.</p>
 			<button id="btnGreen" class="Btns" type="button">Green</button>
 			<button id="btnRed" class="Btns" type="button">Red</button>
-			<button id="btnStop" class="Btns" type="button">Off</button></br>
+			<button id="btnStop" class="Btns" type="button">Off</button><br />
 		</div>
   
 		<div class="container">

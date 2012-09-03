@@ -12,6 +12,15 @@ body {
 	line-height: 1.5em;
 	color: #666;
 }
+a {
+	font-weight: bold;
+	color: #333;
+	text-decoration:none;
+}
+
+a:hover {
+	color: #FF6623;
+}
 h2 {
 	padding-left: 0px;
 	font-weight: normal;
@@ -21,9 +30,13 @@ h2 {
 .ledBtns {
 	padding: 10px;
 	font-size: 22px;
-	width: 130px;
+	width: 135px;
 	color: #00AEFF;
 	margin-bottom: 20px;
+}
+#state {
+	color: #00AEFF;
+	font-size: 22px;
 }
 .container {
 	background-color: #f7f7f7;
@@ -37,21 +50,17 @@ h2 {
 }
 </style>
 
-<title>Delay LED</title>
+<title>Digital Out Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
 	// Declare these variables so you don't have
 	// to type the full namespace
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
-	var LED = BO.io.LED;
-	
-	// Set to true to print debug messages to console
-	BO.enableDebugging = false;	
+	var Pin = BO.Pin;
 
 	// If you are not serving this file from the same computer
 	// that the Arduino board is connected to, replace
@@ -59,10 +68,8 @@ $(document).ready(function() {
 	// of the computer that the Arduino board is connected to.
 	var arduino = new IOBoard(location.hostname, 8887);
 	
-	// Variable definition
+	// Variables
 	var led;
-	var interval;
-	var delay = 2000;
 	
 	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
@@ -72,30 +79,27 @@ $(document).ready(function() {
 		// Remove the event listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
+		// Set Pin 11 to Digital out (DOUT)
+		arduino.setDigitalPinMode(11, Pin.DOUT);
+
 		// Create an LED object to interface with the LED wired
 		// to the I/O board
-		led = new LED(arduino, arduino.getDigitalPin(11));
+		led = arduino.getDigitalPin(11);
 		
 		// Use jQuery to get a reference to the buttons
-		// and listen for click events
-		$('#btnStart').on('click', startDelay);		
-		$('#btnStop').on('click', turnLedOff);
+		// and listen for click events 
+		$('#btnOff').on('click', turnLedOff);
+		$('#btnOn').on('click', turnLedOn);		
 	}
-	
-	function turnLEDOn(evt) {
+
+	function turnLedOn(evt) {
 		// Turn the LED on
-		led.on()
+		led.value = Pin.HIGH;
 	}
-	
+
 	function turnLedOff(evt) {
 		// Turn the LED off
-		led.off();
-		// Stop the timer function. Works only while the timer is started
-		clearTimeout(interval)
-	}	
-	
-	function startDelay(evt) {
-		interval = setTimeout(turnLEDOn, delay);
+		led.value = Pin.LOW;
 	}
 });
 
@@ -103,12 +107,16 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<h2>Delay LED Example</h2>
+	<h2>Digital Out Example</h2>
 		<div class="container">
-			<p>This example demonstrates the use of a JavaScript timer to turn an LED on 2 seconds after the Start button is pressed. The Stop button can stop the timer (preventing the LED from turning on) and can also switch the LED off once it is on.</p>
-			<button id="btnStart" class="ledBtns" type="button">Start</button>
-			<span class="spacer"></span>
-			<button id="btnStop" class="ledBtns" type="button">Stop</button>
+			<p>This example demonstrates digital output using an LED. More info on digital output in Breakout can be found in the <a href="http://breakoutjs.com/guides/the-pin-object/#digital_output">Digital Output</a> section of the Using the Pin Object guide.</p>
 		</div>
+
+	<div class="container">
+		<p>Use the buttons below to turn the LED on or off.</p>
+		<button id="btnOn" class="ledBtns" type="button">On</button>
+		<span class="spacer"></span>
+		<button id="btnOff" class="ledBtns" type="button">Off</button>
+	</div>
 </body>
 </html>

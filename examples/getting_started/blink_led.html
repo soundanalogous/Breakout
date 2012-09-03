@@ -12,6 +12,15 @@ body {
 	line-height: 1.5em;
 	color: #666;
 }
+a {
+	font-weight: bold;
+	color: #333;
+	text-decoration:none;
+}
+
+a:hover {
+	color: #FF6623;
+}
 h2 {
 	padding-left: 0px;
 	font-weight: normal;
@@ -21,13 +30,13 @@ h2 {
 .ledBtns {
 	padding: 10px;
 	font-size: 22px;
-	width: 130px;
+	width: 135px;
 	color: #00AEFF;
 	margin-bottom: 20px;
 }
 .container {
 	background-color: #f7f7f7;
-	padding-left: 10px;
+	padding: 0 10px 20px 10px;
 	border: 1px dotted #CCC;
 	width: 280px;
 	margin-top: 20px;
@@ -103,11 +112,11 @@ $(document).ready(function() {
 <body>
 	<h2>Blink LED</h2>
 		<div class="container">
-			<p>Use the buttons below to start the blinking process and stop it.</p>
+			<p>This example demonstrates the use of a JavaScript timer to blink a LED. Use the buttons below to start and stop blinking the LED.</p>
 			<button id="btnStart" class="ledBtns" type="button">Start</button>
 			<span class="spacer"></span>
 			<button id="btnStop" class="ledBtns" type="button">Stop</button>
-			<small>For a more elegant solution, please check out the <a href="../generators/blink_led.html">Blink with Generator</a> example.</small>
+			<small>For a more elegant solution, please check out the <a href="../generators/blink_led.html">Blink with Oscillator</a> example.</small>
 		</div>
 </body>
 </html>

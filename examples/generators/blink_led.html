@@ -18,16 +18,26 @@ h2 {
 	font-size: 28px;
 	color: #00AEFF;
 }
+a {
+	font-weight: bold;
+	color: #333;
+	text-decoration:none;
+}
+
+a:hover {
+	color: #FF6623;
+}
 .ledBtns {
-	padding: 5px;
-	font-size: 16px;
-	width: 80px;
+	padding: 10px;
+	font-size: 22px;
+	width: 135px;
 	color: #00AEFF;
 	margin-bottom: 20px;
 }
+
 .container {
 	background-color: #f7f7f7;
-	padding-left: 10px;
+	padding: 0 10px 0 10px;
 	border: 1px dotted #CCC;
 	width: 280px;
 	margin-top: 20px;
@@ -37,7 +47,7 @@ h2 {
 }
 </style>
 
-<title>Blink LED with Generator Example</title>
+<title>Blink LED with Oscillator Example</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
@@ -116,12 +126,12 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<h2>Blink LED with Generator</h2>
+	<h2>Blink LED with Oscillator</h2>
 		<div class="container">
-			<p>For this example an Arduino, a resistor, and a LED is needed. Connect the LED with the resistor between Pin 11 and GRD. More details can be found at the <a href="http://breakoutjs.com/guides/the-pin-object/">'Using the Pin Object'</a> page.</p>
+			<p>This example demonstrates blinking an LED with an Oscillator. See the <a href="http://breakoutjs.com/guides/the-pin-object/#analog_output">Analog Output</a> section of 'Using the Pin Object' guide and the <a href="http://breakoutjs.com/docs/symbols/BO.generators.Oscillator.html">Oscillator reference</a> for more info.</p>
 		</div>
 		<div class="container">
-			<p>Use the buttons below to start and stop the blinking.</p>
+			<p>Use the buttons below to start and stop blinking the LED.</p>
 			<button id="btnStart" class="ledBtns" type="button">Start</button>
 			<span class="spacer"></span>
 			<button id="btnStop" class="ledBtns" type="button">Stop</button>

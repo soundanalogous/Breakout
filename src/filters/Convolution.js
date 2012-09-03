@@ -86,7 +86,7 @@ BO.filters.Convolution = (function() {
 	 * Low-pass filter kernel. Use by passing this array to the constructor.
 	 * @constant
 	 */
-	Convolution.LPF = [1/3, 1/3, 1/3];
+	Convolution.LPF = [1.0/3, 1.0/3, 1.0/3];
 
 	/**
 	 * Note: This filter is not currently working... needs a new implementation.
@@ -94,13 +94,13 @@ BO.filters.Convolution = (function() {
 	 * @private
 	 * @constant
 	 */
-	Convolution.HPF = [1/3, -2/3, 1/3];
+	Convolution.HPF = [1.0/3, -2.0/3, 1.0/3];
 	
 	/**
 	 * Moving average filter kernel. Use by passing this array to the constructor.
 	 * @constant
 	 */
-	Convolution.MOVING_AVERAGE = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8];		
+	Convolution.MOVING_AVERAGE = [1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8];		
 		
 	return Convolution;
 
