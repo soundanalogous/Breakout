@@ -361,12 +361,13 @@ ul.inheritsList
 				
 				
 			
-				<div id="class_desc">Creates an interface to the I/O board. The IOBoard object brokers the
-communication between your application and the physical I/O board. Currently
-you can only connect to a single I/O board per computer. However you could 
-connect to multiple I/O boards if they are attached to multiple computers on
-your network. In that case you would create a separate IOBoard instance for
-each board you are connecting to in your network.</div>
+				<div id="class_desc">Creates an interface to the I/O board. The IOBoard object brokers
+the communication between your application and the physical I/O board.
+Currently you can only connect to a single I/O board per computer.
+However you could connect to multiple I/O boards if they are attached to
+multiple computers on your network. In that case you would create a
+separate IOBoard instance for each board you are connecting to in your
+network.</div>
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_core_IOBoard.js.html">IOBoard.js</a>.
@@ -390,9 +391,9 @@ each board you are connecting to in your network.</div>
 							<div class="fixedFont">
 								<b><a href="../symbols/BO.IOBoard.html#constructor">BO.IOBoard</a></b>(host, port, useSocketIO, protocol)
 							</div>
-							<div class="description">Creates a new IOBoard object representing the digital and analog inputs and
-outputs of the device as well as support for i2c devices and sending strings 
-between the IOBoard sketch and your javascript application.</div>
+							<div class="description">Creates a new IOBoard object representing the digital and analog inputs
+and outputs of the device as well as support for i2c devices and sending
+strings between the IOBoard sketch and your javascript application.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -429,7 +430,8 @@ between the IOBoard sketch and your javascript application.</div>
 								<div class="fixedFont">
 								<b><a href="../symbols/BO.IOBoard.html#samplingInterval">samplingInterval</a></b>
 								</div>
-								<div class="description">Get or set the sampling interval (how often to run the main loop on the IOBoard).</div>
+								<div class="description">Get or set the sampling interval (how often to run the main loop on
+the IOBoard).</div>
 							</td>
 						</tr>
 					
@@ -468,7 +470,8 @@ between the IOBoard sketch and your javascript application.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#analogToDigital">analogToDigital</a></b>(analogPinNumber)
 								</div>
-								<div class="description">Use this method to obtain the digital pin number equivalent for an analog pin.</div>
+								<div class="description">Use this method to obtain the digital pin number equivalent 
+for an analog pin.</div>
 							</td>
 						</tr>
 					
@@ -486,7 +489,7 @@ between the IOBoard sketch and your javascript application.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#disableDigitalPins">disableDigitalPins</a></b>()
 								</div>
-								<div class="description">Disables digital pin reporting for all digital pins</div>
+								<div class="description">Disables digital pin reporting for all digital pins.</div>
 							</td>
 						</tr>
 					
@@ -522,7 +525,7 @@ between the IOBoard sketch and your javascript application.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#enablePullUp">enablePullUp</a></b>(pinNum)
 								</div>
-								<div class="description">Enable the internal pull-up resistor for the specified pin number</div>
+								<div class="description">Enable the internal pull-up resistor for the specified pin number.</div>
 							</td>
 						</tr>
 					
@@ -547,7 +550,25 @@ between the IOBoard sketch and your javascript application.</div>
 						<tr>
 							<td class="attributes">&nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#getFirmwareName">getFirmwareName</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#getFirmwareVersion">getFirmwareVersion</a></b>()
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#getPinCapabilities">getPinCapabilities</a></b>()
 								</div>
 								<div class="description"></div>
 							</td>
@@ -594,7 +615,8 @@ between the IOBoard sketch and your javascript application.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#reportCapabilities">reportCapabilities</a></b>()
 								</div>
-								<div class="description">Call this method to print the capabilities for all pins to the console</div>
+								<div class="description">Call this method to print the capabilities for all pins to 
+the console.</div>
 							</td>
 						</tr>
 					
@@ -612,8 +634,8 @@ between the IOBoard sketch and your javascript application.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#reportVersion">reportVersion</a></b>()
 								</div>
-								<div class="description">Request the Firmata version implemented in the firmware (sketch) running
-on the IOBoard.</div>
+								<div class="description">Request the Firmata version implemented in the firmware (sketch)
+running on the IOBoard.</div>
 							</td>
 						</tr>
 					
@@ -622,7 +644,8 @@ on the IOBoard.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#sendDigitalPortReporting">sendDigitalPortReporting</a></b>(mode, mode)
 								</div>
-								<div class="description">Enable or disable reporting of all digital pins for the specified port.</div>
+								<div class="description">Enable or disable reporting of all digital pins for the specified
+port.</div>
 							</td>
 						</tr>
 					
@@ -698,8 +721,8 @@ from the IOBoard.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:firmwareName">firmwareName</a></b>
 								</div>
-								<div class="description">The firmwareName event is dispatched when the firmware name is received
-from the IOBoard.</div>
+								<div class="description">The firmwareName event is dispatched when the firmware name is
+received from the IOBoard.</div>
 							</td>
 						</tr>
 					
@@ -708,8 +731,8 @@ from the IOBoard.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:firmwareVersion">firmwareVersion</a></b>
 								</div>
-								<div class="description">The firmwareVersion event is dispatched when the firmware version is
-received from the IOBoard.</div>
+								<div class="description">The firmwareVersion event is dispatched when the firmware version
+is received from the IOBoard.</div>
 							</td>
 						</tr>
 					
@@ -718,8 +741,8 @@ received from the IOBoard.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:ioBoardConnected">ioBoardConnected</a></b>
 								</div>
-								<div class="description">The ioBoardConnected event is dispatched when the websocket connection
-is established.</div>
+								<div class="description">The ioBoardConnected event is dispatched when the websocket 
+connection is established.</div>
 							</td>
 						</tr>
 					
@@ -728,8 +751,8 @@ is established.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:ioBoardDisconnected">ioBoardDisconnected</a></b>
 								</div>
-								<div class="description">The ioBoardDisconnected event is dispatched when the websocket connection
-is closed.</div>
+								<div class="description">The ioBoardDisconnected event is dispatched when the websocket
+connection is closed.</div>
 							</td>
 						</tr>
 					
@@ -738,8 +761,8 @@ is closed.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:ioBoardReady">ioBoardReady</a></b>
 								</div>
-								<div class="description">The ioBoardReady event is dispatched when the board is ready to send 
-and receive commands.</div>
+								<div class="description">The ioBoardReady event is dispatched when the board is ready to
+send and receive commands.</div>
 							</td>
 						</tr>
 					
@@ -758,8 +781,8 @@ a pin state query (via a call to: queryPinState()) is received.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:stringMessage">stringMessage</a></b>
 								</div>
-								<div class="description">The stringMessage event is dispatched when a string is received from
-the IOBoard.</div>
+								<div class="description">The stringMessage event is dispatched when a string is received
+from the IOBoard.</div>
 							</td>
 						</tr>
 					
@@ -768,7 +791,7 @@ the IOBoard.</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.IOBoard.html#event:sysexMessage">sysexMessage</a></b>
 								</div>
-								<div class="description">The sysexMessage event is dispatched when a sysex message is 
+								<div class="description">The sysexMessage event is dispatched when a sysEx message is 
 received from the IOBoard.</div>
 							</td>
 						</tr>
@@ -792,9 +815,9 @@ received from the IOBoard.</div>
 				</div>
 				
 				<div class="description">
-					Creates a new IOBoard object representing the digital and analog inputs and
-outputs of the device as well as support for i2c devices and sending strings 
-between the IOBoard sketch and your javascript application.
+					Creates a new IOBoard object representing the digital and analog inputs
+and outputs of the device as well as support for i2c devices and sending
+strings between the IOBoard sketch and your javascript application.
 					
 				</div>
 				
@@ -821,7 +844,8 @@ between the IOBoard sketch and your javascript application.
 								<span class="light fixedFont">{Boolean}</span>  <b>useSocketIO</b>
 								
 							</dt>
-								<dd>Set to true if using node.js socket.io. Default = false.</dd>
+								<dd>Set to true if using node.js socket.io.
+Default = false.</dd>
 						
 							<dt>
 								<span class="light fixedFont">{String}</span>  <b>protocol</b>
@@ -855,9 +879,9 @@ between the IOBoard sketch and your javascript application.
 					
 					</div>
 					<div class="description">
-						Set to true when the IOBoard is ready. This can be used in place of listening
-for the IOBoardEvent.READY event when creating an app with a draw loop (such
-as when using processing.js or three.js);
+						Set to true when the IOBoard is ready. This can be used in place of
+listening for the IOBoardEvent.READY event when creating an app with
+a draw loop (such as when using processing.js or three.js);
 						
 						
 					</div>
@@ -879,8 +903,9 @@ as when using processing.js or three.js);
 					
 					</div>
 					<div class="description">
-						Get or set the sampling interval (how often to run the main loop on the IOBoard). Normally
-the sampling interval should not be changed. Default = 19 (ms).
+						Get or set the sampling interval (how often to run the main loop on
+the IOBoard). Normally the sampling interval should not be changed. 
+Default = 19 (ms).
 						
 						
 					</div>
@@ -931,7 +956,8 @@ the sampling interval should not be changed. Default = 19 (ms).
 									<span class="light fixedFont">{Function}</span> <b>listener</b>
 									
 								</dt>
-								<dd>The function to be called when the event is fired</dd>
+								<dd>The function to be called when the event
+is fired</dd>
 							
 							</dl>
 						
@@ -952,7 +978,8 @@ the sampling interval should not be changed. Default = 19 (ms).
 					
 					</div>
 					<div class="description">
-						Use this method to obtain the digital pin number equivalent for an analog pin.
+						Use this method to obtain the digital pin number equivalent 
+for an analog pin.
 						
 						
 					</div>
@@ -986,7 +1013,8 @@ equivalent of the analog pin</p></pre>
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Number}</span> The digital pin number equivalent for the specified analog pin number.</dd>
+								<dd><span class="light fixedFont">{Number}</span> The digital pin number equivalent for the specified
+analog pin number.</dd>
 							
 							</dl>
 						
@@ -1039,7 +1067,7 @@ equivalent of the analog pin</p></pre>
 					
 					</div>
 					<div class="description">
-						Disables digital pin reporting for all digital pins
+						Disables digital pin reporting for all digital pins.
 						
 						
 					</div>
@@ -1085,7 +1113,8 @@ equivalent of the analog pin</p></pre>
 									<span class="light fixedFont">{Object}</span> <b>optionalParams</b>
 									
 								</dt>
-								<dd>Optional parameters to assign to the event object.
+								<dd>Optional parameters to assign to the
+event object.
 return {boolean} True if dispatch is successful, false if not.</dd>
 							
 							</dl>
@@ -1143,8 +1172,8 @@ return {boolean} True if dispatch is successful, false if not.</dd>
 					
 					</div>
 					<div class="description">
-						Enables digital pin reporting for all digital pins. You must call this
-before you can receive digital pin data from the IOBoard.
+						Enables digital pin reporting for all digital pins. You must call
+this before you can receive digital pin data from the IOBoard.
 						
 						
 					</div>
@@ -1169,7 +1198,7 @@ before you can receive digital pin data from the IOBoard.
 					
 					</div>
 					<div class="description">
-						Enable the internal pull-up resistor for the specified pin number
+						Enable the internal pull-up resistor for the specified pin number.
 						
 						
 					</div>
@@ -1184,7 +1213,8 @@ before you can receive digital pin data from the IOBoard.
 									<span class="light fixedFont">{Number}</span> <b>pinNum</b>
 									
 								</dt>
-								<dd>The number of the input pin to enable the pull-up resistor.</dd>
+								<dd>The number of the input pin to enable the
+pull-up resistor.</dd>
 							
 							</dl>
 						
@@ -1231,7 +1261,8 @@ before you can receive digital pin data from the IOBoard.
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the IOBoard board analog pin).</dd>
+								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the IOBoard
+board analog pin).</dd>
 							
 							</dl>
 						
@@ -1274,7 +1305,40 @@ before you can receive digital pin data from the IOBoard.
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the IOBoard board digital pin).</dd>
+								<dd><span class="light fixedFont">{Pin}</span> A reference to the Pin object (mapped to the IOBoard
+board digital pin).</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getFirmwareName"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{String}</span>
+					<b>getFirmwareName</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{String}</span> The name of the firmware running on the IOBoard.</dd>
 							
 							</dl>
 						
@@ -1306,7 +1370,40 @@ before you can receive digital pin data from the IOBoard.
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{String}</span> The version of the Firmata firmware running on the IOBoard.</dd>
+								<dd><span class="light fixedFont">{String}</span> The version of the firmware running on the
+IOBoard.</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name="getPinCapabilities"> </a>
+					<div class="fixedFont">
+					
+					<span class="light">{Array}</span>
+					<b>getPinCapabilities</b>()
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+					
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Array}</span> The capabilities of the Pins on the IOBoard.</dd>
 							
 							</dl>
 						
@@ -1445,7 +1542,8 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 									<span class="light fixedFont">{Function}</span> <b>listener</b>
 									
 								</dt>
-								<dd>The function to be called when the event is fired</dd>
+								<dd>The function to be called when the event
+is fired</dd>
 							
 							</dl>
 						
@@ -1466,7 +1564,8 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 					
 					</div>
 					<div class="description">
-						Call this method to print the capabilities for all pins to the console
+						Call this method to print the capabilities for all pins to 
+the console.
 						
 						
 					</div>
@@ -1493,7 +1592,8 @@ return {boolean} True is listener exists for this type, false if not.</dd>
 					<div class="description">
 						Request the name of the firmware (the sketch) running on the IOBoard.
 Listen for the IOBoard.FIRMWARE_NAME event to be notified of when 
-the name is returned from the IOBoard. The version number is also returned.
+the name is returned from the IOBoard. The version number is also
+returned.
 						
 						
 					</div>
@@ -1518,8 +1618,8 @@ the name is returned from the IOBoard. The version number is also returned.
 					
 					</div>
 					<div class="description">
-						Request the Firmata version implemented in the firmware (sketch) running
-on the IOBoard.
+						Request the Firmata version implemented in the firmware (sketch)
+running on the IOBoard.
 Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
 the Firmata version is returned from the IOBoard.
 						
@@ -1546,7 +1646,8 @@ the Firmata version is returned from the IOBoard.
 					
 					</div>
 					<div class="description">
-						Enable or disable reporting of all digital pins for the specified port.
+						Enable or disable reporting of all digital pins for the specified
+port.
 						
 						
 					</div>
@@ -1588,10 +1689,11 @@ the Firmata version is returned from the IOBoard.
 					
 					</div>
 					<div class="description">
-						Call to associate a pin with a connected servo motor. See the documentation for your
-servo motor for the minimum and maximum pulse width. If you can't find it, then the
-default values should be close enough so call sendServoAttach(pin) omitting the
-min and max values.
+						Call to associate a pin with a connected servo motor. See the
+documentation for your servo motor for the minimum and maximum 
+pulse width. If you can't find it, then the default values should
+be close enough so call sendServoAttach(pin) omitting the min and
+max values.
 						
 						
 					</div>
@@ -1612,13 +1714,15 @@ min and max values.
 									<span class="light fixedFont">{Number}</span> <b>minPulse</b>
 									
 								</dt>
-								<dd>[optional] The minimum pulse width for the servo. Default = 544.</dd>
+								<dd>[optional] The minimum pulse width for the
+servo. Default = 544.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{Number}</span> <b>maxPulse</b>
 									
 								</dt>
-								<dd>[optional] The maximum pulse width for the servo. Default = 2400.</dd>
+								<dd>[optional] The maximum pulse width for the
+servo. Default = 2400.</dd>
 							
 							</dl>
 						
@@ -1639,14 +1743,15 @@ min and max values.
 					
 					</div>
 					<div class="description">
-						Send a string message to the IOBoard. This is useful if you have a custom sketch
-running on the IOBoard rather than StandardFirmata and want to communicate with
-your javascript message via string messages that you then parse in javascript.
+						Send a string message to the IOBoard. This is useful if you have a
+custom sketch running on the IOBoard rather than StandardFirmata
+and want to communicate with your javascript message via string
+messages that you then parse in javascript.
 You can receive string messages as well.
 
-<p>To test, load the EchoString.pde example from Firmata->Examples menu in the
-IOBoard Application, then use sendString("your string message") to have it
-echoed back to your javascript application.</p>
+<p>To test, load the EchoString.pde example from Firmata->Examples
+menu in the IOBoard Application, then use sendString("your string
+message") to have it echoed back to your javascript application.</p>
 						
 						
 					</div>
@@ -1697,15 +1802,17 @@ echoed back to your javascript application.</p>
 									<span class="light fixedFont">{Number}</span> <b>pin</b>
 									
 								</dt>
-								<dd>The number of the pin. When using and analog pin as a digital
-pin, refer the datasheet for your board to obtain the digital pin equivalent of the
-analog pin number. For example on an Arduino UNO, analog pin 0 = digital pin 14.</dd>
+								<dd>The number of the pin. When using and analog
+pin as a digital pin, refer the datasheet for your board to obtain 
+the digital pin equivalent of the analog pin number. For example on 
+an Arduino UNO, analog pin 0 = digital pin 14.</dd>
 							
 								<dt>
 									<span class="light fixedFont">{Number}</span> <b>mode</b>
 									
 								</dt>
-								<dd>Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO, Pin.SHIFT, or Pin.I2c</dd>
+								<dd>Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO,
+Pin.SHIFT, or Pin.I2c</dd>
 							
 							</dl>
 						
@@ -1824,8 +1931,8 @@ pin value changes.
 					
 					</div>
 					<div class="description">
-						The firmwareName event is dispatched when the firmware name is received
-from the IOBoard.
+						The firmwareName event is dispatched when the firmware name is
+received from the IOBoard.
 						
 						
 					</div>
@@ -1873,8 +1980,8 @@ from the IOBoard.
 					
 					</div>
 					<div class="description">
-						The firmwareVersion event is dispatched when the firmware version is
-received from the IOBoard.
+						The firmwareVersion event is dispatched when the firmware version
+is received from the IOBoard.
 						
 						
 					</div>
@@ -1916,8 +2023,8 @@ received from the IOBoard.
 					
 					</div>
 					<div class="description">
-						The ioBoardConnected event is dispatched when the websocket connection
-is established.
+						The ioBoardConnected event is dispatched when the websocket 
+connection is established.
 						
 						
 					</div>
@@ -1953,8 +2060,8 @@ is established.
 					
 					</div>
 					<div class="description">
-						The ioBoardDisconnected event is dispatched when the websocket connection
-is closed.
+						The ioBoardDisconnected event is dispatched when the websocket
+connection is closed.
 						
 						
 					</div>
@@ -1990,8 +2097,8 @@ is closed.
 					
 					</div>
 					<div class="description">
-						The ioBoardReady event is dispatched when the board is ready to send 
-and receive commands.
+						The ioBoardReady event is dispatched when the board is ready to
+send and receive commands.
 						
 						
 					</div>
@@ -2070,8 +2177,8 @@ a pin state query (via a call to: queryPinState()) is received.
 					
 					</div>
 					<div class="description">
-						The stringMessage event is dispatched when a string is received from
-the IOBoard.
+						The stringMessage event is dispatched when a string is received
+from the IOBoard.
 						
 						
 					</div>
@@ -2113,7 +2220,7 @@ the IOBoard.
 					
 					</div>
 					<div class="description">
-						The sysexMessage event is dispatched when a sysex message is 
+						The sysexMessage event is dispatched when a sysEx message is 
 received from the IOBoard.
 						
 						
@@ -2135,7 +2242,7 @@ received from the IOBoard.
 									<span class="light fixedFont">{Array}</span> <b>message</b>
 									
 								</dt>
-								<dd>The sysex data</dd>
+								<dd>The sysEx data</dd>
 							
 							</dl>
 						
@@ -2157,7 +2264,7 @@ received from the IOBoard.
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jun 30 2012 13:02:06 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Sep 03 2012 14:39:04 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

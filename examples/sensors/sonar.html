@@ -7,17 +7,31 @@
 
 <style type="text/css">
 body {
-	margin: 20px;
-	width: 350px;
+	margin: 15px;
 	font-family: sans-serif;
-	font-size: 18px;
+	font-size: 16px;
+	line-height: 1.5em;
 	color: #666;
 }
 h2 {
+	padding-left: 0px;
 	font-weight: normal;
 	font-size: 28px;
-	padding-bottom: 20px;
 	color: #00AEFF;
+	margin-bottom: 20px;
+}
+.container {
+	background-color: #f7f7f7;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 40px;
+}
+.text {
+	font-family: "Arial";
+	font-size: 22px;
+	color: #666;
+	padding: 20px;
+	margin: 0;
 }
 </style>
 
@@ -93,8 +107,10 @@ $(document).ready(function() {
 
   <h2>LV-MaxSonar-EZ1 Sensor</h2>
 
-  <p id="distance_cm"></p>
-  <p id="distance_in"></p>
+  <div class="container">
+	  <div id="distance_cm" class="text"></div>
+	  <div id="distance_in" class="text"></div>
+  </div>
   
 </body>
 </html>​

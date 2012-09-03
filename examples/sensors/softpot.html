@@ -4,11 +4,32 @@
 
 <meta charset=utf-8 />
 <style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+	margin-bottom: 20px;
+}
+.container {
+	background-color: #f7f7f7;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 40px;
+}
 .text {
 	font-family: "Arial";
 	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+	color: #666;
+	padding: 20px;
+	margin: 0;
 }
 </style>
 
@@ -57,30 +78,30 @@ $(document).ready(function() {
 
 	function onPotPress(event) {
 		$('#val').html("value = " + event.target.value.toFixed(3));
-		$('#state').html("pressed");
+		$('#state').html("state = pressed");
 	}
 
 	function onPotRelease(event) {
 		$('#val').html("value = " + event.target.value.toFixed(3));
-		$('#state').html("released");
+		$('#state').html("state = released");
 	}
 
 	function onPotTap(event) {
 		$('#val').html("value = " + event.target.value.toFixed(3));
-		$('#state').html("tapped");
+		$('#state').html("state = tapped");
 	}
 
 	function onFlickUp(event) {
-		$('#state').html("flick up");
+		$('#state').html("state = flick up");
 	}
 
 	function onFlickDown(event) {
-		$('#state').html("flick down");
+		$('#state').html("state = flick down");
 	}
 
 	function onPotDrag(event) {
 		$('#val').html("value = " + event.target.value.toFixed(3));
-		$('#state').html("dragging");
+		$('#state').html("state = dragging");
 	}
 				
 });
@@ -88,9 +109,13 @@ $(document).ready(function() {
 
 </head>
 <body>
+
+	<h2>SoftPot Slide Sensor</h2>
   
-	<div id="val" class="text">value =</div>
-	<div id="state" class="text"></div>
+  	<div class="container">
+		<div id="val" class="text">value =</div>
+		<div id="state" class="text">state =</div>
+	</div>
   
 </body>
 </html>​

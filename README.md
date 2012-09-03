@@ -42,7 +42,7 @@ Breakout is only supported for Arduino 1.0 and higher [Download Arduino](http://
 
 You will need one of the following I/O boards:
 
-- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonandro, etc). 
+- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonardo, etc). 
 - [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy++ 1.0 or 2.0
 - Many Arduino clones / variants should also work
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
@@ -60,7 +60,7 @@ OS:
 Desktop Browsers:
 
 - Chrome version 14 - 21
-- Firefox version 7 - 14 (version 11 or higher is recommended)
+- Firefox version 7 - 15 (version 11 or higher is recommended)
 - Safari version 5 - 6
 
 Mobile Browsers (browser must support websockets):
@@ -74,7 +74,7 @@ Contributing
 ---
 Contributors are welcome. If you have any ideas, suggestions for improvements, examples to share, or anything else you'd like to contribute please get in touch.
 
-Please submit pull requests against the *dev* branch.
+Please submit pull requests against the *dev* branch. Test against Chrome, Firefox and Safari.
 
 Credits
 ---

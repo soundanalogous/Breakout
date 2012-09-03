@@ -920,7 +920,7 @@ BO.IOBoard = (function() {
 		/**
 		 * @return {Array} The capabilities of the Pins on the IOBoard.
 		 */
-		this.getCapabilities = function() {
+		this.getPinCapabilities = function() {
 			var capabilities = [];
 			var modeNames = {
 				0:"input",

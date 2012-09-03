@@ -16,7 +16,7 @@
 <span class='line'>  9</span> 
 <span class='line'> 10</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 11</span> 
-<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="COMM">// Dependencies</span><span class="WHIT">
 <span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Event</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Event</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 14</span> 
 <span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">/**
@@ -54,14 +54,15 @@
 <span class='line'> 47</span> 
 <span class='line'> 48</span> </span><span class="WHIT">	</span><span class="COMM">/**
 <span class='line'> 49</span> 	 * The value of the softpot.
-<span class='line'> 50</span> 	 * @name SoftPotEvent#value
-<span class='line'> 51</span> 	 * @property
-<span class='line'> 52</span> 	 * @type Number
-<span class='line'> 53</span> 	 */</span><span class="WHIT"> 
-<span class='line'> 54</span> 	</span><span class="NAME">SoftPotEvent.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._touchPoint</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
-<span class='line'> 55</span> 	</span><span class="NAME">SoftPotEvent.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">this._touchPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 56</span> 
-<span class='line'> 57</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 58</span> 
-<span class='line'> 59</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'> 60</span> </span></pre></body></html>
+<span class='line'> 50</span> 	 * 
+<span class='line'> 51</span> 	 * @name SoftPotEvent#value
+<span class='line'> 52</span> 	 * @property
+<span class='line'> 53</span> 	 * @type Number
+<span class='line'> 54</span> 	 */</span><span class="WHIT"> 
+<span class='line'> 55</span> 	</span><span class="NAME">SoftPotEvent.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._touchPoint</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 56</span> 	</span><span class="NAME">SoftPotEvent.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">this._touchPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> 
+<span class='line'> 58</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> 
+<span class='line'> 60</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> </span></pre></body></html>

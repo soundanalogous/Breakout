@@ -92,6 +92,7 @@ JSUTILS.EventDispatcher = (function () {
 						isSuccess = true;
 					} catch(e) {
 						// To Do: Handle error
+						console.log("error: Error calling event handler. " + e);
 					}
 				}
 			}

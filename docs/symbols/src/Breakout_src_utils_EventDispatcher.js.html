@@ -60,7 +60,7 @@
 <span class='line'> 53</span> </span><span class="WHIT">					</span><span class="NAME">this._eventListeners</span><span class="PUNC">[</span><span class="NAME">type</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">splice</span><span class="PUNC">(</span><span class="NAME">i</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 54</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 55</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 56</span> </span><span class="WHIT">			</span><span class="COMM">// to do: if no more listeners for a type, delete key?</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">			</span><span class="COMM">// To Do: If no more listeners for a type, delete key?</span><span class="WHIT">
 <span class='line'> 57</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
 <span class='line'> 58</span> </span><span class="WHIT">		
 <span class='line'> 59</span> 		</span><span class="COMM">/**
@@ -87,7 +87,7 @@
 <span class='line'> 80</span> 			</span><span class="NAME">event.target</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._target</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 81</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">isSuccess</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">		
 <span class='line'> 82</span> 
-<span class='line'> 83</span> 			</span><span class="COMM">// add any optional params to the Event object</span><span class="WHIT">
+<span class='line'> 83</span> 			</span><span class="COMM">// Add any optional params to the Event object</span><span class="WHIT">
 <span class='line'> 84</span> </span><span class="WHIT">			</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">obj</span><span class="WHIT"> </span><span class="KEYW">in</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 85</span> </span><span class="WHIT">				</span><span class="NAME">event</span><span class="PUNC">[</span><span class="NAME">obj.toString</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">]</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">[</span><span class="NAME">obj</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 86</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
@@ -98,17 +98,16 @@
 <span class='line'> 91</span> </span><span class="WHIT">						</span><span class="NAME">this._eventListeners</span><span class="PUNC">[</span><span class="NAME">event.type</span><span class="PUNC">]</span><span class="PUNC">[</span><span class="NAME">j</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">event</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 92</span> </span><span class="WHIT">						</span><span class="NAME">isSuccess</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'> 93</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">catch</span><span class="PUNC">(</span><span class="NAME">e</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
-<span class='line'> 94</span> </span><span class="WHIT">						</span><span class="COMM">// to do: handle error</span><span class="WHIT">
-<span class='line'> 95</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 96</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 97</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'> 98</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">isSuccess</span><span class="PUNC">;</span><span class="WHIT">	
-<span class='line'> 99</span> 		</span><span class="PUNC">}</span><span class="WHIT">
-<span class='line'>100</span> 
-<span class='line'>101</span> 
-<span class='line'>102</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>103</span> 
-<span class='line'>104</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>105</span> 
-<span class='line'>106</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>107</span> </span></pre></body></html>
+<span class='line'> 94</span> </span><span class="WHIT">						</span><span class="COMM">// To Do: Handle error</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">						</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"error: Error calling event handler. "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">e</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">				</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">isSuccess</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>100</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> 
+<span class='line'>103</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> 
+<span class='line'>105</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> </span></pre></body></html>

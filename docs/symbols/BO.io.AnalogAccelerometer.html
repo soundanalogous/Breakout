@@ -430,7 +430,7 @@ of gravity (9.8 m/sec2).</div>
 								<div class="fixedFont">
 								<b><a href="../symbols/BO.io.AnalogAccelerometer.html#pitch">pitch</a></b>
 								</div>
-								<div class="description">[read-only] The pitch value in degrees</div>
+								<div class="description">[read-only] The pitch value in degrees.</div>
 							</td>
 						</tr>
 					
@@ -440,7 +440,7 @@ of gravity (9.8 m/sec2).</div>
 								<div class="fixedFont">
 								<b><a href="../symbols/BO.io.AnalogAccelerometer.html#roll">roll</a></b>
 								</div>
-								<div class="description">[read-only] The roll value in degrees</div>
+								<div class="description">[read-only] The roll value in degrees.</div>
 							</td>
 						</tr>
 					
@@ -546,7 +546,8 @@ of gravity (9.8 m/sec2).</div>
 							<td class="nameDescription">
 								<div class="fixedFont"><b><a href="../symbols/BO.io.AnalogAccelerometer.html#setRangeFor">setRangeFor</a></b>(axis, minimum, maximum)
 								</div>
-								<div class="description">Scale the range for the specified axis (from 0 to 1) to (minimum to maximum).</div>
+								<div class="description">Scale the range for the specified axis (from 0 to 1) to (minimum to 
+maximum).</div>
 							</td>
 						</tr>
 					
@@ -627,32 +628,38 @@ of gravity (9.8 m/sec2).</div>
 								<span class="light fixedFont">{Pin}</span>  <b>xPin</b>
 								
 							</dt>
-								<dd>A reference to the Pin connected to the x axis of the accelerometer</dd>
+								<dd>A reference to the Pin connected to the x axis of the
+accelerometer</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Pin}</span>  <b>yPin</b>
 								
 							</dt>
-								<dd>A reference to the Pin connected to the y axis of the accelerometer</dd>
+								<dd>A reference to the Pin connected to the y axis of the
+accelerometer</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Pin}</span>  <b>zPin</b>
 								
 							</dt>
-								<dd>A reference to the Pin connected to the z axis of the accelerometer</dd>
+								<dd>A reference to the Pin connected to the z axis of the
+accelerometer</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Number}</span>  <b>dynamicRange</b>
 								
 							</dt>
-								<dd>The range of the acceleromter in Gs (typically 2 or 3 for an 
-analog accelerometer). See the datasheet for the acceleromter to get the exact value.</dd>
+								<dd>The range of the acceleromter in Gs
+(typically 2 or 3 for an 
+analog accelerometer). See the datasheet for the acceleromter to get
+the exact value.</dd>
 						
 							<dt>
 								<span class="light fixedFont">{Boolean}</span>  <b>enableSmoothing</b>
 								
 							</dt>
-								<dd>True to enable smoothing, false to disable. Default is false.</dd>
+								<dd>True to enable smoothing, false to
+disable. Default is false.</dd>
 						
 						</dl>
 					
@@ -703,7 +710,7 @@ of gravity (9.8 m/sec2).
 					
 					</div>
 					<div class="description">
-						[read-only] The pitch value in degrees
+						[read-only] The pitch value in degrees.
 						
 						
 					</div>
@@ -725,7 +732,7 @@ of gravity (9.8 m/sec2).
 					
 					</div>
 					<div class="description">
-						[read-only] The roll value in degrees
+						[read-only] The roll value in degrees.
 						
 						
 					</div>
@@ -890,9 +897,10 @@ of gravity (9.8 m/sec2).
 					
 					</div>
 					<div class="description">
-						Use this method to get the minimum and maximum range values for an axis. Create a new object
-to store the return value and then pass obj.min and obj.max along with the respective axis
-identifier to the setRangeFor method.
+						Use this method to get the minimum and maximum range values for an axis.
+Create a new object to store the return value and then pass obj.min
+and obj.max along with the respective axis identifier to the setRangeFor
+method.
 						
 						
 					</div>
@@ -919,7 +927,8 @@ identifier to the setRangeFor method.
 									<span class="light fixedFont">{Number}</span> <b>supplyVoltage</b>
 									
 								</dt>
-								<dd>The supply voltage of the Acceleromter (enter as 3.3, 3.0, 5.0, etc).</dd>
+								<dd>The supply voltage of the Acceleromter
+(enter as 3.3, 3.0, 5.0, etc).</dd>
 							
 							</dl>
 						
@@ -930,8 +939,8 @@ identifier to the setRangeFor method.
 							<dl class="detailList">
 							<dt class="heading">Returns:</dt>
 							
-								<dd><span class="light fixedFont">{Object}</span> An object containing the min and max range values to be passed to the 
-setRangeFor method.</dd>
+								<dd><span class="light fixedFont">{Object}</span> An object containing the min and max range values to be
+passed to the setRangeFor method.</dd>
 							
 							</dl>
 						
@@ -948,7 +957,8 @@ setRangeFor method.</dd>
 					
 					</div>
 					<div class="description">
-						Scale the range for the specified axis (from 0 to 1) to (minimum to maximum).
+						Scale the range for the specified axis (from 0 to 1) to (minimum to 
+maximum).
 						
 						
 					</div>
@@ -1020,7 +1030,8 @@ AnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS).</dd>
 									<span class="light fixedFont">{<a href="../symbols/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a>}</span> <b>target</b>
 									
 								</dt>
-								<dd>A reference to the AnalogAccelerometer object.</dd>
+								<dd>A reference to the 
+AnalogAccelerometer object.</dd>
 							
 							</dl>
 						
@@ -1042,7 +1053,7 @@ AnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS).</dd>
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Sat Jun 30 2012 13:02:06 GMT-0400 (EDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Sep 03 2012 14:39:04 GMT-0400 (EDT)
 		</div>
 	</body>
 </html>

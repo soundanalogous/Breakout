@@ -192,7 +192,7 @@ footer span {
 		document.write("<h3>" + name + "</h3>");
 		document.write("<ul>");
 		for (i = 0; i < examples.length; i++) {
-			document.write("<li>" + examples[i].split('.')[0].link(path + "/" + examples[i]) + "</li>");
+			document.write("<li>" + examples[i].split('.')[0].link("../examples/" + path + "/" + examples[i]) + "</li>");
 		}
 		document.write("</ul>");
 	}
