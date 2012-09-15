@@ -1,0 +1,180 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="WHIT"> </span><span class="COMM">/**
+<span class='line'>  2</span>  * Based on BlinkM.as originally written in as3.
+<span class='line'>  3</span>  * Copyright (c) the Funnel development team
+<span class='line'>  4</span>  * http://www.funnel.cc
+<span class='line'>  5</span>  *
+<span class='line'>  6</span>  * Ported to JavaScript by Jeff Hoefs
+<span class='line'>  7</span>  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com>
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
+<span class='line'> 10</span>  */</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.BlinkM'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> 
+<span class='line'> 14</span> </span><span class="NAME">BO.io.BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 15</span> 
+<span class='line'> 16</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BlinkM</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> 
+<span class='line'> 18</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">I2CBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.I2CBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> 
+<span class='line'> 21</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 22</span> 	 * Creates and BlinkM object.
+<span class='line'> 23</span> 	 *
+<span class='line'> 24</span> 	 * @exports BlinkM as BO.io.BlinkM
+<span class='line'> 25</span> 	 * @class Creates an interface to a BlinkM RGB Led module. This
+<span class='line'> 26</span> 	 * object allows you to change the color of the led, fade between
+<span class='line'> 27</span> 	 * colors and run preprogrammed light scripts.
+<span class='line'> 28</span> 	 * See Breakout/examples/actuators/blinkM.html for an example application.
+<span class='line'> 29</span> 	 * @constructor
+<span class='line'> 30</span> 	 * @augments BO.I2CBase 
+<span class='line'> 31</span> 	 * @param {IOBoard} board The IOBoard instance
+<span class='line'> 32</span> 	 * @param {Number} address The i2c address of the BlinkM module
+<span class='line'> 33</span> 	 */</span><span class="WHIT">
+<span class='line'> 34</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">address</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 35</span> 
+<span class='line'> 36</span> </span><span class="WHIT">		</span><span class="NAME">address</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">address</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">0x09</span><span class="PUNC">;</span><span class="WHIT">	</span><span class="COMM">// default i2c address for BlinkM</span><span class="WHIT">
+<span class='line'> 37</span> 
+<span class='line'> 38</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"BlinkM"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">		
+<span class='line'> 40</span> 		</span><span class="COMM">// call super class</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">		</span><span class="NAME">I2CBase.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">address</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">		
+<span class='line'> 43</span> 
+<span class='line'> 44</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 45</span> 
+<span class='line'> 46</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">I2CBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BlinkM</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> 
+<span class='line'> 49</span> 
+<span class='line'> 50</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 51</span> 	 * Sets the BlinkM to the specified RGB color immediately.
+<span class='line'> 52</span> 	 * @param {Number{}} color An array containing the RGB values. 
+<span class='line'> 53</span> 	 * color[0] = R, color[1] = G, color[2] = B
+<span class='line'> 54</span> 	 */</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.goToRGBColorNow</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">color</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x6E</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">	
+<span class='line'> 59</span> 	</span><span class="COMM">/**
+<span class='line'> 60</span> 	 * Fades to the specified RGB color in the specified time duration. 
+<span class='line'> 61</span> 	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
+<span class='line'> 62</span> 	 * 255 is the fastest.
+<span class='line'> 63</span> 	 *
+<span class='line'> 64</span> 	 * @param {Number[]} color An array containing the RGB values.
+<span class='line'> 65</span> 	 * color[0] = R, color[1] = G, color[2] = B
+<span class='line'> 66</span> 	 * @param {Number} speed The fade speed. Default value is 15.
+<span class='line'> 67</span> 	 */</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.fadeToRGBColor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">color</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 70</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 71</span> </span><span class="WHIT">			</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x66</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 72</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x63</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> 
+<span class='line'> 76</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 77</span> 	 * Fade to a random RGB color.
+<span class='line'> 78</span> 	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
+<span class='line'> 79</span> 	 * 255 is the fastest.
+<span class='line'> 80</span> 	 *
+<span class='line'> 81</span> 	 * @param {Number[]} colorRange An array containing a range for each color
+<span class='line'> 82</span> 	 * value.
+<span class='line'> 83</span> 	 * colorRange[0] = range for Red (0-255), colorRange[1] = range for Green, etc.
+<span class='line'> 84</span> 	 * @param {Number} speed The fade speed. Default value is 15.
+<span class='line'> 85</span> 	 */</span><span class="WHIT">
+<span class='line'> 86</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.fadeToRandomRGBColor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">colorRange</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 87</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">			</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x66</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x43</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">colorRange</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">colorRange</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">colorRange</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> 
+<span class='line'> 94</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 95</span> 	 * Fades to the specified HSB color in the specified time duration. 
+<span class='line'> 96</span> 	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
+<span class='line'> 97</span> 	 * 255 is the fastest.
+<span class='line'> 98</span> 	 *
+<span class='line'> 99</span> 	 * @param {Number[]} color An array containing the HSB values.
+<span class='line'>100</span> 	 * color[0] = H, color[1] = S, color[2] = B
+<span class='line'>101</span> 	 * @param {Number} speed The fade speed. Default value is 15.
+<span class='line'>102</span> 	 */</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.fadeToHSBColor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">color</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">			</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x66</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>108</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x68</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">color</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">	
+<span class='line'>111</span> 	</span><span class="COMM">/**
+<span class='line'>112</span> 	 * Fade to a random HSB color.
+<span class='line'>113</span> 	 * The fade speed range is from 1 to 255, where 1 is the slowest time and
+<span class='line'>114</span> 	 * 255 is the fastest.
+<span class='line'>115</span> 	 *
+<span class='line'>116</span> 	 * @param {Number[]} colorRange An array containing a range for each color
+<span class='line'>117</span> 	 * value.
+<span class='line'>118</span> 	 * colorRange[0] = range for Hue (0-255), colorRange[1] = range for
+<span class='line'>119</span> 	 * Saturation, etc.
+<span class='line'>120</span> 	 * @param {Number} speed The fade speed. Default value is 15.
+<span class='line'>121</span> 	 */</span><span class="WHIT">	
+<span class='line'>122</span> 	</span><span class="NAME">BlinkM.prototype.fadeToRandomHSBColor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">colorRange</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">speed</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">			</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x66</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x48</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">colorRange</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">colorRange</span><span class="PUNC">[</span><span class="NUMB">1</span><span class="PUNC">]</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">colorRange</span><span class="PUNC">[</span><span class="NUMB">2</span><span class="PUNC">]</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> 
+<span class='line'>130</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>131</span> 	 * Set the rate at which color fading happens. The range is from 1 to 255,
+<span class='line'>132</span> 	 * where 1 is the slowest and 255 is the fastest (immediate).
+<span class='line'>133</span> 	 *
+<span class='line'>134</span> 	 * @param {Number} speed
+<span class='line'>135</span> 	 */</span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.setFadeSpeed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">speed</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x66</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">speed</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">	
+<span class='line'>140</span> 	</span><span class="COMM">/**
+<span class='line'>141</span> 	 * Play a predefined light script. See the BlinkM datasheet page 20 for a
+<span class='line'>142</span> 	 * list and description of the predefined scripts.
+<span class='line'>143</span> 	 *
+<span class='line'>144</span> 	 * @param {Number} scriptId The id of the light script (from 0 to 18).
+<span class='line'>145</span> 	 * @param {Number} theNumberOfRepeats The number of times the script should
+<span class='line'>146</span> 	 * repeat.
+<span class='line'>147</span> 	 * @param {Number} lineNumber The line number to begin the script from.
+<span class='line'>148</span> 	 */</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.playLightScript</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">scriptId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">theNumberOfRepeats</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">lineNumber</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">theNumberOfRepeats</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">theNumberOfRepeats</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x70</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">scriptId</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">theNumberOfRepeats</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">lineNumber</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> 
+<span class='line'>154</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>155</span> 	 * Stop the currently playing predefined light script.
+<span class='line'>156</span> 	 */</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.stopScript</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">		</span><span class="COMM">//self.sendI2CRequest([I2CBase.WRITE, this.address, 'o'.charCodeAt(0)]);</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">		</span><span class="NAME">this.sendI2CRequest</span><span class="PUNC">(</span><span class="PUNC">[</span><span class="NAME">I2CBase.WRITE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.address</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0x6F</span><span class="PUNC">]</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>161</span> 
+<span class='line'>162</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>163</span> 	 * @private
+<span class='line'>164</span> 	 */</span><span class="WHIT">
+<span class='line'>165</span> </span><span class="WHIT">	</span><span class="NAME">BlinkM.prototype.handleI2C</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">data</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>166</span> </span><span class="WHIT">		</span><span class="COMM">// TODO: implement if needed</span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">		</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="STRN">"BlinkM: "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">data</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>169</span> 
+<span class='line'>170</span> </span><span class="WHIT">	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">BlinkM</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>171</span> 
+<span class='line'>172</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>173</span> </span></pre></body></html>
