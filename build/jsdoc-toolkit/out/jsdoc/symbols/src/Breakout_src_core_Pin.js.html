@@ -1,0 +1,469 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * Based on Pin.as originally written in as3.
+<span class='line'>  3</span>  * Copyright (c) the Funnel development team
+<span class='line'>  4</span>  * http://www.funnel.cc
+<span class='line'>  5</span>  *
+<span class='line'>  6</span>  * Ported to JavaScript by Jeff Hoefs
+<span class='line'>  7</span>  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com>
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
+<span class='line'> 10</span>  */</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.Pin'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> 
+<span class='line'> 14</span> </span><span class="NAME">BO.Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">	</span><span class="COMM">//"use strict";	// closure compiler doesn't like this... should be fixed soon though</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 18</span> 
+<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="COMM">// dependencies</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">		</span><span class="NAME">PinEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.PinEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="NAME">GeneratorEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.generators.GeneratorEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 23</span> 
+<span class='line'> 24</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 25</span> 	 * An object to represent an IOBoard pin
+<span class='line'> 26</span> 	 *
+<span class='line'> 27</span> 	 * @exports Pin as BO.Pin
+<span class='line'> 28</span> 	 * @class Each analog and digital pin of the physical I/O board is represented by a Pin object.
+<span class='line'> 29</span> 	 * The Pin object is the foundation for many of the io objects and is also very
+<span class='line'> 30</span> 	 * useful on its own. See the Using The Pin Object Guide on http://breakoutjs.com
+<span class='line'> 31</span> 	 * for a detailed overview.
+<span class='line'> 32</span> 	 * @param {Number} number The pin number
+<span class='line'> 33</span> 	 * @param {Number} type The type of pin
+<span class='line'> 34</span> 	 */</span><span class="WHIT">
+<span class='line'> 35</span> </span><span class="WHIT">	</span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">number</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 36</span> 
+<span class='line'> 37</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"Pin"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 38</span> 
+<span class='line'> 39</span> </span><span class="WHIT">		</span><span class="NAME">this._type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">		</span><span class="NAME">this._capabilities</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">		</span><span class="NAME">this._number</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">number</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">		</span><span class="NAME">this._analogNumber</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="WHIT">		</span><span class="NAME">this._maxPWMValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">		</span><span class="NAME">this._value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">		</span><span class="NAME">this._lastValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">		</span><span class="NAME">this._preFilterValue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 47</span> </span><span class="WHIT">		</span><span class="NAME">this._average</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> </span><span class="WHIT">		</span><span class="NAME">this._minimum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.pow</span><span class="PUNC">(</span><span class="NUMB">2</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">16</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 49</span> </span><span class="WHIT">		</span><span class="NAME">this._maximum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">		</span><span class="NAME">this._sum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> </span><span class="WHIT">		</span><span class="NAME">this._numSamples</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">		</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">		</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> 
+<span class='line'> 55</span> </span><span class="WHIT">		</span><span class="NAME">this._autoSetValueCallback</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.autoSetValue.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">		
+<span class='line'> 57</span> 		</span><span class="NAME">this._evtDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 58</span> 
+<span class='line'> 59</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 60</span> 
+<span class='line'> 61</span> </span><span class="WHIT">	</span><span class="NAME">Pin.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">		
+<span class='line'> 63</span> 		</span><span class="COMM">/**
+<span class='line'> 64</span> 		 * The analogNumber sould only be set internally.
+<span class='line'> 65</span> 		 * @private
+<span class='line'> 66</span> 		 */</span><span class="WHIT">		
+<span class='line'> 67</span> 		</span><span class="NAME">setAnalogNumber</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 68</span> </span><span class="WHIT">			</span><span class="NAME">this._analogNumber</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">num</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 70</span> 
+<span class='line'> 71</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 72</span> 		 * [read-only] The analog pin number used by the IOBoard (printed on board or datasheet).
+<span class='line'> 73</span> 		 * @name Pin#analogNumber
+<span class='line'> 74</span> 		 * @property
+<span class='line'> 75</span> 		 * @type Number
+<span class='line'> 76</span> 		 */</span><span class="WHIT">	
+<span class='line'> 77</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">analogNumber</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._analogNumber</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">		
+<span class='line'> 80</span> 
+<span class='line'> 81</span> 		</span><span class="COMM">/**
+<span class='line'> 82</span> 		 * [read-only] The pin number corresponding to the Arduino documentation for the type of board.
+<span class='line'> 83</span> 		 * @name Pin#number
+<span class='line'> 84</span> 		 * @property
+<span class='line'> 85</span> 		 * @type Number
+<span class='line'> 86</span> 		 */</span><span class="WHIT">			 
+<span class='line'> 87</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">number</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._number</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 90</span> 
+<span class='line'> 91</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 92</span> 		 * The maximum PWM value supported for this pin. This value should
+<span class='line'> 93</span> 		 * normally be set internally.
+<span class='line'> 94</span> 		 * @private
+<span class='line'> 95</span> 		 */</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">		</span><span class="NAME">setMaxPWMValue</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">			</span><span class="NAME">this._maxPWMValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 99</span> 
+<span class='line'>100</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>101</span> 		 * [read-only] The maximum PWM value supported for this pin.
+<span class='line'>102</span> 		 * &lt;p> This is the max PWM value supported by Arduino (currently 255) rather 
+<span class='line'>103</span> 		 * than the max PWM value specified by the microcontroller datasheet.&lt;/p>
+<span class='line'>104</span> 		 *
+<span class='line'>105</span> 		 * @name Pin#maxPWMValue
+<span class='line'>106</span> 		 * @property
+<span class='line'>107</span> 		 * @type Number
+<span class='line'>108</span> 		 */</span><span class="WHIT">			 
+<span class='line'>109</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">maxPWMValue</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>110</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._maxPWMValue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>111</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">		
+<span class='line'>112</span> 		
+<span class='line'>113</span> 		</span><span class="COMM">/**
+<span class='line'>114</span> 		 * [read-only] The average value of the pin over time. Call clear() to reset.
+<span class='line'>115</span> 		 * @name Pin#average
+<span class='line'>116</span> 		 * @property
+<span class='line'>117</span> 		 * @type Number
+<span class='line'>118</span> 		 */</span><span class="WHIT">			 
+<span class='line'>119</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">average</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._average</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>122</span> 
+<span class='line'>123</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>124</span> 		 * [read-only] The minimum value of the pin over time. Call clear() to reset.
+<span class='line'>125</span> 		 * @name Pin#minimum
+<span class='line'>126</span> 		 * @property
+<span class='line'>127</span> 		 * @type Number
+<span class='line'>128</span> 		 */</span><span class="WHIT">			 	
+<span class='line'>129</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">minimum</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._minimum</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>131</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>132</span> </span><span class="WHIT">		
+<span class='line'>133</span> 		</span><span class="COMM">/**
+<span class='line'>134</span> 		 * [read-only] The maximum value of the pin over time. Call clear() to reset.
+<span class='line'>135</span> 		 * @name Pin#maximum
+<span class='line'>136</span> 		 * @property
+<span class='line'>137</span> 		 * @type Number
+<span class='line'>138</span> 		 */</span><span class="WHIT">			 
+<span class='line'>139</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">maximum</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._maximum</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>142</span> </span><span class="WHIT">		
+<span class='line'>143</span> 		</span><span class="COMM">/**
+<span class='line'>144</span> 		 * The current digital or analog value of the pin.
+<span class='line'>145</span> 		 * @name Pin#value
+<span class='line'>146</span> 		 * @property
+<span class='line'>147</span> 		 * @type Number
+<span class='line'>148</span> 		 */</span><span class="WHIT">		 
+<span class='line'>149</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>150</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">		</span><span class="NAME">set</span><span class="WHIT"> </span><span class="NAME">value</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">			</span><span class="NAME">this._lastValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">			</span><span class="NAME">this._preFilterValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>155</span> </span><span class="WHIT">			</span><span class="NAME">this._value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this.applyFilters</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">			</span><span class="NAME">this.calculateMinMaxAndMean</span><span class="PUNC">(</span><span class="NAME">this._value</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>157</span> </span><span class="WHIT">			</span><span class="NAME">this.detectChange</span><span class="PUNC">(</span><span class="NAME">this._lastValue</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._value</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>158</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>159</span> </span><span class="WHIT">		
+<span class='line'>160</span> 		</span><span class="COMM">/**
+<span class='line'>161</span> 		 * [read-only] The last pin value.
+<span class='line'>162</span> 		 * @name Pin#lastValue
+<span class='line'>163</span> 		 * @property
+<span class='line'>164</span> 		 * @type Number
+<span class='line'>165</span> 		 */</span><span class="WHIT">			 
+<span class='line'>166</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">lastValue</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._lastValue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>169</span> </span><span class="WHIT">		
+<span class='line'>170</span> 		</span><span class="COMM">/**
+<span class='line'>171</span> 		 * [read-only] The value before any filters were applied.
+<span class='line'>172</span> 		 * @name Pin#preFilterValue
+<span class='line'>173</span> 		 * @property
+<span class='line'>174</span> 		 * @type Number
+<span class='line'>175</span> 		 */</span><span class="WHIT">			 
+<span class='line'>176</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">preFilterValue</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>177</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._preFilterValue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>179</span> 
+<span class='line'>180</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>181</span> 		 * Get and set filters for the Pin.
+<span class='line'>182</span> 		 * @name Pin#filters
+<span class='line'>183</span> 		 * @property
+<span class='line'>184</span> 		 * @type FilterBase
+<span class='line'>185</span> 		 */</span><span class="WHIT">	
+<span class='line'>186</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">filters</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>187</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._filters</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>188</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>189</span> </span><span class="WHIT">		</span><span class="NAME">set</span><span class="WHIT"> </span><span class="NAME">filters</span><span class="PUNC">(</span><span class="NAME">filterArray</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>190</span> </span><span class="WHIT">			</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">filterArray</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>192</span> 
+<span class='line'>193</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>194</span> 		 * [read-only] Get a reference to the current generator.
+<span class='line'>195</span> 		 * @name Pin#generator
+<span class='line'>196</span> 		 * @property
+<span class='line'>197</span> 		 * @type GeneratorBase
+<span class='line'>198</span> 		 */</span><span class="WHIT">	
+<span class='line'>199</span> 		</span><span class="NAME">get</span><span class="WHIT"> </span><span class="NAME">generator</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._generator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>202</span> 
+<span class='line'>203</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>204</span> 		 * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT, 
+<span class='line'>205</span> 		 * 4: PWM, 5: SERVO, 6: SHIFT, 7: I2C). Use 
+<span class='line'>206</span> 		 * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
+<span class='line'>207</span> 		 * @return {Number} The pin type/mode
+<span class='line'>208</span> 		 */</span><span class="WHIT">	
+<span class='line'>209</span> 		</span><span class="NAME">getType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>210</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._type</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>211</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>212</span> 
+<span class='line'>213</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>214</span> 		 * Set the pin type. This method should only be used internally.
+<span class='line'>215</span> 		 * @private
+<span class='line'>216</span> 		 */</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">		</span><span class="NAME">setType</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pinType</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">			</span><span class="COMM">// Ensure pin type is valid</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">pinType</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">pinType</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">Pin.TOTAL_PIN_MODES</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>220</span> </span><span class="WHIT">				</span><span class="NAME">this._type</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">pinType</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">			
+<span class='line'>223</span> 
+<span class='line'>224</span> 		</span><span class="COMM">/**
+<span class='line'>225</span> 		 * An object storing the capabilities of the pin.
+<span class='line'>226</span> 		 * @return {Object} An object describing the capabilities of this Pin.
+<span class='line'>227</span> 		 */</span><span class="WHIT">	
+<span class='line'>228</span> 		</span><span class="NAME">getCapabilities</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._capabilities</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>230</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>231</span> 
+<span class='line'>232</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>233</span> 		 * This method should only be used internally.
+<span class='line'>234</span> 		 * @private
+<span class='line'>235</span> 		 */</span><span class="WHIT">
+<span class='line'>236</span> </span><span class="WHIT">		</span><span class="NAME">setCapabilities</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">pinCapabilities</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>237</span> </span><span class="WHIT">			</span><span class="NAME">this._capabilities</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">pinCapabilities</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>238</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">		
+<span class='line'>239</span> 
+<span class='line'>240</span> 		</span><span class="COMM">/**
+<span class='line'>241</span> 		 * Dispatch a Change event whenever a pin value changes
+<span class='line'>242</span> 		 * @private
+<span class='line'>243</span> 		 */</span><span class="WHIT">
+<span class='line'>244</span> </span><span class="WHIT">		</span><span class="NAME">detectChange</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">oldValue</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">newValue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>245</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">oldValue</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">newValue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>246</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">PinEvent</span><span class="PUNC">(</span><span class="NAME">PinEvent.CHANGE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>247</span> 
+<span class='line'>248</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">oldValue</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">newValue</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">				</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">PinEvent</span><span class="PUNC">(</span><span class="NAME">PinEvent.RISING_EDGE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>250</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">oldValue</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">newValue</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">				</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">PinEvent</span><span class="PUNC">(</span><span class="NAME">PinEvent.FALLING_EDGE</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>252</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>254</span> </span><span class="WHIT">		
+<span class='line'>255</span> 		</span><span class="COMM">/**
+<span class='line'>256</span> 		 * From funnel Pin.as
+<span class='line'>257</span> 		 * @private
+<span class='line'>258</span> 		 */</span><span class="WHIT">
+<span class='line'>259</span> </span><span class="WHIT">		</span><span class="NAME">clearWeight</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>260</span> </span><span class="WHIT">			</span><span class="NAME">this._sum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._average</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>261</span> </span><span class="WHIT">			</span><span class="NAME">this._numSamples</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>262</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>263</span> </span><span class="WHIT">		
+<span class='line'>264</span> 		</span><span class="COMM">/**
+<span class='line'>265</span> 		 * From funnel Pin.as
+<span class='line'>266</span> 		 * @private
+<span class='line'>267</span> 		 */</span><span class="WHIT">
+<span class='line'>268</span> </span><span class="WHIT">		</span><span class="NAME">calculateMinMaxAndMean</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>269</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">MAX_SAMPLES</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Number.MAX_VALUE</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>270</span> 
+<span class='line'>271</span> </span><span class="WHIT">			</span><span class="NAME">this._minimum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.min</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._minimum</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>272</span> </span><span class="WHIT">			</span><span class="NAME">this._maximum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.max</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._maximum</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>273</span> </span><span class="WHIT">			
+<span class='line'>274</span> 			</span><span class="NAME">this._sum</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>275</span> </span><span class="WHIT">			</span><span class="NAME">this._average</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._sum</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">++</span><span class="NAME">this._numSamples</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._numSamples</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NAME">MAX_SAMPLES</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>277</span> </span><span class="WHIT">				</span><span class="NAME">this.clearWeight</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>278</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>279</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>280</span> </span><span class="WHIT">			
+<span class='line'>281</span> 		</span><span class="COMM">/**
+<span class='line'>282</span> 		 * Resets the minimum, maximum, average and lastValue of the pin.
+<span class='line'>283</span> 		 */</span><span class="WHIT">
+<span class='line'>284</span> </span><span class="WHIT">		</span><span class="NAME">clear</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>285</span> </span><span class="WHIT">			</span><span class="NAME">this._minimum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._maximum</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._average</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._lastValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._preFilterValue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>286</span> </span><span class="WHIT">			</span><span class="NAME">this.clearWeight</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>287</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>288</span> </span><span class="WHIT">		
+<span class='line'>289</span> 		</span><span class="COMM">/**
+<span class='line'>290</span> 		 * Add a new filter to the Pin.
+<span class='line'>291</span> 		 * @param {FilterBase} newFilter A filter object that extends FilterBase.
+<span class='line'>292</span> 		 * @see BO.filters.Convolution
+<span class='line'>293</span> 		 * @see BO.filters.Scaler
+<span class='line'>294</span> 		 * @see BO.filters.TriggerPoint
+<span class='line'>295</span> 		 */</span><span class="WHIT">
+<span class='line'>296</span> </span><span class="WHIT">		</span><span class="NAME">addFilter</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>297</span> 
+<span class='line'>298</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>299</span> </span><span class="WHIT">				</span><span class="KEYW">return</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>300</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>301</span> 
+<span class='line'>302</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>303</span> </span><span class="WHIT">				</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">[</span><span class="PUNC">]</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>304</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>305</span> 
+<span class='line'>306</span> </span><span class="WHIT">			</span><span class="NAME">this._filters.push</span><span class="PUNC">(</span><span class="NAME">newFilter</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>308</span> 
+<span class='line'>309</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>310</span> 		 * Add a new generator to the Pin. A pin can only have one generator
+<span class='line'>311</span> 		 * assigned. 
+<span class='line'>312</span> 		 * Assigning a new generator will replace the previously assigned 
+<span class='line'>313</span> 		 * generator.
+<span class='line'>314</span> 		 *
+<span class='line'>315</span> 		 * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
+<span class='line'>316</span> 		 * @see BO.generators.Oscillator
+<span class='line'>317</span> 		 */</span><span class="WHIT">
+<span class='line'>318</span> </span><span class="WHIT">		</span><span class="NAME">addGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">newGenerator</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>319</span> </span><span class="WHIT">			</span><span class="NAME">this.removeGenerator</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>320</span> </span><span class="WHIT">			</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">newGenerator</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>321</span> </span><span class="WHIT">			</span><span class="NAME">this._generator.addEventListener</span><span class="PUNC">(</span><span class="NAME">GeneratorEvent.UPDATE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._autoSetValueCallback</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>322</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>323</span> 
+<span class='line'>324</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>325</span> 		 * Removes the generator from the pin.
+<span class='line'>326</span> 		 */</span><span class="WHIT">
+<span class='line'>327</span> </span><span class="WHIT">		</span><span class="NAME">removeGenerator</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>328</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">!==</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>329</span> </span><span class="WHIT">				</span><span class="NAME">this._generator.removeEventListener</span><span class="PUNC">(</span><span class="NAME">GeneratorEvent.UPDATE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._autoSetValueCallback</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>330</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>331</span> </span><span class="WHIT">			</span><span class="NAME">this._generator</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">				
+<span class='line'>332</span> 		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>333</span> 
+<span class='line'>334</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>335</span> 		 * Removes all filters from the pin.
+<span class='line'>336</span> 		 */</span><span class="WHIT">
+<span class='line'>337</span> </span><span class="WHIT">		</span><span class="NAME">removeAllFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>338</span> </span><span class="WHIT">			</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>339</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>340</span> 
+<span class='line'>341</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>342</span> 		 * @private
+<span class='line'>343</span> 		 */</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="WHIT">		</span><span class="NAME">autoSetValue</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>345</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._generator.value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>346</span> </span><span class="WHIT">			</span><span class="NAME">this.value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>347</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>348</span> 
+<span class='line'>349</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>350</span> 		 * @private
+<span class='line'>351</span> 		 */</span><span class="WHIT">
+<span class='line'>352</span> </span><span class="WHIT">		</span><span class="NAME">applyFilters</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>353</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>354</span> 
+<span class='line'>355</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._filters</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">null</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>356</span> </span><span class="WHIT">			
+<span class='line'>357</span> 			</span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>358</span> </span><span class="WHIT">			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">len</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._filters.length</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>359</span> </span><span class="WHIT">			</span><span class="KEYW">for</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">len</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="NAME">i</span><span class="PUNC">++</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>360</span> </span><span class="WHIT">				</span><span class="NAME">result</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">this._filters</span><span class="PUNC">[</span><span class="NAME">i</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">processSample</span><span class="PUNC">(</span><span class="NAME">result</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>361</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>362</span> 
+<span class='line'>363</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">result</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>364</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>365</span> 
+<span class='line'>366</span> </span><span class="WHIT">		</span><span class="COMM">// Implement EventDispatcher</span><span class="WHIT">
+<span class='line'>367</span> </span><span class="WHIT">		
+<span class='line'>368</span> 		</span><span class="COMM">/**
+<span class='line'>369</span> 		 * @param {String} type The event type
+<span class='line'>370</span> 		 * @param {Function} listener The function to be called when the event is fired
+<span class='line'>371</span> 		 */</span><span class="WHIT">
+<span class='line'>372</span> </span><span class="WHIT">		</span><span class="NAME">addEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>373</span> </span><span class="WHIT">			</span><span class="NAME">this._evtDispatcher.addEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>374</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>375</span> </span><span class="WHIT">		
+<span class='line'>376</span> 		</span><span class="COMM">/**
+<span class='line'>377</span> 		 * @param {String} type The event type
+<span class='line'>378</span> 		 * @param {Function} listener The function to be called when the event is fired
+<span class='line'>379</span> 		 */</span><span class="WHIT">
+<span class='line'>380</span> </span><span class="WHIT">		</span><span class="NAME">removeEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>381</span> </span><span class="WHIT">			</span><span class="NAME">this._evtDispatcher.removeEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">listener</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>382</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>383</span> </span><span class="WHIT">		
+<span class='line'>384</span> 		</span><span class="COMM">/**
+<span class='line'>385</span> 		 * @param {String} type The event type
+<span class='line'>386</span> 		 * return {boolean} True is listener exists for this type, false if not.
+<span class='line'>387</span> 		 */</span><span class="WHIT">
+<span class='line'>388</span> </span><span class="WHIT">		</span><span class="NAME">hasEventListener</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>389</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._evtDispatcher.hasEventListener</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>390</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>391</span> 
+<span class='line'>392</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>393</span> 		 * @param {PinEvent} type The Event object
+<span class='line'>394</span> 		 * @param {Object} optionalParams Optional parameters to assign to the event object.
+<span class='line'>395</span> 		 * return {boolean} True if dispatch is successful, false if not.
+<span class='line'>396</span> 		 */</span><span class="WHIT">	
+<span class='line'>397</span> 		</span><span class="NAME">dispatchEvent</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>398</span> </span><span class="WHIT">			</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._evtDispatcher.dispatchEvent</span><span class="PUNC">(</span><span class="NAME">event</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">optionalParams</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>399</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">		
+<span class='line'>400</span> 			
+<span class='line'>401</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>402</span> 
+<span class='line'>403</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>404</span> </span><span class="WHIT">	</span><span class="NAME">Pin.HIGH</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>405</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>406</span> </span><span class="WHIT">	</span><span class="NAME">Pin.LOW</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>407</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>408</span> </span><span class="WHIT">	</span><span class="NAME">Pin.ON</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>409</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>410</span> </span><span class="WHIT">	</span><span class="NAME">Pin.OFF</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>411</span> 
+<span class='line'>412</span> </span><span class="WHIT">	</span><span class="COMM">// Pin modes</span><span class="WHIT">
+<span class='line'>413</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>414</span> </span><span class="WHIT">	</span><span class="NAME">Pin.DIN</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x00</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>415</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>416</span> </span><span class="WHIT">	</span><span class="NAME">Pin.DOUT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x01</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>417</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>418</span> </span><span class="WHIT">	</span><span class="NAME">Pin.AIN</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x02</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>419</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>420</span> </span><span class="WHIT">	</span><span class="NAME">Pin.AOUT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>421</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>422</span> </span><span class="WHIT">	</span><span class="NAME">Pin.PWM</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x03</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>423</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>424</span> </span><span class="WHIT">	</span><span class="NAME">Pin.SERVO</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x04</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>425</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>426</span> </span><span class="WHIT">	</span><span class="NAME">Pin.SHIFT</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x05</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>427</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>428</span> </span><span class="WHIT">	</span><span class="NAME">Pin.I2C</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0x06</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>429</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>430</span> </span><span class="WHIT">	</span><span class="NAME">Pin.TOTAL_PIN_MODES</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">7</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>431</span> 
+<span class='line'>432</span> 
+<span class='line'>433</span> </span><span class="WHIT">	</span><span class="COMM">// Document events</span><span class="WHIT">
+<span class='line'>434</span> 
+<span class='line'>435</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>436</span> 	 * The pinChange event is dispatched when the pin value changes.
+<span class='line'>437</span> 	 * @name Pin#pinChange
+<span class='line'>438</span> 	 * @type BO.PinEvent.CHANGE
+<span class='line'>439</span> 	 * @event
+<span class='line'>440</span> 	 * @param {BO.Pin} target A reference to the Pin object.
+<span class='line'>441</span> 	 */</span><span class="WHIT">
+<span class='line'>442</span> 
+<span class='line'>443</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>444</span> 	 * The risingEdge event is dispatched when the pin value increased (from 0 to 1).
+<span class='line'>445</span> 	 * @name Pin#risingEdge
+<span class='line'>446</span> 	 * @type BO.PinEvent.RISING_EDGE
+<span class='line'>447</span> 	 * @event
+<span class='line'>448</span> 	 * @param {BO.Pin} target A reference to the Pin object.
+<span class='line'>449</span> 	 */</span><span class="WHIT">	
+<span class='line'>450</span> 	 
+<span class='line'>451</span> 	</span><span class="COMM">/**
+<span class='line'>452</span> 	 * The change event is dispatched when the pin value decreased (from 1 to 0).
+<span class='line'>453</span> 	 * @name Pin#fallingEdge
+<span class='line'>454</span> 	 * @type BO.PinEvent.FALLING_EDGE
+<span class='line'>455</span> 	 * @event
+<span class='line'>456</span> 	 * @param {BO.Pin} target A reference to the Pin object.
+<span class='line'>457</span> 	 */</span><span class="WHIT">		 	 
+<span class='line'>458</span> 
+<span class='line'>459</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>460</span> 
+<span class='line'>461</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>462</span> </span></pre></body></html>

@@ -716,7 +716,6 @@ BO.IOBoard = (function() {
 		 * Query the current configuration and state of any pin. Making this
 		 * private for now.
 		 * 
-		 * @private
 		 * @param {Pin} pin The Pin to be queried
 		 */
 		function queryPinState(pin) {

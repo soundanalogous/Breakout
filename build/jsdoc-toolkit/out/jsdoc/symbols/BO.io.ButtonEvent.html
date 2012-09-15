@@ -1,0 +1,623 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="JsDoc Toolkit" />
+		
+		<title>JsDoc Reference - BO.io.ButtonEvent</title>
+
+		<style type="text/css">
+			/* default.css */
+body
+{
+	font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+	width: 850px;
+}
+
+a
+{
+	color: #333333;
+	text-decoration:none;
+}
+
+a:hover
+{
+	color: #FF6623;
+}
+
+#header
+{
+	/*background: #F7F7F7;*/
+	display:block;
+	border-bottom: 1px dotted #8C8C8C;
+}
+
+.header_links
+{
+	padding-left: 20px;
+	font-weight: normal;
+}
+
+#links
+{
+	float: right;
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: 25px;
+}
+
+#logo
+{
+	padding: 10px 0px 10px 10px;
+}
+
+.header
+{
+	clear: both;
+	background-color: #ccc;
+	padding: 8px;
+}
+
+h1
+{
+	font-size: 150%;
+	color: #333333;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0 0 .3em;
+}
+
+hr
+{
+	border: none 0;
+	border-top: 1px dotted #8C8C8C;
+	height: 1px;
+}
+
+pre.code
+{
+	display: block;
+	padding: 8px;
+	border: 1px solid #ccc;
+	background-color: #F7F7F7;
+}
+
+#index
+{
+	margin-top: 0px;
+	float: left;
+	/*width: 160px;*/
+	width: 220px;
+	position: absolute;
+	left: 8px;
+	/*background-color: #F7F7F7;*/
+	border-right: 1px dotted #8C8C8C;
+	padding: 8px;
+}
+
+#content
+{
+	/*margin-left: 190px;*/
+	color: #000000;
+	margin-left: 250px;
+	width: 600px;
+}
+
+#content a
+{
+	color: #FF6623;
+}
+
+#content #class_desc {
+
+}
+
+.classList
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	font-family: arial, sans-serif;
+	font-size: 1em;
+	overflow: auto;
+}
+
+.classList li
+{
+	padding: 4px 0 4px 8px;
+}
+
+.classList li:nth-child(odd) {
+	background-color: #F7F7F7;
+}
+
+.summaryTable { width: 100%; }
+
+h1.classTitle
+{
+	color: #333333;
+	font-size:170%;
+	line-height:130%;
+}
+
+h2 { font-size: 110%; }
+caption, div.sectionTitle
+{
+	background-color: #8C8C8C;
+	color: #fff;
+	font-size:130%;
+	text-align: left;
+	padding: 2px 6px 2px 6px;
+	border: 1px #8C8C8C solid;
+}
+
+div.sectionTitle 
+{ 
+	margin-bottom: 8px; 
+}
+
+.summaryTable thead { display: none; }
+
+.summaryTable td
+{
+	vertical-align: top;
+	padding: 4px;
+	border-bottom: 1px #8C8C8C solid;
+	border-right: 1px #8C8C8C solid;
+}
+
+/*col#summaryAttributes {}*/
+.summaryTable td.attributes
+{
+	border-left: 1px #8C8C8C solid;
+	width: 140px;
+	text-align: right;
+}
+
+td.attributes, .fixedFont
+{
+	line-height: 15px;
+	color: #111111;
+	font-family: "Courier New",Courier,monospace;
+	font-size: 13px;
+}
+
+.summaryTable td.nameDescription
+{
+	text-align: left;
+	font-size: 13px;
+	line-height: 15px;
+}
+
+.summaryTable td.nameDescription, .description
+{
+	line-height: 15px;
+	padding: 4px;
+	padding-left: 4px;
+}
+
+.summaryTable { margin-bottom: 8px; }
+
+ul.inheritsList
+{
+	list-style: square;
+	margin-left: 20px;
+	padding-left: 0;
+}
+
+.detailList {
+	margin-left: 20px; 
+	line-height: 15px;
+}
+.detailList dt { margin-left: 20px; }
+
+.detailList .heading
+{
+	font-weight: bold;
+	padding-bottom: 6px;
+	margin-left: 0;
+}
+
+.light, td.attributes, .light a:link, .light a:visited
+{
+	color: #333333;
+	font-style: italic;
+}
+
+.fineprint
+{
+	text-align: right;
+	font-size: 10px;
+}
+		</style>
+	</head>
+
+	<body>
+<!-- ============================== header ================================= -->	
+		<!-- begin static/header.html -->
+		<div id="header">
+<a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+<div id="links">
+<a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+<a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+<a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+<a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+</div>
+</div>
+		<!-- end static/header.html -->
+
+<!-- ============================== classes index ============================ -->
+		<div id="index">
+			<!-- begin publish.classesIndex -->
+			<div align="center"><a href="../index.html">Class Index</a>
+| <a href="../files.html">File Index</a></div>
+<hr />
+<h2>Classes</h2>
+<ul class="classList">
+	
+	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
+	
+	<li><a href="../symbols/BO.html">BO</a></li>
+	
+	<li><a href="../symbols/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+	
+	<li><a href="../symbols/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+	
+	<li><a href="../symbols/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+	
+	<li><a href="../symbols/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+	
+	<li><a href="../symbols/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+	
+	<li><a href="../symbols/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+	
+	<li><a href="../symbols/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+	
+	<li><a href="../symbols/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+	
+	<li><a href="../symbols/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+	
+	<li><a href="../symbols/BO.I2CBase.html">BO.I2CBase</a></li>
+	
+	<li><a href="../symbols/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+	
+	<li><a href="../symbols/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+	
+	<li><a href="../symbols/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+	
+	<li><a href="../symbols/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+	
+	<li><a href="../symbols/BO.io.Button.html">BO.io.Button</a></li>
+	
+	<li><a href="../symbols/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+	
+	<li><a href="../symbols/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+	
+	<li><a href="../symbols/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+	
+	<li><a href="../symbols/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+	
+	<li><a href="../symbols/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+	
+	<li><a href="../symbols/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+	
+	<li><a href="../symbols/BO.io.LED.html">BO.io.LED</a></li>
+	
+	<li><a href="../symbols/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+	
+	<li><a href="../symbols/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+	
+	<li><a href="../symbols/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+	
+	<li><a href="../symbols/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+	
+	<li><a href="../symbols/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+	
+	<li><a href="../symbols/BO.io.Servo.html">BO.io.Servo</a></li>
+	
+	<li><a href="../symbols/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+	
+	<li><a href="../symbols/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+	
+	<li><a href="../symbols/BO.IOBoard.html">BO.IOBoard</a></li>
+	
+	<li><a href="../symbols/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+	
+	<li><a href="../symbols/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+	
+	<li><a href="../symbols/BO.Pin.html">BO.Pin</a></li>
+	
+	<li><a href="../symbols/BO.PinEvent.html">BO.PinEvent</a></li>
+	
+	<li><a href="../symbols/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+	
+	<li><a href="../symbols/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+	
+	<li><a href="../symbols/JSUTILS.html">JSUTILS</a></li>
+	
+	<li><a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a></li>
+	
+	<li><a href="../symbols/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+	
+	<li><a href="../symbols/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+	
+	<li><a href="../symbols/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+	
+	<li><a href="../symbols/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+	
+</ul>
+<hr />
+			<!-- end publish.classesIndex -->
+		</div>
+		
+		<div id="content">
+<!-- ============================== class title ============================ -->
+			<h1 class="classTitle">
+				
+				Class BO.io.ButtonEvent
+			</h1>
+
+<!-- ============================== class summary ========================== -->			
+			<p class="description">
+				
+				<br />Extends
+					<a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a>.<br />
+				
+			
+				<div id="class_desc">An Event object to be dispatched (fired) by a Button
+object.</div>
+				
+				
+					<br /><i>Defined in: </i> <a href="../symbols/src/Breakout_src_io_ButtonEvent.js.html">ButtonEvent.js</a>.
+				
+			</p>
+
+<!-- ============================== constructor summary ==================== -->			
+			
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class BO.io.ButtonEvent.">
+				<caption>Class Summary</caption>
+				<thead>
+					<tr>
+						<th scope="col">Constructor Attributes</th>
+						<th scope="col">Constructor Name and Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="attributes">&nbsp;</td>
+						<td class="nameDescription" >
+							<div class="fixedFont">
+								<b><a href="../symbols/BO.io.ButtonEvent.html#constructor">BO.io.ButtonEvent</a></b>(type)
+							</div>
+							<div class="description"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+
+<!-- ============================== properties summary ===================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class BO.io.ButtonEvent.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BO.io.ButtonEvent.<b><a href="../symbols/BO.io.ButtonEvent.html#.LONG_PRESS">LONG_PRESS</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BO.io.ButtonEvent.<b><a href="../symbols/BO.io.ButtonEvent.html#.PRESS">PRESS</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BO.io.ButtonEvent.<b><a href="../symbols/BO.io.ButtonEvent.html#.RELEASE">RELEASE</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &lt;constant&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								BO.io.ButtonEvent.<b><a href="../symbols/BO.io.ButtonEvent.html#.SUSTAINED_PRESS">SUSTAINED_PRESS</a></b>
+								</div>
+								<div class="description"></div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
+				<dl class="inheritsList">
+				<dt>Fields borrowed from class <a href="../symbols/JSUTILS.Event.html">JSUTILS.Event</a>: </dt><dd><a href="../symbols/JSUTILS.Event.html#target">target</a>, <a href="../symbols/JSUTILS.Event.html#type">type</a></dd>
+				</dl>
+				
+			
+
+<!-- ============================== methods summary ======================== -->
+			
+<!-- ============================== events summary ======================== -->
+			
+
+<!-- ============================== constructor details ==================== -->		
+			
+			<div class="details"><a name="constructor"> </a>
+				<div class="sectionTitle">
+					Class Detail
+				</div>
+				
+				<div class="fixedFont">
+						<b>BO.io.ButtonEvent</b>(type)
+				</div>
+				
+				<div class="description">
+					
+					
+				</div>
+				
+				
+				
+				
+					
+						<dl class="detailList">
+						<dt class="heading">Parameters:</dt>
+						
+							<dt>
+								<span class="light fixedFont">{String}</span>  <b>type</b>
+								
+							</dt>
+								<dd>The event type</dd>
+						
+						</dl>
+					
+					
+					
+					
+					
+					
+					
+
+			</div>
+			
+
+<!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name=".LONG_PRESS"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">BO.io.ButtonEvent.</span><b>LONG_PRESS</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".PRESS"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">BO.io.ButtonEvent.</span><b>PRESS</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".RELEASE"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">BO.io.ButtonEvent.</span><b>RELEASE</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					<hr />
+				
+					<a name=".SUSTAINED_PRESS"> </a>
+					<div class="fixedFont">&lt;static&gt; &lt;constant&gt; 
+					
+					
+					<span class="light">BO.io.ButtonEvent.</span><b>SUSTAINED_PRESS</b>
+					
+					</div>
+					<div class="description">
+						
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+
+					
+				
+			
+
+<!-- ============================== method details ========================= -->		
+			
+			
+<!-- ============================== event details ========================= -->		
+			
+			
+			<hr />
+		</div>
+
+		
+<!-- ============================== footer ================================= -->
+		<div class="fineprint" style="clear:both">
+			
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.4.0 on Mon Sep 03 2012 15:40:52 GMT-0400 (EDT)
+		</div>
+	</body>
+</html>

@@ -1,0 +1,142 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="WHIT"> </span><span class="COMM">/**
+<span class='line'>  2</span>  * Based on RGBLED.as originally written in as3.
+<span class='line'>  3</span>  * Copyright (c) the Funnel development team
+<span class='line'>  4</span>  * http://www.funnel.cc
+<span class='line'>  5</span>  *
+<span class='line'>  6</span>  * Ported to JavaScript by Jeff Hoefs
+<span class='line'>  7</span>  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com>
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
+<span class='line'> 10</span>  */</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.RGBLED'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> 
+<span class='line'> 14</span> </span><span class="NAME">BO.io.RGBLED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 15</span> 
+<span class='line'> 16</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">RGBLED</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> 
+<span class='line'> 18</span> </span><span class="WHIT">	</span><span class="COMM">// Dependencies</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">		</span><span class="NAME">LED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.LED</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> 
+<span class='line'> 22</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 23</span> 	 * The RGB pins of the RGBLED must be connected to PWM pins on the IOBoard.
+<span class='line'> 24</span> 	 *
+<span class='line'> 25</span> 	 * &lt;p>COMMON_ANODE vs COMMON_CATHODE. You can determine if your RGB LED is 
+<span class='line'> 26</span> 	 * common anode or common cathode by reading the datasheet. To wire a 
+<span class='line'> 27</span> 	 * common cathode RGB LED, connect the cathode to ground and the 3 anode
+<span class='line'> 28</span> 	 * pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
+<span class='line'> 29</span> 	 * LED, the anode is connected to power and the 3 cathode pins are connected
+<span class='line'> 30</span> 	 * to the IOBoard PWM pins via 330 ohm resistors.&lt;/p>
+<span class='line'> 31</span> 	 *
+<span class='line'> 32</span> 	 * @exports RGBLED as BO.io.RGBLED
+<span class='line'> 33</span> 	 * @class Creates an interface to an RGB LED. This interface is for the
+<span class='line'> 34</span> 	 * type of RGB LED with 4 legs. One leg is connected to power or ground 
+<span class='line'> 35</span> 	 * (depending on the type of LED - common anode or common cathode) and the
+<span class='line'> 36</span> 	 * other 3 legs are connected to PWM pins on the I/O board. See 
+<span class='line'> 37</span> 	 * Breakout/examples/schematics.pdf for wiring diagrams. See 
+<span class='line'> 38</span> 	 * Breakout/examples/actuators/rgb_led.html for an example application.
+<span class='line'> 39</span> 	 * @constructor
+<span class='line'> 40</span> 	 * @param {IOBoard} board A reference to the IOBoard instance that the
+<span class='line'> 41</span> 	 * servo is attached to.
+<span class='line'> 42</span> 	 * @param {Pin} redLEDPin A reference to the IOBoard Pin the red LED pin
+<span class='line'> 43</span> 	 * is connected to.
+<span class='line'> 44</span> 	 * @param {Pin} greenLEDPin A reference to the IOBoard Pin the green LED
+<span class='line'> 45</span> 	 * pin is connected to.
+<span class='line'> 46</span> 	 * @param {Pin} blueLEDPin A reference to the IOBoard Pin the blue LED pin
+<span class='line'> 47</span> 	 * is connected to.	 
+<span class='line'> 48</span> 	 * @param {Number} driveMode The drive mode of the RGBLED. Must be set to
+<span class='line'> 49</span> 	 * RGBLED.COMMON_ANODE or RGBLED.COMMON_CATHODE. RGBLED.COMMON_ANODE is
+<span class='line'> 50</span> 	 * default.
+<span class='line'> 51</span> 	 */</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">	</span><span class="NAME">RGBLED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">redLEDPin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">greenLEDPin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">blueLEDPin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">driveMode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">		</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> </span><span class="WHIT">		
+<span class='line'> 55</span> 		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"RGBLED"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> 
+<span class='line'> 57</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">driveMode</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="NAME">undefined</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="NAME">driveMode</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">RGBLED.COMMON_ANODE</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 58</span> 
+<span class='line'> 59</span> </span><span class="WHIT">		</span><span class="NAME">this._redLED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">LED</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">redLEDPin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">driveMode</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">		</span><span class="NAME">this._greenLED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">LED</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">greenLEDPin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">driveMode</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">		</span><span class="NAME">this._blueLED</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">LED</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">blueLEDPin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">driveMode</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> 
+<span class='line'> 64</span> </span><span class="WHIT">	</span><span class="NAME">RGBLED.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 65</span> 
+<span class='line'> 66</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 67</span> 		 * Set the RGBLED color.
+<span class='line'> 68</span> 		 * 
+<span class='line'> 69</span> 		 * @param {Number} red The red value (0 - 255)
+<span class='line'> 70</span> 		 * @param {Number} green The green value (0 - 255)
+<span class='line'> 71</span> 		 * @param {Number} blue The blue value (0 - 255)
+<span class='line'> 72</span> 		 */</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">		</span><span class="NAME">setColor</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">red</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">green</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">blue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">			</span><span class="NAME">red</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">red</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> </span><span class="WHIT">			</span><span class="NAME">green</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">green</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="WHIT">			</span><span class="NAME">blue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">blue</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 77</span> 
+<span class='line'> 78</span> </span><span class="WHIT">			</span><span class="NAME">this._redLED.intensity</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">red</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">			</span><span class="NAME">this._greenLED.intensity</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">green</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">			</span><span class="NAME">this._blueLED.intensity</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">blue</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 82</span> 
+<span class='line'> 83</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 84</span> 		 * Fade in the RGBLED from the off state.
+<span class='line'> 85</span> 		 * 
+<span class='line'> 86</span> 		 * @param {Number} time The time of the fade (in milliseconds)
+<span class='line'> 87</span> 		 */</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">		</span><span class="NAME">fadeIn</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">time</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">			</span><span class="NAME">time</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">time</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">			</span><span class="NAME">this._redLED.fadeTo</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">			</span><span class="NAME">this._greenLED.fadeTo</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">			</span><span class="NAME">this._blueLED.fadeTo</span><span class="PUNC">(</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 94</span> 
+<span class='line'> 95</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'> 96</span> 		 * Fade out the RGBLED from the on state.
+<span class='line'> 97</span> 		 * 
+<span class='line'> 98</span> 		 * @param {Number} time The time of the fade (in milliseconds)
+<span class='line'> 99</span> 		 */</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">		</span><span class="NAME">fadeOut</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">time</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">			</span><span class="NAME">time</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">time</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">			</span><span class="NAME">this._redLED.fadeTo</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">			</span><span class="NAME">this._greenLED.fadeTo</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">			</span><span class="NAME">this._blueLED.fadeTo</span><span class="PUNC">(</span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">			
+<span class='line'>105</span> 		</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>106</span> 
+<span class='line'>107</span> </span><span class="WHIT">		</span><span class="COMM">/**
+<span class='line'>108</span> 		 * Fade from the current color to the new color.
+<span class='line'>109</span> 		 * 
+<span class='line'>110</span> 		 * @param {Number} red The red value to fade to (0 - 255)
+<span class='line'>111</span> 		 * @param {Number} green The green value to fade to (0 - 255)
+<span class='line'>112</span> 		 * @param {Number} blue The blue value to fade to (0 - 255)
+<span class='line'>113</span> 		 * @param {Number} time The time of the fade (in milliseconds)		 
+<span class='line'>114</span> 		 */</span><span class="WHIT">		
+<span class='line'>115</span> 		</span><span class="NAME">fadeTo</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">red</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">green</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">blue</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">			</span><span class="NAME">red</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">red</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">			</span><span class="NAME">green</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">green</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>118</span> </span><span class="WHIT">			</span><span class="NAME">blue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">blue</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NUMB">255</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">			</span><span class="NAME">time</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">time</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">1000</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>120</span> 
+<span class='line'>121</span> </span><span class="WHIT">			</span><span class="NAME">this._redLED.fadeTo</span><span class="PUNC">(</span><span class="NAME">red</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>122</span> </span><span class="WHIT">			</span><span class="NAME">this._greenLED.fadeTo</span><span class="PUNC">(</span><span class="NAME">green</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">			</span><span class="NAME">this._blueLED.fadeTo</span><span class="PUNC">(</span><span class="NAME">blue</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">time</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>124</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>125</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>126</span> 
+<span class='line'>127</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>128</span> </span><span class="WHIT">	</span><span class="NAME">RGBLED.COMMON_ANODE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">LED.SYNC_DRIVE</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">	</span><span class="COMM">/** @constant */</span><span class="WHIT">
+<span class='line'>130</span> </span><span class="WHIT">	</span><span class="NAME">RGBLED.COMMON_CATHODE</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">LED.SOURCE_DRIVE</span><span class="PUNC">;</span><span class="WHIT">				
+<span class='line'>131</span> 
+<span class='line'>132</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">RGBLED</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>133</span> 
+<span class='line'>134</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span></pre></body></html>

@@ -1,0 +1,382 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com>
+<span class='line'>  3</span>  * Released under the MIT license. See LICENSE file for details.
+<span class='line'>  4</span>  */</span><span class="WHIT">
+<span class='line'>  5</span> 
+<span class='line'>  6</span> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.io.SoftPot'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> 
+<span class='line'>  8</span> </span><span class="NAME">BO.io.SoftPot</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  9</span> 
+<span class='line'> 10</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">SoftPot</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> </span><span class="WHIT">	</span><span class="COMM">// private static constants:</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT">	</span><span class="NAME">TAP_TIMEOUT</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">200</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="WHIT">		</span><span class="NAME">FLICK_TIMEOUT</span><span class="WHIT">			</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">200</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">		</span><span class="NAME">PRESS_TIMER_INTERVAL</span><span class="WHIT">	</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">10</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">		</span><span class="NAME">MIN_VALUE</span><span class="WHIT">				</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0.01</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">		</span><span class="NAME">DEBOUNCE_TIMEOUT</span><span class="WHIT">		</span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">20</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 18</span> 
+<span class='line'> 19</span> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">PhysicalInputBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.PhysicalInputBase</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">		</span><span class="NAME">Pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.Pin</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">		</span><span class="NAME">PinEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.PinEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">		</span><span class="NAME">Scaler</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.filters.Scaler</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">		</span><span class="NAME">Timer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.Timer</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">		</span><span class="NAME">TimerEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.TimerEvent</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">		</span><span class="NAME">SoftPotEvent</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.io.SoftPotEvent</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 27</span> 
+<span class='line'> 28</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 29</span> 	 * A softpot analog sensor.
+<span class='line'> 30</span> 	 *
+<span class='line'> 31</span> 	 * @exports SoftPot as BO.io.SoftPot
+<span class='line'> 32</span> 	 * @class Creates an interface to a SoftPot sensor. A softpot is a type of
+<span class='line'> 33</span> 	 * analog resistive sensor that acts as a type of slider input. There are 
+<span class='line'> 34</span> 	 * straight and curved variations. This object provides a number of useful 
+<span class='line'> 35</span> 	 * events such as Press, Release, Drag, Tap and capturing Flick gestures.
+<span class='line'> 36</span> 	 * See Breakout/examples/sensors/softpot.html for an example application.
+<span class='line'> 37</span> 	 * @constructor
+<span class='line'> 38</span> 	 * @augments BO.PhysicalInputBase
+<span class='line'> 39</span> 	 * @param {IOBoard} board A reference to the IOBoard instance
+<span class='line'> 40</span> 	 * @param {Pin} pin A reference to the Pin the softpot is connected to.
+<span class='line'> 41</span> 	 * @param {Number} softPotLength The length of the softpot in mm. 
+<span class='line'> 42</span> 	 * Default = 100. 
+<span class='line'> 43</span> 	 */</span><span class="WHIT">
+<span class='line'> 44</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">board</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">softPotLength</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">		</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 46</span> </span><span class="WHIT">		
+<span class='line'> 47</span> 		</span><span class="NAME">PhysicalInputBase.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 48</span> 
+<span class='line'> 49</span> </span><span class="WHIT">		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"SoftPot"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 50</span> </span><span class="WHIT">		</span><span class="NAME">this._pin</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">pin</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 51</span> 
+<span class='line'> 52</span> </span><span class="WHIT">		</span><span class="NAME">softPotLength</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">softPotLength</span><span class="WHIT"> </span><span class="PUNC">||</span><span class="WHIT"> </span><span class="NUMB">100</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> 
+<span class='line'> 54</span> </span><span class="WHIT">		</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 55</span> </span><span class="WHIT">		</span><span class="NAME">this._flickDistance</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 56</span> </span><span class="WHIT">		</span><span class="NAME">this._touchPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 57</span> </span><span class="WHIT">		</span><span class="NAME">this._lastMovePoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 58</span> </span><span class="WHIT">		</span><span class="NAME">this._isTouched</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">		</span><span class="NAME">this._distanceFromPressed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">		</span><span class="NAME">this._minFlickMovement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1.0</span><span class="PUNC">/</span><span class="NAME">softPotLength</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NUMB">2.5</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">		</span><span class="NAME">this._minDragMovement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1.0</span><span class="PUNC">/</span><span class="NAME">softPotLength</span><span class="WHIT"> </span><span class="PUNC">*</span><span class="WHIT"> </span><span class="NUMB">1.0</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 62</span> </span><span class="WHIT">		</span><span class="NAME">this._tapTimeout</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">TAP_TIMEOUT</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 63</span> </span><span class="WHIT">		</span><span class="NAME">this._minValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">MIN_VALUE</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> </span><span class="WHIT">		
+<span class='line'> 65</span> 		</span><span class="NAME">this._board</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">board</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">		</span><span class="NAME">board.enableAnalogPin</span><span class="PUNC">(</span><span class="NAME">this._pin.analogNumber</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 67</span> 
+<span class='line'> 68</span> </span><span class="WHIT">		</span><span class="NAME">this._debugMode</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BO.enableDebugging</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 69</span> </span><span class="WHIT">						
+<span class='line'> 70</span> 		</span><span class="NAME">this._pin.addEventListener</span><span class="PUNC">(</span><span class="NAME">PinEvent.CHANGE</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this.onPinChange.bind</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 71</span> 
+<span class='line'> 72</span> </span><span class="WHIT">		</span><span class="NAME">this._pressTimer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Timer</span><span class="PUNC">(</span><span class="NAME">PRESS_TIMER_INTERVAL</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">		</span><span class="NAME">this._flickTimer</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Timer</span><span class="PUNC">(</span><span class="NAME">FLICK_TIMEOUT</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 74</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 75</span> 
+<span class='line'> 76</span> 
+<span class='line'> 77</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">PhysicalInputBase.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">SoftPot</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 79</span> 
+<span class='line'> 80</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 81</span> 	 * @private
+<span class='line'> 82</span> 	 * @param {Event} evt PinEvent.CHANGE
+<span class='line'> 83</span> 	 */</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.onPinChange</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">evt</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 85</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">evt.target.value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 86</span> 
+<span class='line'> 87</span> </span><span class="WHIT">		</span><span class="COMM">// _minValue is the minimum value required to set the release state</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">		</span><span class="COMM">// should be as close to zero as possible</span><span class="WHIT">
+<span class='line'> 89</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._isTouched</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">&lt;</span><span class="WHIT"> </span><span class="NAME">this._minValue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 90</span> </span><span class="WHIT">			</span><span class="NAME">this.onRelease</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 91</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">val</span><span class="WHIT"> </span><span class="PUNC">>=</span><span class="WHIT"> </span><span class="NAME">this._minValue</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 92</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this._isTouched</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 93</span> </span><span class="WHIT">				</span><span class="NAME">this.startTouch</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 94</span> </span><span class="WHIT">				</span><span class="NAME">this._lastMovePoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 96</span> </span><span class="WHIT">				</span><span class="NAME">this.onMove</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 97</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>100</span> 
+<span class='line'>101</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>102</span> 	 * @private
+<span class='line'>103</span> 	 * @param {Number} touchPoint The value where the touch is occuring on the
+<span class='line'>104</span> 	 * strip
+<span class='line'>105</span> 	 */</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.setMinFlickMovement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">num</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">		</span><span class="NAME">this._minFlickMovement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">num</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>108</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>109</span> </span><span class="WHIT">	
+<span class='line'>110</span> 	</span><span class="COMM">/**
+<span class='line'>111</span> 	 * @private
+<span class='line'>112</span> 	 */</span><span class="WHIT">
+<span class='line'>113</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.startTouch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">touchPoint</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>114</span> </span><span class="WHIT">		
+<span class='line'>115</span> 		</span><span class="NAME">this._pressTimer.reset</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>116</span> </span><span class="WHIT">		</span><span class="NAME">this._pressTimer.start</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>117</span> </span><span class="WHIT">		
+<span class='line'>118</span> 		</span><span class="COMM">// where we pressed</span><span class="WHIT">
+<span class='line'>119</span> </span><span class="WHIT">		</span><span class="NAME">this._touchPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">touchPoint</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>120</span> </span><span class="WHIT">		</span><span class="NAME">this.dispatch</span><span class="PUNC">(</span><span class="NAME">SoftPotEvent.PRESS</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">		
+<span class='line'>122</span> 		</span><span class="NAME">this._isTouched</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>123</span> </span><span class="WHIT">		</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>124</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>125</span> 
+<span class='line'>126</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>127</span> 	 * @private
+<span class='line'>128</span> 	 */</span><span class="WHIT">
+<span class='line'>129</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.onRelease</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">		
+<span class='line'>130</span> 
+<span class='line'>131</span> 			</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dispatchedFlick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>132</span> 			
+<span class='line'>133</span> 			</span><span class="COMM">// discard unintentional touch / noise</span><span class="WHIT">
+<span class='line'>134</span> </span><span class="WHIT">			</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._pressTimer.currentCount</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">DEBOUNCE_TIMEOUT</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NAME">PRESS_TIMER_INTERVAL</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">				</span><span class="COMM">// must meet minimum time requirement for flick  </span><span class="WHIT">
+<span class='line'>136</span> </span><span class="WHIT">				</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._flickTimer.running</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>137</span> </span><span class="WHIT">					</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._flickDir</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>138</span> </span><span class="WHIT">						</span><span class="NAME">this.dispatch</span><span class="PUNC">(</span><span class="NAME">SoftPotEvent.FLICK_DOWN</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>140</span> </span><span class="WHIT">						</span><span class="NAME">this.dispatch</span><span class="PUNC">(</span><span class="NAME">SoftPotEvent.FLICK_UP</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>141</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="WHIT">	
+<span class='line'>142</span> 					</span><span class="NAME">dispatchedFlick</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>143</span> 					
+<span class='line'>144</span> 				</span><span class="PUNC">}</span><span class="WHIT"> 
+<span class='line'>145</span> 							
+<span class='line'>146</span> 				</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">dispatchedFlick</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>147</span> </span><span class="WHIT">					</span><span class="COMM">// Check for presses  </span><span class="WHIT">
+<span class='line'>148</span> </span><span class="WHIT">					</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._pressTimer.running</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>149</span> </span><span class="WHIT">				
+<span class='line'>150</span> 						</span><span class="COMM">// If less than tap timeout, then it is a tap </span><span class="WHIT">
+<span class='line'>151</span> </span><span class="WHIT">						</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this._pressTimer.currentCount</span><span class="WHIT"> </span><span class="PUNC">&lt;=</span><span class="WHIT"> </span><span class="NAME">this._tapTimeout</span><span class="WHIT"> </span><span class="PUNC">/</span><span class="WHIT"> </span><span class="NAME">PRESS_TIMER_INTERVAL</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>152</span> </span><span class="WHIT">							</span><span class="NAME">this.dispatch</span><span class="PUNC">(</span><span class="NAME">SoftPotEvent.TAP</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>153</span> </span><span class="WHIT">						</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">					</span><span class="PUNC">}</span><span class="WHIT"> 
+<span class='line'>155</span> 				</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>156</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>157</span> 
+<span class='line'>158</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatch</span><span class="PUNC">(</span><span class="NAME">SoftPotEvent.RELEASE</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>159</span> 
+<span class='line'>160</span> </span><span class="WHIT">			</span><span class="NAME">this.resetForNext</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>161</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>162</span> </span><span class="WHIT">	
+<span class='line'>163</span> 	</span><span class="COMM">/**
+<span class='line'>164</span> 	 * @private
+<span class='line'>165</span> 	 * @param {Number} touchPoint The value where the touch is occuring on the
+<span class='line'>166</span> 	 * strip
+<span class='line'>167</span> 	 */</span><span class="WHIT">
+<span class='line'>168</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.onMove</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">touchPoint</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">		
+<span class='line'>169</span> 	
+<span class='line'>170</span> 		</span><span class="NAME">this._touchPoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">touchPoint</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>171</span> 		</span><span class="COMM">// Save current point</span><span class="WHIT">
+<span class='line'>172</span> </span><span class="WHIT">		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">curMovePoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">touchPoint</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">		
+<span class='line'>174</span> 		</span><span class="COMM">// Flick handeling </span><span class="WHIT">
+<span class='line'>175</span> </span><span class="WHIT">		</span><span class="NAME">this._flickDistance</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.abs</span><span class="PUNC">(</span><span class="NAME">curMovePoint</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">this._lastMovePoint</span><span class="PUNC">)</span><span class="WHIT"> 
+<span class='line'>176</span> 		
+<span class='line'>177</span> 		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">this._flickDistance</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">this._minFlickMovement</span><span class="WHIT"> </span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>178</span> </span><span class="WHIT">			</span><span class="NAME">this._flickTimer.reset</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>179</span> 			</span><span class="NAME">this._flickTimer.start</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>180</span> 			
+<span class='line'>181</span> 			</span><span class="KEYW">if</span><span class="PUNC">(</span><span class="NAME">curMovePoint</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">this._lastMovePoint</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>182</span> </span><span class="WHIT">				</span><span class="NAME">this._flickDir</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>183</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>184</span> </span><span class="WHIT">				</span><span class="NAME">this._flickDir</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">			</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>186</span> </span><span class="WHIT">			
+<span class='line'>187</span> 			</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>188</span> 		</span><span class="PUNC">}</span><span class="WHIT">			
+<span class='line'>189</span> 		
+<span class='line'>190</span> 		</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">dragDistance</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">Math.abs</span><span class="PUNC">(</span><span class="NAME">curMovePoint</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">this._lastMovePoint</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">				
+<span class='line'>191</span> 
+<span class='line'>192</span> 		</span><span class="COMM">// Dragging handler </span><span class="WHIT">
+<span class='line'>193</span> </span><span class="WHIT">		</span><span class="COMM">// Don't check when flick timer is running</span><span class="WHIT">
+<span class='line'>194</span> </span><span class="WHIT">		</span><span class="COMM">//console.log("min drag = " + this._minDragMovement);</span><span class="WHIT">
+<span class='line'>195</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">(</span><span class="NAME">dragDistance</span><span class="WHIT"> </span><span class="PUNC">></span><span class="WHIT"> </span><span class="NAME">this._minDragMovement</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._flickTimer.running</span><span class="WHIT"> </span><span class="PUNC">===</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>196</span> </span><span class="WHIT">			</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>197</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>198</span> </span><span class="WHIT">		
+<span class='line'>199</span> 		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._isDrag</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>200</span> </span><span class="WHIT">			</span><span class="NAME">this.dispatch</span><span class="PUNC">(</span><span class="NAME">SoftPotEvent.DRAG</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>201</span> </span><span class="WHIT">			</span><span class="NAME">this._distanceFromPressed</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">curMovePoint</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="WHIT"> </span><span class="NAME">this._lastMovePoint</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>202</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">								
+<span class='line'>204</span> 		</span><span class="NAME">this.debug</span><span class="PUNC">(</span><span class="STRN">"SoftPot: distance traveled flick is "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">this._flickDistance</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>205</span> 		</span><span class="NAME">this.debug</span><span class="PUNC">(</span><span class="STRN">"SoftPot: distance traveled drag is "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">dragDistance</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>206</span> 
+<span class='line'>207</span> 		</span><span class="COMM">// Reuse for next </span><span class="WHIT">
+<span class='line'>208</span> </span><span class="WHIT">		</span><span class="NAME">this._lastMovePoint</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">curMovePoint</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>209</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>210</span> 
+<span class='line'>211</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>212</span> 	 * Scale from the minimum and maximum input values to 0.0 -> 1.0.
+<span class='line'>213</span> 	 *
+<span class='line'>214</span> 	 * @param {Number} minimum The minimum value
+<span class='line'>215</span> 	 * @param {Number} maximum The maximum value
+<span class='line'>216</span> 	 */</span><span class="WHIT">
+<span class='line'>217</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.setRange</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">minimum</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">maximum</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>218</span> </span><span class="WHIT">		</span><span class="NAME">this._pin.removeAllFilters</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>219</span> </span><span class="WHIT">		</span><span class="NAME">this._pin.addFilter</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">Scaler</span><span class="PUNC">(</span><span class="NAME">mimimum</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">maximum</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">0</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">Scaler.LINEAR</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>220</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>221</span> 
+<span class='line'>222</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>223</span> 	 * @private
+<span class='line'>224</span> 	 * @type {Event} type The event type
+<span class='line'>225</span> 	 */</span><span class="WHIT">
+<span class='line'>226</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.dispatch</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>227</span> </span><span class="WHIT">		</span><span class="NAME">this.debug</span><span class="PUNC">(</span><span class="STRN">"SoftPot dispatch "</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">type</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>228</span> </span><span class="WHIT">		</span><span class="NAME">this.dispatchEvent</span><span class="PUNC">(</span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">SoftPotEvent</span><span class="PUNC">(</span><span class="NAME">type</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">this._touchPoint</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>229</span> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>230</span> 
+<span class='line'>231</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>232</span> 	 * Reset whenever you need the next Touch point.
+<span class='line'>233</span> 	 * @private
+<span class='line'>234</span> 	 */</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.resetForNext</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>236</span> </span><span class="WHIT">		</span><span class="NAME">this._flickTimer.stop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>237</span> </span><span class="WHIT">		</span><span class="NAME">this._pressTimer.stop</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>238</span> </span><span class="WHIT">		</span><span class="NAME">this._isTouched</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>239</span> </span><span class="WHIT">		</span><span class="NAME">this._isDrag</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">false</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>240</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>241</span> 
+<span class='line'>242</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>243</span> 	 * For debugging.
+<span class='line'>244</span> 	 * 
+<span class='line'>245</span> 	 * @private
+<span class='line'>246</span> 	 */</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">	</span><span class="NAME">SoftPot.prototype.debug</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">str</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>248</span> </span><span class="WHIT">		</span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">this._debugMode</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>249</span> </span><span class="WHIT">			</span><span class="NAME">console.log</span><span class="PUNC">(</span><span class="NAME">str</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT"> 
+<span class='line'>250</span> 		</span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>251</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>252</span> 	
+<span class='line'>253</span> 	</span><span class="COMM">/**
+<span class='line'>254</span> 	 * The current value.
+<span class='line'>255</span> 	 * 
+<span class='line'>256</span> 	 * @name SoftPot#value
+<span class='line'>257</span> 	 * @property
+<span class='line'>258</span> 	 * @type Number
+<span class='line'>259</span> 	 */</span><span class="WHIT"> 
+<span class='line'>260</span> 	</span><span class="NAME">SoftPot.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._touchPoint</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>261</span> </span><span class="WHIT">	
+<span class='line'>262</span> 	</span><span class="COMM">/**
+<span class='line'>263</span> 	 * The current distance from the press point.
+<span class='line'>264</span> 	 * 
+<span class='line'>265</span> 	 * @name SoftPot#distanceFromPressed
+<span class='line'>266</span> 	 * @property
+<span class='line'>267</span> 	 * @type Number
+<span class='line'>268</span> 	 */</span><span class="WHIT"> 
+<span class='line'>269</span> 	</span><span class="NAME">SoftPot.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"distanceFromPressed"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._distanceFromPressed</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>270</span> </span><span class="WHIT">	
+<span class='line'>271</span> 	</span><span class="COMM">/**
+<span class='line'>272</span> 	 * The minimum distance required to trigger a flick event. Change this
+<span class='line'>273</span> 	 * value to fine tune the flick gesture.
+<span class='line'>274</span> 	 * 
+<span class='line'>275</span> 	 * @name SoftPot#minFlickMovement
+<span class='line'>276</span> 	 * @property
+<span class='line'>277</span> 	 * @type Number
+<span class='line'>278</span> 	 */</span><span class="WHIT"> 
+<span class='line'>279</span> 	</span><span class="NAME">SoftPot.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"minFlickMovement"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._minFlickMovement</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>280</span> 	</span><span class="NAME">SoftPot.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"minFlickMovement"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">min</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">this._minFlickMovement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">min</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">		
+<span class='line'>281</span> 	
+<span class='line'>282</span> 	</span><span class="COMM">/**
+<span class='line'>283</span> 	 * The minimum distance required to trigger a drag event. Change this
+<span class='line'>284</span> 	 * value to fine tune the drag response.
+<span class='line'>285</span> 	 * 
+<span class='line'>286</span> 	 * @name SoftPot#minDragMovement
+<span class='line'>287</span> 	 * @property
+<span class='line'>288</span> 	 * @type Number
+<span class='line'>289</span> 	 */</span><span class="WHIT"> 
+<span class='line'>290</span> 	</span><span class="NAME">SoftPot.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"minDragMovement"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._minDragMovement</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>291</span> 	</span><span class="NAME">SoftPot.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"minDragMovement"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">min</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">this._minDragMovement</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">min</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>292</span> 
+<span class='line'>293</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>294</span> 	 * The maximum time (in milliseconds) between a press and release in
+<span class='line'>295</span> 	 * order to trigger a TAP event.
+<span class='line'>296</span> 	 * @name SoftPot#tapTimeout
+<span class='line'>297</span> 	 * @property
+<span class='line'>298</span> 	 * @type Number
+<span class='line'>299</span> 	 */</span><span class="WHIT"> 
+<span class='line'>300</span> 	</span><span class="NAME">SoftPot.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"tapTimeout"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._tapTimeout</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>301</span> 	</span><span class="NAME">SoftPot.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"tapTimeout"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">t</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">this._tapTimeout</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">t</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>302</span> 
+<span class='line'>303</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>304</span> 	 * The minimum value required to set the Release state. This number should
+<span class='line'>305</span> 	 * be as close to zero as possible. Increase this value if you are noticing
+<span class='line'>306</span> 	 * fluttering between the Pressed and Released states. Default value = 0.01;
+<span class='line'>307</span> 	 * 
+<span class='line'>308</span> 	 * @name SoftPot#minValue
+<span class='line'>309</span> 	 * @property
+<span class='line'>310</span> 	 * @type Number
+<span class='line'>311</span> 	 */</span><span class="WHIT"> 
+<span class='line'>312</span> 	</span><span class="NAME">SoftPot.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"minValue"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._minValue</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>313</span> 	</span><span class="NAME">SoftPot.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"minValue"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> </span><span class="NAME">this._minValue</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'>314</span> 
+<span class='line'>315</span> 
+<span class='line'>316</span> 	</span><span class="COMM">// Document events</span><span class="WHIT">
+<span class='line'>317</span> 
+<span class='line'>318</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>319</span> 	 * The softPotPressed event is dispatched when pressure is applied to 
+<span class='line'>320</span> 	 * the softpot surface.
+<span class='line'>321</span> 	 * @name SoftPot#softPotPressed
+<span class='line'>322</span> 	 * @type BO.io.SoftPotEvent.PRESS
+<span class='line'>323</span> 	 * @event
+<span class='line'>324</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>325</span> 	 */</span><span class="WHIT">
+<span class='line'>326</span> 
+<span class='line'>327</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'>328</span> 	 * The softPotReleased event is dispatched when pressure is released from 
+<span class='line'>329</span> 	 * the softpot surface.
+<span class='line'>330</span> 	 * @name SoftPot#softPotReleased
+<span class='line'>331</span> 	 * @type BO.io.SoftPotEvent.RELEASE
+<span class='line'>332</span> 	 * @event
+<span class='line'>333</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>334</span> 	 */</span><span class="WHIT">	
+<span class='line'>335</span> 	 
+<span class='line'>336</span> 	</span><span class="COMM">/**
+<span class='line'>337</span> 	 * The softPotDrag event is dispatched when a drag is detected along 
+<span class='line'>338</span> 	 * the length of the softpot sensor.
+<span class='line'>339</span> 	 * @name SoftPot#softPotDrag
+<span class='line'>340</span> 	 * @type BO.io.SoftPotEvent.DRAG
+<span class='line'>341</span> 	 * @event
+<span class='line'>342</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>343</span> 	 */</span><span class="WHIT">	
+<span class='line'>344</span> 	 
+<span class='line'>345</span> 	</span><span class="COMM">/**
+<span class='line'>346</span> 	 * The softPotFlickUp event is dispatched when a flick gesture is detected
+<span class='line'>347</span> 	 * in the direction of the sensor pins.
+<span class='line'>348</span> 	 * @name SoftPot#softPotFlickUp
+<span class='line'>349</span> 	 * @type BO.io.SoftPotEvent.FLICK_UP
+<span class='line'>350</span> 	 * @event
+<span class='line'>351</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>352</span> 	 */</span><span class="WHIT">	
+<span class='line'>353</span> 	 
+<span class='line'>354</span> 	</span><span class="COMM">/**
+<span class='line'>355</span> 	 * The softPotFlickDown event is dispatched when a flick gesture is 
+<span class='line'>356</span> 	 * detected in the direction away from the sensor pins.
+<span class='line'>357</span> 	 * @name SoftPot#softPotFlickDown
+<span class='line'>358</span> 	 * @type BO.io.SoftPotEvent.FLICK_DOWN
+<span class='line'>359</span> 	 * @event
+<span class='line'>360</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>361</span> 	 */</span><span class="WHIT">
+<span class='line'>362</span> </span><span class="WHIT">	 
+<span class='line'>363</span> 	</span><span class="COMM">/**
+<span class='line'>364</span> 	 * The softPotTap event is dispatched when a press and release occurs
+<span class='line'>365</span> 	 * in in less than the duration specified by the tapTimeout property.
+<span class='line'>366</span> 	 * @name SoftPot#softPotTap
+<span class='line'>367</span> 	 * @type BO.io.SoftPotEvent.TAP
+<span class='line'>368</span> 	 * @event
+<span class='line'>369</span> 	 * @param {BO.io.SoftPot} target A reference to the SoftPot object
+<span class='line'>370</span> 	 */</span><span class="WHIT">		 	 	 	 
+<span class='line'>371</span> 
+<span class='line'>372</span> 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">SoftPot</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>373</span> 
+<span class='line'>374</span> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>375</span> </span></pre></body></html>

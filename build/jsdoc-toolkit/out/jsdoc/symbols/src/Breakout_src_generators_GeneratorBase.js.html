@@ -1,0 +1,73 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="WHIT"> </span><span class="COMM">/**
+<span class='line'>  2</span>  * Based on IGenerator.as originally written in as3.
+<span class='line'>  3</span>  * Copyright (c) the Funnel development team
+<span class='line'>  4</span>  * http://www.funnel.cc
+<span class='line'>  5</span>  *
+<span class='line'>  6</span>  * Ported to JavaScript by Jeff Hoefs
+<span class='line'>  7</span>  * Copyright (c) 2011-2012 Jeff Hoefs &lt;jeff.hoefs@gmail.com>
+<span class='line'>  8</span>  *
+<span class='line'>  9</span>  * Released under the MIT license. See LICENSE file for details.
+<span class='line'> 10</span>  */</span><span class="WHIT">
+<span class='line'> 11</span> 
+<span class='line'> 12</span> </span><span class="WHIT"> </span><span class="NAME">JSUTILS.namespace</span><span class="PUNC">(</span><span class="STRN">'BO.generators.GeneratorBase'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 13</span> 
+<span class='line'> 14</span> </span><span class="WHIT"> </span><span class="NAME">BO.generators.GeneratorBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT"> 	</span><span class="STRN">"use strict"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 16</span> 
+<span class='line'> 17</span> </span><span class="WHIT"> 	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">GeneratorBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 18</span> 
+<span class='line'> 19</span> </span><span class="WHIT"> 	</span><span class="COMM">// dependencies</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">	</span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">EventDispatcher</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.EventDispatcher</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 21</span> 
+<span class='line'> 22</span> </span><span class="WHIT"> 	</span><span class="COMM">/**
+<span class='line'> 23</span>  	 * A base object for generators.
+<span class='line'> 24</span>  	 *
+<span class='line'> 25</span>  	 * @exports GeneratorBase as BO.generators.GeneratorBase
+<span class='line'> 26</span>  	 * @class A base object to be extended by all Generator objects. This
+<span class='line'> 27</span>  	 * object should not be instantiated directly.
+<span class='line'> 28</span>  	 * @constructor
+<span class='line'> 29</span>  	 * @augments JSUTILS.EventDispatcher
+<span class='line'> 30</span>  	 */</span><span class="WHIT">
+<span class='line'> 31</span> </span><span class="WHIT"> 	</span><span class="NAME">GeneratorBase</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 32</span> </span><span class="WHIT"> 		
+<span class='line'> 33</span>  		</span><span class="NAME">EventDispatcher.call</span><span class="PUNC">(</span><span class="KEYW">this</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">this</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 34</span> 
+<span class='line'> 35</span> </span><span class="WHIT"> 		</span><span class="NAME">this.name</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">"GeneratorBase"</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 36</span> </span><span class="WHIT"> 		</span><span class="COMM">/** @protected */</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="WHIT"> 		</span><span class="NAME">this._value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 38</span> 
+<span class='line'> 39</span> </span><span class="WHIT"> 	</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> 
+<span class='line'> 41</span> </span><span class="WHIT"> 	</span><span class="NAME">GeneratorBase.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">JSUTILS.inherit</span><span class="PUNC">(</span><span class="NAME">EventDispatcher.prototype</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT"> 	</span><span class="NAME">GeneratorBase.prototype.constructor</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">GeneratorBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> 
+<span class='line'> 44</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 45</span> 	 * [read-only] Get a generated number.
+<span class='line'> 46</span> 	 * @name GeneratorBase#value
+<span class='line'> 47</span> 	 * @protected
+<span class='line'> 48</span> 	 * @property
+<span class='line'> 49</span> 	 * @type Number
+<span class='line'> 50</span> 	 */</span><span class="WHIT"> 	 	 
+<span class='line'> 51</span>  	</span><span class="NAME">GeneratorBase.prototype.__defineGetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> 
+<span class='line'> 52</span> 	 	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">this._value</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 53</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 54</span> 
+<span class='line'> 55</span> </span><span class="WHIT">	</span><span class="COMM">/**
+<span class='line'> 56</span> 	 * Use setValue() instead?
+<span class='line'> 57</span> 	 * @protected
+<span class='line'> 58</span> 	 */</span><span class="WHIT">
+<span class='line'> 59</span> </span><span class="WHIT">	</span><span class="NAME">GeneratorBase.prototype.__defineSetter__</span><span class="PUNC">(</span><span class="STRN">"value"</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">val</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT"> 
+<span class='line'> 60</span> 	 	</span><span class="NAME">this._value</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">val</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 61</span> </span><span class="WHIT">	</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">	
+<span class='line'> 62</span> 
+<span class='line'> 63</span>  	</span><span class="KEYW">return</span><span class="WHIT"> </span><span class="NAME">GeneratorBase</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 64</span> 
+<span class='line'> 65</span> 
+<span class='line'> 66</span> </span><span class="WHIT"> </span><span class="PUNC">}</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span></pre></body></html>
