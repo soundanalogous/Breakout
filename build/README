@@ -16,8 +16,8 @@ $ python build.py [Release Number]
 
 Updating the documentation
 --------------------------
-The documentation uses JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/)
-to be build.
+Documentation is generated as part of the build process. The documentation uses 
+JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/).
 
 Cleaning-up
 -----------

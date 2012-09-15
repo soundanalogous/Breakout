@@ -165,8 +165,7 @@ def buildLib(files, filename, version):
 
 
 def buildJSDocs():
-
-	os.system("java -jar jsdoc-toolkit/jsrun.jar -a -t=templates/jsdoc -d=../../docs/ -r=2 ../../src/")
+	os.system("java -jar jsdoc-toolkit/jsrun.jar jsdoc-toolkit/app/run.js -a -t=jsdoc-toolkit/templates/jsdoc -r=2 ../src/ -d=../docs/")
 
 
 def main(argv=None):
@@ -176,11 +175,11 @@ def main(argv=None):
 	else:
 		version = "0.1.6"
 
-	# min_files = [
-	# ['Breakout', ALL_FILES],
-	# ['Breakout-base', WITHOUT_IO],
-	# ['Breakout-core', CORE_FILES]
-	# ]
+	min_files = [
+	['Breakout', ALL_FILES],
+	['Breakout-base', WITHOUT_IO],
+	['Breakout-core', CORE_FILES]
+	]
 
 	for fname_lib, files in min_files:
 		buildLib(files, fname_lib, version)
