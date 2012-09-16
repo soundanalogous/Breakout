@@ -1,5 +1,5 @@
 2012.09.15 Version 0.1.7
-* Jsdocs are not generated as part of build process
+* jsdocs are now generated as part of build process
 * Added index page for examples: /examples/index.html (initial idea by Fabian Affolter)
 * Added additional getting_started examples (contributed by Fabian Affolter)
 * Included SignalScope.js in the core library under src/utils/
