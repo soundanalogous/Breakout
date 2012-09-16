@@ -7,6 +7,7 @@ var express = require('express'),
   app = express(),
   server = require('http').createServer(app),
   io = require('socket.io').listen(server),
+  path = require('path'),
   connectedSocket = null,
   isConnected = false,
   enableMultiConnect = false;  // Set to true to enable multiple clients to connect
@@ -19,7 +20,6 @@ program
   .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
   .option('-s, --server <port>', 'Specify the port [8887]', Number, 8887)
   .option('-m, --multi <connection>', 'Enable multiple connections [false]', "false")
-  .option('-r, --root <webserver root>', 'Specify the webserver root directory [../]', '../')
   .parse(process.argv);
 
 
@@ -35,7 +35,8 @@ server.listen(parseInt(serverPort, 10));
 console.log("Server is running at: http://localhost:" + serverPort + " -> CTRL + C to shutdown");
 
 app.configure(function() {
-  app.use(express.static(rootDir));
+  var dir =  path.dirname(__dirname);
+  app.use(express.static(path.resolve(dir)));
 });
 
 
