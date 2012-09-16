@@ -57,6 +57,10 @@ BO.WSocketWrapper = (function() {
 			try {
 				/** @private */
 				self._socket.on('connect', function() {
+					// prevent socket.io from automatically attempting to reconnect
+					// when the server is quit
+					self._socket.socket.options.reconnect = false;
+					
 					self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
 					/** @private */
 					self._socket.on('message', function(msg) {
