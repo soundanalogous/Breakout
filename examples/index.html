@@ -22,7 +22,7 @@ body {
 .container {
 	margin: 0 auto;
 	padding: 10px 40px 0 40px;
-	width: 800px;
+	max-width: 800px;
 	height: 100%;
 	margin-bottom: 40px;
 }
@@ -39,11 +39,15 @@ a:hover {
 header {
 	display:block;
 	border-bottom: 1px dotted #8C8C8C;
+	overflow: auto;
 }
 
 .header_links {
 	padding-left: 20px;
 	font-weight: normal;
+}
+.header_links:first-child {
+	padding-left: 0px;
 }
 
 #links {
@@ -73,7 +77,7 @@ td:first-child {
 
 h2 {
 	font-weight: normal;
-	font-size: 24px;
+	font-size: 22px;
 	margin: 10px 0 20px 0;
 }
 h3 {
@@ -87,7 +91,8 @@ h3 {
 	opacity: 0.8;
 }
 li {
-	font-size: 12px;
+	font-size: 14px;
+	line-height: 28px;
 	padding-left: 5px;
 	list-style-type: none;
 }
@@ -103,97 +108,145 @@ footer {
 footer span {
 	letter-spacing: 0.1em;
 }
+
+@media only screen and (max-width: 480px) {
+	#links {
+		float: left;
+		margin-top: 0px;
+	}
+
+	li {
+		font-size: 18px;
+		line-height: 36px;
+		padding-left: 5px;
+		list-style-type: none;
+	}
+
+	.header_links {
+		padding-left: 10px;
+	}	
+
+	.container {
+		padding: 10px 15px 0 15px;
+	}
+
+}
 </style>
 
 <title>Breakout.js examples index</title>
+
+<script src="libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
-	// List all files from the 'actuators' folder
-	var actuators = [
-		"blinkM.html",
-		"dcmotor.html",
-		"rgb_led.html",
-		"bi_color_led.html",
-		"servo.html"
-		];
-	
-	// List all files from the 'boards' folder
-	var boards = [
-		"leonardo.html",
-		"mega.html",
-		"teensy.html",
-		"uno.html"
-		];
-    
-    // List all files from the 'device_sensors' folder
-	var devices = [
-		"blinkM_accel.html",
-		"blinkM_compass.html",
-		"rgbled_accel.html"
-		];
-    
-	// List all files from the filters folder
-	var filters = [
-		"convolution.html",
-		"scaler.html",
-		"triggerpoint.html"
-		];
-    
-	// List all files from the 'generators' folder
-	var generators = [
-		"blink_led.html",
-		"oscillator.html"
-		];
+$(document).ready(function() {
+	var currentSize = "";
+    var links = [
+    	{ name: "Getting Started", path: "getting_started", examples: [
+			"hello_world.html",
+			"firmware.html",
+			"simple_led.html",
+			"analog_input.html",
+			"analog_input_scope.html",
+			"analog_input_smoothie.html",
+			"digital_out.html",
+			"pwm_led.html",
+			"blink_led.html"]
+		},    
+    	{ name: "Actuators", path: "actuators", examples: [
+			"blinkM.html",
+			"dcmotor.html",
+			"rgb_led.html",
+			"bi_color_led.html",
+			"servo.html"]
+		},
+		{ name: "Sensors", path: "sensors", examples: [
+			"adxl345.html",
+			"analog_accelerometer.html",
+			"flex.html",
+			"fsr.html",
+			"hmc5883.html",
+			"hmc6352.html",
+			"itg3200.html",
+			"sharp_ir.html",
+			"softpot.html",
+			"sonar.html",
+			"temperature.html"]
+		},		
+    	{ name: "Filters", path: "filters", examples: [
+			"convolution.html",
+			"scaler.html",
+			"triggerpoint.html"]
+		},					
+    	{ name: "Generators", path: "generators", examples: [
+			"blink_led.html",
+			"oscillator.html"]
+		},
+    	{ name: "Boards", path: "boards", examples: [
+			"leonardo.html",
+			"mega.html",
+			"teensy.html",
+			"uno.html"]
+		},
+    	{ name: "Processing.js", path: "processing_js", examples: [
+			"basic_example.html",
+			"accelerometer.html",
+			"compass.html",
+			"gyro.html",
+			"imu_test.html"]
+		},
+    	{ name: "Three.js", path: "three_js", examples: [
+			"accelerometer.html"]
+		},		
+    	{ name: "Device Sensors", path: "device_sensors", examples: [
+			"blinkM_accel.html",
+			"blinkM_compass.html",
+			"rgbled_accel.html"]
+		}			
+    ];
 
-	// List all files from the 'getting_started' folder
-	var getting_started = [
-		"hello_world.html",
-		"firmware.html",
-		"simple_led.html",
-		"analog_input.html",
-		"analog_input_scope.html",
-		"analog_input_smoothie.html",
-		"digital_out.html",
-		"pwm_led.html",
-		"blink_led.html"
-		];
+	function buildTable(numCols) {
+		var i,
+			j,
+			k,
+			len = links.length,
+			html = "";
 
-	// List all files from the 'processing_js' folder
-	var processing = [
-		"basic_example.html",
-		"accelerometer.html",
-		"compass.html",
-		"gyro.html",
-		"imu_test.html"
-		];
-    
-	// List all files from the 'sensors' folder
-	var sensors = [
-		"adxl345.html",
-		"analog_accelerometer.html",
-		"flex.html",
-		"fsr.html",
-		"hmc5883.html",
-		"hmc6352.html",
-		"itg3200.html",
-		"sharp_ir.html",
-		"softpot.html",
-		"sonar.html",
-		"temperature.html"
-		];
-
-	// List all files from the 'three.js' folder
-	var three = [
-		"accelerometer.html"
-		];
-
-	function linkDisplay(name, path, examples) {
-		document.write("<h3>" + name + "</h3>");
-		document.write("<ul>");
-		for (i = 0; i < examples.length; i++) {
-			document.write("<li>" + examples[i].split('.')[0].link("../examples/" + path + "/" + examples[i]) + "</li>");
+		html = '<table>';
+		for (i = 0; i < len; i++) {
+			if (i % numCols === 0) html += "<tr>";
+			html += "<td>";
+			html += '<h3>' + links[i].name + '</h3>';
+			html += "<ul>";
+			for (k = 0, numExamples=links[i].examples.length; k < numExamples; k++) {
+				html += '<li>' + links[i].examples[k].split('.')[0].link("../examples/" + links[i].path + '/' + links[i].examples[k]) + '</li>';
+			}
+			html += "</ul></td>";
+			if (i % numCols === numCols - 1) html += "</tr>";
 		}
-		document.write("</ul>");
+		html += '</table>';
+
+		$('.examplesWrapper').html(html);
 	}
+
+	$(window).resize(function() {
+		setSize($(this).width());
+	});
+
+	function setSize(width) {
+		if (width <= 480 && currentSize !== "small") {
+			buildTable(1);
+			currentSize = "small";
+		} else if (width > 480 && width <= 768 && currentSize !== "medium") {
+			buildTable(2);
+			currentSize = "medium";
+		} else if (width > 768 && currentSize !== "full") {
+			buildTable(3);
+			currentSize = "full";
+		}	
+	}
+
+	setSize($(window).width());
+
+});
 </script>
 
 </head>
@@ -214,23 +267,7 @@ footer span {
 
 	<p>All schematics for the examples are collected in the <a href="schematics.pdf">Schematics</a> file.</p>
 
-	<table>
-		<tr>
-			<td><script type="text/javascript">linkDisplay("Getting started", "getting_started", getting_started);</script></td>
-			<td><script type="text/javascript">linkDisplay("Actuators", "actuators", actuators);</script></td>
-			<td ><script type="text/javascript">linkDisplay("Sensors", "sensors", sensors);</script></td>
-		</tr>
-		<tr>
-			<td><script type="text/javascript">linkDisplay("Filters", "filters", filters);</script></td>
-			<td><script type="text/javascript">linkDisplay("Generators", "generators", generators);</script></td>
-			<td ><script type="text/javascript">linkDisplay("Boards", "boards", boards);</script></td>
-		</tr>
-		<tr>
-			<td><script type="text/javascript">linkDisplay("Processing.js", "processing_js", processing);</script></td>
-			<td><script type="text/javascript">linkDisplay("Three.js", "three_js", three);</script></td>
-			<td><script type="text/javascript">linkDisplay("Device sensors", "device_sensors", devices);</script></td>
-		</tr>
-	</table>
+	<div class="examplesWrapper"></div>
 
 	<footer>
 		Breakout is distributed under the terms of the MIT License. See the <a href="https://raw.github.com/soundanalogous/Breakout/master/LICENSE"><span>LICENSE</span></a> file.

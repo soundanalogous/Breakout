@@ -3,6 +3,7 @@
 <head>
 
 <meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
 <style type="text/css">
 body {
 	margin: 20px;
@@ -119,7 +120,7 @@ $(document).ready(function() {
 					addFilter(Convolution.LPF, "LPF");
 					break;
 				case 'hpf':
-					//addFilter(Convolution.HPF, "HPF");
+					addFilter(Convolution.HPF, "HPF");
 					break;
 			}
 		});
@@ -154,7 +155,7 @@ $(document).ready(function() {
 		<select id="eqSelector" name="equations">
 			<option value="moving_average">MOVING_AVERAGE</option>
 			<option value="lpf">LPF</option>
-			<!--<option value="hpf">HPF</option>-->
+			<option value="hpf">HPF</option>
 		</select>
 
 		<div class="scopeContainer clear">

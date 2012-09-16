@@ -58,7 +58,7 @@
 
 	};
 
-	/*
+	/**
 	 * Call this method at the desired frame rate in order
 	 * to draw the input signal.
 	 * @param {Number} input1 The channel 1 input signal
@@ -82,7 +82,7 @@
 		this.drawMarkers();
 	};
 
-	/*
+	/**
 	 * @private
 	 */
 	SignalScope.prototype.drawChannel = function(values, color) {
@@ -101,7 +101,7 @@
 		this._ctx.stroke();
 	};
 
-	/*
+	/**
 	 * @private
 	 */
 	SignalScope.prototype.drawMarkers = function() {
@@ -120,7 +120,7 @@
 		}
 	};
 
-	/*
+	/**
 	 * Add a horizontal marker to the scope. 1 or more markers can be added.
 	 * @param {Number} level The value of the marker within the input value range.
 	 * @param {String} color The hex color value for the marker.
@@ -130,7 +130,7 @@
 		this._markers.push([level, color]);
 	};
 
-	/*
+	/**
 	 * Remove all markers from the scope.
 	 */
 	SignalScope.prototype.removeAllMarkers = function() {

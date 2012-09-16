@@ -22,11 +22,10 @@ BO.WSocketWrapper = (function() {
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
-	 * @param {Boolean} useSocketIO Set true to use socket.io implementation, set false to use
 	 * native websocket implementation.
 	 * @param {String} protocol The websockt protocol definition (if necessary).
 	 */
-	WSocketWrapper = function(host, port, useSocketIO, protocol) {
+	WSocketWrapper = function(host, port, protocol) {
 		this.name = "WSocketWrapper";
 
 		EventDispatcher.call(this, this);
@@ -34,7 +33,6 @@ BO.WSocketWrapper = (function() {
 		this._host = host;
 		this._port = port;
 		this._protocol = protocol || "default-protocol";
-		this._useSocketIO = useSocketIO || false;
 		this._socket = null;
 		this._readyState = ""; // only applies to native WebSocket implementations
 
@@ -52,7 +50,8 @@ BO.WSocketWrapper = (function() {
 	 */
 	WSocketWrapper.prototype.init = function(self) {
 
-		if (self._useSocketIO) {
+		// if io (socket.io) is defined, assume that the node server is being used
+		if (typeof io !== "undefined") {
 			self._socket = io.connect("http://"+self._host+":"+self._port);
 
 			try {
@@ -75,11 +74,11 @@ BO.WSocketWrapper = (function() {
 
 				if ("MozWebSocket" in window) {
 					// MozWebSocket is no longer used in Firefox 11 and higher
-					self._socket = new MozWebSocket("ws://"+self._host+":"+self._port, self._protocol);
+					self._socket = new MozWebSocket("ws://"+self._host+":"+self._port+'/websocket', self._protocol);
 				} else if ("WebSocket" in window) {
 					// Safari doesn't like protocol parameter
 					//self._socket = new WebSocket("ws://"+self._host+":"+self._port, self._protocol);
-					self._socket = new WebSocket("ws://"+self._host+":"+self._port);
+					self._socket = new WebSocket("ws://"+self._host+":"+self._port+'/websocket');
 				} else {
 					console.log("Websockets not supported by this browser");
 					throw "Websockets not supported by this browser";

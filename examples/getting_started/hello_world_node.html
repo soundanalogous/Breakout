@@ -54,6 +54,7 @@ h2 {
 <title>Hello World</title>
 
 <!-- order of import is important -->
+<!-- To use the node js server, include socket.io.js before Breakout.js -->
 <script src="../../socket.io/socket.io.js"></script>
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
@@ -72,11 +73,7 @@ $(document).ready(function() {
 	// that the Arduino board is connected to, replace
 	// location.hostname with the IP address or hostname
 	// of the computer that the Arduino board is connected to.
-
-	// To use the node.js server, set the 3rd parameter to true
-	// also make sure the network port in this file matches
-	// the network port you are listen on in the server.js	
-	var ard = new IOBoard(location.hostname, 8080, true);
+	var arduino = new IOBoard(location.hostname, 8887);
 	var led;
 
 	// listen for the IOBoard READY event which indicates the IOBoard

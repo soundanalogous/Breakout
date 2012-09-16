@@ -1,3 +1,13 @@
+2012.09.15 Version 0.1.7
+* Jsdocs are not generated as part of build process
+* Added index page for examples: /examples/index.html (initial idea by Fabian Affolter)
+* Added additional getting_started examples (contributed by Fabian Affolter)
+* Included SignalScope.js in the core library under src/utils/
+* Added getFirmwareName() and getPinCapabilities() methods to IOBoard.js (contributed by Fabian Affolter)
+* Added command line arguments to nodeJS server (contributed by Fabian Affolter)
+* Removed useSocketIO parameter from IOBoard and WSocketWrapper. If you include socket.io, it is now assumed you are using the nodeJS server.
+* Changed default port for nodeJS server from 8080 to 8887
+
 2012.07.18 Version 0.1.6
 * Added examples demonstrating use of DeviceMotion and DeviceOrientation APIs with Breakout
 * Added fritzing files to Breakout/examples/schematics_src/fritzing/

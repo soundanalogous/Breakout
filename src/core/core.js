@@ -5,7 +5,7 @@
 
 
 /** 
- * @version 0.1.6
+ * @version 0.1.7
  * @namespace
  *
  * <p>Namespace for Breakout objects.</p>
@@ -17,7 +17,7 @@ var BO = BO || {};
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.1.6';
+BREAKOUT.VERSION = '0.1.7';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application

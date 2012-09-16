@@ -70,11 +70,10 @@ BO.IOBoard = (function() {
 	 * @constructor
 	 * @param {String} host The host address of the web server.
 	 * @param {Number} port The port to connect to on the web server.
-	 * @param {Boolean} useSocketIO Set to true if using node.js socket.io.
 	 * Default = false.
-	 * @param {String} protocol The websockt protocol definition (if necessary).
+	 * @param {String} protocol [optional] The websockt protocol definition (if necessary).
 	 */
-	IOBoard = function(host, port, useSocketIO, protocol) {
+	IOBoard = function(host, port, protocol) {
 		"use strict";
 		
 		this.name = "IOBoard";
@@ -101,10 +100,7 @@ BO.IOBoard = (function() {
 		
 		_evtDispatcher = new EventDispatcher(this);
 
-		// '/websocket' is required for the Breakout Server
-		if (!useSocketIO && typeof port === "number") port = port+'/websocket';
-
-		_socket = new WSocketWrapper(host, port, useSocketIO, protocol);
+		_socket = new WSocketWrapper(host, port, protocol);
 		_socket.addEventListener(WSocketEvent.CONNECTED, onSocketConnection);
 		_socket.addEventListener(WSocketEvent.MESSAGE, onSocketMessage);
 		_socket.addEventListener(WSocketEvent.CLOSE, onSocketClosed);

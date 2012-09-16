@@ -173,7 +173,7 @@ def main(argv=None):
 	if len(sys.argv) > 1:
 		version = sys.argv[1]
 	else:
-		version = "0.1.6"
+		version = "0.1.7"
 
 	min_files = [
 	['Breakout', ALL_FILES],

@@ -75,9 +75,11 @@ BO.filters.Convolution = (function() {
 
 		var result = 0;
 		var len = this._buffer.length;
+
 		for (var i=0; i<len; i++) {
 			result += this._coef[i] * this._buffer[i];
-		}
+			if (result < 0) result *= -1;
+		}	
 
 		return result;
 	};
@@ -86,21 +88,19 @@ BO.filters.Convolution = (function() {
 	 * Low-pass filter kernel. Use by passing this array to the constructor.
 	 * @constant
 	 */
-	Convolution.LPF = [1.0/3, 1.0/3, 1.0/3];
+	Convolution.LPF = [1/3, 1/3, 1/3];
 
 	/**
-	 * Note: This filter is not currently working... needs a new implementation.
 	 * High-pass filter kernel. Use by passing this array to the constructor.
-	 * @private
 	 * @constant
 	 */
-	Convolution.HPF = [1.0/3, -2.0/3, 1.0/3];
+	Convolution.HPF = [1/3, -2.0/3, 1/3];
 	
 	/**
 	 * Moving average filter kernel. Use by passing this array to the constructor.
 	 * @constant
 	 */
-	Convolution.MOVING_AVERAGE = [1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8, 1.0/8];		
+	Convolution.MOVING_AVERAGE = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8];		
 		
 	return Convolution;
 

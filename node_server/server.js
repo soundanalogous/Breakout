@@ -25,9 +25,10 @@ var mimeTypes = {
 /* Commandline options */
 var program = require('commander');
 program
-  .version('0.1.6')
+  .version('0.1.7')
   .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
-  .option('-s, --server <port>', 'Specify the port [8080]', Number, 8080)
+  .option('-s, --server <port>', 'Specify the port [8887]', Number, 8887)
+  .option('-m, --multi <connection>', 'Enable multiple connections [false]', "false")
   .parse(process.argv);
 
 /* Serial */
@@ -39,6 +40,10 @@ var serialDefaults = {
   baudrate: 57600,
   buffersize: 1
 };
+
+if (program.multi == "true") {
+  enableMultiConnect = true;
+}
 
 // Create new serialport pointer
 var serial = new serialPort(port , serialDefaults);
@@ -59,6 +64,7 @@ serial.on( "error", function( msg ) {
     console.log("serial error: " + msg );
 });
 
+// configure socket.io
 io.configure(function() {
   // Suppress socket.io debug output
   io.set('log level', 1);
@@ -88,6 +94,9 @@ console.log("Server is running at: http://localhost:" + serverPort + " -> CTRL +
 function handler (request, response) {
   if(request.method == "GET"){
     var filename;
+
+    console.log("got request");
+    console.log(request.url);
     
     // Absolute path
     //if (request.url == "/") {
@@ -108,7 +117,7 @@ function handler (request, response) {
     var extension = request.url.substring(request.url.lastIndexOf(".")+1);
     //console.log("debug: ext = " + extension);
     
-    path.exists(filename, function(exists) {
+    fs.exists(filename, function(exists) {
       var type = mimeTypes[extension];
       if (exists) {
           response.writeHead(200, {'Content-Type': type, 'Connection': 'close'});
