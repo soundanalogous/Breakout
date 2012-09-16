@@ -45,6 +45,7 @@ h2 {
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script src="../libs/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
+<script src="../libs/jquery.ui.touch-punch.min.js"></script>
 <link href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -67,7 +68,6 @@ $(document).ready(function() {
 	// Variables
 	var ledGreen;
 	var ledRed;
-	var mixColors = false;
 	
 	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data
@@ -111,26 +111,26 @@ $(document).ready(function() {
 	}
 	
 	$( "#sliderRed" ).bind( "slide", function(event, ui) {
-		var value = $( "#sliderRed" ).slider( "option", "value" );
+		var value = $(this).slider( "option", "value" );
         $('#valueRed').text("(Value: " + value.toFixed(2) + ")");
         ledRed.value = value;
-	})
+	});
 	
 	$( "#sliderGreen" ).bind( "slide", function(event, ui) {
-		var value = $( "#sliderGreen" ).slider( "option", "value" );
+		var value = $(this).slider( "option", "value" );
         $('#valueGreen').text("(Value: " + value.toFixed(2) + ")");
         ledGreen.value = value;
-	})
+	});
 	
 	function switchLed(led) {
 		if (led == 0) {
 			ledRed.value = Pin.HIGH;
-			ledGreen.value = Pin.LOW;
+			ledGreen.value = Pin.HIGH;
 			$("#sliderRed").slider( "option", "value", 1);
 			$('#valueRed').text("(Value: " + 1.0 + ")");
 		} else {
 			ledGreen.value = Pin.HIGH;
-			ledRed.value = Pin.LOW;
+			ledRed.value = Pin.HIGH;
 			$("#sliderGreen").slider( "option", "value", 1);
 			$('#valueGreen').text("(Value: " + 1.0 + ")");		
 		}
@@ -162,8 +162,8 @@ $(document).ready(function() {
   
 		<div class="container">
 			<p>Use the slider to set the intensity of a color or to mix them.</p>
-			<label>Red </label><small id="valueRed"></small><p id="sliderRed" class="slider"></p>
-			<label>Green </label><small id="valueGreen"></small><p id="sliderGreen" class="slider"></p>
+			<label>Red </label><small id="valueRed"></small><div id="sliderRed" class="slider"></div>
+			<label>Green </label><small id="valueGreen"></small><div id="sliderGreen" class="slider"></div>
 		</div>
 </body>
 </html>
