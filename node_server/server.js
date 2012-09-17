@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
@@ -8,10 +9,15 @@ var express = require('express'),
   server = require('http').createServer(app),
   io = require('socket.io').listen(server),
   path = require('path'),
+  fileSystem = require('fs'),
   connectedSocket = null,
   isConnected = false,
   enableMultiConnect = false;  // Set to true to enable multiple clients to connect
 
+/**************** ON EXIT CALLBACK *************/
+process.on('exit', function () {
+  console.log('About to exit.');
+});
 
 /**************** COMMAND LINE OPTIONS *************/
 var program = require('commander');
@@ -20,11 +26,11 @@ program
   .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
   .option('-s, --server <port>', 'Specify the port [8887]', Number, 8887)
   .option('-m, --multi <connection>', 'Enable multiple connections [false]', "false")
+  .option('-d, --dir <path>', 'Path to the root of your app [defaults to the current directory]')
   .parse(process.argv);
 
 
 /******************* FILE SERVER ********************/
-var rootDir = program.root;
 var serverPort = program.server;
 
 if (program.multi == "true") {
@@ -35,8 +41,16 @@ server.listen(parseInt(serverPort, 10));
 console.log("Server is running at: http://localhost:" + serverPort + " -> CTRL + C to shutdown");
 
 app.configure(function() {
-  var dir =  path.dirname(__dirname);
-  app.use(express.static(path.resolve(dir)));
+  var dir = path.resolve(program.dir);
+  fileSystem.realpath(dir, function (err, resolvedPath) {
+    if (err) {
+      console.log(dir + " does not exist");
+      process.exit(1);
+    }
+    else {
+      app.use(express.static(dir));
+    }
+  });
 });
 
 
@@ -67,6 +81,7 @@ serial.on( "data", function( data ) {
 
 serial.on( "error", function( msg ) {
     console.log("serial error: " + msg );
+    process.exit(1);
 });
 
 

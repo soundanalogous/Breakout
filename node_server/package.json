@@ -1,0 +1,29 @@
+{
+  "name": "breakout-server",
+  "version": "0.1.7",
+  "description": "Node.js module to run a breakout server",
+  "preferGlobal": "true",
+  "main": "server.js",
+  "bin": {
+    "breakout-server": "server.js"
+  },
+  "author": "soundanalogous",
+  "keywords": [
+    "arduino",
+    "firmata",
+    "websocket"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soundanalogous/Breakout.git"
+  },
+  "dependencies": {
+    "serialport": ">= 1.0.7",
+    "socket.io": ">= 0.9.10",
+    "express": ">= 3.0.0rc4",
+    "commander": ">= 1.0.4"
+  },
+  "engines": {
+    "node": "*"
+  }
+}
