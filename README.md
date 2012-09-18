@@ -93,6 +93,7 @@ Breakout Server uses [webbit](https://github.com/webbit/webbit)
 Contributors:
 
 - Fabian Affolter
+- Xavier Seignard
 
 License
 ---
