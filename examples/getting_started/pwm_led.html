@@ -102,9 +102,9 @@ $(document).ready(function() {
 	}
 	
 	$( "#slider" ).bind( "slide", function(event, ui) {
-		var value = $( "#slider" ).slider( "option", "value" );
-        $('#value').text("Value: " + value.toFixed(2));
-        led.value = value;
+		var value = ui.value;
+        	$('#value').text("Value: " + value.toFixed(2));
+        	led.value = value;
 	})
 	
 	function changeLed(intensity) {
