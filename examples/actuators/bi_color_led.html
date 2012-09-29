@@ -111,13 +111,13 @@ $(document).ready(function() {
 	}
 	
 	$( "#sliderRed" ).bind( "slide", function(event, ui) {
-		var value = $(this).slider( "option", "value" );
+		var value = ui.value;
         $('#valueRed').text("(Value: " + value.toFixed(2) + ")");
         ledRed.value = value;
 	});
 	
 	$( "#sliderGreen" ).bind( "slide", function(event, ui) {
-		var value = $(this).slider( "option", "value" );
+		var value = ui.value;
         $('#valueGreen').text("(Value: " + value.toFixed(2) + ")");
         ledGreen.value = value;
 	});
