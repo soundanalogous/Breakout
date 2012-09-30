@@ -28,6 +28,7 @@ ALL_FILES = [
 'core/Pin.js',
 'core/I2CBase.js',
 'core/PhysicalInputBase.js',
+'io/Stepper.js',
 'io/BlinkM.js',
 'io/CompassEvent.js',
 'io/CompassHMC6352.js',
@@ -184,7 +185,7 @@ def main(argv=None):
 	for fname_lib, files in min_files:
 		buildLib(files, fname_lib, version)
 
-	buildJSDocs()
+	#buildJSDocs()
 
 if __name__ == "__main__":
 	main()

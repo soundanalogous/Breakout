@@ -1,4 +1,4 @@
- /**
+/**
  * Based on Servo.as originally written in as3.
  * Copyright (c) the Funnel development team
  * http://www.funnel.cc

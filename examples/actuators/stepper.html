@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+	margin: 10px;
+	font-family: sans-serif;
+	font-size: 16px;
+	color: #00AEFF;
+	width: 300px;
+}
+h2 {
+	font-size: 22px;
+	padding-bottom: 10px;
+}
+.container {
+	background-color: #f7f7f7;
+	padding: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin: 20px 0 40px 0;
+	padding-top: 10px;
+}
+</style>
+
+<title>Stepper Example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.8.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// Declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var Stepper = BO.io.Stepper;
+	var Event = JSUTILS.Event;
+
+	// Set to true to print debug messages to console
+	BO.enableDebugging = true;	
+
+	// If you are not serving this file from the same computer
+	// that the Arduino board is connected to, replace
+	// location.hostname with the IP address or hostname
+	// of the computer that the Arduino board is connected to.
+	var arduino = new IOBoard(location.hostname, 8887);
+	
+	// Variables
+	var stepper;
+	
+	// Listen for the IOBoard READY event which indicates the IOBoard
+	// is ready to send and receive data	
+	arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+	function onReady(event) {
+		var stepsPerRev = 200;
+		
+		// Remove the listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+
+		// Parameters: board, motor interface, num steps per rev, 
+		// direction pin, step pin
+		stepper = new Stepper(arduino, 
+							Stepper.DRIVER, 
+							stepsPerRev, 
+							arduino.getDigitalPin(2), 
+							arduino.getDigitalPin(3));
+
+		stepper.setSpeed(1500);
+		stepper.step(1600, Stepper.CLOCKWISE);	// 1 rev
+
+		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+					
+	}
+
+	function onStepperComplete(evt) {
+
+		stepper.removeEventListener(Event.COMPLETE, onStepperComplete);
+
+		stepper.setSpeed(1000);
+		stepper.step(1600, Stepper.COUNTER_CLOCKWISE);	// 1 rev
+	}
+
+	// called when a new string message is received from the I/O board
+	function onStringMessage(event) {
+		console.log("string received: " + event.message);
+	}	
+
+});
+
+</script>
+
+</head>
+<body>
+  	<h2>Stepper Example</h2>
+	<div class="container">
+
+	</div>
+</body>
+</html>
