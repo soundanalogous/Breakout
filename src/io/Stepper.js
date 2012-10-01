@@ -104,7 +104,7 @@ BO.io.Stepper = (function() {
 		/**
 		 * Number of steps in specified direction.
 		 *
-		 * @param {Number} numSteps The number of steps (max = +/-16,384).
+		 * @param {Number} numSteps The number of steps (max = +/-16,383).
 		 * Positive value is clockwise, negative value is counter clockwise.
 		 */
 		step: function(numSteps) {
@@ -114,11 +114,11 @@ BO.io.Stepper = (function() {
 
 			if (numSteps > MAX_STEPS) {
 				numSteps = MAX_STEPS;
-				console.log("Warning: Maximum number of steps (16383) exceeded. Setting to step number to 16,384");
+				console.log("Warning: Maximum number of steps (16383) exceeded. Setting to step number to 16,383");
 			}
 			if (numSteps < -MAX_STEPS) {
 				numSteps = -MAX_STEPS;
-				console.log("Warning: Maximum number of steps (-16383) exceeded. Setting to step number to -16,384");
+				console.log("Warning: Maximum number of steps (-16383) exceeded. Setting to step number to -16,383");
 			}
 
 			if (numSteps > 0) {
@@ -147,7 +147,7 @@ BO.io.Stepper = (function() {
 				speed = MAX_SPEED;
 				// TO DO: determin what the absolute max is when using stepper with Firmata.
 				// It's likely far less that 16384 rpm
-				console.log("Warning: Maximum speed (16,383) exceeded. Setting speed to 16,384 RPM");
+				console.log("Warning: Maximum speed (16,383) exceeded. Setting speed to 16,383 RPM");
 			}					
 
 			this._board.sendSysex(Stepper.STEPPER, 
