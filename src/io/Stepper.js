@@ -11,6 +11,13 @@ BO.io.Stepper = (function() {
 	var Stepper;
 	var instanceCounter = 0;
 
+	// private static constants
+	var CONFIG = 0,
+		STEP = 1,
+		SPEED = 2,
+		MAX_STEPS = 16383,
+		MAX_SPEED = 16383;
+
 	// dependencies
 	var Pin = BO.Pin,
 		EventDispatcher = JSUTILS.EventDispatcher,
@@ -64,7 +71,7 @@ BO.io.Stepper = (function() {
 			case Stepper.TWO_WIRE:
 				// configure the stepper motor
 				this._board.sendSysex(Stepper.STEPPER,
-												[Stepper.CONFIG,
+												[CONFIG,
 												this._id,
 												driverType,
 												numStepsPerRevLSB, 
@@ -78,7 +85,7 @@ BO.io.Stepper = (function() {
 
 				// configure the stepper motor
 				this._board.sendSysex(Stepper.STEPPER,
-												[Stepper.CONFIG,
+												[CONFIG,
 												this._id,
 												driverType,
 												numStepsPerRevLSB, 
@@ -97,21 +104,29 @@ BO.io.Stepper = (function() {
 		/**
 		 * Number of steps in specified direction.
 		 *
-		 * @param {Number} numSteps The number of steps (max = 16,384)
-		 * @param {Number} direction The direction of rotation 
-		 * (0 = counter clockwise, 1 = clockwise).
+		 * @param {Number} numSteps The number of steps (max = +/-16,384).
+		 * Positive value is clockwise, negative value is counter clockwise.
 		 */
-		step: function(numSteps, direction) {
-			var numStepsLSB = numSteps & 0x007F,
-				numStepsMSB = (numSteps >> 7) & 0x007F;				
+		step: function(numSteps) {
+			var numStepsLSB = Math.abs(numSteps) & 0x007F,
+				numStepsMSB = (Math.abs(numSteps) >> 7) & 0x007F,
+				direction = Stepper.CLOCKWISE;		
 
-			if (numSteps > 16384) {
-				numSteps = 16384;
-				console.log("Warning: Maximum number of steps (16384) exceeded. Setting to step number to 16,384");
+			if (numSteps > MAX_STEPS) {
+				numSteps = MAX_STEPS;
+				console.log("Warning: Maximum number of steps (16383) exceeded. Setting to step number to 16,384");
+			}
+			if (numSteps < -MAX_STEPS) {
+				numSteps = -MAX_STEPS;
+				console.log("Warning: Maximum number of steps (-16383) exceeded. Setting to step number to -16,384");
+			}
+
+			if (numSteps > 0) {
+				direction = Stepper.COUNTER_CLOCKWISE;
 			}
 
 			this._board.sendSysex(Stepper.STEPPER, 
-											[Stepper.STEP,
+											[STEP,
 											this._id,
 											numStepsLSB,
 											numStepsMSB,
@@ -128,15 +143,15 @@ BO.io.Stepper = (function() {
 			var speedLSB = speed & 0x007F,
 				speedMSB = (speed >> 7) & 0x007F;
 
-			if (speed > 16384) {
-				speed = 16384;
+			if (speed > MAX_SPEED) {
+				speed = MAX_SPEED;
 				// TO DO: determin what the absolute max is when using stepper with Firmata.
 				// It's likely far less that 16384 rpm
-				console.log("Warning: Maximum speed (16,384) exceeded. Setting speed to 16,384 RPM");
+				console.log("Warning: Maximum speed (16,383) exceeded. Setting speed to 16,384 RPM");
 			}					
 
 			this._board.sendSysex(Stepper.STEPPER, 
-											[Stepper.SPEED,
+											[SPEED,
 											this._id,
 											speedLSB,
 											speedMSB]);
@@ -196,22 +211,12 @@ BO.io.Stepper = (function() {
 	
 	};
 
-	// TO DO: make some of these private static vars
-
 	/** @constant */
-	Stepper.STEPPER	= 0x67;
-	/** @constant */
-	Stepper.CONFIG = 0;
-	/** @constant */
-	Stepper.STEP = 1;
-	/** @constant */
-	Stepper.SPEED = 2;
-
+	Stepper.STEPPER	= 0x72;
 	/** @constant */
 	Stepper.CLOCKWISE = 0;
 	/** @constant */
 	Stepper.COUNTER_CLOCKWISE = 1;
-
 	/** @constant */
 	Stepper.DRIVER = 1;
 	/** @constant */

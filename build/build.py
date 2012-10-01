@@ -185,7 +185,7 @@ def main(argv=None):
 	for fname_lib, files in min_files:
 		buildLib(files, fname_lib, version)
 
-	#buildJSDocs()
+	buildJSDocs()
 
 if __name__ == "__main__":
 	main()

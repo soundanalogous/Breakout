@@ -4,7 +4,6 @@
 
 <meta charset=utf-8 />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link type="text/css" href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
 <style type="text/css">
 body {
 	margin: 10px;
@@ -17,17 +16,6 @@ h2 {
 	font-size: 22px;
 	padding-bottom: 10px;
 }
-.Btns {
-	padding: 10px;
-	font-size: 16px;
-	width: 85px;
-	color: #00AEFF;
-	margin: 0 5px 0 0;
-}
-label {
-	font-size: 14px;
-	color: #666;
-}
 .container {
 	background-color: #f7f7f7;
 	padding: 10px;
@@ -36,22 +24,12 @@ label {
 	margin: 20px 0 40px 0;
 	padding-top: 10px;
 }
-#numSteps {
-	width: 50px;
-	margin-bottom: 20px;
-}
-#slider {
-	margin-top: 20px;
-	width: 280px;
-}
 </style>
 
-<title>Stepper Example</title>
+<title>Stepper Example (4 wire)</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
-<script src="../libs/jquery-ui/jquery-ui-1.8.23.custom.min.js"></script>
-<script src="../libs/jquery.ui.touch-punch.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -79,7 +57,7 @@ $(document).ready(function() {
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-		var stepsPerRev = 1600; // 200 * 8 (EasyDriver set to 8 microsteps)
+		var stepsPerRev = 200;
 		
 		// Remove the listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
@@ -89,53 +67,26 @@ $(document).ready(function() {
 		// Parameters: board, motor interface, num steps per rev, 
 		// direction pin, step pin
 		stepper = new Stepper(arduino, 
-							Stepper.DRIVER, 
+							Stepper.FOUR_WIRE, 
 							stepsPerRev, 
-							arduino.getDigitalPin(2), 
-							arduino.getDigitalPin(3));
+							arduino.getDigitalPin(4), 
+							arduino.getDigitalPin(7),
+							arduino.getDigitalPin(8),
+							arduino.getDigitalPin(12));
 
-		stepper.setSpeed(10);
-		// stepper.step(1600);	// 1 rev
+		stepper.setSpeed(150);
+		stepper.step(200);	// 1 rev
 
-		// stepper.addEventListener(Event.COMPLETE, onStepperComplete);
-
-		initGUIListeners();
+		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 					
 	}
 
-	function initGUIListeners() {
-		$('button#cwise').on('click', function() {
-			stepper.step(1600);
-		});
-
-		$('button#ccwise').on('click', function() {
-			stepper.step(-1600);		
-		});
-
-		$('#numSteps').change(function(evt) {
-			var steps = this.value;
-			if (steps <= 16384 && steps >= -16384) {
-				stepper.step(steps);
-			}
-		});
-
-		$('#slider').slider({
-			min: 10,
-			max: 220,
-			step: 10,
-			slide: function(event, ui) {
-				var motorSpeed = ui.value;
-				stepper.setSpeed(motorSpeed);
-				$('#motorSpeed').text(motorSpeed);
-			}
-		});
-	}	
-
 	function onStepperComplete(evt) {
+		console.log("complete");
 		stepper.removeEventListener(Event.COMPLETE, onStepperComplete);
 
-		stepper.setSpeed(100);
-		stepper.step(-1600);	// 1 rev
+		stepper.setSpeed(150);
+		stepper.step(-200);	// 1 rev
 	}
 
 	// called when a new string message is received from the I/O board
@@ -151,17 +102,7 @@ $(document).ready(function() {
 <body>
   	<h2>Stepper Example</h2>
 	<div class="container">
-		<label for="numSteps">Number of Steps (max +/-16383): </label><input id="numSteps" type="number" value="1600" min="-16384" max="16384" step="100" />
-		<div>
-			<button type="button" class="Btns" id="cwise">1600</button>
-			<button type="button" class="Btns" id="ccwise">-1600</button>
-		</div>		
-	</div>
 
-	<div class="container">
-		<label>Speed (RPM): </label><label id="motorSpeed">10</label>
-		<div id="slider"></div>
 	</div>
-
 </body>
 </html>
