@@ -46,7 +46,7 @@ label {
 }
 </style>
 
-<title>Stepper Example (4 wire)</title>
+<title>Stepper Example (2 wire)</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
@@ -89,19 +89,17 @@ $(document).ready(function() {
 		// Parameters: board, motor interface, num steps per rev, 
 		// direction pin, step pin
 		stepper = new Stepper(arduino, 
-							Stepper.FOUR_WIRE, 
+							Stepper.TWO_WIRE, 
 							stepsPerRev, 
 							arduino.getDigitalPin(2), 
-							arduino.getDigitalPin(3),
-							arduino.getDigitalPin(4),
-							arduino.getDigitalPin(5));
+							arduino.getDigitalPin(3));
 
 		stepper.setSpeed(10);
 		// stepper.step(200);	// 1 rev
 
 		// stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
-		initGUIListeners();		
+		initGUIListeners();
 					
 	}
 
@@ -152,6 +150,7 @@ $(document).ready(function() {
 
 </head>
 <body>
+  	<h2>Stepper Example</h2>
 	<div class="container">
 		<label for="numSteps">Number of Steps (max +/-16383): </label><input id="numSteps" type="number" value="200" min="-16384" max="16384" step="100" />
 		<div>
