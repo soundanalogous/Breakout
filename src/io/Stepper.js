@@ -15,7 +15,7 @@ BO.io.Stepper = (function() {
 	var CONFIG = 0,
 		STEP = 1,
 		SPEED = 2,
-		MAX_STEPS = 16383,
+		MAX_STEPS = 2097151, // 21 bits (2^21 - 1)
 		MAX_SPEED = 16383;
 
 	// dependencies
@@ -104,21 +104,24 @@ BO.io.Stepper = (function() {
 		/**
 		 * Number of steps in specified direction.
 		 *
-		 * @param {Number} numSteps The number of steps (max = +/-16,383).
+		 * @param {Number} numSteps The number of steps (max = +/-2097151 (21 bits)).
 		 * Positive value is clockwise, negative value is counter clockwise.
 		 */
 		step: function(numSteps) {
-			var numStepsLSB = Math.abs(numSteps) & 0x007F,
-				numStepsMSB = (Math.abs(numSteps) >> 7) & 0x007F,
-				direction = Stepper.CLOCKWISE;		
+			var steps = [
+				Math.abs(numSteps) & 0x0000007F,
+				(Math.abs(numSteps) >> 7) & 0x0000007F,
+				(Math.abs(numSteps) >> 14) & 0x0000007F
+				],
+				direction = Stepper.CLOCKWISE;
 
 			if (numSteps > MAX_STEPS) {
 				numSteps = MAX_STEPS;
-				console.log("Warning: Maximum number of steps (16383) exceeded. Setting to step number to 16,383");
+				console.log("Warning: Maximum number of steps (2097151) exceeded. Setting to step number to 2097151");
 			}
 			if (numSteps < -MAX_STEPS) {
 				numSteps = -MAX_STEPS;
-				console.log("Warning: Maximum number of steps (-16383) exceeded. Setting to step number to -16,383");
+				console.log("Warning: Maximum number of steps (-2097151) exceeded. Setting to step number to -2097151");
 			}
 
 			if (numSteps > 0) {
@@ -127,9 +130,10 @@ BO.io.Stepper = (function() {
 
 			this._board.sendSysex(Stepper.STEPPER, 
 											[STEP,
-											this._id,
-											numStepsLSB,
-											numStepsMSB,
+											this._id,									
+											steps[0],
+											steps[1],
+											steps[2],
 											direction]);
 		},
 

@@ -37,7 +37,7 @@ label {
 	padding-top: 10px;
 }
 #numSteps {
-	width: 50px;
+	width: 80px;
 	margin-bottom: 20px;
 }
 #slider {
@@ -105,16 +105,16 @@ $(document).ready(function() {
 
 	function initGUIListeners() {
 		$('button#cwise').on('click', function() {
-			stepper.step(200);
+			stepper.step(65536);
 		});
 
 		$('button#ccwise').on('click', function() {
-			stepper.step(-200);		
+			stepper.step(-65536);		
 		});
 
 		$('#numSteps').change(function(evt) {
 			var steps = this.value;
-			if (steps <= 16384 && steps >= -16384) {
+			if (steps <= 2097151 && steps >= -2097151) {
 				stepper.step(steps);
 			}
 		});
@@ -152,7 +152,7 @@ $(document).ready(function() {
 <body>
   	<h2>Stepper Example</h2>
 	<div class="container">
-		<label for="numSteps">Number of Steps (max +/-16383): </label><input id="numSteps" type="number" value="200" min="-16384" max="16384" step="100" />
+		<label for="numSteps">Number of Steps (max +/-2097151): </label><input id="numSteps" type="number" value="200" min="-2097151" max="2097151" step="100" />
 		<div>
 			<button type="button" class="Btns" id="cwise">200</button>
 			<button type="button" class="Btns" id="ccwise">-200</button>

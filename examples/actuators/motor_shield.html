@@ -19,7 +19,7 @@ h2 {
 }
 .Btns {
 	padding: 10px;
-	font-size: 16px;
+	font-size: 14px;
 	width: 85px;
 	color: #00AEFF;
 	margin: 0 5px 0 0;
@@ -36,6 +36,12 @@ label {
 	margin: 20px 0 40px 0;
 	padding-top: 10px;
 }
+.btnContainer {
+	margin-top: 20px;
+}
+#angle {
+	width: 50px;
+}
 #numSteps {
 	width: 50px;
 	margin-bottom: 20px;
@@ -46,7 +52,7 @@ label {
 }
 </style>
 
-<title>Stepper Example (4 wire)</title>
+<title>Stepper Example (2 wire)</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
@@ -60,6 +66,7 @@ $(document).ready(function() {
 	var IOBoard = BO.IOBoard;
 	var IOBoardEvent = BO.IOBoardEvent;
 	var Stepper = BO.io.Stepper;
+	var Servo = BO.io.Servo;
 	var Event = JSUTILS.Event;
 
 	// Set to true to print debug messages to console
@@ -73,6 +80,7 @@ $(document).ready(function() {
 	
 	// Variables
 	var stepper;
+	var servo;
 	
 	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data	
@@ -86,22 +94,25 @@ $(document).ready(function() {
 
 		arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 
+		servo = new Servo(arduino, arduino.getDigitalPin(9));
+		servo.angle - 90;
+
 		// Parameters: board, motor interface, num steps per rev, 
 		// direction pin, step pin
 		stepper = new Stepper(arduino, 
-							Stepper.FOUR_WIRE, 
+							Stepper.TWO_WIRE, 
 							stepsPerRev, 
-							arduino.getDigitalPin(2), 
-							arduino.getDigitalPin(3),
-							arduino.getDigitalPin(4),
-							arduino.getDigitalPin(5));
+							arduino.getDigitalPin(5), 
+							arduino.getDigitalPin(6)); //,
+							// arduino.getDigitalPin(6),
+							// arduino.getDigitalPin(7));
 
 		stepper.setSpeed(10);
 		// stepper.step(200);	// 1 rev
 
 		// stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
-		initGUIListeners();		
+		initGUIListeners();
 					
 	}
 
@@ -116,7 +127,7 @@ $(document).ready(function() {
 
 		$('#numSteps').change(function(evt) {
 			var steps = this.value;
-			if (steps <= 2097151 && steps >= -2097151) {
+			if (steps <= 16384 && steps >= -16384) {
 				stepper.step(steps);
 			}
 		});
@@ -131,6 +142,18 @@ $(document).ready(function() {
 				$('#motorSpeed').text(motorSpeed);
 			}
 		});
+
+		$('button').on('click', function() {
+			servo.angle = $(this).data('angle');
+		});
+
+		$('#angle').change(function(evt) {
+			var val = this.value;
+			if (val <= 180 && val >= 0) {
+				// Rotate the servo head to the specified angle
+				servo.angle = val;
+			}
+		});			
 	}	
 
 	function onStepperComplete(evt) {
@@ -152,8 +175,9 @@ $(document).ready(function() {
 
 </head>
 <body>
+  	<h2>Stepper Example</h2>
 	<div class="container">
-		<label for="numSteps">Number of Steps (max +/-2097151): </label><input id="numSteps" type="number" value="200" min="-2097151" max="2097151" step="100" />
+		<label for="numSteps">Number of Steps (max +/-16383): </label><input id="numSteps" type="number" value="200" min="-16384" max="16384" step="100" />
 		<div>
 			<button type="button" class="Btns" id="cwise">200</button>
 			<button type="button" class="Btns" id="ccwise">-200</button>
@@ -164,5 +188,20 @@ $(document).ready(function() {
 		<label>Speed (RPM): </label><label id="motorSpeed">10</label>
 		<div id="slider"></div>
 	</div>
+
+  	<h2>Servo Example</h2>
+	<p>Enter or click on a value below:</p>
+	<div class="container">
+		<label for="angle">Angle (0 - 180): </label>
+		<input id="angle" type="number" value="90" min="0" max="180" step="1" />
+
+		<div class="btnContainer">
+			<button type="button" class="Btns" data-angle="45">45 deg</button>
+			<button type="button" class="Btns" data-angle="90">90 deg</button>
+			<button type="button" class="Btns" data-angle="135">135 deg</button>
+		</div>
+	</div>
+
+
 </body>
 </html>
