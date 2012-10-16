@@ -97,7 +97,7 @@ $(document).ready(function() {
 		stepper.setSpeed(10);
 		// stepper.step(200);	// 1 rev
 
-		// stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
 		initGUIListeners();
 					
@@ -105,11 +105,11 @@ $(document).ready(function() {
 
 	function initGUIListeners() {
 		$('button#cwise').on('click', function() {
-			stepper.step(65536);
+			stepper.step(200);
 		});
 
 		$('button#ccwise').on('click', function() {
-			stepper.step(-65536);		
+			stepper.step(-200);		
 		});
 
 		$('#numSteps').change(function(evt) {
@@ -133,13 +133,10 @@ $(document).ready(function() {
 
 	function onStepperComplete(evt) {
 		console.log("complete");
-		stepper.removeEventListener(Event.COMPLETE, onStepperComplete);
-
-		stepper.setSpeed(150);
-		stepper.step(-200);	// 1 rev
 	}
 
 	// called when a new string message is received from the I/O board
+	// used for debugging Firmata
 	function onStringMessage(event) {
 		console.log("string received: " + event.message);
 	}	
