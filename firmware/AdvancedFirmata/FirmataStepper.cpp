@@ -6,7 +6,7 @@
   function calls.
   
   Modifications:
-  EasyDriver + Arduino Stepper (0.5) by Jeff Hoefs
+  EasyDriver + Arduino Stepper (0.1) by Jeff Hoefs
   Based on modifications by Chris Coleman and Rob Seward
   
   The original stepper.cpp v0.4 notes:
@@ -59,78 +59,61 @@
 
 /**
  * Constructor.
- * Sets the default values for a stepper.
- */
-FirmataStepper::FirmataStepper() {
-  this->step_number = 0;      // which step the motor is on
-  this->speed = 0;        // the motor speed, in revolutions per minute
-  this->direction = 0;      // motor direction
-  this->last_step_time = 0;    // time stamp in ms of the last step taken
-  this->number_of_steps = 0;    // total number of steps for this motor
-  this->done = false;
-  this->running = false;
-  this->interface = FirmataStepper::DRIVER; // default to Easy Stepper (or other step + direction driver)
-}
-
-/**
+ *
  * Configure a stepper for an EasyDriver or other step + direction interface or
  * configure a bipolar or unipolar stepper motor for 2 wire drive mode.
+ * Configure a bipolar or unipolar stepper for 4 wire drive mode.
  * @param interface The interface type: FirmataStepper::DRIVER or
  * FirmataStepper::TWO_WIRE
- * @param number_of_steps The number of steps to make 1 revolution.
+ * @param steps_per_rev The number of steps to make 1 revolution.
  * @param first_pin The direction pin (EasyDriver) or the pin attached to the 
  * 1st motor coil (2 wire drive mode)
  * @param second_pin The step pin (EasyDriver) or the pin attached to the 2nd 
  * motor coil (2 wire drive mode)
- */
-void FirmataStepper::config(byte interface, int number_of_steps, byte first_pin, byte second_pin) {
-  // total number of steps for this motor
-  this->number_of_steps = number_of_steps;
-  this->interface = interface;
-
-  this->motor_pin_1 = first_pin;
-  this->motor_pin_2 = second_pin;
-  this->dir_pin = first_pin;
-  this->step_pin = second_pin;  
-
-  // setup the pins on the microcontroller:
-  pinMode(this->motor_pin_1, OUTPUT);
-  pinMode(this->motor_pin_2, OUTPUT);
-}
-
-/**
- * Configure a bipolar or unipolar stepper for 4 wire drive mode.
- * @param interface The interface type: FirmataStepper::DRIVER, 
- * FirmataStepper::TWO_WIRE, or FirmataStepper::FOUR_WIRE
- * @param number_of_steps The number of steps to make 1 revolution.
- * @param motor_pin_1 The pin attached to the 1st motor coil
- * @param motor_pin_2 The pin attached to the 2nd motor coil
  * @param motor_pin_3 The pin attached to the 3rd motor coil
- * @param motor_pin_4 The pin attached to the 4th motor coil
+ * @param motor_pin_4 The pin attached to the 4th motor coil 
  */
-void FirmataStepper::config(byte interface, int number_of_steps, byte motor_pin_1, byte motor_pin_2, byte motor_pin_3, byte motor_pin_4) {
-  // total number of steps for this motor
-  this->number_of_steps = number_of_steps;
-  this->interface = interface;
+FirmataStepper::FirmataStepper(byte interface, 
+                              int steps_per_rev, 
+                              byte pin1, 
+                              byte pin2, 
+                              byte pin3, 
+                              byte pin4) {
 
-  this->motor_pin_1 = motor_pin_1;
-  this->motor_pin_2 = motor_pin_2;
-  this->motor_pin_3 = motor_pin_3;
-  this->motor_pin_4 = motor_pin_4;
-  
+  this->step_number = 0;      // which step the motor is on
+  this->speed = 0;        // the motor speed, in revolutions per minute
+  this->direction = 0;      // motor direction
+  this->last_step_time = 0;    // time stamp in ms of the last step taken
+  this->steps_per_rev = steps_per_rev;    // total number of steps for this motor
+  this->running = false;
+  this->interface = interface; // default to Easy Stepper (or other step + direction driver)
+
+  this->motor_pin_1 = pin1;
+  this->motor_pin_2 = pin2;
+  this->dir_pin = pin1;
+  this->step_pin = pin2;
+
   // setup the pins on the microcontroller:
   pinMode(this->motor_pin_1, OUTPUT);
   pinMode(this->motor_pin_2, OUTPUT);
-  pinMode(this->motor_pin_3, OUTPUT);
-  pinMode(this->motor_pin_4, OUTPUT);  
+
+  if (interface == FirmataStepper::FOUR_WIRE) {
+    this->motor_pin_3 = pin3;
+    this->motor_pin_4 = pin4;    
+    pinMode(this->motor_pin_3, OUTPUT);
+    pinMode(this->motor_pin_4, OUTPUT);      
+  }
 }
 
 /**
  * Sets the speed in revolutions per minute.
  * @param speed_rpm The speed in RPM.
+ *
+ * TO DO: change to rad/sec?
+ * TO DO: add acceleration parameter (rad/sec^2)
  */
 void FirmataStepper::setSpeed(int speed_rpm) {
-  this->step_delay = 60L * 1000L * 1000L / this->number_of_steps / speed_rpm;
+  this->step_delay = 60L * 1000L * 1000L / this->steps_per_rev / speed_rpm;
 }
 
 /**
@@ -152,15 +135,15 @@ void FirmataStepper::setNumSteps(long steps_to_move) {
  * @return True if step sequence has completed.
  */
 bool FirmataStepper::update() {
-  done = false;
+  bool done = false;
 	if(this->seq_steps_left > 0) {
     updateStepPosition();
-    running = true;
+    this->running = true;
 	} else{
     if(this->seq_steps_left == 0 && running){
         done = true;
     }
-    running = false;
+    this->running = false;
   }
   return done;
 }
@@ -178,12 +161,12 @@ void FirmataStepper::updateStepPosition() {
     // depending on direction:
     if (this->direction == 1) {
       this->step_number++;
-      if (this->step_number == this->number_of_steps) {
+      if (this->step_number == this->steps_per_rev) {
         this->step_number = 0;
       }
     } else {
       if (this->step_number == 0) {
-        this->step_number = this->number_of_steps;
+        this->step_number = this->steps_per_rev;
       }
       this->step_number--;
     }

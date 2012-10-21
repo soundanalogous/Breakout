@@ -6,7 +6,7 @@
   function calls.
   
   Modifications:
-  EasyDriver + Arduino Stepper (0.5) by Jeff Hoefs
+  EasyDriver + Arduino Stepper (0.1) by Jeff Hoefs
   Based on modifications by Chris Coleman and Rob Seward
   
   The original stepper.cpp v0.4 notes:
@@ -68,7 +68,12 @@
 // library interface description
 class FirmataStepper {
   public:
-    FirmataStepper();
+    FirmataStepper(byte interface = FirmataStepper::DRIVER, 
+                    int steps_per_rev = 200, 
+                    byte pin1 = 2, 
+                    byte pin2 = 3, 
+                    byte pin3 = 3, 
+                    byte pin4 = 4);
 
     enum Interface {
       DRIVER = 1,
@@ -76,15 +81,11 @@ class FirmataStepper {
       FOUR_WIRE = 4
     };
 
-    // configure the stepper (set interface type, num steps/rev, and pin numbers)
-    void config(byte interface, int number_of_steps, byte pin1, byte pin2);
-    void config(byte interface, int number_of_steps, byte pin1, byte pin2, byte pin3, byte pin4);
-
     // speed setter method:
     void setSpeed(int speed_rpm);
 
     // set the number of steps
-    void setNumSteps(long number_of_steps);
+    void setNumSteps(long steps_per_rev);
 
     // update the stepper position
 		bool update();
@@ -94,13 +95,12 @@ class FirmataStepper {
   private:
     void stepMotor(byte step_num, byte direction);
     void updateStepPosition();
-    bool done;
     bool running;
     byte interface;     // Type of interface: DRIVER, TWO_WIRE or FOUR_WIRE
     byte direction;        // Direction of rotation
     int speed;          // Speed in RPMs
     unsigned long step_delay;    // delay between steps, in microseconds, based on speed
-    int number_of_steps;      // number of steps to make one revolution
+    int steps_per_rev;      // number of steps to make one revolution
     long step_number;        // which step the motor is on
     long seq_steps_left;   //number of steps left if running a sequence
     

@@ -90,7 +90,7 @@ signed char queryIndex = -1;
 unsigned int i2cReadDelayTime = 0;  // default delay time between i2c read request and Wire.requestFrom()
 
 Servo servos[MAX_SERVOS];
-FirmataStepper stepper[MAX_STEPPERS];
+FirmataStepper *stepper[MAX_STEPPERS];
 byte numSteppers = 0;
 
 /*==============================================================================
@@ -473,23 +473,25 @@ void sysexCallback(byte command, byte argc, byte *argv)
       setPinModeCallback(stepPin, OUTPUT);      
 
       if (interface == FirmataStepper::DRIVER || interface == FirmataStepper::TWO_WIRE) {
-        stepper[deviceNum].config(interface, stepsPerRev, directionPin, stepPin);
+        //stepper[deviceNum].config(interface, stepsPerRev, directionPin, stepPin);
+        stepper[deviceNum] = new FirmataStepper(interface, stepsPerRev, directionPin, stepPin);
       } else if (interface == FirmataStepper::FOUR_WIRE) {
         motorPin3 = argv[7];
         motorPin4 = argv[8];          
         setPinModeCallback(motorPin3, OUTPUT);
         setPinModeCallback(motorPin4, OUTPUT);
-        stepper[deviceNum].config(interface, stepsPerRev, directionPin, stepPin, motorPin3, motorPin4);
+        //stepper[deviceNum].config(interface, stepsPerRev, directionPin, stepPin, motorPin3, motorPin4);
+        stepper[deviceNum] = new FirmataStepper(interface, stepsPerRev, directionPin, stepPin, motorPin3, motorPin4);
       }
     } else if (stepCommand == STEPPER_STEP) {
       numSteps = (long)argv[2] | ((long)argv[3] << 7) | ((long)argv[4] << 14);
       stepDirection = argv[5];
       if (stepDirection == 0) { numSteps *= -1; }
-      stepper[deviceNum].setNumSteps(numSteps);
+      stepper[deviceNum]->setNumSteps(numSteps);
     } else if (stepCommand == STEPPER_SPEED) {
       // speed in revs per minute
       stepSpeed = (argv[2] + (argv[3] << 7));      
-      stepper[deviceNum].setSpeed(stepSpeed);
+      stepper[deviceNum]->setSpeed(stepSpeed);
     }
     break;
 
@@ -674,7 +676,7 @@ void loop()
   // if one or more stepper motors are used, update their position
   if (numSteppers > 0) {
     for (int i=0; i<numSteppers; i++) {
-      bool done = stepper[i].update();
+      bool done = stepper[i]->update();
 
       // send command to client application when stepping is complete
       if (done) {
