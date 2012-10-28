@@ -94,9 +94,6 @@ $(document).ready(function() {
 							arduino.getDigitalPin(2), 
 							arduino.getDigitalPin(3));
 
-		stepper.setSpeed(10);
-		// stepper.step(200);	// 1 rev
-
 		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
 		initGUIListeners();
@@ -105,11 +102,11 @@ $(document).ready(function() {
 
 	function initGUIListeners() {
 		$('button#cwise').on('click', function() {
-			stepper.step(200);
+			stepper.step(2000, 2000, 1000, 1000);
 		});
 
 		$('button#ccwise').on('click', function() {
-			stepper.step(-200);		
+			stepper.step(-2000, 2000);		
 		});
 
 		$('#numSteps').change(function(evt) {
@@ -151,14 +148,14 @@ $(document).ready(function() {
 	<div class="container">
 		<label for="numSteps">Number of Steps (max +/-2097151): </label><input id="numSteps" type="number" value="200" min="-2097151" max="2097151" step="100" />
 		<div>
-			<button type="button" class="Btns" id="cwise">200</button>
-			<button type="button" class="Btns" id="ccwise">-200</button>
+			<button type="button" class="Btns" id="cwise">2000</button>
+			<button type="button" class="Btns" id="ccwise">-2000</button>
 		</div>		
 	</div>
 
-	<div class="container">
+<!-- 	<div class="container">
 		<label>Speed (RPM): </label><label id="motorSpeed">10</label>
 		<div id="slider"></div>
-	</div>
+	</div> -->
 </body>
 </html>

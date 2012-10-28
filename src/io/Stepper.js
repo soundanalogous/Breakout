@@ -14,7 +14,6 @@ BO.io.Stepper = (function() {
 	// private static constants
 	var CONFIG = 0,
 		STEP = 1,
-		SPEED = 2,
 		MAX_STEPS = 2097151, // 21 bits (2^21 - 1)
 		MAX_SPEED = 16383;
 
@@ -102,17 +101,23 @@ BO.io.Stepper = (function() {
 	Stepper.prototype = {
 
 		/**
-		 * Number of steps in specified direction.
+		 * Move the stepper a given number of steps at the specified
+		 * speed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).
 		 *
-		 * @param {Number} numSteps The number of steps (max = +/-2097151 (21 bits)).
+		 * @param {Number} numSteps The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
 		 * Positive value is clockwise, negative value is counter clockwise.
-		 */
-		step: function(numSteps) {
-			var steps = [
-				Math.abs(numSteps) & 0x0000007F,
-				(Math.abs(numSteps) >> 7) & 0x0000007F,
-				(Math.abs(numSteps) >> 14) & 0x0000007F
-				],
+		 * @param {Number} speed Max speed in 0.01*rad/sec 
+		 * @param {Number} accel [optional] Acceleration in 0.01*rad/sec^2
+		 * @param {Number} decel [optional] Deceleration in 0.01*rad/sec^2
+		 */		 
+		step: function(numSteps, speed, accel, decel) {
+			var steps,
+				speedLSB,
+				speedMSB,
+				accelLSB,
+				accelMSB,
+				decelLSB,
+				decelMSB,
 				direction = Stepper.CLOCKWISE;
 
 			if (numSteps > MAX_STEPS) {
@@ -128,38 +133,58 @@ BO.io.Stepper = (function() {
 				direction = Stepper.COUNTER_CLOCKWISE;
 			}
 
-			this._board.sendSysex(Stepper.STEPPER, 
-											[STEP,
-											this._id,									
-											steps[0],
-											steps[1],
-											steps[2],
-											direction]);
-		},
-
-		/**
-		 * Set the stepper speed
-		 *
-		 * @param {Number} speed The spped in revolutions per minute (max = 16,384)
-		 * (0 = counter clockwise, 1 = clockwise).
-		 */
-		setSpeed: function(speed) {
-			var speedLSB = speed & 0x007F,
-				speedMSB = (speed >> 7) & 0x007F;
+			steps = [
+				Math.abs(numSteps) & 0x0000007F,
+				(Math.abs(numSteps) >> 7) & 0x0000007F,
+				(Math.abs(numSteps) >> 14) & 0x0000007F
+				];
 
 			if (speed > MAX_SPEED) {
 				speed = MAX_SPEED;
 				// TO DO: determin what the absolute max is when using stepper with Firmata.
-				// It's likely far less that 16384 rpm
+				// It's likely far less that 16384 rad/sec
 				console.log("Warning: Maximum speed (16,383) exceeded. Setting speed to 16,383 RPM");
 			}					
 
-			this._board.sendSysex(Stepper.STEPPER, 
-											[SPEED,
-											this._id,
-											speedLSB,
-											speedMSB]);
-		},			
+			speedLSB = speed & 0x007F;
+			speedMSB = (speed >> 7) & 0x007F;
+
+			// make sure both accel and decel are defined
+			if (accel !== undefined && decel !== undefined) {
+				accelLSB = accel & 0x007F;
+				accelMSB = (accel >> 7) & 0x007F;
+
+				decelLSB = decel & 0x007F;
+				decelMSB = (decel >> 7) & 0x007F;				
+							
+				this._board.sendSysex(Stepper.STEPPER, 
+												[STEP,
+												this._id,
+												direction,								
+												steps[0],
+												steps[1],
+												steps[2],
+												speedLSB,
+												speedMSB,
+												accelLSB,
+												accelMSB,
+												decelLSB,
+												decelMSB
+												]);
+			} else {
+				// don't send accel and decel values
+				this._board.sendSysex(Stepper.STEPPER, 
+												[STEP,
+												this._id,
+												direction,									
+												steps[0],
+												steps[1],
+												steps[2],
+												speedLSB,
+												speedMSB
+												]);				
+			}
+		},
 
 		/**
 		 * Listen for stepping complete event
