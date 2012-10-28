@@ -1,24 +1,22 @@
 /**
-  FirmataStepper is a modification of Stepper.cpp that gives adds
-  non-blocking capability and EasyDriver (http://schmalzhaus.com/EasyDriver/) 
-  support. As long as you call update() often, you don't have to wait for 
-  the stepper to complete its movement before you can make other 
-  function calls.
-  
-  Modifications:
-  EasyDriver + Arduino Stepper (0.1) by Jeff Hoefs
-  Based on modifications by Chris Coleman and Rob Seward
-  
-  The original stepper.cpp v0.4 notes:
-  
-  Stepper.cpp - - Stepper library for Wiring/Arduino - Version 0.4
-  
-  Original library     (0.1) by Tom Igoe.
-  Two-wire modifications   (0.2) by Sebastian Gassner
-  Combination version   (0.3) by Tom Igoe and David Mellis
-  Bug fix for four-wire   (0.4) by Tom Igoe, bug fix from Noah Shibley  
+  FirmataStepper is a simple non-blocking stepper motor library
+  for 2 and 4 wire bipolar and unipolar stepper motor drive circuits
+  as well as EasyDriver (http://schmalzhaus.com/EasyDriver/) and 
+  other step + direction drive circuits.
 
-  Drives a unipolar or bipolar stepper motor using  2 wires or 4 wires
+  FirmataStepper (0.1) by Jeff Hoefs
+  
+  EasyDriver support based on modifications by Chris Coleman
+
+  Acceleration / Deceleration algorithms and code based on:
+  app note: http://www.atmel.com/dyn/resources/prod_documents/doc8017.pdf
+  source code: http://www.atmel.com/dyn/resources/prod_documents/AVR446.zip
+  
+  stepMotor function based on Stepper.cpp Stepper library for
+  Wiring/Arduino created by Tom Igoe, Sebastian Gassner
+  David Mellis and Noah Shibley.
+
+  Relevant notes from Stepper.cpp:
 
   When wiring multiple stepper motors to a microcontroller,
   you quickly run out of output pins, with each motor requiring 4 connections. 
@@ -50,9 +48,7 @@
      4  0  0
 
   The circuits can be found at 
- 
   http://www.arduino.cc/en/Tutorial/Stepper
-
 */
 
 #include "FirmataStepper.h"
@@ -79,9 +75,7 @@ FirmataStepper::FirmataStepper(byte interface,
                               byte pin2, 
                               byte pin3, 
                               byte pin4) {
-
   this->step_number = 0;      // which step the motor is on
-  this->speed = 0;        // the motor speed, in revolutions per minute
   this->direction = 0;      // motor direction
   this->last_step_time = 0;    // time stamp in ms of the last step taken
   this->steps_per_rev = steps_per_rev;    // total number of steps for this motor
@@ -103,49 +97,211 @@ FirmataStepper::FirmataStepper(byte interface,
     pinMode(this->motor_pin_3, OUTPUT);
     pinMode(this->motor_pin_4, OUTPUT);      
   }
+
+
+  this->alpha = PI_2/this->steps_per_rev;
+  this->at_x100 = (long)(this->alpha * T1_FREQ * 100);
+  this->ax20000 = (long)(this->alpha*20000);
+  this->alpha_x2 = this->alpha * 2;
+
 }
 
 /**
- * Sets the speed in revolutions per minute.
- * @param speed_rpm The speed in RPM.
+ * Move the stepper a given number of steps at the specified
+ * speed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).
  *
- * TO DO: change to rad/sec?
- * TO DO: add acceleration parameter (rad/sec^2)
+ * @param steps_to_move The number ofsteps to move the motor
+ * @param speed Max speed in 0.01*rad/sec 
+ * @param accel [optional] Acceleration in 0.01*rad/sec^2
+ * @param decel [optional] Deceleration in 0.01*rad/sec^2
  */
-void FirmataStepper::setSpeed(int speed_rpm) {
-  this->step_delay = 60L * 1000L * 1000L / this->steps_per_rev / speed_rpm;
+void FirmataStepper::setStepsToMove(long steps_to_move, int speed, int accel, int decel) {
+  unsigned long maxStepLimit;
+  unsigned long accelerationLimit;
+
+  this->step_number = 0;
+  this->lastAccelDelay = 0;
+  this->stepCount = 0;
+  this->rest = 0;  
+
+  if (steps_to_move < 0) {
+    this->direction = FirmataStepper::CCW;
+    steps_to_move = -steps_to_move;
+  }
+  else {
+    this->direction = FirmataStepper::CW;
+  }
+
+  this->steps_to_move = steps_to_move;
+
+  // set max speed limit, by calc min_delay
+  // min_delay = (alpha / tt)/w
+  this->min_delay = this->at_x100 / speed;
+
+  // if acceleration or deceleration are not defined
+  // start in RUN state and do no decelerate
+  if (accel == 0 || decel == 0) {
+    this->step_delay = this->min_delay;
+
+    this->decel_start = steps_to_move;
+    this->run_state = FirmataStepper::RUN;
+    this->accel_count = 0;
+    this->running = true;
+
+    return;
+  }
+
+  // if only moving 1 step
+  if (steps_to_move == 1) {
+
+    // move one step
+    this->accel_count = -1;
+    this->run_state = FirmataStepper::DECEL;
+
+    this->step_delay = this->min_delay;
+    this->running = true;
+  }
+  else if (steps_to_move != 0) {
+    // set initial step delay
+    // step_delay = 1/tt * sqrt(2*alpha/accel)
+    // step_delay = ( tfreq*0.676/100 )*100 * sqrt( (2*alpha*10000000000) / (accel*100) )/10000
+    this->step_delay = (long)((T1_FREQ_148 * sqrt(alpha_x2/accel)) * 1000);   
+
+    // find out after how many steps does the speed hit the max speed limit.
+    // maxSpeedLimit = speed^2 / (2*alpha*accel)
+    maxStepLimit = (long)speed*speed/(long)(((long)this->ax20000*accel)/100);
+
+    // if we hit max spped limit before 0.5 step it will round to 0.
+    // but in practice we need to move at least 1 step to get any speed at all.
+    if (maxStepLimit == 0) {
+      maxStepLimit = 1;
+    }  
+
+    // find out after how many steps we must start deceleration.
+    // n1 = (n1+n2)decel / (accel + decel)
+    accelerationLimit = (long)((steps_to_move*decel) / (accel+decel));
+
+    // we must accelerate at least 1 step before we can start deceleration
+    if (accelerationLimit == 0) {
+      accelerationLimit = 1;
+    }  
+
+    // use the limit we hit first to calc decel
+    if (accelerationLimit <= maxStepLimit) {
+      this->decel_val = accelerationLimit - steps_to_move;
+    }
+    else {
+      this->decel_val = -(long)(maxStepLimit*accel)/decel;
+    }
+
+    // we must decelerate at least 1 step to stop
+    if(this->decel_val == 0) {
+      this->decel_val = -1;
+    }    
+
+    // find step to start deceleration
+    this->decel_start = steps_to_move + this->decel_val;
+
+    // if the max spped is so low that we don't need to go via acceleration state.
+    if (this->step_delay <= this->min_delay) {
+      this->step_delay = this->min_delay;
+      this->run_state = FirmataStepper::RUN;
+    }
+    else {
+      this->run_state = FirmataStepper::ACCEL;
+    }
+
+    // reset counter
+    this->accel_count = 0;
+    this->running = true;
+  }
 }
 
-/**
- * Set the number of steps to move the motor. If the number is negative, 
- * the motor moves in the reverse direction.
- * @param steps_to_move The number of steps to move the motor.
- */
-void FirmataStepper::setNumSteps(long steps_to_move) {    
-  // number of steps
-  this->seq_steps_left = abs(steps_to_move);
 
-  // determine direction
-  if (steps_to_move > 0) {this->direction = 1;}
-  if (steps_to_move < 0) {this->direction = 0;}
-}
-
-/**
- * Call this as frequently as possible to update stepper position.
- * @return True if step sequence has completed.
- */
 bool FirmataStepper::update() {
   bool done = false;
-	if(this->seq_steps_left > 0) {
-    updateStepPosition();
-    this->running = true;
-	} else{
-    if(this->seq_steps_left == 0 && running){
-        done = true;
+  long newStepDelay;
+
+  unsigned long curTimeVal = micros();
+  long timeDiff = curTimeVal - this->last_step_time;
+
+  if (this->running == true && timeDiff >= this->step_delay) {
+
+    this->last_step_time = curTimeVal;
+
+    switch(this->run_state) {
+      case FirmataStepper::STOP:
+        this->stepCount = 0;
+        this->rest = 0;    
+        if (this->running) {
+          done = true;
+        }
+        this->running = false;
+      break;
+
+      case FirmataStepper::ACCEL:
+        updateStepPosition();
+        this->stepCount++;
+        this->accel_count++;
+        newStepDelay = this->step_delay - (((2 * (long)this->step_delay) + this->rest)/(4 * this->accel_count + 1));
+        this->rest = ((2 * (long)this->step_delay)+this->rest)%(4 * this->accel_count + 1);
+
+        // check if we should start deceleration
+        if (this->stepCount >= this->decel_start) {
+          this->accel_count = this->decel_val;
+          this->run_state = FirmataStepper::DECEL;
+          this->rest = 0;
+        }
+        // check if we hit max speed
+        else if (newStepDelay <= this->min_delay) {
+          this->lastAccelDelay = newStepDelay;
+          newStepDelay = this->min_delay;
+          this->rest = 0;
+          this->run_state = FirmataStepper::RUN;
+        }
+      break;
+
+      case FirmataStepper::RUN:
+        updateStepPosition();
+        this->stepCount++;
+        newStepDelay = this->min_delay;
+
+        // if no accel or decel was specified, go directly to STOP state
+        if (stepCount >= this->steps_to_move) {
+          this->run_state = FirmataStepper::STOP;
+        }
+        // check if we should start deceleration
+        else if (this->stepCount >= this->decel_start) {
+          this->accel_count = this->decel_val;
+          // start deceleration with same delay that accel ended with
+          newStepDelay = this->lastAccelDelay;
+          this->run_state = FirmataStepper::DECEL;
+        }
+      break;
+
+      case FirmataStepper::DECEL:
+        updateStepPosition();
+        this->stepCount++;
+        this->accel_count++;  
+
+        newStepDelay = this->step_delay - (((2 * (long)this->step_delay) + this->rest)/(4 * this->accel_count + 1));
+        this->rest = ((2 * (long)this->step_delay)+this->rest)%(4 * this->accel_count + 1);
+
+        if (newStepDelay < 0) newStepDelay = -newStepDelay;
+        // check if we ar at the last step
+        if (this->accel_count >= 0) {
+          this->run_state = FirmataStepper::STOP;
+        }
+
+      break;
     }
-    this->running = false;
+
+    this->step_delay = newStepDelay;
+
   }
+
   return done;
+
 }
 
 /**
@@ -153,29 +309,22 @@ bool FirmataStepper::update() {
  * @private
  */
 void FirmataStepper::updateStepPosition() {
-  if (micros() - this->last_step_time >= this->step_delay) {
-    // get the timeStamp of when you stepped:
-    this->last_step_time = micros();
-
-    // increment or decrement the step number,
-    // depending on direction:
-    if (this->direction == 1) {
-      this->step_number++;
-      if (this->step_number == this->steps_per_rev) {
-        this->step_number = 0;
-      }
-    } else {
-      if (this->step_number == 0) {
-        this->step_number = this->steps_per_rev;
-      }
-      this->step_number--;
+  // increment or decrement the step number,
+  // depending on direction:
+  if (this->direction == FirmataStepper::CW) {
+    this->step_number++;
+    if (this->step_number >= this->steps_per_rev) {
+      this->step_number = 0;
     }
+  } else {
+    if (this->step_number <= 0) {
+      this->step_number = this->steps_per_rev;
+    }
+    this->step_number--;
+  }
 
-    // decrement the steps left:
-    this->seq_steps_left--;
-    // step the motor to step number 0, 1, 2, or 3:
-    stepMotor(this->step_number % 4, this->direction);
-  }	
+  // step the motor to step number 0, 1, 2, or 3:
+  stepMotor(this->step_number % 4, this->direction);
 }
 
 /**
