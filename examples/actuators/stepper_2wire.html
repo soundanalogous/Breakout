@@ -112,20 +112,20 @@ $(document).ready(function() {
 		$('#numSteps').change(function(evt) {
 			var steps = this.value;
 			if (steps <= 2097151 && steps >= -2097151) {
-				stepper.step(steps);
+				stepper.step(steps, 2000, 1000, 1000);
 			}
 		});
 
-		$('#slider').slider({
-			min: 10,
-			max: 200,
-			step: 10,
-			slide: function(event, ui) {
-				var motorSpeed = ui.value;
-				stepper.setSpeed(motorSpeed);
-				$('#motorSpeed').text(motorSpeed);
-			}
-		});
+		// $('#slider').slider({
+		// 	min: 10,
+		// 	max: 200,
+		// 	step: 10,
+		// 	slide: function(event, ui) {
+		// 		var motorSpeed = ui.value;
+		// 		stepper.setSpeed(motorSpeed);
+		// 		$('#motorSpeed').text(motorSpeed);
+		// 	}
+		// });
 	}	
 
 	function onStepperComplete(evt) {

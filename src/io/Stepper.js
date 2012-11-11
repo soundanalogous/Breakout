@@ -12,7 +12,8 @@ BO.io.Stepper = (function() {
 	var instanceCounter = 0;
 
 	// private static constants
-	var CONFIG = 0,
+	var STEPPER	= 0x72,
+		CONFIG = 0,
 		STEP = 1,
 		MAX_STEPS = 2097151, // 21 bits (2^21 - 1)
 		MAX_SPEED = 16383;
@@ -69,7 +70,7 @@ BO.io.Stepper = (function() {
 			case Stepper.DRIVER:
 			case Stepper.TWO_WIRE:
 				// configure the stepper motor
-				this._board.sendSysex(Stepper.STEPPER,
+				this._board.sendSysex(STEPPER,
 												[CONFIG,
 												this._id,
 												driverType,
@@ -83,7 +84,7 @@ BO.io.Stepper = (function() {
 				this._board.setDigitalPinMode(motorPin4.number, Pin.DOUT);
 
 				// configure the stepper motor
-				this._board.sendSysex(Stepper.STEPPER,
+				this._board.sendSysex(STEPPER,
 												[CONFIG,
 												this._id,
 												driverType,
@@ -157,7 +158,7 @@ BO.io.Stepper = (function() {
 				decelLSB = decel & 0x007F;
 				decelMSB = (decel >> 7) & 0x007F;				
 							
-				this._board.sendSysex(Stepper.STEPPER, 
+				this._board.sendSysex(STEPPER, 
 												[STEP,
 												this._id,
 												direction,								
@@ -173,7 +174,7 @@ BO.io.Stepper = (function() {
 												]);
 			} else {
 				// don't send accel and decel values
-				this._board.sendSysex(Stepper.STEPPER, 
+				this._board.sendSysex(STEPPER, 
 												[STEP,
 												this._id,
 												direction,									
@@ -194,13 +195,20 @@ BO.io.Stepper = (function() {
 		onSysExMessage: function(event) {
 			var message = event.message;
 
-			if (message[0] !== Stepper.STEPPER) {
+			if (message[0] !== STEPPER) {
 				return;
 			} else if (message[1] !== this._id) {
 				return;
 			} else {
 				this.dispatchEvent(new Event(Event.COMPLETE));
 			}
+		},
+
+		/**
+		 * @return {Number} The id of the Stepper object instance
+		 */
+		get id() {
+			return this._id;
 		},
 
 		/* implement EventDispatcher */
@@ -240,8 +248,6 @@ BO.io.Stepper = (function() {
 	
 	};
 
-	/** @constant */
-	Stepper.STEPPER	= 0x72;
 	/** @constant */
 	Stepper.CLOCKWISE = 0;
 	/** @constant */

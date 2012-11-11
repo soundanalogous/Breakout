@@ -78,7 +78,6 @@ BO.filters.Convolution = (function() {
 
 		for (var i=0; i<len; i++) {
 			result += this._coef[i] * this._buffer[i];
-			if (result < 0) result *= -1;
 		}	
 
 		return result;

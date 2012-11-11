@@ -41,8 +41,7 @@ fork and open a pull request on Github.
 
 Updating to another jQuery UI release
 -------------------------------------
-This is happens the same way as a jQuery update. To avoid issues it's re-
-commanded to use the name and the release.
+This is performed the same way as a jQuery update. To avoid issues it's recommended to use the name and the release.
 
 $ find . -type f -name "*.html" | xargs sed -ie 's|jquery-ui-1.8.23|jquery-ui-1.8.24|g'
 

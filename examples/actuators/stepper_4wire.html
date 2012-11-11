@@ -96,10 +96,7 @@ $(document).ready(function() {
 							arduino.getDigitalPin(4),
 							arduino.getDigitalPin(5));
 
-		stepper.setSpeed(10);
-		// stepper.step(200);	// 1 rev
-
-		// stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
 		initGUIListeners();		
 					
@@ -107,38 +104,34 @@ $(document).ready(function() {
 
 	function initGUIListeners() {
 		$('button#cwise').on('click', function() {
-			stepper.step(200);
+			stepper.step(2000, 2000, 1000, 1000);
 		});
 
 		$('button#ccwise').on('click', function() {
-			stepper.step(-200);		
+			stepper.step(-2000, 2000);	
 		});
 
 		$('#numSteps').change(function(evt) {
 			var steps = this.value;
 			if (steps <= 2097151 && steps >= -2097151) {
-				stepper.step(steps);
+				stepper.step(steps, 2000, 1000, 1000);
 			}
 		});
 
-		$('#slider').slider({
-			min: 10,
-			max: 200,
-			step: 10,
-			slide: function(event, ui) {
-				var motorSpeed = ui.value;
-				stepper.setSpeed(motorSpeed);
-				$('#motorSpeed').text(motorSpeed);
-			}
-		});
+		// $('#slider').slider({
+		// 	min: 10,
+		// 	max: 200,
+		// 	step: 10,
+		// 	slide: function(event, ui) {
+		// 		var motorSpeed = ui.value;
+		// 		stepper.setSpeed(motorSpeed);
+		// 		$('#motorSpeed').text(motorSpeed);
+		// 	}
+		// });
 	}	
 
 	function onStepperComplete(evt) {
 		console.log("complete");
-		stepper.removeEventListener(Event.COMPLETE, onStepperComplete);
-
-		stepper.setSpeed(150);
-		stepper.step(-200);	// 1 rev
 	}
 
 	// called when a new string message is received from the I/O board
@@ -155,14 +148,14 @@ $(document).ready(function() {
 	<div class="container">
 		<label for="numSteps">Number of Steps (max +/-2097151): </label><input id="numSteps" type="number" value="200" min="-2097151" max="2097151" step="100" />
 		<div>
-			<button type="button" class="Btns" id="cwise">200</button>
-			<button type="button" class="Btns" id="ccwise">-200</button>
+			<button type="button" class="Btns" id="cwise">2000</button>
+			<button type="button" class="Btns" id="ccwise">-2000</button>
 		</div>		
 	</div>
 
-	<div class="container">
+<!-- 	<div class="container">
 		<label>Speed (RPM): </label><label id="motorSpeed">10</label>
 		<div id="slider"></div>
-	</div>
+	</div> -->
 </body>
 </html>

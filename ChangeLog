@@ -1,3 +1,12 @@
+2012.11.00 Version 0.2.0
+* Using AdvancedFirmata instead of StandardFirmata
+* Added stepper motor I/O object and examples (issue #24)
+* Updated schematics to add stepper motor examples
+* Updated examples index to include stepper examples
+* Fixed convolution filter bug (issue #31)
+* Updated processing_js examples to use processing.js version 1.4.1
+* Updated three_js examples to use three.js revision 52
+
 2012.09.15 Version 0.1.7
 * jsdocs are now generated as part of build process
 * Added index page for examples: /examples/index.html (initial idea by Fabian Affolter)

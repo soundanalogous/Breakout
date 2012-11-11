@@ -48,7 +48,6 @@ $(document).ready(function() {
 	var PotEvent = BO.io.PotEvent;
 	var RGBLED = BO.io.RGBLED;
 	var Scaler = BO.filters.Scaler;
-	var Stepper = BO.io.Stepper;
 	var Event = JSUTILS.Event;
 
 	// set to true to print debug messages to console
@@ -74,8 +73,6 @@ $(document).ready(function() {
 	uno.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-
-		var stepsPerRev = 200;
 		
 		// remove the listener because it is no longer needed
 		uno.removeEventListener(IOBoardEvent.READY, onReady);
@@ -137,22 +134,6 @@ $(document).ready(function() {
 		servo = new Servo(uno, uno.getDigitalPin(9));
 		setInterval(servoTest, 5000);
 		// NOTE: running a servo can interfere with analog inputs, creating jitter in the signal
-
-		// Parameters: board, motor interface, num steps per rev, 
-		// direction pin, step pin
-		stepper = new Stepper(uno, 
-							Stepper.FOUR_WIRE, 
-							stepsPerRev, 
-							uno.getDigitalPin(4), 
-							uno.getDigitalPin(7),
-							uno.getDigitalPin(8),
-							uno.getDigitalPin(12));
-
-		stepper.setSpeed(150);
-		stepper.step(200, Stepper.CLOCKWISE);	// 1 rev
-		direction = Stepper.CLOCKWISE;
-
-		stepper.addEventListener(Event.COMPLETE, onStepperComplete);		
 
 
 		// RGBLED example using RGBLED object:
@@ -257,14 +238,6 @@ $(document).ready(function() {
 		}
 		servoDir = !servoDir;
 	}
-
-	function onStepperComplete(evt) {
-		//stepper.removeEventListener(Event.COMPLETE, onStepperComplete);
-		direction = !direction;
-		direction *= 1;
-		stepper.setSpeed(150);
-		stepper.step(200, direction);	// 1 rev
-	}	
 	
 	// blink an led using only pin methods
 	function blink() {

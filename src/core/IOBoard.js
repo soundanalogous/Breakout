@@ -1121,7 +1121,7 @@ BO.IOBoard = (function() {
 				5:"shift",
 				6:"i2c"
 				};
-			for (var i = 0; i < _ioPins.length; i++) {
+			for (var i = 0, len = _ioPins.length; i < len; i++) {
 				for (var mode in _ioPins[i].getCapabilities()) {
 					console.log("Pin " + i + "\tMode: " + modeNames[mode] + "\tResolution (# of bits): " + _ioPins[i].getCapabilities()[mode]);
 				}

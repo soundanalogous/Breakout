@@ -15,17 +15,17 @@ See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other
 Quick Start
 ---
 
-See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/) on [breakoutjs.com](breakoutjs.com) or the quickstart guide below.
+See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/) or the quickstart guide below.
 
-The first step is to upload **StandardFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
+The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
 
-1. Launch Arduino (1.0 or higher) and navigate to *File* -> *Examples* -> *Firmata* -> *StandardFirmata*
-2. Compile *StandardFirmata* for your board and upload.
+1. After downloading or cloning Breakout, navigate to the firmware directory and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
+2. Compile *AdvancedFirmata* for your board and upload.
 3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in *Breakout/examples/schematics.pdf* (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
 
 The next step is to run the Breakout Server application:
 
-1. Make sure your I/O board is attached and the *StandardFirmata* sketch is uploaded. 
+1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded. 
 2. You'll find **Breakout Server** (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in *Breakout/server/*. Simply double-click to launch the application. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
@@ -63,8 +63,8 @@ OS:
 
 Desktop Browsers:
 
-- Chrome version 14 - 21
-- Firefox version 7 - 15 (version 11 or higher is recommended)
+- Chrome version 14 - 23
+- Firefox version 7 - 16 (version 11 or higher is recommended)
 - Safari version 5 - 6
 
 Mobile Browsers (browser must support websockets):
