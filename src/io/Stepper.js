@@ -16,7 +16,7 @@ BO.io.Stepper = (function() {
 		CONFIG = 0,
 		STEP = 1,
 		MAX_STEPS = 2097151, // 21 bits (2^21 - 1)
-		MAX_SPEED = 16383;
+		MAX_SPEED = 16383; // 14 bits (2^14 - 1)
 
 	// dependencies
 	var Pin = BO.Pin,
@@ -30,7 +30,9 @@ BO.io.Stepper = (function() {
 	 * @exports Stepper as BO.io.Stepper
 	 * @class Creates an interface to a Stepper motor. Use this object to set
 	 * the direction and number of steps for the motor to rotate. See
-	 * Breakout/examples/actuators/stepper.html for an example application.
+	 * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html and
+	 * stepper_easydriver.html for example applications.
+	 *
 	 * @constructor
 	 * @param {IOBoard} board A reference to the IOBoard instance that the 
 	 * servo is attached to.
@@ -38,9 +40,9 @@ BO.io.Stepper = (function() {
 	 * Stepper.TWO_WIRE, or Stepper.FOUR_WIRE).
 	 * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
 	 * @param {Pin} directionPin If dirver interface, the pin used to control the direction.
-	 * If 2-wire interface, the 1st moter pin.
+	 * If 2-wire or 4-wire interface, the 1st moter pin.
 	 * @param {Pin} stepPin If dirver interface, the pin used to control the steps.
-	 * If 2-wire interface, the 2nd moter pin.
+	 * If 2-wire or 4-wire interface, the 2nd moter pin.
 	 * @param {Pin} motorPin3 [optional] Only required for a 4-wire interface.
 	 * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.	 	 
 	 */
@@ -71,13 +73,13 @@ BO.io.Stepper = (function() {
 			case Stepper.TWO_WIRE:
 				// configure the stepper motor
 				this._board.sendSysex(STEPPER,
-												[CONFIG,
-												this._id,
-												driverType,
-												numStepsPerRevLSB, 
-												numStepsPerRevMSB,
-												directionPin.number,
-												stepPin.number]);
+										[CONFIG,
+										this._id,
+										driverType,
+										numStepsPerRevLSB, 
+										numStepsPerRevMSB,
+										directionPin.number,
+										stepPin.number]);
 				break;
 			case Stepper.FOUR_WIRE:
 				this._board.setDigitalPinMode(motorPin3.number, Pin.DOUT);
@@ -85,15 +87,15 @@ BO.io.Stepper = (function() {
 
 				// configure the stepper motor
 				this._board.sendSysex(STEPPER,
-												[CONFIG,
-												this._id,
-												driverType,
-												numStepsPerRevLSB, 
-												numStepsPerRevMSB,
-												directionPin.number,
-												stepPin.number,
-												motorPin3.number,
-												motorPin4.number]);
+										[CONFIG,
+										this._id,
+										driverType,
+										numStepsPerRevLSB, 
+										numStepsPerRevMSB,
+										directionPin.number,
+										stepPin.number,
+										motorPin3.number,
+										motorPin4.number]);
 				break;
 		}
 
@@ -104,12 +106,15 @@ BO.io.Stepper = (function() {
 		/**
 		 * Move the stepper a given number of steps at the specified
 		 * speed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).
+		 * The accel and decel parameters are optional but if using, both values
+		 * must be passed to the function.
 		 *
 		 * @param {Number} numSteps The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
 		 * Positive value is clockwise, negative value is counter clockwise.
-		 * @param {Number} speed Max speed in 0.01*rad/sec 
-		 * @param {Number} accel [optional] Acceleration in 0.01*rad/sec^2
-		 * @param {Number} decel [optional] Deceleration in 0.01*rad/sec^2
+		 * @param {Number} speed Max speed in rad/sec (1 rad/sec = 9.549 RPM)
+		 * (max precision of 2 decimal places)
+		 * @param {Number} accel [optional] Acceleration in rad/sec^2 (max precision of 2 decimal places)
+		 * @param {Number} decel [optional] Deceleration in rad/sec^2 (max precision of 2 decimal places)
 		 */		 
 		step: function(numSteps, speed, accel, decel) {
 			var steps,
@@ -138,13 +143,14 @@ BO.io.Stepper = (function() {
 				Math.abs(numSteps) & 0x0000007F,
 				(Math.abs(numSteps) >> 7) & 0x0000007F,
 				(Math.abs(numSteps) >> 14) & 0x0000007F
-				];
+			];
+
+			// the stepper interface expects decimal expressed an an integer
+			speed = Math.floor(speed.toFixed(2) * 100);
 
 			if (speed > MAX_SPEED) {
 				speed = MAX_SPEED;
-				// TO DO: determin what the absolute max is when using stepper with Firmata.
-				// It's likely far less that 16384 rad/sec
-				console.log("Warning: Maximum speed (16,383) exceeded. Setting speed to 16,383 RPM");
+				console.log("Warning: Maximum speed (163.83 rad/sec) exceeded. Setting speed to 163.83 rad/sec");
 			}					
 
 			speedLSB = speed & 0x007F;
@@ -152,6 +158,10 @@ BO.io.Stepper = (function() {
 
 			// make sure both accel and decel are defined
 			if (accel !== undefined && decel !== undefined) {
+				// the stepper interface expects decimal expressed an an integer
+				accel = Math.floor(accel.toFixed(2) * 100);
+				decel = Math.floor(decel.toFixed(2) * 100);
+
 				accelLSB = accel & 0x007F;
 				accelMSB = (accel >> 7) & 0x007F;
 
@@ -159,31 +169,31 @@ BO.io.Stepper = (function() {
 				decelMSB = (decel >> 7) & 0x007F;				
 							
 				this._board.sendSysex(STEPPER, 
-												[STEP,
-												this._id,
-												direction,								
-												steps[0],
-												steps[1],
-												steps[2],
-												speedLSB,
-												speedMSB,
-												accelLSB,
-												accelMSB,
-												decelLSB,
-												decelMSB
-												]);
+										[STEP,
+										this._id,
+										direction,								
+										steps[0],
+										steps[1],
+										steps[2],
+										speedLSB,
+										speedMSB,
+										accelLSB,
+										accelMSB,
+										decelLSB,
+										decelMSB
+										]);
 			} else {
 				// don't send accel and decel values
 				this._board.sendSysex(STEPPER, 
-												[STEP,
-												this._id,
-												direction,									
-												steps[0],
-												steps[1],
-												steps[2],
-												speedLSB,
-												speedMSB
-												]);				
+										[STEP,
+										this._id,
+										direction,									
+										steps[0],
+										steps[1],
+										steps[2],
+										speedLSB,
+										speedMSB
+										]);				
 			}
 		},
 

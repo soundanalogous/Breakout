@@ -46,7 +46,7 @@ label {
 }
 </style>
 
-<title>Stepper Example</title>
+<title>Stepper Example (EasyDriver)</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.8.0.min.js"></script>
@@ -80,11 +80,10 @@ $(document).ready(function() {
 
 	function onReady(event) {
 		var stepsPerRev = 1600; // 200 * 8 (EasyDriver set to 8 microsteps)
+								// adjust to match your particular stepper
 		
 		// Remove the listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
-
-		arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 
 		// Parameters: board, motor interface, num steps per rev, 
 		// direction pin, step pin
@@ -94,25 +93,31 @@ $(document).ready(function() {
 							arduino.getDigitalPin(2), 
 							arduino.getDigitalPin(3));
 
+		// Event.COMPLETE will fire when the step sequence is complete
 		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
-		initGUIListeners();
-					
+		initGUIListeners();		
 	}
 
 	function initGUIListeners() {
+		var numSteps = 16000 // 2000 steps * 8 mircosteps/step
+		var speed = 20.0 // rad/sec
+		var acceleration = 10.0 // rad/sec^2
+		var deceleration = 10.0 // rad/sec^2
+
 		$('button#cwise').on('click', function() {
-			stepper.step(16000, 2000, 1000, 1000);
+			stepper.step(numSteps, speed, acceleration, deceleration);
 		});
 
 		$('button#ccwise').on('click', function() {
-			stepper.step(-16000, 2000);		
+			// acceleration and deceleration are optional parameters
+			stepper.step(-numSteps, speed);		
 		});
 
 		$('#numSteps').change(function(evt) {
 			var steps = this.value;
 			if (steps <= 2097151 && steps >= -2097151) {
-				stepper.step(steps, 2000, 1000, 1000);
+				stepper.step(steps, speed, acceleration, deceleration);
 			}
 		});
 
@@ -130,14 +135,12 @@ $(document).ready(function() {
 
 	function onStepperComplete(evt) {
 		console.log("complete");
+
+		// Each stepper instance is automatically assigned an id
+		// when it is created, starting with 0. You can get the 
+		// id like this but it cannot be set.
 		console.log(evt.target.id);
 	}
-
-	// called when a new string message is received from the I/O board
-	function onStringMessage(event) {
-		console.log("string received: " + event.message);
-	}	
-
 });
 
 </script>
