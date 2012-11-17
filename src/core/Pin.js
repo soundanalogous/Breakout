@@ -201,8 +201,8 @@ BO.Pin = (function() {
 		},
 
 		/**
-		 * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT, 
-		 * 4: PWM, 5: SERVO, 6: SHIFT, 7: I2C). Use 
+		 * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,
+		 * 4: SERVO, 5: SHIFT, 6: I2C). Use 
 		 * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
 		 * @return {Number} The pin type/mode
 		 */	

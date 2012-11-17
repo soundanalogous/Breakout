@@ -96,7 +96,8 @@ BO.IOBoard = (function() {
 			_evtDispatcher,
 			_isMultiClientEnabled = false,
 			_isConfigured = false,
-			_debugMode = BO.enableDebugging;
+			_debugMode = BO.enableDebugging,
+			_pinStateRequested = false;
 		
 		_evtDispatcher = new EventDispatcher(this);
 
@@ -490,9 +491,10 @@ BO.IOBoard = (function() {
 		 * @private
 		 */		
 		function startupInMultiClientMode() {
+			var len = _self.getPinCount();
 			// Populate pin values with the current IOBoard state
-			for (var i = 0; i < _self.getPinCount(); i++) {
-				queryPinState(_self.getDigitalPin(i));
+			for (var i = 0; i < len; i++) {
+				_self.queryPinState(_self.getDigitalPin(i));
 			}
 
 			// Wait for the pin states to finish updating
@@ -521,35 +523,42 @@ BO.IOBoard = (function() {
 		}	
 			
 		/**
+		 * Reads the current configuration of the requested pin. The following
+		 * values are returned: 1: pin number, 2: pin type (0: DIN, 1: DOUT, 
+		 * 2: AIN, 3: AOUT / PWM, 4: SERVO, 5: SHIFT, 6: I2C), 3: pin state.
+		 * The pin state for output modes is the value previously written
+		 * to the pin. For input modes (AIN, DIN, etc) the state is typically
+		 * zero (it is not the value that was written to the pin). For digital
+		 * inputs the state is the status of the pullup resistor.
 		 *
 		 * @private
 		 */
 		function processPinStateResponse(msg) {
-			// If running in multi-client mode and this client is 
-			// already configured ignore pin state response
-			if (_isConfigured) return;
+			// Ignore requests that were not made by this client
+			if (!_pinStateRequested) return;
 						
 			var len = msg.length,
 				pinNumber = msg[1],
 				pinType = msg[2],
-				value,
+				pinState,
 				pin = _ioPins[pinNumber];
 
 			if (len > 4) {
-				// Get value
-				value = _self.getValueFromTwo7bitBytes(msg[3], msg[4]);
+				pinState = _self.getValueFromTwo7bitBytes(msg[3], msg[4]);
 			} else if (len > 3) {
-				value = msg[3];
+				pinState = msg[3];
 			}
 			
+			// update the pin type if it has changed
+			// typically this only happens when multiple clients are connecting
+			// to a single IOBoard. Each client (aside from the initial client) 
+			// needs to get the current pin type
 			if (pin.getType() != pinType) {
 				pin.setType(pinType);
 				managePinListener(pin);
 			}
-			if (pin.value != value) {
-				pin.value = value;
-			}
 			
+			_pinStateRequested = false;
 			_self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
 		}
 				
@@ -706,19 +715,7 @@ BO.IOBoard = (function() {
 		 */
 		function queryAnalogMapping() {
 			_self.send([START_SYSEX,ANALOG_MAPPING_QUERY,END_SYSEX]);
-		};
-		
-		/**
-		 * Query the current configuration and state of any pin. Making this
-		 * private for now.
-		 * @private
-		 * @param {Pin} pin The Pin to be queried
-		 */
-		function queryPinState(pin) {
-			// To Do: Ensure that pin is a Pin object
-			var pinNumber = pin.number;
-			_self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
-		};			
+		};		
 		
 		/**
 		 * Call this method to enable or disable analog input for the specified
@@ -944,6 +941,36 @@ BO.IOBoard = (function() {
 		};
 
 		/**
+		 * Reads the current state of the requested pin. Listen for the
+		 * IOBoardEvent.PIN_STATE_RESPONSE event to get the response.
+		 * The response contains a reference to the pin object with its
+		 * state updated to match the current state of the pin on the IOBoard.
+		 *
+		 * You should not typically need to call this method since the pin
+		 * states are maintained client-side. Use the getAnalogPin or 
+		 * getDigitalPin to get the current state of a pin or getPins to
+		 * get an array of all Pin objects for the IOBoard.
+		 *
+		 * Cases for queryPinState are to update the pin state after a period
+		 * of inactivity. For example if multiple client applications are
+		 * using the same IOBoard (so multiple JavaScript apps connected to
+		 * the same Arduino). When a new client connection is made, 
+		 * queryPinState is called automatically to copy the IOBoard pin state
+		 * to the client. If for some reason you needed to copy the state of a
+		 * single or multiple Pins again, you could call queryPinState in your
+		 * application. In most cases however you should never need to call 
+		 * this method.
+		 *
+		 * @param {Pin} pin The pin object to query the pin state for.
+		 */		 
+		this.queryPinState = function (pin) {
+			// To Do: Ensure that pin is a Pin object
+			var pinNumber = pin.number;
+			_self.send([START_SYSEX,PIN_STATE_QUERY,pinNumber,END_SYSEX]);
+			_pinStateRequested = true;
+		};		
+
+		/**
 		 * Send the digital values for a port. Making this private for now.
 		 *
 		 * @private
@@ -1070,6 +1097,13 @@ BO.IOBoard = (function() {
 		 */	
 		this.getDigitalPin = function(pinNumber) {
 			return _ioPins[_digitalPinMapping[pinNumber]];
+		};
+
+		/**
+		 * @return {Pin[]} An array containing all pins on the IOBoard
+		 */	
+		this.getPins = function () {
+			return _ioPins;
 		};
 
 		/**

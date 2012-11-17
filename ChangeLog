@@ -1,4 +1,6 @@
-2012.11.00 Version 0.2.0
+2012.11.17 Version 0.2.0
+* Added getPins method ot IOBoard to return array of all Pin objects
+* Made queryPinState a public method (issue #25)
 * Using AdvancedFirmata instead of StandardFirmata
 * Added stepper motor I/O object and examples (issue #24)
 * Updated schematics to add stepper motor examples
