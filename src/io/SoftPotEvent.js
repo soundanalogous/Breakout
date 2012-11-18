@@ -5,56 +5,56 @@
 
 JSUTILS.namespace('BO.io.SoftPotEvent');
 
-BO.io.SoftPotEvent = (function() {
+BO.io.SoftPotEvent = (function () {
 
-	var SoftPotEvent;
+    var SoftPotEvent;
 
-	// Dependencies
-	var Event = JSUTILS.Event;
+    // Dependencies
+    var Event = JSUTILS.Event;
 
-	/**
-	 * @exports SoftPotEvent as BO.io.SoftPotEvent
-	 * @class An Event object to be dispatched (fired) by a SoftPot
-	 * object.	 
-	 * @constructor
-	 * @augments JSUTILS.Event
- 	 * @param {String} type The event type
- 	 * @param {Number} touchPoint The value where the softpot was touched	 
-	 */
-	SoftPotEvent = function(type, touchPoint) {
+    /**
+     * @exports SoftPotEvent as BO.io.SoftPotEvent
+     * @class An Event object to be dispatched (fired) by a SoftPot
+     * object.   
+     * @constructor
+     * @augments JSUTILS.Event
+     * @param {String} type The event type
+     * @param {Number} touchPoint The value where the softpot was touched    
+     */
+    SoftPotEvent = function (type, touchPoint) {
 
-		this.name = "SoftPotEvent";
+        this.name = "SoftPotEvent";
 
-		Event.call(this, type);
-		this._touchPoint = touchPoint;
-	};
+        Event.call(this, type);
+        this._touchPoint = touchPoint;
+    };
 
-	/** @constant */
-	SoftPotEvent.PRESS = "softPotPressed";
-	/** @constant */
-	SoftPotEvent.RELEASE = "softPotRelease";
-	/** @constant */
-	SoftPotEvent.DRAG = "softPotDrag";
-	/** @constant */
-	SoftPotEvent.FLICK_UP = "softPotFlickUp";
-	/** @constant */
-	SoftPotEvent.FLICK_DOWN = "softPotFlickDown";
-	/** @constant */
-	SoftPotEvent.TAP = "softPotTap";		
+    /** @constant */
+    SoftPotEvent.PRESS = "softPotPressed";
+    /** @constant */
+    SoftPotEvent.RELEASE = "softPotRelease";
+    /** @constant */
+    SoftPotEvent.DRAG = "softPotDrag";
+    /** @constant */
+    SoftPotEvent.FLICK_UP = "softPotFlickUp";
+    /** @constant */
+    SoftPotEvent.FLICK_DOWN = "softPotFlickDown";
+    /** @constant */
+    SoftPotEvent.TAP = "softPotTap";        
 
-	SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
-	SoftPotEvent.prototype.constructor = SoftPotEvent;
+    SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
+    SoftPotEvent.prototype.constructor = SoftPotEvent;
 
-	/**
-	 * The value of the softpot.
-	 * 
-	 * @name SoftPotEvent#value
-	 * @property
-	 * @type Number
-	 */ 
-	SoftPotEvent.prototype.__defineGetter__("value", function() { return this._touchPoint; });	
-	SoftPotEvent.prototype.__defineSetter__("value", function(val) { this._touchPoint = val; });
+    /**
+     * The value of the softpot.
+     * 
+     * @name SoftPotEvent#value
+     * @property
+     * @type Number
+     */ 
+    SoftPotEvent.prototype.__defineGetter__("value", function () { return this._touchPoint; });  
+    SoftPotEvent.prototype.__defineSetter__("value", function (val) { this._touchPoint = val; });
 
-	return SoftPotEvent;
+    return SoftPotEvent;
 
 }());

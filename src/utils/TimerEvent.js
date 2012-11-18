@@ -5,42 +5,42 @@
 
 JSUTILS.namespace('JSUTILS.TimerEvent');
 
-JSUTILS.TimerEvent = (function() {
+JSUTILS.TimerEvent = (function () {
 
-	var TimerEvent;
+    var TimerEvent;
 
-	// Dependencies
-	var Event = JSUTILS.Event;
+    // Dependencies
+    var Event = JSUTILS.Event;
 
-	/**
-	 * TimerEvent Description.
-	 * 
-	 * @class An Event object to be dispatched (fired) by a Timer object.	
-	 * @exports TimerEvent as JSUTILS.TimerEvent	 
-	 * @extends JSUTILS.Event
- 	 * @param {String} type The event type	 
-	 */
-	TimerEvent = function(type) {
+    /**
+     * TimerEvent Description.
+     * 
+     * @class An Event object to be dispatched (fired) by a Timer object.   
+     * @exports TimerEvent as JSUTILS.TimerEvent     
+     * @extends JSUTILS.Event
+     * @param {String} type The event type
+     */
+    TimerEvent = function (type) {
 
-		this.name = "TimerEvent";
+        this.name = "TimerEvent";
 
-		Event.call(this, type);
-	};
+        Event.call(this, type);
+    };
 
-	/** 
-	 * Description
-	 * @constant
-	 */
-	TimerEvent.TIMER = "timerTick";
-	/** 
-	 * Description
-	 * @constant
-	 */
-	TimerEvent.TIMER_COMPLETE = "timerComplete";
+    /** 
+     * Description
+     * @constant
+     */
+    TimerEvent.TIMER = "timerTick";
+    /** 
+     * Description
+     * @constant
+     */
+    TimerEvent.TIMER_COMPLETE = "timerComplete";
 
-	TimerEvent.prototype = JSUTILS.inherit(Event.prototype);
-	TimerEvent.prototype.constructor = TimerEvent;
+    TimerEvent.prototype = JSUTILS.inherit(Event.prototype);
+    TimerEvent.prototype.constructor = TimerEvent;
 
-	return TimerEvent;
+    return TimerEvent;
 
 }());

@@ -1,4 +1,4 @@
- /**
+/**
  * Based on Convolution.as originally written in as3.
  * Copyright (c) the Funnel development team
  * http://www.funnel.cc
@@ -11,96 +11,96 @@
 
 JSUTILS.namespace('BO.filters.Convolution');
 
-BO.filters.Convolution = (function() {
-	"use strict";
+BO.filters.Convolution = (function () {
+    "use strict";
 
-	var Convolution;
+    var Convolution;
 
-	// dependencies
-	var FilterBase = BO.filters.FilterBase;
+    // dependencies
+    var FilterBase = BO.filters.FilterBase;
 
-	/**
-	 * This class performs a convolution operation of the inputs. A low-pass filter is used to remove fine noise and
-	 * a high pass filter is used to remove drift.
-	 *
-	 * @exports Convolution as BO.filters.Convolution
-	 * @class The Convolution object performs low-pass, high-pass and moving average filtering
-	 * on an analog input. See Breakout/examples/filters/convolution.html for an example application.
-	 * @constructor
-	 * @augments BO.filters.FilterBase
-	 * @param {Number[]} kernel An array of coefficients to be used with product-sum
-	 * operations for input buffers.
-	 */
-	Convolution = function(kernel) {
+    /**
+     * This class performs a convolution operation of the inputs. A low-pass filter is used to remove fine noise and
+     * a high pass filter is used to remove drift.
+     *
+     * @exports Convolution as BO.filters.Convolution
+     * @class The Convolution object performs low-pass, high-pass and moving average filtering
+     * on an analog input. See Breakout/examples/filters/convolution.html for an example application.
+     * @constructor
+     * @augments BO.filters.FilterBase
+     * @param {Number[]} kernel An array of coefficients to be used with product-sum
+     * operations for input buffers.
+     */
+    Convolution = function (kernel) {
 
-		this.name = "Convolution";
+        this.name = "Convolution";
 
-		this._buffer = [];
+        this._buffer = [];
 
-		// use the coef setter
-		this.coef = kernel;
-	};
+        // use the coef setter
+        this.coef = kernel;
+    };
 
 
-	Convolution.prototype = JSUTILS.inherit(FilterBase.prototype);
-	Convolution.prototype.constructor = Convolution;
+    Convolution.prototype = JSUTILS.inherit(FilterBase.prototype);
+    Convolution.prototype.constructor = Convolution;
 
-	/**
-	 * An array of coefficients to be used with product-sum operations for input buffers. 
-	 * If assigned a new array, the input buffer will be cleared.
-	 * @name Convolution#coef
-	 * @property
-	 * @type Number[]
-	 */ 	
-	Convolution.prototype.__defineGetter__("coef", function() {
-		return this._coef;
-	});
-	Convolution.prototype.__defineSetter__("coef", function(kernel) {
-		this._coef = kernel;
-		this._buffer = new Array(this._coef.length);
-		var len = this._buffer.length;
-		for (var i = 0; i < len; i++) {
-			this._buffer[i] = 0;
-		}
-	});
+    /**
+     * An array of coefficients to be used with product-sum operations for input buffers. 
+     * If assigned a new array, the input buffer will be cleared.
+     * @name Convolution#coef
+     * @property
+     * @type Number[]
+     */
+    Convolution.prototype.__defineGetter__("coef", function () {
+        return this._coef;
+    });
+    Convolution.prototype.__defineSetter__("coef", function (kernel) {
+        this._coef = kernel;
+        this._buffer = new Array(this._coef.length);
+        var len = this._buffer.length;
+        for (var i = 0; i < len; i++) {
+            this._buffer[i] = 0;
+        }
+    });
 
-	/**
-	 * Override FilterBase.processSample
-	 *
-	 * @inheritDoc
-	 */
-	Convolution.prototype.processSample = function(val) {
-		this._buffer.unshift(val);
-		this._buffer.pop();
+    /**
+     * Override FilterBase.processSample
+     *
+     * @inheritDoc
+     */
+    Convolution.prototype.processSample = function (val) {
+        this._buffer.unshift(val);
+        this._buffer.pop();
 
-		var result = 0;
-		var len = this._buffer.length;
+        var result = 0;
+        var len = this._buffer.length;
 
-		for (var i=0; i<len; i++) {
-			result += this._coef[i] * this._buffer[i];
-		}	
+        for (var i = 0; i < len; i++) {
+            result += this._coef[i] * this._buffer[i];
+        }   
 
-		return result;
-	};
+        return result;
+    };
 
-	/**
-	 * Low-pass filter kernel. Use by passing this array to the constructor.
-	 * @constant
-	 */
-	Convolution.LPF = [1/3, 1/3, 1/3];
+    /**
+     * Low-pass filter kernel. Use by passing this array to the constructor.
+     * @constant
+     */
+    Convolution.LPF = [1/3, 1/3, 1/3];
 
-	/**
-	 * High-pass filter kernel. Use by passing this array to the constructor.
-	 * @constant
-	 */
-	Convolution.HPF = [1/3, -2.0/3, 1/3];
-	
-	/**
-	 * Moving average filter kernel. Use by passing this array to the constructor.
-	 * @constant
-	 */
-	Convolution.MOVING_AVERAGE = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8];		
-		
-	return Convolution;
+    /**
+     * High-pass filter kernel. Use by passing this array to the constructor.
+     * @constant
+     */
+    Convolution.HPF = [1/3, -2.0/3, 1/3];
+    
+    /**
+     * Moving average filter kernel. Use by passing this array to the constructor.
+     * @constant
+     */
+    Convolution.MOVING_AVERAGE = [1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8, 1/8];      
+        
+    return Convolution;
 
 }());

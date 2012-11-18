@@ -5,37 +5,37 @@
 
 JSUTILS.namespace('BO.io.PotEvent');
 
-BO.io.PotEvent = (function() {
+BO.io.PotEvent = (function () {
 
-	var PotEvent;
+    var PotEvent;
 
-	// Dependencies
-	var Event = JSUTILS.Event;
+    // Dependencies
+    var Event = JSUTILS.Event;
 
-	/**
-	 * @exports PotEvent as BO.io.PotEvent
-	 * @class An Event object to be dispatched (fired) by a Potentiometer
-	 * object.	 
-	 * @constructor
-	 * @augments JSUTILS.Event
-	 * @param {String} type The event type
-	 */
-	PotEvent = function(type) {
+    /**
+     * @exports PotEvent as BO.io.PotEvent
+     * @class An Event object to be dispatched (fired) by a Potentiometer
+     * object.   
+     * @constructor
+     * @augments JSUTILS.Event
+     * @param {String} type The event type
+     */
+    PotEvent = function (type) {
 
-		this.name = "PotEvent";
-		
-		// Call the super class
-		// 2nd parameter is passed to EventDispatcher constructor
-		Event.call(this, type);
-	};
+        this.name = "PotEvent";
+        
+        // Call the super class
+        // 2nd parameter is passed to EventDispatcher constructor
+        Event.call(this, type);
+    };
 
-	// Events
-	/** @constant */
-	PotEvent.CHANGE = "potChange";	
+    // Events
+    /** @constant */
+    PotEvent.CHANGE = "potChange";  
 
-	PotEvent.prototype = JSUTILS.inherit(Event.prototype);
-	PotEvent.prototype.constructor = PotEvent;
+    PotEvent.prototype = JSUTILS.inherit(Event.prototype);
+    PotEvent.prototype.constructor = PotEvent;
 
-	return PotEvent;
+    return PotEvent;
 
 }());

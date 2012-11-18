@@ -1,4 +1,4 @@
- /**
+/**
  * Based on GeneratorEvent.as originally written in as3.
  * Copyright (c) the Funnel development team
  * http://www.funnel.cc
@@ -9,37 +9,37 @@
  * Released under the MIT license. See LICENSE file for details.
  */
 
- JSUTILS.namespace('BO.generators.GeneratorEvent');
+JSUTILS.namespace('BO.generators.GeneratorEvent');
 
- BO.generators.GeneratorEvent = (function() {
- 	"use strict";
+BO.generators.GeneratorEvent = (function () {
+    "use strict";
 
- 	var GeneratorEvent;
+    var GeneratorEvent;
 
- 	// dependencies
-	var Event = JSUTILS.Event;
+    // dependencies
+    var Event = JSUTILS.Event;
 
- 	/**
- 	 * @exports GeneratorEvent as BO.generators.GeneratorEvent
-	 * @class An Event object to be dispatched (fired) by a Generator
-	 * object when its value has updated.	 	 
- 	 * @constructor
- 	 * @augments JSUTILS.Event
- 	 * @param {String} type The event type
- 	 */
- 	GeneratorEvent = function(type) {
- 		
- 		Event.call(this, type);
+    /**
+     * @exports GeneratorEvent as BO.generators.GeneratorEvent
+     * @class An Event object to be dispatched (fired) by a Generator
+     * object when its value has updated.
+     * @constructor
+     * @augments JSUTILS.Event
+     * @param {String} type The event type
+     */
+    GeneratorEvent = function (type) {
 
- 		this.name = "GeneratorEvent";
- 	};
+        Event.call(this, type);
 
- 	GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
- 	GeneratorEvent.prototype.constructor = GeneratorEvent;
+        this.name = "GeneratorEvent";
+    };
 
- 	/** @constant */
- 	GeneratorEvent.UPDATE = "update";
+    GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
+    GeneratorEvent.prototype.constructor = GeneratorEvent;
 
- 	return GeneratorEvent;
+    /** @constant */
+    GeneratorEvent.UPDATE = "update";
 
- }());
+    return GeneratorEvent;
+
+}());

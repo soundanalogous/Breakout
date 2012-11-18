@@ -5,36 +5,36 @@
 
 JSUTILS.namespace('BO.io.MagnetometerEvent');
 
-BO.io.MagnetometerEvent = (function() {
+BO.io.MagnetometerEvent = (function () {
 
-	var MagnetometerEvent;
+    var MagnetometerEvent;
 
-	// dependencies
-	var Event = JSUTILS.Event;
+    // dependencies
+    var Event = JSUTILS.Event;
 
-	/**
-	 * @exports MagnetometerEvent as BO.io.MagnetometerEvent
-	 * @class An Event object to be dispatched (fired) by a Magnetometer
-	 * object.	 
-	 * @constructor
-	 * @augments JSUTILS.Event
- 	 * @param {String} type The event type	 
-	 */
-	MagnetometerEvent = function(type) {
+    /**
+     * @exports MagnetometerEvent as BO.io.MagnetometerEvent
+     * @class An Event object to be dispatched (fired) by a Magnetometer
+     * object.   
+     * @constructor
+     * @augments JSUTILS.Event
+     * @param {String} type The event type   
+     */
+    MagnetometerEvent = function (type) {
 
-		Event.call(this, type);
+        Event.call(this, type);
 
-		this.name = "MagnetometerEvent";
+        this.name = "MagnetometerEvent";
 
-	};
+    };
 
-	/** @constant */
-	MagnetometerEvent.UPDATE = "update";
-	
+    /** @constant */
+    MagnetometerEvent.UPDATE = "update";
+    
 
-	MagnetometerEvent.prototype = JSUTILS.inherit(Event.prototype);
-	MagnetometerEvent.prototype.constructor = MagnetometerEvent;
+    MagnetometerEvent.prototype = JSUTILS.inherit(Event.prototype);
+    MagnetometerEvent.prototype.constructor = MagnetometerEvent;
 
-	return MagnetometerEvent;
+    return MagnetometerEvent;
 
 }());
