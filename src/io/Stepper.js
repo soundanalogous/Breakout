@@ -30,8 +30,8 @@ BO.io.Stepper = (function () {
      * @exports Stepper as BO.io.Stepper
      * @class Creates an interface to a Stepper motor. Use this object to set
      * the direction and number of steps for the motor to rotate. See
-     * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html and
-     * stepper_easydriver.html for example applications.
+     * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html, 
+     * stepper_easydriver.html and stepper_simple.html for example applications.
      *
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the 
@@ -39,12 +39,42 @@ BO.io.Stepper = (function () {
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
      * Stepper.TWO_WIRE, or Stepper.FOUR_WIRE).
      * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
-     * @param {Pin} directionPin If dirver interface, the pin used to control the direction.
+     * @param {Pin} directionPin If dirver interface, the pin used to control 
+     * the direction.
      * If 2-wire or 4-wire interface, the 1st moter pin.
-     * @param {Pin} stepPin If dirver interface, the pin used to control the steps.
+     * @param {Pin} stepPin If dirver interface, the pin used to control the 
+     * steps.
      * If 2-wire or 4-wire interface, the 2nd moter pin.
      * @param {Pin} motorPin3 [optional] Only required for a 4-wire interface.
-     * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.       
+     * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.
+     *
+     * @example
+     * // example
+     * var Stepper = BO.io.Stepper,
+     *     Event = JSUTILS.Event;
+     *
+     * var stepper,
+     *     stepsPerRev = 200,           // update this for your stepper
+     *     numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
+     *     speed = 15.0,                // rad/sec (RPM = speed * 9.55)
+     *     acceleration = 20.0,         // rad/sec^2
+     *     deceleration = 20.0;         // rad/sec^2
+     *
+     * stepper = new Stepper(arduino,
+     *              Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
+     *              stepsPerRev,
+     *              arduino.getDigitalPin(2),
+     *              arduino.getDigitalPin(3));
+     *
+     * stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+     *
+     * // acceleration and deceleration parameters are optional
+     * stepper.step(numSteps, speed, acceleration, deceleration);
+     *
+     * function onStepperComplete(event) {
+     *     // each stepper is assigned a read-only id value when instantiated
+     *     console.log("stepper " + event.target.id + " sequence complete");
+     * }
      */
     Stepper = function (board, driverType, numStepsPerRev, directionPin, stepPin, motorPin3, motorPin4) {
         
