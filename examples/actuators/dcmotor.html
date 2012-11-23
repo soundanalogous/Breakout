@@ -7,40 +7,40 @@
 <link type="text/css" href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" />
 <style type="text/css">
 body {
-	margin: 10px;
-	font-family: sans-serif;
-	font-size: 16px;
-	color: #00AEFF;
+    margin: 10px;
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #00AEFF;
 }
 .Btns {
-	padding: 10px;
-	font-size: 16px;
-	width: 85px;
-	color: #00AEFF;
-	margin: 0 5px 0 0;
+    padding: 10px;
+    font-size: 16px;
+    width: 85px;
+    color: #00AEFF;
+    margin: 0 5px 0 0;
 }
 label {
-	font-size: 14px;
-	color: #666;
+    font-size: 14px;
+    color: #666;
 }
 h2 {
-	font-size: 22px;
-	padding-bottom: 10px;
+    font-size: 22px;
+    padding-bottom: 10px;
 }
 .container {
-	background-color: #f7f7f7;
-	padding: 10px;
-	border: 1px dotted #CCC;
-	width: 280px;
-	margin-bottom: 20px;
+    background-color: #f7f7f7;
+    padding: 10px;
+    border: 1px dotted #CCC;
+    width: 280px;
+    margin-bottom: 20px;
 }
 #speed {
-	width: 50px;
-	margin-bottom: 20px;
+    width: 50px;
+    margin-bottom: 20px;
 }
 #slider {
-	margin-top: 20px;
-	width: 280px;
+    margin-top: 20px;
+    width: 280px;
 }
 </style>
 
@@ -53,138 +53,138 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// Declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var DCMotor = BO.io.DCMotor;
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var DCMotor = BO.io.DCMotor;
 
-	// Set to true to print debug messages to console
-	BO.enableDebugging = false;	
+    // Set to true to print debug messages to console
+    BO.enableDebugging = false; 
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname , 8887);
-	
-	// Variables
-	var motor;
-	var speed;
-	
-	// Listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data	
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname , 8887);
+    
+    // Variables
+    var motor;
+    var speed;
+    
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data    
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		// Remove the event listener because it is no longer needed					
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed                 
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// Parameters: IOBoard, forwardPin, reversePin, pwmPin, 
-		//             minVoltage, maxVoltage, supplyVoltage
-		motor = new DCMotor(arduino, 
-			arduino.getDigitalPin(10),
-			arduino.getDigitalPin(9), 
-			arduino.getDigitalPin(11), 
-			1,	
-			5, 
-			5);
+        // Parameters: IOBoard, forwardPin, reversePin, pwmPin, 
+        //             minVoltage, maxVoltage, supplyVoltage
+        motor = new DCMotor(arduino, 
+            arduino.getDigitalPin(10),
+            arduino.getDigitalPin(9), 
+            arduino.getDigitalPin(11), 
+            1,  
+            5, 
+            5);
 
-		// Set the initial motor speed
-		speed = 0.5;
+        // Set the initial motor speed
+        speed = 0.5;
 
-		// Stop the motor
-		motor.despin(false);
+        // Stop the motor
+        motor.despin(false);
 
-		initGUIListeners();
-		
-	}
+        initGUIListeners();
+        
+    }
 
-	function initGUIListeners() {
-		var status = $('.status');
-		status.text("State: Standby");
+    function initGUIListeners() {
+        var status = $('.status');
+        status.text("State: Standby");
 
-		$('button#reverse').on('click', function() {
-			// Reverse speed if between 0.0 and 1.0
-			motor.reverse(speed);
+        $('button#reverse').on('click', function() {
+            // Reverse speed if between 0.0 and 1.0
+            motor.reverse(speed);
 
-			status.text("State: Reverse");
-			$('#motorSpeed').text(speed * -1);
-			$('#slider').slider({
-				value: speed * -1
-			});			
-		});
+            status.text("State: Reverse");
+            $('#motorSpeed').text(speed * -1);
+            $('#slider').slider({
+                value: speed * -1
+            });         
+        });
 
-		$('button#brake').on('click', function() {
-			// true = apply brake
-			motor.despin(true);
+        $('button#brake').on('click', function() {
+            // true = apply brake
+            motor.despin(true);
 
-			status.text("State: Brake");
-			$('#motorSpeed').text(0.0);
-			$('#slider').slider({
-				value: 0.0
-			});
-		});
+            status.text("State: Brake");
+            $('#motorSpeed').text(0.0);
+            $('#slider').slider({
+                value: 0.0
+            });
+        });
 
-		$('button#forward').on('click', function() {
-			// Forward speed is between 0.0 and 1.0
-			motor.forward(speed);
+        $('button#forward').on('click', function() {
+            // Forward speed is between 0.0 and 1.0
+            motor.forward(speed);
 
-			status.text("State: Forward");
-			$('#motorSpeed').text(speed);
-			$('#slider').slider({
-				value: speed
-			});			
-		});
+            status.text("State: Forward");
+            $('#motorSpeed').text(speed);
+            $('#slider').slider({
+                value: speed
+            });         
+        });
 
-		$('#speed').change(function(evt) {
-			var val = this.value;
-			if (val <= 1.0 && val >= 0.1) {
-				speed = val;
-			}
-		});
+        $('#speed').change(function(evt) {
+            var val = this.value;
+            if (val <= 1.0 && val >= 0.1) {
+                speed = val;
+            }
+        });
 
-		$('#slider').slider({
-			min: -1.0,
-			max: 1.0,
-			step: 0.01,
-			slide: function(event, ui) {
-				var motorSpeed = ui.value;
-				// Set the motor value (between -1.0 and 1.0)
-				motor.value = motorSpeed;
-				if (motorSpeed < 0) {
-					status.text("State: Reverse");
-				} else if (motorSpeed > 0) {
-					status.text("State: Forward");
-				} else {
-					status.text("State: Brake");
-				}
-				$('#motorSpeed').text(motorSpeed);
-			}
-		});
-	}
+        $('#slider').slider({
+            min: -1.0,
+            max: 1.0,
+            step: 0.01,
+            slide: function(event, ui) {
+                var motorSpeed = ui.value;
+                // Set the motor value (between -1.0 and 1.0)
+                motor.value = motorSpeed;
+                if (motorSpeed < 0) {
+                    status.text("State: Reverse");
+                } else if (motorSpeed > 0) {
+                    status.text("State: Forward");
+                } else {
+                    status.text("State: Brake");
+                }
+                $('#motorSpeed').text(motorSpeed);
+            }
+        });
+    }
 });
 
 </script>
 
 </head>
 <body>
-	<h2>DC Motor Control Example</h2>
+    <h2>DC Motor Control Example</h2>
 
-	<div id="btnContainer" class="container">
-		<label for="speed">Constant Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
-		<div>
-			<button type="button" class="Btns" id="reverse">Reverse</button>
-			<button type="button" class="Btns" id="brake">Brake</button>
-			<button type="button" class="Btns" id="forward">Forward</button>
-		</div>
-	</div>
+    <div id="btnContainer" class="container">
+        <label for="speed">Constant Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
+        <div>
+            <button type="button" class="Btns" id="reverse">Reverse</button>
+            <button type="button" class="Btns" id="brake">Brake</button>
+            <button type="button" class="Btns" id="forward">Forward</button>
+        </div>
+    </div>
 
-	<div class="container">
-		<label>Variable Motor Speed: </label><label id="motorSpeed">0.0</label>
-		<div id="slider"></div>
-	</div>
+    <div class="container">
+        <label>Variable Motor Speed: </label><label id="motorSpeed">0.0</label>
+        <div id="slider"></div>
+    </div>
 
-	<p class="status">State: </p>
+    <p class="status">State: </p>
 </body>
 </html>
