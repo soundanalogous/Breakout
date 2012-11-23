@@ -17,32 +17,64 @@ h2 {
 	font-size: 22px;
 	padding-bottom: 10px;
 }
-.Btns {
+h3 {
+	color: #666;
+	font-size: 18px;
+	margin: 0;
+	padding-bottom: 10px;
+}
+section {
+	margin-bottom: 20px;
+}
+section:last-child {
+	margin-bottom: 0px;
+}
+button {
 	padding: 10px;
 	font-size: 16px;
-	width: 85px;
+	width: 280px;
 	color: #00AEFF;
-	margin: 0 5px 0 0;
+	
 }
 label {
+	color: #666;	
 	font-size: 14px;
-	color: #666;
+	margin-bottom: 10px;
+}
+input {
+	font-size: 16px;
+	width: 150px;
+}
+input[type="number"] {
+	margin-top: 10px;
+}
+#link {
+	padding: 0;
+	margin: 0;
+	width: 25px;
 }
 .container {
 	background-color: #f7f7f7;
 	padding: 10px;
 	border: 1px dotted #CCC;
 	width: 280px;
-	margin: 20px 0 40px 0;
+	margin: 20px 0 20px 0;
 	padding-top: 10px;
 }
-#numSteps {
-	width: 50px;
-	margin-bottom: 20px;
+.configure {
+	display: block;
 }
-#slider {
-	margin-top: 20px;
+.control {
+	display: none;
+}
+.slider {
+	margin-top: 10px;
 	width: 280px;
+}
+.note {
+	color: #666;
+	font-size: 14px;
+	line-height: 1.5em;
 }
 </style>
 
@@ -72,75 +104,147 @@ $(document).ready(function() {
 	var arduino = new IOBoard(location.hostname, 8887);
 	
 	// Variables
-	var stepper;
+	var stepper,
+		numMicroSteps = 8; // by default the EasyDriver uses 8 microsteps per step
 	
 	// Listen for the IOBoard READY event which indicates the IOBoard
 	// is ready to send and receive data	
 	arduino.addEventListener(IOBoardEvent.READY, onReady);
 
 	function onReady(event) {
-		var stepsPerRev = 1600; // 200 * 8 (EasyDriver set to 8 microsteps)
-								// adjust to match your particular stepper
-		
+
 		// Remove the listener because it is no longer needed
 		arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// Parameters: board, motor interface, num steps per rev, 
-		// direction pin, step pin
-		stepper = new Stepper(arduino, 
-							Stepper.DRIVER, 
-							stepsPerRev, 
-							arduino.getDigitalPin(2), 
-							arduino.getDigitalPin(3));
-
-		// Event.COMPLETE will fire when the step sequence is complete
-		stepper.addEventListener(Event.COMPLETE, onStepperComplete);
-
-		initGUIListeners();		
+		configureStepper();	
 	}
 
-	function initGUIListeners() {
-		var numSteps = 16000 // 2000 steps * 8 mircosteps/step
-		var speed = 20.0 // rad/sec
-		var acceleration = 10.0 // rad/sec^2
-		var deceleration = 10.0 // rad/sec^2
+	function configureStepper() {
+		var stepsPerRev = 200; // adjust to match your particular stepper
 
-		$('button#cwise').on('click', function() {
-			stepper.step(numSteps, speed, acceleration, deceleration);
-		});
-
-		$('button#ccwise').on('click', function() {
-			// acceleration and deceleration are optional parameters
-			stepper.step(-numSteps, speed);		
-		});
-
-		$('#numSteps').change(function(evt) {
-			var steps = this.value;
-			if (steps <= 2097151 && steps >= -2097151) {
-				stepper.step(steps, speed, acceleration, deceleration);
+		$('#stepsPerRev').change(function (evt) {
+			if (this.value >= 10 && this.value <= 1000) {
+				stepsPerRev = this.value;
 			}
 		});
 
-		// $('#slider').slider({
-		// 	min: 10,
-		// 	max: 220,
-		// 	step: 10,
-		// 	slide: function(event, ui) {
-		// 		var motorSpeed = ui.value;
-		// 		stepper.setSpeed(motorSpeed);
-		// 		$('#motorSpeed').text(motorSpeed);
-		// 	}
-		// });
-	}	
+		$('#microSteps').change(function (evt) {
+			if (this.value >= 10 && this.value <= 1000) {
+				numMicroSteps = this.value;
+			}
+		});		
+
+		// When the configure button is clicked, create a new instance
+		// of a Stepper motor object.
+		$('button#configure').on('click', function () {
+			// Parameters: board, motor interface, num steps per rev, 
+			// direction pin, step pin
+			stepper = new Stepper(arduino, 
+								Stepper.DRIVER, 
+								stepsPerRev * numMicroSteps, 
+								arduino.getDigitalPin(2), 
+								arduino.getDigitalPin(3));
+
+			// Event.COMPLETE will fire when the step sequence is complete
+			stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+
+			$('.configure').css('display', 'none');
+			$('.control').css('display', 'block');
+
+			initGUIListeners();
+		});		
+	}
+
+	function initGUIListeners() {
+		var numSteps = 2000 * numMicroSteps // 2000 steps * 8 mircosteps/step
+		var speed = 15.0 // rad/sec
+		var acceleration = 20.0 // rad/sec^2
+		var deceleration = 20.0 // rad/sec^2
+		var link = true;
+		var rpmPerRadSec = 9.55; // 1 rad/sec = 9.55 rpm
+
+		$('button#start').on('click', function () {
+			// acceleration and deceleration are optional parameters
+			if (acceleration > 0 && deceleration > 0) {
+				// set the number of steps, speed and accel and decel parameters
+				stepper.step(numSteps, speed, acceleration, deceleration);
+			} else {
+				// set the number of steps and speed (accel and decel are optional)
+				stepper.step(numSteps, speed);
+			}
+			$('.status').text("Stepper " + stepper.id + " sequence running");	
+		});
+
+		$('#numSteps').change(function (evt) {
+			if (this.value <= 2097151 && this.value >= -2097151) {
+				numSteps = this.value * numMicroSteps;
+			}
+		});
+
+		$('#speedSlider').slider({
+			min: 1,
+			max: 50,
+			step: 0.1,
+			slide: function (event, ui) {
+				speed = ui.value;
+				$('#stepSpeed').text(speed + " (" + (speed * rpmPerRadSec).toFixed(2) + " RPM)");
+			},
+			value: speed // set initial speed
+		});
+
+		$('#accelSlider').slider({
+			min: 0,
+			max: 100,
+			step: 0.1,
+			slide: function (event, ui) {
+				acceleration = ui.value;
+				$('#accel').text(acceleration > 0 ? acceleration : "none");
+				if (link) {
+					deceleration = acceleration;
+					$('#decelSlider').slider({
+						value: deceleration
+					});
+					$('#decel').text(deceleration > 0 ? deceleration: "none");
+				}				
+			},
+			value: acceleration // set initial acceleration
+		});
+
+		$('#decelSlider').slider({
+			min: 0,
+			max: 100,
+			step: 0.1,
+			slide: function (event, ui) {
+				deceleration = ui.value;
+				$('#decel').text(deceleration > 0 ? deceleration : "none");
+				if (link) {
+					acceleration = deceleration;
+					$('#accelSlider').slider({
+						value: acceleration
+					});
+					$('#accel').text(acceleration > 0 ? acceleration : "none");
+				}
+			},
+			value: deceleration // set initial deceleration
+		});
+
+		$('#link').change(function(evt) {
+			if ($(this).attr('checked')) {
+				link = true;
+			} else {
+				link = false;
+			}
+		});			
+
+	}
 
 	function onStepperComplete(evt) {
-		console.log("complete");
-
 		// Each stepper instance is automatically assigned an id
 		// when it is created, starting with 0. You can get the 
 		// id like this but it cannot be set.
-		console.log(evt.target.id);
+		$('.status').text("Stepper " + evt.target.id + " sequence complete");
 	}
+
 });
 
 </script>
@@ -148,18 +252,74 @@ $(document).ready(function() {
 </head>
 <body>
   	<h2>Stepper Example</h2>
-	<div class="container">
-		<label for="numSteps">Number of Steps (max +/-2097151): </label><input id="numSteps" type="number" value="1600" min="-2097151" max="2097151" step="100" />
-		<div>
-			<button type="button" class="Btns" id="cwise">16000</button>
-			<button type="button" class="Btns" id="ccwise">-16000</button>
-		</div>		
-	</div>
 
-<!-- 	<div class="container">
-		<label>Speed (RPM): </label><label id="motorSpeed">10</label>
-		<div id="slider"></div>
-	</div> -->
+  	<section class="configure">
+	  	<div class="container">
+			<h3>Configure your Stepper Motor</h3>
+			<section>
+			<label for="stepsPerRev">Number of Steps per Revolution: </label>
+			<input id="stepsPerRev" type="number" value="200" min="50" max="1000" step="10" />
+			</section>
+
+			<section>
+			<label for="microSteps">Number of Microsteps (for EasyDriver): </label>
+			<input id="microSteps" type="number" value="8" min="1" max="8" step="1" />
+			</section>		
+
+			<section>
+			<button type="button" id="configure">Configure</button>
+			</section>		
+	  	</div>
+
+		<section class="note">
+			<p>In order for this example to work correctly you must make sure the number of steps per revolution is set for your stepper motor. This is the number of steps it takes for the motor to make one revolution. You can get this value from you motor's datasheet (if the number is not specified, divide the step angle by 360 degrees to get the number of steps per rev). This value usually ranges from 100 to 400 depending on the motor. The default value for this example is 200 stepsPerRev.</p>
+
+			<p>If you are using an EasyDriver and have configured it to use less than 8 micro steps (default), then you'll need to update the number of microsteps above.</p>
+		</section>
+	</section>  	
+
+	<section class="control">
+		<div class="container">
+			<section>
+			<label for="numSteps">Number of Steps to Move (+ CW, - CCW): </label>
+			<input id="numSteps" type="number" value="2000" min="-2097151" max="2097151" step="100" />
+			</section>
+
+			<section>
+			<label>Speed (rad/sec): </label><label id="stepSpeed">15.0 (143.25 RPM)</label>
+			<div class="slider" id="speedSlider"></div>
+			</section>
+
+			<section>
+			<label>Acceleration (rad/sec<sup>2</sup>): </label><label id="accel">20.0</label>
+			<div class="slider" id="accelSlider"></div>
+			</section>
+
+			<section>
+			<label>Deceleration (rad/sec<sup>2</sup>): </label><label id="decel">20.0</label>
+			<div class="slider" id="decelSlider"></div>
+			</section>
+
+			<section>
+			<input id="link" type="checkbox" checked="checked" /><label for="link">Link Acceleration and Deceleration</label>
+			</section>
+
+			<section>
+			<button type="button" id="start">Run Step Sequence</button>
+			</section>
+		</div>
+
+		<section>
+		<p class="status"> </p>
+		</section>
+
+		<section class="note">
+			<p>Depending on your motor, you may not be able to drive the stepper at speeds higher than 31 rad/sec (300 RPM).</p>
+
+			<p>To remove acceleration and deceleration, move the acceleration and deceleration sliders all the way to the left. When using accel and decel you must set both values.</p>
+		</section>		
+
+	</section>
 
 </body>
 </html>
