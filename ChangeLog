@@ -1,4 +1,9 @@
-2012.11.17 Version 0.2.0
+2012.11.24 Version 0.2.0
+* Updated Breakout Server to v0.2.0
+* Restructured server directory
+* Default webserver root is now ../../
+* Added Breakout Server eclipse archive to server directory
+* Created separate 32 bit and 64 bit Breakout Server builds for Windows (issue #9)
 * Added getPins method ot IOBoard to return array of all Pin objects
 * Made queryPinState a public method (issue #25)
 * Using AdvancedFirmata instead of StandardFirmata

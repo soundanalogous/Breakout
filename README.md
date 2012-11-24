@@ -26,7 +26,7 @@ The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-comp
 The next step is to run the Breakout Server application:
 
 1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded. 
-2. You'll find **Breakout Server** (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in *Breakout/server/*. Simply double-click to launch the application. Mountain Lion users may need to right click on the Breakout Server application, and choose Open from the contextual menu to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
+2. You'll find **Breakout Server** for your platform (mac, win or linux) in *Breakout/server/*. Open the folder for your platform and double-click to launch the application. Mountain Lion users may need to [temporarily disable Gatekeeper](https://answers.uchicago.edu/page.php?id=25481) to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
