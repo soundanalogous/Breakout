@@ -14,7 +14,7 @@
 
 // dependencies
 // declare these variables so you don't have
-// to type the full namespace	
+// to type the full namespace   
 var IOBoard = BO.IOBoard;
 var IOBoardEvent = BO.IOBoardEvent;
 var GyroITG3200 = BO.io.GyroITG3200;
@@ -41,18 +41,18 @@ sketch.imageCache.add("images/pjs.png");
 // attach function 
 sketch.attachFunction = function(p) {
 
-	var fio;
-	var gyro;
-	var accelerometer;
-	var imuFilter;
-	var imuFilterTick;
-	var gotGyro = false;
-	var gotAccel = false;
-	var UPDATE_INTERVAL = 100;
-	var FILTER_RATE = 0.1;
-	var GRAVITY = 9.812865328;	// /m/s/s
+    var fio;
+    var gyro;
+    var accelerometer;
+    var imuFilter;
+    var imuFilterTick;
+    var gotGyro = false;
+    var gotAccel = false;
+    var UPDATE_INTERVAL = 100;
+    var FILTER_RATE = 0.1;
+    var GRAVITY = 9.812865328;  // /m/s/s
 
-	var isReady = false;
+    var isReady = false;
 
     p.setup = function() {
         p.size(640, 360, p.P3D);
@@ -61,10 +61,10 @@ sketch.attachFunction = function(p) {
         p.fill(255);
         p.stroke(p.color(44,48,32));
 
-		// If you are not serving this file from the same computer
-		// that the Arduino board is connected to, replace
-		// location.hostname with the IP address or hostname
-		// of the computer that the Arduino board is connected to.
+        // If you are not serving this file from the same computer
+        // that the Arduino board is connected to, replace
+        // location.hostname with the IP address or hostname
+        // of the computer that the Arduino board is connected to.
         fio = new IOBoard(location.hostname, 8887);
         fio.addEventListener(IOBoardEvent.READY, onFioReady);
     };
@@ -136,119 +136,119 @@ sketch.attachFunction = function(p) {
         p.vertex(-1,  1, -1, 0, 1);
 
         p.endShape();
-    }	
+    }   
 
-	function onFioReady(event) {
+    function onFioReady(event) {
 
-		fio.removeEventListener(IOBoardEvent.READY, onFioReady);	
-		
-		initGyro();
-		initAccelerometer();
+        fio.removeEventListener(IOBoardEvent.READY, onFioReady);    
+        
+        initGyro();
+        initAccelerometer();
 
-		imuFilter = new IMUFilter(FILTER_RATE, 0.3);
+        imuFilter = new IMUFilter(FILTER_RATE, 0.3);
 
-		// create a tick interval at which to update the sensor
-		// values. This is not as efficient as performing the IMU calculations
-		// directly on the microcontroller since there is less control
-		// over timing going through StandardFirmata
-		imuFilterTick = new Timer(UPDATE_INTERVAL, 0);
-		imuFilterTick.addEventListener(TimerEvent.TIMER, onImuFilterTick);
-		imuFilterTick.start();
+        // create a tick interval at which to update the sensor
+        // values. This is not as efficient as performing the IMU calculations
+        // directly on the microcontroller since there is less control
+        // over timing going through StandardFirmata
+        imuFilterTick = new Timer(UPDATE_INTERVAL, 0);
+        imuFilterTick.addEventListener(TimerEvent.TIMER, onImuFilterTick);
+        imuFilterTick.start();
 
-		// create a button to use to recalibrate the sensor
-		// you must recalibrate often
-		var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
+        // create a button to use to recalibrate the sensor
+        // you must recalibrate often
+        var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
         button.addEventListener(ButtonEvent.PRESS, onBtnPress);
-	}
+    }
 
-	function initGyro() {
-		// params: IOBoard, autoStart, i2cAddress
-		// disable autoStart (2nd param) because we want to update manually
-		gyro = new GyroITG3200(fio, false);
-		// need to adjust these values until the gyro x, y, and z
-		// values are each as close to zero as possible
-		// the close to zero you get the, the less drift you will notice
-	    gyro.setOffsets(-3, 4.0, -4.1);
-	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);		
-	}
+    function initGyro() {
+        // params: IOBoard, autoStart, i2cAddress
+        // disable autoStart (2nd param) because we want to update manually
+        gyro = new GyroITG3200(fio, false);
+        // need to adjust these values until the gyro x, y, and z
+        // values are each as close to zero as possible
+        // the close to zero you get the, the less drift you will notice
+        gyro.setOffsets(-3, 4.0, -4.1);
+        gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);      
+    }
 
-	function initAccelerometer() {
-		// params: IOBoard, dynamicRange, i2cAddress
-		accelerometer = new AccelerometerADXL345(fio);						
-	    accelerometer.setAxisOffset(-2, -2, 6);
-	    accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
-	}
+    function initAccelerometer() {
+        // params: IOBoard, dynamicRange, i2cAddress
+        accelerometer = new AccelerometerADXL345(fio);                      
+        accelerometer.setAxisOffset(-2, -2, 6);
+        accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
+    }
 
-	function onAccelerationUpdate(event) {
-		gotAccel = true;
+    function onAccelerationUpdate(event) {
+        gotAccel = true;
 
-		// do not call process until we have updated
-		// values from both the gyro and the accelerometer
-		if (gotGyro === true) {
-			process();
-		}
+        // do not call process until we have updated
+        // values from both the gyro and the accelerometer
+        if (gotGyro === true) {
+            process();
+        }
 
-	}
+    }
 
-	function onGyroUpdate(event) {
-		gotGyro = true;
+    function onGyroUpdate(event) {
+        gotGyro = true;
 
-		// do not call process until we have updated
-		// values from both the gyro and the accelerometer
-		if (gotAccel === true) {
-			process();
-		}
-	}
+        // do not call process until we have updated
+        // values from both the gyro and the accelerometer
+        if (gotAccel === true) {
+            process();
+        }
+    }
 
-	function process() {		
-		gotGyro = false;
-		gotAccel = false;
+    function process() {        
+        gotGyro = false;
+        gotAccel = false;
 
-		// apply the gyro and accelerometer data to the IMU filter
-		imuFilter.updateFilter(toRadians(gyro.x), 
-								toRadians(gyro.y), 
-								toRadians(gyro.z),
-								accelerometer.x * GRAVITY, 
-								accelerometer.y * GRAVITY, 
-								accelerometer.z * GRAVITY);
+        // apply the gyro and accelerometer data to the IMU filter
+        imuFilter.updateFilter(toRadians(gyro.x), 
+                                toRadians(gyro.y), 
+                                toRadians(gyro.z),
+                                accelerometer.x * GRAVITY, 
+                                accelerometer.y * GRAVITY, 
+                                accelerometer.z * GRAVITY);
 
-		// computer the euler angles to get pitch, roll and yaw values
-		imuFilter.computeEuler();
+        // computer the euler angles to get pitch, roll and yaw values
+        imuFilter.computeEuler();
 
-		// signal that it is now safe to draw
-		isReady = true;
-	}
+        // signal that it is now safe to draw
+        isReady = true;
+    }
 
-	function onBtnPress(event) {
-		// reset the IMU filter. need to call this to 
-		// recalibrate the sensor.
-		imuFilter.reset();
-	}
+    function onBtnPress(event) {
+        // reset the IMU filter. need to call this to 
+        // recalibrate the sensor.
+        imuFilter.reset();
+    }
 
-	function onImuFilterTick(event) {
-		// don't do anything until the accelerometer and gyro have
-		// been initialized
-		if (accelerometer === undefined || gyro === undefined) return;
+    function onImuFilterTick(event) {
+        // don't do anything until the accelerometer and gyro have
+        // been initialized
+        if (accelerometer === undefined || gyro === undefined) return;
 
-		// update the accelerometer and gyro manually
-		accelerometer.update();
-		gyro.update();
-	}
+        // update the accelerometer and gyro manually
+        accelerometer.update();
+        gyro.update();
+    }
 
-	function toRadians(decimalVal) {
-		return decimalVal * Math.PI/180;
-	}
+    function toRadians(decimalVal) {
+        return decimalVal * Math.PI/180;
+    }
 
-	function toDegrees(radianVal) {
-		return radianVal * (180/Math.PI);
-	}
+    function toDegrees(radianVal) {
+        return radianVal * (180/Math.PI);
+    }
 
 };
 
 var canvas = document.getElementById("canvas1");
 // attaching the sketch to the canvas
 var p = new Processing(canvas, sketch);
-			
+            
 </script>
 
 

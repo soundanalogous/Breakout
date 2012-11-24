@@ -6,47 +6,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
 body {
-	margin: 15px;
-	font-family: sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: #666;
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
 }
 h2 {
-	padding-left: 0px;
-	font-weight: normal;
-	font-size: 28px;
-	color: #00AEFF;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 28px;
+    color: #00AEFF;
 }
 .ledBtns {
-	padding: 10px;
-	font-size: 22px;
-	width: 130px;
-	color: #00AEFF;
-	margin-bottom: 20px;
+    padding: 10px;
+    font-size: 22px;
+    width: 130px;
+    color: #00AEFF;
+    margin-bottom: 20px;
 }
 #state {
-	color: #00AEFF;
-	font-size: 22px;
+    color: #00AEFF;
+    font-size: 22px;
 }
 .container {
-	background-color: #f7f7f7;
-	padding-left: 10px;
-	border: 1px dotted #CCC;
-	width: 280px;
-	margin-top: 20px;
+    background-color: #f7f7f7;
+    padding-left: 10px;
+    border: 1px dotted #CCC;
+    width: 280px;
+    margin-top: 20px;
 }
 .spacer {
-	margin-left: 5px;
+    margin-left: 5px;
 }
 #schematic {
-	position: absolute;
-	display: none;
-	top: 65px;
-	left: 15px;
+    position: absolute;
+    display: none;
+    top: 65px;
+    left: 15px;
 }
 #schematicBtn {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 </style>
@@ -61,95 +61,95 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var LED = BO.io.LED;
-	var Button = BO.io.Button;
-	var ButtonEvent = BO.io.ButtonEvent;
+    // declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var LED = BO.io.LED;
+    var Button = BO.io.Button;
+    var ButtonEvent = BO.io.ButtonEvent;
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname, 8887);
-	var led;
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname, 8887);
+    var led;
 
-	// listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		
-		// remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        
+        // remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// create an LED object to interface with the LED wired
-		// to the I/O board
-		led = new LED(arduino, arduino.getDigitalPin(11));
+        // create an LED object to interface with the LED wired
+        // to the I/O board
+        led = new LED(arduino, arduino.getDigitalPin(11));
 
-		// create a new Button object to interface with the physical
-		// button wired to the I/O board
-		var button = new Button(arduino, arduino.getDigitalPin(2));
-		// listen for button press and release events
-		button.addEventListener(ButtonEvent.PRESS, onPress);
-		button.addEventListener(ButtonEvent.RELEASE, onRelease);
-		
-		// use jQuery to get a reference to the buttons
-		// and listen for click events 
-		$('#btnLeft').on('click', turnLedOff);
-		$('#btnRight').on('click', turnLedOn);
+        // create a new Button object to interface with the physical
+        // button wired to the I/O board
+        var button = new Button(arduino, arduino.getDigitalPin(2));
+        // listen for button press and release events
+        button.addEventListener(ButtonEvent.PRESS, onPress);
+        button.addEventListener(ButtonEvent.RELEASE, onRelease);
+        
+        // use jQuery to get a reference to the buttons
+        // and listen for click events 
+        $('#btnLeft').on('click', turnLedOff);
+        $('#btnRight').on('click', turnLedOn);
 
-		// handle showing and hiding the schematic
-		$('#schematicBtn').on('click', toggleSchematicView);
-		
-	}
+        // handle showing and hiding the schematic
+        $('#schematicBtn').on('click', toggleSchematicView);
+        
+    }
 
-	function onPress(evt) {
-		// get a reference to the target which is the button that 
-		// triggered the event
-		var btn = evt.target;
-		// display the state on the page
-		$('#state').html("Button " + btn.pinNumber + " state: Pressed");
-	}
+    function onPress(evt) {
+        // get a reference to the target which is the button that 
+        // triggered the event
+        var btn = evt.target;
+        // display the state on the page
+        $('#state').html("Button " + btn.pinNumber + " state: Pressed");
+    }
 
-	function onRelease(evt) {
-		// get a reference to the target which is the button that 
-		// triggered the event		
-		var btn = evt.target;
-		// display the state on the page
-		$('#state').html("Button " + btn.pinNumber + " state: Released");
-	}
+    function onRelease(evt) {
+        // get a reference to the target which is the button that 
+        // triggered the event      
+        var btn = evt.target;
+        // display the state on the page
+        $('#state').html("Button " + btn.pinNumber + " state: Released");
+    }
 
-	function onGuiButtonClick(evt) {
-		led.toggle();
-	}
+    function onGuiButtonClick(evt) {
+        led.toggle();
+    }
 
-	function turnLedOn(evt) {
-		// turn the LED on
-		led.on();
-	}
+    function turnLedOn(evt) {
+        // turn the LED on
+        led.on();
+    }
 
-	function turnLedOff(evt) {
-		// turn the LED off
-		led.off();	
-	}
+    function turnLedOff(evt) {
+        // turn the LED off
+        led.off();  
+    }
 
-	// show or hide the schematic
-	function toggleSchematicView(evt) {
-		var schematicBtn = $(this);
-		if (schematicBtn.data('state') === "hidden") {
-			schematicBtn.text("Hide Schematic");
-			schematicBtn.data('state', "visible");
-			$('#schematic').css('display', 'block');
-		} else {
-			schematicBtn.text("Show Schematic");
-			schematicBtn.data('state', "hidden");
-			$('#schematic').css('display', 'none');
-		}
-		
-	}
+    // show or hide the schematic
+    function toggleSchematicView(evt) {
+        var schematicBtn = $(this);
+        if (schematicBtn.data('state') === "hidden") {
+            schematicBtn.text("Hide Schematic");
+            schematicBtn.data('state', "visible");
+            $('#schematic').css('display', 'block');
+        } else {
+            schematicBtn.text("Show Schematic");
+            schematicBtn.data('state', "hidden");
+            $('#schematic').css('display', 'none');
+        }
+        
+    }
 
 });
 
@@ -161,16 +161,16 @@ $(document).ready(function() {
   <h2>Hello World Example</h2>
 
   <div class="container">
-	<p><strong>Output:</strong> Use the buttons below to turn the LED on the breadboard on or off.</p>
-  	<button id="btnLeft" class="ledBtns" type="button">LED Off</button>
-  	<span class="spacer"></span>
-  	<button id="btnRight" class="ledBtns" type="button">LED On</button>
+    <p><strong>Output:</strong> Use the buttons below to turn the LED on the breadboard on or off.</p>
+    <button id="btnLeft" class="ledBtns" type="button">LED Off</button>
+    <span class="spacer"></span>
+    <button id="btnRight" class="ledBtns" type="button">LED On</button>
   </div>
 
 
   <div class="container">
-  	<p><strong>Input:</strong> Press the button on the breadboard to display the state below.</p>
-  	<p id="state">Display Button State</p>
+    <p><strong>Input:</strong> Press the button on the breadboard to display the state below.</p>
+    <p id="state">Display Button State</p>
   </div>
 
   <img id="schematic" src="images/hello_world_schematic.png">

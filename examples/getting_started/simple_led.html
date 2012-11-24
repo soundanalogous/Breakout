@@ -6,32 +6,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
 body {
-	margin: 15px;
-	font-family: sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: #666;
-	width: 300px;
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
+    width: 300px;
 }
 h2 {
-	padding-left: 0px;
-	font-weight: normal;
-	font-size: 28px;
-	color: #00AEFF;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 28px;
+    color: #00AEFF;
 }
 .btn {
-	padding: 10px;
-	font-size: 22px;
-	width: 270px;
-	color: #00AEFF;
-	margin-bottom: 20px;
+    padding: 10px;
+    font-size: 22px;
+    width: 270px;
+    color: #00AEFF;
+    margin-bottom: 20px;
 }
 .container {
-	background-color: #f7f7f7;
-	padding: 0 10px 0 10px;
-	border: 1px dotted #CCC;
-	width: 270px;
-	margin-top: 20px;
+    background-color: #f7f7f7;
+    padding: 0 10px 0 10px;
+    border: 1px dotted #CCC;
+    width: 270px;
+    margin-top: 20px;
 }
 </style>
 
@@ -42,54 +42,54 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// Declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var LED = BO.io.LED;
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var LED = BO.io.LED;
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	// var arduino = new IOBoard("localhost", 8887);
-	var arduino = new IOBoard(location.hostname, 8887);
-	var led;
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    // var arduino = new IOBoard("localhost", 8887);
+    var arduino = new IOBoard(location.hostname, 8887);
+    var led;
 
-	// Listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		// Remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// Create an LED object to interface with the LED wired
-		// to the I/O board
-		led = new LED(arduino, arduino.getDigitalPin(13));
-		
-		// jQuery part for the button
-		$('#button').click(function(){
-			if ($(this).text()=="LED On") {
-				$(this).text("LED Off");
-				led.toggle();
-			} else {
-			$(this).text("LED On");
-				led.toggle();
-			}
-		});
-	}
+        // Create an LED object to interface with the LED wired
+        // to the I/O board
+        led = new LED(arduino, arduino.getDigitalPin(13));
+        
+        // jQuery part for the button
+        $('#button').click(function(){
+            if ($(this).text()=="LED On") {
+                $(this).text("LED Off");
+                led.toggle();
+            } else {
+            $(this).text("LED On");
+                led.toggle();
+            }
+        });
+    }
 });
 
 </script>
 
 </head>
 <body>
-	<h2>Simple LED example</h2>
-		<p>For this example only an Arduino board is needed.</p>
-		<div class="container">
-			<p><strong>Output:</strong> Use the button below to turn the on-board LED on or off.</p>
-			<button id="button" class="btn" type="button">LED On</button>
-		</div>
+    <h2>Simple LED example</h2>
+        <p>For this example only an Arduino board is needed.</p>
+        <div class="container">
+            <p><strong>Output:</strong> Use the button below to turn the on-board LED on or off.</p>
+            <button id="button" class="btn" type="button">LED On</button>
+        </div>
 </body>
 </html>​

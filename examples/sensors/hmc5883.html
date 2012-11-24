@@ -6,31 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
 body {
-	margin: 15px;
-	font-family: sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: #666;
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
 }
 h2 {
-	padding-left: 0px;
-	font-weight: normal;
-	font-size: 22px;
-	color: #00AEFF;
-	margin-bottom: 20px;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 22px;
+    color: #00AEFF;
+    margin-bottom: 20px;
 }
 .container {
-	background-color: #f7f7f7;
-	border: 1px dotted #CCC;
-	width: 290px;
-	margin-top: 40px;
+    background-color: #f7f7f7;
+    border: 1px dotted #CCC;
+    width: 290px;
+    margin-top: 40px;
 }
 .text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #666;
-	padding: 20px;
-	margin: 0;
+    font-family: "Arial";
+    font-size: 22px;
+    color: #666;
+    padding: 20px;
+    margin: 0;
 }
 </style>
 
@@ -41,76 +41,76 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace	
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var MagnetometerHMC5883 = BO.io.MagnetometerHMC5883;
-	var MagnetometerEvent = BO.io.MagnetometerEvent;
+    // dependencies
+    // declare these variables so you don't have
+    // to type the full namespace   
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var MagnetometerHMC5883 = BO.io.MagnetometerHMC5883;
+    var MagnetometerEvent = BO.io.MagnetometerEvent;
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;	
+    // set to true to print debug messages to console
+    BO.enableDebugging = true;  
 
-	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
-	// with the ADXL345
+    // note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+    // with the ADXL345
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.	
-	var fio = new IOBoard(location.hostname, 8887),
-		accelerometer;
-	
-	fio.addEventListener(IOBoardEvent.READY, onReady);
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.  
+    var fio = new IOBoard(location.hostname, 8887),
+        accelerometer;
+    
+    fio.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
+    function onReady(event) {
 
-		fio.removeEventListener(IOBoardEvent.READY, onReady);
-		
-		//params: IOBoard, i2cAddress, numSamples, outputRate
-		var magnetometer = new MagnetometerHMC5883(
-								fio, 
-								MagnetometerHMC5883.DEVICE_ID,
-								MagnetometerHMC5883.SAMPLES_1,
-								MagnetometerHMC5883.HZ_30);							
+        fio.removeEventListener(IOBoardEvent.READY, onReady);
+        
+        //params: IOBoard, i2cAddress, numSamples, outputRate
+        var magnetometer = new MagnetometerHMC5883(
+                                fio, 
+                                MagnetometerHMC5883.DEVICE_ID,
+                                MagnetometerHMC5883.SAMPLES_1,
+                                MagnetometerHMC5883.HZ_30);                         
 
-		// using default settings
-		//var magnetometer = new MagnetometerHMC5883(fio);						
+        // using default settings
+        //var magnetometer = new MagnetometerHMC5883(fio);                      
 
-	    // start reading the accelerometer
-	    magnetometer.startReading();
+        // start reading the accelerometer
+        magnetometer.startReading();
 
-	    magnetometer.addEventListener(MagnetometerEvent.UPDATE, onMagnetoUpdate);
-	    
-	}
-	
-	function onMagnetoUpdate(event) {
-		var data = event.target;
+        magnetometer.addEventListener(MagnetometerEvent.UPDATE, onMagnetoUpdate);
+        
+    }
+    
+    function onMagnetoUpdate(event) {
+        var data = event.target;
 
-		
-		$('#xVal').html("x = " + data.x.toFixed(3));
-		$('#yVal').html("y = " + data.y.toFixed(3));
-		$('#zVal').html("z = " + data.z.toFixed(3));
-		$('#heading').html("heading = " + data.heading.toFixed(3));
+        
+        $('#xVal').html("x = " + data.x.toFixed(3));
+        $('#yVal').html("y = " + data.y.toFixed(3));
+        $('#zVal').html("z = " + data.z.toFixed(3));
+        $('#heading').html("heading = " + data.heading.toFixed(3));
 
-	}
+    }
 
-			
+            
 });
 </script>
 
 </head>
 <body>
 
-	<h2>HMC5883 Magnetometer</h2>
+    <h2>HMC5883 Magnetometer</h2>
   
-  	<div class="container">
-		<div id="xVal" class="text">x =</div>
-		<div id="yVal" class="text">y =</div>
-		<div id="zVal" class="text">z =</div>
-		<div id="heading" class="text">heading =</div>
-	</div>
+    <div class="container">
+        <div id="xVal" class="text">x =</div>
+        <div id="yVal" class="text">y =</div>
+        <div id="zVal" class="text">z =</div>
+        <div id="heading" class="text">heading =</div>
+    </div>
   
 </body>
 </html>​

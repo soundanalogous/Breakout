@@ -7,29 +7,29 @@
 
 <style type="text/css">
 body {
-	margin: 15px;
-	width: 300px;
-	font-family: sans-serif;
-	font-size: 18px;
-	color: #666;
+    margin: 15px;
+    width: 300px;
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #666;
 }
 h2 {
-	font-weight: normal;
-	font-size: 28px;
-	padding-bottom: 20px;
-	color: #00AEFF;
+    font-weight: normal;
+    font-size: 28px;
+    padding-bottom: 20px;
+    color: #00AEFF;
 }
 .container {
-	background-color: #f7f7f7;
-	padding: 0 10px 20px 10px;
-	border: 1px dotted #CCC;
-	width: 270px;
-	margin-top: 20px;
+    background-color: #f7f7f7;
+    padding: 0 10px 20px 10px;
+    border: 1px dotted #CCC;
+    width: 270px;
+    margin-top: 20px;
 }
 .progressbar {
-	background-color: #f7f7f7;
-	width: 270px;
-	margin-bottom: 0;
+    background-color: #f7f7f7;
+    width: 270px;
+    margin-bottom: 0;
 }
 </style>
 
@@ -42,50 +42,50 @@ h2 {
 <link href="../libs/jquery-ui/jquery-ui-1.8.23.custom.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
 $(document).ready(function() {
-	// Declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var Pin = BO.Pin;
-	var PinEvent = BO.PinEvent;
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var Pin = BO.Pin;
+    var PinEvent = BO.PinEvent;
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname, 8887);
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname, 8887);
 
-	// Listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		// Remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// Enable the analog pin so we can read its value
-		arduino.enableAnalogPin(0);
-		var sensor = arduino.getAnalogPin(0);
-		sensor.addEventListener(PinEvent.CHANGE, onChange);
-	}
+        // Enable the analog pin so we can read its value
+        arduino.enableAnalogPin(0);
+        var sensor = arduino.getAnalogPin(0);
+        sensor.addEventListener(PinEvent.CHANGE, onChange);
+    }
 
-	function onChange(evt) {
-		// The potentiometer gives back a value between 0 and 1.0
-		var valueIn = evt.target.value;
-		var value = valueIn * 100;
+    function onChange(evt) {
+        // The potentiometer gives back a value between 0 and 1.0
+        var valueIn = evt.target.value;
+        var value = valueIn * 100;
 
-		$('#value').text("Value = " + value.toFixed(0));
-		$("#progressbar").progressbar({ value: value });
-	}
+        $('#value').text("Value = " + value.toFixed(0));
+        $("#progressbar").progressbar({ value: value });
+    }
 });
 </script>
 
 </head>
 <body>
-	<h2>Reading analog input</h2>
-		<div class="container">
-			<p id="value"></p>
-			<p id="progressbar" class="progressbar"></p>
-		</div>
+    <h2>Reading analog input</h2>
+        <div class="container">
+            <p id="value"></p>
+            <p id="progressbar" class="progressbar"></p>
+        </div>
 </body>
 </html>

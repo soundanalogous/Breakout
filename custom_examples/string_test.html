@@ -5,10 +5,10 @@
 <meta charset=utf-8 />
 <style type="text/css">
 .text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+    font-family: "Arial";
+    font-size: 22px;
+    color: #00AEEF;
+    padding:20px;
 }
 </style>
 
@@ -19,51 +19,51 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// Note, this example is buggy.
+    // Note, this example is buggy.
 
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace
-	var Event = JSUTILS.Event;
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
+    // dependencies
+    // declare these variables so you don't have
+    // to type the full namespace
+    var Event = JSUTILS.Event;
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;	
+    // set to true to print debug messages to console
+    BO.enableDebugging = true;  
 
-	// params: IPaddress, port
-	var arduino = new IOBoard("localhost", 8887);
-	var counter = 0;
+    // params: IPaddress, port
+    var arduino = new IOBoard("localhost", 8887);
+    var counter = 0;
 
-	arduino.addEventListener(IOBoardEvent.CONNECTED, onConnect);
+    arduino.addEventListener(IOBoardEvent.CONNECTED, onConnect);
 
-	function onConnect(event) {
+    function onConnect(event) {
 
-		console.log("connected");
-		
-		// remove the listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.CONNECTED, onConnect);		
+        console.log("connected");
+        
+        // remove the listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.CONNECTED, onConnect);     
 
-		// listen for incoming string messages
-		arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
-						
-	    // send a string message to the I/O board
-		setInterval(sayHello, 2000);	
-	}
+        // listen for incoming string messages
+        arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+                        
+        // send a string message to the I/O board
+        setInterval(sayHello, 2000);    
+    }
 
-	function sayHello() {
-		arduino.sendString("Hello " + counter++);
-	}
-	
+    function sayHello() {
+        arduino.sendString("Hello " + counter++);
+    }
+    
 
-	// called when a new string message is received from the I/O board
-	function onStringMessage(event) {
-		console.log("string received: " + event.message);
-		$('#message').html("message = " + event.message);
-	}
-	
+    // called when a new string message is received from the I/O board
+    function onStringMessage(event) {
+        console.log("string received: " + event.message);
+        $('#message').html("message = " + event.message);
+    }
+    
 
-			
+            
 });
 
 </script>
@@ -71,7 +71,7 @@ $(document).ready(function() {
 </head>
 <body>
   
-	<div id="message" class="text"></div>
+    <div id="message" class="text"></div>
   
 </body>
 </html>​

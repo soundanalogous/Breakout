@@ -7,28 +7,28 @@
 
 <style type="text/css">
 html, body, p {
-	padding: 0;
-	margin: 0;
-	line-height: 1.5em;
+    padding: 0;
+    margin: 0;
+    line-height: 1.5em;
 }
 body {
-	padding: 10px;
-	font-family: sans-serif;
-	font-size: 14px;
-	color: #333;
-	width: 300px;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #333;
+    width: 300px;
 }
 h2 {
-	font-size: 18px;
-	color: #00AEFF;
+    font-size: 18px;
+    color: #00AEFF;
 }
 .data {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 #incoming {
-	margin-top: 20px;
-	padding: 10px;
-	background-color: #F7F7F7;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #F7F7F7;
 }
 </style>
 
@@ -38,57 +38,57 @@ h2 {
 <script src="../libs/jquery-1.8.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	// Declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var BlinkM = BO.io.BlinkM;
-	
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname, 8887);
-	
-	// Variables 
-	var blinkM;
-	var compassData = $('#compassStatus');
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var BlinkM = BO.io.BlinkM;
+    
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname, 8887);
+    
+    // Variables 
+    var blinkM;
+    var compassData = $('#compassStatus');
 
-	document.addEventListener("touchmove", preventBehavior, false);	
+    document.addEventListener("touchmove", preventBehavior, false); 
 
-	// Listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		// Remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// i2c module example: BlinkM module
-		blinkM = new BlinkM(arduino);
-		blinkM.stopScript();
+        // i2c module example: BlinkM module
+        blinkM = new BlinkM(arduino);
+        blinkM.stopScript();
 
-		// Listen for DeviceOrientation events
-		// your mobile device must support the DeviceOrientation API
-		window.addEventListener("deviceorientation", onOrientationChange);
-	}
-	
+        // Listen for DeviceOrientation events
+        // your mobile device must support the DeviceOrientation API
+        window.addEventListener("deviceorientation", onOrientationChange);
+    }
+    
     /**
      * Handle orientation change events from the mobile device
      */
-	function onOrientationChange(event) {
-		var heading = event.webkitCompassHeading;
-		// Use the device compass heading to rotate through the hues of the blinkM
-		blinkM.fadeToHSBColor([Math.floor(heading/360.0 * 255), 255, 200], 255);
+    function onOrientationChange(event) {
+        var heading = event.webkitCompassHeading;
+        // Use the device compass heading to rotate through the hues of the blinkM
+        blinkM.fadeToHSBColor([Math.floor(heading/360.0 * 255), 255, 200], 255);
 
-		compassData.html('Compass data: <br />' +
-						'heading = ' + heading.toFixed(3));
-	}
+        compassData.html('Compass data: <br />' +
+                        'heading = ' + heading.toFixed(3));
+    }
 
     /**
      * Prevent dragging
      */
-	function preventBehavior(evt) { 
+    function preventBehavior(evt) { 
       evt.preventDefault(); 
     }
 });
@@ -96,13 +96,13 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<h2>DeviceOrientation Demo</h2>
-		<p>This example demonstrates how to use the HTML5 DeviceOrientation API to
-  		rotate through the hue values on a blinkM RGBLED module from a mobile device</p>
-		<div id="incoming">
-			<div class="data">
-				<p id="compassStatus"></p>
-			</div>
-		</div>
+    <h2>DeviceOrientation Demo</h2>
+        <p>This example demonstrates how to use the HTML5 DeviceOrientation API to
+        rotate through the hue values on a blinkM RGBLED module from a mobile device</p>
+        <div id="incoming">
+            <div class="data">
+                <p id="compassStatus"></p>
+            </div>
+        </div>
 </body>
 </html>​

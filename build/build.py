@@ -102,91 +102,91 @@ CORE_FILES = [
 
 def merge(files):
 
-	buffer = []
+    buffer = []
 
-	for filename in files:
-		with open(os.path.join('..', 'src', filename), 'r') as f:
-			buffer.append(f.read())
+    for filename in files:
+        with open(os.path.join('..', 'src', filename), 'r') as f:
+            buffer.append(f.read())
 
-	return "".join(buffer)
+    return "".join(buffer)
 
 
 def output(text, filename):
 
-	with open(os.path.join('..', 'dist', filename), 'w') as f:
-		f.write(text)
+    with open(os.path.join('..', 'dist', filename), 'w') as f:
+        f.write(text)
 
 
 def compress(text):
 
-	in_tuple = tempfile.mkstemp()
-	with os.fdopen(in_tuple[0], 'w') as handle:
-		handle.write(text)
+    in_tuple = tempfile.mkstemp()
+    with os.fdopen(in_tuple[0], 'w') as handle:
+        handle.write(text)
 
-	out_tuple = tempfile.mkstemp()
+    out_tuple = tempfile.mkstemp()
 
-	os.system("java -jar compiler/compiler.jar --language_in=ECMASCRIPT5_STRICT --js %s --js_output_file %s" % (in_tuple[1], out_tuple[1]))
+    os.system("java -jar compiler/compiler.jar --language_in=ECMASCRIPT5_STRICT --js %s --js_output_file %s" % (in_tuple[1], out_tuple[1]))
 
-	with os.fdopen(out_tuple[0], 'r') as handle:
-		compressed = handle.read()
+    with os.fdopen(out_tuple[0], 'r') as handle:
+        compressed = handle.read()
 
-	os.unlink(in_tuple[1])
-	os.unlink(out_tuple[1])
+    os.unlink(in_tuple[1])
+    os.unlink(out_tuple[1])
 
-	return compressed
+    return compressed
 
 
 def addHeader(text, version):
 
-	header = """/***
-	Breakout - %s
+    header = """/***
+    Breakout - %s
 
     Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
     Released under the MIT license. See LICENSE file for details.
-	http.//breakoutjs.com
-	***/\n"""
+    http.//breakoutjs.com
+    ***/\n"""
 
-	return (header % version) + text
+    return (header % version) + text
 
 
 
 def buildLib(files, filename, version):
 
-	text = merge(files)
+    text = merge(files)
 
-	filename = filename + '.js'
+    filename = filename + '.js'
 
-	print "=" * 40
-	print "Compiling", filename
-	print "=" * 40
+    print "=" * 40
+    print "Compiling", filename
+    print "=" * 40
 
-	text = compress(text)
+    text = compress(text)
 
-	output(addHeader(text, version), filename)
+    output(addHeader(text, version), filename)
 
 
 def buildJSDocs():
-	os.system("java -jar jsdoc-toolkit/jsrun.jar jsdoc-toolkit/app/run.js -a -t=jsdoc-toolkit/templates/jsdoc -r=2 ../src/ -d=../docs/")
+    os.system("java -jar jsdoc-toolkit/jsrun.jar jsdoc-toolkit/app/run.js -a -t=jsdoc-toolkit/templates/jsdoc -r=2 ../src/ -d=../docs/")
 
 
 def main(argv=None):
 
-	if len(sys.argv) > 1:
-		version = sys.argv[1]
-	else:
-		version = "0.2.0"
+    if len(sys.argv) > 1:
+        version = sys.argv[1]
+    else:
+        version = "0.2.0"
 
-	min_files = [
-	['Breakout', ALL_FILES],
-	['Breakout-base', WITHOUT_IO],
-	['Breakout-core', CORE_FILES]
-	]
+    min_files = [
+    ['Breakout', ALL_FILES],
+    ['Breakout-base', WITHOUT_IO],
+    ['Breakout-core', CORE_FILES]
+    ]
 
-	for fname_lib, files in min_files:
-		buildLib(files, fname_lib, version)
+    for fname_lib, files in min_files:
+        buildLib(files, fname_lib, version)
 
-	buildJSDocs()
+    buildJSDocs()
 
 if __name__ == "__main__":
-	main()
+    main()
 

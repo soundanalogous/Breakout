@@ -6,31 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
 body {
-	margin: 15px;
-	font-family: sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: #666;
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
 }
 h2 {
-	padding-left: 0px;
-	font-weight: normal;
-	font-size: 22px;
-	color: #00AEFF;
-	margin-bottom: 20px;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 22px;
+    color: #00AEFF;
+    margin-bottom: 20px;
 }
 .container {
-	background-color: #f7f7f7;
-	border: 1px dotted #CCC;
-	width: 290px;
-	margin-top: 40px;
+    background-color: #f7f7f7;
+    border: 1px dotted #CCC;
+    width: 290px;
+    margin-top: 40px;
 }
 .text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #666;
-	padding: 20px;
-	margin: 0;
+    font-family: "Arial";
+    font-size: 22px;
+    color: #666;
+    padding: 20px;
+    margin: 0;
 }
 </style>
 
@@ -41,80 +41,80 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace	
-	var Pin = BO.Pin;
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var GyroITG3200 = BO.io.GyroITG3200;
-	var GyroEvent = BO.io.GyroEvent;	
+    // dependencies
+    // declare these variables so you don't have
+    // to type the full namespace   
+    var Pin = BO.Pin;
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var GyroITG3200 = BO.io.GyroITG3200;
+    var GyroEvent = BO.io.GyroEvent;    
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;
+    // set to true to print debug messages to console
+    BO.enableDebugging = true;
 
-	// note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
-	// with the ITG3200
+    // note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+    // with the ITG3200
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var fio = new IOBoard(location.hostname, 8887);
-	var gyro;
-	
-	fio.addEventListener(IOBoardEvent.READY, onReady);
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var fio = new IOBoard(location.hostname, 8887);
+    var gyro;
+    
+    fio.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
+    function onReady(event) {
 
-		fio.removeEventListener(IOBoardEvent.READY, onReady);	
-		
-		// params: IOBoard, autoStart, i2cAddress
-		//gyro = new GyroITG3200(fio, false, GyroITG3200.ID_AD0_VDD);
-		gyro = new GyroITG3200(fio);
-					
-		// calibration
-		// adjust the values until the x, y, and z values
-		// of the gyro are approximately 0 when the gyro is not moving
-	    gyro.setOffsets(-3, 4, -4.5);
+        fio.removeEventListener(IOBoardEvent.READY, onReady);   
+        
+        // params: IOBoard, autoStart, i2cAddress
+        //gyro = new GyroITG3200(fio, false, GyroITG3200.ID_AD0_VDD);
+        gyro = new GyroITG3200(fio);
+                    
+        // calibration
+        // adjust the values until the x, y, and z values
+        // of the gyro are approximately 0 when the gyro is not moving
+        gyro.setOffsets(-3, 4, -4.5);
 
-		// if autoStart is false (2nd parameter of GyroITG3200 constructor)
-		// listen for onGyroReady event before calling gyro.startReading()
-		// or gyro.update();
-		//gyro.addEventListener(GyroEvent.GYRO_READY, onGyroReady);
+        // if autoStart is false (2nd parameter of GyroITG3200 constructor)
+        // listen for onGyroReady event before calling gyro.startReading()
+        // or gyro.update();
+        //gyro.addEventListener(GyroEvent.GYRO_READY, onGyroReady);
 
-	    gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
-	}
+        gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
+    }
 
-	// if autoStart is false, you must listen for GYRO_READY
-	// event and call startReading() when the event is fired
-	function onGyroReady(event) {
-		gyro.removeEventListener(GyroEvent.GYRO_READY, onGyroReady);
+    // if autoStart is false, you must listen for GYRO_READY
+    // event and call startReading() when the event is fired
+    function onGyroReady(event) {
+        gyro.removeEventListener(GyroEvent.GYRO_READY, onGyroReady);
 
-		gyro.startReading();
-	}
-	
-	function onGyroUpdate(event) {
-		var gyro = event.target;
-		
-		$('#xVal').html("x = " + gyro.x.toFixed(3));
-		$('#yVal').html("y = " + gyro.y.toFixed(3));
-		$('#zVal').html("z = " + gyro.z.toFixed(3));
-	}
-			
+        gyro.startReading();
+    }
+    
+    function onGyroUpdate(event) {
+        var gyro = event.target;
+        
+        $('#xVal').html("x = " + gyro.x.toFixed(3));
+        $('#yVal').html("y = " + gyro.y.toFixed(3));
+        $('#zVal').html("z = " + gyro.z.toFixed(3));
+    }
+            
 });
 </script>
 
 </head>
 <body>
   
-  	<h2>ITG3200 3-axis Gyro</h2>
+    <h2>ITG3200 3-axis Gyro</h2>
   
-  	<div class="container">
-		<div id="xVal" class="text">x =</div>
-		<div id="yVal" class="text">y =</div>
-		<div id="zVal" class="text">z =</div>
-	</div>
+    <div class="container">
+        <div id="xVal" class="text">x =</div>
+        <div id="yVal" class="text">y =</div>
+        <div id="zVal" class="text">z =</div>
+    </div>
   
 </body>
 </html>​

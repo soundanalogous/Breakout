@@ -7,23 +7,23 @@
 
 <style type="text/css">
 body {
-	margin: 20px;
-	width: 300px;
-	font-family: sans-serif;
-	font-size: 18px;
-	color: #666;
+    margin: 20px;
+    width: 300px;
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #666;
 }
 h2 {
-	font-weight: normal;
-	font-size: 28px;
-	padding-bottom: 20px;
-	color: #00AEFF;
+    font-weight: normal;
+    font-size: 28px;
+    padding-bottom: 20px;
+    color: #00AEFF;
 }
 #btn {
-	padding: 0 10px 20px 10px;
-	font-size: 22px;
-	width: 270px;
-	color: #00AEFF;
+    padding: 0 10px 20px 10px;
+    font-size: 22px;
+    width: 270px;
+    color: #00AEFF;
 }
 </style>
 
@@ -34,40 +34,40 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var LED = BO.io.LED;
+    // declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var LED = BO.io.LED;
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname, 8887);
-	var led;
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname, 8887);
+    var led;
 
-	// listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		
-		// remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        
+        // remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// create an LED object to interface with the LED 
-		// on the Arduino board (connected to pin 13)
-		led = new LED(arduino, arduino.getDigitalPin(13));
-		
-		// use jQuery to get a reference to the button 
-		// and listen for a click event
-		$('#btn').on('click', toggleLED);
-	}
+        // create an LED object to interface with the LED 
+        // on the Arduino board (connected to pin 13)
+        led = new LED(arduino, arduino.getDigitalPin(13));
+        
+        // use jQuery to get a reference to the button 
+        // and listen for a click event
+        $('#btn').on('click', toggleLED);
+    }
 
-	function toggleLED(evt) {
-		led.toggle();
-	}
+    function toggleLED(evt) {
+        led.toggle();
+    }
 
 });
 

@@ -5,10 +5,10 @@
 <meta charset=utf-8 />
 <style type="text/css">
 #textBox{
-	font-family: "Arial";
-	font-size: 22px;
-	color: #00AEEF;
-	padding:20px;
+    font-family: "Arial";
+    font-size: 22px;
+    color: #00AEEF;
+    padding:20px;
 }
 </style>
 
@@ -22,39 +22,39 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// dependencies
-	// declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var ID12RFIDReader = BO.custom.ID12RFIDReader;
-	var RFIDEvent = BO.custom.RFIDEvent;
+    // dependencies
+    // declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var ID12RFIDReader = BO.custom.ID12RFIDReader;
+    var RFIDEvent = BO.custom.RFIDEvent;
 
-	// set to true to print debug messages to console
-	BO.enableDebugging = true;	
-	
-	var ard = new IOBoard("localhost", 8887);
-	var rfid;
-		
-	ard.addEventListener(IOBoardEvent.READY, onReady);
+    // set to true to print debug messages to console
+    BO.enableDebugging = true;  
+    
+    var ard = new IOBoard("localhost", 8887);
+    var rfid;
+        
+    ard.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-					
-		ard.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+                    
+        ard.removeEventListener(IOBoardEvent.READY, onReady);
 
-		rfid = new ID12RFIDReader(ard);
-		rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);
-		rfid.addEventListener(RFIDEvent.REMOVE_TAG, onRemoveTag);
-	}
-	
-	function onAddTag(event) {
-		$('#textBox').html("Added tag: " + event.tag);
-	}
-	
-	function onRemoveTag(event) {
-		$('#textBox').html("Removed tag: " + event.tag);
-	}
-						
+        rfid = new ID12RFIDReader(ard);
+        rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);
+        rfid.addEventListener(RFIDEvent.REMOVE_TAG, onRemoveTag);
+    }
+    
+    function onAddTag(event) {
+        $('#textBox').html("Added tag: " + event.tag);
+    }
+    
+    function onRemoveTag(event) {
+        $('#textBox').html("Removed tag: " + event.tag);
+    }
+                        
 });
 
 </script>

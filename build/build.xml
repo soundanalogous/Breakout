@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Breakout.js" basedir="." default="build">
-	<property name="build_dir" value="./" description="Breakout.js build directory" />
-	<property name="build_py" value="${build_dir}/build.py" description="Breakout.js 'build.py' file" />
-	<property name="python_dir" value="" description="Python directory, leave empty if in classpath or don't forget ending slash" />
+    <property name="build_dir" value="./" description="Breakout.js build directory" />
+    <property name="build_py" value="${build_dir}/build.py" description="Breakout.js 'build.py' file" />
+    <property name="python_dir" value="" description="Python directory, leave empty if in classpath or don't forget ending slash" />
 
     <target name="build" description="Build all Breakout.js">
-    	<exec executable="${python_dir}python">
-    	    <arg value="${build_py}"/>
-    	    <arg value="0.2.0/>
-    	  </exec>
+        <exec executable="${python_dir}python">
+            <arg value="${build_py}"/>
+            <arg value="0.2.0/>
+          </exec>
     </target>
 </project>

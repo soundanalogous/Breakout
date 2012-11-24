@@ -7,31 +7,31 @@
 
 <style type="text/css">
 body {
-	margin: 15px;
-	font-family: sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: #666;
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
 }
 h2 {
-	padding-left: 0px;
-	font-weight: normal;
-	font-size: 22px;
-	color: #00AEFF;
-	margin-bottom: 20px;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 22px;
+    color: #00AEFF;
+    margin-bottom: 20px;
 }
 .container {
-	background-color: #f7f7f7;
-	border: 1px dotted #CCC;
-	width: 290px;
-	margin-top: 40px;
+    background-color: #f7f7f7;
+    border: 1px dotted #CCC;
+    width: 290px;
+    margin-top: 40px;
 }
 .text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #666;
-	padding: 20px;
-	margin: 0;
+    font-family: "Arial";
+    font-size: 22px;
+    color: #666;
+    padding: 20px;
+    margin: 0;
 }
 </style>
 
@@ -42,72 +42,72 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var Pin = BO.Pin;
-	var PinEvent = BO.PinEvent;
+    // declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var Pin = BO.Pin;
+    var PinEvent = BO.PinEvent;
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname, 8887);
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname, 8887);
 
-	var RANGE_80CM = 80;	// Sharp GP2Y0A21YK
-	var RANGE_150CM = 150;	// Sharp GP2Y0A02YK0F
-	var maxSensorRange;
+    var RANGE_80CM = 80;    // Sharp GP2Y0A21YK
+    var RANGE_150CM = 150;  // Sharp GP2Y0A02YK0F
+    var maxSensorRange;
 
-	// listen for the IOBoard READY event which indicates the IOBoard
-	// is ready to send and receive data
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		
-		// remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+    function onReady(event) {
+        
+        // remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-		// you must specify the range of the IR sensor you are using
-		// because the distance calculation is different depending
-		// on the optics of the sensor
-		maxSensorRange = RANGE_150CM;
+        // you must specify the range of the IR sensor you are using
+        // because the distance calculation is different depending
+        // on the optics of the sensor
+        maxSensorRange = RANGE_150CM;
 
-		// enable the analog pin so we can read its value
-		arduino.enableAnalogPin(0);
-		var sensor = arduino.getAnalogPin(0);
-		sensor.addEventListener(PinEvent.CHANGE, onChange);
-	}
+        // enable the analog pin so we can read its value
+        arduino.enableAnalogPin(0);
+        var sensor = arduino.getAnalogPin(0);
+        sensor.addEventListener(PinEvent.CHANGE, onChange);
+    }
 
-	function onChange(evt) {
+    function onChange(evt) {
 
-		var val = evt.target.value;
-		var dist_cm = calculateDistance(val);
-		var dist_in = dist_cm / 2.54;
+        var val = evt.target.value;
+        var dist_cm = calculateDistance(val);
+        var dist_in = dist_cm / 2.54;
 
-		// Note that the 80 cm sensor is accurate in the range of 10cm to 80cm
-		// and the 150 cm sensor is accurate in the range of 15cm to 150cm.
-		// Sensor values for readings closer than the minimum range will not be
-		// accurate.
-		$('#distance_cm').text("Distance = " + dist_cm.toFixed(0) + " cm");
-		$('#distance_in').text("Distance = " + dist_in.toFixed(0) + " in");
+        // Note that the 80 cm sensor is accurate in the range of 10cm to 80cm
+        // and the 150 cm sensor is accurate in the range of 15cm to 150cm.
+        // Sensor values for readings closer than the minimum range will not be
+        // accurate.
+        $('#distance_cm').text("Distance = " + dist_cm.toFixed(0) + " cm");
+        $('#distance_in').text("Distance = " + dist_in.toFixed(0) + " in");
 
-	}
+    }
 
-	function calculateDistance(val) {
-		var range = 0;
+    function calculateDistance(val) {
+        var range = 0;
 
-		if (maxSensorRange === RANGE_150CM) {
-			// convert analog value in 0 - 1.0 range to volts
-			val = (val/1.0) * 5.0;
-			//http://forum.sparkfun.com/viewtopic.php?f=32&t=24681 (by nasos_i 11/16/10 12:44pm)
-			range = 194.0/((7.14 + (val - 4.69)*val)*(0.18 + (val - 0.28)*val));
-		} else if (maxSensorRange === RANGE_80CM) {
-			range = Math.round((6787 / (val * 1023 - 3)) - 4);
-		}
+        if (maxSensorRange === RANGE_150CM) {
+            // convert analog value in 0 - 1.0 range to volts
+            val = (val/1.0) * 5.0;
+            //http://forum.sparkfun.com/viewtopic.php?f=32&t=24681 (by nasos_i 11/16/10 12:44pm)
+            range = 194.0/((7.14 + (val - 4.69)*val)*(0.18 + (val - 0.28)*val));
+        } else if (maxSensorRange === RANGE_80CM) {
+            range = Math.round((6787 / (val * 1023 - 3)) - 4);
+        }
 
-		return range;
-	}
+        return range;
+    }
 
 });
 
@@ -119,8 +119,8 @@ $(document).ready(function() {
   <h2>Sharp IR Proximity Sensor</h2>
 
   <div class="container">
-  	<p id="distance_cm" class="text"></p>
-  	<p id="distance_in" class="text"></p>
+    <p id="distance_cm" class="text"></p>
+    <p id="distance_in" class="text"></p>
   </div>
   
 </body>

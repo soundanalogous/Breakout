@@ -6,30 +6,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <style type="text/css">
 body {
-	margin: 15px;
-	font-family: sans-serif;
-	font-size: 16px;
-	line-height: 1.5em;
-	color: #666;
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
 }
 h2 {
-	padding-left: 0px;
-	font-weight: normal;
-	font-size: 22px;
-	color: #00AEFF;
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 22px;
+    color: #00AEFF;
 }
 .container {
-	background-color: #f7f7f7;
-	border: 1px dotted #CCC;
-	width: 290px;
-	margin-top: 40px;
+    background-color: #f7f7f7;
+    border: 1px dotted #CCC;
+    width: 290px;
+    margin-top: 40px;
 }
 .text {
-	font-family: "Arial";
-	font-size: 22px;
-	color: #666;
-	padding: 20px;
-	margin: 0;
+    font-family: "Arial";
+    font-size: 22px;
+    color: #666;
+    padding: 20px;
+    margin: 0;
 }
 </style>
 
@@ -40,77 +40,77 @@ h2 {
 <script type="text/javascript">
 $(document).ready(function() {
 
-	// Declare these variables so you don't have
-	// to type the full namespace
-	var IOBoard = BO.IOBoard;
-	var IOBoardEvent = BO.IOBoardEvent;
-	var AnalogAccelerometer = BO.io.AnalogAccelerometer;
-	var AccelerometerEvent = BO.io.AccelerometerEvent;
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var AnalogAccelerometer = BO.io.AnalogAccelerometer;
+    var AccelerometerEvent = BO.io.AccelerometerEvent;
 
-	// Set to true to print debug messages to console
-	BO.enableDebugging = true;	
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true;  
 
-	// If you are not serving this file from the same computer
-	// that the Arduino board is connected to, replace
-	// location.hostname with the IP address or hostname
-	// of the computer that the Arduino board is connected to.
-	var arduino = new IOBoard(location.hostname, 8887);
-	var RANGE_GS = 3; // +-3 Gs for ADXL335
-	var SUPPLY_V = 3.3; // supply voltage of sensor
-	
-	arduino.addEventListener(IOBoardEvent.READY, onReady);
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var arduino = new IOBoard(location.hostname, 8887);
+    var RANGE_GS = 3; // +-3 Gs for ADXL335
+    var SUPPLY_V = 3.3; // supply voltage of sensor
+    
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-	function onReady(event) {
-		// Remove the event listener because it is no longer needed
-		arduino.removeEventListener(IOBoardEvent.READY, onReady);				
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);               
 
-		// Params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
-		var accelerometer = new AnalogAccelerometer(
-								arduino, 
-								arduino.getAnalogPin(0), 
-								arduino.getAnalogPin(1), 
-								arduino.getAnalogPin(2),
-								RANGE_GS,
-								true);
+        // Params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
+        var accelerometer = new AnalogAccelerometer(
+                                arduino, 
+                                arduino.getAnalogPin(0), 
+                                arduino.getAnalogPin(1), 
+                                arduino.getAnalogPin(2),
+                                RANGE_GS,
+                                true);
 
-	    // Use calibrate_accelerometer.html to obtain the min and max voltage values
-	    // to supply to the getCalibratedRange method below.
+        // Use calibrate_accelerometer.html to obtain the min and max voltage values
+        // to supply to the getCalibratedRange method below.
 
-	    // Calibration settings for a ADXL335 at 3.3v
-	    // params: minimum voltage on the axis, max voltage on the axis, supply voltage
-		var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
-		var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
-		var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
+        // Calibration settings for a ADXL335 at 3.3v
+        // params: minimum voltage on the axis, max voltage on the axis, supply voltage
+        var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
+        var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
+        var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
 
-		// Params: axis, minimum range, maximum range
-		accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
-		accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
-		accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
-		
-		accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
-	}
-	
-	function onAccelerationUpdate(event) {
-		var accel = event.target;
-		
-		$('#xVal').html("x = " + accel.x.toFixed(3));
-		$('#yVal').html("y = " + accel.y.toFixed(3));
-		$('#zVal').html("z = " + accel.z.toFixed(3));
-		$('#pitch').html("pitch = " + accel.pitch.toFixed(3));
-		$('#roll').html("roll = " + accel.roll.toFixed(3));
-	}	
+        // Params: axis, minimum range, maximum range
+        accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
+        accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
+        accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
+        
+        accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
+    }
+    
+    function onAccelerationUpdate(event) {
+        var accel = event.target;
+        
+        $('#xVal').html("x = " + accel.x.toFixed(3));
+        $('#yVal').html("y = " + accel.y.toFixed(3));
+        $('#zVal').html("z = " + accel.z.toFixed(3));
+        $('#pitch').html("pitch = " + accel.pitch.toFixed(3));
+        $('#roll').html("roll = " + accel.roll.toFixed(3));
+    }   
 });
 </script>
 
 </head>
 <body>
-	<h2>Analog Accelerometer</h2>
-		<div class="container">
-			<div id="xVal" class="text">x =</div>
-			<div id="yVal" class="text">y =</div>
-			<div id="zVal" class="text">z =</div>
-			<div id="pitch" class="text">pitch =</div>
-			<div id="roll" class="text">roll =</div>
-		</div>
+    <h2>Analog Accelerometer</h2>
+        <div class="container">
+            <div id="xVal" class="text">x =</div>
+            <div id="yVal" class="text">y =</div>
+            <div id="zVal" class="text">z =</div>
+            <div id="pitch" class="text">pitch =</div>
+            <div id="roll" class="text">roll =</div>
+        </div>
 </body>
 </html>​
