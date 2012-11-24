@@ -19,8 +19,9 @@ and the official Firmata library.
 To Use
 ---
 
-Clone or download and copy AdvancedFirmata into your Arduino projects directory. 
-Open in Arduino IDE, verify and upload to your board.
+Clone or download and copy AdvancedFirmata into your Arduino projects/sketch 
+directory (or anywhere on your hard drive). Open in the Arduino IDE, verify and 
+upload to your board.
 
 If you download rather than clone this repository, rename the folder to 
 "AdvancedFirmata" after unzipping and before copying into your Arduino projects

@@ -116,6 +116,7 @@ io.sockets.on('connection', function (connection) {
 
     if (enableMultiConnect) {
         connection.send("config: multiClient");
+        console.log("multi client enabled");
     }
 
     console.log("connected: " + connection.id);

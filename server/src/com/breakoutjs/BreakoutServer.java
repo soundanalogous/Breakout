@@ -41,12 +41,12 @@ public class BreakoutServer extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = -7512833780087238386L;
 	
-	private static final String buildName = "Breakout Server v0.1.1.beta";
+	private static final String buildName = "Breakout Server v0.2.0";
 	
 	private static final int WIDTH = 480;
 	private static final int HEIGHT = 360;
 	private static final int LOGGING_AREA_HEIGHT = 235;
-	private static final String DEFAULT_ROOT = "../";
+	private static final String DEFAULT_ROOT = "../../";
 	private static final int DEFAULT_PORT = 8887;
 	private static final String PORT_KEY = "portKey";
 	private static final String ROOT_KEY = "rootKey";
@@ -202,7 +202,8 @@ public class BreakoutServer extends JFrame implements ActionListener {
 				if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
 					String name = portId.getName();
 					// ignore /dev/tty to prevent duplicate serial port listings (/dev/tty and /dev/cu)
-					if (!name.startsWith("/dev/tty.")) {
+					// also ignore OS X Bluetooth serial ports
+					if (!name.startsWith("/dev/tty.") && !name.contains("Bluetooth")) {
 						serialPorts.addItem(name);
 					}
 				}
@@ -278,7 +279,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 		else if (event.getSource() == portField) {
 			int port = Integer.parseInt(portField.getText());
 			// to do: set the correct range
-			if (port > 1000 && port < 10000) {
+			if (port > 1024 && port < 65535) {
 				netPort = port;
 				// store new netPort value in persistent preferences
 				prefs.putInt(PORT_KEY, netPort);

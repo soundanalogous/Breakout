@@ -128,6 +128,7 @@ BO.IOBoard = (function () {
             if (event.message.match(pattern)) {
                 message = event.message.substr(event.message.indexOf(':') + 2);
                 processStatusMessage(message);
+
             } else {
                 // We have data from the IOBoard
                 processInput(event.message);

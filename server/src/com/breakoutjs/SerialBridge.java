@@ -13,13 +13,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TooManyListenersException;
 
+import org.webbitserver.BaseWebSocketHandler;
 import org.webbitserver.WebServer;
 import org.webbitserver.WebServers;
 import org.webbitserver.WebSocketConnection;
-import org.webbitserver.WebSocketHandler;
 import org.webbitserver.handler.StaticFileHandler;
 
-public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
+public class SerialBridge extends BaseWebSocketHandler implements SerialPortEventListener {
 	
 	private BreakoutServer parent;
 	private WebServer webServer;
@@ -73,24 +73,15 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	 * Start the web server
 	 */
 	public void start() {
-		try {
-			webServer.start();
-			parent.printMessage("Server running on: " + webServer.getUri());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}		
+		webServer.start();
+		parent.printMessage("Server running on: " + webServer.getUri());
 	}
 	
 	/**
 	 * Stop the web server
 	 */
 	public void stop() {
-		try {
-			webServer.stop();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		webServer.stop();
 	}
 	
 	public void begin(String serialPortName, int baudRate) {
@@ -150,17 +141,18 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	
 	synchronized public void serialEvent(SerialPortEvent serialEvent) {
 		switch(serialEvent.getEventType()) {
-			case SerialPortEvent.DATA_AVAILABLE:
-				dataAvailable(serialEvent);
-				break;
-			default:
-				//System.out.println("other serial event: " + serialEvent);
-				break;
+		case SerialPortEvent.DATA_AVAILABLE:
+			dataAvailable(serialEvent);
+			break;
+		default:
+			//System.out.println("other serial event: " + serialEvent);
+			break;
 		}
 
 	}
 	
 	private void dataAvailable(SerialPortEvent serialEvent) {
+		if (input == null) return;
 		try {
 			while (input.available() > 0) {
 				int inputData = input.read();
@@ -171,7 +163,7 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 				}
 			}
 		} catch (IOException e) {
-			
+			e.printStackTrace();
 		}		
 	}
 	
@@ -229,7 +221,7 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	}
 
 	@Override
-	public void onClose(WebSocketConnection connection) {
+	public void onClose(WebSocketConnection connection) throws Exception {
 		parent.printMessage("Client " + connection.data("id") + " closed");
 		//parent.printMessage("Client closed");
 		numConnections--;
@@ -250,8 +242,7 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	}
 
 	@Override
-	public void onMessage(WebSocketConnection connection, String message) {
-
+	public void onMessage(WebSocketConnection connection, String message) throws Exception {
 		if (message.indexOf(',') > -1) {
 			String data[] = message.split(",");
 			for (int i=0; i<data.length; i++) {
@@ -264,11 +255,11 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 	}
 	
 	public void onMessage(WebSocketConnection connection, byte[] message) {
-		
+		System.out.println("got binary websocket data");
 	}
 
 	@Override
-	public void onOpen(WebSocketConnection connection) {
+	public void onOpen(WebSocketConnection connection) throws Exception {
 		connection.data("id", count++);
 		parent.printMessage("Client " + connection.data("id") + " connected");
 		//parent.printMessage("Client connected");
@@ -287,11 +278,6 @@ public class SerialBridge implements WebSocketHandler, SerialPortEventListener {
 		isConnected = true;
 	}
 
-	@Override
-	public void onPong(WebSocketConnection connection, String message) {
-		
-	}
-	
 	/**
 	 * The network port number.
 	 * @return

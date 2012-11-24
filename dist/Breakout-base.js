@@ -1,10 +1,10 @@
 /***
-	Breakout - 0.2.0
+    Breakout - 0.2.0
 
     Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
     Released under the MIT license. See LICENSE file for details.
-	http.//breakoutjs.com
-	***/
+    http.//breakoutjs.com
+    ***/
 'use strict';var BO=BO||{},BREAKOUT=BREAKOUT||BO;BREAKOUT.VERSION="0.2.0";BO.enableDebugging=!1;var JSUTILS=JSUTILS||{};JSUTILS.namespace=function(a){var a=a.split("."),c=window,d;for(d=0;d<a.length;d+=1)"undefined"===typeof c[a[d]]&&(c[a[d]]={}),c=c[a[d]];return c};JSUTILS.inherit=function(a){function c(){}if(null===a)throw TypeError();if(Object.create)return Object.create(a);var d=typeof a;if("object"!==d&&"function"!==d)throw TypeError();c.prototype=a;return new c};
 if(!Function.prototype.bind)Function.prototype.bind=function(a){if("function"!==typeof this)throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var c=Array.prototype.slice.call(arguments,1),d=this,g=function(){},b=function(){return d.apply(this instanceof g?this:a||window,c.concat(Array.prototype.slice.call(arguments)))};g.prototype=this.prototype;b.prototype=new g;return b};JSUTILS.namespace("JSUTILS.Event");
 JSUTILS.Event=function(){var a;a=function(a){this._type=a;this._target=null;this.name="Event"};a.prototype={get type(){return this._type},set type(a){this._type=a},get target(){return this._target},set target(a){this._target=a}};a.CONNECTED="connected";a.CHANGE="change";a.COMPLETE="complete";return a}();JSUTILS.namespace("JSUTILS.EventDispatcher");

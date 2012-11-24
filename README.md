@@ -19,14 +19,14 @@ See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/)
 
 The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
 
-1. After downloading or cloning Breakout, navigate to the firmware directory and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
+1. After downloading or cloning Breakout, navigate to Breakout/firmware/AdvancedFirmata/ and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
 2. Compile *AdvancedFirmata* for your board and upload.
 3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in *Breakout/examples/schematics.pdf* (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
 
 The next step is to run the Breakout Server application:
 
 1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded. 
-2. You'll find **Breakout Server** (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in *Breakout/server/*. Simply double-click to launch the application. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
+2. You'll find **Breakout Server** (Breakout Server.app for OS X, Breakout Server.exe for Windows, BreakoutServer.jar for Linux) in *Breakout/server/*. Simply double-click to launch the application. Mountain Lion users may need to right click on the Breakout Server application, and choose Open from the contextual menu to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
@@ -64,7 +64,7 @@ OS:
 Desktop Browsers:
 
 - Chrome version 14 - 23
-- Firefox version 11 - 16
+- Firefox version 11 - 17
 - Safari version 5 - 6
 - Opera 12
 

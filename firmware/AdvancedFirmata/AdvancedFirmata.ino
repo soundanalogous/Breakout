@@ -550,7 +550,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
     }
     Serial.write(END_SYSEX);
     break;
-  case PIN_STATE_QUERY:
+  case PIN_STATE_QUERY:    
     if (argc > 0) {
       byte pin=argv[0];
       Serial.write(START_SYSEX);
