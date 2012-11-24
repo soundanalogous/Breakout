@@ -63,7 +63,7 @@ Win Build
 
 1. Download [launch4j](http://launch4j.sourceforge.net/)
 2. Copy BreakoutServer.jar, rxtxSerial.dll (64 bit) and BreakoutLogo.ico to a new folder.
-3. Copy Breakout/release/config.xml to same folder.
+3. Copy Breakout/server/release/config.xml to same folder.
 2. Open the Launch4j executable and load config.xml
 3. Click the play button to build the exe file.
 4. Include the 64 bit version of rxtxSerial.dll with Breakout Server64.exe when distributing the app
