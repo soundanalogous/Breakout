@@ -26,7 +26,7 @@ The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-comp
 The next step is to run the Breakout Server application:
 
 1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded. 
-2. You'll find **Breakout Server** for your platform (mac, win or linux) in *Breakout/server/*. Open the folder for your platform and double-click to launch the application. Mountain Lion users may need to [temporarily disable Gatekeeper](https://answers.uchicago.edu/page.php?id=25481) to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
+2. You'll find **Breakout Server** for your platform (mac, win or linux) in *Breakout/server/*. Unzip and open the folder for your platform and launch the application. Mountain Lion users may need to [temporarily disable Gatekeeper](https://answers.uchicago.edu/page.php?id=25481) to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
@@ -56,7 +56,7 @@ Note: In order to use Breakout with an Arduino Leonardo board, you need to updat
 OS:
 
 - Mac OS X 10.6 or higher
-- Windows 7 or XP ([32-bit Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
+- Windows 7 or XP ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
 - Has been tested successfuly on Ubuntu 11.10 running in 64-bit mode on an x86-64 processor
 - May work on older versions of OS X and Windows as well but has not been tested
 - May work on other Linux distributions but has not been tested
