@@ -35,7 +35,7 @@ BO.io.Stepper = (function () {
      *
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the 
-     * servo is attached to.
+     * stepper is attached to.
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
      * Stepper.TWO_WIRE, or Stepper.FOUR_WIRE).
      * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
