@@ -1,3 +1,8 @@
+2012.nn.nn Version 0.2.1
+* Refactored IOBoard to move all methods to prototype.
+* Added state property to Pin object to get state from pinStateQuery response.
+* Fixed bug in pin state response that was preventing querying multiple pins.
+
 2012.11.24 Version 0.2.0
 * Updated Breakout Server to v0.2.0
 * Restructured server directory

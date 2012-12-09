@@ -96,7 +96,7 @@ BO.IOBoard = (function () {
         this._isMultiClientEnabled = false;
         this._isConfigured = false;
         this._debugMode = BO.enableDebugging;
-        this._pinStateRequested = false;
+        this._numPinStateRequests = 0;
         
         this._evtDispatcher = new EventDispatcher(this);
 
@@ -583,7 +583,7 @@ BO.IOBoard = (function () {
          */
         processPinStateResponse: function (msg) {
             // Ignore requests that were not made by this client
-            if (!this._pinStateRequested) {
+            if (this._numPinStateRequests <= 0) {
                 return;
             }
                         
@@ -607,8 +607,15 @@ BO.IOBoard = (function () {
                 pin.setType(pinType);
                 this.managePinListener(pin);
             }
+
+            pin.setState(pinState);
             
-            this._pinStateRequested = false;
+            this._numPinStateRequests--;
+            if (this._numPinStateRequests < 0) {
+                // should never happen, but just in case...
+                this._numPinStateRequests = 0;
+            }
+
             this.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
         },
 
@@ -1043,7 +1050,7 @@ BO.IOBoard = (function () {
             // To Do: Ensure that pin is a Pin object
             var pinNumber = pin.number;
             this.send([START_SYSEX, PIN_STATE_QUERY, pinNumber, END_SYSEX]);
-            this._pinStateRequested = true;
+            this._numPinStateRequests++;
         },
 
         /**

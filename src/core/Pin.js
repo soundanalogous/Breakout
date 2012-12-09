@@ -25,10 +25,11 @@ BO.Pin = (function () {
      * An object to represent an IOBoard pin
      *
      * @exports Pin as BO.Pin
-     * @class Each analog and digital pin of the physical I/O board is represented by a Pin object.
-     * The Pin object is the foundation for many of the io objects and is also very
-     * useful on its own. See the Using The Pin Object Guide on http://breakoutjs.com
-     * for a detailed overview.
+     * @class Each analog and digital pin of the physical I/O board is 
+     * represented by a Pin object.
+     * The Pin object is the foundation for many of the io objects and is also 
+     * very useful on its own. See the Using The Pin Object Guide on 
+     * http://breakoutjs.com for a detailed overview.
      * @param {Number} number The pin number
      * @param {Number} type The type of pin
      */
@@ -51,6 +52,7 @@ BO.Pin = (function () {
         this._numSamples = 0;
         this._filters = null;
         this._generator = null;
+        this._state = undefined;
 
         this._autoSetValueCallback = this.autoSetValue.bind(this);
         
@@ -69,7 +71,8 @@ BO.Pin = (function () {
         },
 
         /**
-         * [read-only] The analog pin number used by the IOBoard (printed on board or datasheet).
+         * [read-only] The analog pin number used by the IOBoard (printed on 
+         * board or datasheet).
          * @name Pin#analogNumber
          * @property
          * @type Number
@@ -79,7 +82,8 @@ BO.Pin = (function () {
         },      
 
         /**
-         * [read-only] The pin number corresponding to the Arduino documentation for the type of board.
+         * [read-only] The pin number corresponding to the Arduino documentation 
+         * for the type of board.
          * @name Pin#number
          * @property
          * @type Number
@@ -98,9 +102,31 @@ BO.Pin = (function () {
         },
 
         /**
+         * Sets the state value. This is populated by the 
+         * processPinStateResponse method of the IOBoard object. It should not
+         * be called manually.
+         * 
+         * @param {Number} state The state of the pin. For output modes, the
+         * state is any value that has been previously written to the pin. For 
+         * input modes, the state is typically zero, however for digital inputs
+         * the state is the status of the pullup resistor.
+         * @private
+         */
+        setState: function (state) {
+
+            // convert PWM values to 0.0 - 1.0 range
+            if (this._type === Pin.PWM) {
+                state = state / this.maxPWMValue;
+            } 
+
+            this._state = state;
+        },
+
+        /**
          * [read-only] The maximum PWM value supported for this pin.
-         * <p> This is the max PWM value supported by Arduino (currently 255) rather 
-         * than the max PWM value specified by the microcontroller datasheet.</p>
+         * <p> This is the max PWM value supported by Arduino (currently 255) 
+         * rather than the max PWM value specified by the microcontroller 
+         * datasheet.</p>
          *
          * @name Pin#maxPWMValue
          * @property
@@ -111,7 +137,8 @@ BO.Pin = (function () {
         },      
         
         /**
-         * [read-only] The average value of the pin over time. Call clear() to reset.
+         * [read-only] The average value of the pin over time. Call clear() to 
+         * reset.
          * @name Pin#average
          * @property
          * @type Number
@@ -121,7 +148,8 @@ BO.Pin = (function () {
         },
 
         /**
-         * [read-only] The minimum value of the pin over time. Call clear() to reset.
+         * [read-only] The minimum value of the pin over time. Call clear() to 
+         * reset.
          * @name Pin#minimum
          * @property
          * @type Number
@@ -131,13 +159,33 @@ BO.Pin = (function () {
         },
         
         /**
-         * [read-only] The maximum value of the pin over time. Call clear() to reset.
+         * [read-only] The maximum value of the pin over time. Call clear() to 
+         * reset.
          * @name Pin#maximum
          * @property
          * @type Number
          */          
         get maximum() {
             return this._maximum;
+        },
+
+        /**
+         * <p>[read-only] The state of the pin. For output modes, the state is 
+         * any value that has been previously written to the pin. For input 
+         * modes, the state is typically zero, however for digital inputs the 
+         * state is the status of the pullup resistor.</p>
+         *
+         * <p>This propery is populated by calling the queryPinState method of 
+         * the IOBoard object. This is useful if there are multiple client 
+         * applications connected to a single physical IOBoard and you want to 
+         * get the state of a pin that is set by another client application.</p>
+         * 
+         * @name Pin#state
+         * @property
+         * @type Number
+         */
+        get state() {
+            return this._state;
         },
         
         /**
@@ -290,7 +338,8 @@ BO.Pin = (function () {
         
         /**
          * Add a new filter to the Pin.
-         * @param {FilterBase} newFilter A filter object that extends FilterBase.
+         * @param {FilterBase} newFilter A filter object that extends 
+         * FilterBase.
          * @see BO.filters.Convolution
          * @see BO.filters.Scaler
          * @see BO.filters.TriggerPoint
@@ -314,7 +363,8 @@ BO.Pin = (function () {
          * Assigning a new generator will replace the previously assigned 
          * generator.
          *
-         * @param {GeneratorBase} newGenerator A generator object that extends GeneratorBase.
+         * @param {GeneratorBase} newGenerator A generator object that extends 
+         * GeneratorBase.
          * @see BO.generators.Oscillator
          */
         addGenerator: function (newGenerator) {
@@ -371,7 +421,8 @@ BO.Pin = (function () {
         
         /**
          * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
+         * @param {Function} listener The function to be called when the event 
+         * is fired
          */
         addEventListener: function (type, listener) {
             this._evtDispatcher.addEventListener(type, listener);
@@ -379,7 +430,8 @@ BO.Pin = (function () {
         
         /**
          * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
+         * @param {Function} listener The function to be called when the event 
+         * is fired
          */
         removeEventListener: function (type, listener) {
             this._evtDispatcher.removeEventListener(type, listener);
@@ -395,7 +447,8 @@ BO.Pin = (function () {
 
         /**
          * @param {PinEvent} type The Event object
-         * @param {Object} optionalParams Optional parameters to assign to the event object.
+         * @param {Object} optionalParams Optional parameters to assign to the 
+         * event object.
          * return {boolean} True if dispatch is successful, false if not.
          */ 
         dispatchEvent: function (event, optionalParams) {
@@ -445,7 +498,8 @@ BO.Pin = (function () {
      */
 
     /**
-     * The risingEdge event is dispatched when the pin value increased (from 0 to 1).
+     * The risingEdge event is dispatched when the pin value increased 
+     * (from 0 to 1).
      * @name Pin#risingEdge
      * @type BO.PinEvent.RISING_EDGE
      * @event
@@ -453,7 +507,8 @@ BO.Pin = (function () {
      */ 
      
     /**
-     * The change event is dispatched when the pin value decreased (from 1 to 0).
+     * The change event is dispatched when the pin value decreased 
+     * (from 1 to 0).
      * @name Pin#fallingEdge
      * @type BO.PinEvent.FALLING_EDGE
      * @event
