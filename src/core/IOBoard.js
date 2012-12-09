@@ -79,144 +79,166 @@ BO.IOBoard = (function () {
         this.name = "IOBoard";
                         
         // Private properties
-        var _self = this,   // Get a reference to this class
-            _socket,
-            _inputDataBuffer = [],
-            _digitalPort = [],
-            _numPorts,
-            _analogPinMapping = [],
-            _digitalPinMapping = [],
-            _i2cPins = [],
-            _ioPins = [],
-            _totalPins = 0,
-            _samplingInterval = 19, // Default sampling interval
-            _isReady = false,
-            _firmwareName = "",
-            _firmwareVersion = 0,
-            _evtDispatcher,
-            _isMultiClientEnabled = false,
-            _isConfigured = false,
-            _debugMode = BO.enableDebugging,
-            _pinStateRequested = false;
+        this._socket = null;
+        this._inputDataBuffer = [];
+        this._digitalPort = [];
+        this._numPorts = 0;
+        this._analogPinMapping = [];
+        this._digitalPinMapping = [];
+        this._i2cPins = [];
+        this._ioPins = [];
+        this._totalPins = 0;
+        this._samplingInterval = 19; // Default sampling interval
+        this._isReady = false;
+        this._firmwareName = "";
+        this._firmwareVersion = 0;
+        this._evtDispatcher = null;
+        this._isMultiClientEnabled = false;
+        this._isConfigured = false;
+        this._debugMode = BO.enableDebugging;
+        this._pinStateRequested = false;
         
-        _evtDispatcher = new EventDispatcher(this);
+        this._evtDispatcher = new EventDispatcher(this);
 
-        _socket = new WSocketWrapper(host, port, protocol);
-        _socket.addEventListener(WSocketEvent.CONNECTED, onSocketConnection);
-        _socket.addEventListener(WSocketEvent.MESSAGE, onSocketMessage);
-        _socket.addEventListener(WSocketEvent.CLOSE, onSocketClosed);
+        // bind event handlers to this
+        this.socketConnectionHandler = this.onSocketConnection.bind(this);
+        this.socketMessageHandler = this.onSocketMessage.bind(this);
+        this.socketClosedHandler = this.onSocketClosed.bind(this);
+        this.initialVersionResultHandler = this.onInitialVersionResult.bind(this);
+        this.sendOutHandler = this.sendOut.bind(this);
+
+        this._socket = new WSocketWrapper(host, port, protocol);
+        this._socket.addEventListener(WSocketEvent.CONNECTED, this.socketConnectionHandler);
+        this._socket.addEventListener(WSocketEvent.MESSAGE, this.socketMessageHandler);
+        this._socket.addEventListener(WSocketEvent.CLOSE, this.socketClosedHandler);
+
+    };
+
+    IOBoard.prototype = {
 
         // Private methods:
 
         /**
+         * A websocket connection has been established.
          * @private
          */
-        function onSocketConnection(event) {
-            debug("debug: Socket Status: (open)");
-            _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.CONNECTED));
-            begin();
-        }
+        onSocketConnection: function (event) {
+            this.debug("debug: Socket Status: (open)");
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.CONNECTED));
+            this.begin();
+        },
 
         /**
+         * A websocket message has been received.
          * @private
          */
-        function onSocketMessage(event) {
+        onSocketMessage: function (event) {
             var pattern = /config/;
             var message = "";
 
             // Check for config messages from the server
             if (event.message.match(pattern)) {
                 message = event.message.substr(event.message.indexOf(':') + 2);
-                processStatusMessage(message);
+                this.processStatusMessage(message);
 
             } else {
                 // We have data from the IOBoard
-                processInput(event.message);
+                this.processInput(event.message);
             }
-        }
+        },
 
         /**
+         * Report that the websocket connection has been closed.
          * @private
          */
-        function onSocketClosed(event) {
-            debug("debug: Socket Status: " + _socket.readyState + " (Closed)");
-            _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DISCONNECTED));
-        }
-            
+        onSocketClosed: function (event) {
+            this.debug("debug: Socket Status: " + this._socket.readyState + " (Closed)");
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.DISCONNECTED));
+        },
+
         /**
+         * Request the firmware version from the IOBoard.
          * @private
          */
-        function begin() {
-            _self.addEventListener(IOBoardEvent.FIRMWARE_NAME, onInitialVersionResult);
-            _self.reportFirmware();
-        }
-        
+        begin: function () {
+            this.addEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
+            this.reportFirmware();
+        },
+
         /**
+         * On startup, Firmata reports its version. Make sure the version is
+         * 2.3 or greater before proceeding. If the Firmata version is < 2.3
+         * report this to the user (to do: throw appropriate error?).
+         *
          * @private
          */
-        function onInitialVersionResult(event) {
-            _self.removeEventListener(IOBoardEvent.FIRMWARE_NAME, onInitialVersionResult);
+        onInitialVersionResult: function (event) {
+            this.removeEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
             var version = event.version * 10,
                 name = event.name;
 
-            debug("debug: Firmware name = " + name + "\t, Firmware version = " + event.version);
+            this.debug("debug: Firmware name = " + name + "\t, Firmware version = " + event.version);
             
             // Make sure the user has uploaded StandardFirmata 2.3 or greater
             if (version >= 23) {
-                queryCapabilities();
+                this.queryCapabilities();
             } else {
                 var err = "error: You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
                 console.log(err);
                 //throw err;    
             }
-        }
+        },
 
         /**
          * Process a status message from the websocket server
          * @private
          */
-        function processStatusMessage(message) {
+        processStatusMessage: function (message) {
             if (message === MULTI_CLIENT) {
-                debug("debug: Multi-client mode enabled");
-                _isMultiClientEnabled = true;
+                this.debug("debug: Multi-client mode enabled");
+                this._isMultiClientEnabled = true;
             }
-        }
-        
+        },
+
         /**
+         * Process input data from the IOBoard.
          * @private
          */
-        function processInput(inputData) {
+        processInput: function (inputData) {
             inputData *= 1; // Force inputData to integer (is there a better way to do this?)
             var len;
 
-            _inputDataBuffer.push(inputData);
-            len = _inputDataBuffer.length;
+            this._inputDataBuffer.push(inputData);
+            len = this._inputDataBuffer.length;
 
-            if (_inputDataBuffer[0] >= 128 && _inputDataBuffer[0] != START_SYSEX) {
+            if (this._inputDataBuffer[0] >= 128 && this._inputDataBuffer[0] != START_SYSEX) {
                 if (len === 3) {
-                    processMultiByteCommand(_inputDataBuffer);
+                    this.processMultiByteCommand(this._inputDataBuffer);
                     // Clear buffer
-                    _inputDataBuffer = [];
+                    this._inputDataBuffer = [];
                 }
-            } else if (_inputDataBuffer[0] === START_SYSEX && _inputDataBuffer[len - 1] === END_SYSEX) {
-                processSysexCommand(_inputDataBuffer);
+            } else if (this._inputDataBuffer[0] === START_SYSEX && this._inputDataBuffer[len - 1] === END_SYSEX) {
+                this.processSysexCommand(this._inputDataBuffer);
                 // Clear buffer
-                _inputDataBuffer = [];
-            } else if (inputData >= 128 && _inputDataBuffer[0] < 128) {
+                this._inputDataBuffer = [];
+            } else if (inputData >= 128 && this._inputDataBuffer[0] < 128) {
                 // If for some reason we got a new command and there is already data
                 // in the buffer, reset the buffer
                 console.log("warning: Malformed input data... resetting buffer");
-                _inputDataBuffer = [];
+                this._inputDataBuffer = [];
                 if (inputData !== END_SYSEX) {
-                    _inputDataBuffer.push(inputData);
+                    this._inputDataBuffer.push(inputData);
                 }
             }
-        }
+        },
 
         /**
+         * Incoming data is either multibyte or sysex. Route multibyte
+         * data to the appropriate method.
+         *
          * @private
          */
-        function processMultiByteCommand(commandData) {
+        processMultiByteCommand: function (commandData) {
             var command = commandData[0],
                 channel;
 
@@ -227,35 +249,45 @@ BO.IOBoard = (function () {
 
             switch (command) {
             case DIGITAL_MESSAGE:
-                processDigitalMessage(channel, commandData[1], commandData[2]); //(LSB, MSB)
+                this.processDigitalMessage(channel, commandData[1], commandData[2]); //(LSB, MSB)
                 break;
             case REPORT_VERSION:
-                _firmwareVersion = commandData[1] + commandData[2] / 10;
-                _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: _firmwareVersion});
+                this._firmwareVersion = commandData[1] + commandData[2] / 10;
+                this.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {version: this._firmwareVersion});
                 break;
             case ANALOG_MESSAGE:
-                processAnalogMessage(channel, commandData[1], commandData[2]);
+                this.processAnalogMessage(channel, commandData[1], commandData[2]);
                 break;
             }
-        }
+        },
 
         /**
+         * Processing inmcoming digital data. Parse the port number and value
+         * to determine if any digital input data has changed. Dispatch an
+         * event if the value has changed.
+         *
+         * @param {Number} port Digital data is sent per port. This does not
+         * align with the concept of a microcontroller port, but is a
+         * collection of 8 pins on the microcontroller.
+         *
+         * @param {Number} bits0_6 Bits 0 - 6 of the port value.
+         * @param {Number} bits7_13 Bits 7 - 13 of the port value.
          * @private
          */
-        function processDigitalMessage(port, bits0_6, bits7_13) {
+        processDigitalMessage: function (port, bits0_6, bits7_13) {
             var offset = port * 8,
                 lastPin = offset + 8,
                 portVal = bits0_6 | (bits7_13 << 7),
                 pinVal,
                 pin = {};
             
-            if (lastPin >= _totalPins) {
-                lastPin = _totalPins;
+            if (lastPin >= this._totalPins) {
+                lastPin = this._totalPins;
             }
             
             var j = 0;
             for (var i = offset; i < lastPin; i++) {
-                pin = _self.getDigitalPin(i);
+                pin = this.getDigitalPin(i);
                 // Ignore data send on Firmata startup
                 if (pin === undefined) {
                     return;
@@ -265,18 +297,25 @@ BO.IOBoard = (function () {
                     pinVal = (portVal >> j) & 0x01;
                     if (pinVal != pin.value) {
                         pin.value = pinVal;
-                        _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.DIGITAL_DATA), {pin: pin});
+                        this.dispatchEvent(new IOBoardEvent(IOBoardEvent.DIGITAL_DATA), {pin: pin});
                     }
                 }
                 j++;
             }
-        }
+        },
 
         /**
+         * Process incoming analog data. The value is mapped from 0 - 1023 to
+         * a floating point value between 0.0 - 1.0.
+         *
+         * TO DO: add a maxADCValue property to Pin or IOBoard to support
+         * ADC values > 1023. maxADCValue could be set during the 
+         * configuration routine if it's supported by Firmata in the future.
+         *
          * @private
          */
-        function processAnalogMessage(channel, bits0_6, bits7_13) {
-            var analogPin = _self.getAnalogPin(channel);
+        processAnalogMessage: function (channel, bits0_6, bits7_13) {
+            var analogPin = this.getAnalogPin(channel);
 
             // NOTE: Is there a better way to handle this? This issue is on
             // browser refresh the IOBoard board is still sending analog data
@@ -288,21 +327,18 @@ BO.IOBoard = (function () {
             if (analogPin === undefined) {
                 return;
             }
-            // Map analog input values from 0-1023 to 0.0-1.0
-            // To Do: Add maxADCValue property to Pin or IOBoard object to
-            // support ADC values > 1023?
-            // maxADCValue could be set during configuration routine if it's
-            // supported by Firmata in the future.
-            analogPin.value = _self.getValueFromTwo7bitBytes(bits0_6, bits7_13) / 1023;
+
+            analogPin.value = this.getValueFromTwo7bitBytes(bits0_6, bits7_13) / 1023;
             if (analogPin.value != analogPin.lastValue) {
-                _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
+                this.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
             }
-        }
+        },
 
         /**
+         * Route the incoming sysex data to the appropriate method.
          * @private
          */
-        function processSysexCommand(sysexData) {
+        processSysexCommand: function (sysexData) {
             // Remove the first and last element from the array
             // since these are the START_SYSEX and END_SYSEX 
             sysexData.shift();
@@ -311,46 +347,48 @@ BO.IOBoard = (function () {
             var command = sysexData[0];
             switch (command) {
             case REPORT_FIRMWARE:
-                processQueryFirmwareResult(sysexData);
+                this.processQueryFirmwareResult(sysexData);
                 break;
             case STRING_DATA:
-                processSysExString(sysexData);
+                this.processSysExString(sysexData);
                 break;
             case CAPABILITY_RESPONSE:
-                processCapabilitiesResponse(sysexData);
+                this.processCapabilitiesResponse(sysexData);
                 break;
             case PIN_STATE_RESPONSE:
-                processPinStateResponse(sysexData);
+                this.processPinStateResponse(sysexData);
                 break;
             case ANALOG_MAPPING_RESPONSE:
-                processAnalogMappingResponse(sysexData);
+                this.processAnalogMappingResponse(sysexData);
                 break;
             default:
                 // Custom sysEx message
-                _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: sysexData});
+                this.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: sysexData});
                 break;
             }
-        }
-        
+        },
+
         /**
+         * Construct the firmware name and version from incoming ascii data.
          * @private
          */
-        function processQueryFirmwareResult(msg) {
+        processQueryFirmwareResult: function (msg) {
             var data;
             for (var i = 3; i < msg.length; i += 2)
             {
                 data = String.fromCharCode(msg[i]);
                 data += String.fromCharCode(msg[i + 1]);
-                _firmwareName += data;
+                this._firmwareName += data;
             }
-            _firmwareVersion = msg[1] + msg[2] / 10;
-            _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: _firmwareName, version: _firmwareVersion});
-        }
+            this._firmwareVersion = msg[1] + msg[2] / 10;
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: this._firmwareName, version: this._firmwareVersion});
+        },
         
         /**
+         * Construct a String from an incoming ascii data.
          * @private
          */
-        function processSysExString(msg) {
+        processSysExString: function (msg) {
             var str = "",
                 data,
                 len = msg.length;
@@ -360,9 +398,9 @@ BO.IOBoard = (function () {
                 data += String.fromCharCode(msg[i + 1]);
                 str += data.charAt(0);
             }
-            _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
-        }
-            
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
+        },
+
         /** 
          * Auto configure using capabilities response.
          * This creates a configuration for any board in the Firmata boards.h 
@@ -370,10 +408,10 @@ BO.IOBoard = (function () {
          *
          * @private
          */
-        function processCapabilitiesResponse(msg) {
+        processCapabilitiesResponse: function (msg) {
             // If running in multi-client mode and this client is already 
             // configured, ignore capabilities response
-            if (_isConfigured) {
+            if (this._isConfigured) {
                 return;
             }
 
@@ -391,7 +429,7 @@ BO.IOBoard = (function () {
                 if (msg[byteCounter] == 127) {
                     
                     // Is digital pin mapping even necessary anymore?
-                    _digitalPinMapping[pinCounter] = pinCounter;
+                    this._digitalPinMapping[pinCounter] = pinCounter;
                     type = undefined;
                     
                     // Assign default types
@@ -403,19 +441,19 @@ BO.IOBoard = (function () {
                     if (pinCapabilities[Pin.AIN]) {
                         type = Pin.AIN;
                         // Map analog input pins
-                        _analogPinMapping[analogPinCounter++] = pinCounter;
+                        this._analogPinMapping[analogPinCounter++] = pinCounter;
                     }
                     
                     pin = new Pin(pinCounter, type);
                     pin.setCapabilities(pinCapabilities);
-                    managePinListener(pin);
-                    _ioPins[pinCounter] = pin;
+                    this.managePinListener(pin);
+                    this._ioPins[pinCounter] = pin;
                     
                     // Store the 2 i2c pin numbers if they exist
                     // To Do: allow for more than 2 i2c pins on a board?
                     // How to identify SDA-SCL pairs in that case?
                     if (pin.getCapabilities()[Pin.I2C]) {
-                        _i2cPins.push(pin.number);
+                        this._i2cPins.push(pin.number);
                     }
                     
                     pinCapabilities = {};
@@ -429,22 +467,22 @@ BO.IOBoard = (function () {
                 }
             }
             
-            _numPorts = Math.ceil(pinCounter / 8);
-            debug("debug: Num ports = " + _numPorts);
+            this._numPorts = Math.ceil(pinCounter / 8);
+            this.debug("debug: Num ports = " + this._numPorts);
             
             // Initialize port values
-            for (var j = 0; j < _numPorts; j++) {
-                _digitalPort[j] = 0;
+            for (var j = 0; j < this._numPorts; j++) {
+                this._digitalPort[j] = 0;
             }
             
-            _totalPins = pinCounter;
-            debug("debug: Num pins = " + _totalPins);
+            this._totalPins = pinCounter;
+            this.debug("debug: Num pins = " + this._totalPins);
 
             // Map the analog pins to the board pins
             // This will map the IOBoard analog pin numbers (printed on IOBoard)
             // to their digital pin number equivalents
-            queryAnalogMapping();
-        }
+            this.queryAnalogMapping();
+        },
 
         /**
          * Map map analog pins to board pin numbers. Need to do this because
@@ -453,27 +491,27 @@ BO.IOBoard = (function () {
          *
          * @private
          */
-        function processAnalogMappingResponse(msg) {
+        processAnalogMappingResponse: function (msg) {
             // If running in multi-client mode and this client is 
             // already configured ignore analog mapping response
-            if (_isConfigured) {
+            if (this._isConfigured) {
                 return;
             }
 
             var len = msg.length;
             for (var i = 1; i < len; i++) {
                 if (msg[i] != 127) {
-                    _analogPinMapping[msg[i]] = i - 1;
-                    _self.getPin(i - 1).setAnalogNumber(msg[i]);
+                    this._analogPinMapping[msg[i]] = i - 1;
+                    this.getPin(i - 1).setAnalogNumber(msg[i]);
                 }
             }
             
-            if (!_isMultiClientEnabled) {
-                startupInSingleClientMode();
+            if (!this._isMultiClientEnabled) {
+                this.startupInSingleClientMode();
             } else {
-                startupInMultiClientMode();
+                this.startupInMultiClientMode();
             }
-        }
+        },
 
         /**
          * Single client mode is the default mode.
@@ -482,15 +520,15 @@ BO.IOBoard = (function () {
          * 
          * @private
          */
-        function startupInSingleClientMode() {
+        startupInSingleClientMode: function () {
             // Perform a soft reset of the board
             // the board state will be reset to its default state
-            debug("debug: System reset");
-            systemReset();
+            this.debug("debug: System reset");
+            this.systemReset();
 
             // Delay to allow systemReset function to execute in StandardFirmata
-            setTimeout(startup, 500);           
-        }           
+            setTimeout(this.startup.bind(this), 500);           
+        },
         
         /**
          * Single client mode is the default mode.
@@ -499,27 +537,28 @@ BO.IOBoard = (function () {
          * 
          * @private
          */     
-        function startupInMultiClientMode() {
-            var len = _self.getPinCount();
+        startupInMultiClientMode: function () {
+            var len = this.getPinCount();
             // Populate pin values with the current IOBoard state
             for (var i = 0; i < len; i++) {
-                _self.queryPinState(_self.getDigitalPin(i));
+                this.queryPinState(this.getDigitalPin(i));
             }
 
             // Wait for the pin states to finish updating
-            setTimeout(startup, 500);
-            _isConfigured = true;
-        }   
-                
+            setTimeout(this.startup.bind(this), 500);
+            this._isConfigured = true;
+        },
+
         /**
+         * The IOBoard is configured and ready to send and accept commands.
          * @private
          */
-        function startup() {
-            debug("debug: IOBoard ready");
-            _isReady = true;
-            _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
-            _self.enableDigitalPins();
-        }
+        startup: function () {
+            this.debug("debug: IOBoard ready");
+            this._isReady = true;
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
+            this.enableDigitalPins();
+        },
         
         /**
          * Resets the board to its default state without physically resetting
@@ -527,10 +566,10 @@ BO.IOBoard = (function () {
          *
          * @private
          */
-        function systemReset() {
-            _self.send(SYSEX_RESET);
-        }   
-            
+        systemReset: function () {
+            this.send(SYSEX_RESET);
+        },
+
         /**
          * Reads the current configuration of the requested pin. The following
          * values are returned: 1: pin number, 2: pin type (0: DIN, 1: DOUT, 
@@ -542,9 +581,9 @@ BO.IOBoard = (function () {
          *
          * @private
          */
-        function processPinStateResponse(msg) {
+        processPinStateResponse: function (msg) {
             // Ignore requests that were not made by this client
-            if (!_pinStateRequested) {
+            if (!this._pinStateRequested) {
                 return;
             }
                         
@@ -552,10 +591,10 @@ BO.IOBoard = (function () {
                 pinNumber = msg[1],
                 pinType = msg[2],
                 pinState,
-                pin = _ioPins[pinNumber];
+                pin = this._ioPins[pinNumber];
 
             if (len > 4) {
-                pinState = _self.getValueFromTwo7bitBytes(msg[3], msg[4]);
+                pinState = this.getValueFromTwo7bitBytes(msg[3], msg[4]);
             } else if (len > 3) {
                 pinState = msg[3];
             }
@@ -566,23 +605,23 @@ BO.IOBoard = (function () {
             // needs to get the current pin type
             if (pin.getType() != pinType) {
                 pin.setType(pinType);
-                managePinListener(pin);
+                this.managePinListener(pin);
             }
             
-            _pinStateRequested = false;
-            _self.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
-        }
-                
+            this._pinStateRequested = false;
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.PIN_STATE_RESPONSE), {pin: pin});
+        },
+
         /**
          * Convert char to decimal value.
          * 
          * @private
          */
-        function toDec(ch) {
+        toDec: function (ch) {
             ch = ch.substring(0, 1);
             var decVal = ch.charCodeAt(0);      
             return decVal;
-        }
+        },
         
         /**
          * Called when ever a pin value is set via pin.value = someValue.
@@ -592,68 +631,76 @@ BO.IOBoard = (function () {
          * @param {Event} event A reference to the event object (Pin in this
          * case).
          */
-        function sendOut(event) {
+        sendOut: function (event) {
             var type = event.target.getType(),
                 pinNum = event.target.number,
                 value = event.target.value;
 
             switch (type) {
             case Pin.DOUT:
-                sendDigitalData(pinNum, value);
+                this.sendDigitalData(pinNum, value);
                 break;
             case Pin.AOUT:
-                sendAnalogData(pinNum, value);
+                this.sendAnalogData(pinNum, value);
                 break;
             case Pin.SERVO:
-                sendServoData(pinNum, value);
+                this.sendServoData(pinNum, value);
                 break;
             }
-        }
-         
+        },
+
         /**
          * Ensure that event listeners are properly managed for pin objects 
          * as the pin type is changed during the execution of the program.
          *
          * @private
          */  
-        function managePinListener(pin) {
+        managePinListener: function (pin) {
             if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
                 if (!pin.hasEventListener(PinEvent.CHANGE)) {
-                    pin.addEventListener(PinEvent.CHANGE, sendOut);
+                    pin.addEventListener(PinEvent.CHANGE, this.sendOutHandler);
                 }
             } else {
                 if (pin.hasEventListener(PinEvent.CHANGE)) {
                     try {
-                        pin.removeEventListener(PinEvent.CHANGE, sendOut);
+                        pin.removeEventListener(PinEvent.CHANGE, this.sendOutHandler);
                     } catch (e) {
                         // Pin had reference to other handler, ignore
-                        debug("debug: Caught pin removeEventListener exception");
+                        this.debug("debug: Caught pin removeEventListener exception");
                     }
                 }
             }
-        }
-        
+        },
+
         /**
+         * Sends an analog value up to 14 bits on an analog pin number between
+         * 0 and 15.
+         * @param {Number} pin The analog pin number.
+         * param {Number} value The value to send.
          * @private
          */
-        function sendAnalogData(pin, value) {
+        sendAnalogData: function (pin, value) {
 
-            var pwmMax = _self.getDigitalPin(pin).maxPWMValue;
+            var pwmMax = this.getDigitalPin(pin).maxPWMValue;
             value *= pwmMax;
             value = (value < 0) ? 0: value;
             value = (value > pwmMax) ? pwmMax : value;
 
             if (pin > 15 || value > Math.pow(2, 14)) {
-                sendExtendedAnalogData(pin, value);
+                this.sendExtendedAnalogData(pin, value);
             } else {
-                _self.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F, (value >> 7) & 0x007F]);
+                this.send([ANALOG_MESSAGE | (pin & 0x0F), value & 0x007F, (value >> 7) & 0x007F]);
             }
-        }
+        },
 
         /**
+         * Sends an analog value > 14 bits and/or send a value for a pin number
+         * greater than 15.
+         * @param {Number} pin The analog pin number (up to 128).
+         * @param {Number} value The value to send (up to 16 bits).
          * @private
          */ 
-        function sendExtendedAnalogData(pin, value) {
+        sendExtendedAnalogData: function (pin, value) {
             var analogData = [];
             
             // If > 16 bits
@@ -675,59 +722,67 @@ BO.IOBoard = (function () {
             }
 
             analogData.push(END_SYSEX);
-            _self.send(analogData);
-        }
-        
+            this.send(analogData);
+        },
+
         /**
+         * Add the pin value to the appropriate digital port and send the 
+         * updated digital port value.
+         * 
+         * @param {Number} pin The digital pin number.
+         * @param {Number} value The value of the digital pin (0 or 1).
          * @private
          */
-        function sendDigitalData(pin, value) {
+        sendDigitalData: function (pin, value) {
             var portNum = Math.floor(pin / 8);
 
             if (value == Pin.HIGH) {
                 // Set the bit
-                _digitalPort[portNum] |= (value << (pin % 8));
+                this._digitalPort[portNum] |= (value << (pin % 8));
             }
             else if (value == Pin.LOW) {
                 // Clear the bit
-                _digitalPort[portNum] &= ~(1 << (pin % 8));
+                this._digitalPort[portNum] &= ~(1 << (pin % 8));
             }
             else {
                 console.log("warning: Invalid value passed to sendDigital, value must be 0 or 1.");
                 return; // Invalid value
             }
             
-            _self.sendDigitalPort(portNum, _digitalPort[portNum]);  
-        }
-        
+            this.sendDigitalPort(portNum, this._digitalPort[portNum]);  
+        },
+
         /**
+         * Send the servo angle.
+         * @param {Number} pin The digital pin number the servo is attached to.
+         * @param {Number} value The angle to rotate to.
          * @private
          */ 
-        function sendServoData(pin, value) {
-            var servoPin = _self.getDigitalPin(pin);
+        sendServoData: function (pin, value) {
+            var servoPin = this.getDigitalPin(pin);
             if (servoPin.getType() == Pin.SERVO && servoPin.lastValue != value) {
-                sendAnalogData(pin, value);
+                this.sendAnalogData(pin, value);
             }   
-        }   
+        },
         
         /**
          * Query the cababilities and current state any board running Firmata.
          * 
          * @private
          */
-        function queryCapabilities() {
-            _self.send([START_SYSEX, CAPABILITY_QUERY, END_SYSEX]);
-        }
+        queryCapabilities: function () {
+            this.send([START_SYSEX, CAPABILITY_QUERY, END_SYSEX]);
+        },
 
         /**
          * Query which pins correspond to the analog channels
          *
          * @private
          */
-        function queryAnalogMapping() {
-            _self.send([START_SYSEX, ANALOG_MAPPING_QUERY, END_SYSEX]);
-        }
-        
+        queryAnalogMapping: function () {
+            this.send([START_SYSEX, ANALOG_MAPPING_QUERY, END_SYSEX]);
+        },
+
         /**
          * Call this method to enable or disable analog input for the specified
          * pin.
@@ -737,20 +792,20 @@ BO.IOBoard = (function () {
          * @param {Number} mode Pin.ON to enable input or Pin.OFF to disable
          * input for the specified pin.
          */
-        function setAnalogPinReporting(pin, mode) {
-            _self.send([REPORT_ANALOG | pin, mode]);
-            _self.getAnalogPin(pin).setType(Pin.AIN);
-        }
+        setAnalogPinReporting: function (pin, mode) {
+            this.send([REPORT_ANALOG | pin, mode]);
+            this.getAnalogPin(pin).setType(Pin.AIN);
+        },
 
         /**
          * for debugging
          * @private
          */
-        function debug(str) {
-            if (_debugMode) {
+        debug: function (str) {
+            if (this._debugMode) {
                 console.log(str); 
             }
-        }   
+        },
 
         // Getters and setters:
 
@@ -762,17 +817,19 @@ BO.IOBoard = (function () {
          * @name IOBoard#samplingInterval
          * @property
          * @type Number
-         */ 
-        this.__defineGetter__("samplingInterval", function () { return _samplingInterval; });
-        this.__defineSetter__("samplingInterval", function (interval) {
+         */
+        get samplingInterval() { 
+            return this._samplingInterval;
+        },
+        set samplingInterval(interval) {
             if (interval >= MIN_SAMPLING_INTERVAL && interval <= MAX_SAMPLING_INTERVAL) {
-                _samplingInterval = interval;
-                _self.send([START_SYSEX, SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
+                this._samplingInterval = interval;
+                this.send([START_SYSEX, SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
             } else {
                 // To Do: Throw error?
                 console.log("warning: Sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
             }
-        });
+        },
         
         /**
          * Set to true when the IOBoard is ready. This can be used in place of
@@ -782,11 +839,14 @@ BO.IOBoard = (function () {
          * @name IOBoard#isReady
          * @property
          * @type Boolean
-         */ 
-        this.__defineGetter__("isReady", function () { return _isReady; });             
-        
+         */
+        get isReady() { 
+            return this._isReady;
+        },
+
+
         // Public methods:
-        
+
         /**
          * A utility class to assemble a single value from the 2 bytes returned
          * from the IOBoard (since data is passed in 7 bit Bytes rather than 
@@ -800,16 +860,16 @@ BO.IOBoard = (function () {
          * concatenated
          * @return {Number} The result of merging the 2 bytes
          */
-        this.getValueFromTwo7bitBytes = function (lsb, msb) {
+        getValueFromTwo7bitBytes: function (lsb, msb) {
             return (msb <<7) | lsb;
-        };
+        },
         
         /**
          * @return {WSocketWrapper} A reference to the WebSocket
          */
-        this.getSocket = function () { 
-            return _socket;
-        };
+        getSocket: function () { 
+            return this._socket;
+        },
             
         /**
          * Request the Firmata version implemented in the firmware (sketch)
@@ -817,67 +877,67 @@ BO.IOBoard = (function () {
          * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
          * the Firmata version is returned from the IOBoard.
          */ 
-        this.reportVersion = function () {
-            _self.send(REPORT_VERSION);
-        };
-        
+        reportVersion: function () {
+            this.send(REPORT_VERSION);
+        },
+
         /**
          * Request the name of the firmware (the sketch) running on the IOBoard.
          * Listen for the IOBoard.FIRMWARE_NAME event to be notified of when 
          * the name is returned from the IOBoard. The version number is also
          * returned.
          */
-        this.reportFirmware = function () {
-            _self.send([START_SYSEX, REPORT_FIRMWARE, END_SYSEX]);
-        };
+        reportFirmware: function () {
+            this.send([START_SYSEX, REPORT_FIRMWARE, END_SYSEX]);
+        },
         
         /**
          * Disables digital pin reporting for all digital pins.
          */
-        this.disableDigitalPins = function () {
-            for (var i = 0; i < _numPorts; i++) {
-                _self.sendDigitalPortReporting(i, Pin.OFF);
+        disableDigitalPins: function () {
+            for (var i = 0; i < this._numPorts; i++) {
+                this.sendDigitalPortReporting(i, Pin.OFF);
             }
-        };
+        },
         
         /**
          * Enables digital pin reporting for all digital pins. You must call
          * this before you can receive digital pin data from the IOBoard.
          */
-        this.enableDigitalPins = function () {
-            for (var i = 0; i < _numPorts; i++) {
-                _self.sendDigitalPortReporting(i, Pin.ON);
+        enableDigitalPins: function () {
+            for (var i = 0; i < this._numPorts; i++) {
+                this.sendDigitalPortReporting(i, Pin.ON);
             }
-        };
-        
+        },
+
         /**
          * Enable or disable reporting of all digital pins for the specified
          * port.
          * 
          * @param {Number} mode Either Pin.On or Pin.OFF
          */
-        this.sendDigitalPortReporting = function (port, mode) {
-            _self.send([(REPORT_DIGITAL | port), mode]);
-        };
+        sendDigitalPortReporting: function (port, mode) {
+            this.send([(REPORT_DIGITAL | port), mode]);
+        },
         
         /**
          * Call this method to enable analog input for the specified pin.
          *
          * @param {Number} pin The pin connected to the analog input
          */
-        this.enableAnalogPin = function (pin) {
-            setAnalogPinReporting(pin, Pin.ON);
-        };
+        enableAnalogPin: function (pin) {
+            this.setAnalogPinReporting(pin, Pin.ON);
+        },
 
         /**
          * Call this method to disable analog input for the specified pin.
          *
          * @param {Number} pin The pin connected to the analog input
          */
-        this.disableAnalogPin = function (pin) {
-            setAnalogPinReporting(pin, Pin.OFF);
-        };
-        
+        disableAnalogPin: function (pin) {
+            this.setAnalogPinReporting(pin, Pin.OFF);
+        },
+
         /**
          * Set the specified digital pin mode. 
          *
@@ -888,12 +948,12 @@ BO.IOBoard = (function () {
          * @param {Number} mode Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO,
          * Pin.SHIFT, or Pin.I2c
          */
-        this.setDigitalPinMode = function (pinNumber, mode) {
-            _self.getDigitalPin(pinNumber).setType(mode);
-            managePinListener(_self.getDigitalPin(pinNumber));
+        setDigitalPinMode: function (pinNumber, mode) {
+            this.getDigitalPin(pinNumber).setType(mode);
+            this.managePinListener(this.getDigitalPin(pinNumber));
             
-            _self.send([SET_PIN_MODE, pinNumber, mode]);            
-        };
+            this.send([SET_PIN_MODE, pinNumber, mode]);            
+        },
 
         /**
          * Enable the internal pull-up resistor for the specified pin number.
@@ -901,31 +961,31 @@ BO.IOBoard = (function () {
          * @param {Number} pinNum The number of the input pin to enable the
          * pull-up resistor.
          */
-        this.enablePullUp = function (pinNum) {
-            sendDigitalData(pinNum, Pin.HIGH);
-        };
+        enablePullUp: function (pinNum) {
+            this.sendDigitalData(pinNum, Pin.HIGH);
+        },
 
         /**
          * @return {String} The name of the firmware running on the IOBoard.
          */
-        this.getFirmwareName = function () {
+        getFirmwareName: function () {
             // To Do: It seams that Firmata is reporting the Firmware
             // name malformed.
-            return _firmwareName;
-        };
+            return this._firmwareName;
+        },
         
         /**
          * @return {String} The version of the firmware running on the
          * IOBoard.
          */
-        this.getFirmwareVersion = function () {
-            return _firmwareVersion;
-        };
+        getFirmwareVersion: function () {
+            return this._firmwareVersion;
+        },
 
         /**
          * @return {Array} The capabilities of the Pins on the IOBoard.
          */
-        this.getPinCapabilities = function () {
+        getPinCapabilities: function () {
             var capabilities = [];
             var modeNames = {
                 0: "input",
@@ -936,16 +996,16 @@ BO.IOBoard = (function () {
                 5: "shift",
                 6: "i2c"
             };
-            for (var i = 0; i < _ioPins.length; i++) {
+            for (var i = 0; i < this._ioPins.length; i++) {
                 var pinElements = [];
                 var j = 0;
-                var pinCapabilities = _ioPins[i].getCapabilities();
+                var pinCapabilities = this._ioPins[i].getCapabilities();
                 for (var mode in pinCapabilities) {
                     if (pinCapabilities.hasOwnProperty(mode)) {
                         var pinElement = [];
                         if (mode >= 0) {
                             pinElement[0] = modeNames[mode];
-                            pinElement[1] = _ioPins[i].getCapabilities()[mode];
+                            pinElement[1] = this._ioPins[i].getCapabilities()[mode];
                         }
                         pinElements[j] = pinElement;
                         j++;
@@ -954,7 +1014,7 @@ BO.IOBoard = (function () {
                 capabilities[i] =  pinElements;
             }
             return capabilities;
-        };
+        },
 
         /**
          * Reads the current state of the requested pin. Listen for the
@@ -979,12 +1039,12 @@ BO.IOBoard = (function () {
          *
          * @param {Pin} pin The pin object to query the pin state for.
          */      
-        this.queryPinState = function (pin) {
+        queryPinState: function (pin) {
             // To Do: Ensure that pin is a Pin object
             var pinNumber = pin.number;
-            _self.send([START_SYSEX, PIN_STATE_QUERY, pinNumber, END_SYSEX]);
-            _pinStateRequested = true;
-        };      
+            this.send([START_SYSEX, PIN_STATE_QUERY, pinNumber, END_SYSEX]);
+            this._pinStateRequested = true;
+        },
 
         /**
          * Send the digital values for a port. Making this private for now.
@@ -994,10 +1054,10 @@ BO.IOBoard = (function () {
          * @param {Number} portData A byte representing the state of the 8 pins
          * for the specified port
          */
-        this.sendDigitalPort = function (portNumber, portData) {
-            _self.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
-        };
-        
+        sendDigitalPort: function (portNumber, portData) {
+            this.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
+        },        
+
         /**
          * Send a string message to the IOBoard. This is useful if you have a
          * custom sketch running on the IOBoard rather than StandardFirmata
@@ -1011,19 +1071,19 @@ BO.IOBoard = (function () {
          * 
          * @param {String} str The string message to send to the IOBoard
          */
-        this.sendString = function (str) {
+        sendString: function (str) {
             // Convert chars to decimal values
             var decValues = [];
             for (var i = 0, len = str.length; i < len; i++) {
-                decValues.push(toDec(str[i]) & 0x007F);
-                decValues.push((toDec(str[i]) >> 7) & 0x007F);
+                decValues.push(this.toDec(str[i]) & 0x007F);
+                decValues.push((this.toDec(str[i]) >> 7) & 0x007F);
             }
             // Data > 7 bits in length must be split into 2 bytes and  
             // packed into an array before passing to the sendSysex
             // method
             this.sendSysex(STRING_DATA, decValues);
-        };
-        
+        },
+
         /**
          * Send a sysEx message to the IOBoard. This is useful for sending
          * custom sysEx data to the IOBoard, for example if you are not using
@@ -1036,7 +1096,7 @@ BO.IOBoard = (function () {
          * message to be sent
          * @see <a href="http://firmata.org/wiki/Protocol#Sysex_Message_Format">Firmata Sysex Message Format"</a>
          */
-        this.sendSysex = function (command, data) {
+        sendSysex: function (command, data) {
             var sysexData = [];
             sysexData[0] = START_SYSEX;
             sysexData[1] = command;
@@ -1052,9 +1112,9 @@ BO.IOBoard = (function () {
             }
             sysexData.push(END_SYSEX);
             
-            _self.send(sysexData);      
-        };
-                    
+            this.send(sysexData);      
+        },
+
         /**
          * Call to associate a pin with a connected servo motor. See the
          * documentation for your servo motor for the minimum and maximum 
@@ -1068,7 +1128,7 @@ BO.IOBoard = (function () {
          * @param {Number} maxPulse [optional] The maximum pulse width for the
          * servo. Default = 2400.
          */
-        this.sendServoAttach = function (pin, minPulse, maxPulse) {
+        sendServoAttach: function (pin, minPulse, maxPulse) {
             var servoPin,
                 servoData = [];
 
@@ -1084,43 +1144,43 @@ BO.IOBoard = (function () {
             servoData[6] = maxPulse >> 7;   
             servoData[7] = END_SYSEX;
             
-            _self.send(servoData);
+            this.send(servoData);
         
-            servoPin = _self.getDigitalPin(pin);
+            servoPin = this.getDigitalPin(pin);
             servoPin.setType(Pin.SERVO);
-            managePinListener(servoPin);    
-        };
-                        
+            this.managePinListener(servoPin);    
+        },
+
         /**
          * @private
          * @return {Pin} An unmapped reference to the Pin object.
          */
-        this.getPin = function (pinNumber) {
-            return _ioPins[pinNumber];
-        };
+        getPin: function (pinNumber) {
+            return this._ioPins[pinNumber];
+        },
         
         /**
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board analog pin).
          */ 
-        this.getAnalogPin = function (pinNumber) {
-            return _ioPins[_analogPinMapping[pinNumber]];
-        };
+        getAnalogPin: function (pinNumber) {
+            return this._ioPins[this._analogPinMapping[pinNumber]];
+        },
         
         /**
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board digital pin).
          */ 
-        this.getDigitalPin = function (pinNumber) {
-            return _ioPins[_digitalPinMapping[pinNumber]];
-        };
+        getDigitalPin: function (pinNumber) {
+            return this._ioPins[this._digitalPinMapping[pinNumber]];
+        },
 
         /**
          * @return {Pin[]} An array containing all pins on the IOBoard
          */ 
-        this.getPins = function () {
-            return _ioPins;
-        };
+        getPins: function () {
+            return this._ioPins;
+        },
 
         /**
          * Use this method to obtain the digital pin number equivalent 
@@ -1136,16 +1196,16 @@ BO.IOBoard = (function () {
          * @return {Number} The digital pin number equivalent for the specified
          * analog pin number.
          */ 
-        this.analogToDigital = function (analogPinNumber) {
-            return _self.getAnalogPin(analogPinNumber).number;  
-        };
+        analogToDigital: function (analogPinNumber) {
+            return this.getAnalogPin(analogPinNumber).number;  
+        },
         
         /**
          * @return {Number} Total number of pins
          */
-        this.getPinCount = function () {
-            return _totalPins;
-        };
+        getPinCount: function () {
+            return this._totalPins;
+        },
         
         /**
          * @return {Number[]} The pin numbers of the i2c pins if the board has
@@ -1153,15 +1213,15 @@ BO.IOBoard = (function () {
          * Returns undefined if the board does not have i2c pins.
          * @private (internal only)
          */
-        this.getI2cPins = function () {
-            return _i2cPins;
-        };
-        
+        getI2cPins: function () {
+            return this._i2cPins;
+        },
+
         /**
          * Call this method to print the capabilities for all pins to 
          * the console.
          */
-        this.reportCapabilities = function () {
+        reportCapabilities: function () {
             var modeNames = {
                 0: "input",
                 1: "output",
@@ -1171,15 +1231,15 @@ BO.IOBoard = (function () {
                 5: "shift",
                 6: "i2c"
             };
-            for (var i = 0, len = _ioPins.length; i < len; i++) {
-                var pinCapabilities = _ioPins[i].getCapabilities();
-                for (var mode in _ioPins[i].getCapabilities()) {
+            for (var i = 0, len = this._ioPins.length; i < len; i++) {
+                var pinCapabilities = this._ioPins[i].getCapabilities();
+                for (var mode in this._ioPins[i].getCapabilities()) {
                     if (pinCapabilities.hasOwnProperty(mode)) {
-                        console.log("Pin " + i + "\tMode: " + modeNames[mode] + "\tResolution (# of bits): " + _ioPins[i].getCapabilities()[mode]);
+                        console.log("Pin " + i + "\tMode: " + modeNames[mode] + "\tResolution (# of bits): " + this._ioPins[i].getCapabilities()[mode]);
                     }
                 }
             }
-        };
+        },
 
         /**
          * A wrapper for the send method of the WebSocket
@@ -1189,9 +1249,9 @@ BO.IOBoard = (function () {
          * @private
          * @param {Number[]} message Message data to be sent to the IOBoard
          */
-        this.send = function (message) {
-            _socket.sendString(message);
-        };
+        send: function (message) {
+            this._socket.sendString(message);
+        },
         
         /**
          * A wrapper for the close method of the WebSocket. Making this 
@@ -1199,11 +1259,10 @@ BO.IOBoard = (function () {
          *
          * @private
          */
-        this.close = function () {
-            _socket.close();
-        };
+        close: function () {
+            this._socket.close();
+        },
 
-        
         // Implement EventDispatcher
         
         /**
@@ -1211,26 +1270,26 @@ BO.IOBoard = (function () {
          * @param {Function} listener The function to be called when the event
          * is fired
          */
-        this.addEventListener = function (type, listener) {
-            _evtDispatcher.addEventListener(type, listener);
-        };
+        addEventListener: function (type, listener) {
+            this._evtDispatcher.addEventListener(type, listener);
+        },
         
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event
          * is fired
          */
-        this.removeEventListener = function (type, listener) {
-            _evtDispatcher.removeEventListener(type, listener);
-        };
+        removeEventListener: function (type, listener) {
+            this._evtDispatcher.removeEventListener(type, listener);
+        },
         
         /**
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
          */
-        this.hasEventListener = function (type) {
-            return _evtDispatcher.hasEventListener(type);
-        };
+        hasEventListener: function (type) {
+            return this._evtDispatcher.hasEventListener(type);
+        },
         
         /**
          * @param {Event} type The Event object
@@ -1238,9 +1297,10 @@ BO.IOBoard = (function () {
          * event object.
          * return {boolean} True if dispatch is successful, false if not.
          */     
-        this.dispatchEvent = function (event, optionalParams) {
-            return _evtDispatcher.dispatchEvent(event, optionalParams);
-        };
+        dispatchEvent: function (event, optionalParams) {
+            return this._evtDispatcher.dispatchEvent(event, optionalParams);
+        }
+
     };
 
     // Document events
