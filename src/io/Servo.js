@@ -53,6 +53,8 @@ BO.io.Servo = (function () {
 
     Servo.prototype = {
 
+        constructor: Servo,
+
         /**
          * Set the angle (in degrees) to rotate the server head to.
          * 

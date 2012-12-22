@@ -54,6 +54,8 @@ BO.custom.ID12RFIDReader = (function () {
 
     ID12RFIDReader.prototype = {
 
+        constructor: ID12RFIDReader,
+
         // private methods:
         /**
          * @private

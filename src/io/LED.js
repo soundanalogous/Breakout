@@ -73,6 +73,8 @@ BO.io.LED = (function () {
 
     LED.prototype = {
 
+        constructor: LED,
+
         /**
          * Get or set the current value (intensity) of the LED.
          * 

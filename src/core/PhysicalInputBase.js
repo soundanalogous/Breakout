@@ -36,6 +36,9 @@ BO.PhysicalInputBase = (function () {
     };
 
     PhysicalInputBase.prototype = {
+
+        constructor: PhysicalInputBase,
+        
         // Implement EventDispatcher
         
         /**

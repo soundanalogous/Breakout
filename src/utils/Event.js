@@ -25,6 +25,9 @@ JSUTILS.Event = (function () {
     };
 
     Event.prototype = {
+
+        constructor: Event,
+        
         /**
          * The event type
          * @name Event#type

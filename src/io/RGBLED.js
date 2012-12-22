@@ -65,6 +65,8 @@ BO.io.RGBLED = (function () {
 
     RGBLED.prototype = {
 
+        constructor: RGBLED,
+
         /**
          * Set the RGBLED color.
          * 

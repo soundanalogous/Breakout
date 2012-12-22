@@ -61,6 +61,8 @@ BO.Pin = (function () {
     };
 
     Pin.prototype = {
+
+        constructor: Pin,
         
         /**
          * The analogNumber sould only be set internally.
@@ -113,7 +115,6 @@ BO.Pin = (function () {
          * @private
          */
         setState: function (state) {
-
             // convert PWM values to 0.0 - 1.0 range
             if (this._type === Pin.PWM) {
                 state = state / this.maxPWMValue;

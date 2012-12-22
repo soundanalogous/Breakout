@@ -116,6 +116,8 @@ BO.IOBoard = (function () {
 
     IOBoard.prototype = {
 
+        constructor: IOBoard,
+
         // Private methods:
 
         /**

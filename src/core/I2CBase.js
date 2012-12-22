@@ -68,6 +68,8 @@ BO.I2CBase = (function () {
 
     I2CBase.prototype = {
 
+        constructor: I2CBase,
+
         /**
          * [read-only] The address of the i2c device.
          * @name I2CBase#address

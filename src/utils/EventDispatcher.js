@@ -30,6 +30,8 @@ JSUTILS.EventDispatcher = (function () {
 
     EventDispatcher.prototype = {
 
+        constructor: EventDispatcher,
+
         /**
          * Description
          * @param {String} type The event type

@@ -98,6 +98,8 @@ BO.io.DCMotor = (function () {
 
     DCMotor.prototype = {
 
+        constructor: DCMotor,
+
         /**
          * The value of the motor speed (-1.0 to 1.0). A speed of zero stops
          * the motor.

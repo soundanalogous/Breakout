@@ -132,6 +132,8 @@ BO.io.Stepper = (function () {
 
     Stepper.prototype = {
 
+        constructor: Stepper,
+
         /**
          * Move the stepper a given number of steps at the specified
          * speed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).
