@@ -26,6 +26,10 @@ BO.io.Servo = (function () {
      * the angle of the servo head. You can simply specify and angle between
      * 0 and 180 degrees and the servo head will rotate to that angle. See
      * Breakout/examples/actuators/servo.html for an example application.
+     * You can also use this with a continuous rotation servo. See the
+     * description for the angle property for use with a continuous rotation
+     * servo.
+     *
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * servo is attached to.
@@ -57,6 +61,14 @@ BO.io.Servo = (function () {
 
         /**
          * Set the angle (in degrees) to rotate the server head to.
+         *
+         * <p>If you are using a continuous rotation servo, a value of 90
+         * will stop the servo. A value of 0 (or < 90 depending on the servo) 
+         * will cause continous clockwise rotation and a value of 180 (or > 90)
+         * will cause continuous counter-clockwise rotation. If your motor
+         * does not come to a full stop when setting 90 degrees, you will need
+         * to adjust the servo (there is typically a screw on the motor) to
+         * adjust</p>
          * 
          * @name Servo#angle
          * @property

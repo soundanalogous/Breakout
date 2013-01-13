@@ -141,9 +141,9 @@ def addHeader(text, version):
     header = """/***
     Breakout - %s
 
-    Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+    Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>
     Released under the MIT license. See LICENSE file for details.
-    http.//breakoutjs.com
+    http://breakoutjs.com
     ***/\n"""
 
     return (header % version) + text

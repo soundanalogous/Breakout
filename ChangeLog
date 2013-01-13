@@ -1,4 +1,5 @@
-2012.nn.nn Version 0.2.1
+2013.nn.nn Version 0.2.1
+* Added missing constructor definition to prototype.
 * Refactored IOBoard to move all methods to prototype.
 * Added state property to Pin object to get state from pinStateQuery response.
 * Fixed bug in pin state response that was preventing querying multiple pins.
