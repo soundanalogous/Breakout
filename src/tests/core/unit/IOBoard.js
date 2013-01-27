@@ -11,7 +11,6 @@
    common = window.common;
    uno = window.uno;
    IOBoard = window.BO.IOBoard;
-   //WSocketWrapper = window.BO.WSocketWrapper;
 
    describe('IOBoard Test Suite', function () {
 
@@ -21,13 +20,10 @@
          dispatcher;
 
       beforeEach(function () {
-         //stubs.push(sinon.stub(WSocketWrapper.prototype, "init"));
-
          // save a reference to this stub to use in testing output methods
          stubSend = sinon.stub(IOBoard.prototype, "send");
          stubs.push(stubSend);
          stubs.push(sinon.stub(IOBoard.prototype, "startupInSingleClientMode"));
-         //stubs.push(sinon.stub(IOBoard.prototype, "startupInMultiClientMode"));
          
          board = new IOBoard("localhost", 8887);
       });
@@ -283,17 +279,32 @@
 
             });
 
-            describe.skip('sendServoData', function () {
-               it("should...", function () {
+            describe('sendServoAttach', function () {
+               it("should send the expected servo config data", function () {
+                  var spyCall;
 
+                  board.sendServoAttach(9);
+
+                  spyCall = stubSend.getCall(1);
+
+                  expect(stubSend.calledTwice).to.equal(true);
+                  expect(spyCall.args[0].toString()).to.equal(common.sendServoAttach.toString());
+               });
+            }); 
+
+            describe('sendServoData', function () {
+               it("should call sendAnalogData with the expected pin and value", function () {
+                  var spy = sinon.spy(board, "sendAnalogData"),
+                     pin = common.sendServoData[0],
+                     value = common.sendServoData[1];
+
+                  // call to setup pin
+                  board.sendServoAttach(9);
+                  board.sendServoData(9, 0.5); // 90 degrees
+
+                  expect(spy.withArgs(pin, value).calledOnce).to.equal(true);
                });
             });
-
-            describe.skip('sendServoAttach', function () {
-               it("should...", function () {
-
-               });
-            });            
 
          });
 

@@ -1,4 +1,5 @@
 2013.nn.nn Version 0.2.1
+* Updated firmware.html example to use updated getPinCapabilities method.
 * Updated IOBoard.prototype.reportCapabilities to print in easier to read format.
 * Changed IOBoard.prototype.getPinCapabilities to store pin modes as objects
   rather than arrays.
@@ -35,13 +36,15 @@
 * Added getFirmwareName() and getPinCapabilities() methods to IOBoard.js 
   (contributed by Fabian Affolter)
 * Added command line arguments to nodeJS server (contributed by Fabian Affolter)
-* Removed useSocketIO parameter from IOBoard and WSocketWrapper. If you include socket.io, it is now assumed you are using the nodeJS server.
+* Removed useSocketIO parameter from IOBoard and WSocketWrapper. If you include 
+  socket.io, it is now assumed you are using the nodeJS server.
 * Changed default port for nodeJS server from 8080 to 8887
 * Updated nodeJS server to use express framework
 * Enabled touch events for jQuery UI elements
 
 2012.07.18 Version 0.1.6
-* Added examples demonstrating use of DeviceMotion and DeviceOrientation APIs with Breakout
+* Added examples demonstrating use of DeviceMotion and DeviceOrientation APIs 
+  with Breakout
 * Added fritzing files to Breakout/examples/schematics_src/fritzing/
 * Updated examples to be more mobile friendly
 * Added simple_led and analog_input examples (contributed by Fabian Affolter)
@@ -55,7 +58,8 @@
 
 2012.04.14 Version 0.1.4
 * Fixed LED and RGBLED fadeTo issue (issue #8)
-* Fixed Pin / Button bug that was causing pins on same port to trigger false events (issue #14)
+* Fixed Pin / Button bug that was causing pins on same port to trigger false 
+  events (issue #14)
 * Added DISCONNECTED event to IOBoardEvent that is fired when the server is 
   disconnected (issue #12)
 
@@ -63,12 +67,14 @@
 * Min, max and average pin values are now calculated after any filters are 
   applied (issue #11).
 * Common Anode RGB LEDs now work properly (issue #8)
-* Changed R, G, and B pins in rgb_led example to match pins in the schematics.pdf document (issue #10).
+* Changed R, G, and B pins in rgb_led example to match pins in the schematics.pdf 
+  document (issue #10).
 * Fixed dcmotor example (issue #9)
 * Fixed LED toggle (issue #7)
 * Created new hello_world example to better demonstrate basic input and output.
 * Added a template example that can be used as a starting point for new projects.
-* Added basic processing_js example and templates for starting new 2d and 3d processing_js projects with Breakout.
+* Added basic processing_js example and templates for starting new 2d and 3d 
+  processing_js projects with Breakout.
 * Added examples of flex, FSR (pressure), IR proximity, temperature and sonar sensors.
 * Updated schematics to add new sensor examples and dcmotor with external power supply.
 

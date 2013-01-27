@@ -24,8 +24,8 @@ var common = {
     sendSysex: [240, 113, 72, 0, 101, 0, 108, 0, 108, 0, 111, 0, 32, 0, 87, 0,
         111, 0, 114, 0, 108, 0, 100, 0, 33, 0, 247
     ],
-    sendServoData: [],
-    sendServoAttach: []    
+    sendServoAttach: [240, 112, 9, 32, 4, 96, 18, 247], // pin 9, default min and max    
+    sendServoData: [9, 0.5] // pin 8, 90 degrees
 };
 
 var uno = {

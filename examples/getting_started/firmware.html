@@ -18,12 +18,22 @@ h2 {
     font-size: 22px;
     color: #00AEFF;
 }
+p {
+    margin: 5px 0;
+}
 .container {
     background-color: #f7f7f7;
     padding: 0 10px 20px 10px;
     border: 1px dotted #CCC;
     width: 270px;
     margin-top: 20px;
+}
+#capabilities {
+    font-size: 14px;
+}
+#capabilities .modes {
+    line-height: 18px;
+    margin-left: 15px;
 }
 </style>
 
@@ -38,56 +48,51 @@ $(document).ready(function() {
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
 
-    // set to true to print debug messages to console
-    BO.enableDebugging = false;
-
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
     var arduino = new IOBoard(location.hostname, 8887);
     
-    // Variables
-    var firmware;
-    var firmwarever;
-    var capabilities;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
     
     // Standard values for the jQuery elements
     $('#firmware').text("unkown");
-    $('#firmwarever').text("unknown");
+    $('#firmwareVer').text("unknown");
     
     function onReady(event) {
+        var firmware,
+            firmwareVer,
+            capabilities;
+
         // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
         
         // Get the data from the IOBoard
         firmware = arduino.getFirmwareName();
-        firmwarever = arduino.getFirmwareVersion();
+        firmwareVer = arduino.getFirmwareVersion();
         capabilities = arduino.getPinCapabilities();
         
-        // Report capabilities of the board all data are going to the 
-        // console
-        //arduino.reportFirmware();
-        //arduino.reportVersion();
-        //arduino.reportCapabilities();
+        // print capabilities to console
+        arduino.reportCapabilities();
                 
         // Transforming the array to a nice output format
-        for (var pin in capabilities) {
-            if (capabilities[pin] != "") {
-                $("#capabilities").append("Pin " + pin + " : " + "<br/>");
-                $.each(capabilities[pin], function(j, entries) {
-                    $("#capabilities").append(" - Mode: " + entries[0] + ", Resolution (# of bits): " + entries[1] + "<br/>");
+        var len = capabilities.length;
+        var html = "";
+        for (var i = 0; i < len; i++) {
+            html += "<div>Pin " + i + ":" + "</div>";
+            $.each(capabilities[i], function(mode, resolution) {
+                resolution = resolution + (resolution > 1 ? " bits" : " bit");
+                html += "<div class='modes'>" + mode + " (" + resolution + ")</div>";
             });
-            }
         }
+        $("#capabilities").append(html);
         
-        // jQuery elements
         $('#firmware').text(firmware);
-        $('#firmwarever').text(firmwarever);
+        $('#firmwareVer').text(firmwareVer);
     }
 });
 
@@ -98,8 +103,9 @@ $(document).ready(function() {
     <h2>Firmware and Board details</h2>
         <div class="container">
             <p>Firmware name: <strong id="firmware"></strong></p>
-            <p>Firmware version: <strong id="firmwarever"></strong></p>
-            <p>Hardware details: <br /> <small id="capabilities"></small></p>
+            <p>Firmware version: <strong id="firmwareVer"></strong></p>
+            <p>Hardware details:</p> 
+            <div id="capabilities"></div>
         </div>
 </body>
 </html>

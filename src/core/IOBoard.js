@@ -530,8 +530,6 @@ BO.IOBoard = (function () {
 
             // Delay to allow systemReset function to execute in StandardFirmata
             setTimeout(this.startup.bind(this), 500);
-
-            this.startup();
         },
         
         /**
@@ -767,7 +765,7 @@ BO.IOBoard = (function () {
         /**
          * Send the servo angle.
          * @param {Number} pin The digital pin number the servo is attached to.
-         * @param {Number} value The angle to rotate to.
+         * @param {Number} value The angle to rotate to (0.0 to 1.0 mapped to 0 - 180).
          * @private
          */ 
         sendServoData: function (pin, value) {
@@ -1262,18 +1260,14 @@ BO.IOBoard = (function () {
         reportCapabilities: function () {
             var capabilities = this.getPinCapabilities(),
                 len = capabilities.length,
-                lastPin,
                 resolution;
 
             for (var i = 0; i < len; i++) {
+                console.log("Pin " + i + ":");
                 for (var mode in capabilities[i]) {
                     if (capabilities[i].hasOwnProperty(mode)) {
-                        if (i != lastPin) {
-                            console.log("Pin " + i + ":");
-                        }
                         resolution = capabilities[i][mode];
                         console.log("\t" + mode + " (" + resolution + (resolution > 1 ? " bits)" : " bit)"));
-                        lastPin = i;
                     } 
                 }
             }
