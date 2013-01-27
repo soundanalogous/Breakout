@@ -77,15 +77,24 @@ Mobile Browsers (browser must support websockets):
 
 Contributing
 ---
-Contributors are welcome. If you have any ideas, suggestions for improvements, examples to share, or anything else you'd like to contribute please get in touch.
+Contributors are welcome. If you have any ideas, suggestions for improvements, 
+examples to share, or anything else you'd like to contribute please get in touch.
 
-Please submit pull requests against the *dev* branch. Test against Chrome, Firefox and Safari.
+Submit pull requests for bug fixes and small changes. For any larger changes, 
+please first start a discussing by submitting a new issue.
+
+Please submit pull requests against the *dev* branch. Code must pass unit tests
+in src/tests/ and must be linted with [JSHint](https://github.com/jshint/jshint) (according to the rules in 
+Breakout/.jshintrc) in order to be accepted. Run tests against Chrome, Firefox, 
+Safari and Opera 12.
+
 
 Credits
 ---
 Breakout is developed by Jeff Hoefs.
 
-Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). The author is also a contributor to the Funnel as3 library.
+Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). 
+The author is also a contributor to the Funnel as3 library.
 
 Logo and icon designed by Claire Lin.
 

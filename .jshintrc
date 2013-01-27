@@ -117,7 +117,11 @@
         "MozWebSocket",
         "io",                    // socket.io
         "require",               // node.js
-        "process"                // node.js
+        "process",               // node.js
+        "describe",              // mocha.js
+        "it",                    // mocha.js
+        "beforeEach",            // mocha.js
+        "afterEach"              // mocha.js
     ],
     "indent"        : 4         // Specify indentation spacing
 }

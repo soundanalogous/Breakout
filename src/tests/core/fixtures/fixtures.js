@@ -222,7 +222,7 @@ var teensy2 = {
         digitalOut: [240, 110, 2, 1, 1, 247], // digital out pin 2, 1
         pwm: [240, 110, 14, 3, 88, 1, 247]    // pwm pin 14, 0.85
     }
-}
+};
 
 var teensyPlusPlus2 = {
     numPins: 46,
@@ -265,4 +265,4 @@ var teensyPlusPlus2 = {
         digitalOut: [240, 110, 2, 1, 1, 247], // digital out pin 2, 1
         pwm: [240, 110, 14, 3, 88, 1, 247]    // pwm pin 14, 0.85
     }
-}
+};
