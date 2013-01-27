@@ -142,7 +142,6 @@ BO.IOBoard = (function () {
             if (event.message.match(pattern)) {
                 message = event.message.substr(event.message.indexOf(':') + 2);
                 this.processStatusMessage(message);
-
             } else {
                 // We have data from the IOBoard
                 this.processInput(event.message);
@@ -208,6 +207,7 @@ BO.IOBoard = (function () {
          */
         processInput: function (inputData) {
             inputData *= 1; // Force inputData to integer (is there a better way to do this?)
+            console.log(inputData);
             var len;
 
             this._inputDataBuffer.push(inputData);
@@ -376,11 +376,10 @@ BO.IOBoard = (function () {
          */
         processQueryFirmwareResult: function (msg) {
             var data;
-            for (var i = 3; i < msg.length; i += 2)
-            {
-                data = String.fromCharCode(msg[i]);
-                data += String.fromCharCode(msg[i + 1]);
-                this._firmwareName += data;
+            for (var i = 3, len = msg.length; i < len; i += 2) {
+                data = msg[i];
+                data += msg[i + 1];
+                this._firmwareName += String.fromCharCode(data);
             }
             this._firmwareVersion = msg[1] + msg[2] / 10;
             this.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {name: this._firmwareName, version: this._firmwareVersion});
@@ -396,9 +395,9 @@ BO.IOBoard = (function () {
                 len = msg.length;
 
             for (var i = 1; i < len; i += 2) {
-                data = String.fromCharCode(msg[i]);
-                data += String.fromCharCode(msg[i + 1]);
-                str += data.charAt(0);
+                data = msg[i];
+                data += msg[i + 1];
+                str += String.fromCharCode(data);                
             }
             this.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
         },
@@ -478,6 +477,7 @@ BO.IOBoard = (function () {
             }
             
             this._totalPins = pinCounter;
+            this._totalAnalogPins = analogPinCounter;
             this.debug("debug: Num pins = " + this._totalPins);
 
             // Map the analog pins to the board pins
@@ -529,7 +529,9 @@ BO.IOBoard = (function () {
             this.systemReset();
 
             // Delay to allow systemReset function to execute in StandardFirmata
-            setTimeout(this.startup.bind(this), 500);           
+            setTimeout(this.startup.bind(this), 500);
+
+            this.startup();
         },
         
         /**
@@ -992,10 +994,21 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * Returns the capabilities for each pin on the IOBoard. The array is
+         * indexed by pin number (beginning at pin 0). Each array element
+         * contains an object with a property for each modes (input, output, 
+         * pwm, servo, i2c, etc) supported by the pin. The mode value is the
+         * resolution in bits.
+         *
          * @return {Array} The capabilities of the Pins on the IOBoard.
          */
         getPinCapabilities: function () {
-            var capabilities = [];
+            var capabilities = [],
+                len,
+                pinElements,
+                pinCapabilities,
+                hasCapabilities;
+
             var modeNames = {
                 0: "input",
                 1: "output",
@@ -1005,23 +1018,30 @@ BO.IOBoard = (function () {
                 5: "shift",
                 6: "i2c"
             };
-            for (var i = 0; i < this._ioPins.length; i++) {
-                var pinElements = [];
-                var j = 0;
-                var pinCapabilities = this._ioPins[i].getCapabilities();
+
+            len = this._ioPins.length;
+            for (var i = 0; i < len; i++) {
+                pinElements = {};
+                pinCapabilities = this._ioPins[i].getCapabilities();
+                hasCapabilities = false;
+
                 for (var mode in pinCapabilities) {
                     if (pinCapabilities.hasOwnProperty(mode)) {
-                        var pinElement = [];
+                        hasCapabilities = true;
                         if (mode >= 0) {
-                            pinElement[0] = modeNames[mode];
-                            pinElement[1] = this._ioPins[i].getCapabilities()[mode];
+                            pinElements[modeNames[mode]] = this._ioPins[i].getCapabilities()[mode];
                         }
-                        pinElements[j] = pinElement;
-                        j++;
                     }
                 }
-                capabilities[i] =  pinElements;
+
+                if (!hasCapabilities) {
+                    capabilities[i] = {"not available": "0"};
+                } else {
+                    capabilities[i] = pinElements;
+                }
+                
             }
+
             return capabilities;
         },
 
@@ -1215,6 +1235,14 @@ BO.IOBoard = (function () {
         getPinCount: function () {
             return this._totalPins;
         },
+
+        /**
+         * @return {Number} The total number of analog pins supported by this
+         * IOBoard
+         */
+        getAnalogPinCount: function () {
+            return this._totalAnalogPins;
+        },
         
         /**
          * @return {Number[]} The pin numbers of the i2c pins if the board has
@@ -1231,21 +1259,21 @@ BO.IOBoard = (function () {
          * the console.
          */
         reportCapabilities: function () {
-            var modeNames = {
-                0: "input",
-                1: "output",
-                2: "analog",
-                3: "pwm",
-                4: "servo",
-                5: "shift",
-                6: "i2c"
-            };
-            for (var i = 0, len = this._ioPins.length; i < len; i++) {
-                var pinCapabilities = this._ioPins[i].getCapabilities();
-                for (var mode in this._ioPins[i].getCapabilities()) {
-                    if (pinCapabilities.hasOwnProperty(mode)) {
-                        console.log("Pin " + i + "\tMode: " + modeNames[mode] + "\tResolution (# of bits): " + this._ioPins[i].getCapabilities()[mode]);
-                    }
+            var capabilities = this.getPinCapabilities(),
+                len = capabilities.length,
+                lastPin,
+                resolution;
+
+            for (var i = 0; i < len; i++) {
+                for (var mode in capabilities[i]) {
+                    if (capabilities[i].hasOwnProperty(mode)) {
+                        if (i != lastPin) {
+                            console.log("Pin " + i + ":");
+                        }
+                        resolution = capabilities[i][mode];
+                        console.log("\t" + mode + " (" + resolution + (resolution > 1 ? " bits)" : " bit)"));
+                        lastPin = i;
+                    } 
                 }
             }
         },
