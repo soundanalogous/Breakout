@@ -29,6 +29,6 @@ will need to be run manually.
 1. Disconnect any boards connected to your computer. The tests run against 
 sampled data in the fixtures directory rather than a connected board. Any 
 connected boards may actually interfere with the tests.
-2. Navigate to the src/tests/core/ and open runner.html in your browser. The 
-tests should run and you should (hopefully) see a green check next to each test 
+2. Navigate to src/tests/core/ and open runner.html in your browser. The tests 
+should run and you should (hopefully) see a green check next to each test 
 indicating that it has passed.
