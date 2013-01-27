@@ -207,7 +207,6 @@ BO.IOBoard = (function () {
          */
         processInput: function (inputData) {
             inputData *= 1; // Force inputData to integer (is there a better way to do this?)
-            //console.log(inputData);
             var len;
 
             this._inputDataBuffer.push(inputData);

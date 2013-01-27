@@ -1,16 +1,16 @@
 (function () {
 
-   var IOBoard,
-      expect,
-      sinon,
-      common,
-      uno;
+   var IOBoard = window.BO.IOBoard,
+      expect = window.chai.expect,
+      sinon = window.sinon,
+      common = window.common,
+      uno = window.uno,
+      leonardo = window.leonardo,
+      mega2560 = window.mega2560,
+      fio = window.fio,
+      teensy2 = window.teensy2,
+      teensyPlusPlus2 = window.teensyPlusPlus2;
 
-   expect = window.chai.expect;
-   sinon = window.sinon;
-   common = window.common;
-   uno = window.uno;
-   IOBoard = window.BO.IOBoard;
 
    describe('IOBoard Test Suite', function () {
 
@@ -266,7 +266,7 @@
 
             describe('sendSysex', function () {
 
-               it("should send the expected string message", function () {
+               it("should send the expected message", function () {
                   var spyCall;
 
                   board.sendSysex(common.sendString[0], common.sendString[1]);
@@ -280,6 +280,7 @@
             });
 
             describe('sendServoAttach', function () {
+
                it("should send the expected servo config data", function () {
                   var spyCall;
 
@@ -290,9 +291,11 @@
                   expect(stubSend.calledTwice).to.equal(true);
                   expect(spyCall.args[0].toString()).to.equal(common.sendServoAttach.toString());
                });
+
             }); 
 
             describe('sendServoData', function () {
+
                it("should call sendAnalogData with the expected pin and value", function () {
                   var spy = sinon.spy(board, "sendAnalogData"),
                      pin = common.sendServoData[0],
@@ -304,6 +307,7 @@
 
                   expect(spy.withArgs(pin, value).calledOnce).to.equal(true);
                });
+
             });
 
          });
@@ -518,7 +522,7 @@
                      spy.restore();
                   });
 
-                  it("should parse a digital messages", function () {
+                  it("should parse a digital message", function () {
                      expect(spy.calledOnce).to.equal(true);
                   });
 
@@ -605,10 +609,15 @@
 
          describeBoardType("Arduino Uno", uno);
 
-         //describeBoardType("Arduino Mega", mega);
+         describeBoardType("Arduino Mega 2560", mega2560);
 
-         //describeBoardType("Arduino Fio", fio);
+         describeBoardType("Arduino Leonardo", leonardo);
 
+         describeBoardType("Arduino Fio", fio);
+
+         describeBoardType("Teensy 2.0", teensy2);
+
+         describeBoardType("Teensy++ 2.0", teensyPlusPlus2);
 
       });
 
