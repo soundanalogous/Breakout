@@ -207,7 +207,7 @@ BO.IOBoard = (function () {
          */
         processInput: function (inputData) {
             inputData *= 1; // Force inputData to integer (is there a better way to do this?)
-            console.log(inputData);
+            //console.log(inputData);
             var len;
 
             this._inputDataBuffer.push(inputData);
@@ -685,13 +685,14 @@ BO.IOBoard = (function () {
 
         /**
          * Sends an analog value up to 14 bits on an analog pin number between
-         * 0 and 15.
+         * 0 and 15. The value passed to this method should be in the range of
+         * 0.0 to 1.0. It is multiplied by the maxPWMValue set for the pin.
+         *
          * @param {Number} pin The analog pin number.
-         * param {Number} value The value to send.
+         * param {Number} value The value to send (0.0 to 1.0).
          * @private
          */
         sendAnalogData: function (pin, value) {
-
             var pwmMax = this.getDigitalPin(pin).maxPWMValue;
             value *= pwmMax;
             value = (value < 0) ? 0: value;

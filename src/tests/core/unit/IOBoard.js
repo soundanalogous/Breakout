@@ -17,11 +17,15 @@
 
       var board,
          stubs = [],
+         stubSend,
          dispatcher;
 
       beforeEach(function () {
          //stubs.push(sinon.stub(WSocketWrapper.prototype, "init"));
-         stubs.push(sinon.stub(IOBoard.prototype, "send"));
+
+         // save a reference to this stub to use in testing output methods
+         stubSend = sinon.stub(IOBoard.prototype, "send");
+         stubs.push(stubSend);
          stubs.push(sinon.stub(IOBoard.prototype, "startupInSingleClientMode"));
          //stubs.push(sinon.stub(IOBoard.prototype, "startupInMultiClientMode"));
          
@@ -49,9 +53,7 @@
 
       describe('Common capabilities', function () {
 
-         // may want to run this against fixtures representing a variety of
-         // arduino boards
-         describe('input messages', function () {
+         describe('parse input messages', function () {
 
             describe("firmware name and version", function () {
                var spy,
@@ -102,9 +104,8 @@
                   var stringMessage = common.stringMessage,
                      len = stringMessage.length;
 
-                  spy = sinon.spy(board, "processSysExString"),
-                  listenerSpy = sinon.spy(),
-                  spyCall;
+                  spy = sinon.spy(board, "processSysExString");
+                  listenerSpy = sinon.spy();
 
                   board.addEventListener("stringMessage", listenerSpy);
 
@@ -135,51 +136,160 @@
 
          });
 
-         describe.skip('output methods', function () {
+         describe('create output messges', function () {
+            var capabilityResponse,
+               capabilitySpy;
+
+            beforeEach(function () {
+               var len;
+
+               capabilityResponse = uno.capabilityResponse;
+               capabilitySpy = sinon.spy(board, "processCapabilitiesResponse");
+               len = capabilityResponse.length;
+
+               // need to get the capability response each time in order to
+               // setup the pins
+               for (var i = 0; i < len; i++) {
+                  board.processInput(capabilityResponse[i]);
+               }
+            });
+
+            afterEach(function () {
+               capabilitySpy.restore();
+            });
 
             describe('sendAnalogData', function () {
-               it("should...", function () {
 
+               it("should send the expected data", function () {
+                  var spyCall;
+
+                  board.sendAnalogData(11, 0.7);
+
+                  spyCall = stubSend.getCall(1);
+
+                  // called once for processInput and a second time for
+                  // sendAnalogData
+                  expect(stubSend.calledTwice).to.equal(true);
+                  expect(spyCall.args[0].toString()).to.equal(common.sendAnalogData.toString());
                });
+
+               it("should call sendExtendedAnalogData when pin number is > 15", function () {
+                  var spy = sinon.spy(board, "sendExtendedAnalogData");
+
+                  board.sendAnalogData(16, 0.5);
+
+                  expect(spy.calledOnce).to.equal(true);
+                  spy.restore();
+               });
+
             });
 
             describe('sendExtendedAnalogData', function () {
-               it("should...", function () {
 
+               it("should send analog data up to 16 bits", function () {
+                  var maxBits = common.sendExtendedAnalogData.maxBits,
+                     spyCall;
+
+                  board.sendExtendedAnalogData(11, Math.pow(2, 16));
+
+                  spyCall = stubSend.getCall(1);
+
+                  // called once for processInput and a second time for
+                  // sendAnalogData
+                  expect(stubSend.calledTwice).to.equal(true);
+                  expect(spyCall.args[0].toString()).to.equal(maxBits.toString());
                });
+
+               it("should send data on pins up to number 128", function () {
+                  var maxPins = common.sendExtendedAnalogData.maxPins,
+                     spyCall;
+
+                  board.sendExtendedAnalogData(128, 255);
+
+                  spyCall = stubSend.getCall(1);
+
+                  // called once for processInput and a second time for
+                  // sendAnalogData
+                  expect(stubSend.calledTwice).to.equal(true);
+                  expect(spyCall.args[0].toString()).to.equal(maxPins.toString());
+               });
+
             });
 
             describe('sendDigitalData', function () {
-               it("should...", function () {
 
+               it("should call sendDigitalPort with expected data", function () {
+                  var spy = sinon.spy(board, "sendDigitalPort"),
+                     spyCall;
+
+                  board.sendDigitalData(3, 1);
+
+                  spyCall = spy.getCall(0);
+
+                  expect(spy.calledOnce).to.equal(true);
+                  expect(spyCall.args.toString()).to.equal(common.sendDigitalData.toString());
+
+                  spy.restore();
                });
-            });
 
-            describe('sendServoData', function () {
-               it("should...", function () {
-
-               });
-            });
-
-            describe('sendServoAttach', function () {
-               it("should...", function () {
-
-               });
-            });
-
-            describe('sendString', function () {
-               it("should...", function () {
-
-               });
-            });            
-
-            describe('sendSysex', function () {
-               it("should...", function () {
-
-               });
             });
 
             describe('sendDigitalPort', function () {
+
+               it("should send the expected data", function () {
+                  var spyCall;
+
+                  board.sendDigitalPort(common.sendDigitalData[0], common.sendDigitalData[1]);
+
+                  spyCall = stubSend.getCall(1);
+
+                  expect(stubSend.calledTwice).to.equal(true);
+                  expect(spyCall.args[0].toString()).to.equal(common.sendDigitalPort.toString());
+               });
+
+            });             
+
+            describe('sendString', function () {
+
+               it("should call sendSysex with the expected string data", function () {
+                  var spy = sinon.spy(board, "sendSysex"),
+                     spyCall;
+
+                  board.sendString("Hello World!");
+
+                  spyCall = spy.getCall(0);
+
+                  expect(spy.calledOnce).to.equal(true);
+                  expect(spyCall.args[0]).to.equal(common.sendString[0]);
+                  expect(spyCall.args[1].toString()).to.equal(common.sendString[1].toString());
+
+                  spy.restore();
+               });
+
+            });            
+
+            describe('sendSysex', function () {
+
+               it("should send the expected string message", function () {
+                  var spyCall;
+
+                  board.sendSysex(common.sendString[0], common.sendString[1]);
+
+                  spyCall = stubSend.getCall(1);
+
+                  expect(stubSend.calledTwice).to.equal(true);
+                  expect(spyCall.args[0].toString()).to.equal(common.sendSysex.toString());
+               });
+
+            });
+
+            describe.skip('sendServoData', function () {
+               it("should...", function () {
+
+               });
+            });
+
+            describe.skip('sendServoAttach', function () {
                it("should...", function () {
 
                });
@@ -414,11 +524,67 @@
 
                });
 
-               describe.skip("pin state query", function () {
+               describe("pin state query", function () {
+                  var spy,
+                     listenerSpy;
+
+                  beforeEach(function () {
+                     var dOutPinState = boardType.pinStateResponse.digitalOut,
+                        len = dOutPinState.length;
+
+                     spy = sinon.spy(board, "processPinStateResponse");
+                     listenerSpy = sinon.spy();
+
+                     board.addEventListener("pinStateResponse", listenerSpy);
+
+                     // increments pinStateRequest counter so the response can
+                     // be processed
+                     board.queryPinState(board.getDigitalPin(boardType.testPinStateDout));
+
+                     for (var i = 0; i < len; i++) {
+                        board.processInput(dOutPinState[i]);
+                     }
+                  });
+
+                  afterEach(function () {
+                     spy.restore();
+                  });
 
                   it("should parse a pin state query response", function () {
-
+                     expect(spy.calledOnce).to.equal(true);
                   });
+
+                  it("should fire a PIN_STATE_RESPONSE event", function () {
+                     expect(listenerSpy.calledOnce).to.equal(true);
+                  });
+
+                  it("should report the expected digital out pin number and state", function () {
+                     var spyCall = listenerSpy.getCall(0),
+                        pin = spyCall.args[0].pin;
+
+                     expect(pin.number).to.equal(boardType.testPinStateDout);
+                     expect(pin.state).to.equal(1);
+                  });
+
+                  it("should report the expected pwm pin number and state", function () {
+                     var pwmPinState = boardType.pinStateResponse.pwm,
+                        len = pwmPinState.length,
+                        pin,
+                        spyCall;
+
+                     board.queryPinState(board.getDigitalPin(boardType.testPinStatePwm));   
+
+                     for (var i = 0; i < len; i++) {
+                        board.processInput(pwmPinState[i]);
+                     }
+
+                     // spy on the 2nd listener call
+                     spyCall = listenerSpy.getCall(1);
+                     pin = spyCall.args[0].pin;
+
+                     expect(pin.number).to.equal(boardType.testPinStatePwm);
+                     expect(pin.state.toFixed(2)).to.equal('0.85');
+                  });                  
 
                });
 
