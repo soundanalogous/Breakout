@@ -25,12 +25,10 @@ h2 {
 <title>Leonardo Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.8.3.min.js"></script>
+<script src="../libs/jquery-1.9.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-    // dependencies
-    // declare these variables so you don't have
+    // Declare these variables so you don't have
     // to type the full namespace
     var Pin = BO.Pin;
     var PinEvent = BO.PinEvent;
@@ -45,29 +43,34 @@ $(document).ready(function() {
     var LED = BO.io.LED;
     var Oscillator = BO.generators.Oscillator;  
 
-    // set to true to print debug messages to console
+    // Set to true to print debug messages to console
     BO.enableDebugging = true;  
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
+    // var arduino = new IOBoard("localhost", 8887);
     var leo = new IOBoard(location.hostname, 8887);
+    
+    // Variables
     var servoDir = true;
     var blinkM;
     var compass;
     var servo;
-    
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data    
     leo.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-
-        // log the board capabilities to the browser console
+        // Log the board capabilities to the browser console
         leo.reportCapabilities();
-                    
+        
+        // Remove the event listener because it is no longer needed
         leo.removeEventListener(IOBoardEvent.READY, onReady);
                     
-        // listen for incoming string messages
+        // Listen for incoming string messages
         leo.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 
         // blink the on for 1 second and off for 1 second.

@@ -25,12 +25,10 @@ h2 {
 <title>Arduino Mega 2560 Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.8.3.min.js"></script>
+<script src="../libs/jquery-1.9.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-    // dependencies
-    // declare these variables so you don't have
+    // Declare these variables so you don't have
     // to type the full namespace
     var Pin = BO.Pin;
     var PinEvent = BO.PinEvent;
@@ -45,26 +43,31 @@ $(document).ready(function() {
     var LED = BO.io.LED;
     var Oscillator = BO.generators.Oscillator;
 
-    // set to true to print debug messages to console
+    // Set to true to print debug messages to console
     BO.enableDebugging = true;  
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
+    // var arduino = new IOBoard("localhost", 8887);
     var mega = new IOBoard(location.hostname, 8887);
+    
+    // Variables    
     var servoDir = true;
     var blinkM;
     var compass;
     var servo;
-    
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data    
     mega.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-                    
+        // Remove the event listener because it is no longer needed
         mega.removeEventListener(IOBoardEvent.READY, onReady);
                     
-        // listen for incoming string messages
+        // Listen for incoming string messages
         // when using StandardFirmata, error messages will be sent
         // from the I/O board as strings.
         mega.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
@@ -73,7 +76,7 @@ $(document).ready(function() {
         blinkLED.blink(1000, 0);
 
         // Digital input using Button object:
-        // params: board, pin, mode
+        // Parameters: board, pin, mode
         var button01 = new Button(mega, mega.getDigitalPin(37), Button.PULL_DOWN);
         button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
         button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
@@ -83,7 +86,7 @@ $(document).ready(function() {
         mega.enableAnalogPin(15);
         // get a reference to the pin object
         var pot = mega.getAnalogPin(15);
-        // listen for the CHANGE event to be notified when the analog
+        // Listen for the CHANGE event to be notified when the analog
         // value has changed.
         pot.addEventListener(PinEvent.CHANGE, onPotChange);
         
@@ -95,17 +98,16 @@ $(document).ready(function() {
         //mega.setDigitalPinMode(56, Pin.DIN);
         mega.setDigitalPinMode(mega.analogToDigital(2), Pin.DIN);
 
-        // either of the following 2 lines can be used:
+        // Either of the following 2 lines can be used:
         //var button02 = mega.getDigitalPin(56);
         var button02 = mega.getAnalogPin(2);
 
         button02.addEventListener(PinEvent.CHANGE, onButtonChange);
         
-
-        // create a new LED
-        // params: board, pin       
+        // Create a new LED
+        // Parameter: board, pin       
         var fadeLED = new LED(mega, mega.getDigitalPin(11));
-        // use a sine wave to fade the led on and off every 2 seconds
+        // Use a sine wave to fade the led on and off every 2 seconds
         fadeLED.blink(2000, 0, Oscillator.SIN);         
         
         servo = new Servo(mega, mega.getDigitalPin(4));
@@ -119,9 +121,7 @@ $(document).ready(function() {
         // i2c module example:  HMC6352 digital compass module
         compass = new CompassHMC6352(mega);
         compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
-        
     }
-    
     
     function onHeadingUpdate(evt) {
         //console.log("heading = " + evt.target.heading);
@@ -175,18 +175,16 @@ $(document).ready(function() {
         }
         servoDir = !servoDir;
     }
-            
 });
-
 </script>
 
 </head>
 <body>
     <h2>Arduino Mega 2560 Test Example</h2>
   
-    <div id="potData" class="text">pot value:</div>
-    <div id="heading" class="text">heading:</div>
-    <div id="button" class="text">button:</div>
+    <div id="potData" class="text">Pot value:</div>
+    <div id="heading" class="text">Heading:</div>
+    <div id="button" class="text">Button:</div>
   
 </body>
 </html>​
