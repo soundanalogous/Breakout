@@ -50,10 +50,10 @@ $(document).ready(function() {
     // that the Arduino board is connected to, replace
     // location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
-    // var arduino = new IOBoard("localhost", 8887);
+    // var mega = new IOBoard("localhost", 8887);
     var mega = new IOBoard(location.hostname, 8887);
     
-    // Variables    
+    // Variables
     var servoDir = true;
     var blinkM;
     var compass;
