@@ -58,13 +58,11 @@ p.scopeLabel {
 <title>Scaler Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.8.3.min.js"></script>
+<script src="../libs/jquery-1.9.0.min.js"></script>
 <script src="../libs/requestAnimFrame.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-    // dependencies
-    // declare these variables so you don't have
+    // Declare these variables so you don't have
     // to type the full namespace
     var PinEvent = BO.PinEvent;
     var IOBoard = BO.IOBoard;
@@ -72,32 +70,38 @@ $(document).ready(function() {
     var Scaler = BO.filters.Scaler;
     var SignalScope = JSUTILS.SignalScope;
 
-    // set to true to print debug messages to console
+    // Set to true to print debug messages to console
     BO.enableDebugging = true;  
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
+    // var arduino = new IOBoard("localhost", 8887);
     var arduino = new IOBoard(location.hostname, 8887);
+    
+    // Variables
     var pot;
 
+    // Scopes
     var scope1 = new SignalScope("scope1", 200, 100, 0, 1);
     var scope2 = new SignalScope("scope2", 200, 100, 0, 1);
     var currentEq;
     var maxVal = 1;
     
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-                    
+        // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);       
 
-        // need to enable an analog pin in order to read it
+        // Need to enable an analog pin in order to read it
         arduino.enableAnalogPin(0);
         pot = arduino.getAnalogPin(0);
         
-        // scale the input from the range of 0.0 to 1.0 to the range of 0.0 to 10.0
+        // Scale the input from the range of 0.0 to 1.0 to the range of 0.0 to 10.0
         pot.addFilter(new Scaler(0, 1, 0, maxVal, Scaler.LINEAR));
         currentEq = Scaler.LINEAR;
         pot.addEventListener(PinEvent.CHANGE, onPotChange);
@@ -109,7 +113,6 @@ $(document).ready(function() {
 
     function onPotChange(event) {
         var pin = event.target;
-
         $('#scope1Value').text('Pre-filtered value: ' + pin.preFilterValue.toFixed(3));
         $('#scope2Value').text('Filtered value: ' + pin.value.toFixed(3));
     }   
@@ -158,9 +161,7 @@ $(document).ready(function() {
 
         requestAnimFrame(animate);
     }
-            
 });
-
 </script>
 
 </head>
