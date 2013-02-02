@@ -25,12 +25,10 @@ h2 {
 <title>Teensy 2.0 Example</title>
 
 <script src="../../dist/Breakout.js"></script>
-<script src="../libs/jquery-1.8.3.min.js"></script>
+<script src="../libs/jquery-1.9.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-    // dependencies
-    // declare these variables so you don't have
+    // Declare these variables so you don't have
     // to type the full namespace
     var Pin = BO.Pin;
     var PinEvent = BO.PinEvent;
@@ -45,63 +43,68 @@ $(document).ready(function() {
     var LED = BO.io.LED;
     var Oscillator = BO.generators.Oscillator;  
 
-    // set to true to print debug messages to console
+    // Set to true to print debug messages to console
     BO.enableDebugging = true;  
 
     // If you are not serving this file from the same computer
     // that the Teensy board is connected to, replace
     // location.hostname with the IP address or hostname
-    // of the computer that the Teensy board is connected to.
+    // of the computer that the Arduino board is connected to.
+    // var teensy = new IOBoard("localhost", 8887);
     var teensy = new IOBoard(location.hostname, 8887);
+    
+    // Variables
     var servoDir = true;
     var blinkM;
     var compass;
     var servo;
-    
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data     
     teensy.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-
-        // log the board capabilities to the browser console
+        // Log the board capabilities to the browser console
         teensy.reportCapabilities();
-                    
+        
+        // Remove the listener because it is no longer needed        
         teensy.removeEventListener(IOBoardEvent.READY, onReady);
                     
-        // listen for incoming string messages
+        // Listen for incoming string messages
         teensy.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 
-        // blink the on for 1 second and off for 1 second
+        // Blink the on for 1 second and off for 1 second
         var blinkLED = new LED(teensy, teensy.getDigitalPin(4));
         blinkLED.blink(1000, 0);
     
-        //set digital pin 2 to input
+        // Set digital pin 2 to input
         teensy.setDigitalPinMode(2, Pin.DIN);
         
-        // get a reference to the pin and listen for Change event
+        // Get a reference to the pin and listen for Change event
         var button01 = new Button(teensy, teensy.getDigitalPin(2), Button.PULL_DOWN);
         button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
         button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
         
-        // enable reporting for an analog pin
+        // Enable reporting for an analog pin
         teensy.enableAnalogPin(2);
         var pot = teensy.getAnalogPin(2);
         console.log("pin number = " + pot.number);
         console.log("analog number = " + pot.analogNumber);
         pot.addEventListener(PinEvent.CHANGE, onPotChange);
-        // disable reporting for an analog pin
+        // Disable reporting for an analog pin
         //teensy.disableAnalogPin(0);
         
-        // set analog pin to digital input
+        // Set analog pin to digital input
         teensy.setDigitalPinMode(16, Pin.DIN);
         var button02 = teensy.getDigitalPin(16);
         button02.addEventListener(PinEvent.CHANGE, onButtonChange);
 
-        // fade the LED on and off over a 2 second duration
+        // Fade the LED on and off over a 2 second duration
         var fadeLED = new LED(teensy, teensy.getDigitalPin(10));
         fadeLED.blink(2000, 0, Oscillator.SIN);     
 
         servo = new Servo(teensy, teensy.getDigitalPin(9));
-        // rotate the servo head ever 5 seconds
+        // Rotate the servo head ever 5 seconds
         setInterval(servoTest, 5000);
         
         blinkM = new BlinkM(teensy);
@@ -113,7 +116,6 @@ $(document).ready(function() {
         
         setTimeout(stopReading, 1000);
         setTimeout(startReading, 3000);
-                
     }
     
     function stopReading() {
@@ -173,9 +175,7 @@ $(document).ready(function() {
         }
         servoDir = !servoDir;
     }
-            
 });
-
 </script>
 
 </head>

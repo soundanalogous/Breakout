@@ -21,25 +21,29 @@
 <script src="libs/jquery-1.8.3.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-
-    // dependencies
-    // declare these variables so you don't have
+    // Declare these variables so you don't have
     // to type the full namespace
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
     var ID12RFIDReader = BO.custom.ID12RFIDReader;
     var RFIDEvent = BO.custom.RFIDEvent;
 
-    // set to true to print debug messages to console
-    BO.enableDebugging = true;  
-    
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true; 
+     
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.  
     var ard = new IOBoard("localhost", 8887);
     var rfid;
-        
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data        
     ard.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-                    
+        // Remove the event listener because it is no longer needed
         ard.removeEventListener(IOBoardEvent.READY, onReady);
 
         rfid = new ID12RFIDReader(ard);
@@ -54,7 +58,6 @@ $(document).ready(function() {
     function onRemoveTag(event) {
         $('#textBox').html("Removed tag: " + event.tag);
     }
-                        
 });
 
 </script>
