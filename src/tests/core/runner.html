@@ -24,25 +24,23 @@
     <script src="../../utils/JSUTILS.js"></script>
     <script src="../../utils/Event.js"></script>
     <script src="../../utils/EventDispatcher.js"></script>
-    <script src="../../core/WSocketEvent.js"></script>
-    <script src="../../core/WSocketWrapper.js"></script>
-    <script src="../../generators/GeneratorEvent.js"></script>
-    <script src="../../generators/GeneratorBase.js"></script>
     <script src="../../core/PinEvent.js"></script>
     <script src="../../core/Pin.js"></script>
     <script src="../../core/IOBoardEvent.js"></script>
-
-
     <script src="../../core/IOBoard.js"></script>
 
     <!-- fixtures -->
     <script src="fixtures/fixtures.js"></script>
 
+    <script src="../helpers/coreStubs.js"></script>
+
     <!-- tests -->
-    <script src="unit/IOBoard.js"></script>    
+    <script src="unit/IOBoard.js"></script>
+    <script src="unit/Pin.js"></script> 
 
     <script>
-        mocha.run();
+        if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+        else { mocha.run(); }
     </script>
   </body>
 </html>

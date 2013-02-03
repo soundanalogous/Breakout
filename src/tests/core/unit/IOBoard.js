@@ -16,15 +16,13 @@
 
         var board,
             stubs = [],
-            stubSend,
-            dispatcher;
+            stubSend;
 
         beforeEach(function () {
             // save a reference to this stub to use in testing output methods
             stubSend = sinon.stub(IOBoard.prototype, "send");
             stubs.push(stubSend);
             stubs.push(sinon.stub(IOBoard.prototype, "startupInSingleClientMode"));
-
             board = new IOBoard("localhost", 8887);
         });
 

@@ -166,8 +166,16 @@ def buildLib(files, filename, version):
 
 
 def buildJSDocs():
-    os.system("java -jar jsdoc-toolkit/jsrun.jar jsdoc-toolkit/app/run.js -a -t=jsdoc-toolkit/templates/jsdoc -r=2 ../src/ -d=../docs/")
+    try:
+        os.system("java -jar jsdoc-toolkit/jsrun.jar jsdoc-toolkit/app/run.js -a -t=jsdoc-toolkit/templates/jsdoc -r=2 ../src/ -d=../docs/")
+    except:
+        pass
 
+def runTests():
+    try:
+        os.system("mocha-phantomjs ../src/tests/core/runner.html");
+    except:
+        pass
 
 def main(argv=None):
 
@@ -186,6 +194,8 @@ def main(argv=None):
         buildLib(files, fname_lib, version)
 
     buildJSDocs()
+
+    runTests()
 
 if __name__ == "__main__":
     main()

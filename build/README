@@ -19,6 +19,12 @@ Updating the documentation
 Documentation is generated as part of the build process. The documentation uses 
 JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/).
 
+Running tests
+-------------
+Tests (in src/tests/) are run automatically at the end of the build process.
+[phantomJS](http://phantomjs.org/) and [mocha-phantomjs](https://github.com/metaskills/mocha-phantomjs) are required to run tests via the build script.
+See the README file in src/tests/ for more info on running the tests.
+
 Cleaning-up
 -----------
 Too much temp files in your directories, get rid of them.

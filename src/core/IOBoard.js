@@ -50,8 +50,6 @@ BO.IOBoard = (function () {
     var Pin = BO.Pin,
         EventDispatcher = JSUTILS.EventDispatcher,
         PinEvent = BO.PinEvent,
-        WSocketEvent = BO.WSocketEvent,
-        WSocketWrapper = BO.WSocketWrapper,
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
@@ -88,6 +86,7 @@ BO.IOBoard = (function () {
         this._i2cPins = [];
         this._ioPins = [];
         this._totalPins = 0;
+        this._totalAnalogPins = 0;
         this._samplingInterval = 19; // Default sampling interval
         this._isReady = false;
         this._firmwareName = "";
@@ -101,16 +100,16 @@ BO.IOBoard = (function () {
         this._evtDispatcher = new EventDispatcher(this);
 
         // bind event handlers to this
+        this.initialVersionResultHandler = this.onInitialVersionResult.bind(this);
+        this.sendOutHandler = this.sendOut.bind(this);
         this.socketConnectionHandler = this.onSocketConnection.bind(this);
         this.socketMessageHandler = this.onSocketMessage.bind(this);
         this.socketClosedHandler = this.onSocketClosed.bind(this);
-        this.initialVersionResultHandler = this.onInitialVersionResult.bind(this);
-        this.sendOutHandler = this.sendOut.bind(this);
 
-        this._socket = new WSocketWrapper(host, port, protocol);
-        this._socket.addEventListener(WSocketEvent.CONNECTED, this.socketConnectionHandler);
-        this._socket.addEventListener(WSocketEvent.MESSAGE, this.socketMessageHandler);
-        this._socket.addEventListener(WSocketEvent.CLOSE, this.socketClosedHandler);
+        this._socket = new BO.WSocketWrapper(host, port, protocol);
+        this._socket.addEventListener(BO.WSocketEvent.CONNECTED, this.socketConnectionHandler);
+        this._socket.addEventListener(BO.WSocketEvent.MESSAGE, this.socketMessageHandler);
+        this._socket.addEventListener(BO.WSocketEvent.CLOSE, this.socketClosedHandler);
 
     };
 

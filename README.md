@@ -77,11 +77,11 @@ Mobile Browsers (browser must support websockets):
 
 Contributing
 ---
-Contributors are welcome. If you have any ideas, suggestions for improvements, 
+Contributions are welcome. If you have any ideas, suggestions for improvements, 
 examples to share, or anything else you'd like to contribute please get in touch.
 
 Submit pull requests for bug fixes and small changes. For any larger changes, 
-please first start a discussing by submitting a new issue.
+please first start a discussing by opening a new issue.
 
 Please submit pull requests against the *dev* branch. Code must pass unit tests
 in src/tests/ and must be linted with [JSHint](https://github.com/jshint/jshint) (according to the rules in 

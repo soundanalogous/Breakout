@@ -18,8 +18,7 @@ BO.Pin = (function () {
 
     // dependencies
     var EventDispatcher = JSUTILS.EventDispatcher,
-        PinEvent = BO.PinEvent,
-        GeneratorEvent = BO.generators.GeneratorEvent;
+        PinEvent = BO.PinEvent;
 
     /**
      * An object to represent an IOBoard pin
@@ -359,6 +358,27 @@ BO.Pin = (function () {
         },
 
         /**
+         * Remove a specified filter from the Pin.
+         * @param {FilterBase} The filter to remove.
+         * @see BO.filters.Convolution
+         * @see BO.filters.Scaler
+         * @see BO.filters.TriggerPoint
+         */
+        removeFilter: function(filterToRemove) {
+            var index;
+
+            if (this._filters.length < 1) {
+                return;
+            }
+
+            index = this._filters.indexOf(filterToRemove);
+
+            if (index !== -1) {
+                this._filters.splice(index, 1);
+            }
+        },
+
+        /**
          * Add a new generator to the Pin. A pin can only have one generator
          * assigned. 
          * Assigning a new generator will replace the previously assigned 
@@ -371,7 +391,7 @@ BO.Pin = (function () {
         addGenerator: function (newGenerator) {
             this.removeGenerator();
             this._generator = newGenerator;
-            this._generator.addEventListener(GeneratorEvent.UPDATE, this._autoSetValueCallback);
+            this._generator.addEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
         },
 
         /**
@@ -379,7 +399,7 @@ BO.Pin = (function () {
          */
         removeGenerator: function () {
             if (this._generator !== null) {
-                this._generator.removeEventListener(GeneratorEvent.UPDATE, this._autoSetValueCallback);
+                this._generator.removeEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
             }
             this._generator = null;             
         },

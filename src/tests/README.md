@@ -23,12 +23,25 @@ listed above.
 Running Tests
 ---
 
-Until I get around to integrating tests into the build system, the unit tests
-will need to be run manually.
-
-1. Disconnect any boards connected to your computer. The tests run against 
+Tests can be run in the browser or from the command line. Before running tests,
+disconnect any boards connected to your computer. The tests run against 
 sampled data in the fixtures directory rather than a connected board. Any 
 connected boards may actually interfere with the tests.
-2. Navigate to src/tests/core/ and open runner.html in your browser. The tests 
-should run and you should (hopefully) see a green check next to each test 
+
+To run tests in the browser:
+
+1. Navigate to src/tests/core/ and open runner.html in your browser.
+2. The tests should run and you should see a green check next to each test 
 indicating that it has passed.
+
+To run tests from the command line:
+
+1. Ensure you have [phantom](http://phantomjs.org/) and [mocha-phantomjs](https://github.com/metaskills/mocha-phantomjs) installed.
+2. Navigate to the Breakout root directory and type:
+```mocha-phantomjs src/tests/core/runner.html```. Also see mocha-phantomjs documentation for additional options.
+3. The tests should run and you should see a green check next to each test 
+indicating that it has passed.
+
+Tests are also run automatically at the end of the build process (kicked off by 
+running the build script in Breakout/build/). Tests will only run automatically
+if phantom and mocha-phantomjs are installed.
