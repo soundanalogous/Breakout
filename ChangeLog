@@ -4,7 +4,7 @@
 * Updated IOBoard.prototype.reportCapabilities to print in easier to read format.
 * Changed IOBoard.prototype.getPinCapabilities to store pin modes as objects
   rather than arrays.
-* Added unit tests for IOBoard and Pin (see src/tests/core/).
+* Added unit tests for IOBoard and Pin (see test/core/).
 * Added getAnalogPinCount() to IOBoard to return the number of analog pins
   supported by the IOBoard.
 * Updated processQueryFirmwareResult to set the firmware name string correctly.

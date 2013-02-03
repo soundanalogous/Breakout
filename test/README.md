@@ -38,7 +38,7 @@ To run tests from the command line:
 
 1. Ensure you have [phantomJS](http://phantomjs.org/) and [mocha-phantomjs](https://github.com/metaskills/mocha-phantomjs) installed.
 2. Navigate to the Breakout root directory and type:
-```mocha-phantomjs src/tests/core/runner.html```. Also see mocha-phantomjs documentation for additional options.
+```mocha-phantomjs test/core/runner.html```. Also see mocha-phantomjs documentation for additional options.
 3. The tests should run and you should see a green check next to each test 
 indicating that it has passed.
 

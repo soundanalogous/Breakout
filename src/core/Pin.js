@@ -359,7 +359,7 @@ BO.Pin = (function () {
 
         /**
          * Remove a specified filter from the Pin.
-         * @param {FilterBase} The filter to remove.
+         * @param {FilterBase} filterToRemove The filter to remove.
          * @see BO.filters.Convolution
          * @see BO.filters.Scaler
          * @see BO.filters.TriggerPoint

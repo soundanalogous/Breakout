@@ -173,7 +173,7 @@ def buildJSDocs():
 
 def runTests():
     try:
-        os.system("mocha-phantomjs ../src/tests/core/runner.html");
+        os.system("mocha-phantomjs ../test/core/runner.html");
     except:
         pass
 

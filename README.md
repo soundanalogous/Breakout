@@ -84,7 +84,7 @@ Submit pull requests for bug fixes and small changes. For any larger changes,
 please first start a discussing by opening a new issue.
 
 Please submit pull requests against the *dev* branch. Code must pass unit tests
-in src/tests/ and must be linted with [JSHint](https://github.com/jshint/jshint) (according to the rules in 
+in Breakout/test/ and must be linted with [JSHint](https://github.com/jshint/jshint) (according to the rules in 
 Breakout/.jshintrc) in order to be accepted. Run tests against Chrome, Firefox, 
 Safari and Opera 12.
 
