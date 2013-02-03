@@ -364,7 +364,7 @@ BO.Pin = (function () {
          * @see BO.filters.Scaler
          * @see BO.filters.TriggerPoint
          */
-        removeFilter: function(filterToRemove) {
+        removeFilter: function (filterToRemove) {
             var index;
 
             if (this._filters.length < 1) {

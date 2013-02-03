@@ -4,7 +4,7 @@
         expect = window.chai.expect,
         sinon = window.sinon,
         common = window.common,
-        uno = window.uno;;
+        uno = window.uno;
 
     describe('Pin Test Suite', function () {
         var pinNumber = 2,
@@ -69,7 +69,7 @@
                     expect(calcSpy.withArgs(0.77).calledOnce).to.equal(true);
                 });
 
-                it('should call applyFilters with expected args', function() {
+                it('should call applyFilters with expected args', function () {
                     expect(filterSpy.withArgs(0.77).calledOnce).to.equal(true);
                 });
 
@@ -153,7 +153,7 @@
 
             describe('addFilter', function () {
                 var filter1 = {name: "filter1"},
-                    filter2 = {name: "filter2"}
+                    filter2 = {name: "filter2"};
 
                 beforeEach(function () {
                     pin = new Pin(pinNumber, Pin.AIN);
@@ -178,7 +178,7 @@
             describe('removeFilter', function () {
                 var filter1 = {name: "filter1"},
                     filter2 = {name: "filter2"},
-                    filter3 = {name: "filter3"}
+                    filter3 = {name: "filter3"};
 
                 it('should remove the specified filter', function () {
                     pin = new Pin(pinNumber, Pin.AIN);
@@ -238,7 +238,7 @@
 
                 afterEach(function () {
                     spy.restore();
-                })
+                });
 
                 it('should call removeGenerator', function () {
                     spy = sinon.spy(pin, "removeGenerator");
@@ -305,7 +305,7 @@
                     expect(pin.lastValue).to.equal(pin.preFilterValue);
                 });
 
-                it ('should call clearWeight', function () {
+                it('should call clearWeight', function () {
                     var spy = sinon.spy(pin, "clearWeight");
                     pin.clear();
                     expect(spy.calledOnce).to.equal(true);
