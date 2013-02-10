@@ -3,13 +3,13 @@
     var IOBoard = window.BO.IOBoard,
         expect = window.chai.expect,
         sinon = window.sinon,
-        common = window.common,
-        uno = window.uno,
-        leonardo = window.leonardo,
-        mega2560 = window.mega2560,
-        fio = window.fio,
-        teensy2 = window.teensy2,
-        teensyPlusPlus2 = window.teensyPlusPlus2;
+        common = window.fixtures.common,
+        uno = window.fixtures.uno,
+        leonardo = window.fixtures.leonardo,
+        mega2560 = window.fixtures.mega2560,
+        fio = window.fixtures.fio,
+        teensy2 = window.fixtures.teensy2,
+        teensyPlusPlus2 = window.fixtures.teensyPlusPlus2;
 
 
     describe('IOBoard Test Suite', function () {

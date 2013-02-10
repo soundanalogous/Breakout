@@ -1,4 +1,6 @@
-var common = {
+var fixtures = window.fixtures || {};
+
+fixtures.common = {
     reportFirmware: [240, 121, 2, 3, 65, 0, 100, 0, 118, 0, 97, 0, 110, 0, 99, 
         0, 101, 0, 100, 0, 70, 0, 105, 0, 114, 0, 109, 0, 97, 0, 116, 0, 97, 0, 
         46, 0, 105, 0, 110, 0, 111, 0, 247
@@ -28,7 +30,7 @@ var common = {
     sendServoData: [9, 0.5] // pin 8, 90 degrees
 };
 
-var uno = {
+fixtures.uno = {
     numPins: 20,
     i2cPins: [18, 19],
     pwmPins: [3, 5, 6, 9, 10, 11],
@@ -60,7 +62,7 @@ var uno = {
     }    
 };
 
-var mega2560 = {
+fixtures.mega2560 = {
     numPins: 70,
     i2cPins: [20, 21],
     pwmPins: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
@@ -121,7 +123,7 @@ var mega2560 = {
  * used as analog pins, so these 6 pins are counted twice even though you can
  * only use one mode at a time.
  */
-var leonardo = {
+fixtures.leonardo = {
     numPins: 30, // 14 digital + 12 analog + 4 spi (D14-D17 on ISP header)
     i2cPins: [2, 3],
     pwmPins: [3, 5, 6, 9, 10, 11, 13],
@@ -158,7 +160,7 @@ var leonardo = {
     }
 };
 
-var fio = {
+fixtures.fio = {
     numPins: 22,
     i2cPins: [18, 19],
     pwmPins: [3, 5, 6, 9, 10, 11],
@@ -190,7 +192,7 @@ var fio = {
     }
 };
 
-var teensy2 = {
+fixtures.teensy2 = {
     numPins: 25,
     i2cPins: [5, 6],
     pwmPins: [4, 5, 9, 10, 12, 14, 15],
@@ -224,7 +226,7 @@ var teensy2 = {
     }
 };
 
-var teensyPlusPlus2 = {
+fixtures.teensyPlusPlus2 = {
     numPins: 46,
     i2cPins: [0, 1],
     pwmPins: [0, 1, 14, 15, 16, 24, 25, 26, 27],

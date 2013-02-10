@@ -2,9 +2,7 @@
 
     var Pin = window.BO.Pin,
         expect = window.chai.expect,
-        sinon = window.sinon,
-        common = window.common,
-        uno = window.uno;
+        sinon = window.sinon;
 
     describe('Pin Test Suite', function () {
         var pinNumber = 2,
