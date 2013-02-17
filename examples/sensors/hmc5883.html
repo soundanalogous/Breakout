@@ -56,10 +56,15 @@ $(document).ready(function() {
     // with the ADXL345
 
     // If you are not serving this file from the same computer
-    // that the Arduino board is connected to, replace
-    // location.hostname with the IP address or hostname
-    // of the computer that the Arduino board is connected to.  
-    var fio = new IOBoard(location.hostname, 8887),
+    // that the Arduino Leonardo board is connected to, replace
+    // window.location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var host = window.location.hostname;
+    // if the file is opened locally, set the host to "localhost"
+    if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+    }
+    var fio = new IOBoard(host, 8887),
         accelerometer;
     
     fio.addEventListener(IOBoardEvent.READY, onReady);

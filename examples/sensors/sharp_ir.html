@@ -50,10 +50,15 @@ $(document).ready(function() {
     var PinEvent = BO.PinEvent;
 
     // If you are not serving this file from the same computer
-    // that the Arduino board is connected to, replace
-    // location.hostname with the IP address or hostname
+    // that the Arduino Leonardo board is connected to, replace
+    // window.location.hostname with the IP address or hostname
     // of the computer that the Arduino board is connected to.
-    var arduino = new IOBoard(location.hostname, 8887);
+    var host = window.location.hostname;
+    // if the file is opened locally, set the host to "localhost"
+    if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+    }
+    var arduino = new IOBoard(host, 8887);
 
     var RANGE_80CM = 80;    // Sharp GP2Y0A21YK
     var RANGE_150CM = 150;  // Sharp GP2Y0A02YK0F

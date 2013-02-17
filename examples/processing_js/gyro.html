@@ -36,6 +36,7 @@ sketch.attachFunction = function(p) {
     // with the ITG3200 and ADXL345 sensors
     var fio,
         gyro,
+        host,
         xRot = 0,
         yRot = 0,
         zRot = 0,
@@ -63,10 +64,15 @@ sketch.attachFunction = function(p) {
         realVelocity = new p.PVector();
 
         // If you are not serving this file from the same computer
-        // that the Arduino board is connected to, replace
-        // location.hostname with the IP address or hostname
+        // that the Arduino Leonardo board is connected to, replace
+        // window.location.hostname with the IP address or hostname
         // of the computer that the Arduino board is connected to.
-        fio = new IOBoard(location.hostname, 8887);
+        host = window.location.hostname;
+        // if the file is opened locally, set the host to "localhost"
+        if (window.location.protocol.indexOf("file:") === 0) {
+            host = "localhost";
+        }
+        fio = new IOBoard(host, 8887);
         fio.addEventListener(IOBoardEvent.READY, onFioReady);
         // get the sampling interval (this is how often the gyro
         // data will be reported). We will need this to translate

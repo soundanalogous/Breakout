@@ -59,6 +59,7 @@ sketch.attachFunction = function(p) {
       tradeGothic,
       helvetica,
       led,
+      host,
       isMousePressed = false,
       isReady = false;
     
@@ -77,12 +78,16 @@ sketch.attachFunction = function(p) {
       // to include a system font, simply reference it by name
       helvetica = p.createFont("Helvetica");
       
-      // create an instance of the IOBoard
       // If you are not serving this file from the same computer
-      // that the Arduino board is connected to, replace
-      // location.hostname with the IP address or hostname
-      // of the computer that the Arduino board is connected to.      
-      arduino = new IOBoard(location.hostname, 8887);
+      // that the Arduino Leonardo board is connected to, replace
+      // window.location.hostname with the IP address or hostname
+      // of the computer that the Arduino board is connected to.
+      host = window.location.hostname;
+      // if the file is opened locally, set the host to "localhost"
+      if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+      }     
+      arduino = new IOBoard(host, 8887);
       arduino.addEventListener(IOBoardEvent.READY, onReady);
 
   };

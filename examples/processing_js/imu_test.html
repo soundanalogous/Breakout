@@ -43,6 +43,7 @@ sketch.attachFunction = function(p) {
 
     var fio;
     var gyro;
+    var host;
     var accelerometer;
     var imuFilter;
     var imuFilterTick;
@@ -62,10 +63,15 @@ sketch.attachFunction = function(p) {
         p.stroke(p.color(44,48,32));
 
         // If you are not serving this file from the same computer
-        // that the Arduino board is connected to, replace
-        // location.hostname with the IP address or hostname
+        // that the Arduino Leonardo board is connected to, replace
+        // window.location.hostname with the IP address or hostname
         // of the computer that the Arduino board is connected to.
-        fio = new IOBoard(location.hostname, 8887);
+        host = window.location.hostname;
+        // if the file is opened locally, set the host to "localhost"
+        if (window.location.protocol.indexOf("file:") === 0) {
+            host = "localhost";
+        }
+        fio = new IOBoard(host, 8887);
         fio.addEventListener(IOBoardEvent.READY, onFioReady);
     };
 
