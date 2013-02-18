@@ -165,17 +165,41 @@ def buildLib(files, filename, version):
     output(addHeader(text, version), filename)
 
 
+def lint(files):
+    lint_error = False
+
+    for filename in files:
+        print "Checking " + str(filename)
+        fpath = "jshint " + os.path.join('..', 'src', filename)
+        result = os.system(fpath)
+        if result != 0:
+            lint_error = True
+        
+    if lint_error:
+        sys.exit(0)
+
 def buildJSDocs():
+    print "=" * 40
+    print "Building docs..."
+    print "=" * 40
+
     try:
         os.system("java -jar jsdoc-toolkit/jsrun.jar jsdoc-toolkit/app/run.js -a -t=jsdoc-toolkit/templates/jsdoc -r=2 ../src/ -d=../docs/")
     except:
         pass
 
 def runTests():
+    print "=" * 40
+    print "Running unit tests..."
+    print "=" * 40
+
     try:
-        os.system("mocha-phantomjs ../test/core/runner.html");
+        result = os.system("mocha-phantomjs ../test/core/runner.html")
     except:
         pass
+
+    if result != 0:
+        sys.exit(0)
 
 def main(argv=None):
 
@@ -190,12 +214,21 @@ def main(argv=None):
     ['Breakout-core', CORE_FILES]
     ]
 
+    print "=" * 40
+    print "Checking for lint..."
+    print "=" * 40
+    
+    for fname_lib, files in min_files:
+        lint(files)
+
+    # run unit tests
+    runTests()    
+
+    # concatenate and minify files
     for fname_lib, files in min_files:
         buildLib(files, fname_lib, version)
 
-    buildJSDocs()
-
-    runTests()
+    #buildJSDocs()
 
 if __name__ == "__main__":
     main()

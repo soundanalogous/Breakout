@@ -94,6 +94,7 @@ BO.IOBoard = (function () {
         this._evtDispatcher = null;
         this._isMultiClientEnabled = false;
         this._isConfigured = false;
+        this._capabilityQueryResponseReceived = false;
         this._debugMode = BO.enableDebugging;
         this._numPinStateRequests = 0;
         
@@ -173,20 +174,58 @@ BO.IOBoard = (function () {
          * @private
          */
         onInitialVersionResult: function (event) {
-            this.removeEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
             var version = event.version * 10,
-                name = event.name;
+                name = event.name,
+                self = this;
 
-            this.debug("debug: Firmware name = " + name + "\t, Firmware version = " + event.version);
+            this.removeEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
+
+            this.debug("debug: Firmware name = " + name + ", Firmware version = " + event.version);
             
             // Make sure the user has uploaded StandardFirmata 2.3 or greater
             if (version >= 23) {
-                this.queryCapabilities();
+
+                if (!this._isMultiClientEnabled) {
+                    // reset IOBoard to its default state
+                    this.systemReset();
+
+                    // Delay to allow systemReset function to execute in StandardFirmata
+                    setTimeout(function () {
+                        self.queryCapabilities();
+                        self.checkForQueryResponse();
+                    }, 500);
+                } else {
+                    this.queryCapabilities();
+                    this.checkForQueryResponse();
+                }
+
             } else {
                 var err = "error: You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
                 console.log(err);
-                //throw err;    
+                //throw err;
             }
+        },
+
+        /**
+         * Check if a capability response was received. If not, assume that
+         * a custom sketch was loaded to the IOBoard and fire a READY event.
+         * @private
+         */
+        checkForQueryResponse: function () {
+            var self = this;
+
+            // If after 200ms a capability query response is not received,
+            // assume that the user is running a custom sketch that does
+            // not implement a capability query response.
+
+            // 200ms is sufficient for an Arduino Mega (current longest
+            // response time). Need to revisit when Arduino Due support is
+            // added to Firmata.
+            setTimeout(function () {
+                if (self._capabilityQueryResponseReceived === false) {
+                    self.startup();
+                }
+            }, 200);
         },
 
         /**
@@ -421,6 +460,8 @@ BO.IOBoard = (function () {
                 len = msg.length,
                 type,
                 pin;
+
+            this._capabilityQueryResponseReceived = true;    
                     
             // Create default configuration
             while (byteCounter <= len) {
@@ -507,27 +548,10 @@ BO.IOBoard = (function () {
             }
             
             if (!this._isMultiClientEnabled) {
-                this.startupInSingleClientMode();
+                this.startup();
             } else {
                 this.startupInMultiClientMode();
             }
-        },
-
-        /**
-         * Single client mode is the default mode.
-         * Checking the "Enable multi-client" box in the Breakout Server UI
-         * to enable multi-client mode.
-         * 
-         * @private
-         */
-        startupInSingleClientMode: function () {
-            // Perform a soft reset of the board
-            // the board state will be reset to its default state
-            this.debug("debug: System reset");
-            this.systemReset();
-
-            // Delay to allow systemReset function to execute in StandardFirmata
-            setTimeout(this.startup.bind(this), 500);
         },
         
         /**
@@ -539,7 +563,7 @@ BO.IOBoard = (function () {
          */     
         startupInMultiClientMode: function () {
             var len = this.getPinCount();
-            // Populate pin values with the current IOBoard state
+            // Populate pins with the current IOBoard state
             for (var i = 0; i < len; i++) {
                 this.queryPinState(this.getDigitalPin(i));
             }
@@ -556,8 +580,8 @@ BO.IOBoard = (function () {
         startup: function () {
             this.debug("debug: IOBoard ready");
             this._isReady = true;
-            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
             this.enableDigitalPins();
+            this.dispatchEvent(new IOBoardEvent(IOBoardEvent.READY));
         },
         
         /**
@@ -567,6 +591,7 @@ BO.IOBoard = (function () {
          * @private
          */
         systemReset: function () {
+            this.debug("debug: System reset");
             this.send(SYSEX_RESET);
         },
 
@@ -869,7 +894,7 @@ BO.IOBoard = (function () {
          * @return {Number} The result of merging the 2 bytes
          */
         getValueFromTwo7bitBytes: function (lsb, msb) {
-            return (msb <<7) | lsb;
+            return (msb << 7) | lsb;
         },
         
         /**

@@ -1,10 +1,19 @@
-2013.nn.nn Version 0.2.1
+2013.02.18 Version 0.2.1
+* Applications using custom firmware should now listen for the IOBoard.READY
+  event rather than the IOBoard.CONNECTED event. Custom firmware can now
+  also handle a Firmata SYSTEM_RESET callback. See Breakout/custome_examples/.
+* System reset is now called before capability query when starting in single
+  client mode.
+* Removed string_test.html from custom_examples and added simple_json.html 
+  example and corresponding skecth (see customm_examples/sketches/.
+* Fixed bug that was setting optional i2c delay time incorrectly.
+* Added ability to open examples directly in browser (closes issue #28)
 * Added removeFilter method to Pin (closes issue #15)
 * Updated firmware.html example to use updated getPinCapabilities method.
-* Updated IOBoard.prototype.reportCapabilities to print in easier to read format.
-* Changed IOBoard.prototype.getPinCapabilities to store pin modes as objects
-  rather than arrays.
-* Added unit tests for IOBoard and Pin (see test/core/).
+* Updated IOBoard.reportCapabilities to print in easier to read format.
+* Changed IOBoard.getPinCapabilities to store pin modes as objects rather than arrays.
+* Auto run tests in build process.
+* Added unit tests for IOBoard, Pin and I2CBase (see test/core/).
 * Added getAnalogPinCount() to IOBoard to return the number of analog pins
   supported by the IOBoard.
 * Updated processQueryFirmwareResult to set the firmware name string correctly.

@@ -12,12 +12,17 @@
 }
 </style>
 
-<title>JSON Test</title>
+<title>Simple JSON</title>
 
 <script src="../dist/Breakout-core.js"></script>
 <script src="libs/jquery-1.9.0.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+    // Note: If you run this example in single client mode, the counter will
+    // be reset each time you refersh the browser. If you run in multi-client
+    // mode the counter will not be reset. This is because you would not want
+    // each connection to reset the counter.
+
     // Declare these variables so you don't have
     // to type the full namespace
     var Event = JSUTILS.Event;
@@ -25,21 +30,21 @@ $(document).ready(function() {
     var IOBoardEvent = BO.IOBoardEvent;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
-    // location.hostname with the IP address or hostname
+    // "localhost" with the IP address or hostname
     // of the computer that the Arduino board is connected to.  
     var arduino = new IOBoard("localhost", 8887);
 
-    // Listen for the IOBoard CONNECTED event which indicates the IOBoard
+    // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
-    arduino.addEventListener(IOBoardEvent.CONNECTED, onConnect);
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-    function onConnect(event) {
+    function onReady(event) {
         // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.CONNECTED, onConnect);     
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);     
 
         // Listen for incoming string messages
         arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);

@@ -50,13 +50,13 @@ $(document).ready(function() {
     var ard = new IOBoard("localhost", 8887);
     var rfid;
     
-    // Listen for IOBoardEvent.CONNECTED if you are running custom
-    // firmware on the IOBoard rather than StandardFirmata or RFIDFirmata
-    ard.addEventListener(IOBoardEvent.CONNECTED, onConnect);
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data        
+    ard.addEventListener(IOBoardEvent.READY, onReady);
 
-    function onConnect(event) {
+    function onReady(event) {
         // Remove the event listener because it is no longer needed
-        ard.removeEventListener(IOBoardEvent.CONNECTED, onConnect);
+        ard.removeEventListener(IOBoardEvent.READY, onReady);
         
         // Setup the RFID stuff
         rfid = new ID12RFIDReader(ard);

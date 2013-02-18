@@ -7,23 +7,38 @@ If you make changes in the core of Breakout, a new build is needed to test the
 features. In the 'build' directory are scripts for different operating system
 available to ease this task.
 
-Windows: build.bat
-Linux:   build.sh
+- Windows: `build.bat`
+- Linux or OS X: `sh build.sh`
+
+If Apache ant is installed, you can run `ant` from the build directory.
 
 Or you can call the build script manually:
 
-$ python build.py [Release Number]
+`$ python build.py [Release Number]`
 
-Updating the documentation
---------------------------
-Documentation is generated as part of the build process. The documentation uses 
-JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/).
+The build process executes the following steps in order:
+
+1. Check each file for lint
+2. Run unit tests
+3. Concatenate and minify files
+
+If any step fails, the build process will exit.
+
+Linting
+-------
+[JSHint](https://github.com/jshint/jshint/) is run for each file in the src 
+directory during the build process. JSHint must be installed: `npm install jshint -g`
 
 Running tests
 -------------
 Tests (in Breakout/test/) are run automatically at the end of the build process.
 [phantomJS](http://phantomjs.org/) and [mocha-phantomjs](https://github.com/metaskills/mocha-phantomjs) are required to run tests via the build script.
 See the README file in Breakout/test/ for more info on running the tests.
+
+Updating the documentation
+--------------------------
+The documentation uses JsDoc Toolkit (http://code.google.com/p/jsdoc-toolkit/).
+Generate documentation by running: `$ python build_docs.py`
 
 Cleaning-up
 -----------

@@ -42,18 +42,18 @@ JSUTILS.namespace = function (namespaceString) {
  */
 JSUTILS.inherit = function (p) {
     if (p === null) {
-        throw TypeError(); // p must be a non-null object
+        throw new TypeError(); // p must be a non-null object
     }
     if (Object.create) { // If Object.create() is defined...
         return Object.create(p); // then just use it
     }
     var t = typeof p; // otherwise do some more type checking
     if (t !== "object" && t !== "function") {
-        throw TypeError();
+        throw new TypeError();
     }
-    function f() {}; // define a dummy constructor function
-    f.prototype = p; // Set its prototype property to p
-    return new f(); // use f() to create an 'heir' of p.
+    function F() {} // define a dummy constructor function
+    F.prototype = p; // Set its prototype property to p
+    return new F(); // use f() to create an 'heir' of p.
 };
 
 
@@ -76,17 +76,17 @@ if (!Function.prototype.bind) {
             /** 
              * @private
              */  
-            fNOP = function () {},
+            FNOP = function () {},
             /** 
              * @private
              */  
             fBound = function () {  
-                return fToBind.apply(this instanceof fNOP ? this : oThis || window,  
+                return fToBind.apply(this instanceof FNOP ? this : oThis || window,  
                                 aArgs.concat(Array.prototype.slice.call(arguments)));  
             };  
   
-        fNOP.prototype = this.prototype;  
-        fBound.prototype = new fNOP();  
+        FNOP.prototype = this.prototype;  
+        fBound.prototype = new FNOP();  
       
         return fBound;  
     };  
