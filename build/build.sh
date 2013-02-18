@@ -1,3 +1,3 @@
 #!/bin/sh
 
-python build.py 0.2.0
+python build.py 0.2.1

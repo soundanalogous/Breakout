@@ -1,11 +1,11 @@
 /***
-    Breakout - 0.2.0
+    Breakout - 0.2.1
 
     Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>
     Released under the MIT license. See LICENSE file for details.
     http://breakoutjs.com
     ***/
-'use strict';var BO=BO||{},BREAKOUT=BREAKOUT||BO;BREAKOUT.VERSION="0.2.0";BO.enableDebugging=!1;var JSUTILS=JSUTILS||{};JSUTILS.namespace=function(a){var a=a.split("."),d=window,c;for(c=0;c<a.length;c+=1)"undefined"===typeof d[a[c]]&&(d[a[c]]={}),d=d[a[c]];return d};JSUTILS.inherit=function(a){function d(){}if(null===a)throw new TypeError;if(Object.create)return Object.create(a);var c=typeof a;if("object"!==c&&"function"!==c)throw new TypeError;d.prototype=a;return new d};
+'use strict';var BO=BO||{},BREAKOUT=BREAKOUT||BO;BREAKOUT.VERSION="0.2.1";BO.enableDebugging=!1;var JSUTILS=JSUTILS||{};JSUTILS.namespace=function(a){var a=a.split("."),d=window,c;for(c=0;c<a.length;c+=1)"undefined"===typeof d[a[c]]&&(d[a[c]]={}),d=d[a[c]];return d};JSUTILS.inherit=function(a){function d(){}if(null===a)throw new TypeError;if(Object.create)return Object.create(a);var c=typeof a;if("object"!==c&&"function"!==c)throw new TypeError;d.prototype=a;return new d};
 if(!Function.prototype.bind)Function.prototype.bind=function(a){if("function"!==typeof this)throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");var d=Array.prototype.slice.call(arguments,1),c=this,f=function(){},b=function(){return c.apply(this instanceof f?this:a||window,d.concat(Array.prototype.slice.call(arguments)))};f.prototype=this.prototype;b.prototype=new f;return b};JSUTILS.namespace("JSUTILS.Event");
 JSUTILS.Event=function(){var a;a=function(a){this._type=a;this._target=null;this.name="Event"};a.prototype={constructor:a,get type(){return this._type},set type(a){this._type=a},get target(){return this._target},set target(a){this._target=a}};a.CONNECTED="connected";a.CHANGE="change";a.COMPLETE="complete";return a}();JSUTILS.namespace("JSUTILS.EventDispatcher");
 JSUTILS.EventDispatcher=function(){var a;a=function(a){this._target=a||null;this._eventListeners={};this.name="EventDispatcher"};a.prototype={constructor:a,addEventListener:function(a,c){this._eventListeners[a]||(this._eventListeners[a]=[]);this._eventListeners[a].push(c)},removeEventListener:function(a,c){for(var f=0,b=this._eventListeners[a].length;f<b;f++)this._eventListeners[a][f]===c&&this._eventListeners[a].splice(f,1)},hasEventListener:function(a){return this._eventListeners[a]&&0<this._eventListeners[a].length?
