@@ -115,6 +115,7 @@ $(document).ready(function() {
         // Only use the potentiometer to rotate the servo head
         // if the 'Use Pot' checkbox is checked
         if (usePot) servo.angle = angle;
+        //console.log(usePot);
     }
 
     function initGUIListeners() {
@@ -131,7 +132,7 @@ $(document).ready(function() {
         }); 
 
         $('#usePot').change(function(evt) {
-            if ($(this).attr('checked')) {
+            if ($(this).prop('checked')) {
                 usePot = true;
             } else {
                 usePot = false;
