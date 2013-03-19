@@ -41,7 +41,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = -7512833780087238386L;
 	
-	private static final String buildName = "Breakout Server v0.2.0";
+	private static final String buildName = "Breakout Server v0.2.2";
 	
 	private static final int WIDTH = 480;
 	private static final int HEIGHT = 360;
@@ -234,7 +234,7 @@ public class BreakoutServer extends JFrame implements ActionListener {
 
 				if (portId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
 					String name = portId.getName();
-					if (!name.startsWith("/dev/tty.")) {
+					if (!name.startsWith("/dev/tty.") && !name.contains("Bluetooth")) {
 						serialPortCount++;
 					}
 				}
