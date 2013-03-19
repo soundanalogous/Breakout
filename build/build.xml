@@ -7,7 +7,7 @@
     <target name="build" description="Build all Breakout.js">
         <exec executable="${python_dir}python">
             <arg value="${build_py}"/>
-            <arg value="0.2.1"/>
+            <arg value="0.2.2"/>
           </exec>
     </target>
 </project>

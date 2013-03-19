@@ -196,7 +196,8 @@ def runTests():
     try:
         result = os.system("mocha-phantomjs ../test/core/runner.html")
     except:
-        pass
+        # set to zero so build doesn't fail if user doesn't have mocha-phantomjs installed
+        result = 0
 
     if result != 0:
         sys.exit(0)
@@ -206,7 +207,7 @@ def main(argv=None):
     if len(sys.argv) > 1:
         version = sys.argv[1]
     else:
-        version = "0.2.0"
+        version = "0.2.2"
 
     min_files = [
     ['Breakout', ALL_FILES],

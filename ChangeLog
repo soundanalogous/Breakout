@@ -1,3 +1,7 @@
+2013.03.18 Version 0.2.2
+* Fixed bug in Breakout Server that was preventing selection of serial port 
+  other than top port in dropdown list.
+
 2013.02.18 Version 0.2.1
 * Applications using custom firmware should now listen for the IOBoard.READY
   event rather than the IOBoard.CONNECTED event. Custom firmware can now

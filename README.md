@@ -63,8 +63,8 @@ OS:
 
 Desktop Browsers:
 
-- Chrome version 14 - 24
-- Firefox version 11 - 18
+- Chrome version 14 - 25
+- Firefox version 11 - 19
 - Safari version 5 - 6
 - Opera 12
 
