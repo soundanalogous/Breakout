@@ -1,3 +1,9 @@
+2013.nn.nn Version 0.2.3
+* Added defaut path for node_server.
+* Updated node_server for better performance.
+* Updated IOBoard to handle incoming array of data in addition to individual
+* strings.
+
 2013.03.18 Version 0.2.2
 * Fixed bug in Breakout Server that was preventing selection of serial port 
   other than top port in dropdown list.

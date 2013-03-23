@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -22,11 +22,11 @@ process.on('exit', function () {
 /**************** COMMAND LINE OPTIONS *************/
 var program = require('commander');
 program
-    .version('0.1.7')
+    .version('0.2.2')
     .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
     .option('-s, --server <port>', 'Specify the port [8887]', Number, 8887)
     .option('-m, --multi <connection>', 'Enable multiple connections [false]', "false")
-    .option('-d, --dir <path>', 'Path to the root of your app [defaults to the current directory]')
+    .option('-d, --dir <path>', 'Path to the root of your app [defaults to the current directory]', '.')
     .parse(process.argv);
 
 
@@ -68,14 +68,12 @@ var serialDefaults = {
 var serial = new serialPort(port, serialDefaults);
 
 serial.on("data", function (data) {
-    if (data[0] >= 0) {
-        if (isConnected) {
-            // Relay serial data to websocket
-            connectedSocket.send(String(data[0]));
-            if (enableMultiConnect) {
-                connectedSocket.broadcast.send(String(data[0]));
-            }        
-        }
+    if (isConnected) {
+        connectedSocket.send(data.toJSON());
+
+        if (enableMultiConnect) {
+            connectedSocket.broadcast.send(data.toJSON());
+        }        
     }
 });
 
@@ -115,6 +113,8 @@ io.sockets.on('connection', function (connection) {
     isConnected = true;
 
     if (enableMultiConnect) {
+        // TO DO: once Breakout Server has been updated to send JSON strings
+        // update the following line to send a JSON string.
         connection.send("config: multiClient");
         console.log("multi client enabled");
     }
@@ -122,16 +122,8 @@ io.sockets.on('connection', function (connection) {
     console.log("connected: " + connection.id);
 
     connection.on('message', function (data) {
-        var message;
-
-        message = data;
-
-        var msgData;
-        if (message.indexOf(',')) {
-            msgData = message.split(',');
-        } else {
-            msgData = message;
-        }
+        var msgData = {};
+        msgData = data.split(',');
 
         // Relay websocket data to serial port
         serial.write(msgData);

@@ -1,7 +1,7 @@
 {
   "name": "breakout-server",
-  "version": "0.1.7",
-  "description": "Node.js module to run a breakout server",
+  "version": "0.2.2",
+  "description": "Node.js module to run a BreakoutJS server",
   "preferGlobal": "true",
   "main": "server.js",
   "bin": {
@@ -18,10 +18,10 @@
     "url": "https://github.com/soundanalogous/Breakout.git"
   },
   "dependencies": {
-    "serialport": ">= 1.0.7",
-    "socket.io": ">= 0.9.10",
-    "express": ">= 3.0.0rc4",
-    "commander": ">= 1.0.4"
+    "serialport": ">= 1.1.0",
+    "socket.io": ">= 0.9.13",
+    "express": ">= 3.1.0",
+    "commander": ">= 1.1.1"
   },
   "engines": {
     "node": "*"

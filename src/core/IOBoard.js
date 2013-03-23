@@ -132,19 +132,47 @@ BO.IOBoard = (function () {
 
         /**
          * A websocket message has been received.
+         * @param {Object} event The message property is an array of one or
+         * more stringified bytes from the board or a config string from
+         * the server.
          * @private
          */
         onSocketMessage: function (event) {
-            var pattern = /config/;
-            var message = "";
+            var message = event.message,
+                data = [],
+                len;
+
+            if (message.length > 1) {
+                data = message.split(",");
+
+                len = data.length;
+                for (var i = 0; i < len; i++) {
+                    this.parseInputMessage(data[i]);
+                }
+            } else {
+                this.parseInputMessage(message);
+            }
+        },
+
+        /**
+         * Determine if the incoming data is a config message or a byte.
+         * @param {String} data A string representing a config message or
+         * an 8-bit unsigned integer.
+         * @private
+         */
+        parseInputMessage: function (data) {
+            var pattern = /config/,
+                message = "";
 
             // Check for config messages from the server
-            if (event.message.match(pattern)) {
-                message = event.message.substr(event.message.indexOf(':') + 2);
+            if (data.match(pattern)) {
+                // to do: update servers to send a JSON string
+                // then parse the string here
+                message = data.substr(data.indexOf(':') + 2);
                 this.processStatusMessage(message);
             } else {
                 // We have data from the IOBoard
-                this.processInput(event.message);
+                this.processInput(parseInt(data, 10));
             }
         },
 
@@ -241,10 +269,10 @@ BO.IOBoard = (function () {
 
         /**
          * Process input data from the IOBoard.
+         * @param {Number} inputData Number as an 8-bit unsigned integer
          * @private
          */
         processInput: function (inputData) {
-            inputData *= 1; // Force inputData to integer (is there a better way to do this?)
             var len;
 
             this._inputDataBuffer.push(inputData);
