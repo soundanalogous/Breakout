@@ -52,6 +52,60 @@ BO.IOBoard = (function () {
         PinEvent = BO.PinEvent,
         IOBoardEvent = BO.IOBoardEvent;
 
+
+    var MSBFIRST = 1;
+    var LSBFIRST = 0;
+    var SHIFT_IN = 2;
+    var SHIFT_OUT = 1;
+
+    var Encoder7Bit = {
+        previous: 0,
+        shift: 0,
+        binaryData: [],
+        startBinaryWrite: function () {
+            this.shift = 0;
+            this.binaryData = [];
+        },
+        endBinaryWrite: function () {
+            if (this.shift > 0) {
+                this.binaryData.push(this.previous);
+            }
+        },
+        writeBinary: function (data) {
+            data = data & 0x00000000000000ff; // constrain to byte
+            if (this.shift === 0) {
+                this.binaryData.push(data & 0x7f);
+                this.shift++;
+                this.previous = data >> 7;
+            } else {
+                this.binaryData.push(((data << this.shift) & 0x7f) | this.previous);
+                if (this.shift === 6) {
+                    this.binaryData(data >> 1);
+                    this.shift = 0;
+                } else {
+                    this.shift++;
+                    this.previous = data >> (8 - this.shift);
+                }
+            }
+        },
+        readBinary: function (outBytes, inData) {
+            var j, pos, shift;
+            var outData = [];
+
+            for (var i = 0; i < outBytes; i++) {
+                j = i << 3;
+                pos = j / 7;
+                shift = (j % 7) & 0x00000000000000ff;
+                outData[i] = (inData[pos] >> shift) | ((inData[pos + 1] << (7 - shift)) & 0xFF);
+            }
+
+            return outData;
+        },
+        num7BitOutbytes: function (a) {
+            return ((a * 7) >> 3);
+        }
+    };
+
     /**
      * Creates a new IOBoard object representing the digital and analog inputs
      * and outputs of the device as well as support for i2c devices and sending
@@ -428,6 +482,9 @@ BO.IOBoard = (function () {
             case ANALOG_MAPPING_RESPONSE:
                 this.processAnalogMappingResponse(sysexData);
                 break;
+            case SHIFT_DATA:
+                this.processShiftData(sysexData);
+                break;                
             default:
                 // Custom sysEx message
                 this.dispatchEvent(new IOBoardEvent(IOBoardEvent.SYSEX_MESSAGE), {message: sysexData});
@@ -465,6 +522,15 @@ BO.IOBoard = (function () {
                 str += String.fromCharCode(data);                
             }
             this.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
+        },
+
+        processShiftData: function (msg) {
+            var len = msg.length;
+            var data = msg.slice(3);
+            // decode to array of 8-bit values
+            var numBytes = Encoder7Bit.num7BitOutbytes(len - 3);
+            var value = Encoder7Bit.readBinary(numBytes, data);
+            console.log(value);
         },
 
         /** 
@@ -1228,6 +1294,101 @@ BO.IOBoard = (function () {
             servoPin = this.getDigitalPin(pin);
             servoPin.setType(Pin.SERVO);
             this.managePinListener(servoPin);    
+        },
+
+        /**
+         * @param {Number} value The number value.
+         * @return {Number} The number of bytes in the value.
+         */
+        getNumBytesInValue: function (value) {
+            var n = 0;
+
+            do {
+                value >>= 8;
+                n++;
+            } while (value);
+
+            return n;
+        },
+
+        /**
+         * TO DO: may need to account for MSBFIRST and LSBFIRST separately
+         *
+         * Write up to a 64-bit value to Encoder7Bit in 8-bit chunks.
+         * @param {Number} value The number value to encode.
+         */
+        encodeMultiByteValue: function (value) {
+            var n = 0;
+
+            Encoder7Bit.startBinaryWrite();
+
+            n = this.getNumBytesInValue(value);
+
+            for (n = n - 1; n >= 0; n--) {
+                Encoder7Bit.writeBinary(value >> (8 * n));
+            }
+
+            Encoder7Bit.endBinaryWrite();
+        },
+
+        /**
+         * TO DO: change to manage latch manually or at least make latch pin
+         * optional?
+         *
+         * @param {Pin} dataPin The data pin.
+         * @param {Pin} clockPin The clock pin.
+         * @param {Pin} latchPin The latch pin.
+         * @param {Number} bitOrder Either MSBFIRST (default) or LSBFIRST
+         * @param {Number} value Value to shift out (up to a 64-bit Integer).
+         */
+        sendShiftOut: function (dataPin, clockPin, latchPin, bitOrder, value) {
+            var shiftOut = [],
+                len;
+
+            shiftOut[0] = START_SYSEX;
+            shiftOut[1] = SHIFT_DATA;
+            shiftOut[2] = SHIFT_OUT;
+            shiftOut[3] = dataPin.number;
+            shiftOut[4] = clockPin.number;
+            shiftOut[5] = latchPin.number;
+            shiftOut[6] = bitOrder;
+
+            this.encodeMultiByteValue(value);
+
+            // added encoded data to array
+            len = Encoder7Bit.binaryData.length;
+            for (var i = 0; i < len; i++) {
+                shiftOut.push(Encoder7Bit.binaryData[i]);
+            }
+            shiftOut.push(END_SYSEX);
+
+            this.send(shiftOut);
+        },
+
+        /**
+         * TO DO: change to manage latch manually or at least make latch pin
+         * optional?
+         *
+         * @param {Pin} dataPin The data pin.
+         * @param {Pin} clockPin The clock pin.
+         * @param {Pin} latchPin The latch pin.
+         * @param {Number} bitOrder [optional] Either MSBFIRST (default) or LSBFIRST.
+         * @param {Number} numBytes [optional] The number of bytes to shift in (default = 1).
+         */
+        sendShiftIn: function (dataPin, clockPin, latchPin, bitOrder, numBytes) {
+            var shiftIn = [];
+
+            shiftIn[0] = START_SYSEX;
+            shiftIn[1] = SHIFT_DATA;
+            shiftIn[2] = SHIFT_IN;
+            shiftIn[3] = dataPin.number;
+            shiftIn[4] = clockPin.number;
+            shiftIn[5] = latchPin.number;
+            shiftIn[6] = bitOrder || MSBFIRST;
+            shiftIn[7] = numBytes || 1;
+            shiftIn[8] = END_SYSEX;
+
+            this.send(shiftIn);
         },
 
         /**
