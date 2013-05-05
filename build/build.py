@@ -176,6 +176,7 @@ def lint(files):
             lint_error = True
         
     if lint_error:
+        print "Lint found or jshint is not installed. To install: npm install jshint -g"
         sys.exit(0)
 
 def buildJSDocs():
@@ -198,6 +199,7 @@ def runTests():
     except:
         # set to zero so build doesn't fail if user doesn't have mocha-phantomjs installed
         result = 0
+        print "Skipping unit tests. Please install phantomJS and mocha-phantomjs."
 
     if result != 0:
         sys.exit(0)
@@ -207,7 +209,7 @@ def main(argv=None):
     if len(sys.argv) > 1:
         version = sys.argv[1]
     else:
-        version = "0.2.2"
+        version = "0.2.3"
 
     min_files = [
     ['Breakout', ALL_FILES],
@@ -229,7 +231,7 @@ def main(argv=None):
     for fname_lib, files in min_files:
         buildLib(files, fname_lib, version)
 
-    #buildJSDocs()
+    buildJSDocs()
 
 if __name__ == "__main__":
     main()
