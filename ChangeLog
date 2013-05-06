@@ -1,4 +1,6 @@
 2013.05.05 Version 0.2.3
+* Created new repo for BreakoutServer source and removed BreakoutServer source
+  from Breakout/server/
 * Reduced startup delay by 300ms.
 * Updated Breakout Server to send entire serial buffer instead of byte by byte.
 * Added defaut path for node_server.
