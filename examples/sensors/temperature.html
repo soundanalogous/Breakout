@@ -19,22 +19,21 @@ h2 {
     padding-bottom: 20px;
     color: #00AEFF;
 }
+p {
+    font-family: "Arial";
+    font-size: 20px;
+    padding: 20px;
+    margin: 0;
+}
 .container {
     background-color: #f7f7f7;
     border: 1px dotted #CCC;
     width: 290px;
     margin-top: 20px;
 }
-.text {
-    font-family: "Arial";
-    font-size: 20px;
-    padding: 20px;
-    margin: 0;
-}
-
 </style>
 
-<title>LM335 Temperature Sensor</title>
+<title>TMP36 Temperature Sensor</title>
 
 <script src="../../dist/Breakout.js"></script>
 <script src="../libs/jquery-1.9.0.min.js"></script>
@@ -73,17 +72,15 @@ $(document).ready(function() {
     }
 
     function onChange(evt) {
-        // The LM335 measures temperature in degrees Kelvin
-        // a value of 0.0 is 0 degrees Kelvin and the temperature
-        // value increases 1 degree kelvin per 10 millivolts
+        // The TMP36 measures temperature in degrees Celsius
+        // 10 mV = 1 degree Celsius
+        // there is an offset of -500 mV to account for negative temperatures
+        // 0 degrees Celsius = 500 mv.
         var val = evt.target.value;
-        var kelvinC = 273.15;
-        var volts = 5;
-        var tempK = val * volts * 100;
-        var tempC = tempK - kelvinC;
+        var milliVolts = val * 1000 * 5;
+        var tempC = (milliVolts - 500) / 10;
         var tempF = tempC * (9/5) + 32;
 
-        $('#kelvin').text("Degrees Kelvin = " + tempK.toFixed(0));
         $('#celsius').text("Degrees Celsius = " + tempC.toFixed(0));
         $('#fahrenheit').text("Degrees Fahrenheit = " + tempF.toFixed(0));
     }
@@ -92,11 +89,10 @@ $(document).ready(function() {
 
 </head>
 <body>
-    <h2>LM335 Temperature Sensor</h2>
-        <div class="container">
-            <p id="kelvin" class="text"></p>
-            <p id="celsius" class="text"></p>
-            <p id="fahrenheit" class="text"></p>
-        </div>
+    <h2>TMP36 Temperature Sensor</h2>
+    <div class="container">
+        <p id="celsius"></p>
+        <p id="fahrenheit"></p>
+    </div>
 </body>
 </html>​
