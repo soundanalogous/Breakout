@@ -1,8 +1,13 @@
-2013.nn.nn Version 0.2.3
+2013.05.12 Version 0.2.3
+* Changed temperature.html example to use TMP36 sensor instead of LM335 sensor.
+* Created new repo for BreakoutServer source and removed BreakoutServer source
+  from Breakout/server/
+* Reduced startup delay by 300ms.
+* Updated Breakout Server to send entire serial buffer instead of byte by byte.
 * Added defaut path for node_server.
 * Updated node_server for better performance.
 * Updated IOBoard to handle incoming array of data in addition to individual
-* strings.
+  strings.
 
 2013.03.18 Version 0.2.2
 * Fixed bug in Breakout Server that was preventing selection of serial port 

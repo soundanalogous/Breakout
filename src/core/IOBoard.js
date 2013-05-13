@@ -275,7 +275,7 @@ BO.IOBoard = (function () {
                     setTimeout(function () {
                         self.queryCapabilities();
                         self.checkForQueryResponse();
-                    }, 500);
+                    }, 200);
                 } else {
                     this.queryCapabilities();
                     this.checkForQueryResponse();

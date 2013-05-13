@@ -22,7 +22,7 @@ process.on('exit', function () {
 /**************** COMMAND LINE OPTIONS *************/
 var program = require('commander');
 program
-    .version('0.2.2')
+    .version('0.2.3')
     .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
     .option('-s, --server <port>', 'Specify the port [8887]', Number, 8887)
     .option('-m, --multi <connection>', 'Enable multiple connections [false]', "false")
