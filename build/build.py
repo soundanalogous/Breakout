@@ -47,6 +47,7 @@ ALL_FILES = [
 'io/DCMotor.js',
 'io/LED.js',
 'io/RGBLED.js',
+'io/BiColorLED.js',
 'io/SoftPotEvent.js',
 'io/SoftPot.js',
 'core/IOBoard.js'

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
+}
+h2 {
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 28px;
+    color: #00AEFF;
+}
+.Btns {
+    padding: 5px;
+    font-size: 16px;
+    width: 85px;
+    color: #00AEFF;
+    margin-bottom: 10px;
+}
+.container {
+    background-color: #f7f7f7;
+    padding-left: 10px;
+    border: 1px dotted #CCC;
+    width: 280px;
+    margin-top: 20px;
+}
+.spacer {
+    margin-left: 5px;
+}
+.slider {
+    margin: 20px;
+}
+</style>
+
+<title>Bi-color LED</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.9.0.min.js"></script>
+<script src="../libs/jquery-ui/jquery-ui-1.10.0.custom.min.js"></script>
+<script src="../libs/jquery.ui.touch-punch.min.js"></script>
+<link href="../libs/jquery-ui/jquery-ui-1.10.0.custom.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var Pin = BO.Pin;
+
+    // Set to true to print debug messages to console
+    BO.enableDebugging = false; 
+
+    // If you are not serving this file from the same computer
+    // that the Arduino Leonardo board is connected to, replace
+    // window.location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var host = window.location.hostname;
+    // if the file is opened locally, set the host to "localhost"
+    if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+    }
+    var arduino = new IOBoard(host, 8887);
+    
+    // Variables
+    var ledGreen;
+    var ledRed;
+    
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+        // Set Pins to PWM
+        arduino.setDigitalPinMode(10, Pin.PWM);
+        arduino.setDigitalPinMode(11, Pin.PWM);
+
+
+        // Create an LED object to interface with the LED wired
+        // to the I/O board
+        ledGreen = arduino.getDigitalPin(10);
+        ledRed = arduino.getDigitalPin(11);
+
+        
+        // Use jQuery to get a reference to the elements
+        // and listen for events 
+        $('#btnStop').click(function() { ledsOff(); });
+        $('#btnRed').click(function() { switchLed(0); });
+        $('#btnGreen').click(function() { switchLed(1); });
+        
+        $("#sliderRed").slider({
+            step: 0.05,
+            min : 0.0,
+            max : 1.0
+            });
+        
+        $("#sliderGreen").slider({
+            step: 0.05,
+            min : 0.0,
+            max : 1.0
+            });
+
+        $('#valueRed').text("(Value: 0.0)");
+        $('#valueGreen').text("(Value: 0.0)");
+    }
+    
+    $( "#sliderRed" ).bind( "slide", function(event, ui) {
+        var value = ui.value;
+        $('#valueRed').text("(Value: " + value.toFixed(2) + ")");
+        ledRed.value = value;
+    });
+    
+    $( "#sliderGreen" ).bind( "slide", function(event, ui) {
+        var value = ui.value;
+        $('#valueGreen').text("(Value: " + value.toFixed(2) + ")");
+        ledGreen.value = value;
+    });
+    
+    function switchLed(led) {
+        if (led == 0) {
+            ledRed.value = Pin.HIGH;
+            ledGreen.value = Pin.HIGH;
+            $("#sliderRed").slider( "option", "value", 1);
+            $('#valueRed').text("(Value: " + 1.0 + ")");
+        } else {
+            ledGreen.value = Pin.HIGH;
+            ledRed.value = Pin.HIGH;
+            $("#sliderGreen").slider( "option", "value", 1);
+            $('#valueGreen').text("(Value: " + 1.0 + ")");      
+        }
+    }
+    
+    function ledsOff() {
+        ledRed.value = Pin.LOW;
+        ledGreen.value = Pin.LOW;
+        $("#sliderRed").slider( "option", "value", 0);
+        $("#sliderGreen").slider( "option", "value", 0);
+        $('#valueRed').text("(Value: " + 0.0 + ")");
+        $('#valueGreen').text("(Value: " + 0.0 + ")");      
+
+    }
+});
+
+</script>
+
+</head>
+<body>
+    <h2>Bi-color LED</h2>
+
+        <div class="container">
+            <p>Use the buttons below to switch the colors or the LED off.</p>
+            <button id="btnGreen" class="Btns" type="button">Green</button>
+            <button id="btnRed" class="Btns" type="button">Red</button>
+            <button id="btnStop" class="Btns" type="button">Off</button><br />
+        </div>
+  
+        <div class="container">
+            <p>Use the slider to set the intensity of a color or to mix them.</p>
+            <label>Red </label><small id="valueRed"></small><div id="sliderRed" class="slider"></div>
+            <label>Green </label><small id="valueGreen"></small><div id="sliderGreen" class="slider"></div>
+        </div>
+</body>
+</html>
