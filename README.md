@@ -98,8 +98,8 @@ OS:
 
 Desktop Browsers:
 
-- Chrome version 14 - 26
-- Firefox version 11 - 20
+- Chrome version 14 - 27
+- Firefox version 11 - 21
 - Safari version 5 - 6
 - Opera 12
 
