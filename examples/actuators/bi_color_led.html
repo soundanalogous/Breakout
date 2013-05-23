@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+    margin: 20px;
+    font-family: sans-serif;
+    font-size: 18px;
+    color: #00AEFF;
+    width: 600px;
+}
+h2 {
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+#duration {
+    width: 50px;
+}
+.container {
+    background-color: #f7f7f7;
+    padding-left: 10px;
+    border: 1px dotted #CCC;
+    width: 280px;
+    margin-top: 20px;
+}
+.Btns {
+    padding: 10px;
+    font-size: 16px;
+    width: 80px;
+    color: #00AEFF;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+label {
+    font-size: 14px;
+    color: #666;
+}
+.spacer {
+    margin-left: 5px;
+}
+</style>
+
+<title>Bi-Color LED Example</title>
+
+<script src="../../dist/Breakout.js"></script>
+<script src="../libs/jquery-1.9.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Declare these variables so you don't have to type the full
+    // namespace.
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var BILED = BO.io.BiColorLED;
+
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true;    
+
+    // If you are not serving this file from the same computer
+    // that the Arduino Leonardo board is connected to, replace
+    // window.location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var host = window.location.hostname;
+    // If the file is opened locally, set the host to "localhost"
+    if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+    }
+    var arduino = new IOBoard(host, 8887);
+    
+    // Variables
+    var biLED;
+//    var duration = 500;
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+    function onReady(event) {    
+        // Remove the listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+        // Bi-Color LED example using BiColorLED object:
+        // NOTE: The r and g pins of the LED must be connected to PWM
+        // pins on the IOBoard (eg. 11, 10, 9, 6, 5, or 3).
+        // Change COMMON_CATHODE to COMMON_ANODE according to your LED
+        // type
+        // Parameters: board, redLEDPin, greenLEDPin, driveMode
+        biLED = new BILED(
+            arduino, 
+            arduino.getDigitalPin(10),
+            arduino.getDigitalPin(11),
+            BILED.COMMON_CATHODE);
+
+        // Listener for GUI events
+        initGUIListeners();
+    }  
+
+    function initGUIListeners() {
+        
+        $('button#Green').on('click', function() {
+            biLED.setColor(255, 0, 0);
+        });
+
+        $('button#Red').on('click', function() {
+            biLED.setColor(0, 255, 0);
+        });
+        
+        $('button#Off').on('click', function() {
+            biLED.setColor(0, 0, 0);
+        });
+    }	
+});
+</script>
+
+</head>
+<body>
+    <h2>Bi-Color LED Example</h2>
+    <div class="container">
+    <p>Choose the color </p>
+
+        <button type="button" class="Btns" id="Red">Red</button>
+        <span class="spacer"></span>
+        <button type="button" class="Btns" id="Green">Green</button>
+        <span class="spacer"></span>
+        <button type="button" class="Btns" id="Off">Off</button>
+</body>
+</html>
