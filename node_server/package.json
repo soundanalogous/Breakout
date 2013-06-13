@@ -1,6 +1,6 @@
 {
   "name": "breakout-server",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Node.js module to run a BreakoutJS server",
   "preferGlobal": "true",
   "main": "server.js",
