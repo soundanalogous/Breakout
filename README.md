@@ -98,9 +98,9 @@ OS:
 
 Desktop Browsers:
 
-- Chrome version 14 - 26
-- Firefox version 11 - 20
-- Safari version 5 - 6
+- Chrome version 14 or higher
+- Firefox version 11 or higher
+- Safari version 5 or higher
 - Opera 12
 
 Mobile Browsers (browser must support websockets):
