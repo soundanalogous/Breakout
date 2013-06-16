@@ -1332,16 +1332,14 @@ BO.IOBoard = (function () {
         },
 
         /**
-         * TO DO: change to manage latch manually or at least make latch pin
-         * optional?
+         * Shift out a single value (up to a 64-bit Integer).
          *
          * @param {Pin} dataPin The data pin.
          * @param {Pin} clockPin The clock pin.
-         * @param {Pin} latchPin The latch pin.
          * @param {Number} bitOrder Either MSBFIRST (default) or LSBFIRST
          * @param {Number} value Value to shift out (up to a 64-bit Integer).
          */
-        sendShiftOut: function (dataPin, clockPin, latchPin, bitOrder, value) {
+        sendShiftOut: function (dataPin, clockPin, bitOrder, value) {
             var shiftOut = [],
                 len;
 
@@ -1350,8 +1348,7 @@ BO.IOBoard = (function () {
             shiftOut[2] = SHIFT_OUT;
             shiftOut[3] = dataPin.number;
             shiftOut[4] = clockPin.number;
-            shiftOut[5] = latchPin.number;
-            shiftOut[6] = bitOrder;
+            shiftOut[5] = bitOrder;
 
             this.encodeMultiByteValue(value);
 
@@ -1366,16 +1363,15 @@ BO.IOBoard = (function () {
         },
 
         /**
-         * TO DO: change to manage latch manually or at least make latch pin
-         * optional?
+         * Sends a command to shift in a specified number of bytes. Listen for 
+         * SHIFT_IN event to get returned value.
          *
          * @param {Pin} dataPin The data pin.
          * @param {Pin} clockPin The clock pin.
-         * @param {Pin} latchPin The latch pin.
          * @param {Number} bitOrder [optional] Either MSBFIRST (default) or LSBFIRST.
          * @param {Number} numBytes [optional] The number of bytes to shift in (default = 1).
          */
-        sendShiftIn: function (dataPin, clockPin, latchPin, bitOrder, numBytes) {
+        sendShiftIn: function (dataPin, clockPin, bitOrder, numBytes) {
             var shiftIn = [];
 
             shiftIn[0] = START_SYSEX;
@@ -1383,10 +1379,9 @@ BO.IOBoard = (function () {
             shiftIn[2] = SHIFT_IN;
             shiftIn[3] = dataPin.number;
             shiftIn[4] = clockPin.number;
-            shiftIn[5] = latchPin.number;
-            shiftIn[6] = bitOrder || MSBFIRST;
-            shiftIn[7] = numBytes || 1;
-            shiftIn[8] = END_SYSEX;
+            shiftIn[5] = bitOrder || MSBFIRST;
+            shiftIn[6] = numBytes || 1;
+            shiftIn[7] = END_SYSEX;
 
             this.send(shiftIn);
         },
