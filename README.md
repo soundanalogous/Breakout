@@ -14,38 +14,40 @@ See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other
 Example
 ---
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset=utf-8 />
-    <title>Hello World</title>
-    </head>
-      <body>
-        <button id="ledToggle">Toggle LED</button>
-        <p id="btnStatus"></p>
-        <script src="../../dist/Breakout.js"></script>
-        <script>
-        var arduino = new BO.IOBoard("localhost", 8887);
-        arduino.addEventListener(BO.IOBoardEvent.READY, function (event) {
-          var led = new BO.io.LED(arduino, arduino.getDigitalPin(11)),
-            button = new BO.io.Button(arduino, arduino.getDigitalPin(2)),
-            toggleBtn = document.getElementById("ledToggle"),
-            btnStatus = document.getElementById("btnStatus");
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Hello World</title>
+</head>
+  <body>
+    <button id="ledToggle">Toggle LED</button>
+    <p id="btnStatus"></p>
+    <script src="../../dist/Breakout.js"></script>
+    <script>
+    var arduino = new BO.IOBoard("localhost", 8887);
+    arduino.addEventListener(BO.IOBoardEvent.READY, function (event) {
+      var led = new BO.io.LED(arduino, arduino.getDigitalPin(11)),
+        button = new BO.io.Button(arduino, arduino.getDigitalPin(2)),
+        toggleBtn = document.getElementById("ledToggle"),
+        btnStatus = document.getElementById("btnStatus");
 
-          toggleBtn.addEventListener("click", function (event) {
-            led.toggle();
-          });
+      toggleBtn.addEventListener("click", function (event) {
+        led.toggle();
+      });
 
-          button.addEventListener(BO.io.ButtonEvent.PRESS, function (event) {
-            btnStatus.innerHTML = "Button " + event.target.pinNumber + " pressed";
-          });
-          button.addEventListener(BO.io.ButtonEvent.RELEASE, function (event) {
-            btnStatus.innerHTML = "Button " + event.target.pinNumber + " released";
-          });
-        });
-        </script>
-      </body>
-    </html>
+      button.addEventListener(BO.io.ButtonEvent.PRESS, function (event) {
+        btnStatus.innerHTML = "Button " + event.target.pinNumber + " pressed";
+      });
+      button.addEventListener(BO.io.ButtonEvent.RELEASE, function (event) {
+        btnStatus.innerHTML = "Button " + event.target.pinNumber + " released";
+      });
+    });
+    </script>
+  </body>
+</html>
+```
 
 Quick Start
 ---
