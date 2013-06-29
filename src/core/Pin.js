@@ -505,7 +505,11 @@ BO.Pin = (function () {
     /** @constant */
     Pin.I2C = 0x06;
     /** @constant */
-    Pin.TOTAL_PIN_MODES = 7;
+    Pin.ONEWIRE = 0x07;
+    /** @constant */
+    Pin.STEPPER = 0x08;
+    /** @constant */
+    Pin.TOTAL_PIN_MODES = 9;
 
 
     // Document events

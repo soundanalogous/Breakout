@@ -1,3 +1,6 @@
+2013.06.nn Version 0.2.4
+* Added pin modes for ONEWIRE and STEPPER
+
 2013.05.12 Version 0.2.3
 * Changed temperature.html example to use TMP36 sensor instead of LM335 sensor.
 * Created new repo for BreakoutServer source and removed BreakoutServer source
