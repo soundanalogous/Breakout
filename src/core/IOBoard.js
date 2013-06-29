@@ -1008,12 +1008,18 @@ BO.IOBoard = (function () {
          * an Arduino UNO, analog pin 0 = digital pin 14.
          * @param {Number} mode Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO,
          * Pin.SHIFT, or Pin.I2c
+         * @param {Boolean} silent [optional] Set to true to not send
+         * SET_PIN_MODE command. Default = false.
          */
-        setDigitalPinMode: function (pinNumber, mode) {
+        setDigitalPinMode: function (pinNumber, mode, silent) {
             this.getDigitalPin(pinNumber).setType(mode);
             this.managePinListener(this.getDigitalPin(pinNumber));
             
-            this.send([SET_PIN_MODE, pinNumber, mode]);            
+            // sometimes we want to set up a pin without sending the set pin
+            // mode command because the firmware handles the pin mode
+            if (!silent || silent !== true) {
+                this.send([SET_PIN_MODE, pinNumber, mode]);
+            }
         },
 
         /**
