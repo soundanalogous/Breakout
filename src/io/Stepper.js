@@ -93,6 +93,8 @@ BO.io.Stepper = (function () {
             numStepsPerRevMSB = (numStepsPerRev >> 7) & 0x007F,
             silent = true;
 
+        // Setup pin mode but don't send set pin mode command to Firmata since
+        // Firmata sets pin modes automatically in the Stepper implementation.
         this._board.setDigitalPinMode(directionPin.number, Pin.DOUT, silent);
         this._board.setDigitalPinMode(stepPin.number, Pin.DOUT, silent);
 
@@ -103,13 +105,13 @@ BO.io.Stepper = (function () {
         case Stepper.TWO_WIRE:
             // configure the stepper motor
             this._board.sendSysex(STEPPER,
-                                    [CONFIG,
-                                    this._id,
-                                    driverType,
-                                    numStepsPerRevLSB, 
-                                    numStepsPerRevMSB,
-                                    directionPin.number,
-                                    stepPin.number]);
+                [CONFIG,
+                this._id,
+                driverType,
+                numStepsPerRevLSB, 
+                numStepsPerRevMSB,
+                directionPin.number,
+                stepPin.number]);
             break;
         case Stepper.FOUR_WIRE:
             this._board.setDigitalPinMode(motorPin3.number, Pin.DOUT, silent);
@@ -117,15 +119,15 @@ BO.io.Stepper = (function () {
 
             // configure the stepper motor
             this._board.sendSysex(STEPPER,
-                                    [CONFIG,
-                                    this._id,
-                                    driverType,
-                                    numStepsPerRevLSB, 
-                                    numStepsPerRevMSB,
-                                    directionPin.number,
-                                    stepPin.number,
-                                    motorPin3.number,
-                                    motorPin4.number]);
+                [CONFIG,
+                this._id,
+                driverType,
+                numStepsPerRevLSB, 
+                numStepsPerRevMSB,
+                directionPin.number,
+                stepPin.number,
+                motorPin3.number,
+                motorPin4.number]);
             break;
         }
 
@@ -201,31 +203,31 @@ BO.io.Stepper = (function () {
                 decelMSB = (decel >> 7) & 0x007F;               
                             
                 this._board.sendSysex(STEPPER, 
-                                        [STEP,
-                                        this._id,
-                                        direction,                              
-                                        steps[0],
-                                        steps[1],
-                                        steps[2],
-                                        speedLSB,
-                                        speedMSB,
-                                        accelLSB,
-                                        accelMSB,
-                                        decelLSB,
-                                        decelMSB
-                                        ]);
+                    [STEP,
+                    this._id,
+                    direction,
+                    steps[0],
+                    steps[1],
+                    steps[2],
+                    speedLSB,
+                    speedMSB,
+                    accelLSB,
+                    accelMSB,
+                    decelLSB,
+                    decelMSB
+                    ]);
             } else {
                 // don't send accel and decel values
                 this._board.sendSysex(STEPPER, 
-                                        [STEP,
-                                        this._id,
-                                        direction,                                  
-                                        steps[0],
-                                        steps[1],
-                                        steps[2],
-                                        speedLSB,
-                                        speedMSB
-                                        ]);             
+                    [STEP,
+                    this._id,
+                    direction,
+                    steps[0],
+                    steps[1],
+                    steps[2],
+                    speedLSB,
+                    speedMSB
+                    ]);             
             }
         },
 
