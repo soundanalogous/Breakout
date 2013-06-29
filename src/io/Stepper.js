@@ -90,10 +90,11 @@ BO.io.Stepper = (function () {
         this._evtDispatcher = new EventDispatcher(this);
 
         var numStepsPerRevLSB = numStepsPerRev & 0x007F,
-            numStepsPerRevMSB = (numStepsPerRev >> 7) & 0x007F;
+            numStepsPerRevMSB = (numStepsPerRev >> 7) & 0x007F,
+            silent = true;
 
-        this._board.setDigitalPinMode(directionPin.number, Pin.DOUT);
-        this._board.setDigitalPinMode(stepPin.number, Pin.DOUT);
+        this._board.setDigitalPinMode(directionPin.number, Pin.DOUT, silent);
+        this._board.setDigitalPinMode(stepPin.number, Pin.DOUT, silent);
 
         this._board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
         
@@ -111,8 +112,8 @@ BO.io.Stepper = (function () {
                                     stepPin.number]);
             break;
         case Stepper.FOUR_WIRE:
-            this._board.setDigitalPinMode(motorPin3.number, Pin.DOUT);
-            this._board.setDigitalPinMode(motorPin4.number, Pin.DOUT);
+            this._board.setDigitalPinMode(motorPin3.number, Pin.DOUT, silent);
+            this._board.setDigitalPinMode(motorPin4.number, Pin.DOUT, silent);
 
             // configure the stepper motor
             this._board.sendSysex(STEPPER,
