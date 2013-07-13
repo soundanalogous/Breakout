@@ -53,9 +53,9 @@ BO.io.Button = (function () {
         this.buttonMode = buttonMode || Button.PULL_DOWN;
         this._sustainedPressInterval = sustainedPressInterval || 1000;
 
-        this._debounceInterval = 20,
-        this._repeatCount = 0,
-        this._timer = null,
+        this._debounceInterval = 20;
+        this._repeatCount = 0;
+        this._timer = null;
         this._timeout = null;
         
         this._board = board;

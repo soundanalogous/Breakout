@@ -4,5 +4,8 @@
 
 release.sh
 
-node_server/node_modules/
 examples/tests/
+
+# dependencies
+node_modules
+node_server/node_modules/
