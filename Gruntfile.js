@@ -106,6 +106,18 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
+        yuidoc: {
+            compile: {
+                name: '<%= pkg.name %>',
+                description: '<%= pkg.description %>',
+                version: '<%= pkg.version %>',
+                options: {
+                    paths: 'src',
+                    outdir: 'doctest'
+                }
+            }
+        },
+
         mocha_phantomjs: {
             all: ['test/core/runner.html']
         },
@@ -163,5 +175,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
+    grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'mocha_phantomjs']);
 };

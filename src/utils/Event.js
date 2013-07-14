@@ -12,8 +12,8 @@ JSUTILS.Event = (function () {
     /** 
      * A base class for the creation of Event objects.
      *
-     * @class A base class for the creation of Event objects.
-     * @exports Event as JSUTILS.Event
+     * @class Event
+     * @constructor
      * @param {String} type event type
      */
     Event = function (type) {
@@ -30,7 +30,7 @@ JSUTILS.Event = (function () {
         
         /**
          * The event type
-         * @name Event#type
+         * @property type
          * @type String
          */
         get type() {
@@ -42,7 +42,7 @@ JSUTILS.Event = (function () {
 
         /**
          * The event target
-         * @name Event#target
+         * @property target
          * @type Object
          */ 
         get target() {
@@ -57,18 +57,18 @@ JSUTILS.Event = (function () {
     // Generic events
 
     /** 
-     * Description
-     * @constant
+     * @property Event.CONNECTED
+     * @static
      */
     Event.CONNECTED = "connected";
     /** 
-     * Description
-     * @constant
+     * @property Event.CHANGE
+     * @static
      */
     Event.CHANGE    = "change";
     /** 
-     * Description
-     * @constant
+     * @property Event.COMPLETE
+     * @static
      */
     Event.COMPLETE  = "complete";
 

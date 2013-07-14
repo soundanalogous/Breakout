@@ -13,13 +13,14 @@ BO.IOBoardEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports IOBoardEvent as BO.IOBoardEvent
-     * @class An Event object to be dispatched (fired) by the IOBoard object.
+     * An Event object to be dispatched (fired) by the IOBoard object.
      * The most important event is the READY event which signifies that the
      * I/O board is ready to receive commands from the application. Many of the
      * other IOBoard events are used when creating new io component objects.
+     *
+     * @class IOBoardEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      */
     IOBoardEvent = function (type) {
@@ -32,25 +33,55 @@ BO.IOBoardEvent = (function () {
     };
 
     // Events
-    /** @constant */
+    /**
+     * @property IOBoardEvent.ANALOG_DATA
+     * @static
+     */
     IOBoardEvent.ANALOG_DATA = "analogData";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.DIGITAL_DATA
+     * @static
+     */
     IOBoardEvent.DIGITAL_DATA = "digitalData";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.FIRMWARE_VERSION
+     * @static
+     */
     IOBoardEvent.FIRMWARE_VERSION = "firmwareVersion";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.FIRMWARE_NAME
+     * @static
+     */
     IOBoardEvent.FIRMWARE_NAME = "firmwareName";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.STRING_MESSAGE
+     * @static
+     */
     IOBoardEvent.STRING_MESSAGE = "stringMessage";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.SYSEX_MESSAGE
+     * @static
+     */
     IOBoardEvent.SYSEX_MESSAGE = "sysexMessage";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.PIN_STATE_RESPONSE
+     * @static
+     */
     IOBoardEvent.PIN_STATE_RESPONSE = "pinStateResponse";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.READY
+     * @static
+     */
     IOBoardEvent.READY = "ioBoardReady";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.CONNECTED
+     * @static
+     */
     IOBoardEvent.CONNECTED = "ioBoardConnected";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.DISCONNECTED
+     * @static
+     */
     IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";       
 
     IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);

@@ -21,14 +21,15 @@ BO.Pin = (function () {
         PinEvent = BO.PinEvent;
 
     /**
-     * An object to represent an IOBoard pin
-     *
-     * @exports Pin as BO.Pin
-     * @class Each analog and digital pin of the physical I/O board is 
+     * Each analog and digital pin of the physical I/O board is 
      * represented by a Pin object.
      * The Pin object is the foundation for many of the io objects and is also 
      * very useful on its own. See the Using The Pin Object Guide on 
      * http://breakoutjs.com for a detailed overview.
+     *
+     * @class Pin
+     * @constructor
+     * @uses EventDispatcher
      * @param {Number} number The pin number
      * @param {Number} type The type of pin
      */
@@ -74,8 +75,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The analog pin number used by the IOBoard (printed on 
          * board or datasheet).
-         * @name Pin#analogNumber
-         * @property
+         * @property analogNumber
          * @type Number
          */ 
         get analogNumber() {
@@ -85,8 +85,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The pin number corresponding to the Arduino documentation 
          * for the type of board.
-         * @name Pin#number
-         * @property
+         * @property number
          * @type Number
          */          
         get number() {
@@ -128,8 +127,7 @@ BO.Pin = (function () {
          * rather than the max PWM value specified by the microcontroller 
          * datasheet.</p>
          *
-         * @name Pin#maxPWMValue
-         * @property
+         * @property maxPWMValue
          * @type Number
          */          
         get maxPWMValue() {
@@ -139,8 +137,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The average value of the pin over time. Call clear() to 
          * reset.
-         * @name Pin#average
-         * @property
+         * @property average
          * @type Number
          */          
         get average() {
@@ -150,8 +147,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The minimum value of the pin over time. Call clear() to 
          * reset.
-         * @name Pin#minimum
-         * @property
+         * @property minimum
          * @type Number
          */
         get minimum() {
@@ -161,8 +157,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The maximum value of the pin over time. Call clear() to 
          * reset.
-         * @name Pin#maximum
-         * @property
+         * @property maximum
          * @type Number
          */          
         get maximum() {
@@ -180,8 +175,7 @@ BO.Pin = (function () {
          * applications connected to a single physical IOBoard and you want to 
          * get the state of a pin that is set by another client application.</p>
          * 
-         * @name Pin#state
-         * @property
+         * @property state
          * @type Number
          */
         get state() {
@@ -190,8 +184,7 @@ BO.Pin = (function () {
         
         /**
          * The current digital or analog value of the pin.
-         * @name Pin#value
-         * @property
+         * @property value
          * @type Number
          */      
         get value() {
@@ -207,8 +200,7 @@ BO.Pin = (function () {
         
         /**
          * [read-only] The last pin value.
-         * @name Pin#lastValue
-         * @property
+         * @property lastValue
          * @type Number
          */          
         get lastValue() {
@@ -217,8 +209,7 @@ BO.Pin = (function () {
         
         /**
          * [read-only] The value before any filters were applied.
-         * @name Pin#preFilterValue
-         * @property
+         * @property preFilterValue
          * @type Number
          */          
         get preFilterValue() {
@@ -227,9 +218,8 @@ BO.Pin = (function () {
 
         /**
          * Get and set filters for the Pin.
-         * @name Pin#filters
-         * @property
-         * @type FilterBase
+         * @property filters
+         * @type FilterBase[]
          */ 
         get filters() {
             return this._filters;
@@ -240,8 +230,7 @@ BO.Pin = (function () {
 
         /**
          * [read-only] Get a reference to the current generator.
-         * @name Pin#generator
-         * @property
+         * @property generator
          * @type GeneratorBase
          */ 
         get generator() {
@@ -252,6 +241,7 @@ BO.Pin = (function () {
          * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,
          * 4: SERVO, 5: SHIFT, 6: I2C). Use 
          * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
+         * @method getType
          * @return {Number} The pin type/mode
          */ 
         getType: function () {
@@ -271,6 +261,7 @@ BO.Pin = (function () {
 
         /**
          * An object storing the capabilities of the pin.
+         * @method getCapabilities
          * @return {Object} An object describing the capabilities of this Pin.
          */ 
         getCapabilities: function () {
@@ -288,6 +279,7 @@ BO.Pin = (function () {
         /**
          * Dispatch a Change event whenever a pin value changes
          * @private
+         * @method detectChange
          */
         detectChange: function (oldValue, newValue) {
             if (oldValue === newValue) {
@@ -305,6 +297,7 @@ BO.Pin = (function () {
         /**
          * From funnel Pin.as
          * @private
+         * @method clearWeight
          */
         clearWeight: function () {
             this._sum = this._average;
@@ -314,6 +307,7 @@ BO.Pin = (function () {
         /**
          * From funnel Pin.as
          * @private
+         * @method calculateMinMaxAndMean
          */
         calculateMinMaxAndMean: function (val) {
             var MAX_SAMPLES = Number.MAX_VALUE;
@@ -330,6 +324,7 @@ BO.Pin = (function () {
             
         /**
          * Resets the minimum, maximum, average and lastValue of the pin.
+         * @method clear
          */
         clear: function () {
             this._minimum = this._maximum = this._average = this._lastValue = this._preFilterValue;
@@ -338,6 +333,7 @@ BO.Pin = (function () {
         
         /**
          * Add a new filter to the Pin.
+         * @method addFilter
          * @param {FilterBase} newFilter A filter object that extends 
          * FilterBase.
          * @see BO.filters.Convolution
@@ -359,6 +355,7 @@ BO.Pin = (function () {
 
         /**
          * Remove a specified filter from the Pin.
+         * @method removeFilter
          * @param {FilterBase} filterToRemove The filter to remove.
          * @see BO.filters.Convolution
          * @see BO.filters.Scaler
@@ -383,7 +380,7 @@ BO.Pin = (function () {
          * assigned. 
          * Assigning a new generator will replace the previously assigned 
          * generator.
-         *
+         * @method addGenerator
          * @param {GeneratorBase} newGenerator A generator object that extends 
          * GeneratorBase.
          * @see BO.generators.Oscillator
@@ -396,6 +393,7 @@ BO.Pin = (function () {
 
         /**
          * Removes the generator from the pin.
+         * @method removeGenerator
          */
         removeGenerator: function () {
             if (this._generator !== null) {
@@ -406,6 +404,7 @@ BO.Pin = (function () {
 
         /**
          * Removes all filters from the pin.
+         * @method removeAllFilters
          */
         removeAllFilters: function () {
             this._filters = null;
@@ -413,6 +412,7 @@ BO.Pin = (function () {
 
         /**
          * @private
+         * @method autoSetValue
          */
         autoSetValue: function (event) {
             var val = this._generator.value;
@@ -421,6 +421,7 @@ BO.Pin = (function () {
 
         /**
          * @private
+         * @method applyFilters
          */
         applyFilters: function (val) {
             var result;
@@ -478,37 +479,82 @@ BO.Pin = (function () {
             
     };
 
-    /** @constant */
+    /**
+     * @property Pin.HIGH
+     * @static
+     */
     Pin.HIGH = 1;
-    /** @constant */
+    /**
+     * @property Pin.LOW
+     * @static
+     */
     Pin.LOW = 0;
-    /** @constant */
+    /**
+     * @property Pin.ON
+     * @static
+     */
     Pin.ON = 1;
-    /** @constant */
+    /**
+     * @property Pin.OFF
+     * @static
+     */
     Pin.OFF = 0;
 
     // Pin modes
-    /** @constant */
+    /**
+     * @property Pin.DIN
+     * @static
+     */
     Pin.DIN = 0x00;
-    /** @constant */
+    /**
+     * @property Pin.DOUT
+     * @static
+     */
     Pin.DOUT = 0x01;
-    /** @constant */
+    /**
+     * @property Pin.AIN
+     * @static
+     */
     Pin.AIN = 0x02;
-    /** @constant */
+    /**
+     * @property Pin.AOUT
+     * @static
+     */
     Pin.AOUT = 0x03;
-    /** @constant */
+    /**
+     * @property Pin.PWM
+     * @static
+     */
     Pin.PWM = 0x03;
-    /** @constant */
+    /**
+     * @property Pin.SERVO
+     * @static
+     */
     Pin.SERVO = 0x04;
-    /** @constant */
+    /**
+     * @property Pin.SHIFT
+     * @static
+     */
     Pin.SHIFT = 0x05;
-    /** @constant */
+    /**
+     * @property Pin.I2C
+     * @static
+     */
     Pin.I2C = 0x06;
-    /** @constant */
+    /**
+     * @property Pin.ONEWIRE
+     * @static
+     */
     Pin.ONEWIRE = 0x07;
-    /** @constant */
+    /**
+     * @property Pin.STEPPER
+     * @static
+     */
     Pin.STEPPER = 0x08;
-    /** @constant */
+    /**
+     * @property Pin.TOTAL_PIN_MODES
+     * @static
+     */
     Pin.TOTAL_PIN_MODES = 9;
 
 
@@ -516,27 +562,24 @@ BO.Pin = (function () {
 
     /**
      * The pinChange event is dispatched when the pin value changes.
-     * @name Pin#pinChange
      * @type BO.PinEvent.CHANGE
-     * @event
+     * @event pinChange
      * @param {BO.Pin} target A reference to the Pin object.
      */
 
     /**
      * The risingEdge event is dispatched when the pin value increased 
      * (from 0 to 1).
-     * @name Pin#risingEdge
      * @type BO.PinEvent.RISING_EDGE
-     * @event
+     * @event risingEdge
      * @param {BO.Pin} target A reference to the Pin object.
      */ 
      
     /**
      * The change event is dispatched when the pin value decreased 
      * (from 1 to 0).
-     * @name Pin#fallingEdge
      * @type BO.PinEvent.FALLING_EDGE
-     * @event
+     * @event fallingEdge
      * @param {BO.Pin} target A reference to the Pin object.
      */
 

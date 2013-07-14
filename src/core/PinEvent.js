@@ -13,11 +13,10 @@ BO.PinEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports PinEvent as BO.PinEvent
-     * @class An Event object to be dispatched (fired) by a Pin
-     * object.   
+     * An Event object to be dispatched (fired) by a Pin object.
+     * @class PinEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      */
     PinEvent = function (type) {
@@ -30,11 +29,20 @@ BO.PinEvent = (function () {
     };
 
     // Events
-    /** @constant */
+    /**
+     * @property PinEvent.CHANGE
+     * @static
+     */
     PinEvent.CHANGE = "pinChange";
-    /** @constant */
+    /**
+     * @property PinEvent.RISING_EDGE
+     * @static
+     */
     PinEvent.RISING_EDGE = "risingEdge";
-    /** @constant */
+    /**
+     * @property PinEvent.FALLING_EDGE
+     * @static
+     */
     PinEvent.FALLING_EDGE = "fallingEdge";
     
 

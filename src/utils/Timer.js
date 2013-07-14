@@ -14,12 +14,12 @@ JSUTILS.Timer = (function () {
         EventDispatcher = JSUTILS.EventDispatcher;
 
     /**
-     * An as3-like Timer object.
-     *
-     * @class The Timer object wraps the window.setInterval() method to provide
+     * The Timer object wraps the window.setInterval() method to provide
      * an as3-like Timer interface.
-     * @exports Timer as JSUTILS.Timer
-     * @extends JSUTILS.EventDispatcher  
+     *
+     * @class Timer
+     * @constructor
+     * @extends EventDispatcher  
      * @param {Number} delay The delay (ms) interval between ticks
      * @param {Number} repeatCount The number of number of ticks.
      * A value of zero will set the timer to repeat forever. Default = 0
@@ -45,7 +45,7 @@ JSUTILS.Timer = (function () {
     /**
      * The delay interval in milliseconds.
      * 
-     * @name Timer#delay
+     * @property delay
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("delay", function () {
@@ -62,7 +62,7 @@ JSUTILS.Timer = (function () {
     /**
      * The repeat count in milliseconds.
      * 
-     * @name Timer#repeatCount
+     * @property repeatCount
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("repeatCount", function () {
@@ -79,7 +79,7 @@ JSUTILS.Timer = (function () {
     /**
      * [read-only] Returns true if the timer is running.
      * 
-     * @name Timer#running
+     * @property running
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("running", function () {
@@ -90,7 +90,7 @@ JSUTILS.Timer = (function () {
      * [read-only] Returns the current count (number of ticks since timer
      * started).
      * 
-     * @name Timer#currentCount
+     * @property currentCount
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("currentCount", function () {
@@ -99,6 +99,7 @@ JSUTILS.Timer = (function () {
 
     /**
      * Start the timer.
+     * @method start
      */
     Timer.prototype.start = function () {
         if (this._timer === null) {
@@ -109,6 +110,7 @@ JSUTILS.Timer = (function () {
 
     /**
      * Stop the timer and reset the count to zero.
+     * @method reset
      */
     Timer.prototype.reset = function () {
         this.stop();
@@ -117,6 +119,7 @@ JSUTILS.Timer = (function () {
 
     /**
      * Stop the timer.
+     * @method stop
      */
     Timer.prototype.stop = function () {
         if (this._timer !== null) {
@@ -127,8 +130,8 @@ JSUTILS.Timer = (function () {
     };
 
     /**
-     * Description
      * @private
+     * @method onTick
      */
     Timer.prototype.onTick = function () {
         this._count = this._count + 1;
@@ -145,18 +148,15 @@ JSUTILS.Timer = (function () {
     /**
      * The timerTick event is dispatched at the rate specified 
      * by the delay interval.
-     * @name Timer#timerTick
      * @type JSUTILS.TimerEvent.TIMER
-     * @event
+     * @event timerTick
      * @param {JSUTILS.Timer} target A reference to the Timer object.
      */ 
 
     /**
      * The timerComplete event is dispatched when the repeatCount value
-     * has been reached.
-     * @name Timer#timerComplete
      * @type JSUTILS.TimerEvent.TIMER_COMPLETE
-     * @event
+     * @event timerComplete
      * @param {JSUTILS.Timer} target A reference to the Timer object.
      */      
 

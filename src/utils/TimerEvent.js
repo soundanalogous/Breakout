@@ -13,11 +13,11 @@ JSUTILS.TimerEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * TimerEvent Description.
+     * An Event object to be dispatched (fired) by a Timer object.
      * 
-     * @class An Event object to be dispatched (fired) by a Timer object.   
-     * @exports TimerEvent as JSUTILS.TimerEvent     
-     * @extends JSUTILS.Event
+     * @class TimerEvent
+     * @constructor    
+     * @extends Event
      * @param {String} type The event type
      */
     TimerEvent = function (type) {
@@ -28,13 +28,13 @@ JSUTILS.TimerEvent = (function () {
     };
 
     /** 
-     * Description
-     * @constant
+     * @property TimerEvent.TIMER
+     * @static
      */
     TimerEvent.TIMER = "timerTick";
     /** 
-     * Description
-     * @constant
+     * @property TimerEvent.TIMER_COMPLETE
+     * @static
      */
     TimerEvent.TIMER_COMPLETE = "timerComplete";
 

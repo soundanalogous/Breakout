@@ -5,7 +5,9 @@
  * inherit() method copied from Flanagan, David. JavaScript: The Definitive Guide.
  */
 
-/** @namespace Namespace and utility functions */
+/**
+ * Namespace and utility functions
+ */
 var JSUTILS = JSUTILS || {};
 
 
@@ -15,7 +17,6 @@ var JSUTILS = JSUTILS || {};
  * Use this function to safely create a new namespace
  * if a namespace already exists, it won't be recreated.
  *
- * @function
  * @param {String} namespaceString The namespace as a string.
  */
 JSUTILS.namespace = function (namespaceString) {
@@ -37,7 +38,6 @@ JSUTILS.namespace = function (namespaceString) {
  * Use this method rather than Object.create() directly if
  * browser compatibility is unknown.
  *
- * @function
  * @param {Object} p The prototype of the object to inherit.
  */
 JSUTILS.inherit = function (p) {
@@ -62,7 +62,6 @@ if (!Function.prototype.bind) {
 
     /** 
      * add bind for browsers that don't support it (Safari)
-     * @function
      * @private
      */
     Function.prototype.bind = function (oThis) {

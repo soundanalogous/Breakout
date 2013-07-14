@@ -53,23 +53,22 @@ BO.IOBoard = (function () {
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
-     * Creates a new IOBoard object representing the digital and analog inputs
-     * and outputs of the device as well as support for i2c devices and sending
-     * strings between the IOBoard sketch and your javascript application.
-     *
-     * @exports IOBoard as BO.IOBoard
-     * @class Creates an interface to the I/O board. The IOBoard object brokers
+     * Creates an interface to the I/O board. The IOBoard object brokers
      * the communication between your application and the physical I/O board.
      * Currently you can only connect to a single I/O board per computer.
      * However you could connect to multiple I/O boards if they are attached to
      * multiple computers on your network. In that case you would create a
      * separate IOBoard instance for each board you are connecting to in your
      * network.
+     *
+     * @class IOBoard
      * @constructor
+     * @uses EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * Default = false.
-     * @param {String} protocol [optional] The websockt protocol definition (if necessary).
+     * @param {String} protocol [optional] The websockt protocol definition 
+     * (if necessary).
      */
     IOBoard = function (host, port, protocol) {
         "use strict";
@@ -875,8 +874,7 @@ BO.IOBoard = (function () {
          * the IOBoard). Normally the sampling interval should not be changed. 
          * Default = 19 (ms).
          *
-         * @name IOBoard#samplingInterval
-         * @property
+         * @property samplingInterval
          * @type Number
          */
         get samplingInterval() { 
@@ -897,8 +895,7 @@ BO.IOBoard = (function () {
          * listening for the IOBoardEvent.READY event when creating an app with
          * a draw loop (such as when using processing.js or three.js);
          *
-         * @name IOBoard#isReady
-         * @property
+         * @property isReady
          * @type Boolean
          */
         get isReady() { 
@@ -926,6 +923,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getSocket
          * @return {WSocketWrapper} A reference to the WebSocket
          */
         getSocket: function () { 
@@ -937,6 +935,7 @@ BO.IOBoard = (function () {
          * running on the IOBoard.
          * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
          * the Firmata version is returned from the IOBoard.
+         * @method reportVersion
          */ 
         reportVersion: function () {
             this.send(REPORT_VERSION);
@@ -947,6 +946,7 @@ BO.IOBoard = (function () {
          * Listen for the IOBoard.FIRMWARE_NAME event to be notified of when 
          * the name is returned from the IOBoard. The version number is also
          * returned.
+         * @method reportFirmware
          */
         reportFirmware: function () {
             this.send([START_SYSEX, REPORT_FIRMWARE, END_SYSEX]);
@@ -954,6 +954,7 @@ BO.IOBoard = (function () {
         
         /**
          * Disables digital pin reporting for all digital pins.
+         * @method disableDigitalPins
          */
         disableDigitalPins: function () {
             for (var i = 0; i < this._numPorts; i++) {
@@ -964,6 +965,7 @@ BO.IOBoard = (function () {
         /**
          * Enables digital pin reporting for all digital pins. You must call
          * this before you can receive digital pin data from the IOBoard.
+         * @method enableDigitalPins
          */
         enableDigitalPins: function () {
             for (var i = 0; i < this._numPorts; i++) {
@@ -974,7 +976,7 @@ BO.IOBoard = (function () {
         /**
          * Enable or disable reporting of all digital pins for the specified
          * port.
-         * 
+         * @method sendDigitalPortReporting
          * @param {Number} mode Either Pin.On or Pin.OFF
          */
         sendDigitalPortReporting: function (port, mode) {
@@ -983,7 +985,7 @@ BO.IOBoard = (function () {
         
         /**
          * Call this method to enable analog input for the specified pin.
-         *
+         * @method enableAnalogPin
          * @param {Number} pin The pin connected to the analog input
          */
         enableAnalogPin: function (pin) {
@@ -992,7 +994,7 @@ BO.IOBoard = (function () {
 
         /**
          * Call this method to disable analog input for the specified pin.
-         *
+         * @method disableAnalogPin
          * @param {Number} pin The pin connected to the analog input
          */
         disableAnalogPin: function (pin) {
@@ -1002,6 +1004,7 @@ BO.IOBoard = (function () {
         /**
          * Set the specified digital pin mode. 
          *
+         * @method setDigitalPinMode
          * @param {Number} pin The number of the pin. When using and analog
          * pin as a digital pin, refer the datasheet for your board to obtain 
          * the digital pin equivalent of the analog pin number. For example on 
@@ -1024,7 +1027,7 @@ BO.IOBoard = (function () {
 
         /**
          * Enable the internal pull-up resistor for the specified pin number.
-         *
+         * @method enablePullUp
          * @param {Number} pinNum The number of the input pin to enable the
          * pull-up resistor.
          */
@@ -1033,6 +1036,7 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * @method getFirmwareName
          * @return {String} The name of the firmware running on the IOBoard.
          */
         getFirmwareName: function () {
@@ -1042,6 +1046,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getFirmwareVersion
          * @return {String} The version of the firmware running on the
          * IOBoard.
          */
@@ -1056,6 +1061,7 @@ BO.IOBoard = (function () {
          * pwm, servo, i2c, etc) supported by the pin. The mode value is the
          * resolution in bits.
          *
+         * @method getPinCapabilities
          * @return {Array} The capabilities of the Pins on the IOBoard.
          */
         getPinCapabilities: function () {
@@ -1124,6 +1130,7 @@ BO.IOBoard = (function () {
          * application. In most cases however you should never need to call 
          * this method.
          *
+         * @method queryPinState
          * @param {Pin} pin The pin object to query the pin state for.
          */      
         queryPinState: function (pin) {
@@ -1137,6 +1144,7 @@ BO.IOBoard = (function () {
          * Send the digital values for a port. Making this private for now.
          *
          * @private
+         * @method sendDigitalPort
          * @param {Number} portNumber The number of the port
          * @param {Number} portData A byte representing the state of the 8 pins
          * for the specified port
@@ -1155,7 +1163,8 @@ BO.IOBoard = (function () {
          * <p>To test, load the EchoString.pde example from Firmata->Examples
          * menu in the IOBoard Application, then use sendString("your string
          * message") to have it echoed back to your javascript application.</p>
-         * 
+         *
+         * @method sendString
          * @param {String} str The string message to send to the IOBoard
          */
         sendString: function (str) {
@@ -1178,6 +1187,7 @@ BO.IOBoard = (function () {
          * calling it from your main application.
          *
          * @private
+         * @method sendSysex
          * @param {Number} command The sysEx command value (see firmata.org)
          * @param {Number[]} data A packet of data representing the sysEx
          * message to be sent
@@ -1209,6 +1219,7 @@ BO.IOBoard = (function () {
          * be close enough so call sendServoAttach(pin) omitting the min and
          * max values.
          *
+         * @method sendServoAttach
          * @param {Number} pin The pin the server is connected to.
          * @param {Number} minPulse [optional] The minimum pulse width for the
          * servo. Default = 544.
@@ -1240,6 +1251,7 @@ BO.IOBoard = (function () {
 
         /**
          * @private
+         * @method getPin
          * @return {Pin} An unmapped reference to the Pin object.
          */
         getPin: function (pinNumber) {
@@ -1247,6 +1259,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getAnalogPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board analog pin).
          */ 
@@ -1255,6 +1268,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getDigitalPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board digital pin).
          */ 
@@ -1263,6 +1277,7 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * @method getPins
          * @return {Pin[]} An array containing all pins on the IOBoard
          */ 
         getPins: function () {
@@ -1280,6 +1295,7 @@ BO.IOBoard = (function () {
          * <p>board.analogToDigital(3) returns 17 which is the digital
          * equivalent of the analog pin</p>
          *
+         * @method analogToDigital
          * @return {Number} The digital pin number equivalent for the specified
          * analog pin number.
          */ 
@@ -1288,6 +1304,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getPinCount
          * @return {Number} Total number of pins
          */
         getPinCount: function () {
@@ -1295,6 +1312,7 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * @method getAnalogPinCount
          * @return {Number} The total number of analog pins supported by this
          * IOBoard
          */
@@ -1303,10 +1321,11 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * Returns undefined if the board does not have i2c pins.
+         * @private
+         * @method getI2cPins
          * @return {Number[]} The pin numbers of the i2c pins if the board has
          * i2c.
-         * Returns undefined if the board does not have i2c pins.
-         * @private (internal only)
          */
         getI2cPins: function () {
             return this._i2cPins;
@@ -1315,6 +1334,7 @@ BO.IOBoard = (function () {
         /**
          * Call this method to print the capabilities for all pins to 
          * the console.
+         * @method reportCapabilities
          */
         reportCapabilities: function () {
             var capabilities = this.getPinCapabilities(),
@@ -1338,6 +1358,7 @@ BO.IOBoard = (function () {
          * So I'm making this private for now.
          *
          * @private
+         * @method send
          * @param {Number[]} message Message data to be sent to the IOBoard
          */
         send: function (message) {
@@ -1349,6 +1370,7 @@ BO.IOBoard = (function () {
          * private until a use case arises.
          *
          * @private
+         * @method close
          */
         close: function () {
             this._socket.close();
@@ -1399,36 +1421,32 @@ BO.IOBoard = (function () {
     /**
      * The ioBoardReady event is dispatched when the board is ready to
      * send and receive commands. 
-     * @name IOBoard#ioBoardReady
      * @type BO.IOBoardEvent.READY
-     * @event
+     * @event ioBoardReady
      * @param {IOBoard} target A reference to the IOBoard
      */
 
     /**
      * The ioBoardConnected event is dispatched when the websocket 
      * connection is established.
-     * @name IOBoard#ioBoardConnected
      * @type BO.IOBoardEvent.CONNECTED
-     * @event
+     * @event ioBoardConnected
      * @param {IOBoard} target A reference to the IOBoard
      */
 
     /**
      * The ioBoardDisconnected event is dispatched when the websocket
      * connection is closed.
-     * @name IOBoard#ioBoardDisconnected
      * @type BO.IOBoardEvent.DISCONNECTED
-     * @event
+     * @event ioBoardDisconnected
      * @param {IOBoard} target A reference to the IOBoard
      */  
      
     /**
      * The stringMessage event is dispatched when a string is received
      * from the IOBoard.
-     * @name IOBoard#stringMessage
      * @type BO.IOBoardEvent.STRING_MESSAGE
-     * @event
+     * @event stringMessage
      * @param {IOBoard} target A reference to the IOBoard
      * @param {String} message The string message received from the IOBoard
      */
@@ -1436,9 +1454,8 @@ BO.IOBoard = (function () {
     /**
      * The sysexMessage event is dispatched when a sysEx message is 
      * received from the IOBoard.
-     * @name IOBoard#sysexMessage
      * @type BO.IOBoardEvent.SYSEX_MESSAGE
-     * @event
+     * @event sysexMessage
      * @param {IOBoard} target A reference to the IOBoard
      * @param {Array} message The sysEx data
      */
@@ -1446,9 +1463,8 @@ BO.IOBoard = (function () {
     /**
      * The firmwareVersion event is dispatched when the firmware version
      * is received from the IOBoard.
-     * @name IOBoard#firmwareVersion
      * @type BO.IOBoardEvent.FIRMWARE_VERSION
-     * @event
+     * @event firmwareVersion
      * @param {IOBoard} target A reference to the IOBoard
      * @param {Number} version The firmware version (where Firmata 2.3 = 23)
      */
@@ -1456,9 +1472,8 @@ BO.IOBoard = (function () {
     /**
      * The firmwareName event is dispatched when the firmware name is
      * received from the IOBoard.
-     * @name IOBoard#firmwareName
      * @type BO.IOBoardEvent.FIRMWARE_NAME
-     * @event
+     * @event firmwareName
      * @param {IOBoard} target A reference to the IOBoard
      * @param {String} name The name of the firmware running on the IOBoard
      * @param {Number} version The firmware version (where Firmata 2.3 = 23)
@@ -1467,9 +1482,8 @@ BO.IOBoard = (function () {
     /**
      * The pinStateResponse event is dispatched when the results of
      * a pin state query (via a call to: queryPinState()) is received.
-     * @name IOBoard#pinStateResponse
      * @type BO.IOBoardEvent.PIN_STATE_RESPONSE
-     * @event
+     * @event pinStateResponse
      * @param {IOBoard} target A reference to the IOBoard
      * @param {BO.Pin} pin A reference to the pin object.
      */
@@ -1479,9 +1493,8 @@ BO.IOBoard = (function () {
      * from the IOBoard. Use thie event to be notified when any analog
      * pin value changes. Use Pin.CHANGE to be notified when a specific
      * pin value changes.
-     * @name IOBoard#analogData
      * @type BO.IOBoardEvent.ANALOG_DATA
-     * @event
+     * @event analogData
      * @param {IOBoard} target A reference to the IOBoard
      * @param {BO.Pin} pin A reference to the pin object.
      */
@@ -1491,9 +1504,8 @@ BO.IOBoard = (function () {
      * from the IOBoard. Use this event to be notified when any digital
      * pin value changes. Use Pin.CHANGE to be notified when a specific
      * pin value changes.
-     * @name IOBoard#digitalData
      * @type BO.IOBoardEvent.DIGITAL_DATA
-     * @event
+     * @event digitalData
      * @param {IOBoard} target A reference to the IOBoard
      * @param {BO.Pin} pin A reference to the pin object.
      */
