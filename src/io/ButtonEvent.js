@@ -13,11 +13,11 @@ BO.io.ButtonEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports ButtonEvent as BO.io.ButtonEvent
-     * @class An Event object to be dispatched (fired) by a Button
-     * object.   
+     * An Event object to be dispatched (fired) by a Button
+     * object.
+     * @class ButtonEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type   
      */
     ButtonEvent = function (type) {

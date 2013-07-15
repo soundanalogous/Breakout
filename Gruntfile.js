@@ -113,7 +113,8 @@ module.exports = function (grunt) {
                 version: '<%= pkg.version %>',
                 options: {
                     paths: 'src',
-                    outdir: 'doctest'
+                    outdir: 'docs',
+                    themedir: 'build/yuidoc_theme'
                 }
             }
         },

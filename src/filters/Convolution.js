@@ -11,6 +11,9 @@
 
 JSUTILS.namespace('BO.filters.Convolution');
 
+/**
+ * @namespace BO.filters
+ */
 BO.filters.Convolution = (function () {
     "use strict";
 
@@ -20,14 +23,13 @@ BO.filters.Convolution = (function () {
     var FilterBase = BO.filters.FilterBase;
 
     /**
-     * This class performs a convolution operation of the inputs. A low-pass filter is used to remove fine noise and
-     * a high pass filter is used to remove drift.
+     * The Convolution object performs low-pass, high-pass and moving average
+     * filtering on an analog input.
+     * See Breakout/examples/filters/convolution.html for an example application.
      *
-     * @exports Convolution as BO.filters.Convolution
-     * @class The Convolution object performs low-pass, high-pass and moving average filtering
-     * on an analog input. See Breakout/examples/filters/convolution.html for an example application.
+     * @class Convolution
      * @constructor
-     * @augments BO.filters.FilterBase
+     * @extends FilterBase
      * @param {Number[]} kernel An array of coefficients to be used with product-sum
      * operations for input buffers.
      */
@@ -48,8 +50,7 @@ BO.filters.Convolution = (function () {
     /**
      * An array of coefficients to be used with product-sum operations for input buffers. 
      * If assigned a new array, the input buffer will be cleared.
-     * @name Convolution#coef
-     * @property
+     * @property coef
      * @type Number[]
      */
     Convolution.prototype.__defineGetter__("coef", function () {
@@ -66,8 +67,6 @@ BO.filters.Convolution = (function () {
 
     /**
      * Override FilterBase.processSample
-     *
-     * @inheritDoc
      */
     Convolution.prototype.processSample = function (val) {
         this._buffer.unshift(val);
@@ -85,19 +84,22 @@ BO.filters.Convolution = (function () {
 
     /**
      * Low-pass filter kernel. Use by passing this array to the constructor.
-     * @constant
+     * @property Convolution.LPF
+     * @static
      */
     Convolution.LPF = [1 / 3, 1 / 3, 1 / 3];
 
     /**
      * High-pass filter kernel. Use by passing this array to the constructor.
-     * @constant
+     * @property Convolution.HPF
+     * @static
      */
     Convolution.HPF = [1 / 3, -2.0 / 3, 1 / 3];
     
     /**
      * Moving average filter kernel. Use by passing this array to the constructor.
-     * @constant
+     * @property Convolution.MOVING_AVERAGE
+     * @static
      */
     Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];      
         

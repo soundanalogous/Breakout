@@ -25,14 +25,12 @@ BO.io.Stepper = (function () {
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
-     * Creates a new Stepper.
-     *
-     * @exports Stepper as BO.io.Stepper
-     * @class Creates an interface to a Stepper motor. Use this object to set
+     * Creates an interface to a Stepper motor. Use this object to set
      * the direction and number of steps for the motor to rotate. See
      * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html, 
      * stepper_easydriver.html and stepper_simple.html for example applications.
      *
+     * @class Stepper
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.

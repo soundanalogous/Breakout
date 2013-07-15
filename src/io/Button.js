@@ -16,21 +16,22 @@ BO.io.Button = (function () {
         ButtonEvent = BO.io.ButtonEvent;
 
     /**
-     * An object to represent a physical button. The advantage of using the 
-     * Button class over listening for pin change events on a Pin object, is 
-     * that the Button class handles debouncing and provides helpful button
-     * events: Pressed, Released, Long Press and Sustained Press
+     * Creates and interface to a physical button. The Button object
+     * dispatches events on state changes such as Pressed, Released and 
+     * Sustained Press. The Button object also handles debouncing.
+     *
+     * The advantage of using the Button class over listening for pin change
+     * events on a Pin object, is that the Button class handles debouncing and
+     * provides helpful button events: Pressed, Released, Long Press and
+     * Sustained Press
      *
      * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to
      * the button is connected to ground, configuration is PULL_DOWN, if the 
      * resistor is connected to power, then the configuration is PULL_UP.</p>
      *
-     * @exports Button as BO.io.Button
-     * @class Creates and interface to a physical button. The Button object
-     * dispatches events on state changes such as Pressed, Released and 
-     * Sustained Press. The Button object also handles debouncing.
+     * @class Button
      * @constructor
-     * @augments BO.PhysicalInputBase
+     * @extends PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the button is connected to.
      * @param {Number} buttonMode The mode of the button (either 

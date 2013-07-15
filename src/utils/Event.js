@@ -5,6 +5,9 @@
 
 JSUTILS.namespace('JSUTILS.Event');
 
+/**
+ * @namespace JSUTILS
+ */
 JSUTILS.Event = (function () {
 
     var Event;

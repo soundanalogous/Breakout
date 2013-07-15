@@ -20,6 +20,10 @@ BO.io.LED = (function () {
     var Oscillator = BO.generators.Oscillator;
 
     /**
+     * Creates an interface to an LED. This object provides helpful
+     * methods for blinking and fading LEDs. To use the fading methods, the
+     * LED must be connected to a PWM pin on the I/O board.
+     *
      * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
      * than Oscillator.SQUARE the LED must be connected to a PWM pin.</p>
      *
@@ -28,10 +32,7 @@ BO.io.LED = (function () {
      * Cathode is connected to the microcontroller pin, then it is 
      * SYNC_DRIVE.</p>
      *
-     * @exports LED as BO.io.LED
-     * @class Creates an interface to an LED. This object provides helpful
-     * methods for blinking and fading LEDs. To use the fading methods, the
-     * LED must be connected to a PWM pin on the I/O board.
+     * @class LED
      * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
      * @param {Pin} ledPin A reference to the Pin the LED is connected to.
      * @param {Number} driveMode The drive mode of the LED. Must be set to

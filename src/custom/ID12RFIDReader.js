@@ -5,6 +5,9 @@
 
 JSUTILS.namespace('BO.custom.ID12RFIDReader');
 
+/**
+ * @namespace BO.custom
+ */
 BO.custom.ID12RFIDReader = (function () {
 
     var ID12RFIDReader;

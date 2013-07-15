@@ -5,6 +5,9 @@
 
 JSUTILS.namespace('BO.io.AccelerometerADXL345');
 
+/**
+ * @namespace BO.io
+ */
 BO.io.AccelerometerADXL345 = (function () {
     "use strict";
 
@@ -26,15 +29,14 @@ BO.io.AccelerometerADXL345 = (function () {
         AccelerometerEvent = BO.io.AccelerometerEvent;
 
     /**
-     * Analog Devices ADXL345 3-axis accelerometer
-     *
-     * @exports AccelerometerADXL345 as BO.io.AccelerometerADXL345
-     * @class Creates an interface to an ADXL345 3-axis accelerometer. Use the
+     * Creates an interface to an ADXL345 3-axis accelerometer. Use the
      * accelerometer to read the acceleration along the x, y, and z axis of an 
      * object it is attached to. You can also obtain the pitch and roll. See the
      * example in Breakout/examples/sensors/adxl345.html.
+     *
+     * @class AccelerometerADXL345
      * @constructor
-     * @augments BO.I2CBase
+     * @extends I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
      * RANGE_8G, RANGE_16G). Default is RANGE_2G.    

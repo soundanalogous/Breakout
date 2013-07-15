@@ -5,6 +5,9 @@
 
 JSUTILS.namespace('BO.I2CBase');
 
+/**
+ * @namespace BO
+ */
 BO.I2CBase = (function () {
     "use strict";
 

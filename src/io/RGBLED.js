@@ -20,7 +20,15 @@ BO.io.RGBLED = (function () {
         LED = BO.io.LED;
 
     /**
-     * The RGB pins of the RGBLED must be connected to PWM pins on the IOBoard.
+     * Creates an interface to an RGB LED. This interface is for the
+     * type of RGB LED with 4 legs. One leg is connected to power or ground 
+     * (depending on the type of LED - common anode or common cathode) and the
+     * other 3 legs are connected to PWM pins on the I/O board. See 
+     * Breakout/examples/schematics.pdf for wiring diagrams. See 
+     * Breakout/examples/actuators/rgb_led.html for an example application.
+     *
+     * <p>The RGB pins of the RGBLED must be connected to PWM pins on the
+     * IOBoard.</p>
      *
      * <p>COMMON_ANODE vs COMMON_CATHODE. You can determine if your RGB LED is 
      * common anode or common cathode by reading the datasheet. To wire a 
@@ -29,13 +37,7 @@ BO.io.RGBLED = (function () {
      * LED, the anode is connected to power and the 3 cathode pins are connected
      * to the IOBoard PWM pins via 330 ohm resistors.</p>
      *
-     * @exports RGBLED as BO.io.RGBLED
-     * @class Creates an interface to an RGB LED. This interface is for the
-     * type of RGB LED with 4 legs. One leg is connected to power or ground 
-     * (depending on the type of LED - common anode or common cathode) and the
-     * other 3 legs are connected to PWM pins on the I/O board. See 
-     * Breakout/examples/schematics.pdf for wiring diagrams. See 
-     * Breakout/examples/actuators/rgb_led.html for an example application.
+     * @class RGBLED
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.

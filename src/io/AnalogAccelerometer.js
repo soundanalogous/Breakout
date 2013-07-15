@@ -27,17 +27,16 @@ BO.io.AnalogAccelerometer = (function () {
         Convolution = BO.filters.Convolution;
 
     /**
-     * Creates a new Analog Accelerometer object
-     *
-     * @exports AnalogAccelerometer as BO.io.AnalogAccelerometer
-     * @class Creates an interface to an analog accelerometer. Use the
+     * Creates an interface to an analog accelerometer. Use the
      * accelerometer to read the acceleration along the x, y, and z axis of an 
      * object it is attached to. You can also obtain the pitch and roll. This
      * object should interface with most analog accelerometers. See
      * Breakout/examples/sensors/analog_accelerometer.html and 
-     * Breakout/examples/three_js/accelerometer.html for example applications. 
+     * Breakout/examples/three_js/accelerometer.html for example applications.
+     *
+     * @class AnalogAccelerometer
      * @constructor
-     * @augments BO.PhysicalInputBase    
+     * @extends PhysicalInputBase    
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} xPin A reference to the Pin connected to the x axis of the
      * accelerometer

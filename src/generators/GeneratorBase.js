@@ -11,6 +11,9 @@
 
 JSUTILS.namespace('BO.generators.GeneratorBase');
 
+/**
+ * @namespace BO.generators
+ */
 BO.generators.GeneratorBase = (function () {
     "use strict";
 
@@ -20,20 +23,18 @@ BO.generators.GeneratorBase = (function () {
     var EventDispatcher = JSUTILS.EventDispatcher;
 
     /**
-     * A base object for generators.
+     * A base object to be extended by all Generator objects. This object should
+     * not be instantiated directly.
      *
-     * @exports GeneratorBase as BO.generators.GeneratorBase
-     * @class A base object to be extended by all Generator objects. This
-     * object should not be instantiated directly.
+     * @class GeneratorBase
      * @constructor
-     * @augments JSUTILS.EventDispatcher
+     * @extends EventDispatcher
      */
     GeneratorBase = function () {
         
         EventDispatcher.call(this, this);
 
         this.name = "GeneratorBase";
-        /** @protected */
         this._value = undefined;
 
     };
@@ -43,9 +44,8 @@ BO.generators.GeneratorBase = (function () {
 
     /**
      * [read-only] Get a generated number.
-     * @name GeneratorBase#value
      * @protected
-     * @property
+     * @property value
      * @type Number
      */  
     GeneratorBase.prototype.__defineGetter__("value", function () { 

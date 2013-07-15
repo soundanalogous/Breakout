@@ -13,11 +13,11 @@ BO.io.SoftPotEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports SoftPotEvent as BO.io.SoftPotEvent
-     * @class An Event object to be dispatched (fired) by a SoftPot
-     * object.   
+     * @exports An Event object to be dispatched (fired) by a SoftPot
+     * object.
+     * @class SoftPotEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      * @param {Number} touchPoint The value where the softpot was touched    
      */

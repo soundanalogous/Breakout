@@ -19,7 +19,11 @@ BO.io.DCMotor = (function () {
     var Pin = BO.Pin;
 
     /**
-     * H-bridge motor control.
+     * Creates an interface to an H-bridge to control the direction of rotation
+     * of a motor shaft. You can rotate forward (clockwise), reverse or apply a
+     * brake. See Breakout/examples/actuators/dcmotor.html for an example
+     * application.
+     *
      * <p>Tested successfully with the following H-bridge: SN754410<br>
      * Should also be compatible with the following:<br>
      * SN754410<br>
@@ -28,11 +32,7 @@ BO.io.DCMotor = (function () {
      * TB6612FNG<br>
      * BD621F</p>
      *
-     * @exports DCMotor as BO.io.DCMotor
-     * @class Creates an interface to an H-bridge to control the
-     * direction of rotation of a motor shaft. You can rotate forward
-     * (clockwise), reverse or apply a brake. See 
-     * Breakout/examples/actuators/dcmotor.html for an example application.
+     * @class DCMotor
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.

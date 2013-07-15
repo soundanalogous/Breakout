@@ -20,15 +20,14 @@ BO.filters.TriggerPoint = (function () {
     var FilterBase = BO.filters.FilterBase;
 
     /**
-     * Divides an input to 0 or 1 based on the threshold and hysteresis. You can also
-     * use multiple points by providing a nested array such as [[0.4, 0.1], [0.7, 0.05]].
-     *
-     * @exports TriggerPoint as BO.filters.TriggerPoint
-     * @class Divides an input to 0 or 1 based on the threshold and hysteresis. You can also
-     * use multiple points by providing a nested array such as [[0.4, 0.1], [0.7, 0.05]].
+     * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
+     * also use multiple points by providing a nested array such as [[0.4, 0.1],
+     * [0.7, 0.05]].
      * See Breakout/examples/filters/triggerpoint.html for an example application.
+     *
+     * @class TriggerPoint
      * @constructor
-     * @augments BO.filters.FilterBase
+     * @extends FilterBase
      * @param {Number[]} points An array of threshold and hysteresis values
      * operations for input buffers.
      */
@@ -64,8 +63,6 @@ BO.filters.TriggerPoint = (function () {
 
     /**
      * Override FilterBase.processSample
-     *
-     * @inheritDoc
      */
     TriggerPoint.prototype.processSample = function (val) {
         var status = this._lastStatus;
@@ -82,17 +79,26 @@ BO.filters.TriggerPoint = (function () {
         return status;
     };
 
+    /**
+     * @method addPoint
+     */
     TriggerPoint.prototype.addPoint = function (threshold, hysteresis) {
         this._points[threshold] = hysteresis;
         this.updateRange();
     };
 
+    /**
+     * @method removePoint
+     */
     TriggerPoint.prototype.removePoint = function (threshold) {
         // to do: verify that this works in javascript
         delete this._points[threshold];
         this.updateRange();
     };
 
+    /**
+     * @method removeAllPoints
+     */
     TriggerPoint.prototype.removeAllPoints = function () {
         this._points = {};
         this.updateRange();
@@ -100,6 +106,7 @@ BO.filters.TriggerPoint = (function () {
 
     /**
      * @private
+     * @method updateRange
      */
     TriggerPoint.prototype.updateRange = function () {
                 
@@ -129,6 +136,7 @@ BO.filters.TriggerPoint = (function () {
 
     /**
      * @private
+     * @method getKeys
      */
     TriggerPoint.prototype.getKeys = function (obj) {
         var keys = [];
@@ -143,3 +151,4 @@ BO.filters.TriggerPoint = (function () {
     return TriggerPoint;
 
 }());
+ 

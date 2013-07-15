@@ -18,15 +18,13 @@ BO.io.Potentiometer = (function () {
         PotEvent = BO.io.PotEvent;
 
     /**
-     * The Potentiometer object can be used for any generic analog input. It
-     * provides a higher level of abstraction around an analog input pin.
-     *
-     * @exports Potentiometer as BO.io.Potentiometer
-     * @class Creates an interface to an analog input sensor. This may be a
+     * Creates an interface to an analog input sensor. This may be a
      * potentiometer (dial) or any other analog input that is connected to a
      * single analog pin.
+     *
+     * @class Potentiometer
      * @constructor
-     * @augments BO.PhysicalInputBase    
+     * @extends PhysicalInputBase    
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.
      * @param {Pin} pin A reference to the Pin the potentiometer is connected

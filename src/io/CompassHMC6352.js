@@ -14,17 +14,16 @@ BO.io.CompassHMC6352 = (function () {
         CompassEvent = BO.io.CompassEvent;
 
     /**
-     * HMC6352 digital compass module
-     *
-     * @exports CompassHMC6352 as BO.io.CompassHMC6352
-     * @class Creates an interface to an HMC6352 Digital Compass module.
+     * Creates an interface to an HMC6352 Digital Compass module.
      * Use the compass to obtain a heading. You must hold the sensor flat
      * to obtain the most accurate heading value (just like an analog compass).
      * The compass is also useful in obtaining a rotation value in relation
      * to a fixed position. See Breakout/examples/sensors/hmc6352.html and
      * Breakout/examples/processing_js/compass.html for example applications.
+     *
+     * @class CompassHMC6352
      * @constructor
-     * @augments BO.I2CBase
+     * @extends I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      */

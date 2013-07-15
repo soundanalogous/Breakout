@@ -29,16 +29,15 @@ BO.io.GyroITG3200 = (function () {
         GyroEvent = BO.io.GyroEvent;
 
     /**
-     * InvenSense ITG3200 3-axis MEMS gyro
-     *
-     * @exports GyroITG3200 as BO.io.GyroITG3200
-     * @class Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
+     * Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
      * angular acceleration around the x, y, and z axis. This object provides
-     * the angular velocity of each axis. Proper calibration is required for an accurate
-     * reading. See Breakout/examples/sensors/itg3200.html and 
+     * the angular velocity of each axis. Proper calibration is required for an
+     * accurate reading. See Breakout/examples/sensors/itg3200.html and 
      * Breakout/examples/processing_js/gyro.html for example applications.
+     *
+     * @class GyroITG3200
      * @constructor
-     * @augments BO.I2CBase
+     * @extends I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
