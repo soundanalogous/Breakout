@@ -7,7 +7,6 @@
  */
 /**
  * @version 0.2.3
- * @namespace
  *
  * <p>Namespace for Breakout objects.</p>
  *
@@ -30,7 +29,9 @@ BREAKOUT.VERSION = '0.2.3';
  */
 
 BO.enableDebugging = false;
-/** @namespace Namespace and utility functions */
+/**
+ * Namespace and utility functions
+ */
 var JSUTILS = JSUTILS || {};
 
 
@@ -40,7 +41,6 @@ var JSUTILS = JSUTILS || {};
  * Use this function to safely create a new namespace
  * if a namespace already exists, it won't be recreated.
  *
- * @function
  * @param {String} namespaceString The namespace as a string.
  */
 JSUTILS.namespace = function (namespaceString) {
@@ -62,7 +62,6 @@ JSUTILS.namespace = function (namespaceString) {
  * Use this method rather than Object.create() directly if
  * browser compatibility is unknown.
  *
- * @function
  * @param {Object} p The prototype of the object to inherit.
  */
 JSUTILS.inherit = function (p) {
@@ -87,7 +86,6 @@ if (!Function.prototype.bind) {
 
     /** 
      * add bind for browsers that don't support it (Safari)
-     * @function
      * @private
      */
     Function.prototype.bind = function (oThis) {
@@ -119,6 +117,9 @@ if (!Function.prototype.bind) {
 
 JSUTILS.namespace('JSUTILS.Event');
 
+/**
+ * @namespace JSUTILS
+ */
 JSUTILS.Event = (function () {
 
     var Event;
@@ -126,8 +127,8 @@ JSUTILS.Event = (function () {
     /** 
      * A base class for the creation of Event objects.
      *
-     * @class A base class for the creation of Event objects.
-     * @exports Event as JSUTILS.Event
+     * @class Event
+     * @constructor
      * @param {String} type event type
      */
     Event = function (type) {
@@ -144,7 +145,7 @@ JSUTILS.Event = (function () {
         
         /**
          * The event type
-         * @name Event#type
+         * @property type
          * @type String
          */
         get type() {
@@ -156,7 +157,7 @@ JSUTILS.Event = (function () {
 
         /**
          * The event target
-         * @name Event#target
+         * @property target
          * @type Object
          */ 
         get target() {
@@ -171,18 +172,18 @@ JSUTILS.Event = (function () {
     // Generic events
 
     /** 
-     * Description
-     * @constant
+     * @property Event.CONNECTED
+     * @static
      */
     Event.CONNECTED = "connected";
     /** 
-     * Description
-     * @constant
+     * @property Event.CHANGE
+     * @static
      */
     Event.CHANGE    = "change";
     /** 
-     * Description
-     * @constant
+     * @property Event.COMPLETE
+     * @static
      */
     Event.COMPLETE  = "complete";
 
@@ -197,14 +198,16 @@ JSUTILS.EventDispatcher = (function () {
     var EventDispatcher;
 
     /**
-     * An DOM-like or as3-like EventDispatcher class.
+     * The EventDispatcher class mimics the DOM event dispatcher model so the 
+     * user can add and remove event listeners in a familiar way. Event bubbling
+     * is not available because events are dispatched in relation to state 
+     * changes of physical components instead of layered graphics so there is 
+     * nothing to bubble up.
      *
-     * @class The EventDispatcher class mimics the DOM event dispatcher model so the 
-     * user can add and remove event listeners in a familiar way. Event bubbling is
-     * not available because events are dispatched in relation to state changes of
-     * physical components instead of layered graphics so there is nothing to bubble up.
-     * @exports EventDispatcher as JSUTILS.EventDispatcher
-     * @param {Class} target The instance of the class that implements EventDispatcher
+     * @class EventDispatcher
+     * @constructor
+     * @param {Class} target The instance of the class that implements
+     * EventDispatcher
      */
     EventDispatcher = function (target) {
         "use strict";
@@ -220,9 +223,10 @@ JSUTILS.EventDispatcher = (function () {
         constructor: EventDispatcher,
 
         /**
-         * Description
+         * @method addEventListener
          * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
+         * @param {Function} listener The function to be called when the event
+         * is fired
          */
         addEventListener: function (type, listener) {
             if (!this._eventListeners[type]) {
@@ -232,9 +236,10 @@ JSUTILS.EventDispatcher = (function () {
         },
         
         /**
-         * Description
+         * @method removeEventListener
          * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
+         * @param {Function} listener The function to be called when the event
+         * is fired
          */
         removeEventListener: function (type, listener) {
             for (var i = 0, len = this._eventListeners[type].length; i < len; i++) {
@@ -246,7 +251,7 @@ JSUTILS.EventDispatcher = (function () {
         },
         
         /**
-         * Description
+         * @method hasEventListener
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
          */
@@ -259,7 +264,7 @@ JSUTILS.EventDispatcher = (function () {
         },
         
         /**
-         * Description
+         * @method dispatchEvent
          * @param {Event} type The Event object.
          * @param {Object} optionalParams Optional parameters passed as an object.
          * return {boolean} True if dispatch is successful, false if not.
@@ -305,11 +310,11 @@ JSUTILS.TimerEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * TimerEvent Description.
+     * An Event object to be dispatched (fired) by a Timer object.
      * 
-     * @class An Event object to be dispatched (fired) by a Timer object.   
-     * @exports TimerEvent as JSUTILS.TimerEvent     
-     * @extends JSUTILS.Event
+     * @class TimerEvent
+     * @constructor    
+     * @extends Event
      * @param {String} type The event type
      */
     TimerEvent = function (type) {
@@ -320,13 +325,13 @@ JSUTILS.TimerEvent = (function () {
     };
 
     /** 
-     * Description
-     * @constant
+     * @property TimerEvent.TIMER
+     * @static
      */
     TimerEvent.TIMER = "timerTick";
     /** 
-     * Description
-     * @constant
+     * @property TimerEvent.TIMER_COMPLETE
+     * @static
      */
     TimerEvent.TIMER_COMPLETE = "timerComplete";
 
@@ -348,12 +353,12 @@ JSUTILS.Timer = (function () {
         EventDispatcher = JSUTILS.EventDispatcher;
 
     /**
-     * An as3-like Timer object.
-     *
-     * @class The Timer object wraps the window.setInterval() method to provide
+     * The Timer object wraps the window.setInterval() method to provide
      * an as3-like Timer interface.
-     * @exports Timer as JSUTILS.Timer
-     * @extends JSUTILS.EventDispatcher  
+     *
+     * @class Timer
+     * @constructor
+     * @extends EventDispatcher  
      * @param {Number} delay The delay (ms) interval between ticks
      * @param {Number} repeatCount The number of number of ticks.
      * A value of zero will set the timer to repeat forever. Default = 0
@@ -379,7 +384,7 @@ JSUTILS.Timer = (function () {
     /**
      * The delay interval in milliseconds.
      * 
-     * @name Timer#delay
+     * @property delay
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("delay", function () {
@@ -396,7 +401,7 @@ JSUTILS.Timer = (function () {
     /**
      * The repeat count in milliseconds.
      * 
-     * @name Timer#repeatCount
+     * @property repeatCount
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("repeatCount", function () {
@@ -413,7 +418,7 @@ JSUTILS.Timer = (function () {
     /**
      * [read-only] Returns true if the timer is running.
      * 
-     * @name Timer#running
+     * @property running
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("running", function () {
@@ -424,7 +429,7 @@ JSUTILS.Timer = (function () {
      * [read-only] Returns the current count (number of ticks since timer
      * started).
      * 
-     * @name Timer#currentCount
+     * @property currentCount
      * @type Number
      */ 
     Timer.prototype.__defineGetter__("currentCount", function () {
@@ -433,6 +438,7 @@ JSUTILS.Timer = (function () {
 
     /**
      * Start the timer.
+     * @method start
      */
     Timer.prototype.start = function () {
         if (this._timer === null) {
@@ -443,6 +449,7 @@ JSUTILS.Timer = (function () {
 
     /**
      * Stop the timer and reset the count to zero.
+     * @method reset
      */
     Timer.prototype.reset = function () {
         this.stop();
@@ -451,6 +458,7 @@ JSUTILS.Timer = (function () {
 
     /**
      * Stop the timer.
+     * @method stop
      */
     Timer.prototype.stop = function () {
         if (this._timer !== null) {
@@ -461,8 +469,8 @@ JSUTILS.Timer = (function () {
     };
 
     /**
-     * Description
      * @private
+     * @method onTick
      */
     Timer.prototype.onTick = function () {
         this._count = this._count + 1;
@@ -479,18 +487,15 @@ JSUTILS.Timer = (function () {
     /**
      * The timerTick event is dispatched at the rate specified 
      * by the delay interval.
-     * @name Timer#timerTick
      * @type JSUTILS.TimerEvent.TIMER
-     * @event
+     * @event timerTick
      * @param {JSUTILS.Timer} target A reference to the Timer object.
      */ 
 
     /**
      * The timerComplete event is dispatched when the repeatCount value
-     * has been reached.
-     * @name Timer#timerComplete
      * @type JSUTILS.TimerEvent.TIMER_COMPLETE
-     * @event
+     * @event timerComplete
      * @param {JSUTILS.Timer} target A reference to the Timer object.
      */      
 
@@ -505,9 +510,10 @@ JSUTILS.SignalScope = (function () {
     var SignalScope;
 
     /**
-     * @class A simple 2 channel scope to view analog input data
-     * @constructor
-     * @exports SignalScope as JSUTILS.SignalScope   
+     * A simple 2 channel scope to view analog input data.
+     *
+     * @class SignalScope
+     * @constructor 
      * @param {String} canvasId The id of the canvas element to 
      * use to draw the signal.
      * @param {Number} width The width of the canvas element.
@@ -551,6 +557,7 @@ JSUTILS.SignalScope = (function () {
     /**
      * Call this method at the desired frame rate in order
      * to draw the input signal.
+     * @method update
      * @param {Number} input1 The channel 1 input signal
      * @param {Number} input2 [optional] The channel 2 input signal
      */
@@ -573,6 +580,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * @private
+     * @method drawChannel
      */
     SignalScope.prototype.drawChannel = function (values, color) {
         var offset = 0.0;
@@ -592,6 +600,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * @private
+     * @method drawMarkers
      */
     SignalScope.prototype.drawMarkers = function () {
         var offset = 0.0;
@@ -611,6 +620,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * Add a horizontal marker to the scope. 1 or more markers can be added.
+     * @method addMarker
      * @param {Number} level The value of the marker within the input value range.
      * @param {String} color The hex color value for the marker.
      */
@@ -623,6 +633,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * Remove all markers from the scope.
+     * @removeAllMarkers
      */
     SignalScope.prototype.removeAllMarkers = function () {
         this._markers = null;
@@ -642,13 +653,14 @@ BO.IOBoardEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports IOBoardEvent as BO.IOBoardEvent
-     * @class An Event object to be dispatched (fired) by the IOBoard object.
+     * An Event object to be dispatched (fired) by the IOBoard object.
      * The most important event is the READY event which signifies that the
      * I/O board is ready to receive commands from the application. Many of the
      * other IOBoard events are used when creating new io component objects.
+     *
+     * @class IOBoardEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      */
     IOBoardEvent = function (type) {
@@ -661,25 +673,55 @@ BO.IOBoardEvent = (function () {
     };
 
     // Events
-    /** @constant */
+    /**
+     * @property IOBoardEvent.ANALOG_DATA
+     * @static
+     */
     IOBoardEvent.ANALOG_DATA = "analogData";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.DIGITAL_DATA
+     * @static
+     */
     IOBoardEvent.DIGITAL_DATA = "digitalData";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.FIRMWARE_VERSION
+     * @static
+     */
     IOBoardEvent.FIRMWARE_VERSION = "firmwareVersion";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.FIRMWARE_NAME
+     * @static
+     */
     IOBoardEvent.FIRMWARE_NAME = "firmwareName";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.STRING_MESSAGE
+     * @static
+     */
     IOBoardEvent.STRING_MESSAGE = "stringMessage";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.SYSEX_MESSAGE
+     * @static
+     */
     IOBoardEvent.SYSEX_MESSAGE = "sysexMessage";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.PIN_STATE_RESPONSE
+     * @static
+     */
     IOBoardEvent.PIN_STATE_RESPONSE = "pinStateResponse";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.READY
+     * @static
+     */
     IOBoardEvent.READY = "ioBoardReady";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.CONNECTED
+     * @static
+     */
     IOBoardEvent.CONNECTED = "ioBoardConnected";
-    /** @constant */
+    /**
+     * @property IOBoardEvent.DISCONNECTED
+     * @static
+     */
     IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";       
 
     IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -699,11 +741,11 @@ BO.WSocketEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports WSocketEvent as BO.WSocketEvent
-     * @class Dispatches Websocket events: Connected (onopen), Message (onmessge) 
-     * and Closed (onclose) objects.     
+     * Dispatches Websocket events: Connected (onopen), Message (onmessge)
+     * and Closed (onclose) objects.
+     * @class WSocketEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      */
     WSocketEvent = function (type) {
@@ -715,11 +757,20 @@ BO.WSocketEvent = (function () {
     };
 
     // events
-    /** @constant */
+    /**
+     * @property WSocketEvent.CONNECTED
+     * @static
+     */
     WSocketEvent.CONNECTED = "webSocketConnected";
-    /** @constant */
+    /**
+     * @property WSocketEvent.MESSAGE
+     * @static
+     */
     WSocketEvent.MESSAGE = "webSocketMessage";
-    /** @constant */
+    /**
+     * @property WSocketEvent.CLOSE
+     * @static
+     */
     WSocketEvent.CLOSE = "webSocketClosed";
 
     WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -740,11 +791,12 @@ BO.WSocketWrapper = (function () {
         WSocketEvent = BO.WSocketEvent;
 
     /**
-     * Creates a wrapper for various websocket implementations to unify the interface.
+     * Creates a wrapper for various websocket implementations to unify the
+     * interface.
      *
-     * @exports WSocketWrapper as BO.WSocketWrapper
-     * @class Creates a wrapper for various websocket implementations to unify the interface.
+     * @class WSocketWrapper
      * @constructor
+     * @uses EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * native websocket implementation.
@@ -770,8 +822,9 @@ BO.WSocketWrapper = (function () {
 
     /**
      * Initialize the websocket
-     * @param {Object} self A reference to this websocket object.
      * @private
+     * @method init
+     * @param {Object} self A reference to this websocket object.
      */
     WSocketWrapper.prototype.init = function (self) {
 
@@ -841,6 +894,7 @@ BO.WSocketWrapper = (function () {
      * TO DO: support sending ArrayBuffers and Blobs
      * For now, forward any calls to sendString
      * @private
+     * @method send
      * @param {String} message The message to send
      */
     WSocketWrapper.prototype.send = function (message) {
@@ -851,6 +905,7 @@ BO.WSocketWrapper = (function () {
 
     /**
      * Send a message
+     * @method sendString
      * @param {String} message The message to send
      */
     WSocketWrapper.prototype.sendString = function (message) {
@@ -863,8 +918,7 @@ BO.WSocketWrapper = (function () {
     /**
      * [read-only] Wrapper for the readyState method of the native websocket implementation
      * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
-     * @name WSocketWrapper#readyState
-     * @property
+     * @property readyState
      * @type String
      */      
     WSocketWrapper.prototype.__defineGetter__("readyState", function () {
@@ -877,26 +931,23 @@ BO.WSocketWrapper = (function () {
     /**
      * The webSocketConnected event is dispatched when a connection with
      * the websocket is established.
-     * @name WSocketWrapper#webSocketConnected
      * @type BO.WebsocketEvent.CONNECTED
-     * @event
+     * @event webSocketConnected
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      */ 
 
     /**
      * The webSocketMessage event is dispatched when a websocket message is received.
-     * @name WSocketWrapper#webSocketMessage
      * @type BO.WebsocketEvent.MESSAGE
-     * @event
+     * @event webSocketMessage
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      * @param {String} message The websocket data    
      */ 
 
     /**
      * The webSocketClosed event is dispatched the websocket connection is closed.
-     * @name WSocketWrapper#webSocketClosed
      * @type BO.WebsocketEvent.CLOSE
-     * @event
+     * @event webSocketClosed
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
      */      
 
@@ -914,11 +965,12 @@ BO.generators.GeneratorEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports GeneratorEvent as BO.generators.GeneratorEvent
-     * @class An Event object to be dispatched (fired) by a Generator
-     * object when its value has updated.
+     * An Event object to be dispatched (fired) by a Generator object when its
+     * value has updated.
+     *
+     * @class GeneratorEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      */
     GeneratorEvent = function (type) {
@@ -931,7 +983,10 @@ BO.generators.GeneratorEvent = (function () {
     GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
     GeneratorEvent.prototype.constructor = GeneratorEvent;
 
-    /** @constant */
+    /**
+     * @property GeneratorEvent.UPDATE
+     * @static
+     */
     GeneratorEvent.UPDATE = "update";
 
     return GeneratorEvent;
@@ -939,6 +994,9 @@ BO.generators.GeneratorEvent = (function () {
 }());
 JSUTILS.namespace('BO.generators.GeneratorBase');
 
+/**
+ * @namespace BO.generators
+ */
 BO.generators.GeneratorBase = (function () {
     "use strict";
 
@@ -948,20 +1006,18 @@ BO.generators.GeneratorBase = (function () {
     var EventDispatcher = JSUTILS.EventDispatcher;
 
     /**
-     * A base object for generators.
+     * A base object to be extended by all Generator objects. This object should
+     * not be instantiated directly.
      *
-     * @exports GeneratorBase as BO.generators.GeneratorBase
-     * @class A base object to be extended by all Generator objects. This
-     * object should not be instantiated directly.
+     * @class GeneratorBase
      * @constructor
-     * @augments JSUTILS.EventDispatcher
+     * @extends EventDispatcher
      */
     GeneratorBase = function () {
         
         EventDispatcher.call(this, this);
 
         this.name = "GeneratorBase";
-        /** @protected */
         this._value = undefined;
 
     };
@@ -971,9 +1027,8 @@ BO.generators.GeneratorBase = (function () {
 
     /**
      * [read-only] Get a generated number.
-     * @name GeneratorBase#value
      * @protected
-     * @property
+     * @property value
      * @type Number
      */  
     GeneratorBase.prototype.__defineGetter__("value", function () { 
@@ -1001,11 +1056,10 @@ BO.PinEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports PinEvent as BO.PinEvent
-     * @class An Event object to be dispatched (fired) by a Pin
-     * object.   
+     * An Event object to be dispatched (fired) by a Pin object.
+     * @class PinEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends Event
      * @param {String} type The event type
      */
     PinEvent = function (type) {
@@ -1018,11 +1072,20 @@ BO.PinEvent = (function () {
     };
 
     // Events
-    /** @constant */
+    /**
+     * @property PinEvent.CHANGE
+     * @static
+     */
     PinEvent.CHANGE = "pinChange";
-    /** @constant */
+    /**
+     * @property PinEvent.RISING_EDGE
+     * @static
+     */
     PinEvent.RISING_EDGE = "risingEdge";
-    /** @constant */
+    /**
+     * @property PinEvent.FALLING_EDGE
+     * @static
+     */
     PinEvent.FALLING_EDGE = "fallingEdge";
     
 
@@ -1045,14 +1108,15 @@ BO.Pin = (function () {
         PinEvent = BO.PinEvent;
 
     /**
-     * An object to represent an IOBoard pin
-     *
-     * @exports Pin as BO.Pin
-     * @class Each analog and digital pin of the physical I/O board is 
+     * Each analog and digital pin of the physical I/O board is 
      * represented by a Pin object.
      * The Pin object is the foundation for many of the io objects and is also 
      * very useful on its own. See the Using The Pin Object Guide on 
      * http://breakoutjs.com for a detailed overview.
+     *
+     * @class Pin
+     * @constructor
+     * @uses EventDispatcher
      * @param {Number} number The pin number
      * @param {Number} type The type of pin
      */
@@ -1098,8 +1162,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The analog pin number used by the IOBoard (printed on 
          * board or datasheet).
-         * @name Pin#analogNumber
-         * @property
+         * @property analogNumber
          * @type Number
          */ 
         get analogNumber() {
@@ -1109,8 +1172,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The pin number corresponding to the Arduino documentation 
          * for the type of board.
-         * @name Pin#number
-         * @property
+         * @property number
          * @type Number
          */          
         get number() {
@@ -1152,8 +1214,7 @@ BO.Pin = (function () {
          * rather than the max PWM value specified by the microcontroller 
          * datasheet.</p>
          *
-         * @name Pin#maxPWMValue
-         * @property
+         * @property maxPWMValue
          * @type Number
          */          
         get maxPWMValue() {
@@ -1163,8 +1224,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The average value of the pin over time. Call clear() to 
          * reset.
-         * @name Pin#average
-         * @property
+         * @property average
          * @type Number
          */          
         get average() {
@@ -1174,8 +1234,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The minimum value of the pin over time. Call clear() to 
          * reset.
-         * @name Pin#minimum
-         * @property
+         * @property minimum
          * @type Number
          */
         get minimum() {
@@ -1185,8 +1244,7 @@ BO.Pin = (function () {
         /**
          * [read-only] The maximum value of the pin over time. Call clear() to 
          * reset.
-         * @name Pin#maximum
-         * @property
+         * @property maximum
          * @type Number
          */          
         get maximum() {
@@ -1204,8 +1262,7 @@ BO.Pin = (function () {
          * applications connected to a single physical IOBoard and you want to 
          * get the state of a pin that is set by another client application.</p>
          * 
-         * @name Pin#state
-         * @property
+         * @property state
          * @type Number
          */
         get state() {
@@ -1214,8 +1271,7 @@ BO.Pin = (function () {
         
         /**
          * The current digital or analog value of the pin.
-         * @name Pin#value
-         * @property
+         * @property value
          * @type Number
          */      
         get value() {
@@ -1231,8 +1287,7 @@ BO.Pin = (function () {
         
         /**
          * [read-only] The last pin value.
-         * @name Pin#lastValue
-         * @property
+         * @property lastValue
          * @type Number
          */          
         get lastValue() {
@@ -1241,8 +1296,7 @@ BO.Pin = (function () {
         
         /**
          * [read-only] The value before any filters were applied.
-         * @name Pin#preFilterValue
-         * @property
+         * @property preFilterValue
          * @type Number
          */          
         get preFilterValue() {
@@ -1251,9 +1305,8 @@ BO.Pin = (function () {
 
         /**
          * Get and set filters for the Pin.
-         * @name Pin#filters
-         * @property
-         * @type FilterBase
+         * @property filters
+         * @type FilterBase[]
          */ 
         get filters() {
             return this._filters;
@@ -1264,8 +1317,7 @@ BO.Pin = (function () {
 
         /**
          * [read-only] Get a reference to the current generator.
-         * @name Pin#generator
-         * @property
+         * @property generator
          * @type GeneratorBase
          */ 
         get generator() {
@@ -1276,6 +1328,7 @@ BO.Pin = (function () {
          * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,
          * 4: SERVO, 5: SHIFT, 6: I2C). Use 
          * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
+         * @method getType
          * @return {Number} The pin type/mode
          */ 
         getType: function () {
@@ -1295,6 +1348,7 @@ BO.Pin = (function () {
 
         /**
          * An object storing the capabilities of the pin.
+         * @method getCapabilities
          * @return {Object} An object describing the capabilities of this Pin.
          */ 
         getCapabilities: function () {
@@ -1312,6 +1366,7 @@ BO.Pin = (function () {
         /**
          * Dispatch a Change event whenever a pin value changes
          * @private
+         * @method detectChange
          */
         detectChange: function (oldValue, newValue) {
             if (oldValue === newValue) {
@@ -1329,6 +1384,7 @@ BO.Pin = (function () {
         /**
          * From funnel Pin.as
          * @private
+         * @method clearWeight
          */
         clearWeight: function () {
             this._sum = this._average;
@@ -1338,6 +1394,7 @@ BO.Pin = (function () {
         /**
          * From funnel Pin.as
          * @private
+         * @method calculateMinMaxAndMean
          */
         calculateMinMaxAndMean: function (val) {
             var MAX_SAMPLES = Number.MAX_VALUE;
@@ -1354,6 +1411,7 @@ BO.Pin = (function () {
             
         /**
          * Resets the minimum, maximum, average and lastValue of the pin.
+         * @method clear
          */
         clear: function () {
             this._minimum = this._maximum = this._average = this._lastValue = this._preFilterValue;
@@ -1362,6 +1420,7 @@ BO.Pin = (function () {
         
         /**
          * Add a new filter to the Pin.
+         * @method addFilter
          * @param {FilterBase} newFilter A filter object that extends 
          * FilterBase.
          * @see BO.filters.Convolution
@@ -1383,6 +1442,7 @@ BO.Pin = (function () {
 
         /**
          * Remove a specified filter from the Pin.
+         * @method removeFilter
          * @param {FilterBase} filterToRemove The filter to remove.
          * @see BO.filters.Convolution
          * @see BO.filters.Scaler
@@ -1407,7 +1467,7 @@ BO.Pin = (function () {
          * assigned. 
          * Assigning a new generator will replace the previously assigned 
          * generator.
-         *
+         * @method addGenerator
          * @param {GeneratorBase} newGenerator A generator object that extends 
          * GeneratorBase.
          * @see BO.generators.Oscillator
@@ -1420,6 +1480,7 @@ BO.Pin = (function () {
 
         /**
          * Removes the generator from the pin.
+         * @method removeGenerator
          */
         removeGenerator: function () {
             if (this._generator !== null) {
@@ -1430,6 +1491,7 @@ BO.Pin = (function () {
 
         /**
          * Removes all filters from the pin.
+         * @method removeAllFilters
          */
         removeAllFilters: function () {
             this._filters = null;
@@ -1437,6 +1499,7 @@ BO.Pin = (function () {
 
         /**
          * @private
+         * @method autoSetValue
          */
         autoSetValue: function (event) {
             var val = this._generator.value;
@@ -1445,6 +1508,7 @@ BO.Pin = (function () {
 
         /**
          * @private
+         * @method applyFilters
          */
         applyFilters: function (val) {
             var result;
@@ -1502,37 +1566,82 @@ BO.Pin = (function () {
             
     };
 
-    /** @constant */
+    /**
+     * @property Pin.HIGH
+     * @static
+     */
     Pin.HIGH = 1;
-    /** @constant */
+    /**
+     * @property Pin.LOW
+     * @static
+     */
     Pin.LOW = 0;
-    /** @constant */
+    /**
+     * @property Pin.ON
+     * @static
+     */
     Pin.ON = 1;
-    /** @constant */
+    /**
+     * @property Pin.OFF
+     * @static
+     */
     Pin.OFF = 0;
 
     // Pin modes
-    /** @constant */
+    /**
+     * @property Pin.DIN
+     * @static
+     */
     Pin.DIN = 0x00;
-    /** @constant */
+    /**
+     * @property Pin.DOUT
+     * @static
+     */
     Pin.DOUT = 0x01;
-    /** @constant */
+    /**
+     * @property Pin.AIN
+     * @static
+     */
     Pin.AIN = 0x02;
-    /** @constant */
+    /**
+     * @property Pin.AOUT
+     * @static
+     */
     Pin.AOUT = 0x03;
-    /** @constant */
+    /**
+     * @property Pin.PWM
+     * @static
+     */
     Pin.PWM = 0x03;
-    /** @constant */
+    /**
+     * @property Pin.SERVO
+     * @static
+     */
     Pin.SERVO = 0x04;
-    /** @constant */
+    /**
+     * @property Pin.SHIFT
+     * @static
+     */
     Pin.SHIFT = 0x05;
-    /** @constant */
+    /**
+     * @property Pin.I2C
+     * @static
+     */
     Pin.I2C = 0x06;
-    /** @constant */
+    /**
+     * @property Pin.ONEWIRE
+     * @static
+     */
     Pin.ONEWIRE = 0x07;
-    /** @constant */
+    /**
+     * @property Pin.STEPPER
+     * @static
+     */
     Pin.STEPPER = 0x08;
-    /** @constant */
+    /**
+     * @property Pin.TOTAL_PIN_MODES
+     * @static
+     */
     Pin.TOTAL_PIN_MODES = 9;
 
 
@@ -1540,27 +1649,24 @@ BO.Pin = (function () {
 
     /**
      * The pinChange event is dispatched when the pin value changes.
-     * @name Pin#pinChange
      * @type BO.PinEvent.CHANGE
-     * @event
+     * @event pinChange
      * @param {BO.Pin} target A reference to the Pin object.
      */
 
     /**
      * The risingEdge event is dispatched when the pin value increased 
      * (from 0 to 1).
-     * @name Pin#risingEdge
      * @type BO.PinEvent.RISING_EDGE
-     * @event
+     * @event risingEdge
      * @param {BO.Pin} target A reference to the Pin object.
      */ 
      
     /**
      * The change event is dispatched when the pin value decreased 
      * (from 1 to 0).
-     * @name Pin#fallingEdge
      * @type BO.PinEvent.FALLING_EDGE
-     * @event
+     * @event fallingEdge
      * @param {BO.Pin} target A reference to the Pin object.
      */
 
@@ -1578,14 +1684,13 @@ BO.PhysicalInputBase = (function () {
     var EventDispatcher = JSUTILS.EventDispatcher;
 
     /**
-     * A base class for physical inputs. Treat this class as an abstract base
-     * class - do not instantiate it directly.
-     *
-     * @exports PhysicalInputBase as BO.PhysicalInputBase
-     * @class A base class for physical input objects. Extend this class to
+     * A base class for physical input objects. Extend this class to
      * create new digital or analog input objects. Treat this class as
      * an abstract base class. It should not be instantiated directly.
+     *
+     * @class PhysicalInputBase
      * @constructor
+     * @uses EventDispatcher
      */
     PhysicalInputBase = function () {
 
@@ -1640,6 +1745,9 @@ BO.PhysicalInputBase = (function () {
 
 JSUTILS.namespace('BO.I2CBase');
 
+/**
+ * @namespace BO
+ */
 BO.I2CBase = (function () {
     "use strict";
 
@@ -1651,13 +1759,13 @@ BO.I2CBase = (function () {
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
-     * Creates a new I2CBase base class
+     * A base class for I2C objects. Extend this class when creating an
+     * interface for a new I2C device. I2CBase should not be instantiated
+     * directly.
      *
-     * @exports I2CBase as BO.I2CBase
-     * @class A base class for I2C objects. Extend this class
-     * when creating an interface for a new I2C device. I2CBase should
-     * not be instantiated directly.
+     * @class I2CBase
      * @constructor
+     * @uses EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} address The I2C address of the device
      * @param {Number} delayUS The number of microseconds ...
@@ -1707,8 +1815,7 @@ BO.I2CBase = (function () {
 
         /**
          * [read-only] The address of the i2c device.
-         * @name I2CBase#address
-         * @property
+         * @property address
          * @type Number
          */
         get address() {
@@ -1718,6 +1825,7 @@ BO.I2CBase = (function () {
         // private methods:
         /**
          * @private
+         * onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -1748,6 +1856,7 @@ BO.I2CBase = (function () {
         /**
          * Send an i2c request command to the board
          * @protected
+         * @method sendI2CRequest
          * @param {Number} command
          * @param {Number[]} data
          */
@@ -1771,16 +1880,19 @@ BO.I2CBase = (function () {
         },
     
         /**
+         * To be implemented in subclass
          * @protected
-         * @inheritDoc
+         * @method update
          */
         update: function () {
             // To be implemented in sublasses
         },
         
         /**
+         * To be implemented in subclass. Data should be: slave address,
+         * register, data0, data1...
          * @protected
-         * @inheritDoc
+         * @method handleI2C
          */
         handleI2C: function (data) {
             // To be implemented in sublasses
@@ -1824,20 +1936,40 @@ BO.I2CBase = (function () {
     };
     
 
-    /** @constant */
+    /**
+     * @property I2CBase.I2C_REQUEST
+     * @static
+     */
     I2CBase.I2C_REQUEST = 0x76;
-    /** @constant */
+    /**
+     * @property I2CBase.I2C_REPLY
+     */
     I2CBase.I2C_REPLY = 0x77;
-    /** @constant */
+    /**
+     * @property I2CBase.I2C_CONFIG
+     * @static
+     */
     I2CBase.I2C_CONFIG = 0x78;
 
-    /** @constant */
+    /**
+     * @property I2CBase.WRITE
+     * @static
+     */
     I2CBase.WRITE = 0;
-    /** @constant */
+    /**
+     * @property I2CBase.READ
+     * @static
+     */
     I2CBase.READ = 1;
-    /** @constant */
+    /**
+     * @property I2CBase.READ_CONTINUOUS
+     * @static
+     */
     I2CBase.READ_CONTINUOUS = 2;
-    /** @constant */
+    /**
+     * @property I2CBase.STOP_READING
+     * @static
+     */
     I2CBase.STOP_READING = 3;
 
     return I2CBase;
@@ -1893,23 +2025,22 @@ BO.IOBoard = (function () {
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
-     * Creates a new IOBoard object representing the digital and analog inputs
-     * and outputs of the device as well as support for i2c devices and sending
-     * strings between the IOBoard sketch and your javascript application.
-     *
-     * @exports IOBoard as BO.IOBoard
-     * @class Creates an interface to the I/O board. The IOBoard object brokers
+     * Creates an interface to the I/O board. The IOBoard object brokers
      * the communication between your application and the physical I/O board.
      * Currently you can only connect to a single I/O board per computer.
      * However you could connect to multiple I/O boards if they are attached to
      * multiple computers on your network. In that case you would create a
      * separate IOBoard instance for each board you are connecting to in your
      * network.
+     *
+     * @class IOBoard
      * @constructor
+     * @uses EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * Default = false.
-     * @param {String} protocol [optional] The websockt protocol definition (if necessary).
+     * @param {String} protocol [optional] The websockt protocol definition 
+     * (if necessary).
      */
     IOBoard = function (host, port, protocol) {
         "use strict";
@@ -2715,8 +2846,7 @@ BO.IOBoard = (function () {
          * the IOBoard). Normally the sampling interval should not be changed. 
          * Default = 19 (ms).
          *
-         * @name IOBoard#samplingInterval
-         * @property
+         * @property samplingInterval
          * @type Number
          */
         get samplingInterval() { 
@@ -2737,8 +2867,7 @@ BO.IOBoard = (function () {
          * listening for the IOBoardEvent.READY event when creating an app with
          * a draw loop (such as when using processing.js or three.js);
          *
-         * @name IOBoard#isReady
-         * @property
+         * @property isReady
          * @type Boolean
          */
         get isReady() { 
@@ -2766,6 +2895,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getSocket
          * @return {WSocketWrapper} A reference to the WebSocket
          */
         getSocket: function () { 
@@ -2777,6 +2907,7 @@ BO.IOBoard = (function () {
          * running on the IOBoard.
          * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
          * the Firmata version is returned from the IOBoard.
+         * @method reportVersion
          */ 
         reportVersion: function () {
             this.send(REPORT_VERSION);
@@ -2787,6 +2918,7 @@ BO.IOBoard = (function () {
          * Listen for the IOBoard.FIRMWARE_NAME event to be notified of when 
          * the name is returned from the IOBoard. The version number is also
          * returned.
+         * @method reportFirmware
          */
         reportFirmware: function () {
             this.send([START_SYSEX, REPORT_FIRMWARE, END_SYSEX]);
@@ -2794,6 +2926,7 @@ BO.IOBoard = (function () {
         
         /**
          * Disables digital pin reporting for all digital pins.
+         * @method disableDigitalPins
          */
         disableDigitalPins: function () {
             for (var i = 0; i < this._numPorts; i++) {
@@ -2804,6 +2937,7 @@ BO.IOBoard = (function () {
         /**
          * Enables digital pin reporting for all digital pins. You must call
          * this before you can receive digital pin data from the IOBoard.
+         * @method enableDigitalPins
          */
         enableDigitalPins: function () {
             for (var i = 0; i < this._numPorts; i++) {
@@ -2814,7 +2948,7 @@ BO.IOBoard = (function () {
         /**
          * Enable or disable reporting of all digital pins for the specified
          * port.
-         * 
+         * @method sendDigitalPortReporting
          * @param {Number} mode Either Pin.On or Pin.OFF
          */
         sendDigitalPortReporting: function (port, mode) {
@@ -2823,7 +2957,7 @@ BO.IOBoard = (function () {
         
         /**
          * Call this method to enable analog input for the specified pin.
-         *
+         * @method enableAnalogPin
          * @param {Number} pin The pin connected to the analog input
          */
         enableAnalogPin: function (pin) {
@@ -2832,7 +2966,7 @@ BO.IOBoard = (function () {
 
         /**
          * Call this method to disable analog input for the specified pin.
-         *
+         * @method disableAnalogPin
          * @param {Number} pin The pin connected to the analog input
          */
         disableAnalogPin: function (pin) {
@@ -2842,6 +2976,7 @@ BO.IOBoard = (function () {
         /**
          * Set the specified digital pin mode. 
          *
+         * @method setDigitalPinMode
          * @param {Number} pin The number of the pin. When using and analog
          * pin as a digital pin, refer the datasheet for your board to obtain 
          * the digital pin equivalent of the analog pin number. For example on 
@@ -2864,7 +2999,7 @@ BO.IOBoard = (function () {
 
         /**
          * Enable the internal pull-up resistor for the specified pin number.
-         *
+         * @method enablePullUp
          * @param {Number} pinNum The number of the input pin to enable the
          * pull-up resistor.
          */
@@ -2873,6 +3008,7 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * @method getFirmwareName
          * @return {String} The name of the firmware running on the IOBoard.
          */
         getFirmwareName: function () {
@@ -2882,6 +3018,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getFirmwareVersion
          * @return {String} The version of the firmware running on the
          * IOBoard.
          */
@@ -2896,6 +3033,7 @@ BO.IOBoard = (function () {
          * pwm, servo, i2c, etc) supported by the pin. The mode value is the
          * resolution in bits.
          *
+         * @method getPinCapabilities
          * @return {Array} The capabilities of the Pins on the IOBoard.
          */
         getPinCapabilities: function () {
@@ -2964,6 +3102,7 @@ BO.IOBoard = (function () {
          * application. In most cases however you should never need to call 
          * this method.
          *
+         * @method queryPinState
          * @param {Pin} pin The pin object to query the pin state for.
          */      
         queryPinState: function (pin) {
@@ -2977,6 +3116,7 @@ BO.IOBoard = (function () {
          * Send the digital values for a port. Making this private for now.
          *
          * @private
+         * @method sendDigitalPort
          * @param {Number} portNumber The number of the port
          * @param {Number} portData A byte representing the state of the 8 pins
          * for the specified port
@@ -2995,7 +3135,8 @@ BO.IOBoard = (function () {
          * <p>To test, load the EchoString.pde example from Firmata->Examples
          * menu in the IOBoard Application, then use sendString("your string
          * message") to have it echoed back to your javascript application.</p>
-         * 
+         *
+         * @method sendString
          * @param {String} str The string message to send to the IOBoard
          */
         sendString: function (str) {
@@ -3018,6 +3159,7 @@ BO.IOBoard = (function () {
          * calling it from your main application.
          *
          * @private
+         * @method sendSysex
          * @param {Number} command The sysEx command value (see firmata.org)
          * @param {Number[]} data A packet of data representing the sysEx
          * message to be sent
@@ -3049,6 +3191,7 @@ BO.IOBoard = (function () {
          * be close enough so call sendServoAttach(pin) omitting the min and
          * max values.
          *
+         * @method sendServoAttach
          * @param {Number} pin The pin the server is connected to.
          * @param {Number} minPulse [optional] The minimum pulse width for the
          * servo. Default = 544.
@@ -3080,6 +3223,7 @@ BO.IOBoard = (function () {
 
         /**
          * @private
+         * @method getPin
          * @return {Pin} An unmapped reference to the Pin object.
          */
         getPin: function (pinNumber) {
@@ -3087,6 +3231,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getAnalogPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board analog pin).
          */ 
@@ -3095,6 +3240,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getDigitalPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board digital pin).
          */ 
@@ -3103,6 +3249,7 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * @method getPins
          * @return {Pin[]} An array containing all pins on the IOBoard
          */ 
         getPins: function () {
@@ -3120,6 +3267,7 @@ BO.IOBoard = (function () {
          * <p>board.analogToDigital(3) returns 17 which is the digital
          * equivalent of the analog pin</p>
          *
+         * @method analogToDigital
          * @return {Number} The digital pin number equivalent for the specified
          * analog pin number.
          */ 
@@ -3128,6 +3276,7 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * @method getPinCount
          * @return {Number} Total number of pins
          */
         getPinCount: function () {
@@ -3135,6 +3284,7 @@ BO.IOBoard = (function () {
         },
 
         /**
+         * @method getAnalogPinCount
          * @return {Number} The total number of analog pins supported by this
          * IOBoard
          */
@@ -3143,10 +3293,11 @@ BO.IOBoard = (function () {
         },
         
         /**
+         * Returns undefined if the board does not have i2c pins.
+         * @private
+         * @method getI2cPins
          * @return {Number[]} The pin numbers of the i2c pins if the board has
          * i2c.
-         * Returns undefined if the board does not have i2c pins.
-         * @private (internal only)
          */
         getI2cPins: function () {
             return this._i2cPins;
@@ -3155,6 +3306,7 @@ BO.IOBoard = (function () {
         /**
          * Call this method to print the capabilities for all pins to 
          * the console.
+         * @method reportCapabilities
          */
         reportCapabilities: function () {
             var capabilities = this.getPinCapabilities(),
@@ -3178,6 +3330,7 @@ BO.IOBoard = (function () {
          * So I'm making this private for now.
          *
          * @private
+         * @method send
          * @param {Number[]} message Message data to be sent to the IOBoard
          */
         send: function (message) {
@@ -3189,6 +3342,7 @@ BO.IOBoard = (function () {
          * private until a use case arises.
          *
          * @private
+         * @method close
          */
         close: function () {
             this._socket.close();
@@ -3239,36 +3393,32 @@ BO.IOBoard = (function () {
     /**
      * The ioBoardReady event is dispatched when the board is ready to
      * send and receive commands. 
-     * @name IOBoard#ioBoardReady
      * @type BO.IOBoardEvent.READY
-     * @event
+     * @event ioBoardReady
      * @param {IOBoard} target A reference to the IOBoard
      */
 
     /**
      * The ioBoardConnected event is dispatched when the websocket 
      * connection is established.
-     * @name IOBoard#ioBoardConnected
      * @type BO.IOBoardEvent.CONNECTED
-     * @event
+     * @event ioBoardConnected
      * @param {IOBoard} target A reference to the IOBoard
      */
 
     /**
      * The ioBoardDisconnected event is dispatched when the websocket
      * connection is closed.
-     * @name IOBoard#ioBoardDisconnected
      * @type BO.IOBoardEvent.DISCONNECTED
-     * @event
+     * @event ioBoardDisconnected
      * @param {IOBoard} target A reference to the IOBoard
      */  
      
     /**
      * The stringMessage event is dispatched when a string is received
      * from the IOBoard.
-     * @name IOBoard#stringMessage
      * @type BO.IOBoardEvent.STRING_MESSAGE
-     * @event
+     * @event stringMessage
      * @param {IOBoard} target A reference to the IOBoard
      * @param {String} message The string message received from the IOBoard
      */
@@ -3276,9 +3426,8 @@ BO.IOBoard = (function () {
     /**
      * The sysexMessage event is dispatched when a sysEx message is 
      * received from the IOBoard.
-     * @name IOBoard#sysexMessage
      * @type BO.IOBoardEvent.SYSEX_MESSAGE
-     * @event
+     * @event sysexMessage
      * @param {IOBoard} target A reference to the IOBoard
      * @param {Array} message The sysEx data
      */
@@ -3286,9 +3435,8 @@ BO.IOBoard = (function () {
     /**
      * The firmwareVersion event is dispatched when the firmware version
      * is received from the IOBoard.
-     * @name IOBoard#firmwareVersion
      * @type BO.IOBoardEvent.FIRMWARE_VERSION
-     * @event
+     * @event firmwareVersion
      * @param {IOBoard} target A reference to the IOBoard
      * @param {Number} version The firmware version (where Firmata 2.3 = 23)
      */
@@ -3296,9 +3444,8 @@ BO.IOBoard = (function () {
     /**
      * The firmwareName event is dispatched when the firmware name is
      * received from the IOBoard.
-     * @name IOBoard#firmwareName
      * @type BO.IOBoardEvent.FIRMWARE_NAME
-     * @event
+     * @event firmwareName
      * @param {IOBoard} target A reference to the IOBoard
      * @param {String} name The name of the firmware running on the IOBoard
      * @param {Number} version The firmware version (where Firmata 2.3 = 23)
@@ -3307,9 +3454,8 @@ BO.IOBoard = (function () {
     /**
      * The pinStateResponse event is dispatched when the results of
      * a pin state query (via a call to: queryPinState()) is received.
-     * @name IOBoard#pinStateResponse
      * @type BO.IOBoardEvent.PIN_STATE_RESPONSE
-     * @event
+     * @event pinStateResponse
      * @param {IOBoard} target A reference to the IOBoard
      * @param {BO.Pin} pin A reference to the pin object.
      */
@@ -3319,9 +3465,8 @@ BO.IOBoard = (function () {
      * from the IOBoard. Use thie event to be notified when any analog
      * pin value changes. Use Pin.CHANGE to be notified when a specific
      * pin value changes.
-     * @name IOBoard#analogData
      * @type BO.IOBoardEvent.ANALOG_DATA
-     * @event
+     * @event analogData
      * @param {IOBoard} target A reference to the IOBoard
      * @param {BO.Pin} pin A reference to the pin object.
      */
@@ -3331,9 +3476,8 @@ BO.IOBoard = (function () {
      * from the IOBoard. Use this event to be notified when any digital
      * pin value changes. Use Pin.CHANGE to be notified when a specific
      * pin value changes.
-     * @name IOBoard#digitalData
      * @type BO.IOBoardEvent.DIGITAL_DATA
-     * @event
+     * @event digitalData
      * @param {IOBoard} target A reference to the IOBoard
      * @param {BO.Pin} pin A reference to the pin object.
      */
