@@ -11,6 +11,8 @@
  * <p>Namespace for Breakout objects.</p>
  *
  * <p>You can use the shorthand "BO" instead of "BREAKOUT".</p>
+ *
+ * @namespace BO
  */
 var BO = BO || {};
 
@@ -27,10 +29,10 @@ BREAKOUT.VERSION = '0.3.0';
  * @name BO#enableDebugging
  * @type {Boolean}
  */
-
 BO.enableDebugging = false;
 /**
  * Namespace and utility functions
+ * @namespace JSUTILS
  */
 var JSUTILS = JSUTILS || {};
 
@@ -314,7 +316,7 @@ JSUTILS.TimerEvent = (function () {
      * 
      * @class TimerEvent
      * @constructor    
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     TimerEvent = function (type) {
@@ -358,7 +360,7 @@ JSUTILS.Timer = (function () {
      *
      * @class Timer
      * @constructor
-     * @extends EventDispatcher  
+     * @extends JSUTILS.EventDispatcher  
      * @param {Number} delay The delay (ms) interval between ticks
      * @param {Number} repeatCount The number of number of ticks.
      * A value of zero will set the timer to repeat forever. Default = 0
@@ -660,7 +662,7 @@ BO.IOBoardEvent = (function () {
      *
      * @class IOBoardEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     IOBoardEvent = function (type) {
@@ -745,7 +747,7 @@ BO.WSocketEvent = (function () {
      * and Closed (onclose) objects.
      * @class WSocketEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     WSocketEvent = function (type) {
@@ -796,7 +798,7 @@ BO.WSocketWrapper = (function () {
      *
      * @class WSocketWrapper
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * native websocket implementation.
@@ -1005,7 +1007,7 @@ BO.filters.Scaler = (function () {
      *
      * @class Scaler
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number} inMin minimum input value
      * @param {Number} inMax maximum input value
      * @param {Number} outMin minimum output value
@@ -1114,7 +1116,7 @@ BO.filters.Convolution = (function () {
      *
      * @class Convolution
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number[]} kernel An array of coefficients to be used with product-sum
      * operations for input buffers.
      */
@@ -1209,7 +1211,7 @@ BO.filters.TriggerPoint = (function () {
      *
      * @class TriggerPoint
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number[]} points An array of threshold and hysteresis values
      * operations for input buffers.
      */
@@ -1350,7 +1352,7 @@ BO.generators.GeneratorEvent = (function () {
      *
      * @class GeneratorEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     GeneratorEvent = function (type) {
@@ -1391,7 +1393,7 @@ BO.generators.GeneratorBase = (function () {
      *
      * @class GeneratorBase
      * @constructor
-     * @extends EventDispatcher
+     * @extends JSUTILS.EventDispatcher
      */
     GeneratorBase = function () {
         
@@ -1449,7 +1451,7 @@ BO.generators.Oscillator = (function () {
      *
      * @class Oscillator
      * @constructor
-     * @extends GeneratorBase
+     * @extends BO.generators.GeneratorBase
      * @param {Number} wave waveform
      * @param {Number} freq frequency
      * @param {Number} amplitude amplitude
@@ -1673,7 +1675,7 @@ BO.PinEvent = (function () {
      * An Event object to be dispatched (fired) by a Pin object.
      * @class PinEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     PinEvent = function (type) {
@@ -1730,7 +1732,7 @@ BO.Pin = (function () {
      *
      * @class Pin
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {Number} number The pin number
      * @param {Number} type The type of pin
      */
@@ -2310,7 +2312,7 @@ BO.I2CBase = (function () {
      *
      * @class I2CBase
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} address The I2C address of the device
      * @param {Number} delayUS The number of microseconds ...
@@ -2536,7 +2538,7 @@ BO.PhysicalInputBase = (function () {
      *
      * @class PhysicalInputBase
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      */
     PhysicalInputBase = function () {
 
@@ -2649,7 +2651,7 @@ BO.IOBoard = (function () {
      *
      * @class IOBoard
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * Default = false.

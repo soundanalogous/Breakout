@@ -7,7 +7,8 @@ module.exports = function (grunt) {
                         ' * http://breakoutjs.com\n' +
                         ' */\n';
 
-    var name = '<%= pkg.name %>-v<%= pkg.version %>';
+    var nameAndVersion = '<%= pkg.name %>-v<%= pkg.version %>';
+    var name = '<%= pkg.name %>';
 
     var allFiles = [
         'src/core/core.js',

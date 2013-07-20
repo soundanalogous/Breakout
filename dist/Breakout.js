@@ -11,6 +11,8 @@
  * <p>Namespace for Breakout objects.</p>
  *
  * <p>You can use the shorthand "BO" instead of "BREAKOUT".</p>
+ *
+ * @namespace BO
  */
 var BO = BO || {};
 
@@ -27,10 +29,10 @@ BREAKOUT.VERSION = '0.3.0';
  * @name BO#enableDebugging
  * @type {Boolean}
  */
-
 BO.enableDebugging = false;
 /**
  * Namespace and utility functions
+ * @namespace JSUTILS
  */
 var JSUTILS = JSUTILS || {};
 
@@ -314,7 +316,7 @@ JSUTILS.TimerEvent = (function () {
      * 
      * @class TimerEvent
      * @constructor    
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     TimerEvent = function (type) {
@@ -358,7 +360,7 @@ JSUTILS.Timer = (function () {
      *
      * @class Timer
      * @constructor
-     * @extends EventDispatcher  
+     * @extends JSUTILS.EventDispatcher  
      * @param {Number} delay The delay (ms) interval between ticks
      * @param {Number} repeatCount The number of number of ticks.
      * A value of zero will set the timer to repeat forever. Default = 0
@@ -660,7 +662,7 @@ BO.IOBoardEvent = (function () {
      *
      * @class IOBoardEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     IOBoardEvent = function (type) {
@@ -745,7 +747,7 @@ BO.WSocketEvent = (function () {
      * and Closed (onclose) objects.
      * @class WSocketEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     WSocketEvent = function (type) {
@@ -796,7 +798,7 @@ BO.WSocketWrapper = (function () {
      *
      * @class WSocketWrapper
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * native websocket implementation.
@@ -1005,7 +1007,7 @@ BO.filters.Scaler = (function () {
      *
      * @class Scaler
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number} inMin minimum input value
      * @param {Number} inMax maximum input value
      * @param {Number} outMin minimum output value
@@ -1114,7 +1116,7 @@ BO.filters.Convolution = (function () {
      *
      * @class Convolution
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number[]} kernel An array of coefficients to be used with product-sum
      * operations for input buffers.
      */
@@ -1209,7 +1211,7 @@ BO.filters.TriggerPoint = (function () {
      *
      * @class TriggerPoint
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number[]} points An array of threshold and hysteresis values
      * operations for input buffers.
      */
@@ -1350,7 +1352,7 @@ BO.generators.GeneratorEvent = (function () {
      *
      * @class GeneratorEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     GeneratorEvent = function (type) {
@@ -1391,7 +1393,7 @@ BO.generators.GeneratorBase = (function () {
      *
      * @class GeneratorBase
      * @constructor
-     * @extends EventDispatcher
+     * @extends JSUTILS.EventDispatcher
      */
     GeneratorBase = function () {
         
@@ -1449,7 +1451,7 @@ BO.generators.Oscillator = (function () {
      *
      * @class Oscillator
      * @constructor
-     * @extends GeneratorBase
+     * @extends BO.generators.GeneratorBase
      * @param {Number} wave waveform
      * @param {Number} freq frequency
      * @param {Number} amplitude amplitude
@@ -1673,7 +1675,7 @@ BO.PinEvent = (function () {
      * An Event object to be dispatched (fired) by a Pin object.
      * @class PinEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     PinEvent = function (type) {
@@ -1730,7 +1732,7 @@ BO.Pin = (function () {
      *
      * @class Pin
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {Number} number The pin number
      * @param {Number} type The type of pin
      */
@@ -2310,7 +2312,7 @@ BO.I2CBase = (function () {
      *
      * @class I2CBase
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} address The I2C address of the device
      * @param {Number} delayUS The number of microseconds ...
@@ -2536,7 +2538,7 @@ BO.PhysicalInputBase = (function () {
      *
      * @class PhysicalInputBase
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      */
     PhysicalInputBase = function () {
 
@@ -2618,7 +2620,7 @@ BO.io.Stepper = (function () {
      *
      * @class Stepper
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
@@ -2634,32 +2636,31 @@ BO.io.Stepper = (function () {
      * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.
      *
      * @example
-     * // example
-     * var Stepper = BO.io.Stepper,
-     *     Event = JSUTILS.Event;
+     *     var Stepper = BO.io.Stepper,
+     *         Event = JSUTILS.Event;
      *
-     * var stepper,
-     *     stepsPerRev = 200,           // update this for your stepper
-     *     numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
-     *     speed = 15.0,                // rad/sec (RPM = speed * 9.55)
-     *     acceleration = 20.0,         // rad/sec^2
-     *     deceleration = 20.0;         // rad/sec^2
+     *     var stepper,
+     *         stepsPerRev = 200,           // update this for your stepper
+     *         numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
+     *         speed = 15.0,                // rad/sec (RPM = speed * 9.55)
+     *         acceleration = 20.0,         // rad/sec^2
+     *         deceleration = 20.0;         // rad/sec^2
      *
-     * stepper = new Stepper(arduino,
-     *              Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
-     *              stepsPerRev,
-     *              arduino.getDigitalPin(2),
-     *              arduino.getDigitalPin(3));
+     *     stepper = new Stepper(arduino,
+     *                  Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
+     *                  stepsPerRev,
+     *                  arduino.getDigitalPin(2),
+     *                  arduino.getDigitalPin(3));
      *
-     * stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+     *     stepper.addEventListener(Event.COMPLETE, onStepperComplete);
      *
-     * // acceleration and deceleration parameters are optional
-     * stepper.step(numSteps, speed, acceleration, deceleration);
+     *     // acceleration and deceleration parameters are optional
+     *     stepper.step(numSteps, speed, acceleration, deceleration);
      *
-     * function onStepperComplete(event) {
-     *     // each stepper is assigned a read-only id value when instantiated
-     *     console.log("stepper " + event.target.id + " sequence complete");
-     * }
+     *     function onStepperComplete(event) {
+     *         // each stepper is assigned a read-only id value when instantiated
+     *         console.log("stepper " + event.target.id + " sequence complete");
+     *     }
      */
     Stepper = function (board, driverType, numStepsPerRev, directionPin, stepPin, motorPin3, motorPin4) {
         
@@ -2929,7 +2930,7 @@ BO.io.BlinkM = (function () {
      *
      * @class BlinkM
      * @constructor
-     * @extends I2CBase 
+     * @extends BO.I2CBase 
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the BlinkM module
      */
@@ -3096,7 +3097,7 @@ BO.io.CompassEvent = (function () {
      * An Event object to be dispatched (fired) by a Compass object.
      * @class CompassEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     CompassEvent = function (type) {
@@ -3141,7 +3142,7 @@ BO.io.CompassHMC6352 = (function () {
      *
      * @class CompassHMC6352
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      */
@@ -3231,7 +3232,7 @@ BO.io.ButtonEvent = (function () {
      * object.
      * @class ButtonEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     ButtonEvent = function (type) {
@@ -3297,7 +3298,7 @@ BO.io.Button = (function () {
      *
      * @class Button
      * @constructor
-     * @extends PhysicalInputBase
+     * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the button is connected to.
      * @param {Number} buttonMode The mode of the button (either 
@@ -3508,7 +3509,7 @@ BO.io.PotEvent = (function () {
      * object.
      * @class PotEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     PotEvent = function (type) {
@@ -3555,7 +3556,7 @@ BO.io.Potentiometer = (function () {
      *
      * @class Potentiometer
      * @constructor
-     * @extends PhysicalInputBase    
+     * @extends BO.PhysicalInputBase    
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.
      * @param {Pin} pin A reference to the Pin the potentiometer is connected
@@ -3659,14 +3660,15 @@ BO.io.Potentiometer = (function () {
 
     /**
      * The change event is dispatched when the potentiometer value changes.
+     * @example
+     *     pot.addEventListener(PotEvent.CHANGE, onValueChange);
+     *
+     *     function onValueChange(event) {
+     *         console.log("value = " + event.target.value);  
+     *     }
+     *
      * @type BO.io.PotEvent.CHANGE
      * @event change
-     * @example
-     * pot.addEventListener(PotEvent.CHANGE, onValueChange);
-     *
-     * function onValueChange(event) {
-     *   console.log("value = " + event.target.value);  
-     * }
      * @param {BO.Potentiometer} target A reference to the Potentiometer object
      */
 
@@ -3687,7 +3689,7 @@ BO.io.AccelerometerEvent = (function () {
      * An Event object to be dispatched (fired) by an Accelerometer object.
      * @class AccelerometerEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     AccelerometerEvent = function (type) {
@@ -3739,7 +3741,7 @@ BO.io.AnalogAccelerometer = (function () {
      *
      * @class AnalogAccelerometer
      * @constructor
-     * @extends PhysicalInputBase    
+     * @extends BO.PhysicalInputBase    
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} xPin A reference to the Pin connected to the x axis of the
      * accelerometer
@@ -4028,7 +4030,7 @@ BO.io.AccelerometerADXL345 = (function () {
      *
      * @class AccelerometerADXL345
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
      * RANGE_8G, RANGE_16G). Default is RANGE_2G.    
@@ -4436,7 +4438,7 @@ BO.io.GyroEvent = (function () {
      * object.
      * @class GyroEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     GyroEvent = function (type) {
@@ -4498,7 +4500,7 @@ BO.io.GyroITG3200 = (function () {
      *
      * @class GyroITG3200
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
@@ -4829,7 +4831,7 @@ BO.io.MagnetometerEvent = (function () {
      * object.
      * @class MagnetometerEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     MagnetometerEvent = function (type) {
@@ -4882,7 +4884,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      *
      * @class MagnetometerHMC5883
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      * @param {Number} numSamples The number of samples averaged per 
@@ -5828,7 +5830,7 @@ BO.io.SoftPotEvent = (function () {
      * object.
      * @class SoftPotEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      * @param {Number} touchPoint The value where the softpot was touched    
      */
@@ -5917,7 +5919,7 @@ BO.io.SoftPot = (function () {
      *
      * @class SoftPot
      * @constructor
-     * @extends PhysicalInputBase
+     * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the softpot is connected to.
      * @param {Number} softPotLength The length of the softpot in mm. 
@@ -6306,7 +6308,7 @@ BO.IOBoard = (function () {
      *
      * @class IOBoard
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * Default = false.
