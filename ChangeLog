@@ -1,6 +1,6 @@
 2013.07.nn Version 0.3.0
-* Removed jQuery and jQuery ui version numbers from examples to make updating
-* easier.
+* Updated jquery and jquery-ui and removed version number from file names and
+  references in examples.
 * Switched to YUI docs.
 * Now using grunt for build.
 * Added pin modes for ONEWIRE and STEPPER.

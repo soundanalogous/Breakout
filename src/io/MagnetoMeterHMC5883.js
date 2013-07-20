@@ -77,8 +77,7 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * [read-only] The heading in degrees.
-     * @name MagnetometerHMC5883#heading
-     * @property
+     * @property heading
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("heading", function () {
@@ -87,30 +86,28 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * [read-only] The x-axis measurement
-     * @name MagnetometerHMC5883#x
-     * @property
+     * @property x
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("x", function () { return this._x; });
 
     /**
      * [read-only] The y-axis measurement
-     * @name MagnetometerHMC5883#y
-     * @property
+     * @property y
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("y", function () { return this._y; });
     
     /**
      * [read-only] The z-axis measurement
-     * @name MagnetometerHMC5883#z
-     * @property
+     * @property z
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("z", function () { return this._z; });    
     
     /**
      * @private
+     * @method handleI2C
      */
     MagnetometerHMC5883.prototype.handleI2C = function (data) {
         var xVal,
@@ -150,6 +147,7 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * @private
+     * @method getHeading
      */
     MagnetometerHMC5883.prototype.getHeading = function (x, y) {
         var heading = 0.0;
@@ -181,7 +179,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      *
      * Note: this method is not working properly. Marking it private until resolved
      * @private
-     * 
+     * @method getTiltCompensatedHeading
      * @param {Number} pitch The pitch value (supplied by an accelerometer)
      * @param {Number} roll The roll value (supplied by an accelerometer)
      * @return {Number} tilt-compensated heading direction
@@ -205,7 +203,8 @@ BO.io.MagnetometerHMC5883 = (function () {
     };
     
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     MagnetometerHMC5883.prototype.startReading = function () {
         if (!this._isReading) {
@@ -215,7 +214,8 @@ BO.io.MagnetometerHMC5883 = (function () {
     };
     
     /**
-     * Stop continuous reading of the sensor
+     * Stop continuous reading of the sensor.
+     * @method stopReading
      */
     MagnetometerHMC5883.prototype.stopReading = function () {
         this._isReading = false;
@@ -226,6 +226,7 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /** 
      * Sends read request to magnetometer and updates magnetometer values.
+     * @method update
      */
     MagnetometerHMC5883.prototype.update = function () {
         if (this._isReading) {
@@ -247,44 +248,66 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     // public static constants
 
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.DEVICE_ID
+     * @static
+     */
     MagnetometerHMC5883.DEVICE_ID = 0x1E;   
     
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_1
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_1 = 0;
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_2
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_2 = 1;
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_4
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_4 = 2;
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_8
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_8 = 3;  
     
     /** 0.75 Hz
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_0_75
+     * @static 
      */
     MagnetometerHMC5883.HZ_0_75 = 0x00;
     /** 1.5 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_1_5
+     * @static 
      */
     MagnetometerHMC5883.HZ_1_5 = 0x01;
     /** 3 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_3
+     * @static 
      */
     MagnetometerHMC5883.HZ_3 = 0x02;
     /** 7.5 Hz 
-    * @constant 
+    * @property MagnetometerHMC5883.HZ_7_5
+     * @static 
     */
     MagnetometerHMC5883.HZ_7_5 = 0x03;
     /** 15 Hz 
-    * @constant 
+    * @property MagnetometerHMC5883.HZ_15
+     * @static 
     */
     MagnetometerHMC5883.HZ_15 = 0x04;
     /** 30 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_30
+     * @static 
      */
     MagnetometerHMC5883.HZ_30 = 0x05;
     /** 75 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_75
+     * @static 
      */
     MagnetometerHMC5883.HZ_75 = 0x06;       
 
@@ -293,9 +316,8 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * The update event is dispatched when the compass heading is updated.
-     * @name MagnetometerHMC5883#update
      * @type BO.io.MagnetometerEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
      */     
 

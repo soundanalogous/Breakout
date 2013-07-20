@@ -96,9 +96,7 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The current range setting of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#dynamicRange
-     * @property
+     * @property dynamicRange
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
@@ -106,9 +104,7 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The x axis of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#x
-     * @property
+     * @property x
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("x", function () { return this._x; });
@@ -116,9 +112,7 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The y axis of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#y
-     * @property
+     * @property y
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("y", function () { return this._y; });
@@ -126,18 +120,14 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The z axis of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#z
-     * @property
+     * @property z
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("z", function () { return this._z; });
 
     /**
      * [read-only] The pitch value in degrees.
-     * 
-     * @name AnalogAccelerometer#pitch
-     * @property
+     * @property pitch
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("pitch", function () { 
@@ -149,9 +139,7 @@ BO.io.AnalogAccelerometer = (function () {
     
     /**
      * [read-only] The roll value in degrees.
-     * 
-     * @name AnalogAccelerometer#roll
-     * @property
+     * @property roll
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("roll", function () { 
@@ -178,7 +166,8 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * Scale the range for the specified axis (from 0 to 1) to (minimum to 
      * maximum).
-     * 
+     *
+     * @method setRangeFor 
      * @param axis the axis to set new range (AnalogAccelerometer.X_AXIS, 
      * AnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS).
      * @param {Number} minimum The new minimum value
@@ -223,6 +212,7 @@ BO.io.AnalogAccelerometer = (function () {
      * and obj.max along with the respective axis identifier to the setRangeFor
      * method.
      * 
+     * @method getCalibratedRange
      * @param {Number} minVoltage The minimum value reported on the axis
      * @param {Number} maxVoltage The maximum value reported on the axis
      * @param {Number} supplyVoltage The supply voltage of the Acceleromter
@@ -246,6 +236,7 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * @private
+     * @method xAxisChanged
      */
     AnalogAccelerometer.prototype.xAxisChanged = function (event) {
         this._x = event.target.value;
@@ -254,6 +245,7 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * @private
+     * @method yAxisChanged
      */
     AnalogAccelerometer.prototype.yAxisChanged = function (event) {
         this._y = event.target.value;
@@ -262,17 +254,27 @@ BO.io.AnalogAccelerometer = (function () {
     
     /**
      * @private
+     * @method zAxisChanged
      */
     AnalogAccelerometer.prototype.zAxisChanged = function (event) {
         this._z = event.target.value;
         this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
     };      
 
-    /** @constant */
+    /**
+     * @property AnalogAccelerometer.X_AXIS
+     * @static
+     */
     AnalogAccelerometer.X_AXIS = 0;
-    /** @constant */
+    /**
+     * @property AnalogAccelerometer.Y_AXIS
+     * @static
+     */
     AnalogAccelerometer.Y_AXIS = 1;
-    /** @constant */
+    /**
+     * @property AnalogAccelerometer.Z_AXIS
+     * @static
+     */
     AnalogAccelerometer.Z_AXIS = 2;
 
 
@@ -280,9 +282,8 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * The update event is dispatched when the accelerometer values are updated.
-     * @name AnalogAccelerometer#update
      * @type BO.io.AccelerometerEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.AnalogAccelerometer} target A reference to the 
      * AnalogAccelerometer object.
      */     

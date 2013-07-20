@@ -79,6 +79,7 @@ BO.io.Button = (function () {
 
     /**
      * @private
+     * @method onPinChange
      */
     Button.prototype.onPinChange = function (evt) {
         
@@ -109,6 +110,7 @@ BO.io.Button = (function () {
     
     /**
      * @private
+     * @method pressed
      */
     Button.prototype.pressed = function () {
         this._timeout = null;
@@ -120,6 +122,7 @@ BO.io.Button = (function () {
     
     /**
      * @private
+     * @method released
      */ 
     Button.prototype.released = function () {
         this._timeout = null;
@@ -135,6 +138,7 @@ BO.io.Button = (function () {
     
     /**
      * @private
+     * @method sustainedPress
      */
     Button.prototype.sustainedPress = function () {
         if (this._repeatCount > 0) {
@@ -148,8 +152,7 @@ BO.io.Button = (function () {
     
     /**
      * The debounce time interval in milliseconds.
-     * @name Button#debounceInterval
-     * @property
+     * @property debounceInterval
      * @type Number
      */ 
     Button.prototype.__defineGetter__("debounceInterval", function () { return this._debounceInterval; });
@@ -158,9 +161,7 @@ BO.io.Button = (function () {
     /**
      * The delay time (in milliseconds) the button must be held before a
      * sustained press event is fired.
-     * 
-     * @name Button#sustainedPressInterval
-     * @property
+     * @property sustainedPressInterval
      * @type Number
      */ 
     Button.prototype.__defineGetter__("sustainedPressInterval", function () { return this._sustainedPressInterval; });
@@ -168,18 +169,25 @@ BO.io.Button = (function () {
 
     /**
      * [read-only] The pin number of the pin the button is attached to.
-     * 
-     * @name Button#pinNumber
-     * @property
+     * @property pinNumber
      * @type Number
      */
     Button.prototype.__defineGetter__("pinNumber", function () { return this._pin.number; });    
 
-    /** @constant */
+    /**
+     * @property Button.PULL_DOWN
+     * @static
+     */
     Button.PULL_DOWN = 0;
-    /** @constant */
-    Button.PULL_UP  = 1;
-    /** @contstant */
+    /**
+     * @property Button.PULL_UP
+     * @static
+     */
+    Button.PULL_UP = 1;
+    /**
+     * @property Button.INTERNAL_PULL_UP
+     * @static
+     */
     Button.INTERNAL_PULL_UP = 2;
 
 
@@ -187,26 +195,23 @@ BO.io.Button = (function () {
 
     /**
      * The pressed event is dispatched when the button is pressed.
-     * @name Button#pressed
      * @type BO.io.ButtonEvent.PRESS
-     * @event
+     * @event pressed
      * @param {BO.io.Button} target A reference to the Button object
      */ 
 
     /**
      * The released event is dispatched when the button is released.
-     * @name Button#released
      * @type BO.io.ButtonEvent.RELEASE
-     * @event
+     * @event released
      * @param {BO.io.Button} target A reference to the Button object
      */ 
      
     /**
      * The longPress event is dispatched once when the button has been held for
      * the time duration specified by the sustainedPressInterval property.
-     * @name Button#longPress
      * @type BO.io.ButtonEvent.LONG_PRESS
-     * @event
+     * @event longPress
      * @param {BO.io.Button} target A reference to the Button object
      */ 
      
@@ -214,9 +219,8 @@ BO.io.Button = (function () {
      * The sustainedPress event is dispatched continuously at the rate 
      * specified by the sustainedPressInterval property while the button is
      * held.
-     * @name Button#sustainedPress
      * @type BO.io.ButtonEvent.SUSTAINED_PRESS
-     * @event
+     * @event sustainedPress
      * @param {BO.io.Button} target A reference to the Button object
      */              
 

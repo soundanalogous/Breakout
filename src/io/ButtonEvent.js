@@ -27,13 +27,25 @@ BO.io.ButtonEvent = (function () {
         Event.call(this, type);
     };
 
-    /** @constant */
+    /**
+     * @property ButtonEvent.PRESS
+     * @static
+     */
     ButtonEvent.PRESS = "pressed";
-    /** @constant */
+    /**
+     * @property ButtonEvent.RELEASE
+     * @static
+     */
     ButtonEvent.RELEASE = "released";
-    /** @constant */
+    /**
+     * @property ButtonEvent.LONG_PRESS
+     * @static
+     */
     ButtonEvent.LONG_PRESS = "longPress";
-    /** @constant */
+    /**
+     * @property ButtonEvent.SUSTAINED_PRESS
+     * @static
+     */
     ButtonEvent.SUSTAINED_PRESS = "sustainedPress";
 
     ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);

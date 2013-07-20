@@ -50,14 +50,14 @@ BO.io.CompassHMC6352 = (function () {
 
     /**
      * [read-only] The heading in degrees.
-     * @name CompassHMC6352#heading
-     * @property
+     * @property heading
      * @type Number
      */      
     CompassHMC6352.prototype.__defineGetter__("heading", function () {return this._heading; });
     
     /**
      * @private
+     * @method handleI2C
      */
     CompassHMC6352.prototype.handleI2C = function (data) {
 
@@ -71,7 +71,8 @@ BO.io.CompassHMC6352 = (function () {
     };
     
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     CompassHMC6352.prototype.startReading = function () {
         this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, 0x7F, 0x02]);
@@ -79,6 +80,7 @@ BO.io.CompassHMC6352 = (function () {
     
     /**
      * Stop continuous reading of the sensor
+     * @method stopReading
      */
     CompassHMC6352.prototype.stopReading = function () {
         this.sendI2CRequest([I2CBase.STOP_READING, this.address]);
@@ -89,9 +91,8 @@ BO.io.CompassHMC6352 = (function () {
 
     /**
      * The update event is dispatched when the compass heading is updated.
-     * @name CompassHMC6352#update
      * @type BO.io.CompassEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
      */     
 

@@ -57,17 +57,14 @@ BO.io.Potentiometer = (function () {
     
     /**
      * [read-only] The current value of the potentiometer.
-     * @name Potentiometer#value
-     * @property
+     * @property value
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("value", function () { return this._pin.value; });
 
     /**
      * [read-only] Get the (pre-filtered) average value of the potentiometer.
-     * 
-     * @name Potentiometer#average
-     * @property
+     * @property average
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("average", function () { return this._pin.average; });
@@ -75,9 +72,7 @@ BO.io.Potentiometer = (function () {
     /**
      * [read-only] Get the value of the potentiometer before filters are
      * applied.
-     * 
-     * @name Potentiometer#preFilterValue
-     * @property
+     * @property preFilterValue
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("preFilterValue", function () { return this._pin.preFilterValue; });
@@ -85,9 +80,7 @@ BO.io.Potentiometer = (function () {
     /**
      * [read-only] Get the (pre-filtered) minimum value read by the
      * potentiometer.
-     * 
-     * @name Potentiometer#minimum
-     * @property
+     * @property minimum
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("minimum", function () { return this._pin.minimum; });
@@ -95,15 +88,14 @@ BO.io.Potentiometer = (function () {
     /**
      * [read-only] Get the (pre-filtered) maximum value read by the
      * potentiometer.
-     * 
-     * @name Potentiometer#maximum
-     * @property
+     * @property maximum
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("maximum", function () { return this._pin.maximum; });
 
     /**
      * Resets the minimum, maximum, and average values.
+     * @method clear
      */
     Potentiometer.prototype.clear = function () {
         this._pin.clear();
@@ -114,6 +106,7 @@ BO.io.Potentiometer = (function () {
      * useful for sensors such as a flex sensor that may not return the full
      * range of 0 to 1. 
      *
+     * @method setRange
      * @param {Number} minimum The new minimum range (must be less than the maximum).
      * @param {Number} maximum The new maximum range.
      */
@@ -125,6 +118,7 @@ BO.io.Potentiometer = (function () {
 
     /**
      * @private
+     * @method onPinChange
      */
     Potentiometer.prototype.onPinChange = function (event) {
         this.dispatchEvent(new PotEvent(PotEvent.CHANGE));
@@ -134,9 +128,8 @@ BO.io.Potentiometer = (function () {
 
     /**
      * The change event is dispatched when the potentiometer value changes.
-     * @name Potentiometer#change
      * @type BO.io.PotEvent.CHANGE
-     * @event
+     * @event change
      * @example
      * pot.addEventListener(PotEvent.CHANGE, onValueChange);
      *

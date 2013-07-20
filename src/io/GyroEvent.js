@@ -28,9 +28,15 @@ BO.io.GyroEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property GyroEvent.GYRO_READY
+     * @static
+     */
     GyroEvent.GYRO_READY = "gyroReady";
-    /** @constant */
+    /**
+     * @property GyroEvent.UPDATE
+     * @static
+     */
     GyroEvent.UPDATE = "update";
     
 

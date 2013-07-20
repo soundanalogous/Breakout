@@ -71,7 +71,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Set the RGBLED color.
-         * 
+         *
+         * @method setColor
          * @param {Number} red The red value (0 - 255)
          * @param {Number} green The green value (0 - 255)
          * @param {Number} blue The blue value (0 - 255)
@@ -88,7 +89,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade in the RGBLED from the off state.
-         * 
+         *
+         * @method fadeIn
          * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeIn: function (time) {
@@ -100,7 +102,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade out the RGBLED from the on state.
-         * 
+         *
+         * @method fadeOut
          * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeOut: function (time) {
@@ -112,7 +115,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade from the current color to the new color.
-         * 
+         *
+         * @method fadeTo
          * @param {Number} red The red value to fade to (0 - 255)
          * @param {Number} green The green value to fade to (0 - 255)
          * @param {Number} blue The blue value to fade to (0 - 255)
@@ -130,9 +134,15 @@ BO.io.RGBLED = (function () {
         }
     };
 
-    /** @constant */
+    /**
+     * @property RGBLED.COMMON_ANODE
+     * @static
+     */
     RGBLED.COMMON_ANODE = LED.SYNC_DRIVE;
-    /** @constant */
+    /**
+     * @property RGBLED.COMMON_CATHODE
+     * @static
+     */
     RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
 
     return RGBLED;

@@ -122,6 +122,7 @@ BO.IOBoard = (function () {
         /**
          * A websocket connection has been established.
          * @private
+         * @method onSocketConnection
          */
         onSocketConnection: function (event) {
             this.debug("debug: Socket Status: (open)");
@@ -135,6 +136,7 @@ BO.IOBoard = (function () {
          * more stringified bytes from the board or a config string from
          * the server.
          * @private
+         * @method onSocketMessage
          */
         onSocketMessage: function (event) {
             var message = event.message,
@@ -158,6 +160,7 @@ BO.IOBoard = (function () {
          * @param {String} data A string representing a config message or
          * an 8-bit unsigned integer.
          * @private
+         * @method parseInputMessage
          */
         parseInputMessage: function (data) {
             var pattern = /config/,
@@ -178,6 +181,7 @@ BO.IOBoard = (function () {
         /**
          * Report that the websocket connection has been closed.
          * @private
+         * @method onSocketClosed
          */
         onSocketClosed: function (event) {
             this.debug("debug: Socket Status: " + this._socket.readyState + " (Closed)");
@@ -187,6 +191,7 @@ BO.IOBoard = (function () {
         /**
          * Request the firmware version from the IOBoard.
          * @private
+         * @method begin
          */
         begin: function () {
             this.addEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
@@ -199,6 +204,7 @@ BO.IOBoard = (function () {
          * report this to the user (to do: throw appropriate error?).
          *
          * @private
+         * @method onInitialVersionResult
          */
         onInitialVersionResult: function (event) {
             var version = event.version * 10,
@@ -237,6 +243,7 @@ BO.IOBoard = (function () {
          * Check if a capability response was received. If not, assume that
          * a custom sketch was loaded to the IOBoard and fire a READY event.
          * @private
+         * @method checkForQueryResponse
          */
         checkForQueryResponse: function () {
             var self = this;
@@ -258,6 +265,7 @@ BO.IOBoard = (function () {
         /**
          * Process a status message from the websocket server
          * @private
+         * @method processStatusMessage
          */
         processStatusMessage: function (message) {
             if (message === MULTI_CLIENT) {
@@ -270,6 +278,7 @@ BO.IOBoard = (function () {
          * Process input data from the IOBoard.
          * @param {Number} inputData Number as an 8-bit unsigned integer
          * @private
+         * @method processInput
          */
         processInput: function (inputData) {
             var len;
@@ -303,6 +312,7 @@ BO.IOBoard = (function () {
          * data to the appropriate method.
          *
          * @private
+         * @method processMultiByteCommand
          */
         processMultiByteCommand: function (commandData) {
             var command = commandData[0],
@@ -339,6 +349,7 @@ BO.IOBoard = (function () {
          * @param {Number} bits0_6 Bits 0 - 6 of the port value.
          * @param {Number} bits7_13 Bits 7 - 13 of the port value.
          * @private
+         * @method processDigitalMessage
          */
         processDigitalMessage: function (port, bits0_6, bits7_13) {
             var offset = port * 8,
@@ -379,6 +390,7 @@ BO.IOBoard = (function () {
          * configuration routine if it's supported by Firmata in the future.
          *
          * @private
+         * @method processAnalogMessage
          */
         processAnalogMessage: function (channel, bits0_6, bits7_13) {
             var analogPin = this.getAnalogPin(channel);
@@ -403,6 +415,7 @@ BO.IOBoard = (function () {
         /**
          * Route the incoming sysex data to the appropriate method.
          * @private
+         * @method processSysexCommand
          */
         processSysexCommand: function (sysexData) {
             // Remove the first and last element from the array
@@ -437,6 +450,7 @@ BO.IOBoard = (function () {
         /**
          * Construct the firmware name and version from incoming ascii data.
          * @private
+         * @method processQueryFirmwareResult
          */
         processQueryFirmwareResult: function (msg) {
             var data;
@@ -452,6 +466,7 @@ BO.IOBoard = (function () {
         /**
          * Construct a String from an incoming ascii data.
          * @private
+         * @method processSysExString
          */
         processSysExString: function (msg) {
             var str = "",
@@ -472,6 +487,7 @@ BO.IOBoard = (function () {
          * file.
          *
          * @private
+         * @method processCapabilitiesResponse
          */
         processCapabilitiesResponse: function (msg) {
             // If running in multi-client mode and this client is already 
@@ -558,6 +574,7 @@ BO.IOBoard = (function () {
          * pins.
          *
          * @private
+         * @method processAnalogMappingResponse
          */
         processAnalogMappingResponse: function (msg) {
             // If running in multi-client mode and this client is 
@@ -587,6 +604,7 @@ BO.IOBoard = (function () {
          * enable multi-client mode.
          * 
          * @private
+         * @method startupInMultiClientMode
          */     
         startupInMultiClientMode: function () {
             var len = this.getPinCount();
@@ -603,6 +621,7 @@ BO.IOBoard = (function () {
         /**
          * The IOBoard is configured and ready to send and accept commands.
          * @private
+         * @method startup
          */
         startup: function () {
             this.debug("debug: IOBoard ready");
@@ -616,6 +635,7 @@ BO.IOBoard = (function () {
          * the board.
          *
          * @private
+         * @method systemReset
          */
         systemReset: function () {
             this.debug("debug: System reset");
@@ -632,6 +652,7 @@ BO.IOBoard = (function () {
          * inputs the state is the status of the pullup resistor.
          *
          * @private
+         * @method processPinStateResponse
          */
         processPinStateResponse: function (msg) {
             // Ignore requests that were not made by this client
@@ -675,6 +696,7 @@ BO.IOBoard = (function () {
          * Convert char to decimal value.
          * 
          * @private
+         * @method toDec
          */
         toDec: function (ch) {
             ch = ch.substring(0, 1);
@@ -687,6 +709,7 @@ BO.IOBoard = (function () {
          * Sends digital or analog output pin and output values to the IOBoard.
          *
          * @private
+         * @method sendOut
          * @param {Event} event A reference to the event object (Pin in this
          * case).
          */
@@ -713,6 +736,7 @@ BO.IOBoard = (function () {
          * as the pin type is changed during the execution of the program.
          *
          * @private
+         * @method managePinListener
          */  
         managePinListener: function (pin) {
             if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
@@ -739,6 +763,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The analog pin number.
          * param {Number} value The value to send (0.0 to 1.0).
          * @private
+         * @method sendAnalogData
          */
         sendAnalogData: function (pin, value) {
             var pwmMax = this.getDigitalPin(pin).maxPWMValue;
@@ -759,6 +784,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The analog pin number (up to 128).
          * @param {Number} value The value to send (up to 16 bits).
          * @private
+         * @method sendExtendedAnalogData
          */ 
         sendExtendedAnalogData: function (pin, value) {
             var analogData = [];
@@ -792,6 +818,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The digital pin number.
          * @param {Number} value The value of the digital pin (0 or 1).
          * @private
+         * @method sendDigitalData
          */
         sendDigitalData: function (pin, value) {
             var portNum = Math.floor(pin / 8);
@@ -817,6 +844,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The digital pin number the servo is attached to.
          * @param {Number} value The angle to rotate to (0.0 to 1.0 mapped to 0 - 180).
          * @private
+         * @method sendServoData
          */ 
         sendServoData: function (pin, value) {
             var servoPin = this.getDigitalPin(pin);
@@ -829,6 +857,7 @@ BO.IOBoard = (function () {
          * Query the cababilities and current state any board running Firmata.
          * 
          * @private
+         * @method queryCapabilities
          */
         queryCapabilities: function () {
             this.send([START_SYSEX, CAPABILITY_QUERY, END_SYSEX]);
@@ -838,6 +867,7 @@ BO.IOBoard = (function () {
          * Query which pins correspond to the analog channels
          *
          * @private
+         * @method queryAnalogMapping
          */
         queryAnalogMapping: function () {
             this.send([START_SYSEX, ANALOG_MAPPING_QUERY, END_SYSEX]);
@@ -848,6 +878,7 @@ BO.IOBoard = (function () {
          * pin.
          *
          * @private
+         * @method setAnalogPinReporting
          * @param {Number} pin The pin connected to the analog input
          * @param {Number} mode Pin.ON to enable input or Pin.OFF to disable
          * input for the specified pin.
@@ -912,6 +943,7 @@ BO.IOBoard = (function () {
          * method and should not be needed in any application level code.
          *
          * @private
+         * @method getValueFromTwo7bitBytes
          * @param {Number} lsb The least-significant byte of the 2 values to
          * be concatentated
          * @param {Number} msb The most-significant byte of the 2 values to be

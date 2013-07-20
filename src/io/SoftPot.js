@@ -78,6 +78,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method onPinChange
      * @param {Event} evt PinEvent.CHANGE
      */
     SoftPot.prototype.onPinChange = function (evt) {
@@ -99,6 +100,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method setMinFlickMovement
      * @param {Number} touchPoint The value where the touch is occuring on the
      * strip
      */
@@ -108,6 +110,7 @@ BO.io.SoftPot = (function () {
     
     /**
      * @private
+     * @method startTouch
      */
     SoftPot.prototype.startTouch = function (touchPoint) {
         
@@ -124,6 +127,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method onRelease
      */
     SoftPot.prototype.onRelease = function () {      
 
@@ -161,6 +165,7 @@ BO.io.SoftPot = (function () {
     
     /**
      * @private
+     * @method onMove
      * @param {Number} touchPoint The value where the touch is occuring on the
      * strip
      */
@@ -210,6 +215,7 @@ BO.io.SoftPot = (function () {
     /**
      * Scale from the minimum and maximum input values to 0.0 -> 1.0.
      *
+     * @method setRange
      * @param {Number} minimum The minimum value
      * @param {Number} maximum The maximum value
      */
@@ -220,6 +226,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method dispatch
      * @type {Event} type The event type
      */
     SoftPot.prototype.dispatch = function (type) {
@@ -230,6 +237,7 @@ BO.io.SoftPot = (function () {
     /**
      * Reset whenever you need the next Touch point.
      * @private
+     * @method resetForNext
      */
     SoftPot.prototype.resetForNext = function () {
         this._flickTimer.stop();
@@ -251,18 +259,14 @@ BO.io.SoftPot = (function () {
     
     /**
      * The current value.
-     * 
-     * @name SoftPot#value
-     * @property
+     * @property value
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("value", function () { return this._touchPoint; });
     
     /**
      * The current distance from the press point.
-     * 
-     * @name SoftPot#distanceFromPressed
-     * @property
+     * @property distanceFromPressed
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("distanceFromPressed", function () { return this._distanceFromPressed; });
@@ -270,9 +274,7 @@ BO.io.SoftPot = (function () {
     /**
      * The minimum distance required to trigger a flick event. Change this
      * value to fine tune the flick gesture.
-     * 
-     * @name SoftPot#minFlickMovement
-     * @property
+     * @property minFlickMovement
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("minFlickMovement", function () { return this._minFlickMovement; });  
@@ -281,9 +283,7 @@ BO.io.SoftPot = (function () {
     /**
      * The minimum distance required to trigger a drag event. Change this
      * value to fine tune the drag response.
-     * 
-     * @name SoftPot#minDragMovement
-     * @property
+     * @property minDragMovement
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("minDragMovement", function () { return this._minDragMovement; });    
@@ -292,8 +292,7 @@ BO.io.SoftPot = (function () {
     /**
      * The maximum time (in milliseconds) between a press and release in
      * order to trigger a TAP event.
-     * @name SoftPot#tapTimeout
-     * @property
+     * @property tapTimeout
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("tapTimeout", function () { return this._tapTimeout; });  
@@ -303,9 +302,7 @@ BO.io.SoftPot = (function () {
      * The minimum value required to set the Release state. This number should
      * be as close to zero as possible. Increase this value if you are noticing
      * fluttering between the Pressed and Released states. Default value = 0.01;
-     * 
-     * @name SoftPot#minValue
-     * @property
+     * @property minValue
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("minValue", function () { return this._minValue; });  
@@ -317,54 +314,48 @@ BO.io.SoftPot = (function () {
     /**
      * The softPotPressed event is dispatched when pressure is applied to 
      * the softpot surface.
-     * @name SoftPot#softPotPressed
      * @type BO.io.SoftPotEvent.PRESS
-     * @event
+     * @event softPotPressed
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
 
     /**
      * The softPotReleased event is dispatched when pressure is released from 
      * the softpot surface.
-     * @name SoftPot#softPotReleased
      * @type BO.io.SoftPotEvent.RELEASE
-     * @event
+     * @event softPotReleased
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */ 
      
     /**
      * The softPotDrag event is dispatched when a drag is detected along 
      * the length of the softpot sensor.
-     * @name SoftPot#softPotDrag
      * @type BO.io.SoftPotEvent.DRAG
-     * @event
+     * @event softPotDrag
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */ 
      
     /**
      * The softPotFlickUp event is dispatched when a flick gesture is detected
      * in the direction of the sensor pins.
-     * @name SoftPot#softPotFlickUp
      * @type BO.io.SoftPotEvent.FLICK_UP
-     * @event
+     * @event softPotFlickUp
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */ 
      
     /**
      * The softPotFlickDown event is dispatched when a flick gesture is 
      * detected in the direction away from the sensor pins.
-     * @name SoftPot#softPotFlickDown
      * @type BO.io.SoftPotEvent.FLICK_DOWN
-     * @event
+     * @event softPotFlickDown
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
      
     /**
      * The softPotTap event is dispatched when a press and release occurs
      * in in less than the duration specified by the tapTimeout property.
-     * @name SoftPot#softPotTap
      * @type BO.io.SoftPotEvent.TAP
-     * @event
+     * @event softPotTap
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */                  
 

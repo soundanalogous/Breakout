@@ -16,7 +16,7 @@ BO.io.AccelerometerEvent = (function () {
      * An Event object to be dispatched (fired) by an Accelerometer object.
      * @class AccelerometerEvent
      * @constructor
-     * @augments Event
+     * @extends Event
      * @param {String} type The event type   
      */
     AccelerometerEvent = function (type) {
@@ -27,7 +27,10 @@ BO.io.AccelerometerEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property AccelerometerEvent.UPDATE 
+     * @static
+     */
     AccelerometerEvent.UPDATE = "update";
     
 

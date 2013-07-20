@@ -85,40 +85,35 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
-     * @name AccelerometerADXL345#dynamicRange
-     * @property
+     * @property dynamicRange
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
 
     /**
      * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
-     * @name AccelerometerADXL345#x
-     * @property
+     * @property x
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("x", function () { return this._x; });
 
     /**
      * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
-     * @name AccelerometerADXL345#y
-     * @property
+     * @property y
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("y", function () { return this._y; });
     
     /**
      * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
-     * @name AccelerometerADXL345#z
-     * @property
+     * @property z
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("z", function () { return this._z; });
     
     /**
      * [read-only] The pitch value in degrees 
-     * @name AccelerometerADXL345#pitch
-     * @property
+     * @property pitch
      * @type Number
      */ 
     AccelerometerADXL345.prototype.__defineGetter__("pitch", function () { 
@@ -130,8 +125,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * [read-only] The roll value in degrees 
-     * @name AccelerometerADXL345#roll
-     * @property
+     * @property roll
      * @type Number
      */ 
     AccelerometerADXL345.prototype.__defineGetter__("roll", function () { 
@@ -145,24 +139,21 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * The raw value of the x axis
-     * @name AccelerometerADXL345#rawX
-     * @property
+     * @property rawX
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("rawX", function () { return this._rawX; });
 
     /**
      * The raw value of the y axis
-     * @name AccelerometerADXL345#rawY
-     * @property
+     * @property rawY
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("rawY", function () { return this._rawY; });
     
     /**
      * The raw value of the z axis
-     * @name AccelerometerADXL345#rawZ
-     * @property
+     * @property rawZ
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });
@@ -170,16 +161,14 @@ BO.io.AccelerometerADXL345 = (function () {
     /**
      * [read-only] The state of continuous read mode. True if continuous read mode
      * is enabled, false if it is disabled.
-     * @name AccelerometerADXL345#isRunning
-     * @property
+     * @property isRunning
      * @type Boolean
      */      
     AccelerometerADXL345.prototype.__defineGetter__("isRunning", function () { return this._isReading; });   
     
     /**
      * The sensitivity value for the x axis (default value = 0.0390625).
-     * @name AccelerometerADXL345#sensitivityX
-     * @property
+     * @property sensitivityX
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("sensitivityX", function () { return this._sensitivity.x; });
@@ -187,8 +176,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * The sensitivity value for the y axis (default value = 0.0390625).
-     * @name AccelerometerADXL345#sensitivityY
-     * @property
+     * @property sensitivityY
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("sensitivityY", function () { return this._sensitivity.y; });
@@ -196,8 +184,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * The sensitivity value for the z axis (default value = 0.0390625).
-     * @name AccelerometerADXL345#sensitivityZ
-     * @property
+     * @property sensitivityZ
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("sensitivityZ", function () { return this._sensitivity.z; });
@@ -205,6 +192,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * @private
+     * @method setRangeAndFullRes
      */
     AccelerometerADXL345.prototype.setRangeAndFullRes = function (range) {
             
@@ -235,6 +223,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * @private
+     * @method handleI2C
      */
     AccelerometerADXL345.prototype.handleI2C = function (data) {
         switch (data[0]) {
@@ -254,7 +243,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
     
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     AccelerometerADXL345.prototype.startReading = function () {
         if (!this._isReading) {
@@ -264,7 +254,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
     
     /**
-     * Stop continuous reading of the sensor
+     * Stop continuous reading of the sensor.
+     * @method stopReading
      */
     AccelerometerADXL345.prototype.stopReading = function () {
         this._isReading = false;
@@ -272,7 +263,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
 
     /**
-     * offset the x, y, or z axis output by the respective input value
+     * Offset the x, y, or z axis output by the respective input value.
+     * @method setAxisOffset
      */     
     AccelerometerADXL345.prototype.setAxisOffset = function (xVal, yVal, zVal) {
         // store values so we can retrieve via getAxisOffset
@@ -286,7 +278,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
     
     /**
-     * get the value of the x, y, and z axis offset
+     * Get the value of the x, y, and z axis offset.
+     * @method getAxisOffset
      */
     AccelerometerADXL345.prototype.getAxisOffset = function () {
         // will trace values if debug mode is enabled
@@ -302,6 +295,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /** 
      * Sends read request to accelerometer and updates accelerometer values.
+     * @method update
      */
     AccelerometerADXL345.prototype.update = function () {
         if (this._isReading) {
@@ -313,6 +307,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * @private
+     * @method powerOn
      */
     AccelerometerADXL345.prototype.powerOn = function () {
 
@@ -325,6 +320,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * @private
+     * @method setRegisterBit
      */
     AccelerometerADXL345.prototype.setRegisterBit = function (regAddress, bitPos, state) {
         var value;
@@ -340,6 +336,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * @private
+     * @method readAccel
      */
     AccelerometerADXL345.prototype.readAccel = function (data) {
         
@@ -390,26 +387,43 @@ BO.io.AccelerometerADXL345 = (function () {
         
     // public static constants
     
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_2G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_2G = 2;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_4G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_4G = 4;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_8G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_8G = 8;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_16G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_16G = 16;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.DEVICE_ID 
+     * @static
+     */
     AccelerometerADXL345.DEVICE_ID = 0x53;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.DEFAULT_SENSITIVITY 
+     * @static
+     */
     AccelerometerADXL345.DEFAULT_SENSITIVITY = 0.00390625;
     
     // document events
 
     /**
      * The update event is dispatched when the accelerometer values are updated.
-     * @name AccelerometerADXL345#update
      * @type BO.io.AccelerometerEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
      */                     
 

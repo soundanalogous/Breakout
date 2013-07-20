@@ -28,7 +28,10 @@ BO.io.MagnetometerEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property MagnetometerEvent.UPDATE
+     * @static
+     */
     MagnetometerEvent.UPDATE = "update";
     
 

@@ -68,8 +68,7 @@ BO.io.Servo = (function () {
          * to adjust the servo (there is typically a screw on the motor) to
          * adjust</p>
          * 
-         * @name Servo#angle
-         * @property
+         * @property angle
          * @type Number
          */ 
         set angle(value) {
@@ -90,6 +89,8 @@ BO.io.Servo = (function () {
 
     /**
      * The scale to convert 0-1 (0-255 in 8bit) to 0-0.706 (0-180 in 8bit).
+     * @property Servo.COEF_TO_0_180
+     * @static
      */
     Servo.COEF_TO_0_180 = 180 / 255;
 

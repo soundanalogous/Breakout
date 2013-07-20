@@ -27,7 +27,10 @@ BO.io.CompassEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property CompassEvent.UPDATE 
+     * @static
+     */
     CompassEvent.UPDATE = "update";
     
 

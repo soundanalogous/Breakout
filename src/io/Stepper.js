@@ -32,6 +32,7 @@ BO.io.Stepper = (function () {
      *
      * @class Stepper
      * @constructor
+     * @uses EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
@@ -141,6 +142,7 @@ BO.io.Stepper = (function () {
          * The accel and decel parameters are optional but if using, both values
          * must be passed to the function.
          *
+         * @method step
          * @param {Number} numSteps The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
          * Positive value is clockwise, negative value is counter clockwise.
          * @param {Number} speed Max speed in rad/sec (1 rad/sec = 9.549 RPM)
@@ -233,6 +235,7 @@ BO.io.Stepper = (function () {
          * Listen for stepping complete event
          *
          * @private
+         * @method onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -247,7 +250,10 @@ BO.io.Stepper = (function () {
         },
 
         /**
-         * @return {Number} The id of the Stepper object instance
+         * [read-only] The id of the Stepper object instance. Each stepper motor
+         * is given a unique id upon initialization.
+         * @property id
+         * @type Number
          */
         get id() {
             return this._id;
@@ -290,15 +296,30 @@ BO.io.Stepper = (function () {
     
     };
 
-    /** @constant */
+    /**
+     * @property Stepper.CLOCKWISE
+     * @static
+     */
     Stepper.CLOCKWISE = 0;
-    /** @constant */
+    /**
+     * @property Stepper.COUNTER_CLOCKWISE
+     * @static
+     */
     Stepper.COUNTER_CLOCKWISE = 1;
-    /** @constant */
+    /**
+     * @property Stepper.DRIVER
+     * @static
+     */
     Stepper.DRIVER = 1;
-    /** @constant */
+    /**
+     * @property Stepper.TWO_WIRE
+     * @static
+     */
     Stepper.TWO_WIRE = 2;
-    /** @constant */
+    /**
+     * @property Stepper.FOUR_WIRE
+     * @static
+     */
     Stepper.FOUR_WIRE = 4;              
 
     return Stepper;

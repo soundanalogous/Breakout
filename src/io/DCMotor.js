@@ -103,9 +103,7 @@ BO.io.DCMotor = (function () {
         /**
          * The value of the motor speed (-1.0 to 1.0). A speed of zero stops
          * the motor.
-         * 
-         * @name DCMotor#value
-         * @property
+         * @property value
          * @type Number
          */ 
         set value(val) {
@@ -124,6 +122,7 @@ BO.io.DCMotor = (function () {
         },
         
         /**
+         * @method despin
          * @param {Boolean} useBrake Default = true
          */
         despin: function (useBrake) {
@@ -154,6 +153,7 @@ BO.io.DCMotor = (function () {
         },
         
         /**
+         * @method forward
          * @param {Number} val The new voltage to set (0.0 to 1.0)
          */     
         forward: function (val) {
@@ -171,6 +171,7 @@ BO.io.DCMotor = (function () {
         },
 
         /**
+         * @method reverse
          * @param {Number} val The new voltage to set (-1.0 to 0.0)
          */
         reverse: function (val) {
