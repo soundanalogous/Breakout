@@ -1,4 +1,6 @@
-2013.06.nn Version 0.2.4
+2013.07.nn Version 0.3.0
+* Switched to YUI docs.
+* Now using grunt for build.
 * Added pin modes for ONEWIRE and STEPPER.
 * Added ability to set pin mode without sending set pin mode command to Firmata.
 * Updated stepper.js to not send set pin mode command to Firmata.
