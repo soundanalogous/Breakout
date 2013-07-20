@@ -12,7 +12,7 @@
 JSUTILS.namespace('BO.Pin');
 
 BO.Pin = (function () {
-    //"use strict"; // closure compiler doesn't like this... should be fixed soon though
+    "use strict";
 
     var Pin;
 

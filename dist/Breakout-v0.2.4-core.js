@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.2.4 - 2013-07-14
+ * Breakout v0.2.4 - 2013-07-20
 
  * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
@@ -1099,7 +1099,7 @@ BO.PinEvent = (function () {
 JSUTILS.namespace('BO.Pin');
 
 BO.Pin = (function () {
-    //"use strict"; // closure compiler doesn't like this... should be fixed soon though
+    "use strict";
 
     var Pin;
 
