@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -214,6 +214,7 @@ BO.io.Stepper = (function () {
      *
      * @class Stepper
      * @constructor
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
@@ -229,32 +230,31 @@ BO.io.Stepper = (function () {
      * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.
      *
      * @example
-     * // example
-     * var Stepper = BO.io.Stepper,
-     *     Event = JSUTILS.Event;
+     *     var Stepper = BO.io.Stepper,
+     *         Event = JSUTILS.Event;
      *
-     * var stepper,
-     *     stepsPerRev = 200,           // update this for your stepper
-     *     numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
-     *     speed = 15.0,                // rad/sec (RPM = speed * 9.55)
-     *     acceleration = 20.0,         // rad/sec^2
-     *     deceleration = 20.0;         // rad/sec^2
+     *     var stepper,
+     *         stepsPerRev = 200,           // update this for your stepper
+     *         numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
+     *         speed = 15.0,                // rad/sec (RPM = speed * 9.55)
+     *         acceleration = 20.0,         // rad/sec^2
+     *         deceleration = 20.0;         // rad/sec^2
      *
-     * stepper = new Stepper(arduino,
-     *              Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
-     *              stepsPerRev,
-     *              arduino.getDigitalPin(2),
-     *              arduino.getDigitalPin(3));
+     *     stepper = new Stepper(arduino,
+     *                  Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
+     *                  stepsPerRev,
+     *                  arduino.getDigitalPin(2),
+     *                  arduino.getDigitalPin(3));
      *
-     * stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+     *     stepper.addEventListener(Event.COMPLETE, onStepperComplete);
      *
-     * // acceleration and deceleration parameters are optional
-     * stepper.step(numSteps, speed, acceleration, deceleration);
+     *     // acceleration and deceleration parameters are optional
+     *     stepper.step(numSteps, speed, acceleration, deceleration);
      *
-     * function onStepperComplete(event) {
-     *     // each stepper is assigned a read-only id value when instantiated
-     *     console.log(&quot;stepper &quot; + event.target.id + &quot; sequence complete&quot;);
-     * }
+     *     function onStepperComplete(event) {
+     *         // each stepper is assigned a read-only id value when instantiated
+     *         console.log(&quot;stepper &quot; + event.target.id + &quot; sequence complete&quot;);
+     *     }
      */
     Stepper = function (board, driverType, numStepsPerRev, directionPin, stepPin, motorPin3, motorPin4) {
         
@@ -323,6 +323,7 @@ BO.io.Stepper = (function () {
          * The accel and decel parameters are optional but if using, both values
          * must be passed to the function.
          *
+         * @method step
          * @param {Number} numSteps The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
          * Positive value is clockwise, negative value is counter clockwise.
          * @param {Number} speed Max speed in rad/sec (1 rad/sec = 9.549 RPM)
@@ -415,6 +416,7 @@ BO.io.Stepper = (function () {
          * Listen for stepping complete event
          *
          * @private
+         * @method onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -429,7 +431,10 @@ BO.io.Stepper = (function () {
         },
 
         /**
-         * @return {Number} The id of the Stepper object instance
+         * [read-only] The id of the Stepper object instance. Each stepper motor
+         * is given a unique id upon initialization.
+         * @property id
+         * @type Number
          */
         get id() {
             return this._id;
@@ -472,15 +477,30 @@ BO.io.Stepper = (function () {
     
     };
 
-    /** @constant */
+    /**
+     * @property Stepper.CLOCKWISE
+     * @static
+     */
     Stepper.CLOCKWISE = 0;
-    /** @constant */
+    /**
+     * @property Stepper.COUNTER_CLOCKWISE
+     * @static
+     */
     Stepper.COUNTER_CLOCKWISE = 1;
-    /** @constant */
+    /**
+     * @property Stepper.DRIVER
+     * @static
+     */
     Stepper.DRIVER = 1;
-    /** @constant */
+    /**
+     * @property Stepper.TWO_WIRE
+     * @static
+     */
     Stepper.TWO_WIRE = 2;
-    /** @constant */
+    /**
+     * @property Stepper.FOUR_WIRE
+     * @static
+     */
     Stepper.FOUR_WIRE = 4;              
 
     return Stepper;

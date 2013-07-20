@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -199,7 +199,7 @@ BO.io.ButtonEvent = (function () {
      * object.
      * @class ButtonEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     ButtonEvent = function (type) {
@@ -209,13 +209,25 @@ BO.io.ButtonEvent = (function () {
         Event.call(this, type);
     };
 
-    /** @constant */
+    /**
+     * @property ButtonEvent.PRESS
+     * @static
+     */
     ButtonEvent.PRESS = &quot;pressed&quot;;
-    /** @constant */
+    /**
+     * @property ButtonEvent.RELEASE
+     * @static
+     */
     ButtonEvent.RELEASE = &quot;released&quot;;
-    /** @constant */
+    /**
+     * @property ButtonEvent.LONG_PRESS
+     * @static
+     */
     ButtonEvent.LONG_PRESS = &quot;longPress&quot;;
-    /** @constant */
+    /**
+     * @property ButtonEvent.SUSTAINED_PRESS
+     * @static
+     */
     ButtonEvent.SUSTAINED_PRESS = &quot;sustainedPress&quot;;
 
     ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);

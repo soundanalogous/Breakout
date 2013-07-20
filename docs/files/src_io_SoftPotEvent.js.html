@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -199,7 +199,7 @@ BO.io.SoftPotEvent = (function () {
      * object.
      * @class SoftPotEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      * @param {Number} touchPoint The value where the softpot was touched    
      */
@@ -211,17 +211,35 @@ BO.io.SoftPotEvent = (function () {
         this._touchPoint = touchPoint;
     };
 
-    /** @constant */
+    /**
+     * @property SoftPotEvent.PRESS
+     * @static
+     */
     SoftPotEvent.PRESS = &quot;softPotPressed&quot;;
-    /** @constant */
+    /**
+     * @property SoftPotEvent.RELEASE
+     * @static
+     */
     SoftPotEvent.RELEASE = &quot;softPotRelease&quot;;
-    /** @constant */
+    /**
+     * @property SoftPotEvent.DRAG
+     * @static
+     */
     SoftPotEvent.DRAG = &quot;softPotDrag&quot;;
-    /** @constant */
+    /**
+     * @property SoftPotEvent.FLICK_UP
+     * @static
+     */
     SoftPotEvent.FLICK_UP = &quot;softPotFlickUp&quot;;
-    /** @constant */
+    /**
+     * @property SoftPotEvent.FLICK_DOWN
+     * @static
+     */
     SoftPotEvent.FLICK_DOWN = &quot;softPotFlickDown&quot;;
-    /** @constant */
+    /**
+     * @property SoftPotEvent.TAP
+     * @static
+     */
     SoftPotEvent.TAP = &quot;softPotTap&quot;;        
 
     SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -229,9 +247,7 @@ BO.io.SoftPotEvent = (function () {
 
     /**
      * The value of the softpot.
-     * 
-     * @name SoftPotEvent#value
-     * @property
+     * @property value
      * @type Number
      */ 
     SoftPotEvent.prototype.__defineGetter__(&quot;value&quot;, function () { return this._touchPoint; });  

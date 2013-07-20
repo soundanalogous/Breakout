@@ -25,7 +25,7 @@ BO.PhysicalInputBase = (function () {
      *
      * @class PhysicalInputBase
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      */
     PhysicalInputBase = function () {
 

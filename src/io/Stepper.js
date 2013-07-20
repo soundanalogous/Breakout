@@ -32,7 +32,7 @@ BO.io.Stepper = (function () {
      *
      * @class Stepper
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
@@ -48,32 +48,31 @@ BO.io.Stepper = (function () {
      * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.
      *
      * @example
-     * // example
-     * var Stepper = BO.io.Stepper,
-     *     Event = JSUTILS.Event;
+     *     var Stepper = BO.io.Stepper,
+     *         Event = JSUTILS.Event;
      *
-     * var stepper,
-     *     stepsPerRev = 200,           // update this for your stepper
-     *     numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
-     *     speed = 15.0,                // rad/sec (RPM = speed * 9.55)
-     *     acceleration = 20.0,         // rad/sec^2
-     *     deceleration = 20.0;         // rad/sec^2
+     *     var stepper,
+     *         stepsPerRev = 200,           // update this for your stepper
+     *         numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
+     *         speed = 15.0,                // rad/sec (RPM = speed * 9.55)
+     *         acceleration = 20.0,         // rad/sec^2
+     *         deceleration = 20.0;         // rad/sec^2
      *
-     * stepper = new Stepper(arduino,
-     *              Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
-     *              stepsPerRev,
-     *              arduino.getDigitalPin(2),
-     *              arduino.getDigitalPin(3));
+     *     stepper = new Stepper(arduino,
+     *                  Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
+     *                  stepsPerRev,
+     *                  arduino.getDigitalPin(2),
+     *                  arduino.getDigitalPin(3));
      *
-     * stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+     *     stepper.addEventListener(Event.COMPLETE, onStepperComplete);
      *
-     * // acceleration and deceleration parameters are optional
-     * stepper.step(numSteps, speed, acceleration, deceleration);
+     *     // acceleration and deceleration parameters are optional
+     *     stepper.step(numSteps, speed, acceleration, deceleration);
      *
-     * function onStepperComplete(event) {
-     *     // each stepper is assigned a read-only id value when instantiated
-     *     console.log("stepper " + event.target.id + " sequence complete");
-     * }
+     *     function onStepperComplete(event) {
+     *         // each stepper is assigned a read-only id value when instantiated
+     *         console.log("stepper " + event.target.id + " sequence complete");
+     *     }
      */
     Stepper = function (board, driverType, numStepsPerRev, directionPin, stepPin, motorPin3, motorPin4) {
         

@@ -36,7 +36,7 @@ BO.io.AccelerometerADXL345 = (function () {
      *
      * @class AccelerometerADXL345
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
      * RANGE_8G, RANGE_16G). Default is RANGE_2G.    

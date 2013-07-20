@@ -17,7 +17,7 @@ BO.WSocketEvent = (function () {
      * and Closed (onclose) objects.
      * @class WSocketEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     WSocketEvent = function (type) {

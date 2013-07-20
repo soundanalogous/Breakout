@@ -18,7 +18,7 @@ BO.custom.RFIDEvent = (function () {
      * tag is removed from a reader.
      * @class RFIDEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      * @param {String} tag The RFID tag value (hexadecimal)
      */

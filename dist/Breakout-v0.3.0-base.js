@@ -1,12 +1,12 @@
 /*!
- * Breakout v0.2.4 - 2013-07-20
+ * Breakout v0.3.0 - 2013-07-20
 
  * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
  * http://breakoutjs.com
  */
 /**
- * @version 0.2.3
+ * @version 0.3.0
  *
  * <p>Namespace for Breakout objects.</p>
  *
@@ -17,7 +17,7 @@ var BO = BO || {};
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.2.3';
+BREAKOUT.VERSION = '0.3.0';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application
@@ -954,6 +954,386 @@ BO.WSocketWrapper = (function () {
     return WSocketWrapper;
 
 }());
+JSUTILS.namespace('BO.filters.FilterBase');
+
+BO.filters.FilterBase = (function () {
+    "use strict";
+
+    var FilterBase;
+
+    /**
+     * A base object to be extended by all Filter objects. This object
+     * should not be instantiated directly.
+     *
+     * @class FilterBase
+     * @constructor
+     */
+    FilterBase = function () {
+        throw new Error("Can't instantiate abstract classes");
+    };
+
+    /**
+     * Process the value to be filtered and return the filtered result.
+     *
+     * @protected
+     * @method processSample
+     * @param {Number} val The input value to be filtered.
+     * @return {Number} The resulting value after applying the filter.
+     */
+    FilterBase.prototype.processSample = function (val) { 
+        // to be implemented in sub class
+        throw new Error("Filter objects must implement the method processSample");
+    };
+
+    return FilterBase;
+
+}());
+JSUTILS.namespace('BO.filters.Scaler');
+
+BO.filters.Scaler = (function () {
+    "use strict";
+
+    var Scaler;
+
+    // dependencies
+    var FilterBase = BO.filters.FilterBase;
+
+    /**
+     * Scales up an input value from its min and max range to a specified 
+     * minimum to maximum range. See Breakout/examples/filters/scaler.html for
+     * an example application.  
+     *
+     * @class Scaler
+     * @constructor
+     * @extends FilterBase
+     * @param {Number} inMin minimum input value
+     * @param {Number} inMax maximum input value
+     * @param {Number} outMin minimum output value
+     * @param {Number} outMax maximum output value
+     * @param {Function} type The function used to map the input curve
+     * @param {Boolean} limiter Whether or not to restrict the input value if it
+     * exceeds the specified range.
+     */
+    Scaler = function (inMin, inMax, outMin, outMax, type, limiter) {
+
+        this.name = "Scaler";
+
+        this._inMin = inMin || 0;
+        this._inMax = inMax || 1;
+        this._outMin = outMin || 0;
+        this._outMax = outMax || 1;
+        this._type = type || Scaler.LINEAR;
+        this._limiter = limiter || true;
+
+    };
+
+
+    Scaler.prototype = JSUTILS.inherit(FilterBase.prototype);
+    Scaler.prototype.constructor = Scaler;
+
+    /**
+     * Override FilterBase.processSample
+     */
+    Scaler.prototype.processSample = function (val) {
+        var inRange = this._inMax - this._inMin;
+        var outRange = this._outMax - this._outMin;
+        var normalVal = (val - this._inMin) / inRange;
+        if (this._limiter) {
+            normalVal = Math.max(0, Math.min(1, normalVal));
+        }
+
+        return outRange * this._type(normalVal) + this._outMin;
+    };
+
+    /**
+     * y = x
+     * @method Scaler.LINEAR
+     * @static
+     */
+    Scaler.LINEAR = function (val) {
+        return val;
+    };
+
+    /**
+     * y = x * x
+     * @method Scaler.SQUARE
+     * @static
+     */
+    Scaler.SQUARE = function (val) {
+        return val * val;
+    };
+
+    /**
+     * y = sqrt(x)
+     * @method Scaler.SQUARE_ROOT
+     * @static
+     */
+    Scaler.SQUARE_ROOT = function (val) {
+        return Math.pow(val, 0.5);
+    };
+    
+    /**
+     * y = x^4
+     * @method Scaler.CUBE
+     * @static
+     */
+    Scaler.CUBE = function (val) {
+        return val * val * val * val;
+    };
+    
+    /**
+     * y = pow(x, 1/4)
+     * @method Scaler.CUBE_ROOT
+     * @static
+     */
+    Scaler.CUBE_ROOT = function (val) {
+        return Math.pow(val, 0.25);
+    };          
+
+
+    return Scaler;
+
+}());
+JSUTILS.namespace('BO.filters.Convolution');
+
+/**
+ * @namespace BO.filters
+ */
+BO.filters.Convolution = (function () {
+    "use strict";
+
+    var Convolution;
+
+    // dependencies
+    var FilterBase = BO.filters.FilterBase;
+
+    /**
+     * The Convolution object performs low-pass, high-pass and moving average
+     * filtering on an analog input.
+     * See Breakout/examples/filters/convolution.html for an example application.
+     *
+     * @class Convolution
+     * @constructor
+     * @extends FilterBase
+     * @param {Number[]} kernel An array of coefficients to be used with product-sum
+     * operations for input buffers.
+     */
+    Convolution = function (kernel) {
+
+        this.name = "Convolution";
+
+        this._buffer = [];
+
+        // use the coef setter
+        this.coef = kernel;
+    };
+
+
+    Convolution.prototype = JSUTILS.inherit(FilterBase.prototype);
+    Convolution.prototype.constructor = Convolution;
+
+    /**
+     * An array of coefficients to be used with product-sum operations for input buffers. 
+     * If assigned a new array, the input buffer will be cleared.
+     * @property coef
+     * @type Number[]
+     */
+    Convolution.prototype.__defineGetter__("coef", function () {
+        return this._coef;
+    });
+    Convolution.prototype.__defineSetter__("coef", function (kernel) {
+        this._coef = kernel;
+        this._buffer = new Array(this._coef.length);
+        var len = this._buffer.length;
+        for (var i = 0; i < len; i++) {
+            this._buffer[i] = 0;
+        }
+    });
+
+    /**
+     * Override FilterBase.processSample
+     */
+    Convolution.prototype.processSample = function (val) {
+        this._buffer.unshift(val);
+        this._buffer.pop();
+
+        var result = 0;
+        var len = this._buffer.length;
+
+        for (var i = 0; i < len; i++) {
+            result += this._coef[i] * this._buffer[i];
+        }   
+
+        return result;
+    };
+
+    /**
+     * Low-pass filter kernel. Use by passing this array to the constructor.
+     * @property Convolution.LPF
+     * @static
+     */
+    Convolution.LPF = [1 / 3, 1 / 3, 1 / 3];
+
+    /**
+     * High-pass filter kernel. Use by passing this array to the constructor.
+     * @property Convolution.HPF
+     * @static
+     */
+    Convolution.HPF = [1 / 3, -2.0 / 3, 1 / 3];
+    
+    /**
+     * Moving average filter kernel. Use by passing this array to the constructor.
+     * @property Convolution.MOVING_AVERAGE
+     * @static
+     */
+    Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];      
+        
+    return Convolution;
+
+}());
+JSUTILS.namespace('BO.filters.TriggerPoint');
+
+BO.filters.TriggerPoint = (function () {
+    "use strict";
+
+    var TriggerPoint;
+
+    // dependencies
+    var FilterBase = BO.filters.FilterBase;
+
+    /**
+     * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
+     * also use multiple points by providing a nested array such as [[0.4, 0.1],
+     * [0.7, 0.05]].
+     * See Breakout/examples/filters/triggerpoint.html for an example application.
+     *
+     * @class TriggerPoint
+     * @constructor
+     * @extends FilterBase
+     * @param {Number[]} points An array of threshold and hysteresis values
+     * operations for input buffers.
+     */
+    TriggerPoint = function (points) {
+
+        this.name = "TriggerPoint";
+
+        this._points = {};
+        this._range = [];
+        this._lastStatus = 0;
+
+        if (points === undefined) {
+            points = [[0.5, 0]];
+        }
+
+        if (points[0] instanceof Array) {
+            var len = points.length;
+            for (var i = 0; i < len; i++) {
+                this._points[points[i][0]] = points[i][1];  
+            }
+        } else if (typeof points[0] === "number") {
+            this._points[points[0]] = points[1];
+        }
+
+        this.updateRange();
+
+        this._lastStatus = 0;
+    };
+
+
+    TriggerPoint.prototype = JSUTILS.inherit(FilterBase.prototype);
+    TriggerPoint.prototype.constructor = TriggerPoint;
+
+    /**
+     * Override FilterBase.processSample
+     */
+    TriggerPoint.prototype.processSample = function (val) {
+        var status = this._lastStatus;
+        var len = this._range.length;
+        for (var i = 0; i < len; i++) {
+            var range = this._range[i];
+            if (range[0] <= val && val <= range[1]) {
+                status = i;
+                break;
+            }
+        }
+
+        this._lastStatus = status;
+        return status;
+    };
+
+    /**
+     * @method addPoint
+     */
+    TriggerPoint.prototype.addPoint = function (threshold, hysteresis) {
+        this._points[threshold] = hysteresis;
+        this.updateRange();
+    };
+
+    /**
+     * @method removePoint
+     */
+    TriggerPoint.prototype.removePoint = function (threshold) {
+        // to do: verify that this works in javascript
+        delete this._points[threshold];
+        this.updateRange();
+    };
+
+    /**
+     * @method removeAllPoints
+     */
+    TriggerPoint.prototype.removeAllPoints = function () {
+        this._points = {};
+        this.updateRange();
+    };
+
+    /**
+     * @private
+     * @method updateRange
+     */
+    TriggerPoint.prototype.updateRange = function () {
+                
+        this._range = [];
+        var keys = this.getKeys(this._points);
+
+        var firstKey = keys[0];
+        this._range.push([Number.NEGATIVE_INFINITY, firstKey - this._points[firstKey]]);
+
+        var len = keys.length - 1;
+        for (var i = 0; i < len; i++) {
+            var t0 = keys[i];
+            var t1 = keys[i + 1];
+            var p0 = (t0 * 1) + this._points[t0]; // multiply by 1 to force type to number
+            var p1 = t1 - this._points[t1];
+            if (p0 >= p1) {
+                throw new Error("The specified range overlaps...");
+            }
+            this._range.push([p0, p1]);
+        }
+
+        var lastKey = keys[keys.length - 1];
+        var positiveThresh = (lastKey * 1) + this._points[lastKey];
+        this._range.push([positiveThresh, Number.POSITIVE_INFINITY]);
+
+    };
+
+    /**
+     * @private
+     * @method getKeys
+     */
+    TriggerPoint.prototype.getKeys = function (obj) {
+        var keys = [];
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                keys.push(key);
+            }
+        }
+        return keys.sort();
+    };
+        
+    return TriggerPoint;
+
+}());
+ 
 JSUTILS.namespace('BO.generators.GeneratorEvent');
 
 BO.generators.GeneratorEvent = (function () {
@@ -1046,6 +1426,240 @@ BO.generators.GeneratorBase = (function () {
     return GeneratorBase;
 
 }());
+JSUTILS.namespace('BO.generators.Oscillator');
+
+BO.generators.Oscillator = (function () {
+    "use strict";
+
+    var Oscillator;
+
+    // dependencies
+    var GeneratorBase = BO.generators.GeneratorBase,
+        GeneratorEvent = BO.generators.GeneratorEvent,
+        Timer = JSUTILS.Timer,
+        TimerEvent = JSUTILS.TimerEvent;
+
+    /**
+     * The Oscillator object can be attached to a Pin or LED object to output
+     * a waveform. This is useful for blinking an LED or fading it on and off. In
+     * most cases (unless you are simply using it to blink and LED on or off), 
+     * the Oscillator should be attached to a Pin or LED object associated with
+     * a PWM pin on the I/O board.
+     * See Breakout/examples/generators/oscillator.html for an example application.
+     *
+     * @class Oscillator
+     * @constructor
+     * @extends GeneratorBase
+     * @param {Number} wave waveform
+     * @param {Number} freq frequency
+     * @param {Number} amplitude amplitude
+     * @param {Number} offset offset
+     * @param {Number} phase phase
+     * @param {Number} times The repeat count from 0 to infinite.
+     */
+    Oscillator = function (wave, freq, amplitude, offset, phase, times) {
+
+        // call super class
+        GeneratorBase.call(this);
+
+        this.name = "Oscillator";
+
+        this._wave = wave || Oscillator.SIN;
+        this._freq = freq || 1;
+        this._amplitude = amplitude || 1;
+        this._offset = offset || 0;
+        this._phase = phase || 0;
+        this._times = times || 0;
+
+        if (freq === 0) {
+            throw new Error("Frequency should be larger than 0");
+        }
+
+        this._time = undefined;
+        this._startTime = undefined;
+        this._lastVal = undefined;
+        // need to do this in order to remove the event listener
+        this._autoUpdateCallback = this.autoUpdate.bind(this);
+
+        this._timer = new Timer(33);
+        this._timer.start();
+
+        this.reset();
+    };
+
+    Oscillator.prototype = JSUTILS.inherit(GeneratorBase.prototype);
+    Oscillator.prototype.constructor = Oscillator;
+
+    /**
+     * The service interval in milliseconds. Default is 33ms.
+     * @property serviceInterval
+     * @type Number
+     */ 
+    Oscillator.prototype.__defineSetter__("serviceInterval", function (interval) {
+        this._timer.delay = interval;
+    });
+    Oscillator.prototype.__defineGetter__("serviceInterval", function () {
+        return this._timer.delay;
+    });
+
+    /**
+     * Starts the oscillator.
+     * @method start
+     */
+    Oscillator.prototype.start = function () {
+        this.stop();
+        this._timer.addEventListener(TimerEvent.TIMER, this._autoUpdateCallback);
+
+        var date = new Date();
+        this._startTime = date.getTime();
+        this.autoUpdate(null);
+    };
+
+    /**
+     * Stops the oscillator.
+     * @method stop
+     */
+    Oscillator.prototype.stop = function () {
+        if (this._timer.hasEventListener(TimerEvent.TIMER)) {
+            this._timer.removeEventListener(TimerEvent.TIMER, this._autoUpdateCallback);
+        }
+    };
+
+    /**
+     * Resets the oscillator.
+     * @method reset
+     */
+    Oscillator.prototype.reset = function () {
+        this._time = 0;
+        this._lastVal = 0.999;
+    };
+
+    /**
+     * By default the interval is 33 milliseconds. The Osc is updated every 33ms.
+     * @method update
+     * @param {Number} interval The update interval in milliseconds.
+     */
+    Oscillator.prototype.update = function (interval) {
+        interval = interval || -1;
+        if (interval < 0) {
+            this._time += this._timer.delay;
+        }
+        else {
+            this._time += interval;
+        }
+        this.computeValue();
+    };
+
+    /**
+     * @private
+     * @method autoUpdate
+     */
+    Oscillator.prototype.autoUpdate = function (event) {
+        var date = new Date();
+        this._time = date.getTime() - this._startTime;
+        this.computeValue();
+    };
+
+    /**
+     * @private
+     * @method computeValue
+     */
+    Oscillator.prototype.computeValue = function () {
+        var sec = this._time / 1000;
+
+        if (this._times !== 0 && this._freq * sec >= this._times) {
+            this.stop();
+            sec = this._times / this._freq;
+            if (this._wave !== Oscillator.LINEAR) {
+                this._value = this._offset;
+            } else {
+                this._value = this._amplitude * this._wave(1, 0) + this._offset;
+            }
+        } else {
+            var val = this._freq * (sec + this._phase);
+            this._value = this._amplitude * this._wave(val, this._lastVal) + this._offset;
+            this._lastVal = val;
+        }
+        this.dispatchEvent(new GeneratorEvent(GeneratorEvent.UPDATE));
+    };
+
+    // Static methods
+
+    /**
+     * sine wave
+     * @method Oscillator.SIN
+     * @static
+     */
+    Oscillator.SIN = function (val, lastVal) {
+        return 0.5 * (1 + Math.sin(2 * Math.PI * (val - 0.25)));
+    };
+
+    /**
+     * square wave
+     * @method Oscillator.SQUARE
+     * @static
+     */
+    Oscillator.SQUARE = function (val, lastVal) {
+        return (val % 1 <= 0.5) ? 1 : 0;
+    };
+    
+    /**
+     * triangle wave
+     * @method Oscillator.TRIANGLE
+     * @static
+     */
+    Oscillator.TRIANGLE = function (val, lastVal) {
+        val %= 1;
+        return (val <= 0.5) ? (2 * val) : (2 - 2 * val);
+    };
+    
+    /**
+     * saw wave
+     * @method Oscillator.SAW
+     * @static
+     */
+    Oscillator.SAW = function (val, lastVal) {
+        val %= 1;
+        if (val <= 0.5) {
+            return val + 0.5;
+        }
+        else {
+            return val - 0.5;
+        }
+    };
+    
+    /**
+     * impulse
+     * @method Oscillator.IMPULSE
+     * @static
+     */
+    Oscillator.IMPULSE = function (val, lastVal) {
+        return ((val % 1) < (lastVal % 1)) ? 1 : 0;
+    };
+    
+    /**
+     * linear
+     * @method Oscillator.LINEAR
+     * @static
+     */
+    Oscillator.LINEAR = function (val, lastVal) {
+        return (val < 1) ? val : 1;
+    };
+    
+    // document events
+
+    /**
+     * The update event is dispatched at the rate specified 
+     * by the serviceInterval parameter (default = 33ms).
+     * @type BO.generators.GeneratorEvent.UPDATE
+     * @event update
+     * @param {BO.generators.Oscillator} target A reference to the Oscillator object.
+     */
+
+    return Oscillator;
+
+}());
+
 JSUTILS.namespace('BO.PinEvent');
 
 BO.PinEvent = (function () {
@@ -1674,75 +2288,6 @@ BO.Pin = (function () {
 
 }());
 
-JSUTILS.namespace('BO.PhysicalInputBase');
-
-BO.PhysicalInputBase = (function () {
-
-    var PhysicalInputBase;
-
-    // Dependencies
-    var EventDispatcher = JSUTILS.EventDispatcher;
-
-    /**
-     * A base class for physical input objects. Extend this class to
-     * create new digital or analog input objects. Treat this class as
-     * an abstract base class. It should not be instantiated directly.
-     *
-     * @class PhysicalInputBase
-     * @constructor
-     * @uses EventDispatcher
-     */
-    PhysicalInputBase = function () {
-
-        this.name = "PhysicalInputBase";
-
-        this._evtDispatcher = new EventDispatcher(this);
-    };
-
-    PhysicalInputBase.prototype = {
-
-        constructor: PhysicalInputBase,
-        
-        // Implement EventDispatcher
-        
-        /**
-         * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
-         */
-        addEventListener: function (type, listener) {
-            this._evtDispatcher.addEventListener(type, listener);
-        },
-        
-        /**
-         * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
-         */
-        removeEventListener: function (type, listener) {
-            this._evtDispatcher.removeEventListener(type, listener);
-        },
-        
-        /**
-         * @param {String} type The event type
-         * return {boolean} True is listener exists for this type, false if not.
-         */
-        hasEventListener: function (type) {
-            return this._evtDispatcher.hasEventListener(type);
-        },
-        
-        /**
-         * @param {Event} type The Event object
-         * @param {Object} optionalParams Optional parameters to assign to the event object.
-         * return {boolean} True if dispatch is successful, false if not.
-         */     
-        dispatchEvent: function (event, optionalParams) {
-            return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }           
-    };
-
-    return PhysicalInputBase;
-
-}());
-
 JSUTILS.namespace('BO.I2CBase');
 
 /**
@@ -1975,6 +2520,75 @@ BO.I2CBase = (function () {
     return I2CBase;
 
 }());
+JSUTILS.namespace('BO.PhysicalInputBase');
+
+BO.PhysicalInputBase = (function () {
+
+    var PhysicalInputBase;
+
+    // Dependencies
+    var EventDispatcher = JSUTILS.EventDispatcher;
+
+    /**
+     * A base class for physical input objects. Extend this class to
+     * create new digital or analog input objects. Treat this class as
+     * an abstract base class. It should not be instantiated directly.
+     *
+     * @class PhysicalInputBase
+     * @constructor
+     * @uses EventDispatcher
+     */
+    PhysicalInputBase = function () {
+
+        this.name = "PhysicalInputBase";
+
+        this._evtDispatcher = new EventDispatcher(this);
+    };
+
+    PhysicalInputBase.prototype = {
+
+        constructor: PhysicalInputBase,
+        
+        // Implement EventDispatcher
+        
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event is fired
+         */
+        addEventListener: function (type, listener) {
+            this._evtDispatcher.addEventListener(type, listener);
+        },
+        
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event is fired
+         */
+        removeEventListener: function (type, listener) {
+            this._evtDispatcher.removeEventListener(type, listener);
+        },
+        
+        /**
+         * @param {String} type The event type
+         * return {boolean} True is listener exists for this type, false if not.
+         */
+        hasEventListener: function (type) {
+            return this._evtDispatcher.hasEventListener(type);
+        },
+        
+        /**
+         * @param {Event} type The Event object
+         * @param {Object} optionalParams Optional parameters to assign to the event object.
+         * return {boolean} True if dispatch is successful, false if not.
+         */     
+        dispatchEvent: function (event, optionalParams) {
+            return this._evtDispatcher.dispatchEvent(event, optionalParams);
+        }           
+    };
+
+    return PhysicalInputBase;
+
+}());
+
 JSUTILS.namespace('BO.IOBoard');
 
 BO.IOBoard = (function () {
@@ -2094,6 +2708,7 @@ BO.IOBoard = (function () {
         /**
          * A websocket connection has been established.
          * @private
+         * @method onSocketConnection
          */
         onSocketConnection: function (event) {
             this.debug("debug: Socket Status: (open)");
@@ -2107,6 +2722,7 @@ BO.IOBoard = (function () {
          * more stringified bytes from the board or a config string from
          * the server.
          * @private
+         * @method onSocketMessage
          */
         onSocketMessage: function (event) {
             var message = event.message,
@@ -2130,6 +2746,7 @@ BO.IOBoard = (function () {
          * @param {String} data A string representing a config message or
          * an 8-bit unsigned integer.
          * @private
+         * @method parseInputMessage
          */
         parseInputMessage: function (data) {
             var pattern = /config/,
@@ -2150,6 +2767,7 @@ BO.IOBoard = (function () {
         /**
          * Report that the websocket connection has been closed.
          * @private
+         * @method onSocketClosed
          */
         onSocketClosed: function (event) {
             this.debug("debug: Socket Status: " + this._socket.readyState + " (Closed)");
@@ -2159,6 +2777,7 @@ BO.IOBoard = (function () {
         /**
          * Request the firmware version from the IOBoard.
          * @private
+         * @method begin
          */
         begin: function () {
             this.addEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
@@ -2171,6 +2790,7 @@ BO.IOBoard = (function () {
          * report this to the user (to do: throw appropriate error?).
          *
          * @private
+         * @method onInitialVersionResult
          */
         onInitialVersionResult: function (event) {
             var version = event.version * 10,
@@ -2209,6 +2829,7 @@ BO.IOBoard = (function () {
          * Check if a capability response was received. If not, assume that
          * a custom sketch was loaded to the IOBoard and fire a READY event.
          * @private
+         * @method checkForQueryResponse
          */
         checkForQueryResponse: function () {
             var self = this;
@@ -2230,6 +2851,7 @@ BO.IOBoard = (function () {
         /**
          * Process a status message from the websocket server
          * @private
+         * @method processStatusMessage
          */
         processStatusMessage: function (message) {
             if (message === MULTI_CLIENT) {
@@ -2242,6 +2864,7 @@ BO.IOBoard = (function () {
          * Process input data from the IOBoard.
          * @param {Number} inputData Number as an 8-bit unsigned integer
          * @private
+         * @method processInput
          */
         processInput: function (inputData) {
             var len;
@@ -2275,6 +2898,7 @@ BO.IOBoard = (function () {
          * data to the appropriate method.
          *
          * @private
+         * @method processMultiByteCommand
          */
         processMultiByteCommand: function (commandData) {
             var command = commandData[0],
@@ -2311,6 +2935,7 @@ BO.IOBoard = (function () {
          * @param {Number} bits0_6 Bits 0 - 6 of the port value.
          * @param {Number} bits7_13 Bits 7 - 13 of the port value.
          * @private
+         * @method processDigitalMessage
          */
         processDigitalMessage: function (port, bits0_6, bits7_13) {
             var offset = port * 8,
@@ -2351,6 +2976,7 @@ BO.IOBoard = (function () {
          * configuration routine if it's supported by Firmata in the future.
          *
          * @private
+         * @method processAnalogMessage
          */
         processAnalogMessage: function (channel, bits0_6, bits7_13) {
             var analogPin = this.getAnalogPin(channel);
@@ -2375,6 +3001,7 @@ BO.IOBoard = (function () {
         /**
          * Route the incoming sysex data to the appropriate method.
          * @private
+         * @method processSysexCommand
          */
         processSysexCommand: function (sysexData) {
             // Remove the first and last element from the array
@@ -2409,6 +3036,7 @@ BO.IOBoard = (function () {
         /**
          * Construct the firmware name and version from incoming ascii data.
          * @private
+         * @method processQueryFirmwareResult
          */
         processQueryFirmwareResult: function (msg) {
             var data;
@@ -2424,6 +3052,7 @@ BO.IOBoard = (function () {
         /**
          * Construct a String from an incoming ascii data.
          * @private
+         * @method processSysExString
          */
         processSysExString: function (msg) {
             var str = "",
@@ -2444,6 +3073,7 @@ BO.IOBoard = (function () {
          * file.
          *
          * @private
+         * @method processCapabilitiesResponse
          */
         processCapabilitiesResponse: function (msg) {
             // If running in multi-client mode and this client is already 
@@ -2530,6 +3160,7 @@ BO.IOBoard = (function () {
          * pins.
          *
          * @private
+         * @method processAnalogMappingResponse
          */
         processAnalogMappingResponse: function (msg) {
             // If running in multi-client mode and this client is 
@@ -2559,6 +3190,7 @@ BO.IOBoard = (function () {
          * enable multi-client mode.
          * 
          * @private
+         * @method startupInMultiClientMode
          */     
         startupInMultiClientMode: function () {
             var len = this.getPinCount();
@@ -2575,6 +3207,7 @@ BO.IOBoard = (function () {
         /**
          * The IOBoard is configured and ready to send and accept commands.
          * @private
+         * @method startup
          */
         startup: function () {
             this.debug("debug: IOBoard ready");
@@ -2588,6 +3221,7 @@ BO.IOBoard = (function () {
          * the board.
          *
          * @private
+         * @method systemReset
          */
         systemReset: function () {
             this.debug("debug: System reset");
@@ -2604,6 +3238,7 @@ BO.IOBoard = (function () {
          * inputs the state is the status of the pullup resistor.
          *
          * @private
+         * @method processPinStateResponse
          */
         processPinStateResponse: function (msg) {
             // Ignore requests that were not made by this client
@@ -2647,6 +3282,7 @@ BO.IOBoard = (function () {
          * Convert char to decimal value.
          * 
          * @private
+         * @method toDec
          */
         toDec: function (ch) {
             ch = ch.substring(0, 1);
@@ -2659,6 +3295,7 @@ BO.IOBoard = (function () {
          * Sends digital or analog output pin and output values to the IOBoard.
          *
          * @private
+         * @method sendOut
          * @param {Event} event A reference to the event object (Pin in this
          * case).
          */
@@ -2685,6 +3322,7 @@ BO.IOBoard = (function () {
          * as the pin type is changed during the execution of the program.
          *
          * @private
+         * @method managePinListener
          */  
         managePinListener: function (pin) {
             if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
@@ -2711,6 +3349,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The analog pin number.
          * param {Number} value The value to send (0.0 to 1.0).
          * @private
+         * @method sendAnalogData
          */
         sendAnalogData: function (pin, value) {
             var pwmMax = this.getDigitalPin(pin).maxPWMValue;
@@ -2731,6 +3370,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The analog pin number (up to 128).
          * @param {Number} value The value to send (up to 16 bits).
          * @private
+         * @method sendExtendedAnalogData
          */ 
         sendExtendedAnalogData: function (pin, value) {
             var analogData = [];
@@ -2764,6 +3404,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The digital pin number.
          * @param {Number} value The value of the digital pin (0 or 1).
          * @private
+         * @method sendDigitalData
          */
         sendDigitalData: function (pin, value) {
             var portNum = Math.floor(pin / 8);
@@ -2789,6 +3430,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The digital pin number the servo is attached to.
          * @param {Number} value The angle to rotate to (0.0 to 1.0 mapped to 0 - 180).
          * @private
+         * @method sendServoData
          */ 
         sendServoData: function (pin, value) {
             var servoPin = this.getDigitalPin(pin);
@@ -2801,6 +3443,7 @@ BO.IOBoard = (function () {
          * Query the cababilities and current state any board running Firmata.
          * 
          * @private
+         * @method queryCapabilities
          */
         queryCapabilities: function () {
             this.send([START_SYSEX, CAPABILITY_QUERY, END_SYSEX]);
@@ -2810,6 +3453,7 @@ BO.IOBoard = (function () {
          * Query which pins correspond to the analog channels
          *
          * @private
+         * @method queryAnalogMapping
          */
         queryAnalogMapping: function () {
             this.send([START_SYSEX, ANALOG_MAPPING_QUERY, END_SYSEX]);
@@ -2820,6 +3464,7 @@ BO.IOBoard = (function () {
          * pin.
          *
          * @private
+         * @method setAnalogPinReporting
          * @param {Number} pin The pin connected to the analog input
          * @param {Number} mode Pin.ON to enable input or Pin.OFF to disable
          * input for the specified pin.
@@ -2884,6 +3529,7 @@ BO.IOBoard = (function () {
          * method and should not be needed in any application level code.
          *
          * @private
+         * @method getValueFromTwo7bitBytes
          * @param {Number} lsb The least-significant byte of the 2 values to
          * be concatentated
          * @param {Number} msb The most-significant byte of the 2 values to be

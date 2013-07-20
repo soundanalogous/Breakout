@@ -29,7 +29,7 @@ BO.filters.Convolution = (function () {
      *
      * @class Convolution
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number[]} kernel An array of coefficients to be used with product-sum
      * operations for input buffers.
      */

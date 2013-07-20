@@ -34,7 +34,7 @@ BO.io.SoftPot = (function () {
      *
      * @class SoftPot
      * @constructor
-     * @extends PhysicalInputBase
+     * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the softpot is connected to.
      * @param {Number} softPotLength The length of the softpot in mm. 

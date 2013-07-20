@@ -37,7 +37,7 @@ BO.io.GyroITG3200 = (function () {
      *
      * @class GyroITG3200
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use

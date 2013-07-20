@@ -26,7 +26,7 @@ BO.filters.Scaler = (function () {
      *
      * @class Scaler
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number} inMin minimum input value
      * @param {Number} inMax maximum input value
      * @param {Number} outMin minimum output value

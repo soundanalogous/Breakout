@@ -16,7 +16,7 @@ BO.PinEvent = (function () {
      * An Event object to be dispatched (fired) by a Pin object.
      * @class PinEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     PinEvent = function (type) {

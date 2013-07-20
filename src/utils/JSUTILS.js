@@ -7,6 +7,7 @@
 
 /**
  * Namespace and utility functions
+ * @namespace JSUTILS
  */
 var JSUTILS = JSUTILS || {};
 

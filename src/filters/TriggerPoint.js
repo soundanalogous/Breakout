@@ -27,7 +27,7 @@ BO.filters.TriggerPoint = (function () {
      *
      * @class TriggerPoint
      * @constructor
-     * @extends FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number[]} points An array of threshold and hysteresis values
      * operations for input buffers.
      */

@@ -31,7 +31,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      *
      * @class MagnetometerHMC5883
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      * @param {Number} numSamples The number of samples averaged per 

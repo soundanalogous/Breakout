@@ -32,7 +32,7 @@ BO.generators.Oscillator = (function () {
      *
      * @class Oscillator
      * @constructor
-     * @extends GeneratorBase
+     * @extends BO.generators.GeneratorBase
      * @param {Number} wave waveform
      * @param {Number} freq frequency
      * @param {Number} amplitude amplitude

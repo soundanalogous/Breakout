@@ -17,7 +17,7 @@ BO.io.MagnetometerEvent = (function () {
      * object.
      * @class MagnetometerEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     MagnetometerEvent = function (type) {

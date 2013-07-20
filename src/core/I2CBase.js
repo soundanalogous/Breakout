@@ -25,7 +25,7 @@ BO.I2CBase = (function () {
      *
      * @class I2CBase
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} address The I2C address of the device
      * @param {Number} delayUS The number of microseconds ...

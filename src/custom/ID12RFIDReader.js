@@ -39,7 +39,7 @@ BO.custom.ID12RFIDReader = (function () {
      *
      * @class ID12RFIDReader
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} readerId The ID assigned to the reader in the firmware
      * running on the IOBoard (default = 13)

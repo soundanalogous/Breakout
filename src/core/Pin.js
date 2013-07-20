@@ -29,7 +29,7 @@ BO.Pin = (function () {
      *
      * @class Pin
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {Number} number The pin number
      * @param {Number} type The type of pin
      */

@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -199,7 +199,7 @@ BO.io.GyroEvent = (function () {
      * object.
      * @class GyroEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     GyroEvent = function (type) {
@@ -210,9 +210,15 @@ BO.io.GyroEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property GyroEvent.GYRO_READY
+     * @static
+     */
     GyroEvent.GYRO_READY = &quot;gyroReady&quot;;
-    /** @constant */
+    /**
+     * @property GyroEvent.UPDATE
+     * @static
+     */
     GyroEvent.UPDATE = &quot;update&quot;;
     
 

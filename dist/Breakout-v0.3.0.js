@@ -1,12 +1,12 @@
 /*!
- * Breakout v0.2.4 - 2013-07-20
+ * Breakout v0.3.0 - 2013-07-20
 
  * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
  * http://breakoutjs.com
  */
 /**
- * @version 0.2.3
+ * @version 0.3.0
  *
  * <p>Namespace for Breakout objects.</p>
  *
@@ -17,7 +17,7 @@ var BO = BO || {};
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.2.3';
+BREAKOUT.VERSION = '0.3.0';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application
@@ -2618,6 +2618,7 @@ BO.io.Stepper = (function () {
      *
      * @class Stepper
      * @constructor
+     * @uses EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
      * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
@@ -2727,6 +2728,7 @@ BO.io.Stepper = (function () {
          * The accel and decel parameters are optional but if using, both values
          * must be passed to the function.
          *
+         * @method step
          * @param {Number} numSteps The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
          * Positive value is clockwise, negative value is counter clockwise.
          * @param {Number} speed Max speed in rad/sec (1 rad/sec = 9.549 RPM)
@@ -2819,6 +2821,7 @@ BO.io.Stepper = (function () {
          * Listen for stepping complete event
          *
          * @private
+         * @method onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -2833,7 +2836,10 @@ BO.io.Stepper = (function () {
         },
 
         /**
-         * @return {Number} The id of the Stepper object instance
+         * [read-only] The id of the Stepper object instance. Each stepper motor
+         * is given a unique id upon initialization.
+         * @property id
+         * @type Number
          */
         get id() {
             return this._id;
@@ -2876,15 +2882,30 @@ BO.io.Stepper = (function () {
     
     };
 
-    /** @constant */
+    /**
+     * @property Stepper.CLOCKWISE
+     * @static
+     */
     Stepper.CLOCKWISE = 0;
-    /** @constant */
+    /**
+     * @property Stepper.COUNTER_CLOCKWISE
+     * @static
+     */
     Stepper.COUNTER_CLOCKWISE = 1;
-    /** @constant */
+    /**
+     * @property Stepper.DRIVER
+     * @static
+     */
     Stepper.DRIVER = 1;
-    /** @constant */
+    /**
+     * @property Stepper.TWO_WIRE
+     * @static
+     */
     Stepper.TWO_WIRE = 2;
-    /** @constant */
+    /**
+     * @property Stepper.FOUR_WIRE
+     * @static
+     */
     Stepper.FOUR_WIRE = 4;              
 
     return Stepper;
@@ -2930,6 +2951,8 @@ BO.io.BlinkM = (function () {
 
     /**
      * Sets the BlinkM to the specified RGB color immediately.
+     *
+     * @method goToRGBColorNow
      * @param {Number{}} color An array containing the RGB values. 
      * color[0] = R, color[1] = G, color[2] = B
      */
@@ -2942,6 +2965,7 @@ BO.io.BlinkM = (function () {
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
      * 255 is the fastest.
      *
+     * @method fadeToRGBColor
      * @param {Number[]} color An array containing the RGB values.
      * color[0] = R, color[1] = G, color[2] = B
      * @param {Number} speed The fade speed. Default value is 15.
@@ -2959,6 +2983,7 @@ BO.io.BlinkM = (function () {
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
      * 255 is the fastest.
      *
+     * @method fadeToRandomRGBColor
      * @param {Number[]} colorRange An array containing a range for each color
      * value.
      * colorRange[0] = range for Red (0-255), colorRange[1] = range for Green, etc.
@@ -2977,6 +3002,7 @@ BO.io.BlinkM = (function () {
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
      * 255 is the fastest.
      *
+     * @method fadeToHSBColor
      * @param {Number[]} color An array containing the HSB values.
      * color[0] = H, color[1] = S, color[2] = B
      * @param {Number} speed The fade speed. Default value is 15.
@@ -2994,6 +3020,7 @@ BO.io.BlinkM = (function () {
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
      * 255 is the fastest.
      *
+     * @method fadeToRandomHSBColor
      * @param {Number[]} colorRange An array containing a range for each color
      * value.
      * colorRange[0] = range for Hue (0-255), colorRange[1] = range for
@@ -3012,6 +3039,7 @@ BO.io.BlinkM = (function () {
      * Set the rate at which color fading happens. The range is from 1 to 255,
      * where 1 is the slowest and 255 is the fastest (immediate).
      *
+     * @method setFadeSpeed
      * @param {Number} speed
      */
     BlinkM.prototype.setFadeSpeed = function (speed) {
@@ -3022,6 +3050,7 @@ BO.io.BlinkM = (function () {
      * Play a predefined light script. See the BlinkM datasheet page 20 for a
      * list and description of the predefined scripts.
      *
+     * @method playLightScript
      * @param {Number} scriptId The id of the light script (from 0 to 18).
      * @param {Number} theNumberOfRepeats The number of times the script should
      * repeat.
@@ -3034,6 +3063,7 @@ BO.io.BlinkM = (function () {
 
     /**
      * Stop the currently playing predefined light script.
+     * @method stopScript
      */
     BlinkM.prototype.stopScript = function () {
         //self.sendI2CRequest([I2CBase.WRITE, this.address, 'o'.charCodeAt(0)]);
@@ -3042,6 +3072,7 @@ BO.io.BlinkM = (function () {
 
     /**
      * @private
+     * @method handleI2C
      */
     BlinkM.prototype.handleI2C = function (data) {
         // TODO: implement if needed
@@ -3076,7 +3107,10 @@ BO.io.CompassEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property CompassEvent.UPDATE 
+     * @static
+     */
     CompassEvent.UPDATE = "update";
     
 
@@ -3134,14 +3168,14 @@ BO.io.CompassHMC6352 = (function () {
 
     /**
      * [read-only] The heading in degrees.
-     * @name CompassHMC6352#heading
-     * @property
+     * @property heading
      * @type Number
      */      
     CompassHMC6352.prototype.__defineGetter__("heading", function () {return this._heading; });
     
     /**
      * @private
+     * @method handleI2C
      */
     CompassHMC6352.prototype.handleI2C = function (data) {
 
@@ -3155,7 +3189,8 @@ BO.io.CompassHMC6352 = (function () {
     };
     
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     CompassHMC6352.prototype.startReading = function () {
         this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, 0x7F, 0x02]);
@@ -3163,6 +3198,7 @@ BO.io.CompassHMC6352 = (function () {
     
     /**
      * Stop continuous reading of the sensor
+     * @method stopReading
      */
     CompassHMC6352.prototype.stopReading = function () {
         this.sendI2CRequest([I2CBase.STOP_READING, this.address]);
@@ -3173,9 +3209,8 @@ BO.io.CompassHMC6352 = (function () {
 
     /**
      * The update event is dispatched when the compass heading is updated.
-     * @name CompassHMC6352#update
      * @type BO.io.CompassEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
      */     
 
@@ -3206,13 +3241,25 @@ BO.io.ButtonEvent = (function () {
         Event.call(this, type);
     };
 
-    /** @constant */
+    /**
+     * @property ButtonEvent.PRESS
+     * @static
+     */
     ButtonEvent.PRESS = "pressed";
-    /** @constant */
+    /**
+     * @property ButtonEvent.RELEASE
+     * @static
+     */
     ButtonEvent.RELEASE = "released";
-    /** @constant */
+    /**
+     * @property ButtonEvent.LONG_PRESS
+     * @static
+     */
     ButtonEvent.LONG_PRESS = "longPress";
-    /** @constant */
+    /**
+     * @property ButtonEvent.SUSTAINED_PRESS
+     * @static
+     */
     ButtonEvent.SUSTAINED_PRESS = "sustainedPress";
 
     ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -3298,6 +3345,7 @@ BO.io.Button = (function () {
 
     /**
      * @private
+     * @method onPinChange
      */
     Button.prototype.onPinChange = function (evt) {
         
@@ -3328,6 +3376,7 @@ BO.io.Button = (function () {
     
     /**
      * @private
+     * @method pressed
      */
     Button.prototype.pressed = function () {
         this._timeout = null;
@@ -3339,6 +3388,7 @@ BO.io.Button = (function () {
     
     /**
      * @private
+     * @method released
      */ 
     Button.prototype.released = function () {
         this._timeout = null;
@@ -3354,6 +3404,7 @@ BO.io.Button = (function () {
     
     /**
      * @private
+     * @method sustainedPress
      */
     Button.prototype.sustainedPress = function () {
         if (this._repeatCount > 0) {
@@ -3367,8 +3418,7 @@ BO.io.Button = (function () {
     
     /**
      * The debounce time interval in milliseconds.
-     * @name Button#debounceInterval
-     * @property
+     * @property debounceInterval
      * @type Number
      */ 
     Button.prototype.__defineGetter__("debounceInterval", function () { return this._debounceInterval; });
@@ -3377,9 +3427,7 @@ BO.io.Button = (function () {
     /**
      * The delay time (in milliseconds) the button must be held before a
      * sustained press event is fired.
-     * 
-     * @name Button#sustainedPressInterval
-     * @property
+     * @property sustainedPressInterval
      * @type Number
      */ 
     Button.prototype.__defineGetter__("sustainedPressInterval", function () { return this._sustainedPressInterval; });
@@ -3387,18 +3435,25 @@ BO.io.Button = (function () {
 
     /**
      * [read-only] The pin number of the pin the button is attached to.
-     * 
-     * @name Button#pinNumber
-     * @property
+     * @property pinNumber
      * @type Number
      */
     Button.prototype.__defineGetter__("pinNumber", function () { return this._pin.number; });    
 
-    /** @constant */
+    /**
+     * @property Button.PULL_DOWN
+     * @static
+     */
     Button.PULL_DOWN = 0;
-    /** @constant */
-    Button.PULL_UP  = 1;
-    /** @contstant */
+    /**
+     * @property Button.PULL_UP
+     * @static
+     */
+    Button.PULL_UP = 1;
+    /**
+     * @property Button.INTERNAL_PULL_UP
+     * @static
+     */
     Button.INTERNAL_PULL_UP = 2;
 
 
@@ -3406,26 +3461,23 @@ BO.io.Button = (function () {
 
     /**
      * The pressed event is dispatched when the button is pressed.
-     * @name Button#pressed
      * @type BO.io.ButtonEvent.PRESS
-     * @event
+     * @event pressed
      * @param {BO.io.Button} target A reference to the Button object
      */ 
 
     /**
      * The released event is dispatched when the button is released.
-     * @name Button#released
      * @type BO.io.ButtonEvent.RELEASE
-     * @event
+     * @event released
      * @param {BO.io.Button} target A reference to the Button object
      */ 
      
     /**
      * The longPress event is dispatched once when the button has been held for
      * the time duration specified by the sustainedPressInterval property.
-     * @name Button#longPress
      * @type BO.io.ButtonEvent.LONG_PRESS
-     * @event
+     * @event longPress
      * @param {BO.io.Button} target A reference to the Button object
      */ 
      
@@ -3433,9 +3485,8 @@ BO.io.Button = (function () {
      * The sustainedPress event is dispatched continuously at the rate 
      * specified by the sustainedPressInterval property while the button is
      * held.
-     * @name Button#sustainedPress
      * @type BO.io.ButtonEvent.SUSTAINED_PRESS
-     * @event
+     * @event sustainedPress
      * @param {BO.io.Button} target A reference to the Button object
      */              
 
@@ -3470,7 +3521,10 @@ BO.io.PotEvent = (function () {
     };
 
     // Events
-    /** @constant */
+    /**
+     * @property PotEvent.CHANGE
+     * @static
+     */
     PotEvent.CHANGE = "potChange";  
 
     PotEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -3534,17 +3588,14 @@ BO.io.Potentiometer = (function () {
     
     /**
      * [read-only] The current value of the potentiometer.
-     * @name Potentiometer#value
-     * @property
+     * @property value
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("value", function () { return this._pin.value; });
 
     /**
      * [read-only] Get the (pre-filtered) average value of the potentiometer.
-     * 
-     * @name Potentiometer#average
-     * @property
+     * @property average
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("average", function () { return this._pin.average; });
@@ -3552,9 +3603,7 @@ BO.io.Potentiometer = (function () {
     /**
      * [read-only] Get the value of the potentiometer before filters are
      * applied.
-     * 
-     * @name Potentiometer#preFilterValue
-     * @property
+     * @property preFilterValue
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("preFilterValue", function () { return this._pin.preFilterValue; });
@@ -3562,9 +3611,7 @@ BO.io.Potentiometer = (function () {
     /**
      * [read-only] Get the (pre-filtered) minimum value read by the
      * potentiometer.
-     * 
-     * @name Potentiometer#minimum
-     * @property
+     * @property minimum
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("minimum", function () { return this._pin.minimum; });
@@ -3572,15 +3619,14 @@ BO.io.Potentiometer = (function () {
     /**
      * [read-only] Get the (pre-filtered) maximum value read by the
      * potentiometer.
-     * 
-     * @name Potentiometer#maximum
-     * @property
+     * @property maximum
      * @type Number
      */ 
     Potentiometer.prototype.__defineGetter__("maximum", function () { return this._pin.maximum; });
 
     /**
      * Resets the minimum, maximum, and average values.
+     * @method clear
      */
     Potentiometer.prototype.clear = function () {
         this._pin.clear();
@@ -3591,6 +3637,7 @@ BO.io.Potentiometer = (function () {
      * useful for sensors such as a flex sensor that may not return the full
      * range of 0 to 1. 
      *
+     * @method setRange
      * @param {Number} minimum The new minimum range (must be less than the maximum).
      * @param {Number} maximum The new maximum range.
      */
@@ -3602,6 +3649,7 @@ BO.io.Potentiometer = (function () {
 
     /**
      * @private
+     * @method onPinChange
      */
     Potentiometer.prototype.onPinChange = function (event) {
         this.dispatchEvent(new PotEvent(PotEvent.CHANGE));
@@ -3611,9 +3659,8 @@ BO.io.Potentiometer = (function () {
 
     /**
      * The change event is dispatched when the potentiometer value changes.
-     * @name Potentiometer#change
      * @type BO.io.PotEvent.CHANGE
-     * @event
+     * @event change
      * @example
      * pot.addEventListener(PotEvent.CHANGE, onValueChange);
      *
@@ -3640,7 +3687,7 @@ BO.io.AccelerometerEvent = (function () {
      * An Event object to be dispatched (fired) by an Accelerometer object.
      * @class AccelerometerEvent
      * @constructor
-     * @augments Event
+     * @extends Event
      * @param {String} type The event type   
      */
     AccelerometerEvent = function (type) {
@@ -3651,7 +3698,10 @@ BO.io.AccelerometerEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property AccelerometerEvent.UPDATE 
+     * @static
+     */
     AccelerometerEvent.UPDATE = "update";
     
 
@@ -3749,9 +3799,7 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The current range setting of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#dynamicRange
-     * @property
+     * @property dynamicRange
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
@@ -3759,9 +3807,7 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The x axis of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#x
-     * @property
+     * @property x
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("x", function () { return this._x; });
@@ -3769,9 +3815,7 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The y axis of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#y
-     * @property
+     * @property y
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("y", function () { return this._y; });
@@ -3779,18 +3823,14 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * [read-only] The z axis of the accelerometer in units 
      * of gravity (9.8 m/sec2).
-     * 
-     * @name AnalogAccelerometer#z
-     * @property
+     * @property z
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("z", function () { return this._z; });
 
     /**
      * [read-only] The pitch value in degrees.
-     * 
-     * @name AnalogAccelerometer#pitch
-     * @property
+     * @property pitch
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("pitch", function () { 
@@ -3802,9 +3842,7 @@ BO.io.AnalogAccelerometer = (function () {
     
     /**
      * [read-only] The roll value in degrees.
-     * 
-     * @name AnalogAccelerometer#roll
-     * @property
+     * @property roll
      * @type Number
      */ 
     AnalogAccelerometer.prototype.__defineGetter__("roll", function () { 
@@ -3831,7 +3869,8 @@ BO.io.AnalogAccelerometer = (function () {
     /**
      * Scale the range for the specified axis (from 0 to 1) to (minimum to 
      * maximum).
-     * 
+     *
+     * @method setRangeFor 
      * @param axis the axis to set new range (AnalogAccelerometer.X_AXIS, 
      * AnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS).
      * @param {Number} minimum The new minimum value
@@ -3876,6 +3915,7 @@ BO.io.AnalogAccelerometer = (function () {
      * and obj.max along with the respective axis identifier to the setRangeFor
      * method.
      * 
+     * @method getCalibratedRange
      * @param {Number} minVoltage The minimum value reported on the axis
      * @param {Number} maxVoltage The maximum value reported on the axis
      * @param {Number} supplyVoltage The supply voltage of the Acceleromter
@@ -3899,6 +3939,7 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * @private
+     * @method xAxisChanged
      */
     AnalogAccelerometer.prototype.xAxisChanged = function (event) {
         this._x = event.target.value;
@@ -3907,6 +3948,7 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * @private
+     * @method yAxisChanged
      */
     AnalogAccelerometer.prototype.yAxisChanged = function (event) {
         this._y = event.target.value;
@@ -3915,17 +3957,27 @@ BO.io.AnalogAccelerometer = (function () {
     
     /**
      * @private
+     * @method zAxisChanged
      */
     AnalogAccelerometer.prototype.zAxisChanged = function (event) {
         this._z = event.target.value;
         this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
     };      
 
-    /** @constant */
+    /**
+     * @property AnalogAccelerometer.X_AXIS
+     * @static
+     */
     AnalogAccelerometer.X_AXIS = 0;
-    /** @constant */
+    /**
+     * @property AnalogAccelerometer.Y_AXIS
+     * @static
+     */
     AnalogAccelerometer.Y_AXIS = 1;
-    /** @constant */
+    /**
+     * @property AnalogAccelerometer.Z_AXIS
+     * @static
+     */
     AnalogAccelerometer.Z_AXIS = 2;
 
 
@@ -3933,9 +3985,8 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * The update event is dispatched when the accelerometer values are updated.
-     * @name AnalogAccelerometer#update
      * @type BO.io.AccelerometerEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.AnalogAccelerometer} target A reference to the 
      * AnalogAccelerometer object.
      */     
@@ -4026,40 +4077,35 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
-     * @name AccelerometerADXL345#dynamicRange
-     * @property
+     * @property dynamicRange
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
 
     /**
      * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
-     * @name AccelerometerADXL345#x
-     * @property
+     * @property x
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("x", function () { return this._x; });
 
     /**
      * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
-     * @name AccelerometerADXL345#y
-     * @property
+     * @property y
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("y", function () { return this._y; });
     
     /**
      * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
-     * @name AccelerometerADXL345#z
-     * @property
+     * @property z
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("z", function () { return this._z; });
     
     /**
      * [read-only] The pitch value in degrees 
-     * @name AccelerometerADXL345#pitch
-     * @property
+     * @property pitch
      * @type Number
      */ 
     AccelerometerADXL345.prototype.__defineGetter__("pitch", function () { 
@@ -4071,8 +4117,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * [read-only] The roll value in degrees 
-     * @name AccelerometerADXL345#roll
-     * @property
+     * @property roll
      * @type Number
      */ 
     AccelerometerADXL345.prototype.__defineGetter__("roll", function () { 
@@ -4086,24 +4131,21 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * The raw value of the x axis
-     * @name AccelerometerADXL345#rawX
-     * @property
+     * @property rawX
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("rawX", function () { return this._rawX; });
 
     /**
      * The raw value of the y axis
-     * @name AccelerometerADXL345#rawY
-     * @property
+     * @property rawY
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("rawY", function () { return this._rawY; });
     
     /**
      * The raw value of the z axis
-     * @name AccelerometerADXL345#rawZ
-     * @property
+     * @property rawZ
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });
@@ -4111,16 +4153,14 @@ BO.io.AccelerometerADXL345 = (function () {
     /**
      * [read-only] The state of continuous read mode. True if continuous read mode
      * is enabled, false if it is disabled.
-     * @name AccelerometerADXL345#isRunning
-     * @property
+     * @property isRunning
      * @type Boolean
      */      
     AccelerometerADXL345.prototype.__defineGetter__("isRunning", function () { return this._isReading; });   
     
     /**
      * The sensitivity value for the x axis (default value = 0.0390625).
-     * @name AccelerometerADXL345#sensitivityX
-     * @property
+     * @property sensitivityX
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("sensitivityX", function () { return this._sensitivity.x; });
@@ -4128,8 +4168,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * The sensitivity value for the y axis (default value = 0.0390625).
-     * @name AccelerometerADXL345#sensitivityY
-     * @property
+     * @property sensitivityY
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("sensitivityY", function () { return this._sensitivity.y; });
@@ -4137,8 +4176,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * The sensitivity value for the z axis (default value = 0.0390625).
-     * @name AccelerometerADXL345#sensitivityZ
-     * @property
+     * @property sensitivityZ
      * @type Number
      */      
     AccelerometerADXL345.prototype.__defineGetter__("sensitivityZ", function () { return this._sensitivity.z; });
@@ -4146,6 +4184,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * @private
+     * @method setRangeAndFullRes
      */
     AccelerometerADXL345.prototype.setRangeAndFullRes = function (range) {
             
@@ -4176,6 +4215,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * @private
+     * @method handleI2C
      */
     AccelerometerADXL345.prototype.handleI2C = function (data) {
         switch (data[0]) {
@@ -4195,7 +4235,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
     
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     AccelerometerADXL345.prototype.startReading = function () {
         if (!this._isReading) {
@@ -4205,7 +4246,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
     
     /**
-     * Stop continuous reading of the sensor
+     * Stop continuous reading of the sensor.
+     * @method stopReading
      */
     AccelerometerADXL345.prototype.stopReading = function () {
         this._isReading = false;
@@ -4213,7 +4255,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
 
     /**
-     * offset the x, y, or z axis output by the respective input value
+     * Offset the x, y, or z axis output by the respective input value.
+     * @method setAxisOffset
      */     
     AccelerometerADXL345.prototype.setAxisOffset = function (xVal, yVal, zVal) {
         // store values so we can retrieve via getAxisOffset
@@ -4227,7 +4270,8 @@ BO.io.AccelerometerADXL345 = (function () {
     };
     
     /**
-     * get the value of the x, y, and z axis offset
+     * Get the value of the x, y, and z axis offset.
+     * @method getAxisOffset
      */
     AccelerometerADXL345.prototype.getAxisOffset = function () {
         // will trace values if debug mode is enabled
@@ -4243,6 +4287,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /** 
      * Sends read request to accelerometer and updates accelerometer values.
+     * @method update
      */
     AccelerometerADXL345.prototype.update = function () {
         if (this._isReading) {
@@ -4254,6 +4299,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * @private
+     * @method powerOn
      */
     AccelerometerADXL345.prototype.powerOn = function () {
 
@@ -4266,6 +4312,7 @@ BO.io.AccelerometerADXL345 = (function () {
     
     /**
      * @private
+     * @method setRegisterBit
      */
     AccelerometerADXL345.prototype.setRegisterBit = function (regAddress, bitPos, state) {
         var value;
@@ -4281,6 +4328,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * @private
+     * @method readAccel
      */
     AccelerometerADXL345.prototype.readAccel = function (data) {
         
@@ -4331,26 +4379,43 @@ BO.io.AccelerometerADXL345 = (function () {
         
     // public static constants
     
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_2G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_2G = 2;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_4G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_4G = 4;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_8G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_8G = 8;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.RANGE_16G 
+     * @static
+     */
     AccelerometerADXL345.RANGE_16G = 16;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.DEVICE_ID 
+     * @static
+     */
     AccelerometerADXL345.DEVICE_ID = 0x53;
-    /** @constant */
+    /**
+     * @property AccelerometerADXL345.DEFAULT_SENSITIVITY 
+     * @static
+     */
     AccelerometerADXL345.DEFAULT_SENSITIVITY = 0.00390625;
     
     // document events
 
     /**
      * The update event is dispatched when the accelerometer values are updated.
-     * @name AccelerometerADXL345#update
      * @type BO.io.AccelerometerEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
      */                     
 
@@ -4382,9 +4447,15 @@ BO.io.GyroEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property GyroEvent.GYRO_READY
+     * @static
+     */
     GyroEvent.GYRO_READY = "gyroReady";
-    /** @constant */
+    /**
+     * @property GyroEvent.UPDATE
+     * @static
+     */
     GyroEvent.UPDATE = "update";
     
 
@@ -4472,16 +4543,14 @@ BO.io.GyroITG3200 = (function () {
     /**
      * [read-only] The state of continuous read mode. True if continuous read mode
      * is enabled, false if it is disabled.
-     * @name GyroITG3200#isRunning
-     * @property
+     * @property isRunning
      * @type Boolean
      */      
     GyroITG3200.prototype.__defineGetter__("isRunning", function () { return this._isReading; });
 
     /**
      * [read-only] The x axis output value in degrees.
-     * @name GyroITG3200#x
-     * @property
+     * @property x
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("x", function () { 
@@ -4490,8 +4559,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * [read-only] The y axis output value in degrees.
-     * @name GyroITG3200#y
-     * @property
+     * @property y
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("y", function () { 
@@ -4500,8 +4568,7 @@ BO.io.GyroITG3200 = (function () {
     
     /**
      * [read-only] The z axis output value in degrees.
-     * @name GyroITG3200#z
-     * @property
+     * @property z
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("z", function () { 
@@ -4510,31 +4577,29 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * The raw x axis output value from the sensor.
-     * @name GyroITG3200#rawX
-     * @property
+     * @property rawX
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("rawX", function () { return this._rawX; });
 
     /**
      * The raw y axis output value from the sensor.
-     * @name GyroITG3200#rawY
-     * @property
+     * @property rawY
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("rawY", function () { return this._rawY; });
     
     /**
      * The raw z axis output value from the sensor.
-     * @name GyroITG3200#rawZ
-     * @property
+     * @property rawZ
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });      
     
     /**
      * Set the polarity of the x, y, and z output values.
-     * 
+     *
+     * @method setRevPolarity
      * @param {Boolean} xPol Polarity of the x axis
      * @param {Boolean} yPol Polarity of the y axis
      * @param {Boolean} zPol Polarity of the z axis
@@ -4546,7 +4611,9 @@ BO.io.GyroITG3200 = (function () {
     };
     
     /**
-     * Offset the x, y, or z output by the respective input value
+     * Offset the x, y, or z output by the respective input value.
+     *
+     * @method setOffsets
      * @param {Number} xOffset
      * @param {Number} yOffset
      * @param {Number} zOffset
@@ -4558,7 +4625,9 @@ BO.io.GyroITG3200 = (function () {
     };
     
     /**
-     * Set the gain value for the x, y, or z output
+     * Set the gain value for the x, y, or z output.
+     *
+     * @method setGains
      * @param {Number} xGain
      * @param {Number} yGain
      * @param {Number} zGain
@@ -4570,7 +4639,8 @@ BO.io.GyroITG3200 = (function () {
     };      
 
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     GyroITG3200.prototype.startReading = function () {
         if (!this._isReading) {
@@ -4580,7 +4650,8 @@ BO.io.GyroITG3200 = (function () {
     };
     
     /**
-     * Stop continuous reading of the sensor
+     * Stop continuous reading of the sensor.
+     * @method stopReading
      */
     GyroITG3200.prototype.stopReading = function () {
         this._isReading = false;
@@ -4590,6 +4661,7 @@ BO.io.GyroITG3200 = (function () {
 
     /** 
      * Sends read request to accelerometer and updates accelerometer values.
+     * @method update
      */
     GyroITG3200.prototype.update = function () {
 
@@ -4602,6 +4674,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method init
      */ 
     GyroITG3200.prototype.init = function () {           
         // set fast sample rate divisor = 0
@@ -4623,6 +4696,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method onGyroReady
      */
     GyroITG3200.prototype.onGyroReady = function () {
         this._startupTimer = null;
@@ -4635,6 +4709,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method setRegisterBit
      */
     GyroITG3200.prototype.setRegisterBit = function (regAddress, bitPos, state) {
         var value;
@@ -4650,6 +4725,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method handleI2C
      */
     GyroITG3200.prototype.handleI2C = function (data) {
 
@@ -4665,6 +4741,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method readGyro
      */
     GyroITG3200.prototype.readGyro = function (data) {
         
@@ -4712,11 +4789,17 @@ BO.io.GyroITG3200 = (function () {
     // public static constants
 
     /** 
-     * ID = 0x69 if sensor pin 9 (AD0) is tied to Power, 
-     * else ID = 0x68 if pin 9 is tied to Ground
-     * @constant 
+     * ID = 0x69 if sensor pin 9 (AD0) is tied to Power.
+     * @property GyroITG3200.ID_AD0_VDD
+     * @static
      */
     GyroITG3200.ID_AD0_VDD = 0x69;
+
+    /** 
+     * ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.
+     * @property GyroITG3200.ID_AD0_VDD
+     * @static
+     */    
     GyroITG3200.ID_AD0_GND = 0x68;
 
 
@@ -4724,9 +4807,8 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * The update event is dispatched when the accelerometer values are updated.
-     * @name GyroITG3200#update
      * @type BO.io.GyroEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
      */     
             
@@ -4758,7 +4840,10 @@ BO.io.MagnetometerEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property MagnetometerEvent.UPDATE
+     * @static
+     */
     MagnetometerEvent.UPDATE = "update";
     
 
@@ -4843,8 +4928,7 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * [read-only] The heading in degrees.
-     * @name MagnetometerHMC5883#heading
-     * @property
+     * @property heading
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("heading", function () {
@@ -4853,30 +4937,28 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * [read-only] The x-axis measurement
-     * @name MagnetometerHMC5883#x
-     * @property
+     * @property x
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("x", function () { return this._x; });
 
     /**
      * [read-only] The y-axis measurement
-     * @name MagnetometerHMC5883#y
-     * @property
+     * @property y
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("y", function () { return this._y; });
     
     /**
      * [read-only] The z-axis measurement
-     * @name MagnetometerHMC5883#z
-     * @property
+     * @property z
      * @type Number
      */      
     MagnetometerHMC5883.prototype.__defineGetter__("z", function () { return this._z; });    
     
     /**
      * @private
+     * @method handleI2C
      */
     MagnetometerHMC5883.prototype.handleI2C = function (data) {
         var xVal,
@@ -4916,6 +4998,7 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * @private
+     * @method getHeading
      */
     MagnetometerHMC5883.prototype.getHeading = function (x, y) {
         var heading = 0.0;
@@ -4947,7 +5030,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      *
      * Note: this method is not working properly. Marking it private until resolved
      * @private
-     * 
+     * @method getTiltCompensatedHeading
      * @param {Number} pitch The pitch value (supplied by an accelerometer)
      * @param {Number} roll The roll value (supplied by an accelerometer)
      * @return {Number} tilt-compensated heading direction
@@ -4971,7 +5054,8 @@ BO.io.MagnetometerHMC5883 = (function () {
     };
     
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     MagnetometerHMC5883.prototype.startReading = function () {
         if (!this._isReading) {
@@ -4981,7 +5065,8 @@ BO.io.MagnetometerHMC5883 = (function () {
     };
     
     /**
-     * Stop continuous reading of the sensor
+     * Stop continuous reading of the sensor.
+     * @method stopReading
      */
     MagnetometerHMC5883.prototype.stopReading = function () {
         this._isReading = false;
@@ -4992,6 +5077,7 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /** 
      * Sends read request to magnetometer and updates magnetometer values.
+     * @method update
      */
     MagnetometerHMC5883.prototype.update = function () {
         if (this._isReading) {
@@ -5013,44 +5099,66 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     // public static constants
 
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.DEVICE_ID
+     * @static
+     */
     MagnetometerHMC5883.DEVICE_ID = 0x1E;   
     
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_1
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_1 = 0;
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_2
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_2 = 1;
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_4
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_4 = 2;
-    /** @constant */
+    /**
+     * @property MagnetometerHMC5883.SAMPLES_8
+     * @static
+     */
     MagnetometerHMC5883.SAMPLES_8 = 3;  
     
     /** 0.75 Hz
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_0_75
+     * @static 
      */
     MagnetometerHMC5883.HZ_0_75 = 0x00;
     /** 1.5 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_1_5
+     * @static 
      */
     MagnetometerHMC5883.HZ_1_5 = 0x01;
     /** 3 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_3
+     * @static 
      */
     MagnetometerHMC5883.HZ_3 = 0x02;
     /** 7.5 Hz 
-    * @constant 
+    * @property MagnetometerHMC5883.HZ_7_5
+     * @static 
     */
     MagnetometerHMC5883.HZ_7_5 = 0x03;
     /** 15 Hz 
-    * @constant 
+    * @property MagnetometerHMC5883.HZ_15
+     * @static 
     */
     MagnetometerHMC5883.HZ_15 = 0x04;
     /** 30 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_30
+     * @static 
      */
     MagnetometerHMC5883.HZ_30 = 0x05;
     /** 75 Hz 
-     * @constant 
+     * @property MagnetometerHMC5883.HZ_75
+     * @static 
      */
     MagnetometerHMC5883.HZ_75 = 0x06;       
 
@@ -5059,9 +5167,8 @@ BO.io.MagnetometerHMC5883 = (function () {
 
     /**
      * The update event is dispatched when the compass heading is updated.
-     * @name MagnetometerHMC5883#update
      * @type BO.io.MagnetometerEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
      */     
 
@@ -5127,8 +5234,7 @@ BO.io.Servo = (function () {
          * to adjust the servo (there is typically a screw on the motor) to
          * adjust</p>
          * 
-         * @name Servo#angle
-         * @property
+         * @property angle
          * @type Number
          */ 
         set angle(value) {
@@ -5149,6 +5255,8 @@ BO.io.Servo = (function () {
 
     /**
      * The scale to convert 0-1 (0-255 in 8bit) to 0-0.706 (0-180 in 8bit).
+     * @property Servo.COEF_TO_0_180
+     * @static
      */
     Servo.COEF_TO_0_180 = 180 / 255;
 
@@ -5250,9 +5358,7 @@ BO.io.DCMotor = (function () {
         /**
          * The value of the motor speed (-1.0 to 1.0). A speed of zero stops
          * the motor.
-         * 
-         * @name DCMotor#value
-         * @property
+         * @property value
          * @type Number
          */ 
         set value(val) {
@@ -5271,6 +5377,7 @@ BO.io.DCMotor = (function () {
         },
         
         /**
+         * @method despin
          * @param {Boolean} useBrake Default = true
          */
         despin: function (useBrake) {
@@ -5301,6 +5408,7 @@ BO.io.DCMotor = (function () {
         },
         
         /**
+         * @method forward
          * @param {Number} val The new voltage to set (0.0 to 1.0)
          */     
         forward: function (val) {
@@ -5318,6 +5426,7 @@ BO.io.DCMotor = (function () {
         },
 
         /**
+         * @method reverse
          * @param {Number} val The new voltage to set (-1.0 to 0.0)
          */
         reverse: function (val) {
@@ -5364,6 +5473,7 @@ BO.io.LED = (function () {
      * SYNC_DRIVE.</p>
      *
      * @class LED
+     * @constructor
      * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
      * @param {Pin} ledPin A reference to the Pin the LED is connected to.
      * @param {Number} driveMode The drive mode of the LED. Must be set to
@@ -5409,9 +5519,7 @@ BO.io.LED = (function () {
 
         /**
          * Get or set the current value (intensity) of the LED.
-         * 
-         * @name LED#intensity
-         * @property
+         * @property intensity
          * @type Number
          */ 
         get intensity() {
@@ -5436,6 +5544,7 @@ BO.io.LED = (function () {
         
         /**
          * Turn the LED on.
+         * @method on
          */
         on: function () {
             this._pin.value = this._onValue;
@@ -5443,6 +5552,7 @@ BO.io.LED = (function () {
 
         /**
          * Turn the LED off.
+         * @method off
          */
         off: function () {
             this._pin.value = this._offValue;
@@ -5450,7 +5560,7 @@ BO.io.LED = (function () {
 
         /**
          * Check if the LED is on.
-         * 
+         * @method isOn
          * @return {Boolean} True if the LED is on, false if it is off.
          */
         isOn: function () {
@@ -5458,13 +5568,15 @@ BO.io.LED = (function () {
         },
 
         /**
-         * Toggle the LED on or off
+         * Toggle the LED on or off.
+         * @method toggle
          */
         toggle: function () {
             this._pin.value = 1 - this._pin.value;
         },
 
         /**
+         * @method blink
          * @param {Number} interval The time interval to blink the LED.
          * @param {Number} times The number of times the LED should blink.
          * A value of 0 will blink forever.
@@ -5490,6 +5602,7 @@ BO.io.LED = (function () {
 
         /**
          * Stop the LED blink cycle.
+         * @method stopBlinking
          */
         stopBlinking: function () {
             if (this._pin.generator !== null) {
@@ -5501,6 +5614,7 @@ BO.io.LED = (function () {
         /**
          * The LED must be connected to a PWM pin to use this method.
          *
+         * @method fadeIn
          * @param {Number} time The fade-in time (in milliseconds).
          */
         fadeIn: function (time) {
@@ -5510,6 +5624,7 @@ BO.io.LED = (function () {
         /**
          * The LED must be connected to a PWM pin to use this method.
          *
+         * @method fadeOut
          * @param {Number} time The fade-out time (in milliseconds).
          */
         fadeOut: function (time) {
@@ -5518,7 +5633,8 @@ BO.io.LED = (function () {
 
         /**
          * The LED must be connected to a PWM pin to use this method.
-         *      
+         *
+         * @method fadeTo
          * @param {Number} to The new intensity value to fade to.
          * @param {Number} time The fade time (in milliseconds).
          */
@@ -5544,7 +5660,15 @@ BO.io.LED = (function () {
         }   
     };
 
+    /**
+     * @property LED.SOURCE_DRIVE
+     * @static
+     */
     LED.SOURCE_DRIVE = 0;
+    /**
+     * @property LED.SYNC_DRIVE
+     * @static
+     */
     LED.SYNC_DRIVE = 1;
 
     return LED;
@@ -5612,7 +5736,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Set the RGBLED color.
-         * 
+         *
+         * @method setColor
          * @param {Number} red The red value (0 - 255)
          * @param {Number} green The green value (0 - 255)
          * @param {Number} blue The blue value (0 - 255)
@@ -5629,7 +5754,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade in the RGBLED from the off state.
-         * 
+         *
+         * @method fadeIn
          * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeIn: function (time) {
@@ -5641,7 +5767,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade out the RGBLED from the on state.
-         * 
+         *
+         * @method fadeOut
          * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeOut: function (time) {
@@ -5653,7 +5780,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade from the current color to the new color.
-         * 
+         *
+         * @method fadeTo
          * @param {Number} red The red value to fade to (0 - 255)
          * @param {Number} green The green value to fade to (0 - 255)
          * @param {Number} blue The blue value to fade to (0 - 255)
@@ -5671,9 +5799,15 @@ BO.io.RGBLED = (function () {
         }
     };
 
-    /** @constant */
+    /**
+     * @property RGBLED.COMMON_ANODE
+     * @static
+     */
     RGBLED.COMMON_ANODE = LED.SYNC_DRIVE;
-    /** @constant */
+    /**
+     * @property RGBLED.COMMON_CATHODE
+     * @static
+     */
     RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
 
     return RGBLED;
@@ -5706,17 +5840,35 @@ BO.io.SoftPotEvent = (function () {
         this._touchPoint = touchPoint;
     };
 
-    /** @constant */
+    /**
+     * @property SoftPotEvent.PRESS
+     * @static
+     */
     SoftPotEvent.PRESS = "softPotPressed";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.RELEASE
+     * @static
+     */
     SoftPotEvent.RELEASE = "softPotRelease";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.DRAG
+     * @static
+     */
     SoftPotEvent.DRAG = "softPotDrag";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.FLICK_UP
+     * @static
+     */
     SoftPotEvent.FLICK_UP = "softPotFlickUp";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.FLICK_DOWN
+     * @static
+     */
     SoftPotEvent.FLICK_DOWN = "softPotFlickDown";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.TAP
+     * @static
+     */
     SoftPotEvent.TAP = "softPotTap";        
 
     SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -5724,9 +5876,7 @@ BO.io.SoftPotEvent = (function () {
 
     /**
      * The value of the softpot.
-     * 
-     * @name SoftPotEvent#value
-     * @property
+     * @property value
      * @type Number
      */ 
     SoftPotEvent.prototype.__defineGetter__("value", function () { return this._touchPoint; });  
@@ -5811,6 +5961,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method onPinChange
      * @param {Event} evt PinEvent.CHANGE
      */
     SoftPot.prototype.onPinChange = function (evt) {
@@ -5832,6 +5983,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method setMinFlickMovement
      * @param {Number} touchPoint The value where the touch is occuring on the
      * strip
      */
@@ -5841,6 +5993,7 @@ BO.io.SoftPot = (function () {
     
     /**
      * @private
+     * @method startTouch
      */
     SoftPot.prototype.startTouch = function (touchPoint) {
         
@@ -5857,6 +6010,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method onRelease
      */
     SoftPot.prototype.onRelease = function () {      
 
@@ -5894,6 +6048,7 @@ BO.io.SoftPot = (function () {
     
     /**
      * @private
+     * @method onMove
      * @param {Number} touchPoint The value where the touch is occuring on the
      * strip
      */
@@ -5943,6 +6098,7 @@ BO.io.SoftPot = (function () {
     /**
      * Scale from the minimum and maximum input values to 0.0 -> 1.0.
      *
+     * @method setRange
      * @param {Number} minimum The minimum value
      * @param {Number} maximum The maximum value
      */
@@ -5953,6 +6109,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * @private
+     * @method dispatch
      * @type {Event} type The event type
      */
     SoftPot.prototype.dispatch = function (type) {
@@ -5963,6 +6120,7 @@ BO.io.SoftPot = (function () {
     /**
      * Reset whenever you need the next Touch point.
      * @private
+     * @method resetForNext
      */
     SoftPot.prototype.resetForNext = function () {
         this._flickTimer.stop();
@@ -5984,18 +6142,14 @@ BO.io.SoftPot = (function () {
     
     /**
      * The current value.
-     * 
-     * @name SoftPot#value
-     * @property
+     * @property value
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("value", function () { return this._touchPoint; });
     
     /**
      * The current distance from the press point.
-     * 
-     * @name SoftPot#distanceFromPressed
-     * @property
+     * @property distanceFromPressed
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("distanceFromPressed", function () { return this._distanceFromPressed; });
@@ -6003,9 +6157,7 @@ BO.io.SoftPot = (function () {
     /**
      * The minimum distance required to trigger a flick event. Change this
      * value to fine tune the flick gesture.
-     * 
-     * @name SoftPot#minFlickMovement
-     * @property
+     * @property minFlickMovement
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("minFlickMovement", function () { return this._minFlickMovement; });  
@@ -6014,9 +6166,7 @@ BO.io.SoftPot = (function () {
     /**
      * The minimum distance required to trigger a drag event. Change this
      * value to fine tune the drag response.
-     * 
-     * @name SoftPot#minDragMovement
-     * @property
+     * @property minDragMovement
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("minDragMovement", function () { return this._minDragMovement; });    
@@ -6025,8 +6175,7 @@ BO.io.SoftPot = (function () {
     /**
      * The maximum time (in milliseconds) between a press and release in
      * order to trigger a TAP event.
-     * @name SoftPot#tapTimeout
-     * @property
+     * @property tapTimeout
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("tapTimeout", function () { return this._tapTimeout; });  
@@ -6036,9 +6185,7 @@ BO.io.SoftPot = (function () {
      * The minimum value required to set the Release state. This number should
      * be as close to zero as possible. Increase this value if you are noticing
      * fluttering between the Pressed and Released states. Default value = 0.01;
-     * 
-     * @name SoftPot#minValue
-     * @property
+     * @property minValue
      * @type Number
      */ 
     SoftPot.prototype.__defineGetter__("minValue", function () { return this._minValue; });  
@@ -6050,54 +6197,48 @@ BO.io.SoftPot = (function () {
     /**
      * The softPotPressed event is dispatched when pressure is applied to 
      * the softpot surface.
-     * @name SoftPot#softPotPressed
      * @type BO.io.SoftPotEvent.PRESS
-     * @event
+     * @event softPotPressed
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
 
     /**
      * The softPotReleased event is dispatched when pressure is released from 
      * the softpot surface.
-     * @name SoftPot#softPotReleased
      * @type BO.io.SoftPotEvent.RELEASE
-     * @event
+     * @event softPotReleased
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */ 
      
     /**
      * The softPotDrag event is dispatched when a drag is detected along 
      * the length of the softpot sensor.
-     * @name SoftPot#softPotDrag
      * @type BO.io.SoftPotEvent.DRAG
-     * @event
+     * @event softPotDrag
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */ 
      
     /**
      * The softPotFlickUp event is dispatched when a flick gesture is detected
      * in the direction of the sensor pins.
-     * @name SoftPot#softPotFlickUp
      * @type BO.io.SoftPotEvent.FLICK_UP
-     * @event
+     * @event softPotFlickUp
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */ 
      
     /**
      * The softPotFlickDown event is dispatched when a flick gesture is 
      * detected in the direction away from the sensor pins.
-     * @name SoftPot#softPotFlickDown
      * @type BO.io.SoftPotEvent.FLICK_DOWN
-     * @event
+     * @event softPotFlickDown
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
      
     /**
      * The softPotTap event is dispatched when a press and release occurs
      * in in less than the duration specified by the tapTimeout property.
-     * @name SoftPot#softPotTap
      * @type BO.io.SoftPotEvent.TAP
-     * @event
+     * @event softPotTap
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */                  
 
@@ -6224,6 +6365,7 @@ BO.IOBoard = (function () {
         /**
          * A websocket connection has been established.
          * @private
+         * @method onSocketConnection
          */
         onSocketConnection: function (event) {
             this.debug("debug: Socket Status: (open)");
@@ -6237,6 +6379,7 @@ BO.IOBoard = (function () {
          * more stringified bytes from the board or a config string from
          * the server.
          * @private
+         * @method onSocketMessage
          */
         onSocketMessage: function (event) {
             var message = event.message,
@@ -6260,6 +6403,7 @@ BO.IOBoard = (function () {
          * @param {String} data A string representing a config message or
          * an 8-bit unsigned integer.
          * @private
+         * @method parseInputMessage
          */
         parseInputMessage: function (data) {
             var pattern = /config/,
@@ -6280,6 +6424,7 @@ BO.IOBoard = (function () {
         /**
          * Report that the websocket connection has been closed.
          * @private
+         * @method onSocketClosed
          */
         onSocketClosed: function (event) {
             this.debug("debug: Socket Status: " + this._socket.readyState + " (Closed)");
@@ -6289,6 +6434,7 @@ BO.IOBoard = (function () {
         /**
          * Request the firmware version from the IOBoard.
          * @private
+         * @method begin
          */
         begin: function () {
             this.addEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
@@ -6301,6 +6447,7 @@ BO.IOBoard = (function () {
          * report this to the user (to do: throw appropriate error?).
          *
          * @private
+         * @method onInitialVersionResult
          */
         onInitialVersionResult: function (event) {
             var version = event.version * 10,
@@ -6339,6 +6486,7 @@ BO.IOBoard = (function () {
          * Check if a capability response was received. If not, assume that
          * a custom sketch was loaded to the IOBoard and fire a READY event.
          * @private
+         * @method checkForQueryResponse
          */
         checkForQueryResponse: function () {
             var self = this;
@@ -6360,6 +6508,7 @@ BO.IOBoard = (function () {
         /**
          * Process a status message from the websocket server
          * @private
+         * @method processStatusMessage
          */
         processStatusMessage: function (message) {
             if (message === MULTI_CLIENT) {
@@ -6372,6 +6521,7 @@ BO.IOBoard = (function () {
          * Process input data from the IOBoard.
          * @param {Number} inputData Number as an 8-bit unsigned integer
          * @private
+         * @method processInput
          */
         processInput: function (inputData) {
             var len;
@@ -6405,6 +6555,7 @@ BO.IOBoard = (function () {
          * data to the appropriate method.
          *
          * @private
+         * @method processMultiByteCommand
          */
         processMultiByteCommand: function (commandData) {
             var command = commandData[0],
@@ -6441,6 +6592,7 @@ BO.IOBoard = (function () {
          * @param {Number} bits0_6 Bits 0 - 6 of the port value.
          * @param {Number} bits7_13 Bits 7 - 13 of the port value.
          * @private
+         * @method processDigitalMessage
          */
         processDigitalMessage: function (port, bits0_6, bits7_13) {
             var offset = port * 8,
@@ -6481,6 +6633,7 @@ BO.IOBoard = (function () {
          * configuration routine if it's supported by Firmata in the future.
          *
          * @private
+         * @method processAnalogMessage
          */
         processAnalogMessage: function (channel, bits0_6, bits7_13) {
             var analogPin = this.getAnalogPin(channel);
@@ -6505,6 +6658,7 @@ BO.IOBoard = (function () {
         /**
          * Route the incoming sysex data to the appropriate method.
          * @private
+         * @method processSysexCommand
          */
         processSysexCommand: function (sysexData) {
             // Remove the first and last element from the array
@@ -6539,6 +6693,7 @@ BO.IOBoard = (function () {
         /**
          * Construct the firmware name and version from incoming ascii data.
          * @private
+         * @method processQueryFirmwareResult
          */
         processQueryFirmwareResult: function (msg) {
             var data;
@@ -6554,6 +6709,7 @@ BO.IOBoard = (function () {
         /**
          * Construct a String from an incoming ascii data.
          * @private
+         * @method processSysExString
          */
         processSysExString: function (msg) {
             var str = "",
@@ -6574,6 +6730,7 @@ BO.IOBoard = (function () {
          * file.
          *
          * @private
+         * @method processCapabilitiesResponse
          */
         processCapabilitiesResponse: function (msg) {
             // If running in multi-client mode and this client is already 
@@ -6660,6 +6817,7 @@ BO.IOBoard = (function () {
          * pins.
          *
          * @private
+         * @method processAnalogMappingResponse
          */
         processAnalogMappingResponse: function (msg) {
             // If running in multi-client mode and this client is 
@@ -6689,6 +6847,7 @@ BO.IOBoard = (function () {
          * enable multi-client mode.
          * 
          * @private
+         * @method startupInMultiClientMode
          */     
         startupInMultiClientMode: function () {
             var len = this.getPinCount();
@@ -6705,6 +6864,7 @@ BO.IOBoard = (function () {
         /**
          * The IOBoard is configured and ready to send and accept commands.
          * @private
+         * @method startup
          */
         startup: function () {
             this.debug("debug: IOBoard ready");
@@ -6718,6 +6878,7 @@ BO.IOBoard = (function () {
          * the board.
          *
          * @private
+         * @method systemReset
          */
         systemReset: function () {
             this.debug("debug: System reset");
@@ -6734,6 +6895,7 @@ BO.IOBoard = (function () {
          * inputs the state is the status of the pullup resistor.
          *
          * @private
+         * @method processPinStateResponse
          */
         processPinStateResponse: function (msg) {
             // Ignore requests that were not made by this client
@@ -6777,6 +6939,7 @@ BO.IOBoard = (function () {
          * Convert char to decimal value.
          * 
          * @private
+         * @method toDec
          */
         toDec: function (ch) {
             ch = ch.substring(0, 1);
@@ -6789,6 +6952,7 @@ BO.IOBoard = (function () {
          * Sends digital or analog output pin and output values to the IOBoard.
          *
          * @private
+         * @method sendOut
          * @param {Event} event A reference to the event object (Pin in this
          * case).
          */
@@ -6815,6 +6979,7 @@ BO.IOBoard = (function () {
          * as the pin type is changed during the execution of the program.
          *
          * @private
+         * @method managePinListener
          */  
         managePinListener: function (pin) {
             if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
@@ -6841,6 +7006,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The analog pin number.
          * param {Number} value The value to send (0.0 to 1.0).
          * @private
+         * @method sendAnalogData
          */
         sendAnalogData: function (pin, value) {
             var pwmMax = this.getDigitalPin(pin).maxPWMValue;
@@ -6861,6 +7027,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The analog pin number (up to 128).
          * @param {Number} value The value to send (up to 16 bits).
          * @private
+         * @method sendExtendedAnalogData
          */ 
         sendExtendedAnalogData: function (pin, value) {
             var analogData = [];
@@ -6894,6 +7061,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The digital pin number.
          * @param {Number} value The value of the digital pin (0 or 1).
          * @private
+         * @method sendDigitalData
          */
         sendDigitalData: function (pin, value) {
             var portNum = Math.floor(pin / 8);
@@ -6919,6 +7087,7 @@ BO.IOBoard = (function () {
          * @param {Number} pin The digital pin number the servo is attached to.
          * @param {Number} value The angle to rotate to (0.0 to 1.0 mapped to 0 - 180).
          * @private
+         * @method sendServoData
          */ 
         sendServoData: function (pin, value) {
             var servoPin = this.getDigitalPin(pin);
@@ -6931,6 +7100,7 @@ BO.IOBoard = (function () {
          * Query the cababilities and current state any board running Firmata.
          * 
          * @private
+         * @method queryCapabilities
          */
         queryCapabilities: function () {
             this.send([START_SYSEX, CAPABILITY_QUERY, END_SYSEX]);
@@ -6940,6 +7110,7 @@ BO.IOBoard = (function () {
          * Query which pins correspond to the analog channels
          *
          * @private
+         * @method queryAnalogMapping
          */
         queryAnalogMapping: function () {
             this.send([START_SYSEX, ANALOG_MAPPING_QUERY, END_SYSEX]);
@@ -6950,6 +7121,7 @@ BO.IOBoard = (function () {
          * pin.
          *
          * @private
+         * @method setAnalogPinReporting
          * @param {Number} pin The pin connected to the analog input
          * @param {Number} mode Pin.ON to enable input or Pin.OFF to disable
          * input for the specified pin.
@@ -7014,6 +7186,7 @@ BO.IOBoard = (function () {
          * method and should not be needed in any application level code.
          *
          * @private
+         * @method getValueFromTwo7bitBytes
          * @param {Number} lsb The least-significant byte of the 2 values to
          * be concatentated
          * @param {Number} msb The most-significant byte of the 2 values to be

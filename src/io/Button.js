@@ -31,7 +31,7 @@ BO.io.Button = (function () {
      *
      * @class Button
      * @constructor
-     * @extends PhysicalInputBase
+     * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the button is connected to.
      * @param {Number} buttonMode The mode of the button (either 

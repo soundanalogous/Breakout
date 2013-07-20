@@ -26,7 +26,7 @@ BO.io.BlinkM = (function () {
      *
      * @class BlinkM
      * @constructor
-     * @extends I2CBase 
+     * @extends BO.I2CBase 
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the BlinkM module
      */

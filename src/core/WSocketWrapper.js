@@ -20,7 +20,7 @@ BO.WSocketWrapper = (function () {
      *
      * @class WSocketWrapper
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * native websocket implementation.

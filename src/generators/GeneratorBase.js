@@ -28,7 +28,7 @@ BO.generators.GeneratorBase = (function () {
      *
      * @class GeneratorBase
      * @constructor
-     * @extends EventDispatcher
+     * @extends JSUTILS.EventDispatcher
      */
     GeneratorBase = function () {
         

@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -178,6 +178,15 @@
                     <div class="content">
                         <h1>BO.io.Stepper Class</h1>
 <div class="box meta">
+    
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                
+                    <li><a href="JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+                
+            </ul>
+        </div>
     
 
     
@@ -425,32 +434,32 @@ If 2-wire or 4-wire interface, the 2nd moter pin.</p>
             <h4>Example:</h4>
 
             <div class="example-content">
-                <p>// example
-var Stepper = BO.io.Stepper,
-    Event = JSUTILS.Event;</p>
+                <pre class="code prettyprint"><code>var Stepper = BO.io.Stepper,
+    Event = JSUTILS.Event;
 
-<p>var stepper,
+var stepper,
     stepsPerRev = 200,           // update this for your stepper
     numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
     speed = 15.0,                // rad/sec (RPM = speed * 9.55)
     acceleration = 20.0,         // rad/sec^2
-    deceleration = 20.0;         // rad/sec^2</p>
+    deceleration = 20.0;         // rad/sec^2
 
-<p>stepper = new Stepper(arduino,
-             Stepper.TWO<em>WIRE, // or Stepper.DRIVER or Stepper.FOUR</em>WIRE
+stepper = new Stepper(arduino,
+             Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
              stepsPerRev,
              arduino.getDigitalPin(2),
-             arduino.getDigitalPin(3));</p>
+             arduino.getDigitalPin(3));
 
-<p>stepper.addEventListener(Event.COMPLETE, onStepperComplete);</p>
+stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
-<p>// acceleration and deceleration parameters are optional
-stepper.step(numSteps, speed, acceleration, deceleration);</p>
+// acceleration and deceleration parameters are optional
+stepper.step(numSteps, speed, acceleration, deceleration);
 
-<p>function onStepperComplete(event) {
+function onStepperComplete(event) {
     // each stepper is assigned a read-only id value when instantiated
     console.log("stepper " + event.target.id + " sequence complete");
-}</p>
+}
+</code></pre>
             </div>
         </div>
     
@@ -464,6 +473,10 @@ stepper.step(numSteps, speed, acceleration, deceleration);</p>
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -474,7 +487,117 @@ stepper.step(numSteps, speed, acceleration, deceleration);</p>
             <h2 class="off-left">Item Index</h2>
 
             
+                <div class="index-section methods">
+                    <h3>Methods</h3>
 
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_addEventListener">addEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_hasEventListener">hasEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_onSysExMessage">onSysExMessage</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_removeEventListener">removeEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_step">step</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_id">id</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Stepper.CLOCKWISE">Stepper.CLOCKWISE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Stepper.COUNTER_CLOCKWISE">Stepper.COUNTER_CLOCKWISE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Stepper.DRIVER">Stepper.DRIVER</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Stepper.FOUR_WIRE">Stepper.FOUR_WIRE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Stepper.TWO_WIRE">Stepper.TWO_WIRE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -483,7 +606,908 @@ stepper.step(numSteps, speed, acceleration, deceleration);</p>
         </div>
 
         
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
 
+                
+                    <div id="method_addEventListener" class="method item inherited">
+    <h3 class="name"><code>addEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_addEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l37"><code>src&#x2F;utils&#x2F;EventDispatcher.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatchEvent" class="method item inherited">
+    <h3 class="name"><code>dispatchEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>optionalParams</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_dispatchEvent">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l78"><code>src&#x2F;utils&#x2F;EventDispatcher.js:78</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Event object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">optionalParams</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Optional parameters passed as an object.
+return {boolean} True if dispatch is successful, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_hasEventListener" class="method item inherited">
+    <h3 class="name"><code>hasEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_hasEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l65"><code>src&#x2F;utils&#x2F;EventDispatcher.js:65</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type
+return {boolean} True is listener exists for this type, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_onSysExMessage" class="method item private">
+    <h3 class="name"><code>onSysExMessage</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l233"><code>src&#x2F;io&#x2F;Stepper.js:233</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Listen for stepping complete event</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_removeEventListener" class="method item inherited">
+    <h3 class="name"><code>removeEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_removeEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l50"><code>src&#x2F;utils&#x2F;EventDispatcher.js:50</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_step" class="method item">
+    <h3 class="name"><code>step</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>numSteps</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>speed</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>accel</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>decel</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l138"><code>src&#x2F;io&#x2F;Stepper.js:138</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Move the stepper a given number of steps at the specified
+speed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).
+The accel and decel parameters are optional but if using, both values
+must be passed to the function.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">numSteps</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
+Positive value is clockwise, negative value is counter clockwise.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">speed</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Max speed in rad/sec (1 rad/sec = 9.549 RPM)
+(max precision of 2 decimal places)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">accel</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>[optional] Acceleration in rad/sec^2 (max precision of 2 decimal places)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">decel</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>[optional] Deceleration in rad/sec^2 (max precision of 2 decimal places)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_id" class="property item">
+    <h3 class="name"><code>id</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l251"><code>src&#x2F;io&#x2F;Stepper.js:251</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[read-only] The id of the Stepper object instance. Each stepper motor
+is given a unique id upon initialization.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Stepper.CLOCKWISE" class="property item">
+    <h3 class="name"><code>Stepper.CLOCKWISE</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l298"><code>src&#x2F;io&#x2F;Stepper.js:298</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Stepper.COUNTER_CLOCKWISE" class="property item">
+    <h3 class="name"><code>Stepper.COUNTER_CLOCKWISE</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l303"><code>src&#x2F;io&#x2F;Stepper.js:303</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Stepper.DRIVER" class="property item">
+    <h3 class="name"><code>Stepper.DRIVER</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l308"><code>src&#x2F;io&#x2F;Stepper.js:308</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Stepper.FOUR_WIRE" class="property item">
+    <h3 class="name"><code>Stepper.FOUR_WIRE</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l318"><code>src&#x2F;io&#x2F;Stepper.js:318</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Stepper.TWO_WIRE" class="property item">
+    <h3 class="name"><code>Stepper.TWO_WIRE</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_Stepper.js.html#l313"><code>src&#x2F;io&#x2F;Stepper.js:313</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

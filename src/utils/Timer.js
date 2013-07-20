@@ -19,7 +19,7 @@ JSUTILS.Timer = (function () {
      *
      * @class Timer
      * @constructor
-     * @extends EventDispatcher  
+     * @extends JSUTILS.EventDispatcher  
      * @param {Number} delay The delay (ms) interval between ticks
      * @param {Number} repeatCount The number of number of ticks.
      * A value of zero will set the timer to repeat forever. Default = 0

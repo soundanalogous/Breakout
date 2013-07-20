@@ -63,7 +63,7 @@ BO.IOBoard = (function () {
      *
      * @class IOBoard
      * @constructor
-     * @uses EventDispatcher
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * Default = false.

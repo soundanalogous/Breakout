@@ -23,7 +23,7 @@ BO.io.CompassHMC6352 = (function () {
      *
      * @class CompassHMC6352
      * @constructor
-     * @extends I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      */

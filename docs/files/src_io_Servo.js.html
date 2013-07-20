@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -250,8 +250,7 @@ BO.io.Servo = (function () {
          * to adjust the servo (there is typically a screw on the motor) to
          * adjust&lt;/p&gt;
          * 
-         * @name Servo#angle
-         * @property
+         * @property angle
          * @type Number
          */ 
         set angle(value) {
@@ -272,6 +271,8 @@ BO.io.Servo = (function () {
 
     /**
      * The scale to convert 0-1 (0-255 in 8bit) to 0-0.706 (0-180 in 8bit).
+     * @property Servo.COEF_TO_0_180
+     * @static
      */
     Servo.COEF_TO_0_180 = 180 / 255;
 

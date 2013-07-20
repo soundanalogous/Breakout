@@ -10,6 +10,8 @@
  * <p>Namespace for Breakout objects.</p>
  *
  * <p>You can use the shorthand "BO" instead of "BREAKOUT".</p>
+ *
+ * @namespace BO
  */
 var BO = BO || {};
 
@@ -26,5 +28,4 @@ BREAKOUT.VERSION = '0.3.0';
  * @name BO#enableDebugging
  * @type {Boolean}
  */
-
 BO.enableDebugging = false;

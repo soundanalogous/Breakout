@@ -25,7 +25,7 @@ BO.generators.GeneratorEvent = (function () {
      *
      * @class GeneratorEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     GeneratorEvent = function (type) {

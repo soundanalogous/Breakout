@@ -17,7 +17,7 @@ BO.io.GyroEvent = (function () {
      * object.
      * @class GyroEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     GyroEvent = function (type) {

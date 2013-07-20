@@ -17,7 +17,7 @@ BO.io.PotEvent = (function () {
      * object.
      * @class PotEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     PotEvent = function (type) {

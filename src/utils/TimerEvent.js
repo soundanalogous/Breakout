@@ -17,7 +17,7 @@ JSUTILS.TimerEvent = (function () {
      * 
      * @class TimerEvent
      * @constructor    
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     TimerEvent = function (type) {

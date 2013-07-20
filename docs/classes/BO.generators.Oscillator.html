@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Docs for: 0.2.4</em>
+            <em>API Docs for: 0.3.0</em>
         </div>
     </div> -->
     <div id="header">
@@ -182,7 +182,7 @@
 
     
         <div class="extends">
-            Extends GeneratorBase
+            Extends <a href="../classes/BO.generators.GeneratorBase.html" class="crosslink">BO.generators.GeneratorBase</a>
         </div>
     
 
@@ -431,6 +431,13 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
 
                     <ul class="index-list methods extends">
                         
+                            <li class="index-item method inherited">
+                                <a href="#method_addEventListener">addEventListener</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method private">
                                 <a href="#method_autoUpdate">autoUpdate</a>
 
@@ -440,6 +447,20 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
                         
                             <li class="index-item method private">
                                 <a href="#method_computeValue">computeValue</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_hasEventListener">hasEventListener</a>
 
                                 
                                 
@@ -499,6 +520,13 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
                                 
                             </li>
                         
+                            <li class="index-item method inherited">
+                                <a href="#method_removeEventListener">removeEventListener</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method">
                                 <a href="#method_reset">reset</a>
 
@@ -544,6 +572,13 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
                                 
                             </li>
                         
+                            <li class="index-item property protected inherited">
+                                <a href="#property_value">value</a>
+
+                                
+                                
+                            </li>
+                        
                     </ul>
                 </div>
             
@@ -571,6 +606,112 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
         
             <div id="methods" class="api-class-tabpanel">
                 <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_addEventListener" class="method item inherited">
+    <h3 class="name"><code>addEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_addEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l37"><code>src&#x2F;utils&#x2F;EventDispatcher.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
 
                 
                     <div id="method_autoUpdate" class="method item private">
@@ -677,6 +818,197 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
         
     </div>
 
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatchEvent" class="method item inherited">
+    <h3 class="name"><code>dispatchEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>optionalParams</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_dispatchEvent">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l78"><code>src&#x2F;utils&#x2F;EventDispatcher.js:78</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Event object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">optionalParams</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Optional parameters passed as an object.
+return {boolean} True if dispatch is successful, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_hasEventListener" class="method item inherited">
+    <h3 class="name"><code>hasEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_hasEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l65"><code>src&#x2F;utils&#x2F;EventDispatcher.js:65</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type
+return {boolean} True is listener exists for this type, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -1021,6 +1353,112 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
 </div>
 
                 
+                    <div id="method_removeEventListener" class="method item inherited">
+    <h3 class="name"><code>removeEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_removeEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l50"><code>src&#x2F;utils&#x2F;EventDispatcher.js:50</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_reset" class="method item">
     <h3 class="name"><code>reset</code></h3>
 
@@ -1312,6 +1750,49 @@ See Breakout/examples/generators/oscillator.html for an example application.</p>
 
     <div class="description">
         <p>The service interval in milliseconds. Default is 33ms.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_value" class="property item protected inherited">
+    <h3 class="name"><code>value</code></h3>
+    <span class="type">Number</span>
+
+    
+
+    
+        <span class="flag protected">protected</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/BO.generators.GeneratorBase.html#property_value">BO.generators.GeneratorBase</a>:
+            
+        
+        
+        <a href="../files/src_generators_GeneratorBase.js.html#l45"><code>src&#x2F;generators&#x2F;GeneratorBase.js:45</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>[read-only] Get a generated number.</p>
     </div>
 
     

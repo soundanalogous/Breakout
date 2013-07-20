@@ -24,7 +24,7 @@ BO.io.Potentiometer = (function () {
      *
      * @class Potentiometer
      * @constructor
-     * @extends PhysicalInputBase    
+     * @extends BO.PhysicalInputBase    
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.
      * @param {Pin} pin A reference to the Pin the potentiometer is connected
@@ -128,14 +128,15 @@ BO.io.Potentiometer = (function () {
 
     /**
      * The change event is dispatched when the potentiometer value changes.
+     * @example
+     *     pot.addEventListener(PotEvent.CHANGE, onValueChange);
+     *
+     *     function onValueChange(event) {
+     *         console.log("value = " + event.target.value);  
+     *     }
+     *
      * @type BO.io.PotEvent.CHANGE
      * @event change
-     * @example
-     * pot.addEventListener(PotEvent.CHANGE, onValueChange);
-     *
-     * function onValueChange(event) {
-     *   console.log("value = " + event.target.value);  
-     * }
      * @param {BO.Potentiometer} target A reference to the Potentiometer object
      */
 

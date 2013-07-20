@@ -36,7 +36,7 @@ BO.io.AnalogAccelerometer = (function () {
      *
      * @class AnalogAccelerometer
      * @constructor
-     * @extends PhysicalInputBase    
+     * @extends BO.PhysicalInputBase    
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} xPin A reference to the Pin connected to the x axis of the
      * accelerometer

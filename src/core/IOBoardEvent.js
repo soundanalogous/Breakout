@@ -20,7 +20,7 @@ BO.IOBoardEvent = (function () {
      *
      * @class IOBoardEvent
      * @constructor
-     * @extends Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     IOBoardEvent = function (type) {
