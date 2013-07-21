@@ -25,19 +25,19 @@ BO.io.LED = (function () {
      * LED must be connected to a PWM pin on the I/O board.
      *
      * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
-     * than Oscillator.SQUARE the LED must be connected to a PWM pin.</p>
+     * than `Oscillator.SQUARE` the LED must be connected to a PWM pin.</p>
      *
-     * <p>SOURCE_DRIVE vs SYNC_DRIVE. If the Anode (longer LED pin) is
-     * connected to the microcontroller pin, then it is SOURCE_DRIVE. If the
+     * <p>`SOURCE_DRIVE` vs `SYNC_DRIVE`. If the Anode (longer LED pin) is
+     * connected to the microcontroller pin, then it is `SOURCE_DRIVE`. If the
      * Cathode is connected to the microcontroller pin, then it is 
-     * SYNC_DRIVE.</p>
+     * `SYNC_DRIVE`.</p>
      *
      * @class LED
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
      * @param {Pin} ledPin A reference to the Pin the LED is connected to.
      * @param {Number} driveMode The drive mode of the LED. Must be set to
-     * LED.SOURCE_MODE or LED.SYNC_MODE. SOURCE_MODE is default.
+     * `LED.SOURCE_MODE` or `LED.SYNC_MODE`. `SOURCE_MODE` is default.
      */
     LED = function (board, ledPin, driveMode) {
         "use strict";

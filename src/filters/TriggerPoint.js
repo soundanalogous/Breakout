@@ -21,9 +21,9 @@ BO.filters.TriggerPoint = (function () {
 
     /**
      * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
-     * also use multiple points by providing a nested array such as [[0.4, 0.1],
-     * [0.7, 0.05]].
-     * See Breakout/examples/filters/triggerpoint.html for an example application.
+     * also use multiple points by providing a nested array such as `[[0.4, 0.1],
+     * [0.7, 0.05]]`.
+     * See [Breakout/examples/filters/triggerpoint.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/triggerpoint.html) for an example application.
      *
      * @class TriggerPoint
      * @constructor

@@ -13,8 +13,8 @@ BO.WSocketEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * Dispatches Websocket events: Connected (onopen), Message (onmessge)
-     * and Closed (onclose) objects.
+     * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
+     * and Closed `onclose` objects.
      * @class WSocketEvent
      * @constructor
      * @extends JSUTILS.Event

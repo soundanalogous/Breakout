@@ -25,7 +25,7 @@ BO.Pin = (function () {
      * represented by a Pin object.
      * The Pin object is the foundation for many of the io objects and is also 
      * very useful on its own. See the Using The Pin Object Guide on 
-     * http://breakoutjs.com for a detailed overview.
+     * [http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.
      *
      * @class Pin
      * @constructor

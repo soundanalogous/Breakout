@@ -25,9 +25,9 @@ BO.io.Button = (function () {
      * provides helpful button events: Pressed, Released, Long Press and
      * Sustained Press
      *
-     * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to
-     * the button is connected to ground, configuration is PULL_DOWN, if the 
-     * resistor is connected to power, then the configuration is PULL_UP.</p>
+     * <p>`PULL_UP` vs `PULL_DOWN`. If the other end of the resistor connected to
+     * the button is connected to ground, configuration is `PULL_DOWN`, if the 
+     * resistor is connected to power, then the configuration is `PULL_UP`.</p>
      *
      * @class Button
      * @constructor
@@ -35,9 +35,9 @@ BO.io.Button = (function () {
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the button is connected to.
      * @param {Number} buttonMode The mode of the button (either 
-     * Button.PULL_DOWN or Button.PULL_UP if wired with external resistors or 
-     * Button.INTERNAL_PULL_UP if using the internal pull-up resistors. Default
-     * is PULL_DOWN.
+     * `Button.PULL_DOWN` or `Button.PULL_UP` if wired with external resistors or 
+     * `Button.INTERNAL_PULL_UP` if using the internal pull-up resistors. Default
+     * is `PULL_DOWN`.
      * @param {Number} sustainedPressInterval The delay time in milliseconds 
      * before a sustained press event is fired.
      */

@@ -31,8 +31,8 @@ BO.io.AnalogAccelerometer = (function () {
      * accelerometer to read the acceleration along the x, y, and z axis of an 
      * object it is attached to. You can also obtain the pitch and roll. This
      * object should interface with most analog accelerometers. See
-     * Breakout/examples/sensors/analog_accelerometer.html and 
-     * Breakout/examples/three_js/accelerometer.html for example applications.
+     * [Breakout/examples/sensors/analog\_accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/analog_accelerometer.html) and 
+     * [Breakout/examples/three\_js/accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/three_js/accelerometer.html) for example applications.
      *
      * @class AnalogAccelerometer
      * @constructor

@@ -32,7 +32,7 @@ BO.io.AccelerometerADXL345 = (function () {
      * Creates an interface to an ADXL345 3-axis accelerometer. Use the
      * accelerometer to read the acceleration along the x, y, and z axis of an 
      * object it is attached to. You can also obtain the pitch and roll. See the
-     * example in Breakout/examples/sensors/adxl345.html.
+     * example in [Breakout/examples/sensors/adxl345.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/adxl345.html).
      *
      * @class AccelerometerADXL345
      * @constructor

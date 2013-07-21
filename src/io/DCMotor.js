@@ -21,7 +21,7 @@ BO.io.DCMotor = (function () {
     /**
      * Creates an interface to an H-bridge to control the direction of rotation
      * of a motor shaft. You can rotate forward (clockwise), reverse or apply a
-     * brake. See Breakout/examples/actuators/dcmotor.html for an example
+     * brake. See [Breakout/examples/actuators/dcmotor.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/dcmotor.html) for an example
      * application.
      *
      * <p>Tested successfully with the following H-bridge: SN754410<br>

@@ -28,7 +28,7 @@ BO.generators.Oscillator = (function () {
      * most cases (unless you are simply using it to blink and LED on or off), 
      * the Oscillator should be attached to a Pin or LED object associated with
      * a PWM pin on the I/O board.
-     * See Breakout/examples/generators/oscillator.html for an example application.
+     * See [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.
      *
      * @class Oscillator
      * @constructor

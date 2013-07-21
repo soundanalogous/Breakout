@@ -25,7 +25,7 @@ BO.filters.Convolution = (function () {
     /**
      * The Convolution object performs low-pass, high-pass and moving average
      * filtering on an analog input.
-     * See Breakout/examples/filters/convolution.html for an example application.
+     * See [Breakout/examples/filters/convolution.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/convolution.html) for an example application.
      *
      * @class Convolution
      * @constructor

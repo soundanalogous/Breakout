@@ -37,7 +37,7 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
+    <h2 class="off-left">v0.3.0 APIs</h2>
     <div id="api-tabview" class="tabview">
         <ul class="tabs">
             <li><a href="#api-classes">Classes</a></li>
@@ -214,8 +214,8 @@ BO.io.GyroITG3200 = (function () {
      * Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
      * angular acceleration around the x, y, and z axis. This object provides
      * the angular velocity of each axis. Proper calibration is required for an
-     * accurate reading. See Breakout/examples/sensors/itg3200.html and 
-     * Breakout/examples/processing_js/gyro.html for example applications.
+     * accurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and 
+     * [Breakout/examples/processing\_js/gyro.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/gyro.html) for example applications.
      *
      * @class GyroITG3200
      * @constructor
@@ -223,8 +223,8 @@ BO.io.GyroITG3200 = (function () {
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
-     * GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND, then use GyroITG3200.ID_AD0_GND. 
-     * Default = GyroITG3200.ID_AD0_VDD
+     * &#x60;GyroITG3200.ID_AD0_DVV&#x60; (0x69), if pin 9 (AD0) is tied to GND, then use &#x60;GyroITG3200.ID_AD0_GND&#x60;. 
+     * Default = &#x60;GyroITG3200.ID_AD0_VDD&#x60;
      */
     GyroITG3200 = function (board, autoStart, address) {
 

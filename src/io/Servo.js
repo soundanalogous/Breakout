@@ -22,7 +22,7 @@ BO.io.Servo = (function () {
      * Creates an interface to a Servo motor. Use this object to set
      * the angle of the servo head. You can simply specify and angle between
      * 0 and 180 degrees and the servo head will rotate to that angle. See
-     * Breakout/examples/actuators/servo.html for an example application.
+     * [Breakout/examples/actuators/servo.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/servo.html) for an example application.
      * You can also use this with a continuous rotation servo. See the
      * description for the angle property for use with a continuous rotation
      * servo.

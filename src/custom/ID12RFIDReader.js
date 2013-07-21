@@ -26,7 +26,8 @@ BO.custom.ID12RFIDReader = (function () {
      * Creates an interface to an ID-12 RFID Reader. Other Innovations
      * RFID readers will likely work but have not been tested. This object
      * requires firmware other than StandardFirmata to be uploaded to the I/O board.
-     * See Breakout/custom_examples/rfid_example1.html and rfid_example2.html for
+     * See [Breakout/custom\_examples/rfid_example1.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html) 
+     * and [rfid\_example2.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example2.html) for
      * example applications.
      *
      * <p>To use this object with standard io objects in Breakout, 

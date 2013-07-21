@@ -24,13 +24,13 @@ BO.io.RGBLED = (function () {
      * type of RGB LED with 4 legs. One leg is connected to power or ground 
      * (depending on the type of LED - common anode or common cathode) and the
      * other 3 legs are connected to PWM pins on the I/O board. See 
-     * Breakout/examples/schematics.pdf for wiring diagrams. See 
-     * Breakout/examples/actuators/rgb_led.html for an example application.
+     * [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See 
+     * [Breakout/examples/actuators/rgb\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.
      *
-     * <p>The RGB pins of the RGBLED must be connected to PWM pins on the
+     * <p>The RGB pins of the RGB LED must be connected to PWM pins on the
      * IOBoard.</p>
      *
-     * <p>COMMON_ANODE vs COMMON_CATHODE. You can determine if your RGB LED is 
+     * <p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is 
      * common anode or common cathode by reading the datasheet. To wire a 
      * common cathode RGB LED, connect the cathode to ground and the 3 anode
      * pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode

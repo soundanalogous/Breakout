@@ -21,7 +21,7 @@ BO.filters.Scaler = (function () {
 
     /**
      * Scales up an input value from its min and max range to a specified 
-     * minimum to maximum range. See Breakout/examples/filters/scaler.html for
+     * minimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for
      * an example application.  
      *
      * @class Scaler

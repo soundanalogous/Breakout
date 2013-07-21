@@ -18,8 +18,8 @@ BO.io.CompassHMC6352 = (function () {
      * Use the compass to obtain a heading. You must hold the sensor flat
      * to obtain the most accurate heading value (just like an analog compass).
      * The compass is also useful in obtaining a rotation value in relation
-     * to a fixed position. See Breakout/examples/sensors/hmc6352.html and
-     * Breakout/examples/processing_js/compass.html for example applications.
+     * to a fixed position. See [Breakout/examples/sensors/hmc6352.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/hmc6352.html) and
+     * [Breakout/examples/processing\_js/compass.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/compass.html) for example applications.
      *
      * @class CompassHMC6352
      * @constructor

@@ -37,7 +37,7 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
+    <h2 class="off-left">v0.3.0 APIs</h2>
     <div id="api-tabview" class="tabview">
         <ul class="tabs">
             <li><a href="#api-classes">Classes</a></li>
@@ -207,19 +207,19 @@ BO.io.LED = (function () {
      * LED must be connected to a PWM pin on the I/O board.
      *
      * &lt;p&gt;PLEASE NOTE: To use the fade methods, or to use an waveform other 
-     * than Oscillator.SQUARE the LED must be connected to a PWM pin.&lt;/p&gt;
+     * than &#x60;Oscillator.SQUARE&#x60; the LED must be connected to a PWM pin.&lt;/p&gt;
      *
-     * &lt;p&gt;SOURCE_DRIVE vs SYNC_DRIVE. If the Anode (longer LED pin) is
-     * connected to the microcontroller pin, then it is SOURCE_DRIVE. If the
+     * &lt;p&gt;&#x60;SOURCE_DRIVE&#x60; vs &#x60;SYNC_DRIVE&#x60;. If the Anode (longer LED pin) is
+     * connected to the microcontroller pin, then it is &#x60;SOURCE_DRIVE&#x60;. If the
      * Cathode is connected to the microcontroller pin, then it is 
-     * SYNC_DRIVE.&lt;/p&gt;
+     * &#x60;SYNC_DRIVE&#x60;.&lt;/p&gt;
      *
      * @class LED
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
      * @param {Pin} ledPin A reference to the Pin the LED is connected to.
      * @param {Number} driveMode The drive mode of the LED. Must be set to
-     * LED.SOURCE_MODE or LED.SYNC_MODE. SOURCE_MODE is default.
+     * &#x60;LED.SOURCE_MODE&#x60; or &#x60;LED.SYNC_MODE&#x60;. &#x60;SOURCE_MODE&#x60; is default.
      */
     LED = function (board, ledPin, driveMode) {
         &quot;use strict&quot;;

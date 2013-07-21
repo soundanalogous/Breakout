@@ -30,7 +30,7 @@ BO.io.SoftPot = (function () {
      * analog resistive sensor that acts as a type of slider input. There are 
      * straight and curved variations. This object provides a number of useful 
      * events such as Press, Release, Drag, Tap and capturing Flick gestures.
-     * See Breakout/examples/sensors/softpot.html for an example application.
+     * See [Breakout/examples/sensors/softpot.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/softpot.html) for an example application.
      *
      * @class SoftPot
      * @constructor

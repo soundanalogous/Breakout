@@ -13,6 +13,7 @@ BO.io.SoftPotEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
+     * An Event object to be dispatched (fired) by a SoftPot
      * @exports An Event object to be dispatched (fired) by a SoftPot
      * object.
      * @class SoftPotEvent

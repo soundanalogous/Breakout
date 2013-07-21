@@ -22,7 +22,7 @@ BO.io.BlinkM = (function () {
      * Creates an interface to a BlinkM RGB Led module. This
      * object allows you to change the color of the led, fade between
      * colors and run preprogrammed light scripts.
-     * See Breakout/examples/actuators/blinkM.html for an example application.
+     * See [Breakout/examples/actuators/blinkM.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/blinkM.html) for an example application.
      *
      * @class BlinkM
      * @constructor

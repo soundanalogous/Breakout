@@ -26,7 +26,7 @@ BO.io.MagnetometerHMC5883 = (function () {
     /**
      * Creates an interface to an HMC5883 3-axis magnetometer. Use the
      * magnetometer to obtain a compass heading or rotation in relation to
-     * a fixed point. See Breakout/examples/sensors/hmc5883.html for an example
+     * a fixed point. See [Breakout/examples/sensors/hmc5883.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/hmc5883.html) for an example
      * application.
      *
      * @class MagnetometerHMC5883
@@ -35,11 +35,11 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      * @param {Number} numSamples The number of samples averaged per 
-     * measurement output. Options are: MagnetometerHMC5883.SAMPLES_1,
-     * MagnetometerHMC5883.SAMPLES_2, MagnetometerHMC5883.SAMPLES_4
-     * MagnetometerHMC5883.SAMPLES_8 (default = MagnetometerHMC5883.SAMPLES_1)
+     * measurement output. Options are: `MagnetometerHMC5883.SAMPLES_1`,
+     * `MagnetometerHMC5883.SAMPLES_2`, `MagnetometerHMC5883.SAMPLES_4`
+     * `MagnetometerHMC5883.SAMPLES_8` (default = `MagnetometerHMC5883.SAMPLES_1`)
      * @param {Number} outputRate The data output rate in Hz 
-     * (default = MagnetometerHMC5883.HZ_30)
+     * (default = `MagnetometerHMC5883.HZ_30`)
      */
     MagnetometerHMC5883 = function (board, address, numSamples, outputRate) {
         address = address || MagnetometerHMC5883.DEVICE_ID;

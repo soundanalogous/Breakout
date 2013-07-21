@@ -37,7 +37,7 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
+    <h2 class="off-left">v0.3.0 APIs</h2>
     <div id="api-tabview" class="tabview">
         <ul class="tabs">
             <li><a href="#api-classes">Classes</a></li>
@@ -200,13 +200,13 @@
 type of RGB LED with 4 legs. One leg is connected to power or ground 
 (depending on the type of LED - common anode or common cathode) and the
 other 3 legs are connected to PWM pins on the I/O board. See 
-Breakout/examples/schematics.pdf for wiring diagrams. See 
-Breakout/examples/actuators/rgb_led.html for an example application.</p>
+<a href="http://breakoutjs.com/examples/schematics.pdf">Breakout/examples/schematics.pdf</a> for wiring diagrams. See 
+<a href="https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html">Breakout/examples/actuators/rgb_led.html</a> for an example application.</p>
 
-<p>The RGB pins of the RGBLED must be connected to PWM pins on the
+<p>The RGB pins of the RGB LED must be connected to PWM pins on the
 IOBoard.</p>
 
-<p>COMMON_ANODE vs COMMON_CATHODE. You can determine if your RGB LED is 
+<p><code>COMMON_ANODE</code> vs <code>COMMON_CATHODE</code>. You can determine if your RGB LED is 
 common anode or common cathode by reading the datasheet. To wire a 
 common cathode RGB LED, connect the cathode to ground and the 3 anode
 pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
