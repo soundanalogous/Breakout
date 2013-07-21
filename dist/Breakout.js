@@ -743,8 +743,8 @@ BO.WSocketEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * Dispatches Websocket events: Connected (onopen), Message (onmessge)
-     * and Closed (onclose) objects.
+     * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
+     * and Closed `onclose` objects.
      * @class WSocketEvent
      * @constructor
      * @extends JSUTILS.Event
@@ -1002,7 +1002,7 @@ BO.filters.Scaler = (function () {
 
     /**
      * Scales up an input value from its min and max range to a specified 
-     * minimum to maximum range. See Breakout/examples/filters/scaler.html for
+     * minimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for
      * an example application.  
      *
      * @class Scaler
@@ -1112,7 +1112,7 @@ BO.filters.Convolution = (function () {
     /**
      * The Convolution object performs low-pass, high-pass and moving average
      * filtering on an analog input.
-     * See Breakout/examples/filters/convolution.html for an example application.
+     * See [Breakout/examples/filters/convolution.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/convolution.html) for an example application.
      *
      * @class Convolution
      * @constructor
@@ -1205,9 +1205,9 @@ BO.filters.TriggerPoint = (function () {
 
     /**
      * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
-     * also use multiple points by providing a nested array such as [[0.4, 0.1],
-     * [0.7, 0.05]].
-     * See Breakout/examples/filters/triggerpoint.html for an example application.
+     * also use multiple points by providing a nested array such as `[[0.4, 0.1],
+     * [0.7, 0.05]]`.
+     * See [Breakout/examples/filters/triggerpoint.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/triggerpoint.html) for an example application.
      *
      * @class TriggerPoint
      * @constructor
@@ -1447,7 +1447,7 @@ BO.generators.Oscillator = (function () {
      * most cases (unless you are simply using it to blink and LED on or off), 
      * the Oscillator should be attached to a Pin or LED object associated with
      * a PWM pin on the I/O board.
-     * See Breakout/examples/generators/oscillator.html for an example application.
+     * See [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.
      *
      * @class Oscillator
      * @constructor
@@ -1728,7 +1728,7 @@ BO.Pin = (function () {
      * represented by a Pin object.
      * The Pin object is the foundation for many of the io objects and is also 
      * very useful on its own. See the Using The Pin Object Guide on 
-     * http://breakoutjs.com for a detailed overview.
+     * [http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.
      *
      * @class Pin
      * @constructor
@@ -2615,16 +2615,18 @@ BO.io.Stepper = (function () {
     /**
      * Creates an interface to a Stepper motor. Use this object to set
      * the direction and number of steps for the motor to rotate. See
-     * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html, 
-     * stepper_easydriver.html and stepper_simple.html for example applications.
+     * [Breakout/examples/actuators/stepper\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html), 
+     * [stepper\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html), 
+     * [stepper\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html) 
+     * and [stepper\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.
      *
      * @class Stepper
      * @constructor
      * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
-     * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
-     * Stepper.TWO_WIRE, or Stepper.FOUR_WIRE).
+     * @param {Number} driverType. The type of driver (`Stepper.DRIVER`, 
+     * `Stepper.TWO_WIRE`, or `Stepper.FOUR_WIRE`).
      * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
      * @param {Pin} directionPin If dirver interface, the pin used to control 
      * the direction.
@@ -2926,7 +2928,7 @@ BO.io.BlinkM = (function () {
      * Creates an interface to a BlinkM RGB Led module. This
      * object allows you to change the color of the led, fade between
      * colors and run preprogrammed light scripts.
-     * See Breakout/examples/actuators/blinkM.html for an example application.
+     * See [Breakout/examples/actuators/blinkM.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/blinkM.html) for an example application.
      *
      * @class BlinkM
      * @constructor
@@ -3137,8 +3139,8 @@ BO.io.CompassHMC6352 = (function () {
      * Use the compass to obtain a heading. You must hold the sensor flat
      * to obtain the most accurate heading value (just like an analog compass).
      * The compass is also useful in obtaining a rotation value in relation
-     * to a fixed position. See Breakout/examples/sensors/hmc6352.html and
-     * Breakout/examples/processing_js/compass.html for example applications.
+     * to a fixed position. See [Breakout/examples/sensors/hmc6352.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/hmc6352.html) and
+     * [Breakout/examples/processing\_js/compass.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/compass.html) for example applications.
      *
      * @class CompassHMC6352
      * @constructor
@@ -3292,9 +3294,9 @@ BO.io.Button = (function () {
      * provides helpful button events: Pressed, Released, Long Press and
      * Sustained Press
      *
-     * <p>PULL_UP vs PULL_DOWN. If the other end of the resistor connected to
-     * the button is connected to ground, configuration is PULL_DOWN, if the 
-     * resistor is connected to power, then the configuration is PULL_UP.</p>
+     * <p>`PULL_UP` vs `PULL_DOWN`. If the other end of the resistor connected to
+     * the button is connected to ground, configuration is `PULL_DOWN`, if the 
+     * resistor is connected to power, then the configuration is `PULL_UP`.</p>
      *
      * @class Button
      * @constructor
@@ -3302,9 +3304,9 @@ BO.io.Button = (function () {
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the button is connected to.
      * @param {Number} buttonMode The mode of the button (either 
-     * Button.PULL_DOWN or Button.PULL_UP if wired with external resistors or 
-     * Button.INTERNAL_PULL_UP if using the internal pull-up resistors. Default
-     * is PULL_DOWN.
+     * `Button.PULL_DOWN` or `Button.PULL_UP` if wired with external resistors or 
+     * `Button.INTERNAL_PULL_UP` if using the internal pull-up resistors. Default
+     * is `PULL_DOWN`.
      * @param {Number} sustainedPressInterval The delay time in milliseconds 
      * before a sustained press event is fired.
      */
@@ -3736,8 +3738,8 @@ BO.io.AnalogAccelerometer = (function () {
      * accelerometer to read the acceleration along the x, y, and z axis of an 
      * object it is attached to. You can also obtain the pitch and roll. This
      * object should interface with most analog accelerometers. See
-     * Breakout/examples/sensors/analog_accelerometer.html and 
-     * Breakout/examples/three_js/accelerometer.html for example applications.
+     * [Breakout/examples/sensors/analog\_accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/analog_accelerometer.html) and 
+     * [Breakout/examples/three\_js/accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/three_js/accelerometer.html) for example applications.
      *
      * @class AnalogAccelerometer
      * @constructor
@@ -4026,14 +4028,14 @@ BO.io.AccelerometerADXL345 = (function () {
      * Creates an interface to an ADXL345 3-axis accelerometer. Use the
      * accelerometer to read the acceleration along the x, y, and z axis of an 
      * object it is attached to. You can also obtain the pitch and roll. See the
-     * example in Breakout/examples/sensors/adxl345.html.
+     * example in [Breakout/examples/sensors/adxl345.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/adxl345.html).
      *
      * @class AccelerometerADXL345
      * @constructor
      * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
-     * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
-     * RANGE_8G, RANGE_16G). Default is RANGE_2G.    
+     * @param {Number} range The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`, 
+     * `RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.    
      * @param {Number} address The i2c address of the accelerometer (default is 0x53)
      */
     AccelerometerADXL345 = function (board, range, address) {
@@ -4495,8 +4497,8 @@ BO.io.GyroITG3200 = (function () {
      * Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
      * angular acceleration around the x, y, and z axis. This object provides
      * the angular velocity of each axis. Proper calibration is required for an
-     * accurate reading. See Breakout/examples/sensors/itg3200.html and 
-     * Breakout/examples/processing_js/gyro.html for example applications.
+     * accurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and 
+     * [Breakout/examples/processing\_js/gyro.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/gyro.html) for example applications.
      *
      * @class GyroITG3200
      * @constructor
@@ -4504,8 +4506,8 @@ BO.io.GyroITG3200 = (function () {
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
-     * GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND, then use GyroITG3200.ID_AD0_GND. 
-     * Default = GyroITG3200.ID_AD0_VDD
+     * `GyroITG3200.ID_AD0_DVV` (0x69), if pin 9 (AD0) is tied to GND, then use `GyroITG3200.ID_AD0_GND`. 
+     * Default = `GyroITG3200.ID_AD0_VDD`
      */
     GyroITG3200 = function (board, autoStart, address) {
 
@@ -4879,7 +4881,7 @@ BO.io.MagnetometerHMC5883 = (function () {
     /**
      * Creates an interface to an HMC5883 3-axis magnetometer. Use the
      * magnetometer to obtain a compass heading or rotation in relation to
-     * a fixed point. See Breakout/examples/sensors/hmc5883.html for an example
+     * a fixed point. See [Breakout/examples/sensors/hmc5883.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/hmc5883.html) for an example
      * application.
      *
      * @class MagnetometerHMC5883
@@ -4888,11 +4890,11 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
      * @param {Number} numSamples The number of samples averaged per 
-     * measurement output. Options are: MagnetometerHMC5883.SAMPLES_1,
-     * MagnetometerHMC5883.SAMPLES_2, MagnetometerHMC5883.SAMPLES_4
-     * MagnetometerHMC5883.SAMPLES_8 (default = MagnetometerHMC5883.SAMPLES_1)
+     * measurement output. Options are: `MagnetometerHMC5883.SAMPLES_1`,
+     * `MagnetometerHMC5883.SAMPLES_2`, `MagnetometerHMC5883.SAMPLES_4`
+     * `MagnetometerHMC5883.SAMPLES_8` (default = `MagnetometerHMC5883.SAMPLES_1`)
      * @param {Number} outputRate The data output rate in Hz 
-     * (default = MagnetometerHMC5883.HZ_30)
+     * (default = `MagnetometerHMC5883.HZ_30`)
      */
     MagnetometerHMC5883 = function (board, address, numSamples, outputRate) {
         address = address || MagnetometerHMC5883.DEVICE_ID;
@@ -5190,7 +5192,7 @@ BO.io.Servo = (function () {
      * Creates an interface to a Servo motor. Use this object to set
      * the angle of the servo head. You can simply specify and angle between
      * 0 and 180 degrees and the servo head will rotate to that angle. See
-     * Breakout/examples/actuators/servo.html for an example application.
+     * [Breakout/examples/actuators/servo.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/servo.html) for an example application.
      * You can also use this with a continuous rotation servo. See the
      * description for the angle property for use with a continuous rotation
      * servo.
@@ -5278,7 +5280,7 @@ BO.io.DCMotor = (function () {
     /**
      * Creates an interface to an H-bridge to control the direction of rotation
      * of a motor shaft. You can rotate forward (clockwise), reverse or apply a
-     * brake. See Breakout/examples/actuators/dcmotor.html for an example
+     * brake. See [Breakout/examples/actuators/dcmotor.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/dcmotor.html) for an example
      * application.
      *
      * <p>Tested successfully with the following H-bridge: SN754410<br>
@@ -5467,19 +5469,19 @@ BO.io.LED = (function () {
      * LED must be connected to a PWM pin on the I/O board.
      *
      * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
-     * than Oscillator.SQUARE the LED must be connected to a PWM pin.</p>
+     * than `Oscillator.SQUARE` the LED must be connected to a PWM pin.</p>
      *
-     * <p>SOURCE_DRIVE vs SYNC_DRIVE. If the Anode (longer LED pin) is
-     * connected to the microcontroller pin, then it is SOURCE_DRIVE. If the
+     * <p>`SOURCE_DRIVE` vs `SYNC_DRIVE`. If the Anode (longer LED pin) is
+     * connected to the microcontroller pin, then it is `SOURCE_DRIVE`. If the
      * Cathode is connected to the microcontroller pin, then it is 
-     * SYNC_DRIVE.</p>
+     * `SYNC_DRIVE`.</p>
      *
      * @class LED
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
      * @param {Pin} ledPin A reference to the Pin the LED is connected to.
      * @param {Number} driveMode The drive mode of the LED. Must be set to
-     * LED.SOURCE_MODE or LED.SYNC_MODE. SOURCE_MODE is default.
+     * `LED.SOURCE_MODE` or `LED.SYNC_MODE`. `SOURCE_MODE` is default.
      */
     LED = function (board, ledPin, driveMode) {
         "use strict";
@@ -5691,13 +5693,13 @@ BO.io.RGBLED = (function () {
      * type of RGB LED with 4 legs. One leg is connected to power or ground 
      * (depending on the type of LED - common anode or common cathode) and the
      * other 3 legs are connected to PWM pins on the I/O board. See 
-     * Breakout/examples/schematics.pdf for wiring diagrams. See 
-     * Breakout/examples/actuators/rgb_led.html for an example application.
+     * [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See 
+     * [Breakout/examples/actuators/rgb\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.
      *
-     * <p>The RGB pins of the RGBLED must be connected to PWM pins on the
+     * <p>The RGB pins of the RGB LED must be connected to PWM pins on the
      * IOBoard.</p>
      *
-     * <p>COMMON_ANODE vs COMMON_CATHODE. You can determine if your RGB LED is 
+     * <p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is 
      * common anode or common cathode by reading the datasheet. To wire a 
      * common cathode RGB LED, connect the cathode to ground and the 3 anode
      * pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
@@ -5826,6 +5828,7 @@ BO.io.SoftPotEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
+     * An Event object to be dispatched (fired) by a SoftPot
      * @exports An Event object to be dispatched (fired) by a SoftPot
      * object.
      * @class SoftPotEvent
@@ -5915,7 +5918,7 @@ BO.io.SoftPot = (function () {
      * analog resistive sensor that acts as a type of slider input. There are 
      * straight and curved variations. This object provides a number of useful 
      * events such as Press, Release, Drag, Tap and capturing Flick gestures.
-     * See Breakout/examples/sensors/softpot.html for an example application.
+     * See [Breakout/examples/sensors/softpot.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/softpot.html) for an example application.
      *
      * @class SoftPot
      * @constructor
@@ -7566,15 +7569,15 @@ BO.IOBoard = (function () {
          * for an analog pin.
          *
          * @example
-         * // set analog pin A3 on an Arduino Uno to digital input
-         * board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
-         * 
-         * <p>board.analogToDigital(3) returns 17 which is the digital
-         * equivalent of the analog pin</p>
+         *     // set analog pin A3 on an Arduino Uno to digital input
+         *     board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
          *
-         * @method analogToDigital
-         * @return {Number} The digital pin number equivalent for the specified
-         * analog pin number.
+         *     <p>board.analogToDigital(3) returns 17 which is the digital
+         *     equivalent of the analog pin</p>
+         *
+         *     @method analogToDigital
+         *     @return {Number} The digital pin number equivalent for the specified
+         *     analog pin number.
          */ 
         analogToDigital: function (analogPinNumber) {
             return this.getAnalogPin(analogPinNumber).number;  

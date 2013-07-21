@@ -743,8 +743,8 @@ BO.WSocketEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * Dispatches Websocket events: Connected (onopen), Message (onmessge)
-     * and Closed (onclose) objects.
+     * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
+     * and Closed `onclose` objects.
      * @class WSocketEvent
      * @constructor
      * @extends JSUTILS.Event
@@ -1114,7 +1114,7 @@ BO.Pin = (function () {
      * represented by a Pin object.
      * The Pin object is the foundation for many of the io objects and is also 
      * very useful on its own. See the Using The Pin Object Guide on 
-     * http://breakoutjs.com for a detailed overview.
+     * [http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.
      *
      * @class Pin
      * @constructor
@@ -3295,15 +3295,15 @@ BO.IOBoard = (function () {
          * for an analog pin.
          *
          * @example
-         * // set analog pin A3 on an Arduino Uno to digital input
-         * board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
-         * 
-         * <p>board.analogToDigital(3) returns 17 which is the digital
-         * equivalent of the analog pin</p>
+         *     // set analog pin A3 on an Arduino Uno to digital input
+         *     board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
          *
-         * @method analogToDigital
-         * @return {Number} The digital pin number equivalent for the specified
-         * analog pin number.
+         *     <p>board.analogToDigital(3) returns 17 which is the digital
+         *     equivalent of the analog pin</p>
+         *
+         *     @method analogToDigital
+         *     @return {Number} The digital pin number equivalent for the specified
+         *     analog pin number.
          */ 
         analogToDigital: function (analogPinNumber) {
             return this.getAnalogPin(analogPinNumber).number;  

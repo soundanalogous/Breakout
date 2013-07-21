@@ -743,8 +743,8 @@ BO.WSocketEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * Dispatches Websocket events: Connected (onopen), Message (onmessge)
-     * and Closed (onclose) objects.
+     * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
+     * and Closed `onclose` objects.
      * @class WSocketEvent
      * @constructor
      * @extends JSUTILS.Event
@@ -1002,7 +1002,7 @@ BO.filters.Scaler = (function () {
 
     /**
      * Scales up an input value from its min and max range to a specified 
-     * minimum to maximum range. See Breakout/examples/filters/scaler.html for
+     * minimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for
      * an example application.  
      *
      * @class Scaler
@@ -1112,7 +1112,7 @@ BO.filters.Convolution = (function () {
     /**
      * The Convolution object performs low-pass, high-pass and moving average
      * filtering on an analog input.
-     * See Breakout/examples/filters/convolution.html for an example application.
+     * See [Breakout/examples/filters/convolution.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/convolution.html) for an example application.
      *
      * @class Convolution
      * @constructor
@@ -1205,9 +1205,9 @@ BO.filters.TriggerPoint = (function () {
 
     /**
      * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
-     * also use multiple points by providing a nested array such as [[0.4, 0.1],
-     * [0.7, 0.05]].
-     * See Breakout/examples/filters/triggerpoint.html for an example application.
+     * also use multiple points by providing a nested array such as `[[0.4, 0.1],
+     * [0.7, 0.05]]`.
+     * See [Breakout/examples/filters/triggerpoint.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/triggerpoint.html) for an example application.
      *
      * @class TriggerPoint
      * @constructor
@@ -1447,7 +1447,7 @@ BO.generators.Oscillator = (function () {
      * most cases (unless you are simply using it to blink and LED on or off), 
      * the Oscillator should be attached to a Pin or LED object associated with
      * a PWM pin on the I/O board.
-     * See Breakout/examples/generators/oscillator.html for an example application.
+     * See [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.
      *
      * @class Oscillator
      * @constructor
@@ -1728,7 +1728,7 @@ BO.Pin = (function () {
      * represented by a Pin object.
      * The Pin object is the foundation for many of the io objects and is also 
      * very useful on its own. See the Using The Pin Object Guide on 
-     * http://breakoutjs.com for a detailed overview.
+     * [http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.
      *
      * @class Pin
      * @constructor
@@ -3909,15 +3909,15 @@ BO.IOBoard = (function () {
          * for an analog pin.
          *
          * @example
-         * // set analog pin A3 on an Arduino Uno to digital input
-         * board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
-         * 
-         * <p>board.analogToDigital(3) returns 17 which is the digital
-         * equivalent of the analog pin</p>
+         *     // set analog pin A3 on an Arduino Uno to digital input
+         *     board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
          *
-         * @method analogToDigital
-         * @return {Number} The digital pin number equivalent for the specified
-         * analog pin number.
+         *     <p>board.analogToDigital(3) returns 17 which is the digital
+         *     equivalent of the analog pin</p>
+         *
+         *     @method analogToDigital
+         *     @return {Number} The digital pin number equivalent for the specified
+         *     analog pin number.
          */ 
         analogToDigital: function (analogPinNumber) {
             return this.getAnalogPin(analogPinNumber).number;  
