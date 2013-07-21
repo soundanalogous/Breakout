@@ -185,7 +185,9 @@ th {
     white-space: nowrap;
 }
 
-/* -- Custom --- */
+
+
+/* -- Custom --------------------------------------------------------------- */
 #header
 {
     /*background: #F7F7F7;*/
@@ -224,8 +226,27 @@ th {
     border: none !important;
 }
 
+.yui3-tab-label:hover {
+    background: rgba(255, 102, 35, 0.40) !important;
+    border-color: rgba(255, 102, 35, 0.50) !important;
+    border-width: 1px 1px 0 1px !important;
+    color: #fff !important;
+}
+
+.yui3-tab-selected .yui3-tab-label:hover {
+    background: #FF6623 !important;
+}
+
 .yui3-tab-label {
     font-size: 100% !important;
+}
+
+#api-classes li:nth-child(odd) {
+    background-color: #F7F7F7;
+}
+
+.content .apidocs {
+    margin-top: 6em;
 }
 
 
@@ -322,7 +343,7 @@ th {
 
 
 #classdocs .item {
-    border-bottom: 1px solid #466899;
+    border-bottom: 1px dotted #8C8C8C;
     margin: 1em 0;
     padding: 1.5em;
 }
@@ -494,8 +515,22 @@ h3, h4, h5, h6 {
 
 /* Module/Class intro description. */
 .apidocs .intro {
-    background: #f0f1f8;
-    border-color: #d4d8eb;
+/*    background: #f0f1f8;
+    border-color: #d4d8eb;*/
+    background: rgba(255, 102, 35, 0.10);
+    border-color: rgba(255, 102, 35, 0.20);    
+}
+
+.apidocs .intro p {
+    /*font-size: 123.077%;*/
+    font-size: 107.692%;
+    /*line-height: 138.462%;*/
+    line-height: 153.846%;
+}
+
+.intro p a {
+    font-weight: bold;
+    color: #666;
 }
 
 /* Loading spinners. */
@@ -802,10 +837,8 @@ kbd .cmd { font-family: Monaco, Helvetica; }
 
 .apis a:hover,
 .apis a:focus {
-    background: #E8EDFC;
-    background: -moz-linear-gradient(top, #e8edfc 0%, #becef7 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E8EDFC), color-stop(100%,#BECEF7));
-    border-color: #AAC0FA;
+    background: rgba(255, 102, 35, 0.30);
+    border-color: rgba(255, 102, 35, 0.40);
     border-radius: 3px;
     color: #333;
     outline: none;
@@ -813,8 +846,8 @@ kbd .cmd { font-family: Monaco, Helvetica; }
 
 .api-list-item a:hover,
 .api-list-item a:focus {
-    font-weight: bold;
-    text-shadow: 1px 1px 1px #fff;
+    /*font-weight: bold;*/
+    /*text-shadow: 1px 1px 1px #fff;*/
 }
 
 .apis .message { color: #888; }

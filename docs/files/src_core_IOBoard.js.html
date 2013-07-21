@@ -181,7 +181,7 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Copyright (c) 2011-2013 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -1503,15 +1503,15 @@ BO.IOBoard = (function () {
          * for an analog pin.
          *
          * @example
-         * // set analog pin A3 on an Arduino Uno to digital input
-         * board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
-         * 
-         * &lt;p&gt;board.analogToDigital(3) returns 17 which is the digital
-         * equivalent of the analog pin&lt;/p&gt;
+         *     // set analog pin A3 on an Arduino Uno to digital input
+         *     board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
          *
-         * @method analogToDigital
-         * @return {Number} The digital pin number equivalent for the specified
-         * analog pin number.
+         *     &lt;p&gt;board.analogToDigital(3) returns 17 which is the digital
+         *     equivalent of the analog pin&lt;/p&gt;
+         *
+         *     @method analogToDigital
+         *     @return {Number} The digital pin number equivalent for the specified
+         *     analog pin number.
          */ 
         analogToDigital: function (analogPinNumber) {
             return this.getAnalogPin(analogPinNumber).number;  

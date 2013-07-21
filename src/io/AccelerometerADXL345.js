@@ -38,8 +38,8 @@ BO.io.AccelerometerADXL345 = (function () {
      * @constructor
      * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
-     * @param {Number} range The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, 
-     * RANGE_8G, RANGE_16G). Default is RANGE_2G.    
+     * @param {Number} range The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`, 
+     * `RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.    
      * @param {Number} address The i2c address of the accelerometer (default is 0x53)
      */
     AccelerometerADXL345 = function (board, range, address) {

@@ -27,8 +27,10 @@ BO.io.Stepper = (function () {
     /**
      * Creates an interface to a Stepper motor. Use this object to set
      * the direction and number of steps for the motor to rotate. See
-     * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html, 
-     * stepper_easydriver.html and stepper_simple.html for example applications.
+     * [Breakout/examples/actuators/stepper\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html), 
+     * [stepper\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html), 
+     * [stepper\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html) 
+     * and [stepper\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.
      *
      * @class Stepper
      * @constructor

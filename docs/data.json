@@ -906,7 +906,7 @@
                 },
                 {
                     "name": "range",
-                    "description": "The dynamic range selection in Gs (options RANGE_2G, RANGE_4G, \nRANGE_8G, RANGE_16G). Default is RANGE_2G.",
+                    "description": "The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`, \n`RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.",
                     "type": "Number"
                 },
                 {
@@ -1516,7 +1516,7 @@
             "namespace": "BO.io",
             "file": "src/io/Stepper.js",
             "line": 27,
-            "description": "Creates an interface to a Stepper motor. Use this object to set\nthe direction and number of steps for the motor to rotate. See\nBreakout/examples/actuators/stepper_2wire.html, stepper_4wire.html, \nstepper_easydriver.html and stepper_simple.html for example applications.",
+            "description": "Creates an interface to a Stepper motor. Use this object to set\nthe direction and number of steps for the motor to rotate. See\n[Breakout/examples/actuators/stepper\\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html), \n[stepper\\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html), \n[stepper\\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html) \nand [stepper\\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.",
             "is_constructor": 1,
             "uses": [
                 "JSUTILS.EventDispatcher"
@@ -1933,7 +1933,7 @@
         {
             "file": "src/core/IOBoard.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.IOBoard",
             "namespace": "BO"
         },
@@ -2771,12 +2771,12 @@
             "line": 1319,
             "description": "Use this method to obtain the digital pin number equivalent \nfor an analog pin.",
             "example": [
-                "\n// set analog pin A3 on an Arduino Uno to digital input\nboard.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);\n\n<p>board.analogToDigital(3) returns 17 which is the digital\nequivalent of the analog pin</p>"
+                "\n    // set analog pin A3 on an Arduino Uno to digital input\n    board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);\n\n    <p>board.analogToDigital(3) returns 17 which is the digital\n    equivalent of the analog pin</p>"
             ],
             "itemtype": "method",
             "name": "analogToDigital",
             "return": {
-                "description": "The digital pin number equivalent for the specified\nanalog pin number.",
+                "description": "The digital pin number equivalent for the specified\n    analog pin number.",
                 "type": "Number"
             },
             "class": "BO.IOBoard",
@@ -7207,7 +7207,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 138,
+            "line": 140,
             "description": "Move the stepper a given number of steps at the specified\nspeed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).\nThe accel and decel parameters are optional but if using, both values\nmust be passed to the function.",
             "itemtype": "method",
             "name": "step",
@@ -7238,7 +7238,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 233,
+            "line": 235,
             "description": "Listen for stepping complete event",
             "access": "private",
             "tagname": "",
@@ -7249,7 +7249,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 251,
+            "line": 253,
             "description": "[read-only] The id of the Stepper object instance. Each stepper motor\nis given a unique id upon initialization.",
             "itemtype": "property",
             "name": "id",
@@ -7259,7 +7259,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 263,
+            "line": 265,
             "params": [
                 {
                     "name": "type",
@@ -7277,7 +7277,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 271,
+            "line": 273,
             "params": [
                 {
                     "name": "type",
@@ -7295,7 +7295,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 279,
+            "line": 281,
             "params": [
                 {
                     "name": "type",
@@ -7308,7 +7308,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 287,
+            "line": 289,
             "params": [
                 {
                     "name": "type",
@@ -7326,7 +7326,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 298,
+            "line": 300,
             "itemtype": "property",
             "name": "Stepper.CLOCKWISE",
             "static": 1,
@@ -7335,7 +7335,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 303,
+            "line": 305,
             "itemtype": "property",
             "name": "Stepper.COUNTER_CLOCKWISE",
             "static": 1,
@@ -7344,7 +7344,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 308,
+            "line": 310,
             "itemtype": "property",
             "name": "Stepper.DRIVER",
             "static": 1,
@@ -7353,7 +7353,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 313,
+            "line": 315,
             "itemtype": "property",
             "name": "Stepper.TWO_WIRE",
             "static": 1,
@@ -7362,7 +7362,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 318,
+            "line": 320,
             "itemtype": "property",
             "name": "Stepper.FOUR_WIRE",
             "static": 1,
@@ -7853,7 +7853,7 @@
             "line": " src/core/I2CBase.js:188"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/IOBoard.js:1"
         },
         {
@@ -8170,19 +8170,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:263"
+            "line": " src/io/Stepper.js:265"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:271"
+            "line": " src/io/Stepper.js:273"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:279"
+            "line": " src/io/Stepper.js:281"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:287"
+            "line": " src/io/Stepper.js:289"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
