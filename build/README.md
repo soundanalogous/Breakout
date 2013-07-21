@@ -10,7 +10,7 @@ Installation (dev)
     $ npm install -g grunt-cli
     ```
 
-3. Install Node modules
+3. Navigate to the Breakout directory execute the following command to install the required Node modules.
 
     ```bash
     $ npm install
@@ -18,7 +18,6 @@ Installation (dev)
 
 Building a new release
 ----------------------
-
 Execute the following command to build a release:
 
 ```bash
