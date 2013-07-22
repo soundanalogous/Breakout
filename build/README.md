@@ -1,10 +1,13 @@
+Building Breakout
+===
+
 This readme file describes the Breakout build process. If you are changing any
 of the Breakout source code (in Breakout/src/) and/or making a contribution to
 Breakout you will need to follow this process.
 
 
 Installing the build tools (dev)
-------------------
+---
 Breakout uses [grunt](http://gruntjs.com/) to run the build tasks. The following
 instructions will get you set up with Node.js (which is a requrement to run grunt)
 and grunt so you can build Breakout.
@@ -26,7 +29,7 @@ the required Node modules. This will install everything you need to build Breako
     ```
 
 Building a new release
-----------------------
+---
 If you are contributing to Breakout and have changed any of the source files
 (excluding example files) you must run the full build process before submitting
 a pull request. Executing the following command will run the full build.
@@ -54,7 +57,7 @@ after making changes to the code rather than running the full build.
 
 
 Linting
--------
+---
 [JSHint](https://github.com/jshint/jshint/) is run to enfoce code quality. See
 the jshint options set in `Breakout/.jshintrc`. To run jshint alone, execute the
 following command:
@@ -65,7 +68,7 @@ $ grunt jshint
 
 
 Concatenate and minify
-----------------------
+---
 If you make changes to any files in the Breakout src directory, you will need
 to concatenate and minify (uglify) the src files. Run the `compile` command to 
 concatenate and minify the files.
@@ -87,7 +90,7 @@ $ grunt uglify
 
 
 Running tests
--------------
+---
 Unit tests are written with [mocha](http://visionmedia.github.io/mocha/), [chai for expect](http://chaijs.com/api/bdd/) and [sinon](http://sinonjs.org/) for spies and stubs. [phantomJS](http://phantomjs.org/) is used to run the tests headlessly. phantomJS is installed when you run `npm install` so there is no need to install it separately. If you already have phantomJS
 installed, there will not be a conflict.
 
@@ -110,7 +113,7 @@ the existing tests and fixtures in `Breakout/test/core/`as a guilde.
 
 
 Updating the documentation
---------------------------
+---
 The documentation uses [yuidoc](http://yui.github.io/yuidoc/).
 If you need to generate the docs outside of the full build process, run the
 following command:
@@ -121,5 +124,5 @@ $ grunt docs
 
 
 License
--------
+---
 Breakout is distributed under the terms of the MIT License.
