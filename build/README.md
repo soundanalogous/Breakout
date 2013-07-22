@@ -1,6 +1,6 @@
-This file describes the Breakout build process. If you are changing any of the
-Breakout source code (in Breakout/src/) and/or making a contribution to Breakout
-you will need to follow this process.
+This readme file describes the Breakout build process. If you are changing any
+of the Breakout source code (in Breakout/src/) and/or making a contribution to
+Breakout you will need to follow this process.
 
 
 Installing the build tools (dev)
@@ -8,6 +8,8 @@ Installing the build tools (dev)
 Breakout uses [grunt](http://gruntjs.com/) to run the build tasks. The following
 instructions will get you set up with Node.js (which is a requrement to run grunt)
 and grunt so you can build Breakout.
+
+*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*
 
 1. Install [Node.js](http://nodejs.org/)
 2. Install grunt-cli globally (may require `sudo`)
@@ -26,8 +28,8 @@ the required Node modules. This will install everything you need to build Breako
 Building a new release
 ----------------------
 If you are contributing to Breakout and have changed any of the source files
-(excluding example files) you must run the full build before submitting a pull
-request. Executing the following command will run the full build process.
+(excluding example files) you must run the full build process before submitting
+a pull request. Executing the following command will run the full build.
 
 ```bash
 $ grunt
@@ -46,13 +48,16 @@ code and run `grunt` again.
 
 It can take a while to build a full release so if you just want to run one or
 two of the build steps refer to the grunt commands in the following sections for
-each of the build steps.
+each of the build steps. For example, while you are working on a new feature it
+may be convenient to just run `grunt compile` (which only takes a few seconds)
+after making changes to the code rather than running the full build.
 
 
 Linting
 -------
 [JSHint](https://github.com/jshint/jshint/) is run to enfoce code quality. See
-the jshint options set in `Breakout/.jshintrc`.
+the jshint options set in `Breakout/.jshintrc`. To run jshint alone, execute the
+following command:
 
 ```bash
 $ grunt jshint
@@ -83,7 +88,7 @@ $ grunt uglify
 
 Running tests
 -------------
-Unit tests are written with [mocha](http://visionmedia.github.io/mocha/), [chai for expect](http://chaijs.com/api/bdd/) and [sinon](http://sinonjs.org/) for spies and stubs. [phantomJS](http://phantomjs.org/) is used to run the tests headlessly. phantomJS is installed when you run `npm install` so there is not need to install it separately. If you already have phantomJS
+Unit tests are written with [mocha](http://visionmedia.github.io/mocha/), [chai for expect](http://chaijs.com/api/bdd/) and [sinon](http://sinonjs.org/) for spies and stubs. [phantomJS](http://phantomjs.org/) is used to run the tests headlessly. phantomJS is installed when you run `npm install` so there is no need to install it separately. If you already have phantomJS
 installed, there will not be a conflict.
 
 The following command will run jshint and then the unit tests via phantomjs:
@@ -98,7 +103,7 @@ Use the following command to run the unit tests without first running jshint:
 $ grunt mocha_phantomjs
 ```
 
-See the README file in *Breakout/test/* for more info on running the tests. If
+See the README file in `Breakout/test/` for more info on running the tests. If
 you are contributing to Breakout and add any JavaScript to the src files (example
 files are excluded) be sure to add unit tests for any new functionality. Refer to
 the existing tests and fixtures in `Breakout/test/core/`as a guilde.
