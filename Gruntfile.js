@@ -177,5 +177,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+
     grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'mocha_phantomjs', 'yuidoc']);
+    grunt.registerTask('compile', ['concat', 'uglify']);
+    grunt.registerTask('test', ['jshint', 'mocha_phantomjs']);
+    grunt.registerTask('docs', ['yuidoc']);
 };
