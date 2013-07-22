@@ -88,7 +88,7 @@ You will need one of the following I/O boards:
 - Many Arduino clones / variants should also work
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
 
-Note: In order to use Breakout with an Arduino Leonardo board, you need to update the Firmata library in your Arduino application. [Please refer to the instructions here](https://github.com/soundanalogous/Breakout/wiki/Updating-Firmata-in-Arduino).
+*In order to use Breakout with an Arduino Leonardo, Arduino Due or Teensy 3.0 board, you need to update the Firmata library in your Arduino application. You can get the latest version of [Firmata here](https://github.com/firmata/arduino). Refer to the README for installation instructions. Note that the instructions are different for Arduino 1.0.x vs Arduino 1.5.x.*
 
 OS:
 
@@ -117,10 +117,10 @@ Contributing
 Contributions are welcome. If you have any ideas, suggestions for improvements, 
 examples to share, or anything else you'd like to contribute please get in touch.
 
-Submit pull requests (against the *dev* branch) for bug fixes and small changes. For any
-larger changes, please first start a discussing by opening a new issue.
+Submit pull requests (against the `dev` branch) for bug fixes and small changes. For any
+larger changes, please first start a discussion by opening a new issue.
 
-See Breakout/build/README.md for instructions on building Breakout. 
+See `Breakout/build/README.md` for instructions on building Breakout. 
 
 
 Credits

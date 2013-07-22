@@ -2,7 +2,7 @@ Building Breakout
 ===
 
 This readme file describes the Breakout build process. If you are changing any
-of the Breakout source code (in Breakout/src/) and/or making a contribution to
+of the Breakout source code (in `Breakout/src/`) and/or making a contribution to
 Breakout you will need to follow this process.
 
 
@@ -11,8 +11,6 @@ Installing the build tools (dev)
 Breakout uses [grunt](http://gruntjs.com/) to run the build tasks. The following
 instructions will get you set up with Node.js (which is a requrement to run grunt)
 and grunt so you can build Breakout.
-
-*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*
 
 1. Install [Node.js](http://nodejs.org/)
 2. Install grunt-cli globally (may require `sudo`)
@@ -27,6 +25,8 @@ the required Node modules. This will install everything you need to build Breako
     ```bash
     $ npm install
     ```
+
+*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*    
 
 Building a new release
 ---
@@ -114,9 +114,9 @@ the existing tests and fixtures in `Breakout/test/core/`as a guilde.
 
 Updating the documentation
 ---
-The documentation uses [yuidoc](http://yui.github.io/yuidoc/).
-If you need to generate the docs outside of the full build process, run the
-following command:
+The documentation uses [yuidoc](http://yui.github.io/yuidoc/). Be sure to use the
+yui doc syntax when documenting any added code. If you need to generate the docs
+outside of the full build process, run the following command:
 
 ```bash
 $ grunt docs
