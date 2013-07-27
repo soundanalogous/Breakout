@@ -1,4 +1,5 @@
 2013.07.27 Version 0.3.0
+* Updated all examples to include socket.io client library.
 * Added BiColorLED and updated bi_color_led.html example contributed by fabaff
 * Updated jquery and jquery-ui and removed version number from file names and
   references in examples.
