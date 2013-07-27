@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/utils/Timer.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/utils/Timer.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;JSUTILS.Timer&#x27;);
+
+JSUTILS.Timer = (function () {
+
+    var Timer;
+
+    // Dependencies
+    var TimerEvent = JSUTILS.TimerEvent,
+        EventDispatcher = JSUTILS.EventDispatcher;
+
+    /**
+     * The Timer object wraps the window.setInterval() method to provide
+     * an as3-like Timer interface.
+     *
+     * @class Timer
+     * @constructor
+     * @extends JSUTILS.EventDispatcher  
+     * @param {Number} delay The delay (ms) interval between ticks
+     * @param {Number} repeatCount The number of number of ticks.
+     * A value of zero will set the timer to repeat forever. Default = 0
+     */
+    Timer = function (delay, repeatCount) {
+
+        EventDispatcher.call(this, this);
+
+        this.name = &quot;Timer&quot;;
+
+        this._count = 0;
+        this._delay = delay;
+        this._repeatCount = repeatCount || 0;
+        this._isRunning = false;
+
+        this._timer = null;
+    };
+
+    Timer.prototype = JSUTILS.inherit(EventDispatcher.prototype);
+    Timer.prototype.constructor = Timer;
+
+
+    /**
+     * The delay interval in milliseconds.
+     * 
+     * @property delay
+     * @type Number
+     */ 
+    Timer.prototype.__defineGetter__(&quot;delay&quot;, function () {
+        return this._delay;
+    });
+    Timer.prototype.__defineSetter__(&quot;delay&quot;, function (val) { 
+        this._delay = val;
+        if (this._isRunning) {
+            this.stop();
+            this.start();
+        }
+    }); 
+
+    /**
+     * The repeat count in milliseconds.
+     * 
+     * @property repeatCount
+     * @type Number
+     */ 
+    Timer.prototype.__defineGetter__(&quot;repeatCount&quot;, function () {
+        return this._repeatCount;
+    });
+    Timer.prototype.__defineSetter__(&quot;repeatCount&quot;, function (val) { 
+        this._repeatCount = val;
+        if (this._isRunning) {
+            this.stop();
+            this.start();
+        }
+    });
+
+    /**
+     * [read-only] Returns true if the timer is running.
+     * 
+     * @property running
+     * @type Number
+     */ 
+    Timer.prototype.__defineGetter__(&quot;running&quot;, function () {
+        return this._isRunning;
+    });
+
+    /**
+     * [read-only] Returns the current count (number of ticks since timer
+     * started).
+     * 
+     * @property currentCount
+     * @type Number
+     */ 
+    Timer.prototype.__defineGetter__(&quot;currentCount&quot;, function () {
+        return this._count;
+    });
+
+    /**
+     * Start the timer.
+     * @method start
+     */
+    Timer.prototype.start = function () {
+        if (this._timer === null) {
+            this._timer = setInterval(this.onTick.bind(this), this._delay);
+            this._isRunning = true;
+        }
+    };
+
+    /**
+     * Stop the timer and reset the count to zero.
+     * @method reset
+     */
+    Timer.prototype.reset = function () {
+        this.stop();
+        this._count = 0;
+    };
+
+    /**
+     * Stop the timer.
+     * @method stop
+     */
+    Timer.prototype.stop = function () {
+        if (this._timer !== null) {
+            clearInterval(this._timer);
+            this._timer = null;
+            this._isRunning = false;
+        }
+    };
+
+    /**
+     * @private
+     * @method onTick
+     */
+    Timer.prototype.onTick = function () {
+        this._count = this._count + 1;
+        if (this._repeatCount !== 0 &amp;&amp; this._count &gt; this._repeatCount) {
+            this.stop();
+            this.dispatchEvent(new TimerEvent(TimerEvent.TIMER_COMPLETE));
+        } else {
+            this.dispatchEvent(new TimerEvent(TimerEvent.TIMER));
+        }
+    };
+
+    // Document events
+
+    /**
+     * The timerTick event is dispatched at the rate specified 
+     * by the delay interval.
+     * @type JSUTILS.TimerEvent.TIMER
+     * @event timerTick
+     * @param {JSUTILS.Timer} target A reference to the Timer object.
+     */ 
+
+    /**
+     * The timerComplete event is dispatched when the repeatCount value
+     * @type JSUTILS.TimerEvent.TIMER_COMPLETE
+     * @event timerComplete
+     * @param {JSUTILS.Timer} target A reference to the Timer object.
+     */      
+
+    return Timer;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

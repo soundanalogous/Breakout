@@ -20,15 +20,13 @@ BO.filters.Scaler = (function () {
     var FilterBase = BO.filters.FilterBase;
 
     /**
-     * Scales an input value from its min and max range to a specified minimum to maximum range. 
-     * A number of scaling functions are provided.  
+     * Scales up an input value from its min and max range to a specified 
+     * minimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for
+     * an example application.  
      *
-     * @exports Scaler as BO.filters.Scaler
-     * @class Scales up an input value from its min and max range to a specified 
-     * minimum to maximum range. See Breakout/examples/filters/scaler.html for an
-     * example application.
+     * @class Scaler
      * @constructor
-     * @augments BO.filters.FilterBase
+     * @extends BO.filters.FilterBase
      * @param {Number} inMin minimum input value
      * @param {Number} inMax maximum input value
      * @param {Number} outMin minimum output value
@@ -56,8 +54,6 @@ BO.filters.Scaler = (function () {
 
     /**
      * Override FilterBase.processSample
-     *
-     * @inheritDoc
      */
     Scaler.prototype.processSample = function (val) {
         var inRange = this._inMax - this._inMin;
@@ -72,6 +68,8 @@ BO.filters.Scaler = (function () {
 
     /**
      * y = x
+     * @method Scaler.LINEAR
+     * @static
      */
     Scaler.LINEAR = function (val) {
         return val;
@@ -79,6 +77,8 @@ BO.filters.Scaler = (function () {
 
     /**
      * y = x * x
+     * @method Scaler.SQUARE
+     * @static
      */
     Scaler.SQUARE = function (val) {
         return val * val;
@@ -86,6 +86,8 @@ BO.filters.Scaler = (function () {
 
     /**
      * y = sqrt(x)
+     * @method Scaler.SQUARE_ROOT
+     * @static
      */
     Scaler.SQUARE_ROOT = function (val) {
         return Math.pow(val, 0.5);
@@ -93,6 +95,8 @@ BO.filters.Scaler = (function () {
     
     /**
      * y = x^4
+     * @method Scaler.CUBE
+     * @static
      */
     Scaler.CUBE = function (val) {
         return val * val * val * val;
@@ -100,6 +104,8 @@ BO.filters.Scaler = (function () {
     
     /**
      * y = pow(x, 1/4)
+     * @method Scaler.CUBE_ROOT
+     * @static
      */
     Scaler.CUBE_ROOT = function (val) {
         return Math.pow(val, 0.25);

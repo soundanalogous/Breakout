@@ -15,9 +15,10 @@ JSUTILS.SignalScope = (function () {
     var SignalScope;
 
     /**
-     * @class A simple 2 channel scope to view analog input data
-     * @constructor
-     * @exports SignalScope as JSUTILS.SignalScope   
+     * A simple 2 channel scope to view analog input data.
+     *
+     * @class SignalScope
+     * @constructor 
      * @param {String} canvasId The id of the canvas element to 
      * use to draw the signal.
      * @param {Number} width The width of the canvas element.
@@ -61,6 +62,7 @@ JSUTILS.SignalScope = (function () {
     /**
      * Call this method at the desired frame rate in order
      * to draw the input signal.
+     * @method update
      * @param {Number} input1 The channel 1 input signal
      * @param {Number} input2 [optional] The channel 2 input signal
      */
@@ -83,6 +85,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * @private
+     * @method drawChannel
      */
     SignalScope.prototype.drawChannel = function (values, color) {
         var offset = 0.0;
@@ -102,6 +105,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * @private
+     * @method drawMarkers
      */
     SignalScope.prototype.drawMarkers = function () {
         var offset = 0.0;
@@ -121,6 +125,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * Add a horizontal marker to the scope. 1 or more markers can be added.
+     * @method addMarker
      * @param {Number} level The value of the marker within the input value range.
      * @param {String} color The hex color value for the marker.
      */
@@ -133,6 +138,7 @@ JSUTILS.SignalScope = (function () {
 
     /**
      * Remove all markers from the scope.
+     * @removeAllMarkers
      */
     SignalScope.prototype.removeAllMarkers = function () {
         this._markers = null;

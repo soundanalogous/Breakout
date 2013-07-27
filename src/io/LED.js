@@ -20,22 +20,24 @@ BO.io.LED = (function () {
     var Oscillator = BO.generators.Oscillator;
 
     /**
-     * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
-     * than Oscillator.SQUARE the LED must be connected to a PWM pin.</p>
-     *
-     * <p>SOURCE_DRIVE vs SYNC_DRIVE. If the Anode (longer LED pin) is
-     * connected to the microcontroller pin, then it is SOURCE_DRIVE. If the
-     * Cathode is connected to the microcontroller pin, then it is 
-     * SYNC_DRIVE.</p>
-     *
-     * @exports LED as BO.io.LED
-     * @class Creates an interface to an LED. This object provides helpful
+     * Creates an interface to an LED. This object provides helpful
      * methods for blinking and fading LEDs. To use the fading methods, the
      * LED must be connected to a PWM pin on the I/O board.
+     *
+     * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
+     * than `Oscillator.SQUARE` the LED must be connected to a PWM pin.</p>
+     *
+     * <p>`SOURCE_DRIVE` vs `SYNC_DRIVE`. If the Anode (longer LED pin) is
+     * connected to the microcontroller pin, then it is `SOURCE_DRIVE`. If the
+     * Cathode is connected to the microcontroller pin, then it is 
+     * `SYNC_DRIVE`.</p>
+     *
+     * @class LED
+     * @constructor
      * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
      * @param {Pin} ledPin A reference to the Pin the LED is connected to.
      * @param {Number} driveMode The drive mode of the LED. Must be set to
-     * LED.SOURCE_MODE or LED.SYNC_MODE. SOURCE_MODE is default.
+     * `LED.SOURCE_MODE` or `LED.SYNC_MODE`. `SOURCE_MODE` is default.
      */
     LED = function (board, ledPin, driveMode) {
         "use strict";
@@ -77,9 +79,7 @@ BO.io.LED = (function () {
 
         /**
          * Get or set the current value (intensity) of the LED.
-         * 
-         * @name LED#intensity
-         * @property
+         * @property intensity
          * @type Number
          */ 
         get intensity() {
@@ -104,6 +104,7 @@ BO.io.LED = (function () {
         
         /**
          * Turn the LED on.
+         * @method on
          */
         on: function () {
             this._pin.value = this._onValue;
@@ -111,6 +112,7 @@ BO.io.LED = (function () {
 
         /**
          * Turn the LED off.
+         * @method off
          */
         off: function () {
             this._pin.value = this._offValue;
@@ -118,7 +120,7 @@ BO.io.LED = (function () {
 
         /**
          * Check if the LED is on.
-         * 
+         * @method isOn
          * @return {Boolean} True if the LED is on, false if it is off.
          */
         isOn: function () {
@@ -126,13 +128,15 @@ BO.io.LED = (function () {
         },
 
         /**
-         * Toggle the LED on or off
+         * Toggle the LED on or off.
+         * @method toggle
          */
         toggle: function () {
             this._pin.value = 1 - this._pin.value;
         },
 
         /**
+         * @method blink
          * @param {Number} interval The time interval to blink the LED.
          * @param {Number} times The number of times the LED should blink.
          * A value of 0 will blink forever.
@@ -158,6 +162,7 @@ BO.io.LED = (function () {
 
         /**
          * Stop the LED blink cycle.
+         * @method stopBlinking
          */
         stopBlinking: function () {
             if (this._pin.generator !== null) {
@@ -169,6 +174,7 @@ BO.io.LED = (function () {
         /**
          * The LED must be connected to a PWM pin to use this method.
          *
+         * @method fadeIn
          * @param {Number} time The fade-in time (in milliseconds).
          */
         fadeIn: function (time) {
@@ -178,6 +184,7 @@ BO.io.LED = (function () {
         /**
          * The LED must be connected to a PWM pin to use this method.
          *
+         * @method fadeOut
          * @param {Number} time The fade-out time (in milliseconds).
          */
         fadeOut: function (time) {
@@ -186,7 +193,8 @@ BO.io.LED = (function () {
 
         /**
          * The LED must be connected to a PWM pin to use this method.
-         *      
+         *
+         * @method fadeTo
          * @param {Number} to The new intensity value to fade to.
          * @param {Number} time The fade time (in milliseconds).
          */
@@ -212,7 +220,15 @@ BO.io.LED = (function () {
         }   
     };
 
+    /**
+     * @property LED.SOURCE_DRIVE
+     * @static
+     */
     LED.SOURCE_DRIVE = 0;
+    /**
+     * @property LED.SYNC_DRIVE
+     * @static
+     */
     LED.SYNC_DRIVE = 1;
 
     return LED;

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/io/LED.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/io/LED.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+ /**
+ * Based on LED.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ *
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.io.LED&#x27;);
+
+BO.io.LED = (function () {
+
+    var LED;
+
+    // Dependencies
+    var Pin = BO.Pin;
+    var Oscillator = BO.generators.Oscillator;
+
+    /**
+     * Creates an interface to an LED. This object provides helpful
+     * methods for blinking and fading LEDs. To use the fading methods, the
+     * LED must be connected to a PWM pin on the I/O board.
+     *
+     * &lt;p&gt;PLEASE NOTE: To use the fade methods, or to use an waveform other 
+     * than &#x60;Oscillator.SQUARE&#x60; the LED must be connected to a PWM pin.&lt;/p&gt;
+     *
+     * &lt;p&gt;&#x60;SOURCE_DRIVE&#x60; vs &#x60;SYNC_DRIVE&#x60;. If the Anode (longer LED pin) is
+     * connected to the microcontroller pin, then it is &#x60;SOURCE_DRIVE&#x60;. If the
+     * Cathode is connected to the microcontroller pin, then it is 
+     * &#x60;SYNC_DRIVE&#x60;.&lt;/p&gt;
+     *
+     * @class LED
+     * @constructor
+     * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
+     * @param {Pin} ledPin A reference to the Pin the LED is connected to.
+     * @param {Number} driveMode The drive mode of the LED. Must be set to
+     * &#x60;LED.SOURCE_MODE&#x60; or &#x60;LED.SYNC_MODE&#x60;. &#x60;SOURCE_MODE&#x60; is default.
+     */
+    LED = function (board, ledPin, driveMode) {
+        &quot;use strict&quot;;
+        
+        this.name = &quot;LED&quot;;
+
+        this._driveMode = driveMode || LED.SOURCE_DRIVE;
+        this._pin = ledPin;
+        this._onValue = 1;
+        this._offValue = 0;
+        this._supportsPWM = undefined;
+
+        if (this._driveMode === LED.SOURCE_DRIVE) {
+            this._onValue = 1;
+            this._offValue = 0;
+        } else if (this._driveMode === LED.SYNC_DRIVE) {
+            this._onValue = 0;
+            this._offValue = 1;
+        } else {
+            throw &quot;driveMode should be LED.SOURCE_DRIVE or LED.SYNC_DRIVE&quot;;
+        }
+
+        // If the pin supports PWM, set PWM mode else set DOUT mode
+        if (this._pin.getCapabilities()[Pin.PWM]) {
+            board.setDigitalPinMode(this._pin.number, Pin.PWM);
+            this._supportsPWM = true;
+        } else {
+            board.setDigitalPinMode(this._pin.number, Pin.DOUT);
+            this._supportsPWM = false;
+        }
+
+        // Start in the off state
+        this.off();
+    };
+
+    LED.prototype = {
+
+        constructor: LED,
+
+        /**
+         * Get or set the current value (intensity) of the LED.
+         * @property intensity
+         * @type Number
+         */ 
+        get intensity() {
+            return this._pin.value;
+        },
+        set intensity(val) {
+            // If the pin does not support PWM, force the value to 1 or 0
+            if (!this._supportsPWM) {
+                if (val &lt; 0.5) {
+                    val = 0;
+                } else {
+                    val = 1;
+                }
+            }
+
+            if (this._driveMode === LED.SOURCE_DRIVE) {
+                this._pin.value = val;
+            } else if (this._driveMode === LED.SYNC_DRIVE) {
+                this._pin.value = 1 - val;
+            }
+        },
+        
+        /**
+         * Turn the LED on.
+         * @method on
+         */
+        on: function () {
+            this._pin.value = this._onValue;
+        },
+
+        /**
+         * Turn the LED off.
+         * @method off
+         */
+        off: function () {
+            this._pin.value = this._offValue;
+        },
+
+        /**
+         * Check if the LED is on.
+         * @method isOn
+         * @return {Boolean} True if the LED is on, false if it is off.
+         */
+        isOn: function () {
+            return this._pin.value === this._onValue;
+        },
+
+        /**
+         * Toggle the LED on or off.
+         * @method toggle
+         */
+        toggle: function () {
+            this._pin.value = 1 - this._pin.value;
+        },
+
+        /**
+         * @method blink
+         * @param {Number} interval The time interval to blink the LED.
+         * @param {Number} times The number of times the LED should blink.
+         * A value of 0 will blink forever.
+         * @param {Function} wave The waveform to apply (default is Oscillator.SQUARE)
+         * @see BO.generator.Oscillator
+         */
+        blink: function (interval, times, wave) {
+            var freq = 1000 / interval;
+            times = times || 0;
+            wave = wave || Oscillator.SQUARE;
+
+            if (!this._supportsPWM &amp;&amp; wave !== Oscillator.SQUARE) {
+                console.log(&quot;warning: Only Oscillator.SQUARE may be used on a non-PWM pin.&quot;);
+                console.log(&quot;debug: Setting wave to Oscillator.SQUARE.&quot;);
+                wave = Oscillator.SQUARE;
+            }
+
+            //var osc = new Oscillator(wave, freq, 1, 0, 0, times);
+            this._pin.addGenerator(new Oscillator(wave, freq, 1, 0, 0, times));
+            //osc.start();
+            this._pin.generator.start();
+        },
+
+        /**
+         * Stop the LED blink cycle.
+         * @method stopBlinking
+         */
+        stopBlinking: function () {
+            if (this._pin.generator !== null) {
+                this._pin.generator.stop();
+            }
+            this.off();
+        },
+
+        /**
+         * The LED must be connected to a PWM pin to use this method.
+         *
+         * @method fadeIn
+         * @param {Number} time The fade-in time (in milliseconds).
+         */
+        fadeIn: function (time) {
+            this.fadeTo(this._onValue, time);
+        },
+
+        /**
+         * The LED must be connected to a PWM pin to use this method.
+         *
+         * @method fadeOut
+         * @param {Number} time The fade-out time (in milliseconds).
+         */
+        fadeOut: function (time) {
+            this.fadeTo(this._offValue, time);
+        },
+
+        /**
+         * The LED must be connected to a PWM pin to use this method.
+         *
+         * @method fadeTo
+         * @param {Number} to The new intensity value to fade to.
+         * @param {Number} time The fade time (in milliseconds).
+         */
+        fadeTo: function (to, time) {
+
+            if (!this._supportsPWM) {
+                console.log(&quot;warning: Fade methods can only be used for LEDs connected to PWM pins.&quot;);
+                return;
+            }
+
+            if (this._driveMode === LED.SYNC_DRIVE) {
+                to = 1 - to;
+            }
+
+            time = time || 1000;
+            var freq = 1000 / time;
+            if (this._pin.value !== to) {
+                this._pin.addGenerator(new Oscillator(Oscillator.LINEAR, freq, to - this._pin.value, this._pin.value, 0, 1));
+                this._pin.generator.start();
+            } else {
+                this._pin.removeGenerator();
+            }       
+        }   
+    };
+
+    /**
+     * @property LED.SOURCE_DRIVE
+     * @static
+     */
+    LED.SOURCE_DRIVE = 0;
+    /**
+     * @property LED.SYNC_DRIVE
+     * @static
+     */
+    LED.SYNC_DRIVE = 1;
+
+    return LED;
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

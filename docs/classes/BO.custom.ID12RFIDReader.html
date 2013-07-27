@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>BO.custom.ID12RFIDReader - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>BO.custom.ID12RFIDReader Class</h1>
+<div class="box meta">
+    
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                
+                    <li><a href="JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+                
+            </ul>
+        </div>
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_custom_ID12RFIDReader.js.html#l25"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:25</code></a>
+        </div>
+    
+
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Creates an interface to an ID-12 RFID Reader. Other Innovations
+RFID readers will likely work but have not been tested. This object
+requires firmware other than StandardFirmata to be uploaded to the I/O board.
+See <a href="https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html">Breakout/custom_examples/rfid_example1.html</a> 
+and <a href="https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example2.html">rfid_example2.html</a> for
+example applications.</p>
+
+<p>To use this object with standard io objects in Breakout, 
+RFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata. 
+See custom_examples/readme.txt for insturctions.</p>
+
+<p>Is is also possible to create a custom application for your
+IOBoard that includes the RFID reader. See IDx_Reader_Firmata_Example
+in the IDxRFIDReader library example files.</p>
+</div>
+
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_BO.custom.ID12RFIDReader" class="method item">
+    <h3 class="name"><code>BO.custom.ID12RFIDReader</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>board</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>readerId</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l25"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:25</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">board</code>
+                        <span class="type">IOBoard</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A reference to the IOBoard instance</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">readerId</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The ID assigned to the reader in the firmware
+running on the IOBoard (default = 13)</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+    </div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+        
+        
+            <li class="api-class-tab events"><a href="#events">Events</a></li>
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_addEventListener">addEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_dec2hex">dec2hex</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_dispatch">dispatch</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_hasEventListener">hasEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_onSysExMessage">onSysExMessage</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method private">
+                                <a href="#method_processRFIDData">processRFIDData</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_removeEventListener">removeEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+
+            
+                <div class="index-section events">
+                    <h3>Events</h3>
+
+                    <ul class="index-list events">
+                        
+                            <li class="index-item event">
+                                <a href="#event_addTag">addTag</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item event">
+                                <a href="#event_removeTag">removeTag</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_addEventListener" class="method item inherited">
+    <h3 class="name"><code>addEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_addEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l37"><code>src&#x2F;utils&#x2F;EventDispatcher.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dec2hex" class="method item private">
+    <h3 class="name"><code>dec2hex</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l81"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:81</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatch" class="method item private">
+    <h3 class="name"><code>dispatch</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l115"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:115</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatchEvent" class="method item inherited">
+    <h3 class="name"><code>dispatchEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>optionalParams</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_dispatchEvent">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l78"><code>src&#x2F;utils&#x2F;EventDispatcher.js:78</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Event object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">optionalParams</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Optional parameters passed as an object.
+return {boolean} True if dispatch is successful, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_hasEventListener" class="method item inherited">
+    <h3 class="name"><code>hasEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_hasEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l65"><code>src&#x2F;utils&#x2F;EventDispatcher.js:65</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type
+return {boolean} True is listener exists for this type, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_onSysExMessage" class="method item private">
+    <h3 class="name"><code>onSysExMessage</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l65"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:65</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_processRFIDData" class="method item private">
+    <h3 class="name"><code>processRFIDData</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l89"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:89</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_removeEventListener" class="method item inherited">
+    <h3 class="name"><code>removeEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_removeEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l50"><code>src&#x2F;utils&#x2F;EventDispatcher.js:50</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+
+        
+            <div id="events" class="api-class-tabpanel">
+                <h2 class="off-left">Events</h2>
+
+                
+                    <div id="event_addTag" class="events item">
+    <h3 class="name"><code>addTag</code></h3>
+    <span class="type">BO.custom.RFIDEvent.ADD_TAG</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l165"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:165</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The addTag event is dispatched when a new tag is read.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">target</code>
+                        <span class="type"><a href="../classes/BO.custom.ID12RFIDReader.html" class="crosslink">BO.custom.ID12RFIDReader</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A reference to the ID12RFIDReader object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">tag</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The RFID tag value.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+                    <div id="event_removeTag" class="events item">
+    <h3 class="name"><code>removeTag</code></h3>
+    <span class="type">BO.custom.RFIDEvent.REMOVE_TAG</span>
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_custom_ID12RFIDReader.js.html#l173"><code>src&#x2F;custom&#x2F;ID12RFIDReader.js:173</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The removeTag event is dispatched when a tag is removed from the reader.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Event Payload:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">target</code>
+                        <span class="type"><a href="../classes/BO.custom.ID12RFIDReader.html" class="crosslink">BO.custom.ID12RFIDReader</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A reference to the ID12RFIDReader object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">tag</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The RFID tag value.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+
+    
+</div>
+
+                
+            </div>
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

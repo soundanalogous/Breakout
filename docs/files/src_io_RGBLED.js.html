@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/io/RGBLED.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/io/RGBLED.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+ /**
+ * Based on RGBLED.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ *
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.io.RGBLED&#x27;);
+
+BO.io.RGBLED = (function () {
+
+    var RGBLED;
+
+    // Dependencies
+    var Pin = BO.Pin,
+        LED = BO.io.LED;
+
+    /**
+     * Creates an interface to an RGB LED. This interface is for the
+     * type of RGB LED with 4 legs. One leg is connected to power or ground 
+     * (depending on the type of LED - common anode or common cathode) and the
+     * other 3 legs are connected to PWM pins on the I/O board. See 
+     * [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See 
+     * [Breakout/examples/actuators/rgb\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.
+     *
+     * &lt;p&gt;The RGB pins of the RGB LED must be connected to PWM pins on the
+     * IOBoard.&lt;/p&gt;
+     *
+     * &lt;p&gt;&#x60;COMMON_ANODE&#x60; vs &#x60;COMMON_CATHODE&#x60;. You can determine if your RGB LED is 
+     * common anode or common cathode by reading the datasheet. To wire a 
+     * common cathode RGB LED, connect the cathode to ground and the 3 anode
+     * pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
+     * LED, the anode is connected to power and the 3 cathode pins are connected
+     * to the IOBoard PWM pins via 330 ohm resistors.&lt;/p&gt;
+     *
+     * @class RGBLED
+     * @constructor
+     * @param {IOBoard} board A reference to the IOBoard instance that the
+     * servo is attached to.
+     * @param {Pin} redLEDPin A reference to the IOBoard Pin the red LED pin
+     * is connected to.
+     * @param {Pin} greenLEDPin A reference to the IOBoard Pin the green LED
+     * pin is connected to.
+     * @param {Pin} blueLEDPin A reference to the IOBoard Pin the blue LED pin
+     * is connected to.  
+     * @param {Number} driveMode The drive mode of the RGBLED. Must be set to
+     * RGBLED.COMMON_ANODE or RGBLED.COMMON_CATHODE. RGBLED.COMMON_ANODE is
+     * default.
+     */
+    RGBLED = function (board, redLEDPin, greenLEDPin, blueLEDPin, driveMode) {
+        &quot;use strict&quot;;
+        
+        this.name = &quot;RGBLED&quot;;
+
+        if (driveMode === undefined) {
+            driveMode = RGBLED.COMMON_ANODE;
+        }
+
+        this._redLED = new LED(board, redLEDPin, driveMode);
+        this._greenLED = new LED(board, greenLEDPin, driveMode);
+        this._blueLED = new LED(board, blueLEDPin, driveMode);
+    };
+
+    RGBLED.prototype = {
+
+        constructor: RGBLED,
+
+        /**
+         * Set the RGBLED color.
+         *
+         * @method setColor
+         * @param {Number} red The red value (0 - 255)
+         * @param {Number} green The green value (0 - 255)
+         * @param {Number} blue The blue value (0 - 255)
+         */
+        setColor: function (red, green, blue) {
+            red = red / 255;
+            green = green / 255;
+            blue = blue / 255;
+
+            this._redLED.intensity = red;
+            this._greenLED.intensity = green;
+            this._blueLED.intensity = blue;
+        },
+
+        /**
+         * Fade in the RGBLED from the off state.
+         *
+         * @method fadeIn
+         * @param {Number} time The time of the fade (in milliseconds)
+         */
+        fadeIn: function (time) {
+            time = time || 1000;
+            this._redLED.fadeTo(1, time);
+            this._greenLED.fadeTo(1, time);
+            this._blueLED.fadeTo(1, time);
+        },
+
+        /**
+         * Fade out the RGBLED from the on state.
+         *
+         * @method fadeOut
+         * @param {Number} time The time of the fade (in milliseconds)
+         */
+        fadeOut: function (time) {
+            time = time || 1000;
+            this._redLED.fadeTo(0, time);
+            this._greenLED.fadeTo(0, time);
+            this._blueLED.fadeTo(0, time);          
+        },
+
+        /**
+         * Fade from the current color to the new color.
+         *
+         * @method fadeTo
+         * @param {Number} red The red value to fade to (0 - 255)
+         * @param {Number} green The green value to fade to (0 - 255)
+         * @param {Number} blue The blue value to fade to (0 - 255)
+         * @param {Number} time The time of the fade (in milliseconds)       
+         */     
+        fadeTo: function (red, green, blue, time) {
+            red = red / 255;
+            green = green / 255;
+            blue = blue / 255;
+            time = time || 1000;
+
+            this._redLED.fadeTo(red, time);
+            this._greenLED.fadeTo(green, time);
+            this._blueLED.fadeTo(blue, time);
+        }
+    };
+
+    /**
+     * @property RGBLED.COMMON_ANODE
+     * @static
+     */
+    RGBLED.COMMON_ANODE = LED.SYNC_DRIVE;
+    /**
+     * @property RGBLED.COMMON_CATHODE
+     * @static
+     */
+    RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
+
+    return RGBLED;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

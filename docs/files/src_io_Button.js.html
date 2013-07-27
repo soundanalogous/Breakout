@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/io/Button.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/io/Button.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.io.Button&#x27;);
+
+BO.io.Button = (function () {
+
+    var Button;
+
+    // dependencies
+    var PhysicalInputBase = BO.PhysicalInputBase,
+        PinEvent = BO.PinEvent,
+        Pin = BO.Pin,
+        ButtonEvent = BO.io.ButtonEvent;
+
+    /**
+     * Creates and interface to a physical button. The Button object
+     * dispatches events on state changes such as Pressed, Released and 
+     * Sustained Press. The Button object also handles debouncing.
+     *
+     * The advantage of using the Button class over listening for pin change
+     * events on a Pin object, is that the Button class handles debouncing and
+     * provides helpful button events: Pressed, Released, Long Press and
+     * Sustained Press
+     *
+     * &lt;p&gt;&#x60;PULL_UP&#x60; vs &#x60;PULL_DOWN&#x60;. If the other end of the resistor connected to
+     * the button is connected to ground, configuration is &#x60;PULL_DOWN&#x60;, if the 
+     * resistor is connected to power, then the configuration is &#x60;PULL_UP&#x60;.&lt;/p&gt;
+     *
+     * @class Button
+     * @constructor
+     * @extends BO.PhysicalInputBase
+     * @param {IOBoard} board A reference to the IOBoard instance
+     * @param {Pin} pin A reference to the Pin the button is connected to.
+     * @param {Number} buttonMode The mode of the button (either 
+     * &#x60;Button.PULL_DOWN&#x60; or &#x60;Button.PULL_UP&#x60; if wired with external resistors or 
+     * &#x60;Button.INTERNAL_PULL_UP&#x60; if using the internal pull-up resistors. Default
+     * is &#x60;PULL_DOWN&#x60;.
+     * @param {Number} sustainedPressInterval The delay time in milliseconds 
+     * before a sustained press event is fired.
+     */
+    Button = function (board, pin, buttonMode, sustainedPressInterval) {
+        &quot;use strict&quot;;
+        
+        PhysicalInputBase.call(this);
+
+        this.name = &quot;Button&quot;;
+        this._pin = pin;
+
+        var pinNumber = pin.number;
+        
+        this.buttonMode = buttonMode || Button.PULL_DOWN;
+        this._sustainedPressInterval = sustainedPressInterval || 1000;
+
+        this._debounceInterval = 20;
+        this._repeatCount = 0;
+        this._timer = null;
+        this._timeout = null;
+        
+        this._board = board;
+        board.setDigitalPinMode(pinNumber, Pin.DIN);
+
+        if (this.buttonMode === Button.INTERNAL_PULL_UP) {
+            // Enable internal pull up resistor
+            board.enablePullUp(pinNumber);
+            // Set value to high to avoid initial change event
+            this._pin.value = Pin.HIGH;
+        } else if (this.buttonMode === Button.PULL_UP) {
+            // Set value to high to avoid initial change event
+            this._pin.value = Pin.HIGH;
+        }
+        this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));   
+    };
+
+    Button.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
+    Button.prototype.constructor = Button;
+
+    /**
+     * @private
+     * @method onPinChange
+     */
+    Button.prototype.onPinChange = function (evt) {
+        
+        var btnVal = evt.target.value;
+        var stateHandler;
+                
+        if (this.buttonMode === Button.PULL_DOWN) {
+            if (btnVal === 1) {
+                stateHandler = this.pressed;
+            } else {
+                stateHandler = this.released;
+            }
+        } else if (this.buttonMode === Button.PULL_UP || this.buttonMode === Button.INTERNAL_PULL_UP) {
+            if (btnVal === 1) {
+                stateHandler = this.released;
+            } else {
+                stateHandler = this.pressed;
+            }
+        }
+        
+        if (this._timeout === null) {
+            this._timeout = setTimeout(stateHandler.bind(this), this._debounceInterval);
+        } else {
+            clearTimeout(this._timeout);
+            this._timeout = setTimeout(stateHandler.bind(this), this._debounceInterval);
+        }
+    };
+    
+    /**
+     * @private
+     * @method pressed
+     */
+    Button.prototype.pressed = function () {
+        this._timeout = null;
+
+        this.dispatchEvent(new ButtonEvent(ButtonEvent.PRESS));
+        
+        this._timer = setInterval(this.sustainedPress.bind(this), this._sustainedPressInterval);
+    };
+    
+    /**
+     * @private
+     * @method released
+     */ 
+    Button.prototype.released = function () {
+        this._timeout = null;
+        this.dispatchEvent(new ButtonEvent(ButtonEvent.RELEASE));
+        
+        if (this._timer !== null) {
+            clearInterval(this._timer);
+            this._timer = null;
+        }
+        
+        this._repeatCount = 0;
+    };
+    
+    /**
+     * @private
+     * @method sustainedPress
+     */
+    Button.prototype.sustainedPress = function () {
+        if (this._repeatCount &gt; 0) {
+            this.dispatchEvent(new ButtonEvent(ButtonEvent.SUSTAINED_PRESS));
+        } else {
+            this.dispatchEvent(new ButtonEvent(ButtonEvent.LONG_PRESS));
+        }
+        
+        this._repeatCount++;
+    };
+    
+    /**
+     * The debounce time interval in milliseconds.
+     * @property debounceInterval
+     * @type Number
+     */ 
+    Button.prototype.__defineGetter__(&quot;debounceInterval&quot;, function () { return this._debounceInterval; });
+    Button.prototype.__defineSetter__(&quot;debounceInterval&quot;, function (interval) { this._debounceInterval = interval; });
+    
+    /**
+     * The delay time (in milliseconds) the button must be held before a
+     * sustained press event is fired.
+     * @property sustainedPressInterval
+     * @type Number
+     */ 
+    Button.prototype.__defineGetter__(&quot;sustainedPressInterval&quot;, function () { return this._sustainedPressInterval; });
+    Button.prototype.__defineSetter__(&quot;sustainedPressInterval&quot;, function (intervalTime) { this._sustainedPressInterval = intervalTime; });
+
+    /**
+     * [read-only] The pin number of the pin the button is attached to.
+     * @property pinNumber
+     * @type Number
+     */
+    Button.prototype.__defineGetter__(&quot;pinNumber&quot;, function () { return this._pin.number; });    
+
+    /**
+     * @property Button.PULL_DOWN
+     * @static
+     */
+    Button.PULL_DOWN = 0;
+    /**
+     * @property Button.PULL_UP
+     * @static
+     */
+    Button.PULL_UP = 1;
+    /**
+     * @property Button.INTERNAL_PULL_UP
+     * @static
+     */
+    Button.INTERNAL_PULL_UP = 2;
+
+
+    // Document events
+
+    /**
+     * The pressed event is dispatched when the button is pressed.
+     * @type BO.io.ButtonEvent.PRESS
+     * @event pressed
+     * @param {BO.io.Button} target A reference to the Button object
+     */ 
+
+    /**
+     * The released event is dispatched when the button is released.
+     * @type BO.io.ButtonEvent.RELEASE
+     * @event released
+     * @param {BO.io.Button} target A reference to the Button object
+     */ 
+     
+    /**
+     * The longPress event is dispatched once when the button has been held for
+     * the time duration specified by the sustainedPressInterval property.
+     * @type BO.io.ButtonEvent.LONG_PRESS
+     * @event longPress
+     * @param {BO.io.Button} target A reference to the Button object
+     */ 
+     
+    /**
+     * The sustainedPress event is dispatched continuously at the rate 
+     * specified by the sustainedPressInterval property while the button is
+     * held.
+     * @type BO.io.ButtonEvent.SUSTAINED_PRESS
+     * @event sustainedPress
+     * @param {BO.io.Button} target A reference to the Button object
+     */              
+
+    return Button;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

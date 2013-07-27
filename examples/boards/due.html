@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+body {
+    margin: 20px;
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #00AEFF;
+}
+h2 {
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+.text {
+    font-family: "Arial";
+    font-size: 22px;
+    color: #00AEEF;
+    padding-bottom: 20px;
+}
+</style>
+
+<title>Arduino Due Example</title>
+
+<!-- The following (socket.io.js) is only required when using the node_server -->
+<script src="../../socket.io/socket.io.js"></script>
+<script src="../../dist/Breakout.min.js"></script>
+<script src="../libs/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var Pin = BO.Pin;
+    var PinEvent = BO.PinEvent;
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var BlinkM = BO.io.BlinkM;
+    var CompassHMC6352 = BO.io.CompassHMC6352;
+    var CompassEvent = BO.io.CompassEvent;
+    var Button = BO.io.Button;
+    var ButtonEvent = BO.io.ButtonEvent;
+    var Servo = BO.io.Servo;
+    var LED = BO.io.LED;
+    var Oscillator = BO.generators.Oscillator;
+
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true;  
+
+    // If you are not serving this file from the same computer
+    // that the Arduino Leonardo board is connected to, replace
+    // window.location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var host = window.location.hostname;
+    // if the file is opened locally, set the host to "localhost"
+    if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+    }
+    var due = new IOBoard(host, 8887);
+    
+    // Variables
+    var servoDir = true;
+    var blinkM;
+    var compass;
+    var servo;
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data    
+    due.addEventListener(IOBoardEvent.READY, onReady);
+
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        due.removeEventListener(IOBoardEvent.READY, onReady);
+                    
+        // Listen for incoming string messages
+        // when using StandardFirmata, error messages will be sent
+        // from the I/O board as strings.
+        due.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+
+        var blinkLED = new LED(due, due.getDigitalPin(13));
+        blinkLED.blink(1000, 0);
+
+        // Digital input using Button object:
+        // Parameters: board, pin, mode
+        var button01 = new Button(due, due.getDigitalPin(37), Button.PULL_DOWN);
+        button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+        button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+        
+        // Demonstrates reading values on an analog pin
+        // enable the analog pin to be read
+        due.enableAnalogPin(11);
+        // get a reference to the pin object
+        var pot = due.getAnalogPin(11);
+        // Listen for the CHANGE event to be notified when the analog
+        // value has changed.
+        pot.addEventListener(PinEvent.CHANGE, onPotChange);
+        
+
+        // Digital input example using Pin object:
+        // Demonstrates how to use an analog pin as a digital pin
+        // analog pin A2 is also digital pin 56
+        // either of the 2 following lines can be used:
+        //due.setDigitalPinMode(56, Pin.DIN);
+        due.setDigitalPinMode(due.analogToDigital(2), Pin.DIN);
+
+        // Either of the following 2 lines can be used:
+        //var button02 = due.getDigitalPin(56);
+        var button02 = due.getAnalogPin(2);
+
+        button02.addEventListener(PinEvent.CHANGE, onButtonChange);
+        
+        // Create a new LED
+        // Parameter: board, pin       
+        var fadeLED = new LED(due, due.getDigitalPin(11));
+        // Use a sine wave to fade the led on and off every 2 seconds
+        fadeLED.blink(2000, 0, Oscillator.SIN);         
+        
+        servo = new Servo(due, due.getDigitalPin(4));
+        setInterval(servoTest, 5000);
+        
+        // i2c module example: BlinkM module
+        blinkM = new BlinkM(due);
+        blinkM.stopScript();
+        setInterval(randomColor, 2000);
+        
+        // i2c module example:  HMC6352 digital compass module
+        compass = new CompassHMC6352(due);
+        compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
+    }
+    
+    function onHeadingUpdate(evt) {
+        //console.log("heading = " + evt.target.heading);
+        $('#heading').html("heading: " + evt.target.heading);
+    }   
+    
+    function randomColor() {
+        var red = Math.floor(Math.random() * 255);
+        var green = Math.floor(Math.random() * 255);
+        var blue = Math.floor(Math.random() * 255);
+        
+        blinkM.goToRGBColorNow([red, green, blue]);
+        //blinkM.fadeToRGBColor([red, green, blue]);
+    }   
+    
+    function onPotChange(event) {
+        var pin = event.target;
+        var analogData = "pot value: " + pin.value.toFixed(3) + 
+            "\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
+            pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
+        
+        //console.log(analogData);
+        $('#potData').html(analogData); 
+    }
+
+    function onButtonPress(event) {
+        var btn = event.target;
+        $('#button').html("button: pin = " + btn.pinNumber + " pressed");
+    }
+
+    function onButtonRelease(event) {
+        var btn = event.target;
+        $('#button').html("button: pin = " + btn.pinNumber + " released");
+    }
+    
+    function onButtonChange(event) {
+        var pin = event.target;
+        //console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
+        $('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);    
+    }   
+        
+    function onStringMessage(event) {
+        console.log("string received: " + event.message);
+    }
+    
+    function servoTest() {
+        if (servoDir) {
+            servo.angle = 0;
+        } else {
+            servo.angle = 180;
+        }
+        servoDir = !servoDir;
+    }
+});
+</script>
+
+</head>
+<body>
+    <h2>Arduino Due Test Example</h2>
+  
+    <div id="potData" class="text">Pot value:</div>
+    <div id="heading" class="text">Heading:</div>
+    <div id="button" class="text">Button:</div>
+  
+</body>
+</html>​

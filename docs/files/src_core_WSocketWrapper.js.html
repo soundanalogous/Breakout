@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/core/WSocketWrapper.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/core/WSocketWrapper.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.WSocketWrapper&#x27;);
+
+BO.WSocketWrapper = (function () {
+    &quot;use strict&quot;;
+
+    var WSocketWrapper;
+
+    // dependencies
+    var EventDispatcher = JSUTILS.EventDispatcher,
+        WSocketEvent = BO.WSocketEvent;
+
+    /**
+     * Creates a wrapper for various websocket implementations to unify the
+     * interface.
+     *
+     * @class WSocketWrapper
+     * @constructor
+     * @uses JSUTILS.EventDispatcher
+     * @param {String} host The host address of the web server.
+     * @param {Number} port The port to connect to on the web server.
+     * native websocket implementation.
+     * @param {String} protocol The websockt protocol definition (if necessary).
+     */
+    WSocketWrapper = function (host, port, protocol) {
+        this.name = &quot;WSocketWrapper&quot;;
+
+        EventDispatcher.call(this, this);
+
+        this._host = host;
+        this._port = port;
+        this._protocol = protocol || &quot;default-protocol&quot;;
+        this._socket = null;
+        this._readyState = &quot;&quot;; // only applies to native WebSocket implementations
+
+        this.init(this);
+
+    };
+
+    WSocketWrapper.prototype = JSUTILS.inherit(EventDispatcher.prototype);
+    WSocketWrapper.prototype.constructor = WSocketWrapper;
+
+    /**
+     * Initialize the websocket
+     * @private
+     * @method init
+     * @param {Object} self A reference to this websocket object.
+     */
+    WSocketWrapper.prototype.init = function (self) {
+
+        // if io (socket.io) is defined, assume that the node server is being used
+        if (typeof io !== &quot;undefined&quot;) {
+            self._socket = io.connect(&quot;http://&quot; + self._host + &quot;:&quot; + self._port);
+
+            try {
+                /** @private */
+                self._socket.on(&#x27;connect&#x27;, function () {
+                    // prevent socket.io from automatically attempting to reconnect
+                    // when the server is quit
+                    self._socket.socket.options.reconnect = false;
+                    
+                    self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
+                    /** @private */
+                    self._socket.on(&#x27;message&#x27;, function (msg) {
+                        self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg});
+                    });
+                });
+                
+            } catch (exception) {
+                console.log(&quot;Error &quot; + exception);
+            }
+
+        } else {
+            
+            try {
+
+                if (&quot;MozWebSocket&quot; in window) {
+                    // MozWebSocket is no longer used in Firefox 11 and higher
+                    self._socket = new MozWebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;, self._protocol);
+                } else if (&quot;WebSocket&quot; in window) {
+                    // Safari doesn&#x27;t like protocol parameter
+                    //self._socket = new WebSocket(&quot;ws://&quot;+self._host+&quot;:&quot;+self._port, self._protocol);
+                    self._socket = new WebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;);
+                } else {
+                    console.log(&quot;Websockets not supported by this browser&quot;);
+                    throw &quot;Websockets not supported by this browser&quot;;
+                }
+                /** @private */
+                self._socket.onopen = function () {
+
+                    self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
+                    /** @private */
+                    self._socket.onmessage = function (msg) {
+                        self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg.data});
+                    };
+                    /** @private */
+                    self._socket.onclose = function () {
+                        self._readyState = self._socket.readyState;
+                        self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));   
+                    };
+
+                };
+                
+            } catch (exception) {
+                console.log(&quot;Error &quot; + exception);
+            }
+                
+        }
+
+    };
+
+    /**
+     * Send a message
+     * TO DO: support sending ArrayBuffers and Blobs
+     * For now, forward any calls to sendString
+     * @private
+     * @method send
+     * @param {String} message The message to send
+     */
+    WSocketWrapper.prototype.send = function (message) {
+        // to do: ensure socket is not null before trying to send
+        //this._socket.send();
+        this.sendString(message);
+    };
+
+    /**
+     * Send a message
+     * @method sendString
+     * @param {String} message The message to send
+     */
+    WSocketWrapper.prototype.sendString = function (message) {
+        // to do: ensure socket is not null before trying to send
+        this._socket.send(message.toString());
+    };  
+
+    // to do: ensure socket is not null before trying to get readyState
+
+    /**
+     * [read-only] Wrapper for the readyState method of the native websocket implementation
+     * &lt;p&gt;CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3&lt;/p&gt;
+     * @property readyState
+     * @type String
+     */      
+    WSocketWrapper.prototype.__defineGetter__(&quot;readyState&quot;, function () {
+        return this._readyState;
+    });
+
+
+    // document events
+
+    /**
+     * The webSocketConnected event is dispatched when a connection with
+     * the websocket is established.
+     * @type BO.WebsocketEvent.CONNECTED
+     * @event webSocketConnected
+     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+     */ 
+
+    /**
+     * The webSocketMessage event is dispatched when a websocket message is received.
+     * @type BO.WebsocketEvent.MESSAGE
+     * @event webSocketMessage
+     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+     * @param {String} message The websocket data    
+     */ 
+
+    /**
+     * The webSocketClosed event is dispatched the websocket connection is closed.
+     * @type BO.WebsocketEvent.CLOSE
+     * @event webSocketClosed
+     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
+     */      
+
+    return WSocketWrapper;
+
+}());
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

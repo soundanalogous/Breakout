@@ -29,21 +29,20 @@ BO.io.GyroITG3200 = (function () {
         GyroEvent = BO.io.GyroEvent;
 
     /**
-     * InvenSense ITG3200 3-axis MEMS gyro
-     *
-     * @exports GyroITG3200 as BO.io.GyroITG3200
-     * @class Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
+     * Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
      * angular acceleration around the x, y, and z axis. This object provides
-     * the angular velocity of each axis. Proper calibration is required for an accurate
-     * reading. See Breakout/examples/sensors/itg3200.html and 
-     * Breakout/examples/processing_js/gyro.html for example applications.
+     * the angular velocity of each axis. Proper calibration is required for an
+     * accurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and 
+     * [Breakout/examples/processing\_js/gyro.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/gyro.html) for example applications.
+     *
+     * @class GyroITG3200
      * @constructor
-     * @augments BO.I2CBase
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
-     * GyroITG3200.ID_AD0_DVV (0x69), if pin 9 (AD0) is tied to GND, then use GyroITG3200.ID_AD0_GND. 
-     * Default = GyroITG3200.ID_AD0_VDD
+     * `GyroITG3200.ID_AD0_DVV` (0x69), if pin 9 (AD0) is tied to GND, then use `GyroITG3200.ID_AD0_GND`. 
+     * Default = `GyroITG3200.ID_AD0_VDD`
      */
     GyroITG3200 = function (board, autoStart, address) {
 
@@ -83,16 +82,14 @@ BO.io.GyroITG3200 = (function () {
     /**
      * [read-only] The state of continuous read mode. True if continuous read mode
      * is enabled, false if it is disabled.
-     * @name GyroITG3200#isRunning
-     * @property
+     * @property isRunning
      * @type Boolean
      */      
     GyroITG3200.prototype.__defineGetter__("isRunning", function () { return this._isReading; });
 
     /**
      * [read-only] The x axis output value in degrees.
-     * @name GyroITG3200#x
-     * @property
+     * @property x
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("x", function () { 
@@ -101,8 +98,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * [read-only] The y axis output value in degrees.
-     * @name GyroITG3200#y
-     * @property
+     * @property y
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("y", function () { 
@@ -111,8 +107,7 @@ BO.io.GyroITG3200 = (function () {
     
     /**
      * [read-only] The z axis output value in degrees.
-     * @name GyroITG3200#z
-     * @property
+     * @property z
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("z", function () { 
@@ -121,31 +116,29 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * The raw x axis output value from the sensor.
-     * @name GyroITG3200#rawX
-     * @property
+     * @property rawX
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("rawX", function () { return this._rawX; });
 
     /**
      * The raw y axis output value from the sensor.
-     * @name GyroITG3200#rawY
-     * @property
+     * @property rawY
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("rawY", function () { return this._rawY; });
     
     /**
      * The raw z axis output value from the sensor.
-     * @name GyroITG3200#rawZ
-     * @property
+     * @property rawZ
      * @type Number
      */      
     GyroITG3200.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });      
     
     /**
      * Set the polarity of the x, y, and z output values.
-     * 
+     *
+     * @method setRevPolarity
      * @param {Boolean} xPol Polarity of the x axis
      * @param {Boolean} yPol Polarity of the y axis
      * @param {Boolean} zPol Polarity of the z axis
@@ -157,7 +150,9 @@ BO.io.GyroITG3200 = (function () {
     };
     
     /**
-     * Offset the x, y, or z output by the respective input value
+     * Offset the x, y, or z output by the respective input value.
+     *
+     * @method setOffsets
      * @param {Number} xOffset
      * @param {Number} yOffset
      * @param {Number} zOffset
@@ -169,7 +164,9 @@ BO.io.GyroITG3200 = (function () {
     };
     
     /**
-     * Set the gain value for the x, y, or z output
+     * Set the gain value for the x, y, or z output.
+     *
+     * @method setGains
      * @param {Number} xGain
      * @param {Number} yGain
      * @param {Number} zGain
@@ -181,7 +178,8 @@ BO.io.GyroITG3200 = (function () {
     };      
 
     /**
-     * Start continuous reading of the sensor
+     * Start continuous reading of the sensor.
+     * @method startReading
      */
     GyroITG3200.prototype.startReading = function () {
         if (!this._isReading) {
@@ -191,7 +189,8 @@ BO.io.GyroITG3200 = (function () {
     };
     
     /**
-     * Stop continuous reading of the sensor
+     * Stop continuous reading of the sensor.
+     * @method stopReading
      */
     GyroITG3200.prototype.stopReading = function () {
         this._isReading = false;
@@ -201,6 +200,7 @@ BO.io.GyroITG3200 = (function () {
 
     /** 
      * Sends read request to accelerometer and updates accelerometer values.
+     * @method update
      */
     GyroITG3200.prototype.update = function () {
 
@@ -213,6 +213,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method init
      */ 
     GyroITG3200.prototype.init = function () {           
         // set fast sample rate divisor = 0
@@ -234,6 +235,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method onGyroReady
      */
     GyroITG3200.prototype.onGyroReady = function () {
         this._startupTimer = null;
@@ -246,6 +248,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method setRegisterBit
      */
     GyroITG3200.prototype.setRegisterBit = function (regAddress, bitPos, state) {
         var value;
@@ -261,6 +264,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method handleI2C
      */
     GyroITG3200.prototype.handleI2C = function (data) {
 
@@ -276,6 +280,7 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * @private
+     * @method readGyro
      */
     GyroITG3200.prototype.readGyro = function (data) {
         
@@ -323,11 +328,17 @@ BO.io.GyroITG3200 = (function () {
     // public static constants
 
     /** 
-     * ID = 0x69 if sensor pin 9 (AD0) is tied to Power, 
-     * else ID = 0x68 if pin 9 is tied to Ground
-     * @constant 
+     * ID = 0x69 if sensor pin 9 (AD0) is tied to Power.
+     * @property GyroITG3200.ID_AD0_VDD
+     * @static
      */
     GyroITG3200.ID_AD0_VDD = 0x69;
+
+    /** 
+     * ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.
+     * @property GyroITG3200.ID_AD0_VDD
+     * @static
+     */    
     GyroITG3200.ID_AD0_GND = 0x68;
 
 
@@ -335,9 +346,8 @@ BO.io.GyroITG3200 = (function () {
 
     /**
      * The update event is dispatched when the accelerometer values are updated.
-     * @name GyroITG3200#update
      * @type BO.io.GyroEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
      */     
             

@@ -1,7 +1,7 @@
 Breakout Test Suite
 ===
 
-Unit tests were written with [mocha](http://visionmedia.github.com/mocha/), [chai](http://chaijs.com/) (for assertions) and [sinon](http://sinonjs.org/) 
+Unit tests were written with [mocha](http://visionmedia.github.com/mocha/), [chai](http://chaijs.com/) (for expect) and [sinon](http://sinonjs.org/) 
 (for spies and stubs).
 
 The IOBoard unit tests use fixture data that was sampled from each of the tested
@@ -36,12 +36,17 @@ indicating that it has passed.
 
 To run tests from the command line:
 
-1. Ensure you have [phantomJS](http://phantomjs.org/) and [mocha-phantomjs](https://github.com/metaskills/mocha-phantomjs) installed.
-2. Navigate to the Breakout root directory and type:
-```mocha-phantomjs test/core/runner.html```. Also see mocha-phantomjs documentation for additional options.
+1. Follow the instructions in `Breakout/build/README.md`.
+2. Execute the following command:
+   
+   ```bash
+    $ grunt test
+    ```
+    This will run jshint (to check for lint) then the unit tests. phantomJS is
+    used to run the tests headlessly.
+
 3. The tests should run and you should see a green check next to each test 
 indicating that it has passed.
 
-Tests are also run automatically at the end of the build process (kicked off by 
-running the build script in Breakout/build/). Tests will only run automatically
-if phantom and mocha-phantomjs are installed.
+Tests are also run automatically as part of the build process (kicked off by 
+running the `grunt` command).

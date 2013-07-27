@@ -13,11 +13,11 @@ BO.io.ButtonEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports ButtonEvent as BO.io.ButtonEvent
-     * @class An Event object to be dispatched (fired) by a Button
-     * object.   
+     * An Event object to be dispatched (fired) by a Button
+     * object.
+     * @class ButtonEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     ButtonEvent = function (type) {
@@ -27,13 +27,25 @@ BO.io.ButtonEvent = (function () {
         Event.call(this, type);
     };
 
-    /** @constant */
+    /**
+     * @property ButtonEvent.PRESS
+     * @static
+     */
     ButtonEvent.PRESS = "pressed";
-    /** @constant */
+    /**
+     * @property ButtonEvent.RELEASE
+     * @static
+     */
     ButtonEvent.RELEASE = "released";
-    /** @constant */
+    /**
+     * @property ButtonEvent.LONG_PRESS
+     * @static
+     */
     ButtonEvent.LONG_PRESS = "longPress";
-    /** @constant */
+    /**
+     * @property ButtonEvent.SUSTAINED_PRESS
+     * @static
+     */
     ButtonEvent.SUSTAINED_PRESS = "sustainedPress";
 
     ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);

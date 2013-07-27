@@ -1,94 +1,128 @@
-This file contains details about the maintenance task which occurs in the
-development process of Breakout.
+Building Breakout
+===
+
+This readme file describes the Breakout build process. If you are changing any
+of the Breakout source code (in `Breakout/src/`) and/or making a contribution to
+Breakout you will need to follow this process.
+
+
+Installing the build tools (dev)
+---
+Breakout uses [grunt](http://gruntjs.com/) to run the build tasks. The following
+instructions will get you set up with Node.js (which is a requrement to run grunt)
+and grunt so you can build Breakout.
+
+1. Install [Node.js](http://nodejs.org/)
+2. Install grunt-cli globally (may require `sudo`)
+
+    ```bash
+    $ npm install -g grunt-cli
+    ```
+
+3. Navigate to the `Breakout` directory execute the following command to install
+the required Node modules. This will install everything you need to build Breakout.
+
+    ```bash
+    $ npm install
+    ```
+
+*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*    
 
 Building a new release
-----------------------
-If you make changes in the core of Breakout, a new build is needed to test the
-features. In the 'build' directory are scripts for different operating system
-available to ease this task.
-
-- Windows: `build.bat`
-- Linux or OS X: `sh build.sh`
-
-If Apache ant is installed, you can run `ant` from the build directory.
-
-Or you can call the build script manually:
+---
+If you are contributing to Breakout and have changed any of the source files
+(excluding example files) you must run the full build process before submitting
+a pull request. Executing the following command will run the full build.
 
 ```bash
-$ python build.py [Release Number]
+$ grunt
 ```
 
-The build process executes the following steps in order:
+This process executes the following steps in order:
 
 1. Check each file for lint
-2. Run unit tests
-3. Concatenate and minify files
+2. Concatenate files
+3. Minify (uglify) files
+4. Run unit tests
+5. Generate docs
 
-If any step fails, the build process will exit.
+If any step fails, the build process will exit. Correct any errors in the source
+code and run `grunt` again.
+
+It can take a while to build a full release so if you just want to run one or
+two of the build steps refer to the grunt commands in the following sections for
+each of the build steps. For example, while you are working on a new feature it
+may be convenient to just run `grunt compile` (which only takes a few seconds)
+after making changes to the code rather than running the full build.
+
 
 Linting
--------
-[JSHint](https://github.com/jshint/jshint/) is run for each file in the src 
-directory during the build process. JSHint must be installed:
+---
+[JSHint](https://github.com/jshint/jshint/) is run to enfoce code quality. See
+the jshint options set in `Breakout/.jshintrc`. To run jshint alone, execute the
+following command:
 
 ```bash
-$ npm install jshint -g
+$ grunt jshint
 ```
+
+
+Concatenate and minify
+---
+If you make changes to any files in the Breakout src directory, you will need
+to concatenate and minify (uglify) the src files. Run the `compile` command to 
+concatenate and minify the files.
+
+```bash
+$ grunt compile
+```
+
+If you would only like to concatenate (and not minify) or vice versa, use one
+of the following two commands:
+
+```bash
+$ grunt concat
+```
+
+```bash
+$ grunt uglify
+```
+
 
 Running tests
--------------
-Tests (in *Breakout/test/*) are run automatically at the end of the build process.
-[phantomJS](http://phantomjs.org/) and [mocha-phantomjs](https://github.com/metaskills/mocha-phantomjs) are required to run tests via the build script.
-See the README file in *Breakout/test/* for more info on running the tests.
+---
+Unit tests are written with [mocha](http://visionmedia.github.io/mocha/), [chai for expect](http://chaijs.com/api/bdd/) and [sinon](http://sinonjs.org/) for spies and stubs. [phantomJS](http://phantomjs.org/) is used to run the tests headlessly. phantomJS is installed when you run `npm install` so there is no need to install it separately. If you already have phantomJS
+installed, there will not be a conflict.
+
+The following command will run jshint and then the unit tests via phantomjs:
+
+```bash
+$ grunt test
+```
+
+Use the following command to run the unit tests without first running jshint:
+
+```bash
+$ grunt mocha_phantomjs
+```
+
+See the README file in `Breakout/test/` for more info on running the tests. If
+you are contributing to Breakout and add any JavaScript to the src files (example
+files are excluded) be sure to add unit tests for any new functionality. Refer to
+the existing tests and fixtures in `Breakout/test/core/`as a guilde.
+
 
 Updating the documentation
---------------------------
-The documentation uses [JsDoc Toolkit](http://code.google.com/p/jsdoc-toolkit/).
-Generate the documentation by running: 
+---
+The documentation uses [yuidoc](http://yui.github.io/yuidoc/). Be sure to use the
+yui doc syntax when documenting any added code. If you need to generate the docs
+outside of the full build process, run the following command:
 
 ```bash
-$ python build_docs.py
+$ grunt docs
 ```
 
-Cleaning-up
------------
-Too much temp files in your directories, get rid of them.
-
-```bash
-$ find . -type f -name "*~" -print0 | xargs -0 rm
-```
-
-Updating to another jQuery release
-----------------------------------
-Whenever a switch to a new jQuery release happens, all example files need an
-update. This should happen after the jQuery files under 'libs' in the example 
-directory are updated.
-
-Change the working directory to 'examples', tweak the command below, and
-execute it. Using only the release number is possible but not recommended.
-
-```bash
-$ find . -type f -name "*.html" | xargs sed -ie 's|jquery-1.9.0|jquery-1.9.1|g'
-```
-
-To remove temp files (htmle) generated by above process:
-
-```bash
-$ find . -type f -name "*.htmle" -exec rm -f {} \;
-```
-
-Don't forget to commit all example files to the dev branch of your Breakout
-fork and open a pull request on Github.
-
-Updating to another jQuery UI release
--------------------------------------
-This is performed the same way as a jQuery update. To avoid issues it's 
-recommended to use the name and the release.
-
-```bash
-$ find . -type f -name "*.html" | xargs sed -ie 's|jquery-ui-1.9.0|jquery-ui-1.10.0|g'
-```
 
 License
--------
+---
 Breakout is distributed under the terms of the MIT License.

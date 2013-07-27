@@ -5,19 +5,20 @@
 
 
 /**
- * @version 0.2.3
- * @namespace
+ * @version 0.3.0
  *
  * <p>Namespace for Breakout objects.</p>
  *
  * <p>You can use the shorthand "BO" instead of "BREAKOUT".</p>
+ *
+ * @namespace BO
  */
 var BO = BO || {};
 
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.2.3';
+BREAKOUT.VERSION = '0.3.0';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application
@@ -27,5 +28,4 @@ BREAKOUT.VERSION = '0.2.3';
  * @name BO#enableDebugging
  * @type {Boolean}
  */
-
 BO.enableDebugging = false;

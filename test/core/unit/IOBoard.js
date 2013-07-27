@@ -22,6 +22,7 @@
             // save a reference to this stub to use in testing output methods
             stubSend = sinon.stub(IOBoard.prototype, "send");
             stubs.push(stubSend);
+
             board = new IOBoard("localhost", 8887);
         });
 
@@ -305,6 +306,45 @@
                         expect(spy.withArgs(pin, value).calledOnce).to.equal(true);
                     });
 
+                });
+
+                describe('setDigitalPinMode', function () {
+                    var pin = 2,
+                        mode = 1,
+                        getDigitalPinStub,
+                        managePinStub;
+
+                    beforeEach(function () {
+                        getDigitalPinStub = sinon.stub(board, "getDigitalPin");
+                        getDigitalPinStub.returns({
+                            setType: sinon.stub()
+                        });
+                        managePinStub = sinon.stub(board, "managePinListener");
+                    });
+
+                    afterEach(function () {
+                        getDigitalPinStub.restore();
+                        managePinStub.restore();
+                    });
+
+                    it("should send the set pin mode command if silent param is not defined or not true", function () {
+                        board.setDigitalPinMode(pin, mode);
+                        
+                        // called once for processInput and a second time for
+                        // setDigitalPinMode
+                        expect(stubSend.calledTwice).to.equal(true);
+
+                        board.setDigitalPinMode(pin, mode, false);
+                        expect(stubSend.calledThrice).to.equal(true);
+                    });
+
+                    it("should not send the set pin command if silent param is true", function () {
+                        board.setDigitalPinMode(pin, mode, true);
+
+                        // called once for processInput but not called for 
+                        // setDigitalPinMode
+                        expect(stubSend.calledOnce).to.equal(true);
+                    });
                 });
 
             });

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/io/BlinkM.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/io/BlinkM.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+ /**
+ * Based on BlinkM.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ *
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.io.BlinkM&#x27;);
+
+BO.io.BlinkM = (function () {
+
+    var BlinkM;
+
+    // dependencies
+    var I2CBase = BO.I2CBase;
+
+    /**
+     * Creates an interface to a BlinkM RGB Led module. This
+     * object allows you to change the color of the led, fade between
+     * colors and run preprogrammed light scripts.
+     * See [Breakout/examples/actuators/blinkM.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/blinkM.html) for an example application.
+     *
+     * @class BlinkM
+     * @constructor
+     * @extends BO.I2CBase 
+     * @param {IOBoard} board The IOBoard instance
+     * @param {Number} address The i2c address of the BlinkM module
+     */
+    BlinkM = function (board, address) {
+
+        address = address || 0x09;  // default i2c address for BlinkM
+
+        this.name = &quot;BlinkM&quot;;
+        
+        // call super class
+        I2CBase.call(this, board, address);
+        
+
+    };
+
+    BlinkM.prototype = JSUTILS.inherit(I2CBase.prototype);
+    BlinkM.prototype.constructor = BlinkM;
+
+
+    /**
+     * Sets the BlinkM to the specified RGB color immediately.
+     *
+     * @method goToRGBColorNow
+     * @param {Number{}} color An array containing the RGB values. 
+     * color[0] = R, color[1] = G, color[2] = B
+     */
+    BlinkM.prototype.goToRGBColorNow = function (color) {
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x6E, color[0], color[1], color[2]]);
+    };
+    
+    /**
+     * Fades to the specified RGB color in the specified time duration. 
+     * The fade speed range is from 1 to 255, where 1 is the slowest time and
+     * 255 is the fastest.
+     *
+     * @method fadeToRGBColor
+     * @param {Number[]} color An array containing the RGB values.
+     * color[0] = R, color[1] = G, color[2] = B
+     * @param {Number} speed The fade speed. Default value is 15.
+     */
+    BlinkM.prototype.fadeToRGBColor = function (color, speed) {
+        var fadeSpeed = speed || -1;
+        if (fadeSpeed &gt;= 0) {
+            this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, fadeSpeed]);
+        }
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x63, color[0], color[1], color[2]]);
+    };
+
+    /**
+     * Fade to a random RGB color.
+     * The fade speed range is from 1 to 255, where 1 is the slowest time and
+     * 255 is the fastest.
+     *
+     * @method fadeToRandomRGBColor
+     * @param {Number[]} colorRange An array containing a range for each color
+     * value.
+     * colorRange[0] = range for Red (0-255), colorRange[1] = range for Green, etc.
+     * @param {Number} speed The fade speed. Default value is 15.
+     */
+    BlinkM.prototype.fadeToRandomRGBColor = function (colorRange, speed) {
+        var fadeSpeed = speed || -1;
+        if (fadeSpeed &gt;= 0) {
+            this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, fadeSpeed]);
+        }
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x43, colorRange[0], colorRange[1], colorRange[2]]);
+    };
+
+    /**
+     * Fades to the specified HSB color in the specified time duration. 
+     * The fade speed range is from 1 to 255, where 1 is the slowest time and
+     * 255 is the fastest.
+     *
+     * @method fadeToHSBColor
+     * @param {Number[]} color An array containing the HSB values.
+     * color[0] = H, color[1] = S, color[2] = B
+     * @param {Number} speed The fade speed. Default value is 15.
+     */
+    BlinkM.prototype.fadeToHSBColor = function (color, speed) {
+        var fadeSpeed = speed || -1;
+        if (fadeSpeed &gt;= 0) {
+            this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, fadeSpeed]);
+        }
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x68, color[0], color[1], color[2]]);
+    };
+    
+    /**
+     * Fade to a random HSB color.
+     * The fade speed range is from 1 to 255, where 1 is the slowest time and
+     * 255 is the fastest.
+     *
+     * @method fadeToRandomHSBColor
+     * @param {Number[]} colorRange An array containing a range for each color
+     * value.
+     * colorRange[0] = range for Hue (0-255), colorRange[1] = range for
+     * Saturation, etc.
+     * @param {Number} speed The fade speed. Default value is 15.
+     */ 
+    BlinkM.prototype.fadeToRandomHSBColor = function (colorRange, speed) {
+        var fadeSpeed = speed || -1;
+        if (fadeSpeed &gt;= 0) {
+            this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, fadeSpeed]);
+        }
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x48, colorRange[0], colorRange[1], colorRange[2]]);
+    };
+
+    /**
+     * Set the rate at which color fading happens. The range is from 1 to 255,
+     * where 1 is the slowest and 255 is the fastest (immediate).
+     *
+     * @method setFadeSpeed
+     * @param {Number} speed
+     */
+    BlinkM.prototype.setFadeSpeed = function (speed) {
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
+    };
+    
+    /**
+     * Play a predefined light script. See the BlinkM datasheet page 20 for a
+     * list and description of the predefined scripts.
+     *
+     * @method playLightScript
+     * @param {Number} scriptId The id of the light script (from 0 to 18).
+     * @param {Number} theNumberOfRepeats The number of times the script should
+     * repeat.
+     * @param {Number} lineNumber The line number to begin the script from.
+     */
+    BlinkM.prototype.playLightScript = function (scriptId, theNumberOfRepeats, lineNumber) {
+        var numOfRepeats = theNumberOfRepeats || 1;
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x70, scriptId, numOfRepeats, lineNumber]);
+    };
+
+    /**
+     * Stop the currently playing predefined light script.
+     * @method stopScript
+     */
+    BlinkM.prototype.stopScript = function () {
+        //self.sendI2CRequest([I2CBase.WRITE, this.address, &#x27;o&#x27;.charCodeAt(0)]);
+        this.sendI2CRequest([I2CBase.WRITE, this.address, 0x6F]);
+    };
+
+    /**
+     * @private
+     * @method handleI2C
+     */
+    BlinkM.prototype.handleI2C = function (data) {
+        // TODO: implement if needed
+        console.log(&quot;BlinkM: &quot; + data);
+    };
+
+    return BlinkM;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

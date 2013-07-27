@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/core/I2CBase.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/core/I2CBase.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.I2CBase&#x27;);
+
+/**
+ * @namespace BO
+ */
+BO.I2CBase = (function () {
+    &quot;use strict&quot;;
+
+    var I2CBase;
+
+    // dependencies
+    var Pin = BO.Pin,
+        EventDispatcher = JSUTILS.EventDispatcher,
+        IOBoardEvent = BO.IOBoardEvent;
+
+    /**
+     * A base class for I2C objects. Extend this class when creating an
+     * interface for a new I2C device. I2CBase should not be instantiated
+     * directly.
+     *
+     * @class I2CBase
+     * @constructor
+     * @uses JSUTILS.EventDispatcher
+     * @param {IOBoard} board A reference to the IOBoard instance
+     * @param {Number} address The I2C address of the device
+     * @param {Number} delayUS The number of microseconds ...
+     */
+    I2CBase = function (board, address, delayUS) {
+
+        if (board === undefined) {
+            return;
+        }
+
+        this.name = &quot;I2CBase&quot;;
+        /** @protected*/
+        this.board = board;
+
+        var _delay = delayUS || 0,
+            _delayInMicrosecondsLSB = _delay &amp; 0xFF,
+            _delayInMicrosecondsMSB = (_delay &gt;&gt; 7) &amp; 0xFF;
+
+        /** @protected */
+        this._address = address;
+        this._evtDispatcher = new EventDispatcher(this);
+        
+        // if the pins are not set as I2C, set them now
+        var i2cPins = board.getI2cPins();
+        if (i2cPins.length === 2) {
+            if (board.getPin(i2cPins[0]).getType() !== Pin.I2C) {
+                board.getPin(i2cPins[0]).setType(Pin.I2C);
+                board.getPin(i2cPins[1]).setType(Pin.I2C);
+            }
+        } else {
+            // to do: proper error handling
+            console.log(&quot;Error, this board does not support i2c&quot;);
+            return;
+        }
+
+        board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
+        
+        // call this for each board in case delay is set
+        board.sendSysex(I2CBase.I2C_CONFIG, [_delayInMicrosecondsLSB, _delayInMicrosecondsMSB]);
+            
+    };
+
+
+    I2CBase.prototype = {
+
+        constructor: I2CBase,
+
+        /**
+         * [read-only] The address of the i2c device.
+         * @property address
+         * @type Number
+         */
+        get address() {
+            return this._address;
+        },
+
+        // private methods:
+        /**
+         * @private
+         * onSysExMessage
+         */
+        onSysExMessage: function (event) {
+            var message = event.message;
+            var addr = this.board.getValueFromTwo7bitBytes(message[1], message[2]);
+            var data = [];
+
+            if (message[0] != I2CBase.I2C_REPLY) {
+                return;
+            } else {
+                //console.log(this);
+                //console.log(&quot;addr = &quot; + this._address);
+                // to do: make sure i2c address in message matches the i2c address of the subclass
+                // return if no match;
+                if (addr != this._address) {
+                    return;
+                }
+
+                for (var i = 3, len = message.length; i &lt; len; i += 2) {
+                    data.push(this.board.getValueFromTwo7bitBytes(message[i], message[i + 1]));
+                }
+                this.handleI2C(data);
+            }
+
+        },
+        
+        // public methods:
+        
+        /**
+         * Send an i2c request command to the board
+         * @protected
+         * @method sendI2CRequest
+         * @param {Number} command
+         * @param {Number[]} data
+         */
+        sendI2CRequest: function (data) {
+
+            // to do: support 10-bit i2c address
+            var tempData = [];
+            var address = data[1];
+            var readWriteMode = data[0];
+            
+            tempData[0] = address;
+            tempData[1] = readWriteMode &lt;&lt; 3;
+            
+            for (var i = 2, len = data.length; i &lt; len; i++) {
+                tempData.push(data[i] &amp; 0x007F);
+                tempData.push((data[i] &gt;&gt; 7) &amp; 0x007F);
+            }
+            
+            this.board.sendSysex(I2CBase.I2C_REQUEST, tempData);
+            
+        },
+    
+        /**
+         * To be implemented in subclass
+         * @protected
+         * @method update
+         */
+        update: function () {
+            // To be implemented in sublasses
+        },
+        
+        /**
+         * To be implemented in subclass. Data should be: slave address,
+         * register, data0, data1...
+         * @protected
+         * @method handleI2C
+         */
+        handleI2C: function (data) {
+            // To be implemented in sublasses
+            // data should be: slave address, register, data0, data1...
+        },
+                
+        /* implement EventDispatcher */
+        
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event is fired
+         */
+        addEventListener: function (type, listener) {
+            this._evtDispatcher.addEventListener(type, listener);
+        },
+        
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event is fired
+         */
+        removeEventListener: function (type, listener) {
+            this._evtDispatcher.removeEventListener(type, listener);
+        },
+        
+        /**
+         * @param {String} type The event type
+         * return {boolean} True is listener exists for this type, false if not.
+         */
+        hasEventListener: function (type) {
+            return this._evtDispatcher.hasEventListener(type);
+        },
+        
+        /**
+         * @param {Event} type The Event object
+         * @param {Object} optionalParams Optional parameters to assign to the event object.
+         * return {boolean} True if dispatch is successful, false if not.
+         */
+        dispatchEvent: function (event, optionalParams) {
+            return this._evtDispatcher.dispatchEvent(event, optionalParams);
+        }
+    };
+    
+
+    /**
+     * @property I2CBase.I2C_REQUEST
+     * @static
+     */
+    I2CBase.I2C_REQUEST = 0x76;
+    /**
+     * @property I2CBase.I2C_REPLY
+     */
+    I2CBase.I2C_REPLY = 0x77;
+    /**
+     * @property I2CBase.I2C_CONFIG
+     * @static
+     */
+    I2CBase.I2C_CONFIG = 0x78;
+
+    /**
+     * @property I2CBase.WRITE
+     * @static
+     */
+    I2CBase.WRITE = 0;
+    /**
+     * @property I2CBase.READ
+     * @static
+     */
+    I2CBase.READ = 1;
+    /**
+     * @property I2CBase.READ_CONTINUOUS
+     * @static
+     */
+    I2CBase.READ_CONTINUOUS = 2;
+    /**
+     * @property I2CBase.STOP_READING
+     * @static
+     */
+    I2CBase.STOP_READING = 3;
+
+    return I2CBase;
+
+}());
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

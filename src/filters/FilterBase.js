@@ -17,11 +17,10 @@ BO.filters.FilterBase = (function () {
     var FilterBase;
 
     /**
-     * An Abstract Base object for filters
-     *
-     * @exports FilterBase as BO.filters.FilterBase
-     * @class A base object to be extended by all Filter objects. This object
+     * A base object to be extended by all Filter objects. This object
      * should not be instantiated directly.
+     *
+     * @class FilterBase
      * @constructor
      */
     FilterBase = function () {
@@ -32,6 +31,7 @@ BO.filters.FilterBase = (function () {
      * Process the value to be filtered and return the filtered result.
      *
      * @protected
+     * @method processSample
      * @param {Number} val The input value to be filtered.
      * @return {Number} The resulting value after applying the filter.
      */

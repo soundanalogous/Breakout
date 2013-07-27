@@ -5,6 +5,9 @@
 
 JSUTILS.namespace('BO.I2CBase');
 
+/**
+ * @namespace BO
+ */
 BO.I2CBase = (function () {
     "use strict";
 
@@ -16,13 +19,13 @@ BO.I2CBase = (function () {
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
-     * Creates a new I2CBase base class
+     * A base class for I2C objects. Extend this class when creating an
+     * interface for a new I2C device. I2CBase should not be instantiated
+     * directly.
      *
-     * @exports I2CBase as BO.I2CBase
-     * @class A base class for I2C objects. Extend this class
-     * when creating an interface for a new I2C device. I2CBase should
-     * not be instantiated directly.
+     * @class I2CBase
      * @constructor
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} address The I2C address of the device
      * @param {Number} delayUS The number of microseconds ...
@@ -72,8 +75,7 @@ BO.I2CBase = (function () {
 
         /**
          * [read-only] The address of the i2c device.
-         * @name I2CBase#address
-         * @property
+         * @property address
          * @type Number
          */
         get address() {
@@ -83,6 +85,7 @@ BO.I2CBase = (function () {
         // private methods:
         /**
          * @private
+         * onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -113,6 +116,7 @@ BO.I2CBase = (function () {
         /**
          * Send an i2c request command to the board
          * @protected
+         * @method sendI2CRequest
          * @param {Number} command
          * @param {Number[]} data
          */
@@ -136,16 +140,19 @@ BO.I2CBase = (function () {
         },
     
         /**
+         * To be implemented in subclass
          * @protected
-         * @inheritDoc
+         * @method update
          */
         update: function () {
             // To be implemented in sublasses
         },
         
         /**
+         * To be implemented in subclass. Data should be: slave address,
+         * register, data0, data1...
          * @protected
-         * @inheritDoc
+         * @method handleI2C
          */
         handleI2C: function (data) {
             // To be implemented in sublasses
@@ -189,20 +196,40 @@ BO.I2CBase = (function () {
     };
     
 
-    /** @constant */
+    /**
+     * @property I2CBase.I2C_REQUEST
+     * @static
+     */
     I2CBase.I2C_REQUEST = 0x76;
-    /** @constant */
+    /**
+     * @property I2CBase.I2C_REPLY
+     */
     I2CBase.I2C_REPLY = 0x77;
-    /** @constant */
+    /**
+     * @property I2CBase.I2C_CONFIG
+     * @static
+     */
     I2CBase.I2C_CONFIG = 0x78;
 
-    /** @constant */
+    /**
+     * @property I2CBase.WRITE
+     * @static
+     */
     I2CBase.WRITE = 0;
-    /** @constant */
+    /**
+     * @property I2CBase.READ
+     * @static
+     */
     I2CBase.READ = 1;
-    /** @constant */
+    /**
+     * @property I2CBase.READ_CONTINUOUS
+     * @static
+     */
     I2CBase.READ_CONTINUOUS = 2;
-    /** @constant */
+    /**
+     * @property I2CBase.STOP_READING
+     * @static
+     */
     I2CBase.STOP_READING = 3;
 
     return I2CBase;

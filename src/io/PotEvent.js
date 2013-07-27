@@ -13,11 +13,11 @@ BO.io.PotEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports PotEvent as BO.io.PotEvent
-     * @class An Event object to be dispatched (fired) by a Potentiometer
-     * object.   
+     * An Event object to be dispatched (fired) by a Potentiometer
+     * object.
+     * @class PotEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     PotEvent = function (type) {
@@ -30,7 +30,10 @@ BO.io.PotEvent = (function () {
     };
 
     // Events
-    /** @constant */
+    /**
+     * @property PotEvent.CHANGE
+     * @static
+     */
     PotEvent.CHANGE = "potChange";  
 
     PotEvent.prototype = JSUTILS.inherit(Event.prototype);

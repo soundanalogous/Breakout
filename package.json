@@ -1,0 +1,28 @@
+{
+  "name": "Breakout",
+  "version": "0.3.0",
+  "description": "breakoutjs.com",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/soundanalogous/Breakout.git"
+  },
+  "author": "Jeff Hoefs <soundanalogous@gmail.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-mocha-phantomjs": "~0.3.0",
+    "mocha": "~1.12.0",
+    "chai": "~1.7.2",
+    "sinon": "~1.7.3",
+    "grunt-contrib-yuidoc": "~0.4.0",
+    "grunt-shell": "~0.3.1"
+  },
+  "engines": {
+    "node" : ">=0.10.0"
+  }
+}

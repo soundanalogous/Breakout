@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/io/BiColorLED.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/io/BiColorLED.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+ /**
+ * Based on RGBLED.js which was written by Jeff Hoefs.
+ *
+ * Copyright (c) 2012-2013 Fabian Affolter &lt;mail@fabian-affolter.ch&gt;
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.io.BiColorLED&#x27;);
+
+BO.io.BiColorLED = (function () {
+
+    var BiColorLED;
+
+    // Dependencies
+    var Pin = BO.Pin,
+        LED = BO.io.LED;
+
+    /**
+     * Creates an interface to an bi-color LED. This interface
+     * is for the type of bi-color LED with 3 legs. One leg is connected
+     * to power or ground (depending on the type of LED - common anode
+     * or common cathode) and the other 2 legs are connected to PWM pins
+     * on the I/O board.
+     * See [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf)
+     * for wiring diagrams.
+     * See [Breakout/examples/actuators/bi\_color\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/bi_color_led.html)
+     * for an example application.
+     *
+     * &lt;p&gt;&#x60;COMMON_ANODE&#x60; vs &#x60;COMMON_CATHODE&#x60;. You can determine if your
+     * LED is common anode or common cathode by reading the datasheet. 
+     * To wire a common cathode LED, connect the cathode to ground
+     * and the 2 anode pins to the IOBoard PWM pins via resistors. For
+     * a common anode LED, the anode is connected to power and the 2 
+     * cathode pins are connected to the IOBoard PWM pins via two 
+     * resistors.&lt;/p&gt;
+     *
+     * @class BiColorLED
+     * @constructor
+     * @param {IOBoard} board A reference to the IOBoard instance that
+     * the LED is attached to.
+     * @param {Pin} color1LEDPin A reference to the IOBoard Pin the
+     * first color LED pin is connected to.
+     * @param {Pin} color2LEDPin A reference to the IOBoard Pin the
+     * second color LED pin is connected to.
+     * @param {Number} driveMode The drive mode of the LED. Must be
+     * set to &#x60;BiColorLED.COMMON_ANODE&#x60; or &#x60;BiColorLED.COMMON_CATHODE&#x60;.
+     * &#x60;BiColorLED.COMMON_ANODE&#x60; is default.
+     */
+    BiColorLED = function (board, color1LEDPin, color2LEDPin, driveMode) {
+        &quot;use strict&quot;;
+        
+        this.name = &quot;BiColorLED&quot;;
+
+        if (driveMode === undefined) {
+            driveMode = BiColorLED.COMMON_ANODE;
+        }
+
+        this._color1LED = new LED(board, color1LEDPin, driveMode);
+        this._color2LED = new LED(board, color2LEDPin, driveMode);
+    };
+
+    BiColorLED.prototype = {
+    
+        constructor: BiColorLED,
+
+        /**
+         * Set the bi-color LED color.
+         * 
+         * @method setColor
+         * @param {Number} color1 The value (0 - 255) of the first color
+         * @param {Number} color2 The value (0 - 255) of the second
+         * color
+         */
+        setColor: function (color1, color2) {
+            color1 = color1 / 255;
+            color2 = color2 / 255;
+
+            this._color1LED.intensity = color1;
+            this._color2LED.intensity = color2;
+        },
+
+        /**
+         * Fade in the bi-color LED from the off state.
+         * 
+         * @method fadeIn
+         * @param {Number} time The time of the fade (in milliseconds)
+         */
+        fadeIn: function (time) {
+            time = time || 1000;
+            this._color1LED.fadeTo(1, time);
+            this._color2LED.fadeTo(1, time);
+        },
+
+        /**
+         * Fade out the bi-color LED from the on state.
+         * 
+         * @method fadeOut
+         * @param {Number} time The time of the fade (in milliseconds)
+         */
+        fadeOut: function (time) {
+            time = time || 1000;
+            this._color1LED.fadeTo(0, time);
+            this._color2LED.fadeTo(0, time);
+        },
+
+        /**
+         * Fade from the current color to the new color.
+         * 
+         * @method fadeTo
+         * @param {Number} color1 The value of the first color to fade
+         * to (0 - 255)
+         * @param {Number} color2 The value of the second color to fade
+         * to (0 - 255)
+         * @param {Number} time The time of the fade (in milliseconds)       
+         */     
+        fadeTo: function (color1, color2, time) {
+            color1 = color1 / 255;
+            color2 = color2 / 255;
+            time = time || 1000;
+
+            this._color1LED.fadeTo(color1, time);
+            this._color2LED.fadeTo(color2, time);
+        }
+    };
+
+    /**
+     * @property BiColorLED.COMMON_ANODE
+     * @static
+     */
+    BiColorLED.COMMON_ANODE = LED.SYNC_DRIVE;
+    /**
+     * @property BiColorLED.COMMON_CATHODE
+     * @static
+     */
+    BiColorLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
+
+    return BiColorLED;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
