@@ -58,7 +58,7 @@ The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-comp
 
 1. After downloading or cloning Breakout, navigate to `Breakout/firmware/AdvancedFirmata/` and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
 2. Compile *AdvancedFirmata* for your board and upload.
-3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf)).
+3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
 
 The next step is to run the Breakout Server application:
 
