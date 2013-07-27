@@ -20,22 +20,24 @@ BO.io.RGBLED = (function () {
         LED = BO.io.LED;
 
     /**
-     * The RGB pins of the RGBLED must be connected to PWM pins on the IOBoard.
+     * Creates an interface to an RGB LED. This interface is for the
+     * type of RGB LED with 4 legs. One leg is connected to power or ground 
+     * (depending on the type of LED - common anode or common cathode) and the
+     * other 3 legs are connected to PWM pins on the I/O board. See 
+     * [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See 
+     * [Breakout/examples/actuators/rgb\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.
      *
-     * <p>COMMON_ANODE vs COMMON_CATHODE. You can determine if your RGB LED is 
+     * <p>The RGB pins of the RGB LED must be connected to PWM pins on the
+     * IOBoard.</p>
+     *
+     * <p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is 
      * common anode or common cathode by reading the datasheet. To wire a 
      * common cathode RGB LED, connect the cathode to ground and the 3 anode
      * pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
      * LED, the anode is connected to power and the 3 cathode pins are connected
      * to the IOBoard PWM pins via 330 ohm resistors.</p>
      *
-     * @exports RGBLED as BO.io.RGBLED
-     * @class Creates an interface to an RGB LED. This interface is for the
-     * type of RGB LED with 4 legs. One leg is connected to power or ground 
-     * (depending on the type of LED - common anode or common cathode) and the
-     * other 3 legs are connected to PWM pins on the I/O board. See 
-     * Breakout/examples/schematics.pdf for wiring diagrams. See 
-     * Breakout/examples/actuators/rgb_led.html for an example application.
+     * @class RGBLED
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.
@@ -69,7 +71,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Set the RGBLED color.
-         * 
+         *
+         * @method setColor
          * @param {Number} red The red value (0 - 255)
          * @param {Number} green The green value (0 - 255)
          * @param {Number} blue The blue value (0 - 255)
@@ -86,7 +89,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade in the RGBLED from the off state.
-         * 
+         *
+         * @method fadeIn
          * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeIn: function (time) {
@@ -98,7 +102,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade out the RGBLED from the on state.
-         * 
+         *
+         * @method fadeOut
          * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeOut: function (time) {
@@ -110,7 +115,8 @@ BO.io.RGBLED = (function () {
 
         /**
          * Fade from the current color to the new color.
-         * 
+         *
+         * @method fadeTo
          * @param {Number} red The red value to fade to (0 - 255)
          * @param {Number} green The green value to fade to (0 - 255)
          * @param {Number} blue The blue value to fade to (0 - 255)
@@ -128,9 +134,15 @@ BO.io.RGBLED = (function () {
         }
     };
 
-    /** @constant */
+    /**
+     * @property RGBLED.COMMON_ANODE
+     * @static
+     */
     RGBLED.COMMON_ANODE = LED.SYNC_DRIVE;
-    /** @constant */
+    /**
+     * @property RGBLED.COMMON_CATHODE
+     * @static
+     */
     RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
 
     return RGBLED;

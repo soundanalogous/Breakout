@@ -19,17 +19,15 @@ BO.io.Servo = (function () {
     var Pin = BO.Pin;
 
     /**
-     * Creates a new Servo.
-     *
-     * @exports Servo as BO.io.Servo
-     * @class Creates an interface to a Servo motor. Use this object to set
+     * Creates an interface to a Servo motor. Use this object to set
      * the angle of the servo head. You can simply specify and angle between
      * 0 and 180 degrees and the servo head will rotate to that angle. See
-     * Breakout/examples/actuators/servo.html for an example application.
+     * [Breakout/examples/actuators/servo.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/servo.html) for an example application.
      * You can also use this with a continuous rotation servo. See the
      * description for the angle property for use with a continuous rotation
      * servo.
      *
+     * @class Servo
      * @constructor
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * servo is attached to.
@@ -70,8 +68,7 @@ BO.io.Servo = (function () {
          * to adjust the servo (there is typically a screw on the motor) to
          * adjust</p>
          * 
-         * @name Servo#angle
-         * @property
+         * @property angle
          * @type Number
          */ 
         set angle(value) {
@@ -92,6 +89,8 @@ BO.io.Servo = (function () {
 
     /**
      * The scale to convert 0-1 (0-255 in 8bit) to 0-0.706 (0-180 in 8bit).
+     * @property Servo.COEF_TO_0_180
+     * @static
      */
     Servo.COEF_TO_0_180 = 180 / 255;
 

@@ -13,11 +13,10 @@ BO.io.AccelerometerEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports AccelerometerEvent as BO.io.AccelerometerEvent
-     * @class An Event object to be dispatched (fired) by an Accelerometer
-     * object.
+     * An Event object to be dispatched (fired) by an Accelerometer object.
+     * @class AccelerometerEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     AccelerometerEvent = function (type) {
@@ -28,7 +27,10 @@ BO.io.AccelerometerEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property AccelerometerEvent.UPDATE 
+     * @static
+     */
     AccelerometerEvent.UPDATE = "update";
     
 

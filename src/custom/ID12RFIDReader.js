@@ -5,6 +5,9 @@
 
 JSUTILS.namespace('BO.custom.ID12RFIDReader');
 
+/**
+ * @namespace BO.custom
+ */
 BO.custom.ID12RFIDReader = (function () {
 
     var ID12RFIDReader;
@@ -20,7 +23,13 @@ BO.custom.ID12RFIDReader = (function () {
         RFIDEvent = BO.custom.RFIDEvent;
 
     /**
-     * Innovations ID-12 RFID Reader.
+     * Creates an interface to an ID-12 RFID Reader. Other Innovations
+     * RFID readers will likely work but have not been tested. This object
+     * requires firmware other than StandardFirmata to be uploaded to the I/O board.
+     * See [Breakout/custom\_examples/rfid_example1.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html) 
+     * and [rfid\_example2.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example2.html) for
+     * example applications.
+     *
      * <p>To use this object with standard io objects in Breakout, 
      * RFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata. 
      * See custom_examples/readme.txt for insturctions.</p>
@@ -29,13 +38,9 @@ BO.custom.ID12RFIDReader = (function () {
      * IOBoard that includes the RFID reader. See IDx_Reader_Firmata_Example
      * in the IDxRFIDReader library example files.</p>
      *
-     * @exports ID12RFIDReader as BO.custom.ID12RFIDReader
-     * @class Creates an interface to an ID-12 RFID Reader. Other Innovations
-     * RFID readers will likely work but have not been tested. This object
-     * requires firmware other than StandardFirmata to be uploaded to the I/O board.
-     * See Breakout/custom_examples/rfid_example1.html and rfid_example2.html for
-     * example applications.
+     * @class ID12RFIDReader
      * @constructor
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Number} readerId The ID assigned to the reader in the firmware
      * running on the IOBoard (default = 13)
@@ -59,6 +64,7 @@ BO.custom.ID12RFIDReader = (function () {
         // private methods:
         /**
          * @private
+         * @method onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -74,6 +80,7 @@ BO.custom.ID12RFIDReader = (function () {
         // http://stackoverflow.com/questions/57803/how-to-convert-decimal-to-hex-in-javascript
         /**
          * @private
+         * @method dec2hex
          */
         dec2hex: function (i) {
             return (i + 0x100).toString(16).substr(-2).toUpperCase();
@@ -81,6 +88,7 @@ BO.custom.ID12RFIDReader = (function () {
         
         /**
          * @private
+         * @method processRFIDData
          */
         processRFIDData: function (data) {
 
@@ -106,6 +114,7 @@ BO.custom.ID12RFIDReader = (function () {
         
         /**
          * @private
+         * @method dispatch
          */
         dispatch: function (event) {
             this.dispatchEvent(event);
@@ -155,18 +164,16 @@ BO.custom.ID12RFIDReader = (function () {
 
     /**
      * The addTag event is dispatched when a new tag is read.
-     * @name ID12RFIDReader#addTag
      * @type BO.custom.RFIDEvent.ADD_TAG
-     * @event
+     * @event addTag
      * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
      * @param {String} tag The RFID tag value.   
      */
      
     /**
      * The removeTag event is dispatched when a tag is removed from the reader.
-     * @name ID12RFIDReader#removeTag
      * @type BO.custom.RFIDEvent.REMOVE_TAG
-     * @event
+     * @event removeTag
      * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
      * @param {String} tag The RFID tag value.   
      */         

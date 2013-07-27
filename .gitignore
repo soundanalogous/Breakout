@@ -2,7 +2,8 @@
 *.sublime-project
 *.sublime-workspace
 
-release.sh
+dist/*.zip
 
+# dependencies
+node_modules
 node_server/node_modules/
-examples/tests/

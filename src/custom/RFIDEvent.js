@@ -14,11 +14,11 @@ BO.custom.RFIDEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports RFIDEvent as BO.custom.RFIDEvent
-     * @class An Event object to be dispatched when an RFID tag
-     * is read or when an RFID tag is removed from a reader.
+     * An Event object to be dispatched when an RFID tag is read or when an RFID
+     * tag is removed from a reader.
+     * @class RFIDEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      * @param {String} tag The RFID tag value (hexadecimal)
      */
@@ -31,9 +31,15 @@ BO.custom.RFIDEvent = (function () {
         this.name = "RFIDEvent";
     };
 
-    /** @constant */
+    /**
+     * @property RFIDEvent.ADD_TAG
+     * @static
+     */
     RFIDEvent.ADD_TAG = "addTag";
-    /** @constant */
+    /**
+     * @property RFIDEvent.REMOVE_TAG
+     * @static
+     */
     RFIDEvent.REMOVE_TAG = "removeTag";
 
     RFIDEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -41,8 +47,7 @@ BO.custom.RFIDEvent = (function () {
 
     /**
      * [read-only] The RFID tag value (hexadecimal string).
-     * @name RFIDEvent#tag
-     * @property
+     * @property tag
      * @type String
      */ 
     RFIDEvent.prototype.__defineGetter__("tag", function () { return this._tag; });

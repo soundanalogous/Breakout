@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/generators/Oscillator.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/generators/Oscillator.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Based on Osc.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ *
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.generators.Oscillator&#x27;);
+
+BO.generators.Oscillator = (function () {
+    &quot;use strict&quot;;
+
+    var Oscillator;
+
+    // dependencies
+    var GeneratorBase = BO.generators.GeneratorBase,
+        GeneratorEvent = BO.generators.GeneratorEvent,
+        Timer = JSUTILS.Timer,
+        TimerEvent = JSUTILS.TimerEvent;
+
+    /**
+     * The Oscillator object can be attached to a Pin or LED object to output
+     * a waveform. This is useful for blinking an LED or fading it on and off. In
+     * most cases (unless you are simply using it to blink and LED on or off), 
+     * the Oscillator should be attached to a Pin or LED object associated with
+     * a PWM pin on the I/O board.
+     * See [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.
+     *
+     * @class Oscillator
+     * @constructor
+     * @extends BO.generators.GeneratorBase
+     * @param {Number} wave waveform
+     * @param {Number} freq frequency
+     * @param {Number} amplitude amplitude
+     * @param {Number} offset offset
+     * @param {Number} phase phase
+     * @param {Number} times The repeat count from 0 to infinite.
+     */
+    Oscillator = function (wave, freq, amplitude, offset, phase, times) {
+
+        // call super class
+        GeneratorBase.call(this);
+
+        this.name = &quot;Oscillator&quot;;
+
+        this._wave = wave || Oscillator.SIN;
+        this._freq = freq || 1;
+        this._amplitude = amplitude || 1;
+        this._offset = offset || 0;
+        this._phase = phase || 0;
+        this._times = times || 0;
+
+        if (freq === 0) {
+            throw new Error(&quot;Frequency should be larger than 0&quot;);
+        }
+
+        this._time = undefined;
+        this._startTime = undefined;
+        this._lastVal = undefined;
+        // need to do this in order to remove the event listener
+        this._autoUpdateCallback = this.autoUpdate.bind(this);
+
+        this._timer = new Timer(33);
+        this._timer.start();
+
+        this.reset();
+    };
+
+    Oscillator.prototype = JSUTILS.inherit(GeneratorBase.prototype);
+    Oscillator.prototype.constructor = Oscillator;
+
+    /**
+     * The service interval in milliseconds. Default is 33ms.
+     * @property serviceInterval
+     * @type Number
+     */ 
+    Oscillator.prototype.__defineSetter__(&quot;serviceInterval&quot;, function (interval) {
+        this._timer.delay = interval;
+    });
+    Oscillator.prototype.__defineGetter__(&quot;serviceInterval&quot;, function () {
+        return this._timer.delay;
+    });
+
+    /**
+     * Starts the oscillator.
+     * @method start
+     */
+    Oscillator.prototype.start = function () {
+        this.stop();
+        this._timer.addEventListener(TimerEvent.TIMER, this._autoUpdateCallback);
+
+        var date = new Date();
+        this._startTime = date.getTime();
+        this.autoUpdate(null);
+    };
+
+    /**
+     * Stops the oscillator.
+     * @method stop
+     */
+    Oscillator.prototype.stop = function () {
+        if (this._timer.hasEventListener(TimerEvent.TIMER)) {
+            this._timer.removeEventListener(TimerEvent.TIMER, this._autoUpdateCallback);
+        }
+    };
+
+    /**
+     * Resets the oscillator.
+     * @method reset
+     */
+    Oscillator.prototype.reset = function () {
+        this._time = 0;
+        this._lastVal = 0.999;
+    };
+
+    /**
+     * By default the interval is 33 milliseconds. The Osc is updated every 33ms.
+     * @method update
+     * @param {Number} interval The update interval in milliseconds.
+     */
+    Oscillator.prototype.update = function (interval) {
+        interval = interval || -1;
+        if (interval &lt; 0) {
+            this._time += this._timer.delay;
+        }
+        else {
+            this._time += interval;
+        }
+        this.computeValue();
+    };
+
+    /**
+     * @private
+     * @method autoUpdate
+     */
+    Oscillator.prototype.autoUpdate = function (event) {
+        var date = new Date();
+        this._time = date.getTime() - this._startTime;
+        this.computeValue();
+    };
+
+    /**
+     * @private
+     * @method computeValue
+     */
+    Oscillator.prototype.computeValue = function () {
+        var sec = this._time / 1000;
+
+        if (this._times !== 0 &amp;&amp; this._freq * sec &gt;= this._times) {
+            this.stop();
+            sec = this._times / this._freq;
+            if (this._wave !== Oscillator.LINEAR) {
+                this._value = this._offset;
+            } else {
+                this._value = this._amplitude * this._wave(1, 0) + this._offset;
+            }
+        } else {
+            var val = this._freq * (sec + this._phase);
+            this._value = this._amplitude * this._wave(val, this._lastVal) + this._offset;
+            this._lastVal = val;
+        }
+        this.dispatchEvent(new GeneratorEvent(GeneratorEvent.UPDATE));
+    };
+
+    // Static methods
+
+    /**
+     * sine wave
+     * @method Oscillator.SIN
+     * @static
+     */
+    Oscillator.SIN = function (val, lastVal) {
+        return 0.5 * (1 + Math.sin(2 * Math.PI * (val - 0.25)));
+    };
+
+    /**
+     * square wave
+     * @method Oscillator.SQUARE
+     * @static
+     */
+    Oscillator.SQUARE = function (val, lastVal) {
+        return (val % 1 &lt;= 0.5) ? 1 : 0;
+    };
+    
+    /**
+     * triangle wave
+     * @method Oscillator.TRIANGLE
+     * @static
+     */
+    Oscillator.TRIANGLE = function (val, lastVal) {
+        val %= 1;
+        return (val &lt;= 0.5) ? (2 * val) : (2 - 2 * val);
+    };
+    
+    /**
+     * saw wave
+     * @method Oscillator.SAW
+     * @static
+     */
+    Oscillator.SAW = function (val, lastVal) {
+        val %= 1;
+        if (val &lt;= 0.5) {
+            return val + 0.5;
+        }
+        else {
+            return val - 0.5;
+        }
+    };
+    
+    /**
+     * impulse
+     * @method Oscillator.IMPULSE
+     * @static
+     */
+    Oscillator.IMPULSE = function (val, lastVal) {
+        return ((val % 1) &lt; (lastVal % 1)) ? 1 : 0;
+    };
+    
+    /**
+     * linear
+     * @method Oscillator.LINEAR
+     * @static
+     */
+    Oscillator.LINEAR = function (val, lastVal) {
+        return (val &lt; 1) ? val : 1;
+    };
+    
+    // document events
+
+    /**
+     * The update event is dispatched at the rate specified 
+     * by the serviceInterval parameter (default = 33ms).
+     * @type BO.generators.GeneratorEvent.UPDATE
+     * @event update
+     * @param {BO.generators.Oscillator} target A reference to the Oscillator object.
+     */
+
+    return Oscillator;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

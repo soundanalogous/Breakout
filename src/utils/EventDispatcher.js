@@ -10,14 +10,16 @@ JSUTILS.EventDispatcher = (function () {
     var EventDispatcher;
 
     /**
-     * An DOM-like or as3-like EventDispatcher class.
+     * The EventDispatcher class mimics the DOM event dispatcher model so the 
+     * user can add and remove event listeners in a familiar way. Event bubbling
+     * is not available because events are dispatched in relation to state 
+     * changes of physical components instead of layered graphics so there is 
+     * nothing to bubble up.
      *
-     * @class The EventDispatcher class mimics the DOM event dispatcher model so the 
-     * user can add and remove event listeners in a familiar way. Event bubbling is
-     * not available because events are dispatched in relation to state changes of
-     * physical components instead of layered graphics so there is nothing to bubble up.
-     * @exports EventDispatcher as JSUTILS.EventDispatcher
-     * @param {Class} target The instance of the class that implements EventDispatcher
+     * @class EventDispatcher
+     * @constructor
+     * @param {Class} target The instance of the class that implements
+     * EventDispatcher
      */
     EventDispatcher = function (target) {
         "use strict";
@@ -33,9 +35,10 @@ JSUTILS.EventDispatcher = (function () {
         constructor: EventDispatcher,
 
         /**
-         * Description
+         * @method addEventListener
          * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
+         * @param {Function} listener The function to be called when the event
+         * is fired
          */
         addEventListener: function (type, listener) {
             if (!this._eventListeners[type]) {
@@ -45,9 +48,10 @@ JSUTILS.EventDispatcher = (function () {
         },
         
         /**
-         * Description
+         * @method removeEventListener
          * @param {String} type The event type
-         * @param {Function} listener The function to be called when the event is fired
+         * @param {Function} listener The function to be called when the event
+         * is fired
          */
         removeEventListener: function (type, listener) {
             for (var i = 0, len = this._eventListeners[type].length; i < len; i++) {
@@ -59,7 +63,7 @@ JSUTILS.EventDispatcher = (function () {
         },
         
         /**
-         * Description
+         * @method hasEventListener
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
          */
@@ -72,7 +76,7 @@ JSUTILS.EventDispatcher = (function () {
         },
         
         /**
-         * Description
+         * @method dispatchEvent
          * @param {Event} type The Event object.
          * @param {Object} optionalParams Optional parameters passed as an object.
          * return {boolean} True if dispatch is successful, false if not.

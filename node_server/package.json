@@ -1,13 +1,13 @@
 {
   "name": "breakout-server",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Node.js module to run a BreakoutJS server",
   "preferGlobal": "true",
   "main": "server.js",
   "bin": {
     "breakout-server": "server.js"
   },
-  "author": "soundanalogous",
+  "author": "Jeff Hoefs <soundanalogous@gmail.com>",
   "keywords": [
     "arduino",
     "firmata",
@@ -24,6 +24,6 @@
     "commander": ">= 1.1.1"
   },
   "engines": {
-    "node": "*"
+    "node": ">=0.10.0"
   }
 }

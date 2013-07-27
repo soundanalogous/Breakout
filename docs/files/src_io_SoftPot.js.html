@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/io/SoftPot.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/io/SoftPot.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.io.SoftPot&#x27;);
+
+BO.io.SoftPot = (function () {
+
+    var SoftPot;
+
+    // private static constants:
+    var TAP_TIMEOUT             = 200,
+        FLICK_TIMEOUT           = 200,
+        PRESS_TIMER_INTERVAL    = 10,
+        MIN_VALUE               = 0.01,
+        DEBOUNCE_TIMEOUT        = 20;   
+
+    // dependencies
+    var PhysicalInputBase = BO.PhysicalInputBase,
+        Pin = BO.Pin,
+        PinEvent = BO.PinEvent,
+        Scaler = BO.filters.Scaler,
+        Timer = JSUTILS.Timer,
+        TimerEvent = JSUTILS.TimerEvent,
+        SoftPotEvent = BO.io.SoftPotEvent;
+
+    /**
+     * Creates an interface to a SoftPot sensor. A softpot is a type of
+     * analog resistive sensor that acts as a type of slider input. There are 
+     * straight and curved variations. This object provides a number of useful 
+     * events such as Press, Release, Drag, Tap and capturing Flick gestures.
+     * See [Breakout/examples/sensors/softpot.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/softpot.html) for an example application.
+     *
+     * @class SoftPot
+     * @constructor
+     * @extends BO.PhysicalInputBase
+     * @param {IOBoard} board A reference to the IOBoard instance
+     * @param {Pin} pin A reference to the Pin the softpot is connected to.
+     * @param {Number} softPotLength The length of the softpot in mm. 
+     * Default = 100. 
+     */
+    SoftPot = function (board, pin, softPotLength) {
+        &quot;use strict&quot;;
+        
+        PhysicalInputBase.call(this);
+
+        this.name = &quot;SoftPot&quot;;
+        this._pin = pin;
+
+        softPotLength = softPotLength || 100;
+
+        this._isDrag = false;
+        this._flickDistance = 0;
+        this._touchPoint = 0;
+        this._lastMovePoint = 0;
+        this._isTouched = false;
+        this._distanceFromPressed = 0;
+        this._minFlickMovement = 1.0 / softPotLength * 2.5;
+        this._minDragMovement = 1.0 / softPotLength * 1.0;
+        this._tapTimeout = TAP_TIMEOUT;
+        this._minValue = MIN_VALUE;
+        
+        this._board = board;
+        board.enableAnalogPin(this._pin.analogNumber);
+
+        this._debugMode = BO.enableDebugging;
+                        
+        this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
+
+        this._pressTimer = new Timer(PRESS_TIMER_INTERVAL, 0);
+        this._flickTimer = new Timer(FLICK_TIMEOUT, 1);
+    };
+
+
+    SoftPot.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
+    SoftPot.prototype.constructor = SoftPot;
+
+    /**
+     * @private
+     * @method onPinChange
+     * @param {Event} evt PinEvent.CHANGE
+     */
+    SoftPot.prototype.onPinChange = function (evt) {
+        var val = evt.target.value;
+
+        // _minValue is the minimum value required to set the release state
+        // should be as close to zero as possible
+        if (this._isTouched &amp;&amp; val &lt; this._minValue) {
+            this.onRelease();
+        } else if (val &gt;= this._minValue) {
+            if (!this._isTouched) {
+                this.startTouch(val);
+                this._lastMovePoint = val;
+            } else {
+                this.onMove(val);
+            }
+        }
+    };
+
+    /**
+     * @private
+     * @method setMinFlickMovement
+     * @param {Number} touchPoint The value where the touch is occuring on the
+     * strip
+     */
+    SoftPot.prototype.setMinFlickMovement = function (num) {
+        this._minFlickMovement = num;   
+    };
+    
+    /**
+     * @private
+     * @method startTouch
+     */
+    SoftPot.prototype.startTouch = function (touchPoint) {
+        
+        this._pressTimer.reset();
+        this._pressTimer.start();
+        
+        // where we pressed
+        this._touchPoint = touchPoint;
+        this.dispatch(SoftPotEvent.PRESS);
+        
+        this._isTouched = true;
+        this._isDrag = false;   
+    };
+
+    /**
+     * @private
+     * @method onRelease
+     */
+    SoftPot.prototype.onRelease = function () {      
+
+        var dispatchedFlick = false; 
+        
+        // discard unintentional touch / noise
+        if (this._pressTimer.currentCount &gt; DEBOUNCE_TIMEOUT / PRESS_TIMER_INTERVAL) {
+            // must meet minimum time requirement for flick  
+            if (this._flickTimer.running) {
+                if (this._flickDir &gt; 0) {
+                    this.dispatch(SoftPotEvent.FLICK_DOWN);
+                } else {
+                    this.dispatch(SoftPotEvent.FLICK_UP);
+                }   
+                dispatchedFlick = true; 
+                
+            } 
+                        
+            if (!dispatchedFlick) {
+                // Check for presses  
+                if (this._pressTimer.running) {
+            
+                    // If less than tap timeout, then it is a tap 
+                    if (!this._isDrag &amp;&amp; this._pressTimer.currentCount &lt;= this._tapTimeout / PRESS_TIMER_INTERVAL) {
+                        this.dispatch(SoftPotEvent.TAP);
+                    }
+                } 
+            }
+        }
+
+        this.dispatch(SoftPotEvent.RELEASE);
+
+        this.resetForNext(); 
+    };
+    
+    /**
+     * @private
+     * @method onMove
+     * @param {Number} touchPoint The value where the touch is occuring on the
+     * strip
+     */
+    SoftPot.prototype.onMove = function (touchPoint) {       
+    
+        this._touchPoint = touchPoint;      
+        // Save current point
+        var curMovePoint = touchPoint;
+        
+        // Flick handeling 
+        this._flickDistance = Math.abs(curMovePoint - this._lastMovePoint);
+        
+        if (!this._isDrag &amp;&amp; this._flickDistance &gt; this._minFlickMovement) {
+            this._flickTimer.reset(); 
+            this._flickTimer.start(); 
+            
+            if (curMovePoint - this._lastMovePoint &gt; 0) {
+                this._flickDir = 1;
+            } else {
+                this._flickDir = -1;
+            }
+            
+            this._isDrag = false; 
+        }           
+        
+        var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);                
+
+        // Dragging handler 
+        // Don&#x27;t check when flick timer is running
+        //console.log(&quot;min drag = &quot; + this._minDragMovement);
+        if ((dragDistance &gt; this._minDragMovement) &amp;&amp; (this._flickTimer.running === false)) {
+            this._isDrag = true; 
+        }
+        
+        if (this._isDrag) {
+            this.dispatch(SoftPotEvent.DRAG);
+            this._distanceFromPressed = curMovePoint - this._lastMovePoint;
+        }
+                                
+        this.debug(&quot;SoftPot: distance traveled flick is &quot; + this._flickDistance); 
+        this.debug(&quot;SoftPot: distance traveled drag is &quot; + dragDistance); 
+
+        // Reuse for next 
+        this._lastMovePoint = curMovePoint; 
+    };
+
+    /**
+     * Scale from the minimum and maximum input values to 0.0 -&gt; 1.0.
+     *
+     * @method setRange
+     * @param {Number} minimum The minimum value
+     * @param {Number} maximum The maximum value
+     */
+    SoftPot.prototype.setRange = function (minimum, maximum) {
+        this._pin.removeAllFilters();
+        this._pin.addFilter(new Scaler(minimum, maximum, 0, 1, Scaler.LINEAR)); 
+    };
+
+    /**
+     * @private
+     * @method dispatch
+     * @type {Event} type The event type
+     */
+    SoftPot.prototype.dispatch = function (type) {
+        this.debug(&quot;SoftPot dispatch &quot; + type);
+        this.dispatchEvent(new SoftPotEvent(type, this._touchPoint));   
+    };
+
+    /**
+     * Reset whenever you need the next Touch point.
+     * @private
+     * @method resetForNext
+     */
+    SoftPot.prototype.resetForNext = function () {
+        this._flickTimer.stop();
+        this._pressTimer.stop();
+        this._isTouched = false;
+        this._isDrag = false;
+    };
+
+    /**
+     * For debugging.
+     * 
+     * @private
+     */
+    SoftPot.prototype.debug = function (str) {
+        if (this._debugMode) {
+            console.log(str); 
+        }
+    };  
+    
+    /**
+     * The current value.
+     * @property value
+     * @type Number
+     */ 
+    SoftPot.prototype.__defineGetter__(&quot;value&quot;, function () { return this._touchPoint; });
+    
+    /**
+     * The current distance from the press point.
+     * @property distanceFromPressed
+     * @type Number
+     */ 
+    SoftPot.prototype.__defineGetter__(&quot;distanceFromPressed&quot;, function () { return this._distanceFromPressed; });
+    
+    /**
+     * The minimum distance required to trigger a flick event. Change this
+     * value to fine tune the flick gesture.
+     * @property minFlickMovement
+     * @type Number
+     */ 
+    SoftPot.prototype.__defineGetter__(&quot;minFlickMovement&quot;, function () { return this._minFlickMovement; });  
+    SoftPot.prototype.__defineSetter__(&quot;minFlickMovement&quot;, function (min) { this._minFlickMovement = min; });        
+    
+    /**
+     * The minimum distance required to trigger a drag event. Change this
+     * value to fine tune the drag response.
+     * @property minDragMovement
+     * @type Number
+     */ 
+    SoftPot.prototype.__defineGetter__(&quot;minDragMovement&quot;, function () { return this._minDragMovement; });    
+    SoftPot.prototype.__defineSetter__(&quot;minDragMovement&quot;, function (min) { this._minDragMovement = min; });
+
+    /**
+     * The maximum time (in milliseconds) between a press and release in
+     * order to trigger a TAP event.
+     * @property tapTimeout
+     * @type Number
+     */ 
+    SoftPot.prototype.__defineGetter__(&quot;tapTimeout&quot;, function () { return this._tapTimeout; });  
+    SoftPot.prototype.__defineSetter__(&quot;tapTimeout&quot;, function (t) { this._tapTimeout = t; });
+
+    /**
+     * The minimum value required to set the Release state. This number should
+     * be as close to zero as possible. Increase this value if you are noticing
+     * fluttering between the Pressed and Released states. Default value = 0.01;
+     * @property minValue
+     * @type Number
+     */ 
+    SoftPot.prototype.__defineGetter__(&quot;minValue&quot;, function () { return this._minValue; });  
+    SoftPot.prototype.__defineSetter__(&quot;minValue&quot;, function (val) { this._minValue = val; });    
+
+
+    // Document events
+
+    /**
+     * The softPotPressed event is dispatched when pressure is applied to 
+     * the softpot surface.
+     * @type BO.io.SoftPotEvent.PRESS
+     * @event softPotPressed
+     * @param {BO.io.SoftPot} target A reference to the SoftPot object
+     */
+
+    /**
+     * The softPotReleased event is dispatched when pressure is released from 
+     * the softpot surface.
+     * @type BO.io.SoftPotEvent.RELEASE
+     * @event softPotReleased
+     * @param {BO.io.SoftPot} target A reference to the SoftPot object
+     */ 
+     
+    /**
+     * The softPotDrag event is dispatched when a drag is detected along 
+     * the length of the softpot sensor.
+     * @type BO.io.SoftPotEvent.DRAG
+     * @event softPotDrag
+     * @param {BO.io.SoftPot} target A reference to the SoftPot object
+     */ 
+     
+    /**
+     * The softPotFlickUp event is dispatched when a flick gesture is detected
+     * in the direction of the sensor pins.
+     * @type BO.io.SoftPotEvent.FLICK_UP
+     * @event softPotFlickUp
+     * @param {BO.io.SoftPot} target A reference to the SoftPot object
+     */ 
+     
+    /**
+     * The softPotFlickDown event is dispatched when a flick gesture is 
+     * detected in the direction away from the sensor pins.
+     * @type BO.io.SoftPotEvent.FLICK_DOWN
+     * @event softPotFlickDown
+     * @param {BO.io.SoftPot} target A reference to the SoftPot object
+     */
+     
+    /**
+     * The softPotTap event is dispatched when a press and release occurs
+     * in in less than the duration specified by the tapTimeout property.
+     * @type BO.io.SoftPotEvent.TAP
+     * @event softPotTap
+     * @param {BO.io.SoftPot} target A reference to the SoftPot object
+     */                  
+
+    return SoftPot;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

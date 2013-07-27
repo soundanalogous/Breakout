@@ -13,11 +13,11 @@ BO.WSocketEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports WSocketEvent as BO.WSocketEvent
-     * @class Dispatches Websocket events: Connected (onopen), Message (onmessge) 
-     * and Closed (onclose) objects.     
+     * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
+     * and Closed `onclose` objects.
+     * @class WSocketEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     WSocketEvent = function (type) {
@@ -29,11 +29,20 @@ BO.WSocketEvent = (function () {
     };
 
     // events
-    /** @constant */
+    /**
+     * @property WSocketEvent.CONNECTED
+     * @static
+     */
     WSocketEvent.CONNECTED = "webSocketConnected";
-    /** @constant */
+    /**
+     * @property WSocketEvent.MESSAGE
+     * @static
+     */
     WSocketEvent.MESSAGE = "webSocketMessage";
-    /** @constant */
+    /**
+     * @property WSocketEvent.CLOSE
+     * @static
+     */
     WSocketEvent.CLOSE = "webSocketClosed";
 
     WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);

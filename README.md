@@ -14,38 +14,40 @@ See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other
 Example
 ---
 
-    <!DOCTYPE html>
-    <html>
-    <head>
-    <meta charset=utf-8 />
-    <title>Hello World</title>
-    </head>
-      <body>
-        <button id="ledToggle">Toggle LED</button>
-        <p id="btnStatus"></p>
-        <script src="../../dist/Breakout.js"></script>
-        <script>
-        var arduino = new BO.IOBoard("localhost", 8887);
-        arduino.addEventListener(BO.IOBoardEvent.READY, function (event) {
-          var led = new BO.io.LED(arduino, arduino.getDigitalPin(11)),
-            button = new BO.io.Button(arduino, arduino.getDigitalPin(2)),
-            toggleBtn = document.getElementById("ledToggle"),
-            btnStatus = document.getElementById("btnStatus");
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>Hello World</title>
+</head>
+  <body>
+    <button id="ledToggle">Toggle LED</button>
+    <p id="btnStatus"></p>
+    <script src="../../dist/Breakout.js"></script>
+    <script>
+    var arduino = new BO.IOBoard("localhost", 8887);
+    arduino.addEventListener(BO.IOBoardEvent.READY, function (event) {
+      var led = new BO.io.LED(arduino, arduino.getDigitalPin(11)),
+        button = new BO.io.Button(arduino, arduino.getDigitalPin(2)),
+        toggleBtn = document.getElementById("ledToggle"),
+        btnStatus = document.getElementById("btnStatus");
 
-          toggleBtn.addEventListener("click", function (event) {
-            led.toggle();
-          });
+      toggleBtn.addEventListener("click", function (event) {
+        led.toggle();
+      });
 
-          button.addEventListener(BO.io.ButtonEvent.PRESS, function (event) {
-            btnStatus.innerHTML = "Button " + event.target.pinNumber + " pressed";
-          });
-          button.addEventListener(BO.io.ButtonEvent.RELEASE, function (event) {
-            btnStatus.innerHTML = "Button " + event.target.pinNumber + " released";
-          });
-        });
-        </script>
-      </body>
-    </html>
+      button.addEventListener(BO.io.ButtonEvent.PRESS, function (event) {
+        btnStatus.innerHTML = "Button " + event.target.pinNumber + " pressed";
+      });
+      button.addEventListener(BO.io.ButtonEvent.RELEASE, function (event) {
+        btnStatus.innerHTML = "Button " + event.target.pinNumber + " released";
+      });
+    });
+    </script>
+  </body>
+</html>
+```
 
 Quick Start
 ---
@@ -54,9 +56,9 @@ See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/)
 
 The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
 
-1. After downloading or cloning Breakout, navigate to Breakout/firmware/AdvancedFirmata/ and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
+1. After downloading or cloning Breakout, navigate to `Breakout/firmware/AdvancedFirmata/` and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
 2. Compile *AdvancedFirmata* for your board and upload.
-3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in *Breakout/examples/schematics.pdf* (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
+3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
 
 The next step is to run the Breakout Server application:
 
@@ -81,17 +83,17 @@ Breakout is only supported for Arduino 1.0 and higher [Download Arduino](http://
 
 You will need one of the following I/O boards:
 
-- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonardo, etc). 
-- [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy++ 1.0 or 2.0
+- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonardo, Due, etc). 
+- [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy 3.0, Teensy++ 1.0 or 2.0
 - Many Arduino clones / variants should also work
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
 
-Note: In order to use Breakout with an Arduino Leonardo board, you need to update the Firmata library in your Arduino application. [Please refer to the instructions here](https://github.com/soundanalogous/Breakout/wiki/Updating-Firmata-in-Arduino).
+*In order to use Breakout with an Arduino Leonardo, Arduino Due or Teensy 3.0 board, you need to update the Firmata library in your Arduino application. You can get the latest version of [Firmata here](https://github.com/firmata/arduino). Refer to the README for installation instructions. Note that the instructions are different for Arduino 1.0.x vs Arduino 1.5.x.*
 
 OS:
 
 - Mac OS X 10.6 or higher
-- Windows 7 or XP ([Java JRE 1.6 or greater required](http://www.java.com/en/download/index.jsp))
+- Windows 7 or XP ([Java JRE 1.6 or greater required to run Breakout Server](http://www.java.com/en/download/index.jsp))
 - Has been tested successfuly on Ubuntu 11.10 running in 64-bit mode on an x86-64 processor
 - May work on older versions of OS X and Windows as well but has not been tested
 - May work on other Linux distributions but has not been tested
@@ -115,18 +117,17 @@ Contributing
 Contributions are welcome. If you have any ideas, suggestions for improvements, 
 examples to share, or anything else you'd like to contribute please get in touch.
 
-Submit pull requests for bug fixes and small changes. For any larger changes, 
-please first start a discussing by opening a new issue.
+Submit pull requests (against the `dev` branch) for bug fixes and small changes. For any
+larger changes, please first start a discussion by opening a new issue.
 
-Please submit pull requests against the *dev* branch. Code must pass unit tests
-in Breakout/test/ and must pass lint checks in order to be accepted. See build/README.md for more info. Run tests against Chrome, Firefox, Safari and Opera 12.
+See [Breakout/build/README.md](https://github.com/soundanalogous/Breakout/blob/master/build/README.md) for instructions on building Breakout. 
 
 
 Credits
 ---
-Breakout is developed by Jeff Hoefs.
+Breakout is developed by [Jeff Hoefs](http://jeffhoefs.com).
 
-Breakout is based largely on the as3 library of [Funnel](http://funnel.cc). 
+Breakout is based on the as3 library of [Funnel](http://funnel.cc). 
 The author is also a contributor to the Funnel as3 library.
 
 Logo and icon designed by Claire Lin.

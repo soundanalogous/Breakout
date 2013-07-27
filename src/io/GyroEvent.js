@@ -13,11 +13,11 @@ BO.io.GyroEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports GyroEvent as BO.io.GyroEvent
-     * @class An Event object to be dispatched (fired) by a Gyroscope
-     * object.   
+     * An Event object to be dispatched (fired) by a Gyroscope
+     * object.
+     * @class GyroEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     GyroEvent = function (type) {
@@ -28,9 +28,15 @@ BO.io.GyroEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property GyroEvent.GYRO_READY
+     * @static
+     */
     GyroEvent.GYRO_READY = "gyroReady";
-    /** @constant */
+    /**
+     * @property GyroEvent.UPDATE
+     * @static
+     */
     GyroEvent.UPDATE = "update";
     
 

@@ -23,18 +23,16 @@ BO.generators.Oscillator = (function () {
         TimerEvent = JSUTILS.TimerEvent;
 
     /**
-     * Osc outputs a waveform on the associated PWM pin. For example, this can be used to blink or fade
-     * an LED on or off.
-     *
-     * @exports Oscillator as BO.generators.Oscillator
-     * @class The Oscillator object can be attached to a Pin or LED object to output
+     * The Oscillator object can be attached to a Pin or LED object to output
      * a waveform. This is useful for blinking an LED or fading it on and off. In
      * most cases (unless you are simply using it to blink and LED on or off), 
      * the Oscillator should be attached to a Pin or LED object associated with
-     * a PWM pin on the I/O board. See Breakout/examples/generators/oscillator.html
-     * for an example application.
+     * a PWM pin on the I/O board.
+     * See [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.
+     *
+     * @class Oscillator
      * @constructor
-     * @augments BO.generators.GeneratorBase
+     * @extends BO.generators.GeneratorBase
      * @param {Number} wave waveform
      * @param {Number} freq frequency
      * @param {Number} amplitude amplitude
@@ -77,9 +75,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * The service interval in milliseconds. Default is 33ms.
-     *
-     * @name Oscillator#serviceInterval
-     * @property
+     * @property serviceInterval
      * @type Number
      */ 
     Oscillator.prototype.__defineSetter__("serviceInterval", function (interval) {
@@ -90,7 +86,8 @@ BO.generators.Oscillator = (function () {
     });
 
     /**
-     * Starts the oscillator
+     * Starts the oscillator.
+     * @method start
      */
     Oscillator.prototype.start = function () {
         this.stop();
@@ -103,6 +100,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * Stops the oscillator.
+     * @method stop
      */
     Oscillator.prototype.stop = function () {
         if (this._timer.hasEventListener(TimerEvent.TIMER)) {
@@ -112,6 +110,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * Resets the oscillator.
+     * @method reset
      */
     Oscillator.prototype.reset = function () {
         this._time = 0;
@@ -120,6 +119,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * By default the interval is 33 milliseconds. The Osc is updated every 33ms.
+     * @method update
      * @param {Number} interval The update interval in milliseconds.
      */
     Oscillator.prototype.update = function (interval) {
@@ -135,6 +135,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * @private
+     * @method autoUpdate
      */
     Oscillator.prototype.autoUpdate = function (event) {
         var date = new Date();
@@ -144,6 +145,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * @private
+     * @method computeValue
      */
     Oscillator.prototype.computeValue = function () {
         var sec = this._time / 1000;
@@ -168,6 +170,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * sine wave
+     * @method Oscillator.SIN
      * @static
      */
     Oscillator.SIN = function (val, lastVal) {
@@ -176,6 +179,7 @@ BO.generators.Oscillator = (function () {
 
     /**
      * square wave
+     * @method Oscillator.SQUARE
      * @static
      */
     Oscillator.SQUARE = function (val, lastVal) {
@@ -184,6 +188,7 @@ BO.generators.Oscillator = (function () {
     
     /**
      * triangle wave
+     * @method Oscillator.TRIANGLE
      * @static
      */
     Oscillator.TRIANGLE = function (val, lastVal) {
@@ -193,6 +198,7 @@ BO.generators.Oscillator = (function () {
     
     /**
      * saw wave
+     * @method Oscillator.SAW
      * @static
      */
     Oscillator.SAW = function (val, lastVal) {
@@ -207,6 +213,7 @@ BO.generators.Oscillator = (function () {
     
     /**
      * impulse
+     * @method Oscillator.IMPULSE
      * @static
      */
     Oscillator.IMPULSE = function (val, lastVal) {
@@ -215,6 +222,7 @@ BO.generators.Oscillator = (function () {
     
     /**
      * linear
+     * @method Oscillator.LINEAR
      * @static
      */
     Oscillator.LINEAR = function (val, lastVal) {
@@ -226,13 +234,11 @@ BO.generators.Oscillator = (function () {
     /**
      * The update event is dispatched at the rate specified 
      * by the serviceInterval parameter (default = 33ms).
-     * @name Oscillator#update
      * @type BO.generators.GeneratorEvent.UPDATE
-     * @event
+     * @event update
      * @param {BO.generators.Oscillator} target A reference to the Oscillator object.
      */
 
     return Oscillator;
-
 
 }());

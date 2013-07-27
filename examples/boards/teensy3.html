@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+body {
+    margin: 20px;
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #00AEFF;
+}
+h2 {
+    font-size: 22px;
+    padding-bottom: 10px;
+}
+.text {
+    font-family: "Arial";
+    font-size: 22px;
+    color: #00AEEF;
+    padding-bottom: 20px;
+}
+</style>
+
+<title>Teensy 3.0 Example</title>
+
+<!-- The following (socket.io.js) is only required when using the node_server -->
+<script src="../../socket.io/socket.io.js"></script>
+<script src="../../dist/Breakout.min.js"></script>
+<script src="../libs/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var Pin = BO.Pin;
+    var PinEvent = BO.PinEvent;
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var BlinkM = BO.io.BlinkM;
+    var CompassHMC6352 = BO.io.CompassHMC6352;
+    var CompassEvent = BO.io.CompassEvent;
+    var Button = BO.io.Button;
+    var ButtonEvent = BO.io.ButtonEvent;
+    var Servo = BO.io.Servo;
+    var LED = BO.io.LED;
+    var Oscillator = BO.generators.Oscillator;  
+
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true;  
+
+    // If you are not serving this file from the same computer
+    // that the Arduino Leonardo board is connected to, replace
+    // window.location.hostname with the IP address or hostname
+    // of the computer that the Arduino board is connected to.
+    var host = window.location.hostname;
+    // if the file is opened locally, set the host to "localhost"
+    if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+    }
+    var teensy = new IOBoard(host, 8887);
+    
+    // Variables
+    var servoDir = true;
+    var blinkM;
+    var compass;
+    var servo;
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data     
+    teensy.addEventListener(IOBoardEvent.READY, onReady);
+
+    function onReady(event) {
+        // Log the board capabilities to the browser console
+        teensy.reportCapabilities();
+        
+        // Remove the listener because it is no longer needed        
+        teensy.removeEventListener(IOBoardEvent.READY, onReady);
+                    
+        // Listen for incoming string messages
+        teensy.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+
+        // Blink the on for 1 second and off for 1 second
+        var blinkLED = new LED(teensy, teensy.getDigitalPin(4));
+        blinkLED.blink(1000, 0);
+    
+        // Set digital pin 2 to input
+        teensy.setDigitalPinMode(2, Pin.DIN);
+        
+        // Get a reference to the pin and listen for Change event
+        var button01 = new Button(teensy, teensy.getDigitalPin(2), Button.PULL_DOWN);
+        button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
+        button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
+        
+        // Enable reporting for an analog pin
+        teensy.enableAnalogPin(9);
+        var pot = teensy.getAnalogPin(9);
+        console.log("pin number = " + pot.number);
+        console.log("analog number = " + pot.analogNumber);
+        pot.addEventListener(PinEvent.CHANGE, onPotChange);
+        // Disable reporting for an analog pin
+        //teensy.disableAnalogPin(0);
+        
+        // Set analog pin to digital input
+        teensy.setDigitalPinMode(20, Pin.DIN);
+        var button02 = teensy.getDigitalPin(20);
+        button02.addEventListener(PinEvent.CHANGE, onButtonChange);
+
+        // Fade the LED on and off over a 2 second duration
+        var fadeLED = new LED(teensy, teensy.getDigitalPin(10));
+        fadeLED.blink(2000, 0, Oscillator.SIN);     
+
+        servo = new Servo(teensy, teensy.getDigitalPin(9));
+        // Rotate the servo head ever 5 seconds
+        setInterval(servoTest, 5000);
+        
+        blinkM = new BlinkM(teensy);
+        blinkM.stopScript();
+        setInterval(randomColor, 2000);
+        
+        compass = new CompassHMC6352(teensy);
+        compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
+        
+        setTimeout(stopReading, 1000);
+        setTimeout(startReading, 3000);
+    }
+    
+    function stopReading() {
+        compass.stopReading();
+    }
+    
+    function startReading() {
+        compass.startReading();
+    }   
+    
+    function onHeadingUpdate(evt) {
+        $('#heading').html("heading: " + evt.target.heading);
+    }   
+    
+    function randomColor() {
+        var red = Math.floor(Math.random() * 255);
+        var green = Math.floor(Math.random() * 255);
+        var blue = Math.floor(Math.random() * 255);
+        
+        blinkM.goToRGBColorNow([red, green, blue]);
+        //blinkM.fadeToRGBColor([red, green, blue]);
+    }   
+    
+    function onPotChange(event) {
+        var pin = event.target;
+        var analogData = "pot value: " + pin.value.toFixed(3) + 
+            "\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
+            pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
+        
+        $('#potData').html(analogData); 
+    }
+
+    function onButtonPress(event) {
+        var btn = event.target;
+        $('#button').html("button: pin = " + btn.pinNumber + " pressed");
+    }
+
+    function onButtonRelease(event) {
+        var btn = event.target;
+        $('#button').html("button: pin = " + btn.pinNumber + " released");
+    }
+    
+    function onButtonChange(event) {
+        var pin = event.target;
+        $('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);    
+    }   
+        
+    function onStringMessage(event) {
+        console.log("string received: " + event.message);
+    }
+    
+    function servoTest() {
+        if (servoDir) {
+            servo.angle = 0;
+        } else {
+            servo.angle = 180;
+        }
+        servoDir = !servoDir;
+    }
+});
+</script>
+
+</head>
+<body>
+    <h2>Teensy 3.0 Test Example</h2>
+  
+    <div id="potData" class="text">pot value:</div>
+    <div id="heading" class="text">heading:</div>
+    <div id="button" class="text">button:</div>
+  
+</body>
+</html>​

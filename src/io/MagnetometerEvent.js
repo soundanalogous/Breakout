@@ -13,11 +13,11 @@ BO.io.MagnetometerEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports MagnetometerEvent as BO.io.MagnetometerEvent
-     * @class An Event object to be dispatched (fired) by a Magnetometer
-     * object.   
+     * An Event object to be dispatched (fired) by a Magnetometer
+     * object.
+     * @class MagnetometerEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type   
      */
     MagnetometerEvent = function (type) {
@@ -28,7 +28,10 @@ BO.io.MagnetometerEvent = (function () {
 
     };
 
-    /** @constant */
+    /**
+     * @property MagnetometerEvent.UPDATE
+     * @static
+     */
     MagnetometerEvent.UPDATE = "update";
     
 

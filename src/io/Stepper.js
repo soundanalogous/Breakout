@@ -25,19 +25,20 @@ BO.io.Stepper = (function () {
         IOBoardEvent = BO.IOBoardEvent;
 
     /**
-     * Creates a new Stepper.
-     *
-     * @exports Stepper as BO.io.Stepper
-     * @class Creates an interface to a Stepper motor. Use this object to set
+     * Creates an interface to a Stepper motor. Use this object to set
      * the direction and number of steps for the motor to rotate. See
-     * Breakout/examples/actuators/stepper_2wire.html, stepper_4wire.html, 
-     * stepper_easydriver.html and stepper_simple.html for example applications.
+     * [Breakout/examples/actuators/stepper\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html), 
+     * [stepper\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html), 
+     * [stepper\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html) 
+     * and [stepper\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.
      *
+     * @class Stepper
      * @constructor
+     * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
-     * @param {Number} driverType. The type of driver (Stepper.DRIVER, 
-     * Stepper.TWO_WIRE, or Stepper.FOUR_WIRE).
+     * @param {Number} driverType. The type of driver (`Stepper.DRIVER`, 
+     * `Stepper.TWO_WIRE`, or `Stepper.FOUR_WIRE`).
      * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
      * @param {Pin} directionPin If dirver interface, the pin used to control 
      * the direction.
@@ -49,32 +50,31 @@ BO.io.Stepper = (function () {
      * @param {Pin} motorPin4 [optional] Only required for a 4-wire interface.
      *
      * @example
-     * // example
-     * var Stepper = BO.io.Stepper,
-     *     Event = JSUTILS.Event;
+     *     var Stepper = BO.io.Stepper,
+     *         Event = JSUTILS.Event;
      *
-     * var stepper,
-     *     stepsPerRev = 200,           // update this for your stepper
-     *     numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
-     *     speed = 15.0,                // rad/sec (RPM = speed * 9.55)
-     *     acceleration = 20.0,         // rad/sec^2
-     *     deceleration = 20.0;         // rad/sec^2
+     *     var stepper,
+     *         stepsPerRev = 200,           // update this for your stepper
+     *         numSteps = stepsPerRev * 10, // 10 revolutions (+ CW, - CCW)
+     *         speed = 15.0,                // rad/sec (RPM = speed * 9.55)
+     *         acceleration = 20.0,         // rad/sec^2
+     *         deceleration = 20.0;         // rad/sec^2
      *
-     * stepper = new Stepper(arduino,
-     *              Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
-     *              stepsPerRev,
-     *              arduino.getDigitalPin(2),
-     *              arduino.getDigitalPin(3));
+     *     stepper = new Stepper(arduino,
+     *                  Stepper.TWO_WIRE, // or Stepper.DRIVER or Stepper.FOUR_WIRE
+     *                  stepsPerRev,
+     *                  arduino.getDigitalPin(2),
+     *                  arduino.getDigitalPin(3));
      *
-     * stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+     *     stepper.addEventListener(Event.COMPLETE, onStepperComplete);
      *
-     * // acceleration and deceleration parameters are optional
-     * stepper.step(numSteps, speed, acceleration, deceleration);
+     *     // acceleration and deceleration parameters are optional
+     *     stepper.step(numSteps, speed, acceleration, deceleration);
      *
-     * function onStepperComplete(event) {
-     *     // each stepper is assigned a read-only id value when instantiated
-     *     console.log("stepper " + event.target.id + " sequence complete");
-     * }
+     *     function onStepperComplete(event) {
+     *         // each stepper is assigned a read-only id value when instantiated
+     *         console.log("stepper " + event.target.id + " sequence complete");
+     *     }
      */
     Stepper = function (board, driverType, numStepsPerRev, directionPin, stepPin, motorPin3, motorPin4) {
         
@@ -90,10 +90,13 @@ BO.io.Stepper = (function () {
         this._evtDispatcher = new EventDispatcher(this);
 
         var numStepsPerRevLSB = numStepsPerRev & 0x007F,
-            numStepsPerRevMSB = (numStepsPerRev >> 7) & 0x007F;
+            numStepsPerRevMSB = (numStepsPerRev >> 7) & 0x007F,
+            silent = true;
 
-        this._board.setDigitalPinMode(directionPin.number, Pin.DOUT);
-        this._board.setDigitalPinMode(stepPin.number, Pin.DOUT);
+        // Setup pin mode but don't send set pin mode command to Firmata since
+        // Firmata sets pin modes automatically in the Stepper implementation.
+        this._board.setDigitalPinMode(directionPin.number, Pin.DOUT, silent);
+        this._board.setDigitalPinMode(stepPin.number, Pin.DOUT, silent);
 
         this._board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
         
@@ -102,29 +105,29 @@ BO.io.Stepper = (function () {
         case Stepper.TWO_WIRE:
             // configure the stepper motor
             this._board.sendSysex(STEPPER,
-                                    [CONFIG,
-                                    this._id,
-                                    driverType,
-                                    numStepsPerRevLSB, 
-                                    numStepsPerRevMSB,
-                                    directionPin.number,
-                                    stepPin.number]);
+                [CONFIG,
+                this._id,
+                driverType,
+                numStepsPerRevLSB, 
+                numStepsPerRevMSB,
+                directionPin.number,
+                stepPin.number]);
             break;
         case Stepper.FOUR_WIRE:
-            this._board.setDigitalPinMode(motorPin3.number, Pin.DOUT);
-            this._board.setDigitalPinMode(motorPin4.number, Pin.DOUT);
+            this._board.setDigitalPinMode(motorPin3.number, Pin.DOUT, silent);
+            this._board.setDigitalPinMode(motorPin4.number, Pin.DOUT, silent);
 
             // configure the stepper motor
             this._board.sendSysex(STEPPER,
-                                    [CONFIG,
-                                    this._id,
-                                    driverType,
-                                    numStepsPerRevLSB, 
-                                    numStepsPerRevMSB,
-                                    directionPin.number,
-                                    stepPin.number,
-                                    motorPin3.number,
-                                    motorPin4.number]);
+                [CONFIG,
+                this._id,
+                driverType,
+                numStepsPerRevLSB, 
+                numStepsPerRevMSB,
+                directionPin.number,
+                stepPin.number,
+                motorPin3.number,
+                motorPin4.number]);
             break;
         }
 
@@ -140,6 +143,7 @@ BO.io.Stepper = (function () {
          * The accel and decel parameters are optional but if using, both values
          * must be passed to the function.
          *
+         * @method step
          * @param {Number} numSteps The number ofsteps to move the motor (max = +/-2097151 (21 bits)).
          * Positive value is clockwise, negative value is counter clockwise.
          * @param {Number} speed Max speed in rad/sec (1 rad/sec = 9.549 RPM)
@@ -200,31 +204,31 @@ BO.io.Stepper = (function () {
                 decelMSB = (decel >> 7) & 0x007F;               
                             
                 this._board.sendSysex(STEPPER, 
-                                        [STEP,
-                                        this._id,
-                                        direction,                              
-                                        steps[0],
-                                        steps[1],
-                                        steps[2],
-                                        speedLSB,
-                                        speedMSB,
-                                        accelLSB,
-                                        accelMSB,
-                                        decelLSB,
-                                        decelMSB
-                                        ]);
+                    [STEP,
+                    this._id,
+                    direction,
+                    steps[0],
+                    steps[1],
+                    steps[2],
+                    speedLSB,
+                    speedMSB,
+                    accelLSB,
+                    accelMSB,
+                    decelLSB,
+                    decelMSB
+                    ]);
             } else {
                 // don't send accel and decel values
                 this._board.sendSysex(STEPPER, 
-                                        [STEP,
-                                        this._id,
-                                        direction,                                  
-                                        steps[0],
-                                        steps[1],
-                                        steps[2],
-                                        speedLSB,
-                                        speedMSB
-                                        ]);             
+                    [STEP,
+                    this._id,
+                    direction,
+                    steps[0],
+                    steps[1],
+                    steps[2],
+                    speedLSB,
+                    speedMSB
+                    ]);             
             }
         },
 
@@ -232,6 +236,7 @@ BO.io.Stepper = (function () {
          * Listen for stepping complete event
          *
          * @private
+         * @method onSysExMessage
          */
         onSysExMessage: function (event) {
             var message = event.message;
@@ -246,7 +251,10 @@ BO.io.Stepper = (function () {
         },
 
         /**
-         * @return {Number} The id of the Stepper object instance
+         * [read-only] The id of the Stepper object instance. Each stepper motor
+         * is given a unique id upon initialization.
+         * @property id
+         * @type Number
          */
         get id() {
             return this._id;
@@ -289,15 +297,30 @@ BO.io.Stepper = (function () {
     
     };
 
-    /** @constant */
+    /**
+     * @property Stepper.CLOCKWISE
+     * @static
+     */
     Stepper.CLOCKWISE = 0;
-    /** @constant */
+    /**
+     * @property Stepper.COUNTER_CLOCKWISE
+     * @static
+     */
     Stepper.COUNTER_CLOCKWISE = 1;
-    /** @constant */
+    /**
+     * @property Stepper.DRIVER
+     * @static
+     */
     Stepper.DRIVER = 1;
-    /** @constant */
+    /**
+     * @property Stepper.TWO_WIRE
+     * @static
+     */
     Stepper.TWO_WIRE = 2;
-    /** @constant */
+    /**
+     * @property Stepper.FOUR_WIRE
+     * @static
+     */
     Stepper.FOUR_WIRE = 4;              
 
     return Stepper;

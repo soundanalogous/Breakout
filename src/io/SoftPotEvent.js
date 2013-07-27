@@ -13,11 +13,12 @@ BO.io.SoftPotEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports SoftPotEvent as BO.io.SoftPotEvent
-     * @class An Event object to be dispatched (fired) by a SoftPot
-     * object.   
+     * An Event object to be dispatched (fired) by a SoftPot
+     * @exports An Event object to be dispatched (fired) by a SoftPot
+     * object.
+     * @class SoftPotEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      * @param {Number} touchPoint The value where the softpot was touched    
      */
@@ -29,17 +30,35 @@ BO.io.SoftPotEvent = (function () {
         this._touchPoint = touchPoint;
     };
 
-    /** @constant */
+    /**
+     * @property SoftPotEvent.PRESS
+     * @static
+     */
     SoftPotEvent.PRESS = "softPotPressed";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.RELEASE
+     * @static
+     */
     SoftPotEvent.RELEASE = "softPotRelease";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.DRAG
+     * @static
+     */
     SoftPotEvent.DRAG = "softPotDrag";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.FLICK_UP
+     * @static
+     */
     SoftPotEvent.FLICK_UP = "softPotFlickUp";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.FLICK_DOWN
+     * @static
+     */
     SoftPotEvent.FLICK_DOWN = "softPotFlickDown";
-    /** @constant */
+    /**
+     * @property SoftPotEvent.TAP
+     * @static
+     */
     SoftPotEvent.TAP = "softPotTap";        
 
     SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
@@ -47,9 +66,7 @@ BO.io.SoftPotEvent = (function () {
 
     /**
      * The value of the softpot.
-     * 
-     * @name SoftPotEvent#value
-     * @property
+     * @property value
      * @type Number
      */ 
     SoftPotEvent.prototype.__defineGetter__("value", function () { return this._touchPoint; });  

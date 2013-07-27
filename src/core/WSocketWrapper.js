@@ -15,11 +15,12 @@ BO.WSocketWrapper = (function () {
         WSocketEvent = BO.WSocketEvent;
 
     /**
-     * Creates a wrapper for various websocket implementations to unify the interface.
+     * Creates a wrapper for various websocket implementations to unify the
+     * interface.
      *
-     * @exports WSocketWrapper as BO.WSocketWrapper
-     * @class Creates a wrapper for various websocket implementations to unify the interface.
+     * @class WSocketWrapper
      * @constructor
+     * @uses JSUTILS.EventDispatcher
      * @param {String} host The host address of the web server.
      * @param {Number} port The port to connect to on the web server.
      * native websocket implementation.
@@ -45,8 +46,9 @@ BO.WSocketWrapper = (function () {
 
     /**
      * Initialize the websocket
-     * @param {Object} self A reference to this websocket object.
      * @private
+     * @method init
+     * @param {Object} self A reference to this websocket object.
      */
     WSocketWrapper.prototype.init = function (self) {
 
@@ -116,6 +118,7 @@ BO.WSocketWrapper = (function () {
      * TO DO: support sending ArrayBuffers and Blobs
      * For now, forward any calls to sendString
      * @private
+     * @method send
      * @param {String} message The message to send
      */
     WSocketWrapper.prototype.send = function (message) {
@@ -126,6 +129,7 @@ BO.WSocketWrapper = (function () {
 
     /**
      * Send a message
+     * @method sendString
      * @param {String} message The message to send
      */
     WSocketWrapper.prototype.sendString = function (message) {
@@ -138,8 +142,7 @@ BO.WSocketWrapper = (function () {
     /**
      * [read-only] Wrapper for the readyState method of the native websocket implementation
      * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
-     * @name WSocketWrapper#readyState
-     * @property
+     * @property readyState
      * @type String
      */      
     WSocketWrapper.prototype.__defineGetter__("readyState", function () {
@@ -152,26 +155,23 @@ BO.WSocketWrapper = (function () {
     /**
      * The webSocketConnected event is dispatched when a connection with
      * the websocket is established.
-     * @name WSocketWrapper#webSocketConnected
      * @type BO.WebsocketEvent.CONNECTED
-     * @event
+     * @event webSocketConnected
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      */ 
 
     /**
      * The webSocketMessage event is dispatched when a websocket message is received.
-     * @name WSocketWrapper#webSocketMessage
      * @type BO.WebsocketEvent.MESSAGE
-     * @event
+     * @event webSocketMessage
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      * @param {String} message The websocket data    
      */ 
 
     /**
      * The webSocketClosed event is dispatched the websocket connection is closed.
-     * @name WSocketWrapper#webSocketClosed
      * @type BO.WebsocketEvent.CLOSE
-     * @event
+     * @event webSocketClosed
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
      */      
 

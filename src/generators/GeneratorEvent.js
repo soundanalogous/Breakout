@@ -20,11 +20,12 @@ BO.generators.GeneratorEvent = (function () {
     var Event = JSUTILS.Event;
 
     /**
-     * @exports GeneratorEvent as BO.generators.GeneratorEvent
-     * @class An Event object to be dispatched (fired) by a Generator
-     * object when its value has updated.
+     * An Event object to be dispatched (fired) by a Generator object when its
+     * value has updated.
+     *
+     * @class GeneratorEvent
      * @constructor
-     * @augments JSUTILS.Event
+     * @extends JSUTILS.Event
      * @param {String} type The event type
      */
     GeneratorEvent = function (type) {
@@ -37,7 +38,10 @@ BO.generators.GeneratorEvent = (function () {
     GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
     GeneratorEvent.prototype.constructor = GeneratorEvent;
 
-    /** @constant */
+    /**
+     * @property GeneratorEvent.UPDATE
+     * @static
+     */
     GeneratorEvent.UPDATE = "update";
 
     return GeneratorEvent;

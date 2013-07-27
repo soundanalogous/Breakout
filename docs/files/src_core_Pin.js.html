@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>src/core/Pin.js - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.0 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1 class="file-heading">File: src/core/Pin.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Based on Pin.as originally written in as3.
+ * Copyright (c) the Funnel development team
+ * http://www.funnel.cc
+ *
+ * Ported to JavaScript by Jeff Hoefs
+ * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ *
+ * Released under the MIT license. See LICENSE file for details.
+ */
+
+JSUTILS.namespace(&#x27;BO.Pin&#x27;);
+
+BO.Pin = (function () {
+    &quot;use strict&quot;;
+
+    var Pin;
+
+    // dependencies
+    var EventDispatcher = JSUTILS.EventDispatcher,
+        PinEvent = BO.PinEvent;
+
+    /**
+     * Each analog and digital pin of the physical I/O board is 
+     * represented by a Pin object.
+     * The Pin object is the foundation for many of the io objects and is also 
+     * very useful on its own. See the Using The Pin Object Guide on 
+     * [http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.
+     *
+     * @class Pin
+     * @constructor
+     * @uses JSUTILS.EventDispatcher
+     * @param {Number} number The pin number
+     * @param {Number} type The type of pin
+     */
+    Pin = function (number, type) {
+
+        this.name = &quot;Pin&quot;;
+
+        this._type = type;
+        this._capabilities = {};
+        this._number = number;
+        this._analogNumber = undefined;
+        this._maxPWMValue = 255;
+        this._value = 0;
+        this._lastValue = -1;
+        this._preFilterValue = 0;
+        this._average = 0;
+        this._minimum = Math.pow(2, 16);
+        this._maximum = 0;
+        this._sum = 0;
+        this._numSamples = 0;
+        this._filters = null;
+        this._generator = null;
+        this._state = undefined;
+
+        this._autoSetValueCallback = this.autoSetValue.bind(this);
+        
+        this._evtDispatcher = new EventDispatcher(this);    
+
+    };
+
+    Pin.prototype = {
+
+        constructor: Pin,
+        
+        /**
+         * The analogNumber sould only be set internally.
+         * @private
+         */     
+        setAnalogNumber: function (num) {
+            this._analogNumber = num;
+        },
+
+        /**
+         * [read-only] The analog pin number used by the IOBoard (printed on 
+         * board or datasheet).
+         * @property analogNumber
+         * @type Number
+         */ 
+        get analogNumber() {
+            return this._analogNumber;
+        },      
+
+        /**
+         * [read-only] The pin number corresponding to the Arduino documentation 
+         * for the type of board.
+         * @property number
+         * @type Number
+         */          
+        get number() {
+            return this._number;
+        },
+
+        /**
+         * The maximum PWM value supported for this pin. This value should
+         * normally be set internally.
+         * @private
+         */
+        setMaxPWMValue: function (value) {
+            this._maxPWMValue = value;
+        },
+
+        /**
+         * Sets the state value. This is populated by the 
+         * processPinStateResponse method of the IOBoard object. It should not
+         * be called manually.
+         * 
+         * @param {Number} state The state of the pin. For output modes, the
+         * state is any value that has been previously written to the pin. For 
+         * input modes, the state is typically zero, however for digital inputs
+         * the state is the status of the pullup resistor.
+         * @private
+         */
+        setState: function (state) {
+            // convert PWM values to 0.0 - 1.0 range
+            if (this._type === Pin.PWM) {
+                state = state / this.maxPWMValue;
+            } 
+
+            this._state = state;
+        },
+
+        /**
+         * [read-only] The maximum PWM value supported for this pin.
+         * &lt;p&gt; This is the max PWM value supported by Arduino (currently 255) 
+         * rather than the max PWM value specified by the microcontroller 
+         * datasheet.&lt;/p&gt;
+         *
+         * @property maxPWMValue
+         * @type Number
+         */          
+        get maxPWMValue() {
+            return this._maxPWMValue;
+        },      
+        
+        /**
+         * [read-only] The average value of the pin over time. Call clear() to 
+         * reset.
+         * @property average
+         * @type Number
+         */          
+        get average() {
+            return this._average;
+        },
+
+        /**
+         * [read-only] The minimum value of the pin over time. Call clear() to 
+         * reset.
+         * @property minimum
+         * @type Number
+         */
+        get minimum() {
+            return this._minimum;
+        },
+        
+        /**
+         * [read-only] The maximum value of the pin over time. Call clear() to 
+         * reset.
+         * @property maximum
+         * @type Number
+         */          
+        get maximum() {
+            return this._maximum;
+        },
+
+        /**
+         * &lt;p&gt;[read-only] The state of the pin. For output modes, the state is 
+         * any value that has been previously written to the pin. For input 
+         * modes, the state is typically zero, however for digital inputs the 
+         * state is the status of the pullup resistor.&lt;/p&gt;
+         *
+         * &lt;p&gt;This propery is populated by calling the queryPinState method of 
+         * the IOBoard object. This is useful if there are multiple client 
+         * applications connected to a single physical IOBoard and you want to 
+         * get the state of a pin that is set by another client application.&lt;/p&gt;
+         * 
+         * @property state
+         * @type Number
+         */
+        get state() {
+            return this._state;
+        },
+        
+        /**
+         * The current digital or analog value of the pin.
+         * @property value
+         * @type Number
+         */      
+        get value() {
+            return this._value;
+        },
+        set value(val) {
+            this._lastValue = this._value;
+            this._preFilterValue = val;
+            this._value = this.applyFilters(val);
+            this.calculateMinMaxAndMean(this._value);
+            this.detectChange(this._lastValue, this._value);
+        },
+        
+        /**
+         * [read-only] The last pin value.
+         * @property lastValue
+         * @type Number
+         */          
+        get lastValue() {
+            return this._lastValue;
+        },
+        
+        /**
+         * [read-only] The value before any filters were applied.
+         * @property preFilterValue
+         * @type Number
+         */          
+        get preFilterValue() {
+            return this._preFilterValue;
+        },
+
+        /**
+         * Get and set filters for the Pin.
+         * @property filters
+         * @type FilterBase[]
+         */ 
+        get filters() {
+            return this._filters;
+        },
+        set filters(filterArray) {
+            this._filters = filterArray;
+        },
+
+        /**
+         * [read-only] Get a reference to the current generator.
+         * @property generator
+         * @type GeneratorBase
+         */ 
+        get generator() {
+            return this._generator;
+        },
+
+        /**
+         * The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,
+         * 4: SERVO, 5: SHIFT, 6: I2C). Use 
+         * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
+         * @method getType
+         * @return {Number} The pin type/mode
+         */ 
+        getType: function () {
+            return this._type;
+        },
+
+        /**
+         * Set the pin type. This method should only be used internally.
+         * @private
+         */
+        setType: function (pinType) {
+            // Ensure pin type is valid
+            if (pinType &gt;= 0 &amp;&amp; pinType &lt; Pin.TOTAL_PIN_MODES) {
+                this._type = pinType;
+            }
+        },          
+
+        /**
+         * An object storing the capabilities of the pin.
+         * @method getCapabilities
+         * @return {Object} An object describing the capabilities of this Pin.
+         */ 
+        getCapabilities: function () {
+            return this._capabilities;
+        },
+
+        /**
+         * This method should only be used internally.
+         * @private
+         */
+        setCapabilities: function (pinCapabilities) {
+            this._capabilities = pinCapabilities;
+        },      
+
+        /**
+         * Dispatch a Change event whenever a pin value changes
+         * @private
+         * @method detectChange
+         */
+        detectChange: function (oldValue, newValue) {
+            if (oldValue === newValue) {
+                return;
+            }
+            this.dispatchEvent(new PinEvent(PinEvent.CHANGE));
+
+            if (oldValue &lt;= 0 &amp;&amp; newValue !== 0) {
+                this.dispatchEvent(new PinEvent(PinEvent.RISING_EDGE));
+            } else if (oldValue !== 0 &amp;&amp; newValue &lt;= 0) {
+                this.dispatchEvent(new PinEvent(PinEvent.FALLING_EDGE));
+            }
+        },
+        
+        /**
+         * From funnel Pin.as
+         * @private
+         * @method clearWeight
+         */
+        clearWeight: function () {
+            this._sum = this._average;
+            this._numSamples = 1;
+        },
+        
+        /**
+         * From funnel Pin.as
+         * @private
+         * @method calculateMinMaxAndMean
+         */
+        calculateMinMaxAndMean: function (val) {
+            var MAX_SAMPLES = Number.MAX_VALUE;
+
+            this._minimum = Math.min(val, this._minimum);
+            this._maximum = Math.max(val, this._maximum);
+            
+            this._sum += val;
+            this._average = this._sum / (++this._numSamples);
+            if (this._numSamples &gt;= MAX_SAMPLES) {
+                this.clearWeight();
+            }
+        },
+            
+        /**
+         * Resets the minimum, maximum, average and lastValue of the pin.
+         * @method clear
+         */
+        clear: function () {
+            this._minimum = this._maximum = this._average = this._lastValue = this._preFilterValue;
+            this.clearWeight();
+        },
+        
+        /**
+         * Add a new filter to the Pin.
+         * @method addFilter
+         * @param {FilterBase} newFilter A filter object that extends 
+         * FilterBase.
+         * @see BO.filters.Convolution
+         * @see BO.filters.Scaler
+         * @see BO.filters.TriggerPoint
+         */
+        addFilter: function (newFilter) {
+
+            if (newFilter === null) {
+                return;
+            }
+
+            if (this._filters === null) {
+                this._filters = [];
+            }
+
+            this._filters.push(newFilter);
+        },
+
+        /**
+         * Remove a specified filter from the Pin.
+         * @method removeFilter
+         * @param {FilterBase} filterToRemove The filter to remove.
+         * @see BO.filters.Convolution
+         * @see BO.filters.Scaler
+         * @see BO.filters.TriggerPoint
+         */
+        removeFilter: function (filterToRemove) {
+            var index;
+
+            if (this._filters.length &lt; 1) {
+                return;
+            }
+
+            index = this._filters.indexOf(filterToRemove);
+
+            if (index !== -1) {
+                this._filters.splice(index, 1);
+            }
+        },
+
+        /**
+         * Add a new generator to the Pin. A pin can only have one generator
+         * assigned. 
+         * Assigning a new generator will replace the previously assigned 
+         * generator.
+         * @method addGenerator
+         * @param {GeneratorBase} newGenerator A generator object that extends 
+         * GeneratorBase.
+         * @see BO.generators.Oscillator
+         */
+        addGenerator: function (newGenerator) {
+            this.removeGenerator();
+            this._generator = newGenerator;
+            this._generator.addEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
+        },
+
+        /**
+         * Removes the generator from the pin.
+         * @method removeGenerator
+         */
+        removeGenerator: function () {
+            if (this._generator !== null) {
+                this._generator.removeEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
+            }
+            this._generator = null;             
+        },
+
+        /**
+         * Removes all filters from the pin.
+         * @method removeAllFilters
+         */
+        removeAllFilters: function () {
+            this._filters = null;
+        },
+
+        /**
+         * @private
+         * @method autoSetValue
+         */
+        autoSetValue: function (event) {
+            var val = this._generator.value;
+            this.value = val;
+        },
+
+        /**
+         * @private
+         * @method applyFilters
+         */
+        applyFilters: function (val) {
+            var result;
+
+            if (this._filters === null) {
+                return val;
+            }
+            
+            result = val;
+            var len = this._filters.length;
+            for (var i = 0; i &lt; len; i++) {
+                result = this._filters[i].processSample(result);
+            }
+
+            return result;
+        },
+
+        // Implement EventDispatcher
+        
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event 
+         * is fired
+         */
+        addEventListener: function (type, listener) {
+            this._evtDispatcher.addEventListener(type, listener);
+        },
+        
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event 
+         * is fired
+         */
+        removeEventListener: function (type, listener) {
+            this._evtDispatcher.removeEventListener(type, listener);
+        },
+        
+        /**
+         * @param {String} type The event type
+         * return {boolean} True is listener exists for this type, false if not.
+         */
+        hasEventListener: function (type) {
+            return this._evtDispatcher.hasEventListener(type);
+        },
+
+        /**
+         * @param {PinEvent} type The Event object
+         * @param {Object} optionalParams Optional parameters to assign to the 
+         * event object.
+         * return {boolean} True if dispatch is successful, false if not.
+         */ 
+        dispatchEvent: function (event, optionalParams) {
+            return this._evtDispatcher.dispatchEvent(event, optionalParams);
+        }       
+            
+    };
+
+    /**
+     * @property Pin.HIGH
+     * @static
+     */
+    Pin.HIGH = 1;
+    /**
+     * @property Pin.LOW
+     * @static
+     */
+    Pin.LOW = 0;
+    /**
+     * @property Pin.ON
+     * @static
+     */
+    Pin.ON = 1;
+    /**
+     * @property Pin.OFF
+     * @static
+     */
+    Pin.OFF = 0;
+
+    // Pin modes
+    /**
+     * @property Pin.DIN
+     * @static
+     */
+    Pin.DIN = 0x00;
+    /**
+     * @property Pin.DOUT
+     * @static
+     */
+    Pin.DOUT = 0x01;
+    /**
+     * @property Pin.AIN
+     * @static
+     */
+    Pin.AIN = 0x02;
+    /**
+     * @property Pin.AOUT
+     * @static
+     */
+    Pin.AOUT = 0x03;
+    /**
+     * @property Pin.PWM
+     * @static
+     */
+    Pin.PWM = 0x03;
+    /**
+     * @property Pin.SERVO
+     * @static
+     */
+    Pin.SERVO = 0x04;
+    /**
+     * @property Pin.SHIFT
+     * @static
+     */
+    Pin.SHIFT = 0x05;
+    /**
+     * @property Pin.I2C
+     * @static
+     */
+    Pin.I2C = 0x06;
+    /**
+     * @property Pin.ONEWIRE
+     * @static
+     */
+    Pin.ONEWIRE = 0x07;
+    /**
+     * @property Pin.STEPPER
+     * @static
+     */
+    Pin.STEPPER = 0x08;
+    /**
+     * @property Pin.TOTAL_PIN_MODES
+     * @static
+     */
+    Pin.TOTAL_PIN_MODES = 9;
+
+
+    // Document events
+
+    /**
+     * The pinChange event is dispatched when the pin value changes.
+     * @type BO.PinEvent.CHANGE
+     * @event pinChange
+     * @param {BO.Pin} target A reference to the Pin object.
+     */
+
+    /**
+     * The risingEdge event is dispatched when the pin value increased 
+     * (from 0 to 1).
+     * @type BO.PinEvent.RISING_EDGE
+     * @event risingEdge
+     * @param {BO.Pin} target A reference to the Pin object.
+     */ 
+     
+    /**
+     * The change event is dispatched when the pin value decreased 
+     * (from 1 to 0).
+     * @type BO.PinEvent.FALLING_EDGE
+     * @event fallingEdge
+     * @param {BO.Pin} target A reference to the Pin object.
+     */
+
+    return Pin;
+
+}());
+
+    </pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>
