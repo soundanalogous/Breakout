@@ -205,7 +205,6 @@ module.exports = function (grunt) {
                     'cd ..',
                     'rm -rf node_server/node_modules/',
                     'rm node_server/.gitignore',
-                    'rm -rf examples/tests/',
                     'cd ..',
                     'zip -r ./' + nameAndVersion + '.zip ./Breakout',
                     'rm -rf ./Breakout',
