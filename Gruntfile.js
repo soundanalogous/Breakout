@@ -7,7 +7,7 @@ module.exports = function (grunt) {
                         ' * http://breakoutjs.com\n' +
                         ' */\n';
 
-    var nameAndVersion = '<%= pkg.name %>-v<%= pkg.version %>';
+    var nameAndVersion = '<%= pkg.name %>_v<%= pkg.version %>';
     var name = '<%= pkg.name %>';
 
     var allFiles = [
@@ -170,7 +170,52 @@ module.exports = function (grunt) {
             target: {
                 src: ['src/**/*.js']
             }
+        },
+
+        /* 
+         * Creates the distribution package that is available from
+         * breakoutjs.com/downloads.
+         */
+        shell: {
+            makePackage: {
+                command: [
+                    'mkdir dist/Breakout',
+                    'rm dist/*.zip',
+                    'cp -r custom_examples dist/Breakout',
+                    'cp -r docs dist/Breakout',
+                    'cp -r examples dist/Breakout',
+                    'cp -r firmware dist/Breakout',
+                    'cp -r node_server dist/Breakout',
+                    'cp -r server dist/Breakout',
+                    'cp -r src dist/Breakout',
+                    'cp ChangeLog dist/Breakout',
+                    'cp LICENSE dist/Breakout',
+                    'cp README.md dist/Breakout',
+                    'cd dist/Breakout',
+                    'find . -name "*.DS_Store" -type f -delete',
+                    'cd server',
+                    'zip -r breakout_server-mac.zip ./breakout_server-mac/',
+                    'zip -r breakout_server-win32.zip ./breakout_server-win32/',
+                    'zip -r breakout_server-win64.zip ./breakout_server-win64/',
+                    'zip -r breakout_server-linux.zip ./breakout_server-linux/',
+                    'rm -r ./breakout_server-mac/',
+                    'rm -r ./breakout_server-win32/',
+                    'rm -r ./breakout_server-win64/',
+                    'rm -r ./breakout_server-linux/',
+                    'cd ..',
+                    'rm -rf node_server/node_modules/',
+                    'rm node_server/.gitignore',
+                    'rm -rf examples/tests/',
+                    'cd ..',
+                    'zip -r ./' + nameAndVersion + '.zip ./Breakout',
+                    'rm -rf ./Breakout',
+                ].join(';'),
+                options: {
+                    stdout: true
+                }
+            }
         }
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -178,9 +223,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+    grunt.loadNpmTasks('grunt-shell');
 
     grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'mocha_phantomjs', 'yuidoc']);
     grunt.registerTask('compile', ['concat', 'uglify']);
     grunt.registerTask('test', ['jshint', 'mocha_phantomjs']);
     grunt.registerTask('docs', ['yuidoc']);
+    grunt.registerTask('package', ['default', 'shell']);
 };
