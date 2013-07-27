@@ -9,3 +9,5 @@ examples/tests/
 # dependencies
 node_modules
 node_server/node_modules/
+
+dist/*.zip
