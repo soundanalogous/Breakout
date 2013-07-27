@@ -204,6 +204,15 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/io/BiColorLED.js": {
+            "name": "src/io/BiColorLED.js",
+            "modules": {},
+            "classes": {
+                "BO.io.BiColorLED": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/io/BlinkM.js": {
             "name": "src/io/BlinkM.js",
             "modules": {},
@@ -982,6 +991,42 @@
                     "name": "enableSmoothing",
                     "description": "True to enable smoothing, false to\ndisable. Default is false.",
                     "type": "Boolean"
+                }
+            ]
+        },
+        "BO.io.BiColorLED": {
+            "name": "BO.io.BiColorLED",
+            "shortname": "BiColorLED",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "namespace": "BO.io",
+            "file": "src/io/BiColorLED.js",
+            "line": 18,
+            "description": "Creates an interface to an bi-color LED. This interface\nis for the type of bi-color LED with 3 legs. One leg is connected\nto power or ground (depending on the type of LED - common anode\nor common cathode) and the other 2 legs are connected to PWM pins\non the I/O board.\nSee [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf)\nfor wiring diagrams.\nSee [Breakout/examples/actuators/bi\\_color\\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/bi_color_led.html)\nfor an example application.\n\n<p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your\nLED is common anode or common cathode by reading the datasheet. \nTo wire a common cathode LED, connect the cathode to ground\nand the 2 anode pins to the IOBoard PWM pins via resistors. For\na common anode LED, the anode is connected to power and the 2 \ncathode pins are connected to the IOBoard PWM pins via two \nresistors.</p>",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "board",
+                    "description": "A reference to the IOBoard instance that\nthe LED is attached to.",
+                    "type": "IOBoard"
+                },
+                {
+                    "name": "color1LEDPin",
+                    "description": "A reference to the IOBoard Pin the\nfirst color LED pin is connected to.",
+                    "type": "Pin"
+                },
+                {
+                    "name": "color2LEDPin",
+                    "description": "A reference to the IOBoard Pin the\nsecond color LED pin is connected to.",
+                    "type": "Pin"
+                },
+                {
+                    "name": "driveMode",
+                    "description": "The drive mode of the LED. Must be\nset to `BiColorLED.COMMON_ANODE` or `BiColorLED.COMMON_CATHODE`.\n`BiColorLED.COMMON_ANODE` is default.",
+                    "type": "Number"
                 }
             ]
         },
@@ -5301,6 +5346,110 @@
             "namespace": "BO.io"
         },
         {
+            "file": "src/io/BiColorLED.js",
+            "line": 1,
+            "description": "Based on RGBLED.js which was written by Jeff Hoefs.\n\nCopyright (c) 2012-2013 Fabian Affolter <mail@fabian-affolter.ch>\nReleased under the MIT license. See LICENSE file for details.",
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/BiColorLED.js",
+            "line": 66,
+            "description": "Set the bi-color LED color.",
+            "itemtype": "method",
+            "name": "setColor",
+            "params": [
+                {
+                    "name": "color1",
+                    "description": "The value (0 - 255) of the first color",
+                    "type": "Number"
+                },
+                {
+                    "name": "color2",
+                    "description": "The value (0 - 255) of the second\ncolor",
+                    "type": "Number"
+                }
+            ],
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/BiColorLED.js",
+            "line": 82,
+            "description": "Fade in the bi-color LED from the off state.",
+            "itemtype": "method",
+            "name": "fadeIn",
+            "params": [
+                {
+                    "name": "time",
+                    "description": "The time of the fade (in milliseconds)",
+                    "type": "Number"
+                }
+            ],
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/BiColorLED.js",
+            "line": 94,
+            "description": "Fade out the bi-color LED from the on state.",
+            "itemtype": "method",
+            "name": "fadeOut",
+            "params": [
+                {
+                    "name": "time",
+                    "description": "The time of the fade (in milliseconds)",
+                    "type": "Number"
+                }
+            ],
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/BiColorLED.js",
+            "line": 106,
+            "description": "Fade from the current color to the new color.",
+            "itemtype": "method",
+            "name": "fadeTo",
+            "params": [
+                {
+                    "name": "color1",
+                    "description": "The value of the first color to fade\nto (0 - 255)",
+                    "type": "Number"
+                },
+                {
+                    "name": "color2",
+                    "description": "The value of the second color to fade\nto (0 - 255)",
+                    "type": "Number"
+                },
+                {
+                    "name": "time",
+                    "description": "The time of the fade (in milliseconds)",
+                    "type": "Number"
+                }
+            ],
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/BiColorLED.js",
+            "line": 126,
+            "itemtype": "property",
+            "name": "BiColorLED.COMMON_ANODE",
+            "static": 1,
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/BiColorLED.js",
+            "line": 131,
+            "itemtype": "property",
+            "name": "BiColorLED.COMMON_CATHODE",
+            "static": 1,
+            "class": "BO.io.BiColorLED",
+            "namespace": "BO.io"
+        },
+        {
             "file": "src/io/BlinkM.js",
             "line": 1,
             "description": "Based on BlinkM.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
@@ -8084,6 +8233,10 @@
         {
             "message": "Missing item type\nBased on Accelerometer.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/io/AnalogAccelerometer.js:1"
+        },
+        {
+            "message": "Missing item type\nBased on RGBLED.js which was written by Jeff Hoefs.\n\nCopyright (c) 2012-2013 Fabian Affolter <mail@fabian-affolter.ch>\nReleased under the MIT license. See LICENSE file for details.",
+            "line": " src/io/BiColorLED.js:1"
         },
         {
             "message": "Missing item type\nBased on BlinkM.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",

@@ -21,6 +21,7 @@ YUI.add("yuidoc-meta", function(Y) {
         "BO.io.AccelerometerADXL345",
         "BO.io.AccelerometerEvent",
         "BO.io.AnalogAccelerometer",
+        "BO.io.BiColorLED",
         "BO.io.BlinkM",
         "BO.io.Button",
         "BO.io.ButtonEvent",

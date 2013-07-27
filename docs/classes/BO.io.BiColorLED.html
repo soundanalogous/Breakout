@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>BO.PhysicalInputBase - Breakout</title>
+    <title>BO.io.BiColorLED - Breakout</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -168,24 +168,15 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>BO.PhysicalInputBase Class</h1>
+                        <h1>BO.io.BiColorLED Class</h1>
 <div class="box meta">
-    
-        <div class="uses">
-            Uses
-            <ul class="inline commas">
-                
-                    <li><a href="JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
-                
-            </ul>
-        </div>
     
 
     
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_core_PhysicalInputBase.js.html#l21"><code>src&#x2F;core&#x2F;PhysicalInputBase.js:21</code></a>
+            Defined in: <a href="../files/src_io_BiColorLED.js.html#l18"><code>src&#x2F;io&#x2F;BiColorLED.js:18</code></a>
         </div>
     
 
@@ -197,19 +188,61 @@
 
 
 <div class="box intro">
-    <p>A base class for physical input objects. Extend this class to
-create new digital or analog input objects. Treat this class as
-an abstract base class. It should not be instantiated directly.</p>
+    <p>Creates an interface to an bi-color LED. This interface
+is for the type of bi-color LED with 3 legs. One leg is connected
+to power or ground (depending on the type of LED - common anode
+or common cathode) and the other 2 legs are connected to PWM pins
+on the I/O board.
+See <a href="http://breakoutjs.com/examples/schematics.pdf">Breakout/examples/schematics.pdf</a>
+for wiring diagrams.
+See <a href="https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/bi_color_led.html">Breakout/examples/actuators/bi_color_led.html</a>
+for an example application.</p>
+
+<p><code>COMMON_ANODE</code> vs <code>COMMON_CATHODE</code>. You can determine if your
+LED is common anode or common cathode by reading the datasheet. 
+To wire a common cathode LED, connect the cathode to ground
+and the 2 anode pins to the IOBoard PWM pins via resistors. For
+a common anode LED, the anode is connected to power and the 2 
+cathode pins are connected to the IOBoard PWM pins via two 
+resistors.</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_BO.PhysicalInputBase" class="method item">
-    <h3 class="name"><code>BO.PhysicalInputBase</code></h3>
+        <div id="method_BO.io.BiColorLED" class="method item">
+    <h3 class="name"><code>BO.io.BiColorLED</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>board</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>color1LEDPin</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>color2LEDPin</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>driveMode</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -237,7 +270,7 @@ an abstract base class. It should not be instantiated directly.</p>
             
         
         
-        <a href="../files/src_core_PhysicalInputBase.js.html#l21"><code>src&#x2F;core&#x2F;PhysicalInputBase.js:21</code></a>
+        <a href="../files/src_io_BiColorLED.js.html#l18"><code>src&#x2F;io&#x2F;BiColorLED.js:18</code></a>
         
         </p>
 
@@ -251,6 +284,79 @@ an abstract base class. It should not be instantiated directly.</p>
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">board</code>
+                        <span class="type">IOBoard</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A reference to the IOBoard instance that
+the LED is attached to.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">color1LEDPin</code>
+                        <span class="type">Pin</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A reference to the IOBoard Pin the
+first color LED pin is connected to.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">color2LEDPin</code>
+                        <span class="type">Pin</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A reference to the IOBoard Pin the
+second color LED pin is connected to.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">driveMode</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The drive mode of the LED. Must be
+set to <code>BiColorLED.COMMON_ANODE</code> or <code>BiColorLED.COMMON_CATHODE</code>.
+<code>BiColorLED.COMMON_ANODE</code> is default.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -269,6 +375,8 @@ an abstract base class. It should not be instantiated directly.</p>
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
         
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
         
         
     </ul>
@@ -283,29 +391,29 @@ an abstract base class. It should not be instantiated directly.</p>
 
                     <ul class="index-list methods">
                         
-                            <li class="index-item method inherited">
-                                <a href="#method_addEventListener">addEventListener</a>
+                            <li class="index-item method">
+                                <a href="#method_fadeIn">fadeIn</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method inherited">
-                                <a href="#method_dispatchEvent">dispatchEvent</a>
+                            <li class="index-item method">
+                                <a href="#method_fadeOut">fadeOut</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method inherited">
-                                <a href="#method_hasEventListener">hasEventListener</a>
+                            <li class="index-item method">
+                                <a href="#method_fadeTo">fadeTo</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method inherited">
-                                <a href="#method_removeEventListener">removeEventListener</a>
+                            <li class="index-item method">
+                                <a href="#method_setColor">setColor</a>
 
                                 
                                 
@@ -315,6 +423,32 @@ an abstract base class. It should not be instantiated directly.</p>
                 </div>
             
 
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_BiColorLED.COMMON_ANODE">BiColorLED.COMMON_ANODE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_BiColorLED.COMMON_CATHODE">BiColorLED.COMMON_CATHODE</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -327,8 +461,8 @@ an abstract base class. It should not be instantiated directly.</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_addEventListener" class="method item inherited">
-    <h3 class="name"><code>addEventListener</code></h3>
+                    <div id="method_fadeIn" class="method item">
+    <h3 class="name"><code>fadeIn</code></h3>
 
     
         <div class="args">
@@ -336,13 +470,7 @@ an abstract base class. It should not be instantiated directly.</p>
             
                 <li class="arg">
                     
-                        <code>type</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>listener</code>
+                        <code>time</code>
                     
                 </li>
             
@@ -367,12 +495,15 @@ an abstract base class. It should not be instantiated directly.</p>
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="../classes/JSUTILS.EventDispatcher.html#method_addEventListener">JSUTILS.EventDispatcher</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="../files/src_utils_EventDispatcher.js.html#l37"><code>src&#x2F;utils&#x2F;EventDispatcher.js:37</code></a>
+        <a href="../files/src_io_BiColorLED.js.html#l82"><code>src&#x2F;io&#x2F;BiColorLED.js:82</code></a>
         
         </p>
 
@@ -383,7 +514,7 @@ an abstract base class. It should not be instantiated directly.</p>
     </div>
 
     <div class="description">
-        
+        <p>Fade in the bi-color LED from the off state.</p>
     </div>
 
     
@@ -394,30 +525,14 @@ an abstract base class. It should not be instantiated directly.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">type</code>
-                        <span class="type">String</span>
+                        <code class="param-name">time</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The event type</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">listener</code>
-                        <span class="type">Function</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The function to be called when the event
-is fired</p>
+                        <p>The time of the fade (in milliseconds)</p>
                     </div>
 
                     
@@ -433,8 +548,8 @@ is fired</p>
 </div>
 
                 
-                    <div id="method_dispatchEvent" class="method item inherited">
-    <h3 class="name"><code>dispatchEvent</code></h3>
+                    <div id="method_fadeOut" class="method item">
+    <h3 class="name"><code>fadeOut</code></h3>
 
     
         <div class="args">
@@ -442,13 +557,7 @@ is fired</p>
             
                 <li class="arg">
                     
-                        <code>type</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>optionalParams</code>
+                        <code>time</code>
                     
                 </li>
             
@@ -473,12 +582,15 @@ is fired</p>
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="../classes/JSUTILS.EventDispatcher.html#method_dispatchEvent">JSUTILS.EventDispatcher</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="../files/src_utils_EventDispatcher.js.html#l78"><code>src&#x2F;utils&#x2F;EventDispatcher.js:78</code></a>
+        <a href="../files/src_io_BiColorLED.js.html#l94"><code>src&#x2F;io&#x2F;BiColorLED.js:94</code></a>
         
         </p>
 
@@ -489,7 +601,7 @@ is fired</p>
     </div>
 
     <div class="description">
-        
+        <p>Fade out the bi-color LED from the on state.</p>
     </div>
 
     
@@ -500,30 +612,14 @@ is fired</p>
             
                 <li class="param">
                     
-                        <code class="param-name">type</code>
-                        <span class="type">Event</span>
+                        <code class="param-name">time</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The Event object.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">optionalParams</code>
-                        <span class="type">Object</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>Optional parameters passed as an object.
-return {boolean} True if dispatch is successful, false if not.</p>
+                        <p>The time of the fade (in milliseconds)</p>
                     </div>
 
                     
@@ -539,8 +635,8 @@ return {boolean} True if dispatch is successful, false if not.</p>
 </div>
 
                 
-                    <div id="method_hasEventListener" class="method item inherited">
-    <h3 class="name"><code>hasEventListener</code></h3>
+                    <div id="method_fadeTo" class="method item">
+    <h3 class="name"><code>fadeTo</code></h3>
 
     
         <div class="args">
@@ -548,7 +644,19 @@ return {boolean} True if dispatch is successful, false if not.</p>
             
                 <li class="arg">
                     
-                        <code>type</code>
+                        <code>color1</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>color2</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>time</code>
                     
                 </li>
             
@@ -573,12 +681,15 @@ return {boolean} True if dispatch is successful, false if not.</p>
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="../classes/JSUTILS.EventDispatcher.html#method_hasEventListener">JSUTILS.EventDispatcher</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="../files/src_utils_EventDispatcher.js.html#l65"><code>src&#x2F;utils&#x2F;EventDispatcher.js:65</code></a>
+        <a href="../files/src_io_BiColorLED.js.html#l106"><code>src&#x2F;io&#x2F;BiColorLED.js:106</code></a>
         
         </p>
 
@@ -589,7 +700,7 @@ return {boolean} True if dispatch is successful, false if not.</p>
     </div>
 
     <div class="description">
-        
+        <p>Fade from the current color to the new color.</p>
     </div>
 
     
@@ -600,15 +711,46 @@ return {boolean} True if dispatch is successful, false if not.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">type</code>
-                        <span class="type">String</span>
+                        <code class="param-name">color1</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The event type
-return {boolean} True is listener exists for this type, false if not.</p>
+                        <p>The value of the first color to fade
+to (0 - 255)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">color2</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The value of the second color to fade
+to (0 - 255)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">time</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The time of the fade (in milliseconds)</p>
                     </div>
 
                     
@@ -624,8 +766,8 @@ return {boolean} True is listener exists for this type, false if not.</p>
 </div>
 
                 
-                    <div id="method_removeEventListener" class="method item inherited">
-    <h3 class="name"><code>removeEventListener</code></h3>
+                    <div id="method_setColor" class="method item">
+    <h3 class="name"><code>setColor</code></h3>
 
     
         <div class="args">
@@ -633,13 +775,13 @@ return {boolean} True is listener exists for this type, false if not.</p>
             
                 <li class="arg">
                     
-                        <code>type</code>
+                        <code>color1</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>listener</code>
+                        <code>color2</code>
                     
                 </li>
             
@@ -664,12 +806,15 @@ return {boolean} True is listener exists for this type, false if not.</p>
     <div class="meta">
         
             
-                <p>Inherited from
-                <a href="../classes/JSUTILS.EventDispatcher.html#method_removeEventListener">JSUTILS.EventDispatcher</a>:
+                
+                <p>
+                
+                Defined in
+                
             
         
         
-        <a href="../files/src_utils_EventDispatcher.js.html#l50"><code>src&#x2F;utils&#x2F;EventDispatcher.js:50</code></a>
+        <a href="../files/src_io_BiColorLED.js.html#l66"><code>src&#x2F;io&#x2F;BiColorLED.js:66</code></a>
         
         </p>
 
@@ -680,7 +825,7 @@ return {boolean} True is listener exists for this type, false if not.</p>
     </div>
 
     <div class="description">
-        
+        <p>Set the bi-color LED color.</p>
     </div>
 
     
@@ -691,14 +836,14 @@ return {boolean} True is listener exists for this type, false if not.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">type</code>
-                        <span class="type">String</span>
+                        <code class="param-name">color1</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The event type</p>
+                        <p>The value (0 - 255) of the first color</p>
                     </div>
 
                     
@@ -706,15 +851,15 @@ return {boolean} True is listener exists for this type, false if not.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">listener</code>
-                        <span class="type">Function</span>
+                        <code class="param-name">color2</code>
+                        <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The function to be called when the event
-is fired</p>
+                        <p>The value (0 - 255) of the second
+color</p>
                     </div>
 
                     
@@ -733,6 +878,104 @@ is fired</p>
             </div>
         
 
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_BiColorLED.COMMON_ANODE" class="property item">
+    <h3 class="name"><code>BiColorLED.COMMON_ANODE</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_BiColorLED.js.html#l126"><code>src&#x2F;io&#x2F;BiColorLED.js:126</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_BiColorLED.COMMON_CATHODE" class="property item">
+    <h3 class="name"><code>BiColorLED.COMMON_CATHODE</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_io_BiColorLED.js.html#l131"><code>src&#x2F;io&#x2F;BiColorLED.js:131</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

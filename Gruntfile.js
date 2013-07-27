@@ -51,6 +51,7 @@ module.exports = function (grunt) {
         'src/io/DCMotor.js',
         'src/io/LED.js',
         'src/io/RGBLED.js',
+        'src/io/BiColorLED.js',
         'src/io/SoftPotEvent.js',
         'src/io/SoftPot.js',
         'src/core/IOBoard.js'
