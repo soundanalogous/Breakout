@@ -56,9 +56,9 @@ See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/)
 
 The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
 
-1. After downloading or cloning Breakout, navigate to Breakout/firmware/AdvancedFirmata/ and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
+1. After downloading or cloning Breakout, navigate to `Breakout/firmware/AdvancedFirmata/` and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
 2. Compile *AdvancedFirmata* for your board and upload.
-3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in *Breakout/examples/schematics.pdf* (or download [here](http://breakoutjs.com/examples/schematics.pdf)).
+3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf)).
 
 The next step is to run the Breakout Server application:
 
@@ -120,7 +120,7 @@ examples to share, or anything else you'd like to contribute please get in touch
 Submit pull requests (against the `dev` branch) for bug fixes and small changes. For any
 larger changes, please first start a discussion by opening a new issue.
 
-See `Breakout/build/README.md` for instructions on building Breakout. 
+See [Breakout/build/README.md](https://github.com/soundanalogous/Breakout/blob/master/build/README.md) for instructions on building Breakout. 
 
 
 Credits
