@@ -1324,12 +1324,12 @@ BO.IOBoard = (function () {
          *     // set analog pin A3 on an Arduino Uno to digital input
          *     board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);
          *
-         *     <p>board.analogToDigital(3) returns 17 which is the digital
-         *     equivalent of the analog pin</p>
+         * <p>board.analogToDigital(3) returns 17 which is the digital
+         * equivalent of the analog pin</p>
          *
-         *     @method analogToDigital
-         *     @return {Number} The digital pin number equivalent for the specified
-         *     analog pin number.
+         * @method analogToDigital
+         * @return {Number} The digital pin number equivalent for the specified
+         * analog pin number.
          */ 
         analogToDigital: function (analogPinNumber) {
             return this.getAnalogPin(analogPinNumber).number;  

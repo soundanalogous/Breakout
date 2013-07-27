@@ -2772,12 +2772,12 @@
             "line": 1319,
             "description": "Use this method to obtain the digital pin number equivalent \nfor an analog pin.",
             "example": [
-                "\n    // set analog pin A3 on an Arduino Uno to digital input\n    board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);\n\n    <p>board.analogToDigital(3) returns 17 which is the digital\n    equivalent of the analog pin</p>"
+                "\n    // set analog pin A3 on an Arduino Uno to digital input\n    board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);\n\n<p>board.analogToDigital(3) returns 17 which is the digital\nequivalent of the analog pin</p>"
             ],
             "itemtype": "method",
             "name": "analogToDigital",
             "return": {
-                "description": "The digital pin number equivalent for the specified\n    analog pin number.",
+                "description": "The digital pin number equivalent for the specified\nanalog pin number.",
                 "type": "Number"
             },
             "class": "BO.IOBoard",
