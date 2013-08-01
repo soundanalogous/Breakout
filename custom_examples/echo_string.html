@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<style type="text/css">
+.text {
+    font-family: "Arial";
+    font-size: 22px;
+    color: #00AEEF;
+    padding:20px;
+}
+</style>
+
+<title>Echo String</title>
+
+
+<!-- The following (socket.io.js) is only required when using the node_server -->
+<script src="../../socket.io/socket.io.js"></script>
+<script src="../dist/Breakout-core.min.js"></script>
+<script src="libs/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // To run this example, Open the Arduino application and 
+    // load File -> Examples -> Firmata -> EchoString to your board.
+
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var Event = JSUTILS.Event;
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true;
+
+    // If you are not serving this file from the same computer
+    // that the Arduino board is connected to, replace
+    // "localhost" with the IP address or hostname
+    // of the computer that the Arduino board is connected to.  
+    var arduino = new IOBoard("localhost", 8887);
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+    function onReady(event) {
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);     
+
+        // Listen for incoming string messages
+        arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
+
+        var count = 0;
+        var stingMessage;
+        var interval = setInterval(function () {
+            stringMessage = "Hello " + count + '\0';
+            arduino.sendString(stringMessage);
+            if (count > 9999) {
+                clearInterval(interval);
+            }
+            count++;
+        }, 10);
+    }
+    
+    // Called when a new string message is received from the I/O board
+    function onStringMessage(event) {
+        var msg = event.message;
+        $('#message').html("count = " + msg);
+    }
+});
+</script>
+
+</head>
+<body>
+  
+    <div id="message" class="text"></div>
+  
+</body>
+</html>​
