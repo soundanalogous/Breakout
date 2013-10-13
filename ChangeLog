@@ -1,3 +1,6 @@
+2013.10.12 Version 0.3.1
+* Update Breakout Server to add auto connect ability
+
 2013.07.27 Version 0.3.0
 * Updated all examples to include socket.io client library.
 * Added BiColorLED and updated bi_color_led.html example contributed by fabaff
