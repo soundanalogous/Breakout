@@ -90,8 +90,6 @@ module.exports = function (grunt) {
         'src/utils/JSUTILS.js',
         'src/utils/Event.js',
         'src/utils/EventDispatcher.js',
-        'src/utils/TimerEvent.js',
-        'src/utils/Timer.js',
         'src/core/IOBoardEvent.js',
         'src/core/WSocketEvent.js',
         'src/core/WSocketWrapper.js',
