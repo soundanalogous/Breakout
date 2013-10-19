@@ -4121,7 +4121,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 155,
+            "line": 161,
             "description": "The webSocketConnected event is dispatched when a connection with\nthe websocket is established.",
             "type": "BO.WebsocketEvent.CONNECTED",
             "itemtype": "event",
@@ -4138,7 +4138,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 163,
+            "line": 169,
             "description": "The webSocketMessage event is dispatched when a websocket message is received.",
             "type": "BO.WebsocketEvent.MESSAGE",
             "itemtype": "event",
@@ -4160,7 +4160,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 171,
+            "line": 177,
             "description": "The webSocketClosed event is dispatched the websocket connection is closed.",
             "type": "BO.WebsocketEvent.CLOSE",
             "itemtype": "event",
