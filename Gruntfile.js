@@ -95,8 +95,6 @@ module.exports = function (grunt) {
         'src/core/IOBoardEvent.js',
         'src/core/WSocketEvent.js',
         'src/core/WSocketWrapper.js',
-        'src/generators/GeneratorEvent.js',
-        'src/generators/GeneratorBase.js',
         'src/core/PinEvent.js',
         'src/core/Pin.js',
         'src/core/PhysicalInputBase.js',

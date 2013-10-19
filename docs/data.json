@@ -3663,7 +3663,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 394,
+            "line": 395,
             "description": "Removes the generator from the pin.",
             "itemtype": "method",
             "name": "removeGenerator",
@@ -3672,7 +3672,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 405,
+            "line": 407,
             "description": "Removes all filters from the pin.",
             "itemtype": "method",
             "name": "removeAllFilters",
@@ -3681,7 +3681,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 413,
+            "line": 415,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3691,7 +3691,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 422,
+            "line": 424,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3701,7 +3701,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 444,
+            "line": 446,
             "params": [
                 {
                     "name": "type",
@@ -3719,7 +3719,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 453,
+            "line": 455,
             "params": [
                 {
                     "name": "type",
@@ -3737,7 +3737,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 462,
+            "line": 464,
             "params": [
                 {
                     "name": "type",
@@ -3750,7 +3750,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 470,
+            "line": 472,
             "params": [
                 {
                     "name": "type",
@@ -3768,7 +3768,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 482,
+            "line": 484,
             "itemtype": "property",
             "name": "Pin.HIGH",
             "static": 1,
@@ -3777,7 +3777,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 487,
+            "line": 489,
             "itemtype": "property",
             "name": "Pin.LOW",
             "static": 1,
@@ -3786,7 +3786,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 492,
+            "line": 494,
             "itemtype": "property",
             "name": "Pin.ON",
             "static": 1,
@@ -3795,7 +3795,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 497,
+            "line": 499,
             "itemtype": "property",
             "name": "Pin.OFF",
             "static": 1,
@@ -3804,7 +3804,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 504,
+            "line": 506,
             "itemtype": "property",
             "name": "Pin.DIN",
             "static": 1,
@@ -3813,7 +3813,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 509,
+            "line": 511,
             "itemtype": "property",
             "name": "Pin.DOUT",
             "static": 1,
@@ -3822,7 +3822,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 514,
+            "line": 516,
             "itemtype": "property",
             "name": "Pin.AIN",
             "static": 1,
@@ -3831,7 +3831,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 519,
+            "line": 521,
             "itemtype": "property",
             "name": "Pin.AOUT",
             "static": 1,
@@ -3840,7 +3840,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 524,
+            "line": 526,
             "itemtype": "property",
             "name": "Pin.PWM",
             "static": 1,
@@ -3849,7 +3849,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 529,
+            "line": 531,
             "itemtype": "property",
             "name": "Pin.SERVO",
             "static": 1,
@@ -3858,7 +3858,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 534,
+            "line": 536,
             "itemtype": "property",
             "name": "Pin.SHIFT",
             "static": 1,
@@ -3867,7 +3867,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 539,
+            "line": 541,
             "itemtype": "property",
             "name": "Pin.I2C",
             "static": 1,
@@ -3876,7 +3876,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 544,
+            "line": 546,
             "itemtype": "property",
             "name": "Pin.ONEWIRE",
             "static": 1,
@@ -3885,7 +3885,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 549,
+            "line": 551,
             "itemtype": "property",
             "name": "Pin.STEPPER",
             "static": 1,
@@ -3894,7 +3894,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 554,
+            "line": 556,
             "itemtype": "property",
             "name": "Pin.TOTAL_PIN_MODES",
             "static": 1,
@@ -3903,7 +3903,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 563,
+            "line": 565,
             "description": "The pinChange event is dispatched when the pin value changes.",
             "type": "BO.PinEvent.CHANGE",
             "itemtype": "event",
@@ -3920,7 +3920,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 570,
+            "line": 572,
             "description": "The risingEdge event is dispatched when the pin value increased \n(from 0 to 1).",
             "type": "BO.PinEvent.RISING_EDGE",
             "itemtype": "event",
@@ -3937,7 +3937,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 578,
+            "line": 580,
             "description": "The change event is dispatched when the pin value decreased \n(from 1 to 0).",
             "type": "BO.PinEvent.FALLING_EDGE",
             "itemtype": "event",
@@ -8076,19 +8076,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:444"
+            "line": " src/core/Pin.js:446"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:453"
+            "line": " src/core/Pin.js:455"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:462"
+            "line": " src/core/Pin.js:464"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:470"
+            "line": " src/core/Pin.js:472"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",

@@ -2118,7 +2118,8 @@ BO.Pin = (function () {
         addGenerator: function (newGenerator) {
             this.removeGenerator();
             this._generator = newGenerator;
-            this._generator.addEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
+            // BO.generators.GeneratorEvent.UPDATE = "update"
+            this._generator.addEventListener("update", this._autoSetValueCallback);
         },
 
         /**
@@ -2127,7 +2128,8 @@ BO.Pin = (function () {
          */
         removeGenerator: function () {
             if (this._generator !== null) {
-                this._generator.removeEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
+                // BO.generators.GeneratorEvent.UPDATE = "update"
+                this._generator.removeEventListener("update", this._autoSetValueCallback);
             }
             this._generator = null;             
         },

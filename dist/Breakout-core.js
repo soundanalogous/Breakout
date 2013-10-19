@@ -837,100 +837,6 @@ BO.WSocketWrapper = (function () {
     return WSocketWrapper;
 
 }());
-JSUTILS.namespace('BO.generators.GeneratorEvent');
-
-BO.generators.GeneratorEvent = (function () {
-    "use strict";
-
-    var GeneratorEvent;
-
-    // dependencies
-    var Event = JSUTILS.Event;
-
-    /**
-     * An Event object to be dispatched (fired) by a Generator object when its
-     * value has updated.
-     *
-     * @class GeneratorEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    GeneratorEvent = function (type) {
-
-        Event.call(this, type);
-
-        this.name = "GeneratorEvent";
-    };
-
-    GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
-    GeneratorEvent.prototype.constructor = GeneratorEvent;
-
-    /**
-     * @property GeneratorEvent.UPDATE
-     * @static
-     */
-    GeneratorEvent.UPDATE = "update";
-
-    return GeneratorEvent;
-
-}());
-JSUTILS.namespace('BO.generators.GeneratorBase');
-
-/**
- * @namespace BO.generators
- */
-BO.generators.GeneratorBase = (function () {
-    "use strict";
-
-    var GeneratorBase;
-
-    // dependencies
-    var EventDispatcher = JSUTILS.EventDispatcher;
-
-    /**
-     * A base object to be extended by all Generator objects. This object should
-     * not be instantiated directly.
-     *
-     * @class GeneratorBase
-     * @constructor
-     * @extends JSUTILS.EventDispatcher
-     */
-    GeneratorBase = function () {
-        
-        EventDispatcher.call(this, this);
-
-        this.name = "GeneratorBase";
-        this._value = undefined;
-
-    };
-
-    GeneratorBase.prototype = JSUTILS.inherit(EventDispatcher.prototype);
-    GeneratorBase.prototype.constructor = GeneratorBase;
-
-
-    Object.defineProperty(GeneratorBase.prototype, "value", {
-        /**
-         * [read-only] Get a generated number.
-         * @protected
-         * @property value
-         * @type Number
-         */
-        get: function () {
-            return this._value;
-        },
-        /**
-         * Use setValue() instead?
-         * @protected
-         */
-        set: function (val) {
-            this._value = val;
-        }
-    });      
-
-    return GeneratorBase;
-
-}());
 JSUTILS.namespace('BO.PinEvent');
 
 BO.PinEvent = (function () {
@@ -1360,7 +1266,8 @@ BO.Pin = (function () {
         addGenerator: function (newGenerator) {
             this.removeGenerator();
             this._generator = newGenerator;
-            this._generator.addEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
+            // BO.generators.GeneratorEvent.UPDATE = "update"
+            this._generator.addEventListener("update", this._autoSetValueCallback);
         },
 
         /**
@@ -1369,7 +1276,8 @@ BO.Pin = (function () {
          */
         removeGenerator: function () {
             if (this._generator !== null) {
-                this._generator.removeEventListener(BO.generators.GeneratorEvent.UPDATE, this._autoSetValueCallback);
+                // BO.generators.GeneratorEvent.UPDATE = "update"
+                this._generator.removeEventListener("update", this._autoSetValueCallback);
             }
             this._generator = null;             
         },
