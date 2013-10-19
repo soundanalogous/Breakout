@@ -92,7 +92,6 @@ module.exports = function (grunt) {
         'src/utils/EventDispatcher.js',
         'src/utils/TimerEvent.js',
         'src/utils/Timer.js',
-        'src/utils/SignalScope.js',
         'src/core/IOBoardEvent.js',
         'src/core/WSocketEvent.js',
         'src/core/WSocketWrapper.js',
