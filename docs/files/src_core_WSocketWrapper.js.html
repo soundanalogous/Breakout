@@ -188,6 +188,13 @@ BO.WSocketWrapper = (function () {
     var EventDispatcher = JSUTILS.EventDispatcher,
         WSocketEvent = BO.WSocketEvent;
 
+    var READY_STATE = {
+        &quot;CONNECTING&quot;: 0,
+        &quot;OPEN&quot;: 1,
+        &quot;CLOSING&quot;: 2,
+        &quot;CLOSED&quot;: 3
+    };        
+
     /**
      * Creates a wrapper for various websocket implementations to unify the
      * interface.
@@ -209,7 +216,7 @@ BO.WSocketWrapper = (function () {
         this._port = port;
         this._protocol = protocol || &quot;default-protocol&quot;;
         this._socket = null;
-        this._readyState = &quot;&quot;; // only applies to native WebSocket implementations
+        this._readyState = 0; // = &quot;&quot;; // only applies to native WebSocket implementations
 
         this.init(this);
 
@@ -261,12 +268,16 @@ BO.WSocketWrapper = (function () {
                     self._socket = new WebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;);
                 } else {
                     console.log(&quot;Websockets not supported by this browser&quot;);
-                    throw &quot;Websockets not supported by this browser&quot;;
+                    throw new Error(&quot;Websockets not supported by this browser&quot;);
                 }
+                self._readyState = self._socket.readyState;
+
                 /** @private */
                 self._socket.onopen = function () {
 
+                    self._readyState = self._socket.readyState;
                     self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
+
                     /** @private */
                     self._socket.onmessage = function (msg) {
                         self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg.data});
@@ -306,9 +317,10 @@ BO.WSocketWrapper = (function () {
      * @method sendString
      * @param {String} message The message to send
      */
-    WSocketWrapper.prototype.sendString = function (message) {
-        // to do: ensure socket is not null before trying to send
-        this._socket.send(message.toString());
+    WSocketWrapper.prototype.sendString = function (message) {        
+        if (this.readyState === READY_STATE.OPEN) {
+            this._socket.send(message.toString());
+        }
     };  
 
     // to do: ensure socket is not null before trying to get readyState
@@ -319,15 +331,11 @@ BO.WSocketWrapper = (function () {
      * @property readyState
      * @type String
      */      
-    WSocketWrapper.prototype.__defineGetter__(&quot;readyState&quot;, function () {
-        return this._readyState;
+    Object.defineProperty(WSocketWrapper.prototype, &quot;readyState&quot;, {
+        get: function () {
+            return this._readyState;
+        }
     });
-
-    // Object.defineProperty(WSocketWrapper.prototype, &quot;readyState&quot;, {
-    //     get: function () {
-    //         return this._readyState;
-    //     }
-    // });
 
 
     // document events

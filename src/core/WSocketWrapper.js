@@ -157,15 +157,11 @@ BO.WSocketWrapper = (function () {
      * @property readyState
      * @type String
      */      
-    WSocketWrapper.prototype.__defineGetter__("readyState", function () {
-        return this._readyState;
+    Object.defineProperty(WSocketWrapper.prototype, "readyState", {
+        get: function () {
+            return this._readyState;
+        }
     });
-
-    // Object.defineProperty(WSocketWrapper.prototype, "readyState", {
-    //     get: function () {
-    //         return this._readyState;
-    //     }
-    // });
 
 
     // document events

@@ -624,7 +624,7 @@
             "extension_for": [],
             "namespace": "BO",
             "file": "src/core/WSocketWrapper.js",
-            "line": 17,
+            "line": 24,
             "description": "Creates a wrapper for various websocket implementations to unify the\ninterface.",
             "is_constructor": 1,
             "uses": [
@@ -4029,7 +4029,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 47,
+            "line": 54,
             "description": "Initialize the websocket",
             "access": "private",
             "tagname": "",
@@ -4047,37 +4047,37 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 60,
-            "class": "BO.WSocketWrapper",
-            "namespace": "BO"
-        },
-        {
-            "file": "src/core/WSocketWrapper.js",
             "line": 67,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 92,
+            "line": 74,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 96,
+            "line": 101,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 100,
+            "line": 107,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 116,
+            "line": 111,
+            "class": "BO.WSocketWrapper",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/WSocketWrapper.js",
+            "line": 127,
             "description": "Send a message\nTO DO: support sending ArrayBuffers and Blobs\nFor now, forward any calls to sendString",
             "access": "private",
             "tagname": "",
@@ -4095,7 +4095,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 130,
+            "line": 141,
             "description": "Send a message",
             "itemtype": "method",
             "name": "sendString",
@@ -4111,7 +4111,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 142,
+            "line": 154,
             "description": "[read-only] Wrapper for the readyState method of the native websocket implementation\n<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>",
             "itemtype": "property",
             "name": "readyState",
@@ -4121,7 +4121,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 161,
+            "line": 169,
             "description": "The webSocketConnected event is dispatched when a connection with\nthe websocket is established.",
             "type": "BO.WebsocketEvent.CONNECTED",
             "itemtype": "event",
@@ -4138,7 +4138,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 169,
+            "line": 177,
             "description": "The webSocketMessage event is dispatched when a websocket message is received.",
             "type": "BO.WebsocketEvent.MESSAGE",
             "itemtype": "event",
@@ -4160,7 +4160,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 177,
+            "line": 185,
             "description": "The webSocketClosed event is dispatched the websocket connection is closed.",
             "type": "BO.WebsocketEvent.CLOSE",
             "itemtype": "event",
@@ -8104,23 +8104,23 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:60"
-        },
-        {
-            "message": "Missing item type",
             "line": " src/core/WSocketWrapper.js:67"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:92"
+            "line": " src/core/WSocketWrapper.js:74"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:96"
+            "line": " src/core/WSocketWrapper.js:101"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:100"
+            "line": " src/core/WSocketWrapper.js:107"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/core/WSocketWrapper.js:111"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
