@@ -42,7 +42,7 @@ BO.WSocketWrapper = (function () {
         this._port = port;
         this._protocol = protocol || "default-protocol";
         this._socket = null;
-        this._readyState = 0; // = ""; // only applies to native WebSocket implementations
+        this._readyState = 0; // only applies to native WebSocket implementations
 
         this.init(this);
 
@@ -147,9 +147,7 @@ BO.WSocketWrapper = (function () {
         if (this.readyState === READY_STATE.OPEN) {
             this._socket.send(message.toString());
         }
-    };  
-
-    // to do: ensure socket is not null before trying to get readyState
+    };
 
     /**
      * [read-only] Wrapper for the readyState method of the native websocket implementation

@@ -4111,7 +4111,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 154,
+            "line": 152,
             "description": "[read-only] Wrapper for the readyState method of the native websocket implementation\n<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>",
             "itemtype": "property",
             "name": "readyState",
@@ -4121,7 +4121,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 169,
+            "line": 167,
             "description": "The webSocketConnected event is dispatched when a connection with\nthe websocket is established.",
             "type": "BO.WebsocketEvent.CONNECTED",
             "itemtype": "event",
@@ -4138,7 +4138,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 177,
+            "line": 175,
             "description": "The webSocketMessage event is dispatched when a websocket message is received.",
             "type": "BO.WebsocketEvent.MESSAGE",
             "itemtype": "event",
@@ -4160,7 +4160,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 185,
+            "line": 183,
             "description": "The webSocketClosed event is dispatched the websocket connection is closed.",
             "type": "BO.WebsocketEvent.CLOSE",
             "itemtype": "event",
@@ -4422,14 +4422,14 @@
         },
         {
             "file": "src/filters/Convolution.js",
-            "line": 68,
+            "line": 70,
             "description": "Override FilterBase.processSample",
             "class": "BO.filters.Convolution",
             "namespace": "BO.filters"
         },
         {
             "file": "src/filters/Convolution.js",
-            "line": 85,
+            "line": 87,
             "description": "Low-pass filter kernel. Use by passing this array to the constructor.",
             "itemtype": "property",
             "name": "Convolution.LPF",
@@ -4439,7 +4439,7 @@
         },
         {
             "file": "src/filters/Convolution.js",
-            "line": 92,
+            "line": 94,
             "description": "High-pass filter kernel. Use by passing this array to the constructor.",
             "itemtype": "property",
             "name": "Convolution.HPF",
@@ -4449,7 +4449,7 @@
         },
         {
             "file": "src/filters/Convolution.js",
-            "line": 99,
+            "line": 101,
             "description": "Moving average filter kernel. Use by passing this array to the constructor.",
             "itemtype": "property",
             "name": "Convolution.MOVING_AVERAGE",
@@ -4623,7 +4623,7 @@
         },
         {
             "file": "src/generators/GeneratorBase.js",
-            "line": 45,
+            "line": 47,
             "description": "[read-only] Get a generated number.",
             "access": "protected",
             "tagname": "",
@@ -4635,7 +4635,7 @@
         },
         {
             "file": "src/generators/GeneratorBase.js",
-            "line": 55,
+            "line": 56,
             "description": "Use setValue() instead?",
             "access": "protected",
             "tagname": "",
@@ -4677,7 +4677,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 88,
+            "line": 90,
             "description": "Starts the oscillator.",
             "itemtype": "method",
             "name": "start",
@@ -4686,7 +4686,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 101,
+            "line": 103,
             "description": "Stops the oscillator.",
             "itemtype": "method",
             "name": "stop",
@@ -4695,7 +4695,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 111,
+            "line": 113,
             "description": "Resets the oscillator.",
             "itemtype": "method",
             "name": "reset",
@@ -4704,7 +4704,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 120,
+            "line": 122,
             "description": "By default the interval is 33 milliseconds. The Osc is updated every 33ms.",
             "itemtype": "method",
             "name": "update",
@@ -4720,7 +4720,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 136,
+            "line": 138,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -4730,7 +4730,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 146,
+            "line": 148,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -4740,7 +4740,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 171,
+            "line": 173,
             "description": "sine wave",
             "itemtype": "method",
             "name": "Oscillator.SIN",
@@ -4750,7 +4750,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 180,
+            "line": 182,
             "description": "square wave",
             "itemtype": "method",
             "name": "Oscillator.SQUARE",
@@ -4760,7 +4760,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 189,
+            "line": 191,
             "description": "triangle wave",
             "itemtype": "method",
             "name": "Oscillator.TRIANGLE",
@@ -4770,7 +4770,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 199,
+            "line": 201,
             "description": "saw wave",
             "itemtype": "method",
             "name": "Oscillator.SAW",
@@ -4780,7 +4780,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 214,
+            "line": 216,
             "description": "impulse",
             "itemtype": "method",
             "name": "Oscillator.IMPULSE",
@@ -4790,7 +4790,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 223,
+            "line": 225,
             "description": "linear",
             "itemtype": "method",
             "name": "Oscillator.LINEAR",
@@ -4800,7 +4800,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 234,
+            "line": 236,
             "description": "The update event is dispatched at the rate specified \nby the serviceInterval parameter (default = 33ms).",
             "type": "BO.generators.GeneratorEvent.UPDATE",
             "itemtype": "event",
@@ -4830,7 +4830,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 86,
+            "line": 89,
             "description": "[read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..",
             "itemtype": "property",
             "name": "dynamicRange",
@@ -4840,7 +4840,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 93,
+            "line": 100,
             "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.",
             "itemtype": "property",
             "name": "x",
@@ -4850,7 +4850,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 100,
+            "line": 111,
             "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.",
             "itemtype": "property",
             "name": "y",
@@ -4860,7 +4860,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 107,
+            "line": 122,
             "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.",
             "itemtype": "property",
             "name": "z",
@@ -4870,7 +4870,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 114,
+            "line": 133,
             "description": "[read-only] The pitch value in degrees",
             "itemtype": "property",
             "name": "pitch",
@@ -4880,7 +4880,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 126,
+            "line": 147,
             "description": "[read-only] The roll value in degrees",
             "itemtype": "property",
             "name": "roll",
@@ -4890,8 +4890,8 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 140,
-            "description": "The raw value of the x axis",
+            "line": 163,
+            "description": "[read-only] The raw value of the x axis",
             "itemtype": "property",
             "name": "rawX",
             "type": "Number",
@@ -4900,8 +4900,8 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 147,
-            "description": "The raw value of the y axis",
+            "line": 174,
+            "description": "[read-only] The raw value of the y axis",
             "itemtype": "property",
             "name": "rawY",
             "type": "Number",
@@ -4910,8 +4910,8 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 154,
-            "description": "The raw value of the z axis",
+            "line": 185,
+            "description": "[read-only] The raw value of the z axis",
             "itemtype": "property",
             "name": "rawZ",
             "type": "Number",
@@ -4920,7 +4920,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 161,
+            "line": 196,
             "description": "[read-only] The state of continuous read mode. True if continuous read mode\nis enabled, false if it is disabled.",
             "itemtype": "property",
             "name": "isRunning",
@@ -4930,7 +4930,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 169,
+            "line": 210,
             "description": "The sensitivity value for the x axis (default value = 0.0390625).",
             "itemtype": "property",
             "name": "sensitivityX",
@@ -4940,7 +4940,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 177,
+            "line": 224,
             "description": "The sensitivity value for the y axis (default value = 0.0390625).",
             "itemtype": "property",
             "name": "sensitivityY",
@@ -4950,7 +4950,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 185,
+            "line": 238,
             "description": "The sensitivity value for the z axis (default value = 0.0390625).",
             "itemtype": "property",
             "name": "sensitivityZ",
@@ -4960,7 +4960,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 193,
+            "line": 253,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -4970,7 +4970,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 224,
+            "line": 284,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -4980,7 +4980,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 245,
+            "line": 305,
             "description": "Start continuous reading of the sensor.",
             "itemtype": "method",
             "name": "startReading",
@@ -4989,7 +4989,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 256,
+            "line": 316,
             "description": "Stop continuous reading of the sensor.",
             "itemtype": "method",
             "name": "stopReading",
@@ -4998,7 +4998,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 265,
+            "line": 325,
             "description": "Offset the x, y, or z axis output by the respective input value.",
             "itemtype": "method",
             "name": "setAxisOffset",
@@ -5007,7 +5007,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 280,
+            "line": 340,
             "description": "Get the value of the x, y, and z axis offset.",
             "itemtype": "method",
             "name": "getAxisOffset",
@@ -5016,7 +5016,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 296,
+            "line": 356,
             "description": "Sends read request to accelerometer and updates accelerometer values.",
             "itemtype": "method",
             "name": "update",
@@ -5025,7 +5025,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 308,
+            "line": 368,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5035,7 +5035,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 321,
+            "line": 381,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5045,7 +5045,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 337,
+            "line": 397,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5055,7 +5055,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 378,
+            "line": 438,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -5064,7 +5064,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 390,
+            "line": 450,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_2G",
             "static": 1,
@@ -5073,7 +5073,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 395,
+            "line": 455,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_4G",
             "static": 1,
@@ -5082,7 +5082,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 400,
+            "line": 460,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_8G",
             "static": 1,
@@ -5091,7 +5091,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 405,
+            "line": 465,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_16G",
             "static": 1,
@@ -5100,7 +5100,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 410,
+            "line": 470,
             "itemtype": "property",
             "name": "AccelerometerADXL345.DEVICE_ID",
             "static": 1,
@@ -5109,7 +5109,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 415,
+            "line": 475,
             "itemtype": "property",
             "name": "AccelerometerADXL345.DEFAULT_SENSITIVITY",
             "static": 1,
@@ -5118,7 +5118,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 423,
+            "line": 483,
             "description": "The update event is dispatched when the accelerometer values are updated.",
             "type": "BO.io.AccelerometerEvent.UPDATE",
             "itemtype": "event",
@@ -5158,8 +5158,8 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 96,
-            "description": "[read-only] The current range setting of the accelerometer in units \nof gravity (9.8 m/sec2).",
+            "line": 99,
+            "description": "[read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..",
             "itemtype": "property",
             "name": "dynamicRange",
             "type": "Number",
@@ -5168,8 +5168,8 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 104,
-            "description": "[read-only] The x axis of the accelerometer in units \nof gravity (9.8 m/sec2).",
+            "line": 110,
+            "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.",
             "itemtype": "property",
             "name": "x",
             "type": "Number",
@@ -5178,8 +5178,8 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 112,
-            "description": "[read-only] The y axis of the accelerometer in units \nof gravity (9.8 m/sec2).",
+            "line": 121,
+            "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.",
             "itemtype": "property",
             "name": "y",
             "type": "Number",
@@ -5188,8 +5188,8 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 120,
-            "description": "[read-only] The z axis of the accelerometer in units \nof gravity (9.8 m/sec2).",
+            "line": 132,
+            "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.",
             "itemtype": "property",
             "name": "z",
             "type": "Number",
@@ -5198,8 +5198,8 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 128,
-            "description": "[read-only] The pitch value in degrees.",
+            "line": 143,
+            "description": "[read-only] The pitch value in degrees",
             "itemtype": "property",
             "name": "pitch",
             "type": "Number",
@@ -5208,8 +5208,8 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 140,
-            "description": "[read-only] The roll value in degrees.",
+            "line": 157,
+            "description": "[read-only] The roll value in degrees",
             "itemtype": "property",
             "name": "roll",
             "type": "Number",
@@ -5218,7 +5218,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 166,
+            "line": 192,
             "description": "Scale the range for the specified axis (from 0 to 1) to (minimum to \nmaximum).",
             "itemtype": "method",
             "name": "setRangeFor",
@@ -5243,7 +5243,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 209,
+            "line": 235,
             "description": "Use this method to get the minimum and maximum range values for an axis.\nCreate a new object to store the return value and then pass obj.min\nand obj.max along with the respective axis identifier to the setRangeFor\nmethod.",
             "itemtype": "method",
             "name": "getCalibratedRange",
@@ -5273,7 +5273,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 237,
+            "line": 263,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5283,7 +5283,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 246,
+            "line": 272,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5293,7 +5293,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 255,
+            "line": 281,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5303,7 +5303,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 264,
+            "line": 290,
             "itemtype": "property",
             "name": "AnalogAccelerometer.X_AXIS",
             "static": 1,
@@ -5312,7 +5312,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 269,
+            "line": 295,
             "itemtype": "property",
             "name": "AnalogAccelerometer.Y_AXIS",
             "static": 1,
@@ -5321,7 +5321,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 274,
+            "line": 300,
             "itemtype": "property",
             "name": "AnalogAccelerometer.Z_AXIS",
             "static": 1,
@@ -5330,7 +5330,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 283,
+            "line": 309,
             "description": "The update event is dispatched when the accelerometer values are updated.",
             "type": "BO.io.AccelerometerEvent.UPDATE",
             "itemtype": "event",
@@ -5666,7 +5666,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 153,
+            "line": 154,
             "description": "The debounce time interval in milliseconds.",
             "itemtype": "property",
             "name": "debounceInterval",
@@ -5676,7 +5676,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 161,
+            "line": 168,
             "description": "The delay time (in milliseconds) the button must be held before a\nsustained press event is fired.",
             "itemtype": "property",
             "name": "sustainedPressInterval",
@@ -5686,7 +5686,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 170,
+            "line": 183,
             "description": "[read-only] The pin number of the pin the button is attached to.",
             "itemtype": "property",
             "name": "pinNumber",
@@ -5696,7 +5696,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 177,
+            "line": 195,
             "itemtype": "property",
             "name": "Button.PULL_DOWN",
             "static": 1,
@@ -5705,7 +5705,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 182,
+            "line": 200,
             "itemtype": "property",
             "name": "Button.PULL_UP",
             "static": 1,
@@ -5714,7 +5714,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 187,
+            "line": 205,
             "itemtype": "property",
             "name": "Button.INTERNAL_PULL_UP",
             "static": 1,
@@ -5723,7 +5723,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 196,
+            "line": 214,
             "description": "The pressed event is dispatched when the button is pressed.",
             "type": "BO.io.ButtonEvent.PRESS",
             "itemtype": "event",
@@ -5740,7 +5740,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 203,
+            "line": 221,
             "description": "The released event is dispatched when the button is released.",
             "type": "BO.io.ButtonEvent.RELEASE",
             "itemtype": "event",
@@ -5757,7 +5757,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 210,
+            "line": 228,
             "description": "The longPress event is dispatched once when the button has been held for\nthe time duration specified by the sustainedPressInterval property.",
             "type": "BO.io.ButtonEvent.LONG_PRESS",
             "itemtype": "event",
@@ -5774,7 +5774,7 @@
         },
         {
             "file": "src/io/Button.js",
-            "line": 218,
+            "line": 236,
             "description": "The sustainedPress event is dispatched continuously at the rate \nspecified by the sustainedPressInterval property while the button is\nheld.",
             "type": "BO.io.ButtonEvent.SUSTAINED_PRESS",
             "itemtype": "event",
@@ -5867,7 +5867,7 @@
         },
         {
             "file": "src/io/CompassHMC6352.js",
-            "line": 58,
+            "line": 62,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5877,7 +5877,7 @@
         },
         {
             "file": "src/io/CompassHMC6352.js",
-            "line": 73,
+            "line": 77,
             "description": "Start continuous reading of the sensor.",
             "itemtype": "method",
             "name": "startReading",
@@ -5886,7 +5886,7 @@
         },
         {
             "file": "src/io/CompassHMC6352.js",
-            "line": 81,
+            "line": 85,
             "description": "Stop continuous reading of the sensor",
             "itemtype": "method",
             "name": "stopReading",
@@ -5895,7 +5895,7 @@
         },
         {
             "file": "src/io/CompassHMC6352.js",
-            "line": 92,
+            "line": 96,
             "description": "The update event is dispatched when the compass heading is updated.",
             "type": "BO.io.CompassEvent.UPDATE",
             "itemtype": "event",
@@ -6006,17 +6006,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 82,
-            "description": "[read-only] The state of continuous read mode. True if continuous read mode\nis enabled, false if it is disabled.",
-            "itemtype": "property",
-            "name": "isRunning",
-            "type": "Boolean",
-            "class": "BO.io.GyroITG3200",
-            "namespace": "BO.io"
-        },
-        {
-            "file": "src/io/GyroITG3200.js",
-            "line": 90,
+            "line": 84,
             "description": "[read-only] The x axis output value in degrees.",
             "itemtype": "property",
             "name": "x",
@@ -6026,7 +6016,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 99,
+            "line": 95,
             "description": "[read-only] The y axis output value in degrees.",
             "itemtype": "property",
             "name": "y",
@@ -6036,7 +6026,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 108,
+            "line": 106,
             "description": "[read-only] The z axis output value in degrees.",
             "itemtype": "property",
             "name": "z",
@@ -6047,7 +6037,7 @@
         {
             "file": "src/io/GyroITG3200.js",
             "line": 117,
-            "description": "The raw x axis output value from the sensor.",
+            "description": "[read-only] The raw value of the x axis",
             "itemtype": "property",
             "name": "rawX",
             "type": "Number",
@@ -6056,8 +6046,8 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 124,
-            "description": "The raw y axis output value from the sensor.",
+            "line": 128,
+            "description": "[read-only] The raw value of the y axis",
             "itemtype": "property",
             "name": "rawY",
             "type": "Number",
@@ -6066,8 +6056,8 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 131,
-            "description": "The raw z axis output value from the sensor.",
+            "line": 139,
+            "description": "[read-only] The raw value of the z axis",
             "itemtype": "property",
             "name": "rawZ",
             "type": "Number",
@@ -6076,7 +6066,17 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 138,
+            "line": 150,
+            "description": "[read-only] The state of continuous read mode. True if continuous read mode\nis enabled, false if it is disabled.",
+            "itemtype": "property",
+            "name": "isRunning",
+            "type": "Boolean",
+            "class": "BO.io.GyroITG3200",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/GyroITG3200.js",
+            "line": 163,
             "description": "Set the polarity of the x, y, and z output values.",
             "itemtype": "method",
             "name": "setRevPolarity",
@@ -6102,7 +6102,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 152,
+            "line": 177,
             "description": "Offset the x, y, or z output by the respective input value.",
             "itemtype": "method",
             "name": "setOffsets",
@@ -6128,7 +6128,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 166,
+            "line": 191,
             "description": "Set the gain value for the x, y, or z output.",
             "itemtype": "method",
             "name": "setGains",
@@ -6154,7 +6154,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 180,
+            "line": 205,
             "description": "Start continuous reading of the sensor.",
             "itemtype": "method",
             "name": "startReading",
@@ -6163,7 +6163,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 191,
+            "line": 216,
             "description": "Stop continuous reading of the sensor.",
             "itemtype": "method",
             "name": "stopReading",
@@ -6172,7 +6172,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 201,
+            "line": 226,
             "description": "Sends read request to accelerometer and updates accelerometer values.",
             "itemtype": "method",
             "name": "update",
@@ -6181,7 +6181,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 214,
+            "line": 239,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6191,7 +6191,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 236,
+            "line": 261,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6201,7 +6201,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 249,
+            "line": 274,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6211,7 +6211,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 265,
+            "line": 290,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6221,7 +6221,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 281,
+            "line": 306,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6231,7 +6231,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 318,
+            "line": 343,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -6240,7 +6240,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 330,
+            "line": 355,
             "description": "ID = 0x69 if sensor pin 9 (AD0) is tied to Power.",
             "itemtype": "property",
             "name": "GyroITG3200.ID_AD0_VDD",
@@ -6250,7 +6250,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 337,
+            "line": 362,
             "description": "ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.",
             "itemtype": "property",
             "name": "GyroITG3200.ID_AD0_VDD",
@@ -6260,7 +6260,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 347,
+            "line": 372,
             "description": "The update event is dispatched when the accelerometer values are updated.",
             "type": "BO.io.GyroEvent.UPDATE",
             "itemtype": "event",
@@ -6449,7 +6449,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 78,
+            "line": 79,
             "description": "[read-only] The heading in degrees.",
             "itemtype": "property",
             "name": "heading",
@@ -6459,7 +6459,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 87,
+            "line": 90,
             "description": "[read-only] The x-axis measurement",
             "itemtype": "property",
             "name": "x",
@@ -6469,7 +6469,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 94,
+            "line": 101,
             "description": "[read-only] The y-axis measurement",
             "itemtype": "property",
             "name": "y",
@@ -6479,7 +6479,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 101,
+            "line": 112,
             "description": "[read-only] The z-axis measurement",
             "itemtype": "property",
             "name": "z",
@@ -6489,7 +6489,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 108,
+            "line": 124,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6499,7 +6499,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 148,
+            "line": 164,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6509,7 +6509,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 176,
+            "line": 192,
             "description": "Get a tilt-compensated heading. Pitch and roll values from an accelerometer\nmust be passed to this method.\n\nNote: this method is not working properly. Marking it private until resolved",
             "access": "private",
             "tagname": "",
@@ -6536,7 +6536,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 205,
+            "line": 221,
             "description": "Start continuous reading of the sensor.",
             "itemtype": "method",
             "name": "startReading",
@@ -6545,7 +6545,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 216,
+            "line": 232,
             "description": "Stop continuous reading of the sensor.",
             "itemtype": "method",
             "name": "stopReading",
@@ -6554,7 +6554,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 227,
+            "line": 243,
             "description": "Sends read request to magnetometer and updates magnetometer values.",
             "itemtype": "method",
             "name": "update",
@@ -6563,7 +6563,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 239,
+            "line": 255,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -6572,7 +6572,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 251,
+            "line": 267,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.DEVICE_ID",
             "static": 1,
@@ -6581,7 +6581,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 257,
+            "line": 273,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.SAMPLES_1",
             "static": 1,
@@ -6590,7 +6590,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 262,
+            "line": 278,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.SAMPLES_2",
             "static": 1,
@@ -6599,7 +6599,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 267,
+            "line": 283,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.SAMPLES_4",
             "static": 1,
@@ -6608,7 +6608,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 272,
+            "line": 288,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.SAMPLES_8",
             "static": 1,
@@ -6617,7 +6617,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 278,
+            "line": 294,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_0_75",
             "static": 1,
@@ -6626,7 +6626,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 283,
+            "line": 299,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_1_5",
             "static": 1,
@@ -6635,7 +6635,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 288,
+            "line": 304,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_3",
             "static": 1,
@@ -6644,7 +6644,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 293,
+            "line": 309,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_7_5",
             "static": 1,
@@ -6653,7 +6653,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 298,
+            "line": 314,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_15",
             "static": 1,
@@ -6662,7 +6662,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 303,
+            "line": 319,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_30",
             "static": 1,
@@ -6671,7 +6671,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 308,
+            "line": 324,
             "itemtype": "property",
             "name": "MagnetometerHMC5883.HZ_75",
             "static": 1,
@@ -6680,7 +6680,7 @@
         },
         {
             "file": "src/io/MagnetoMeterHMC5883.js",
-            "line": 317,
+            "line": 333,
             "description": "The update event is dispatched when the compass heading is updated.",
             "type": "BO.io.MagnetometerEvent.UPDATE",
             "itemtype": "event",
@@ -6736,7 +6736,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 58,
+            "line": 59,
             "description": "[read-only] The current value of the potentiometer.",
             "itemtype": "property",
             "name": "value",
@@ -6746,7 +6746,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 65,
+            "line": 70,
             "description": "[read-only] Get the (pre-filtered) average value of the potentiometer.",
             "itemtype": "property",
             "name": "average",
@@ -6756,7 +6756,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 72,
+            "line": 81,
             "description": "[read-only] Get the value of the potentiometer before filters are\napplied.",
             "itemtype": "property",
             "name": "preFilterValue",
@@ -6766,7 +6766,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 80,
+            "line": 93,
             "description": "[read-only] Get the (pre-filtered) minimum value read by the\npotentiometer.",
             "itemtype": "property",
             "name": "minimum",
@@ -6776,7 +6776,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 88,
+            "line": 105,
             "description": "[read-only] Get the (pre-filtered) maximum value read by the\npotentiometer.",
             "itemtype": "property",
             "name": "maximum",
@@ -6786,7 +6786,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 96,
+            "line": 118,
             "description": "Resets the minimum, maximum, and average values.",
             "itemtype": "method",
             "name": "clear",
@@ -6795,7 +6795,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 104,
+            "line": 126,
             "description": "Scale from the minimum and maximum input values to 0.0 -> 1.0. This is\nuseful for sensors such as a flex sensor that may not return the full\nrange of 0 to 1.",
             "itemtype": "method",
             "name": "setRange",
@@ -6816,7 +6816,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 119,
+            "line": 141,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6826,7 +6826,7 @@
         },
         {
             "file": "src/io/Potentiometer.js",
-            "line": 129,
+            "line": 151,
             "description": "The change event is dispatched when the potentiometer value changes.",
             "example": [
                 "\n    pot.addEventListener(PotEvent.CHANGE, onValueChange);\n\n    function onValueChange(event) {\n        console.log(\"value = \" + event.target.value);  \n    }"
@@ -7117,7 +7117,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 260,
+            "line": 261,
             "description": "The current value.",
             "itemtype": "property",
             "name": "value",
@@ -7127,7 +7127,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 267,
+            "line": 272,
             "description": "The current distance from the press point.",
             "itemtype": "property",
             "name": "distanceFromPressed",
@@ -7137,7 +7137,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 274,
+            "line": 283,
             "description": "The minimum distance required to trigger a flick event. Change this\nvalue to fine tune the flick gesture.",
             "itemtype": "property",
             "name": "minFlickMovement",
@@ -7147,7 +7147,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 283,
+            "line": 298,
             "description": "The minimum distance required to trigger a drag event. Change this\nvalue to fine tune the drag response.",
             "itemtype": "property",
             "name": "minDragMovement",
@@ -7157,7 +7157,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 292,
+            "line": 313,
             "description": "The maximum time (in milliseconds) between a press and release in\norder to trigger a TAP event.",
             "itemtype": "property",
             "name": "tapTimeout",
@@ -7167,7 +7167,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 301,
+            "line": 328,
             "description": "The minimum value required to set the Release state. This number should\nbe as close to zero as possible. Increase this value if you are noticing\nfluttering between the Pressed and Released states. Default value = 0.01;",
             "itemtype": "property",
             "name": "minValue",
@@ -7177,7 +7177,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 314,
+            "line": 347,
             "description": "The softPotPressed event is dispatched when pressure is applied to \nthe softpot surface.",
             "type": "BO.io.SoftPotEvent.PRESS",
             "itemtype": "event",
@@ -7194,7 +7194,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 322,
+            "line": 355,
             "description": "The softPotReleased event is dispatched when pressure is released from \nthe softpot surface.",
             "type": "BO.io.SoftPotEvent.RELEASE",
             "itemtype": "event",
@@ -7211,7 +7211,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 330,
+            "line": 363,
             "description": "The softPotDrag event is dispatched when a drag is detected along \nthe length of the softpot sensor.",
             "type": "BO.io.SoftPotEvent.DRAG",
             "itemtype": "event",
@@ -7228,7 +7228,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 338,
+            "line": 371,
             "description": "The softPotFlickUp event is dispatched when a flick gesture is detected\nin the direction of the sensor pins.",
             "type": "BO.io.SoftPotEvent.FLICK_UP",
             "itemtype": "event",
@@ -7245,7 +7245,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 346,
+            "line": 379,
             "description": "The softPotFlickDown event is dispatched when a flick gesture is \ndetected in the direction away from the sensor pins.",
             "type": "BO.io.SoftPotEvent.FLICK_DOWN",
             "itemtype": "event",
@@ -7262,7 +7262,7 @@
         },
         {
             "file": "src/io/SoftPot.js",
-            "line": 354,
+            "line": 387,
             "description": "The softPotTap event is dispatched when a press and release occurs\nin in less than the duration specified by the tapTimeout property.",
             "type": "BO.io.SoftPotEvent.TAP",
             "itemtype": "event",
@@ -7824,7 +7824,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 62,
+            "line": 64,
             "description": "The repeat count in milliseconds.",
             "itemtype": "property",
             "name": "repeatCount",
@@ -7834,7 +7834,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 79,
+            "line": 83,
             "description": "[read-only] Returns true if the timer is running.",
             "itemtype": "property",
             "name": "running",
@@ -7844,7 +7844,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 89,
+            "line": 95,
             "description": "[read-only] Returns the current count (number of ticks since timer\nstarted).",
             "itemtype": "property",
             "name": "currentCount",
@@ -7854,7 +7854,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 100,
+            "line": 109,
             "description": "Start the timer.",
             "itemtype": "method",
             "name": "start",
@@ -7863,7 +7863,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 111,
+            "line": 120,
             "description": "Stop the timer and reset the count to zero.",
             "itemtype": "method",
             "name": "reset",
@@ -7872,7 +7872,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 120,
+            "line": 129,
             "description": "Stop the timer.",
             "itemtype": "method",
             "name": "stop",
@@ -7881,7 +7881,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 132,
+            "line": 141,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -7891,7 +7891,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 148,
+            "line": 157,
             "description": "The timerTick event is dispatched at the rate specified \nby the delay interval.",
             "type": "JSUTILS.TimerEvent.TIMER",
             "itemtype": "event",
@@ -7908,7 +7908,7 @@
         },
         {
             "file": "src/utils/Timer.js",
-            "line": 156,
+            "line": 165,
             "description": "The timerComplete event is dispatched when the repeatCount value",
             "type": "JSUTILS.TimerEvent.TIMER_COMPLETE",
             "itemtype": "event",
@@ -8172,7 +8172,7 @@
         },
         {
             "message": "Missing item type\nOverride FilterBase.processSample",
-            "line": " src/filters/Convolution.js:68"
+            "line": " src/filters/Convolution.js:70"
         },
         {
             "message": "Missing item type\nBased on IFilter.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
@@ -8204,7 +8204,7 @@
         },
         {
             "message": "Missing item type\nUse setValue() instead?",
-            "line": " src/generators/GeneratorBase.js:55"
+            "line": " src/generators/GeneratorBase.js:56"
         },
         {
             "message": "Missing item type\nBased on GeneratorEvent.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
@@ -8224,7 +8224,7 @@
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/io/AccelerometerADXL345.js:378"
+            "line": " src/io/AccelerometerADXL345.js:438"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
@@ -8272,7 +8272,7 @@
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/io/GyroITG3200.js:318"
+            "line": " src/io/GyroITG3200.js:343"
         },
         {
             "message": "Missing item type\nBased on LED.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
@@ -8284,7 +8284,7 @@
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/io/MagnetoMeterHMC5883.js:239"
+            "line": " src/io/MagnetoMeterHMC5883.js:255"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",

@@ -68,9 +68,15 @@ BO.io.SoftPotEvent = (function () {
      * The value of the softpot.
      * @property value
      * @type Number
-     */ 
-    SoftPotEvent.prototype.__defineGetter__("value", function () { return this._touchPoint; });  
-    SoftPotEvent.prototype.__defineSetter__("value", function (val) { this._touchPoint = val; });
+     */
+    Object.defineProperty(SoftPotEvent.prototype, "value", {
+        get: function () {
+            return this._touchPoint;
+        },
+        set: function (val) {
+            this._touchPoint = val;
+        }
+    });
 
     return SoftPotEvent;
 

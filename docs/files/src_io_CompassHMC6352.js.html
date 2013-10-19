@@ -227,7 +227,11 @@ BO.io.CompassHMC6352 = (function () {
      * @property heading
      * @type Number
      */      
-    CompassHMC6352.prototype.__defineGetter__(&quot;heading&quot;, function () {return this._heading; });
+    Object.defineProperty(CompassHMC6352.prototype, &quot;heading&quot;, {
+        get: function () {
+            return this._heading;
+        }
+    });    
     
     /**
      * @private

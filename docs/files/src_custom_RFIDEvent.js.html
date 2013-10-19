@@ -224,7 +224,11 @@ BO.custom.RFIDEvent = (function () {
      * @property tag
      * @type String
      */ 
-    RFIDEvent.prototype.__defineGetter__(&quot;tag&quot;, function () { return this._tag; });
+    Object.defineProperty(RFIDEvent.prototype, &quot;tag&quot;, {
+        get: function () {
+            return this._tag;
+        }
+    });
 
     return RFIDEvent;
 

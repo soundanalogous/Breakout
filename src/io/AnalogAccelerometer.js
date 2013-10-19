@@ -93,75 +93,101 @@ BO.io.AnalogAccelerometer = (function () {
 
     // Implement Acceleromter interface:
 
-    /**
-     * [read-only] The current range setting of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property dynamicRange
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
+    Object.defineProperties(AnalogAccelerometer.prototype, {
+        // Properties that apply to any accelereomter
 
-    /**
-     * [read-only] The x axis of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property x
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("x", function () { return this._x; });
+        /**
+         * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
+         * @property dynamicRange
+         * @type Number
+         */
+        dynamicRange: {
+            get: function () {
+                return this._dynamicRange;
+            }
+        },
 
-    /**
-     * [read-only] The y axis of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property y
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("y", function () { return this._y; });
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x;
+            }
+        },
 
-    /**
-     * [read-only] The z axis of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property z
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("z", function () { return this._z; });
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y;
+            }
+        },
 
-    /**
-     * [read-only] The pitch value in degrees.
-     * @property pitch
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("pitch", function () { 
-        // -180 to 180
-        //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z;
+            }
+        },
+
+        /**
+         * [read-only] The pitch value in degrees 
+         * @property pitch
+         * @type Number
+         */
+        pitch: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+            }
+        },
+
+        /**
+         * [read-only] The roll value in degrees 
+         * @property roll
+         * @type Number
+         */
+        roll: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+            }
+        },
+
+        // Properties specific to analog accelerometers:
+
+        xPin: {
+            get: function () {
+                return this._xPin;
+            }
+        },
+
+        yPin: {
+            get: function () {
+                return this._yPin;
+            }
+        },
+
+        zPin: {
+            get: function () {
+                return this._zPin;
+            }
+        }
     });
-    
-    /**
-     * [read-only] The roll value in degrees.
-     * @property roll
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("roll", function () { 
-        // -180 to 180
-        //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
-    }); 
-
-    // Methods specific to this Accelerometer type:
-
-    AnalogAccelerometer.prototype.__defineGetter__("xPin", function () { 
-        return this._xPin;
-    });
-
-    AnalogAccelerometer.prototype.__defineGetter__("yPin", function () { 
-        return this._yPin;
-    }); 
-    
-    AnalogAccelerometer.prototype.__defineGetter__("zPin", function () { 
-        return this._zPin;
-    });         
     
     /**
      * Scale the range for the specified axis (from 0 to 1) to (minimum to 

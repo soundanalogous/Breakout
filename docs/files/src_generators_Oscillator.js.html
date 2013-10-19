@@ -251,12 +251,14 @@ BO.generators.Oscillator = (function () {
      * The service interval in milliseconds. Default is 33ms.
      * @property serviceInterval
      * @type Number
-     */ 
-    Oscillator.prototype.__defineSetter__(&quot;serviceInterval&quot;, function (interval) {
-        this._timer.delay = interval;
-    });
-    Oscillator.prototype.__defineGetter__(&quot;serviceInterval&quot;, function () {
-        return this._timer.delay;
+     */
+    Object.defineProperty(Oscillator.prototype, &quot;serviceInterval&quot;, {
+        get: function () {
+            return this._timer.delay;
+        },
+        set: function (interval) {
+            this._timer.delay = interval;
+        }
     });
 
     /**

@@ -382,60 +382,69 @@ JSUTILS.Timer = (function () {
     Timer.prototype = JSUTILS.inherit(EventDispatcher.prototype);
     Timer.prototype.constructor = Timer;
 
+    Object.defineProperties(Timer.prototype, {
+        /**
+         * The delay interval in milliseconds.
+         * 
+         * @property delay
+         * @type Number
+         */
+        delay: {
+            get: function () {
+                return this._delay;
+            },
+            set: function (val) {
+                this._delay = val;
+                if (this._isRunning) {
+                    this.stop();
+                    this.start();
+                }                
+            }
+        },
 
-    /**
-     * The delay interval in milliseconds.
-     * 
-     * @property delay
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("delay", function () {
-        return this._delay;
-    });
-    Timer.prototype.__defineSetter__("delay", function (val) { 
-        this._delay = val;
-        if (this._isRunning) {
-            this.stop();
-            this.start();
+        /**
+         * The repeat count in milliseconds.
+         * 
+         * @property repeatCount
+         * @type Number
+         */
+        repeatCount: {
+            get: function () {
+                return this._repeatCount;
+            },
+            set: function (val) {
+                this._repeatCount = val;
+                if (this._isRunning) {
+                    this.stop();
+                    this.start();
+                }
+            }
+        },
+
+        /**
+         * [read-only] Returns true if the timer is running.
+         * 
+         * @property running
+         * @type Number
+         */
+        running: {
+            get: function () {
+                return this._isRunning;
+            }
+        },
+
+        /**
+         * [read-only] Returns the current count (number of ticks since timer
+         * started).
+         * 
+         * @property currentCount
+         * @type Number
+         */
+        currentCount: {
+            get: function () {
+                return this._count;
+            }
         }
-    }); 
-
-    /**
-     * The repeat count in milliseconds.
-     * 
-     * @property repeatCount
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("repeatCount", function () {
-        return this._repeatCount;
-    });
-    Timer.prototype.__defineSetter__("repeatCount", function (val) { 
-        this._repeatCount = val;
-        if (this._isRunning) {
-            this.stop();
-            this.start();
-        }
-    });
-
-    /**
-     * [read-only] Returns true if the timer is running.
-     * 
-     * @property running
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("running", function () {
-        return this._isRunning;
-    });
-
-    /**
-     * [read-only] Returns the current count (number of ticks since timer
-     * started).
-     * 
-     * @property currentCount
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("currentCount", function () {
-        return this._count;
     });
 
     /**
@@ -820,7 +829,7 @@ BO.WSocketWrapper = (function () {
         this._port = port;
         this._protocol = protocol || "default-protocol";
         this._socket = null;
-        this._readyState = 0; // = ""; // only applies to native WebSocket implementations
+        this._readyState = 0; // only applies to native WebSocket implementations
 
         this.init(this);
 
@@ -925,9 +934,7 @@ BO.WSocketWrapper = (function () {
         if (this.readyState === READY_STATE.OPEN) {
             this._socket.send(message.toString());
         }
-    };  
-
-    // to do: ensure socket is not null before trying to get readyState
+    };
 
     /**
      * [read-only] Wrapper for the readyState method of the native websocket implementation
@@ -1154,17 +1161,19 @@ BO.filters.Convolution = (function () {
      * @property coef
      * @type Number[]
      */
-    Convolution.prototype.__defineGetter__("coef", function () {
-        return this._coef;
-    });
-    Convolution.prototype.__defineSetter__("coef", function (kernel) {
-        this._coef = kernel;
-        this._buffer = new Array(this._coef.length);
-        var len = this._buffer.length;
-        for (var i = 0; i < len; i++) {
-            this._buffer[i] = 0;
+    Object.defineProperty(Convolution.prototype, "coef", {
+        get: function () {
+            return this._coef;
+        },
+        set: function (kernel) {
+            this._coef = kernel;
+            this._buffer = new Array(this._coef.length);
+            var len = this._buffer.length;
+            for (var i = 0; i < len; i++) {
+                this._buffer[i] = 0;
+            }
         }
-    });
+    });    
 
     /**
      * Override FilterBase.processSample
@@ -1421,23 +1430,25 @@ BO.generators.GeneratorBase = (function () {
     GeneratorBase.prototype = JSUTILS.inherit(EventDispatcher.prototype);
     GeneratorBase.prototype.constructor = GeneratorBase;
 
-    /**
-     * [read-only] Get a generated number.
-     * @protected
-     * @property value
-     * @type Number
-     */  
-    GeneratorBase.prototype.__defineGetter__("value", function () { 
-        return this._value;
-    });
 
-    /**
-     * Use setValue() instead?
-     * @protected
-     */
-    GeneratorBase.prototype.__defineSetter__("value", function (val) { 
-        this._value = val;
-    }); 
+    Object.defineProperty(GeneratorBase.prototype, "value", {
+        /**
+         * [read-only] Get a generated number.
+         * @protected
+         * @property value
+         * @type Number
+         */
+        get: function () {
+            return this._value;
+        },
+        /**
+         * Use setValue() instead?
+         * @protected
+         */
+        set: function (val) {
+            this._value = val;
+        }
+    });      
 
     return GeneratorBase;
 
@@ -1510,12 +1521,14 @@ BO.generators.Oscillator = (function () {
      * The service interval in milliseconds. Default is 33ms.
      * @property serviceInterval
      * @type Number
-     */ 
-    Oscillator.prototype.__defineSetter__("serviceInterval", function (interval) {
-        this._timer.delay = interval;
-    });
-    Oscillator.prototype.__defineGetter__("serviceInterval", function () {
-        return this._timer.delay;
+     */
+    Object.defineProperty(Oscillator.prototype, "serviceInterval", {
+        get: function () {
+            return this._timer.delay;
+        },
+        set: function (interval) {
+            this._timer.delay = interval;
+        }
     });
 
     /**

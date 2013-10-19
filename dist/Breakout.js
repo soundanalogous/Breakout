@@ -382,60 +382,69 @@ JSUTILS.Timer = (function () {
     Timer.prototype = JSUTILS.inherit(EventDispatcher.prototype);
     Timer.prototype.constructor = Timer;
 
+    Object.defineProperties(Timer.prototype, {
+        /**
+         * The delay interval in milliseconds.
+         * 
+         * @property delay
+         * @type Number
+         */
+        delay: {
+            get: function () {
+                return this._delay;
+            },
+            set: function (val) {
+                this._delay = val;
+                if (this._isRunning) {
+                    this.stop();
+                    this.start();
+                }                
+            }
+        },
 
-    /**
-     * The delay interval in milliseconds.
-     * 
-     * @property delay
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("delay", function () {
-        return this._delay;
-    });
-    Timer.prototype.__defineSetter__("delay", function (val) { 
-        this._delay = val;
-        if (this._isRunning) {
-            this.stop();
-            this.start();
+        /**
+         * The repeat count in milliseconds.
+         * 
+         * @property repeatCount
+         * @type Number
+         */
+        repeatCount: {
+            get: function () {
+                return this._repeatCount;
+            },
+            set: function (val) {
+                this._repeatCount = val;
+                if (this._isRunning) {
+                    this.stop();
+                    this.start();
+                }
+            }
+        },
+
+        /**
+         * [read-only] Returns true if the timer is running.
+         * 
+         * @property running
+         * @type Number
+         */
+        running: {
+            get: function () {
+                return this._isRunning;
+            }
+        },
+
+        /**
+         * [read-only] Returns the current count (number of ticks since timer
+         * started).
+         * 
+         * @property currentCount
+         * @type Number
+         */
+        currentCount: {
+            get: function () {
+                return this._count;
+            }
         }
-    }); 
-
-    /**
-     * The repeat count in milliseconds.
-     * 
-     * @property repeatCount
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("repeatCount", function () {
-        return this._repeatCount;
-    });
-    Timer.prototype.__defineSetter__("repeatCount", function (val) { 
-        this._repeatCount = val;
-        if (this._isRunning) {
-            this.stop();
-            this.start();
-        }
-    });
-
-    /**
-     * [read-only] Returns true if the timer is running.
-     * 
-     * @property running
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("running", function () {
-        return this._isRunning;
-    });
-
-    /**
-     * [read-only] Returns the current count (number of ticks since timer
-     * started).
-     * 
-     * @property currentCount
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("currentCount", function () {
-        return this._count;
     });
 
     /**
@@ -820,7 +829,7 @@ BO.WSocketWrapper = (function () {
         this._port = port;
         this._protocol = protocol || "default-protocol";
         this._socket = null;
-        this._readyState = 0; // = ""; // only applies to native WebSocket implementations
+        this._readyState = 0; // only applies to native WebSocket implementations
 
         this.init(this);
 
@@ -925,9 +934,7 @@ BO.WSocketWrapper = (function () {
         if (this.readyState === READY_STATE.OPEN) {
             this._socket.send(message.toString());
         }
-    };  
-
-    // to do: ensure socket is not null before trying to get readyState
+    };
 
     /**
      * [read-only] Wrapper for the readyState method of the native websocket implementation
@@ -1154,17 +1161,19 @@ BO.filters.Convolution = (function () {
      * @property coef
      * @type Number[]
      */
-    Convolution.prototype.__defineGetter__("coef", function () {
-        return this._coef;
-    });
-    Convolution.prototype.__defineSetter__("coef", function (kernel) {
-        this._coef = kernel;
-        this._buffer = new Array(this._coef.length);
-        var len = this._buffer.length;
-        for (var i = 0; i < len; i++) {
-            this._buffer[i] = 0;
+    Object.defineProperty(Convolution.prototype, "coef", {
+        get: function () {
+            return this._coef;
+        },
+        set: function (kernel) {
+            this._coef = kernel;
+            this._buffer = new Array(this._coef.length);
+            var len = this._buffer.length;
+            for (var i = 0; i < len; i++) {
+                this._buffer[i] = 0;
+            }
         }
-    });
+    });    
 
     /**
      * Override FilterBase.processSample
@@ -1421,23 +1430,25 @@ BO.generators.GeneratorBase = (function () {
     GeneratorBase.prototype = JSUTILS.inherit(EventDispatcher.prototype);
     GeneratorBase.prototype.constructor = GeneratorBase;
 
-    /**
-     * [read-only] Get a generated number.
-     * @protected
-     * @property value
-     * @type Number
-     */  
-    GeneratorBase.prototype.__defineGetter__("value", function () { 
-        return this._value;
-    });
 
-    /**
-     * Use setValue() instead?
-     * @protected
-     */
-    GeneratorBase.prototype.__defineSetter__("value", function (val) { 
-        this._value = val;
-    }); 
+    Object.defineProperty(GeneratorBase.prototype, "value", {
+        /**
+         * [read-only] Get a generated number.
+         * @protected
+         * @property value
+         * @type Number
+         */
+        get: function () {
+            return this._value;
+        },
+        /**
+         * Use setValue() instead?
+         * @protected
+         */
+        set: function (val) {
+            this._value = val;
+        }
+    });      
 
     return GeneratorBase;
 
@@ -1510,12 +1521,14 @@ BO.generators.Oscillator = (function () {
      * The service interval in milliseconds. Default is 33ms.
      * @property serviceInterval
      * @type Number
-     */ 
-    Oscillator.prototype.__defineSetter__("serviceInterval", function (interval) {
-        this._timer.delay = interval;
-    });
-    Oscillator.prototype.__defineGetter__("serviceInterval", function () {
-        return this._timer.delay;
+     */
+    Object.defineProperty(Oscillator.prototype, "serviceInterval", {
+        get: function () {
+            return this._timer.delay;
+        },
+        set: function (interval) {
+            this._timer.delay = interval;
+        }
     });
 
     /**
@@ -3188,7 +3201,11 @@ BO.io.CompassHMC6352 = (function () {
      * @property heading
      * @type Number
      */      
-    CompassHMC6352.prototype.__defineGetter__("heading", function () {return this._heading; });
+    Object.defineProperty(CompassHMC6352.prototype, "heading", {
+        get: function () {
+            return this._heading;
+        }
+    });    
     
     /**
      * @private
@@ -3432,31 +3449,49 @@ BO.io.Button = (function () {
         
         this._repeatCount++;
     };
-    
-    /**
-     * The debounce time interval in milliseconds.
-     * @property debounceInterval
-     * @type Number
-     */ 
-    Button.prototype.__defineGetter__("debounceInterval", function () { return this._debounceInterval; });
-    Button.prototype.__defineSetter__("debounceInterval", function (interval) { this._debounceInterval = interval; });
-    
-    /**
-     * The delay time (in milliseconds) the button must be held before a
-     * sustained press event is fired.
-     * @property sustainedPressInterval
-     * @type Number
-     */ 
-    Button.prototype.__defineGetter__("sustainedPressInterval", function () { return this._sustainedPressInterval; });
-    Button.prototype.__defineSetter__("sustainedPressInterval", function (intervalTime) { this._sustainedPressInterval = intervalTime; });
 
-    /**
-     * [read-only] The pin number of the pin the button is attached to.
-     * @property pinNumber
-     * @type Number
-     */
-    Button.prototype.__defineGetter__("pinNumber", function () { return this._pin.number; });    
+    Object.defineProperties(Button.prototype, {
+        /**
+         * The debounce time interval in milliseconds.
+         * @property debounceInterval
+         * @type Number
+         */
+        debounceInterval: {
+            get: function () {
+                return this._debounceInterval;
+            },
+            set: function (interval) {
+                this._debounceInterval = interval;
+            }
+        },
+        
+        /**
+         * The delay time (in milliseconds) the button must be held before a
+         * sustained press event is fired.
+         * @property sustainedPressInterval
+         * @type Number
+         */
+        sustainedPressInterval: {
+            get: function () {
+                return this._sustainedPressInterval;
+            },
+            set: function (intervalTime) {
+                this._sustainedPressInterval = intervalTime;
+            }
+        },
 
+        /**
+         * [read-only] The pin number of the pin the button is attached to.
+         * @property pinNumber
+         * @type Number
+         */
+        pinNumber: {
+            get: function () {
+                return this._pin.number;
+            }
+        }
+    });
+      
     /**
      * @property Button.PULL_DOWN
      * @static
@@ -3602,44 +3637,66 @@ BO.io.Potentiometer = (function () {
 
     Potentiometer.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
     Potentiometer.prototype.constructor = Potentiometer;
-    
-    /**
-     * [read-only] The current value of the potentiometer.
-     * @property value
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("value", function () { return this._pin.value; });
 
-    /**
-     * [read-only] Get the (pre-filtered) average value of the potentiometer.
-     * @property average
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("average", function () { return this._pin.average; });
+    Object.defineProperties(Potentiometer.prototype, {
+        /**
+         * [read-only] The current value of the potentiometer.
+         * @property value
+         * @type Number
+         */
+        value: {
+            get: function () {
+                return this._pin.value;
+            }
+        },
 
-    /**
-     * [read-only] Get the value of the potentiometer before filters are
-     * applied.
-     * @property preFilterValue
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("preFilterValue", function () { return this._pin.preFilterValue; });
+        /**
+         * [read-only] Get the (pre-filtered) average value of the potentiometer.
+         * @property average
+         * @type Number
+         */
+        average: {
+            get: function () {
+                return this._pin.average;
+            }
+        },
 
-    /**
-     * [read-only] Get the (pre-filtered) minimum value read by the
-     * potentiometer.
-     * @property minimum
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("minimum", function () { return this._pin.minimum; });
+        /**
+         * [read-only] Get the value of the potentiometer before filters are
+         * applied.
+         * @property preFilterValue
+         * @type Number
+         */
+        preFilterValue: {
+            get: function () {
+                return this._pin.preFilterValue;
+            }
+        },
 
-    /**
-     * [read-only] Get the (pre-filtered) maximum value read by the
-     * potentiometer.
-     * @property maximum
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("maximum", function () { return this._pin.maximum; });
+        /**
+         * [read-only] Get the (pre-filtered) minimum value read by the
+         * potentiometer.
+         * @property minimum
+         * @type Number
+         */
+        minimum: {
+            get: function () {
+                return this._pin.minimum;
+            }
+        },
+
+        /**
+         * [read-only] Get the (pre-filtered) maximum value read by the
+         * potentiometer.
+         * @property maximum
+         * @type Number
+         */
+        maximum: {
+            get: function () {
+                return this._pin.maximum;
+            }
+        }
+    });
 
     /**
      * Resets the minimum, maximum, and average values.
@@ -3814,75 +3871,101 @@ BO.io.AnalogAccelerometer = (function () {
 
     // Implement Acceleromter interface:
 
-    /**
-     * [read-only] The current range setting of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property dynamicRange
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
+    Object.defineProperties(AnalogAccelerometer.prototype, {
+        // Properties that apply to any accelereomter
 
-    /**
-     * [read-only] The x axis of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property x
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("x", function () { return this._x; });
+        /**
+         * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
+         * @property dynamicRange
+         * @type Number
+         */
+        dynamicRange: {
+            get: function () {
+                return this._dynamicRange;
+            }
+        },
 
-    /**
-     * [read-only] The y axis of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property y
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("y", function () { return this._y; });
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x;
+            }
+        },
 
-    /**
-     * [read-only] The z axis of the accelerometer in units 
-     * of gravity (9.8 m/sec2).
-     * @property z
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("z", function () { return this._z; });
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y;
+            }
+        },
 
-    /**
-     * [read-only] The pitch value in degrees.
-     * @property pitch
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("pitch", function () { 
-        // -180 to 180
-        //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z;
+            }
+        },
+
+        /**
+         * [read-only] The pitch value in degrees 
+         * @property pitch
+         * @type Number
+         */
+        pitch: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+            }
+        },
+
+        /**
+         * [read-only] The roll value in degrees 
+         * @property roll
+         * @type Number
+         */
+        roll: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+            }
+        },
+
+        // Properties specific to analog accelerometers:
+
+        xPin: {
+            get: function () {
+                return this._xPin;
+            }
+        },
+
+        yPin: {
+            get: function () {
+                return this._yPin;
+            }
+        },
+
+        zPin: {
+            get: function () {
+                return this._zPin;
+            }
+        }
     });
-    
-    /**
-     * [read-only] The roll value in degrees.
-     * @property roll
-     * @type Number
-     */ 
-    AnalogAccelerometer.prototype.__defineGetter__("roll", function () { 
-        // -180 to 180
-        //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
-    }); 
-
-    // Methods specific to this Accelerometer type:
-
-    AnalogAccelerometer.prototype.__defineGetter__("xPin", function () { 
-        return this._xPin;
-    });
-
-    AnalogAccelerometer.prototype.__defineGetter__("yPin", function () { 
-        return this._yPin;
-    }); 
-    
-    AnalogAccelerometer.prototype.__defineGetter__("zPin", function () { 
-        return this._zPin;
-    });         
     
     /**
      * Scale the range for the specified axis (from 0 to 1) to (minimum to 
@@ -4093,112 +4176,172 @@ BO.io.AccelerometerADXL345 = (function () {
 
     // Implement Acceleromter interface:
 
-    /**
-     * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
-     * @property dynamicRange
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
+    Object.defineProperties(AccelerometerADXL345.prototype, {
+        // Properties that apply to any accelereomter
 
-    /**
-     * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
-     * @property x
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("x", function () { return this._x; });
+        /**
+         * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
+         * @property dynamicRange
+         * @type Number
+         */
+        dynamicRange: {
+            get: function () {
+                return this._dynamicRange;
+            }
+        },
 
-    /**
-     * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
-     * @property y
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("y", function () { return this._y; });
-    
-    /**
-     * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
-     * @property z
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("z", function () { return this._z; });
-    
-    /**
-     * [read-only] The pitch value in degrees 
-     * @property pitch
-     * @type Number
-     */ 
-    AccelerometerADXL345.prototype.__defineGetter__("pitch", function () { 
-        // -180 to 180
-        //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x;
+            }
+        },
+
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y;
+            }
+        },
+
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z;
+            }
+        },
+
+        /**
+         * [read-only] The pitch value in degrees 
+         * @property pitch
+         * @type Number
+         */
+        pitch: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+            }
+        },
+
+        /**
+         * [read-only] The roll value in degrees 
+         * @property roll
+         * @type Number
+         */
+        roll: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+            }
+        },
+
+        // Properties specific to this I2C Accelerometers:         
+
+        /**
+         * [read-only] The raw value of the x axis
+         * @property rawX
+         * @type Number
+         */
+        rawX: {
+            get: function () {
+                return this._rawX;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the y axis
+         * @property rawY
+         * @type Number
+         */
+        rawY: {
+            get: function () {
+                return this._rawY;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the z axis
+         * @property rawZ
+         * @type Number
+         */
+        rawZ: {
+            get: function () {
+                return this._rawZ;
+            }
+        },
+
+        /**
+         * [read-only] The state of continuous read mode. True if continuous read mode
+         * is enabled, false if it is disabled.
+         * @property isRunning
+         * @type Boolean
+         */
+        isRunning: {
+            get: function () {
+                return this._isReading;
+            }
+        },
+
+        // Properties specific to this Accelerometer type:         
+
+        /**
+         * The sensitivity value for the x axis (default value = 0.0390625).
+         * @property sensitivityX
+         * @type Number
+         */
+        sensitivityX: {
+            get: function () {
+                return this._sensitivity.x;
+            },
+            set: function (val) {
+                this._sensitivity.x = val;
+            }
+        },
+
+        /**
+         * The sensitivity value for the y axis (default value = 0.0390625).
+         * @property sensitivityY
+         * @type Number
+         */
+        sensitivityY: {
+            get: function () {
+                
+            },
+            set: function (val) {
+                this._sensitivity.y = val;
+            }
+        },
+
+        /**
+         * The sensitivity value for the z axis (default value = 0.0390625).
+         * @property sensitivityZ
+         * @type Number
+         */
+        sensitivityZ: {
+            get: function () {
+                
+            },
+            set: function (val) {
+                this._sensitivity.z = val;
+            }
+        }
     });
-    
-    /**
-     * [read-only] The roll value in degrees 
-     * @property roll
-     * @type Number
-     */ 
-    AccelerometerADXL345.prototype.__defineGetter__("roll", function () { 
-        // -180 to 180
-        //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
-    });
-    
-    // Methods specific to this Accelerometer type:     
-
-    /**
-     * The raw value of the x axis
-     * @property rawX
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("rawX", function () { return this._rawX; });
-
-    /**
-     * The raw value of the y axis
-     * @property rawY
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("rawY", function () { return this._rawY; });
-    
-    /**
-     * The raw value of the z axis
-     * @property rawZ
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });
-
-    /**
-     * [read-only] The state of continuous read mode. True if continuous read mode
-     * is enabled, false if it is disabled.
-     * @property isRunning
-     * @type Boolean
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("isRunning", function () { return this._isReading; });   
-    
-    /**
-     * The sensitivity value for the x axis (default value = 0.0390625).
-     * @property sensitivityX
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("sensitivityX", function () { return this._sensitivity.x; });
-    AccelerometerADXL345.prototype.__defineSetter__("sensitivityX", function (val) { this._sensitivity.x = val; });
-
-    /**
-     * The sensitivity value for the y axis (default value = 0.0390625).
-     * @property sensitivityY
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("sensitivityY", function () { return this._sensitivity.y; });
-    AccelerometerADXL345.prototype.__defineSetter__("sensitivityY", function (val) { this._sensitivity.y = val; });
-    
-    /**
-     * The sensitivity value for the z axis (default value = 0.0390625).
-     * @property sensitivityZ
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("sensitivityZ", function () { return this._sensitivity.z; });
-    AccelerometerADXL345.prototype.__defineSetter__("sensitivityZ", function (val) { this._sensitivity.z = val; });          
 
     /**
      * @private
@@ -4558,61 +4701,86 @@ BO.io.GyroITG3200 = (function () {
     GyroITG3200.prototype = JSUTILS.inherit(I2CBase.prototype);
     GyroITG3200.prototype.constructor = GyroITG3200;
 
-    /**
-     * [read-only] The state of continuous read mode. True if continuous read mode
-     * is enabled, false if it is disabled.
-     * @property isRunning
-     * @type Boolean
-     */      
-    GyroITG3200.prototype.__defineGetter__("isRunning", function () { return this._isReading; });
 
-    /**
-     * [read-only] The x axis output value in degrees.
-     * @property x
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("x", function () { 
-        return this._x / 14.375 * this._polarities.x * this._gains.x + this._offsets.x; 
-    });
+    Object.defineProperties(GyroITG3200.prototype, {
+        /**
+         * [read-only] The x axis output value in degrees.
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x / 14.375 * this._polarities.x * this._gains.x + this._offsets.x;
+            }
+        },
 
-    /**
-     * [read-only] The y axis output value in degrees.
-     * @property y
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("y", function () { 
-        return this._y / 14.375 * this._polarities.y * this._gains.y + this._offsets.y;
-    });
-    
-    /**
-     * [read-only] The z axis output value in degrees.
-     * @property z
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("z", function () { 
-        return this._z / 14.375 * this._polarities.z * this._gains.z + this._offsets.z;
-    }); 
+        /**
+         * [read-only] The y axis output value in degrees.
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y / 14.375 * this._polarities.y * this._gains.y + this._offsets.y;
+            }
+        },
 
-    /**
-     * The raw x axis output value from the sensor.
-     * @property rawX
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("rawX", function () { return this._rawX; });
+        /**
+         * [read-only] The z axis output value in degrees.
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z / 14.375 * this._polarities.z * this._gains.z + this._offsets.z;
+            }
+        },
 
-    /**
-     * The raw y axis output value from the sensor.
-     * @property rawY
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("rawY", function () { return this._rawY; });
-    
-    /**
-     * The raw z axis output value from the sensor.
-     * @property rawZ
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });      
+        /**
+         * [read-only] The raw value of the x axis
+         * @property rawX
+         * @type Number
+         */
+        rawX: {
+            get: function () {
+                return this._rawX;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the y axis
+         * @property rawY
+         * @type Number
+         */
+        rawY: {
+            get: function () {
+                return this._rawY;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the z axis
+         * @property rawZ
+         * @type Number
+         */
+        rawZ: {
+            get: function () {
+                return this._rawZ;
+            }
+        },
+
+        /**
+         * [read-only] The state of continuous read mode. True if continuous read mode
+         * is enabled, false if it is disabled.
+         * @property isRunning
+         * @type Boolean
+         */
+        isRunning: {
+            get: function () {
+                return this._isReading;
+            }
+        }
+    });   
     
     /**
      * Set the polarity of the x, y, and z output values.
@@ -4944,35 +5112,51 @@ BO.io.MagnetometerHMC5883 = (function () {
     MagnetometerHMC5883.prototype = JSUTILS.inherit(I2CBase.prototype);
     MagnetometerHMC5883.prototype.constructor = MagnetometerHMC5883;
 
-    /**
-     * [read-only] The heading in degrees.
-     * @property heading
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("heading", function () {
-        return this.getHeading(this._x, this._y);
-    });
+    Object.defineProperties(MagnetometerHMC5883.prototype, {
+        /**
+         * [read-only] The heading in degrees.
+         * @property heading
+         * @type Number
+         */
+        heading: {
+            get: function () {
+                return this.getHeading(this._x, this._y);
+            }
+        },
 
-    /**
-     * [read-only] The x-axis measurement
-     * @property x
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("x", function () { return this._x; });
+        /**
+         * [read-only] The x-axis measurement
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x;
+            }
+        },
 
-    /**
-     * [read-only] The y-axis measurement
-     * @property y
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("y", function () { return this._y; });
-    
-    /**
-     * [read-only] The z-axis measurement
-     * @property z
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("z", function () { return this._z; });    
+        /**
+         * [read-only] The y-axis measurement
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y;
+            }
+        },
+
+        /**
+         * [read-only] The z-axis measurement
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z;
+            }
+        }
+    });  
     
     /**
      * @private
@@ -6030,9 +6214,15 @@ BO.io.SoftPotEvent = (function () {
      * The value of the softpot.
      * @property value
      * @type Number
-     */ 
-    SoftPotEvent.prototype.__defineGetter__("value", function () { return this._touchPoint; });  
-    SoftPotEvent.prototype.__defineSetter__("value", function (val) { this._touchPoint = val; });
+     */
+    Object.defineProperty(SoftPotEvent.prototype, "value", {
+        get: function () {
+            return this._touchPoint;
+        },
+        set: function (val) {
+            this._touchPoint = val;
+        }
+    });
 
     return SoftPotEvent;
 
@@ -6290,60 +6480,93 @@ BO.io.SoftPot = (function () {
         if (this._debugMode) {
             console.log(str); 
         }
-    };  
-    
-    /**
-     * The current value.
-     * @property value
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("value", function () { return this._touchPoint; });
-    
-    /**
-     * The current distance from the press point.
-     * @property distanceFromPressed
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("distanceFromPressed", function () { return this._distanceFromPressed; });
-    
-    /**
-     * The minimum distance required to trigger a flick event. Change this
-     * value to fine tune the flick gesture.
-     * @property minFlickMovement
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("minFlickMovement", function () { return this._minFlickMovement; });  
-    SoftPot.prototype.__defineSetter__("minFlickMovement", function (min) { this._minFlickMovement = min; });        
-    
-    /**
-     * The minimum distance required to trigger a drag event. Change this
-     * value to fine tune the drag response.
-     * @property minDragMovement
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("minDragMovement", function () { return this._minDragMovement; });    
-    SoftPot.prototype.__defineSetter__("minDragMovement", function (min) { this._minDragMovement = min; });
+    };
 
-    /**
-     * The maximum time (in milliseconds) between a press and release in
-     * order to trigger a TAP event.
-     * @property tapTimeout
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("tapTimeout", function () { return this._tapTimeout; });  
-    SoftPot.prototype.__defineSetter__("tapTimeout", function (t) { this._tapTimeout = t; });
+    Object.defineProperties(SoftPot.prototype, {
+        /**
+         * The current value.
+         * @property value
+         * @type Number
+         */
+        value: {
+            get: function () {
+                return this._touchPoint;
+            }
+        },
+        
+        /**
+         * The current distance from the press point.
+         * @property distanceFromPressed
+         * @type Number
+         */
+        distanceFromPressed: {
+            get: function () {
+                return this._distanceFromPressed;
+            }
+        },
+        
+        /**
+         * The minimum distance required to trigger a flick event. Change this
+         * value to fine tune the flick gesture.
+         * @property minFlickMovement
+         * @type Number
+         */
+        minFlickMovement: {
+            get: function () {
+                return this._minFlickMovement;
+            },
+            set: function (min) {
+                this._minFlickMovement = min;
+            }
+        },     
+        
+        /**
+         * The minimum distance required to trigger a drag event. Change this
+         * value to fine tune the drag response.
+         * @property minDragMovement
+         * @type Number
+         */
+        minDragMovement: {
+            get: function () {
+                return this._minDragMovement;
+            },
+            set: function (min) {
+                this._minDragMovement = min;
+            }
+        },
 
-    /**
-     * The minimum value required to set the Release state. This number should
-     * be as close to zero as possible. Increase this value if you are noticing
-     * fluttering between the Pressed and Released states. Default value = 0.01;
-     * @property minValue
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("minValue", function () { return this._minValue; });  
-    SoftPot.prototype.__defineSetter__("minValue", function (val) { this._minValue = val; });    
+        /**
+         * The maximum time (in milliseconds) between a press and release in
+         * order to trigger a TAP event.
+         * @property tapTimeout
+         * @type Number
+         */
+        tapTimeout: {
+            get: function () {
+                return this._tapTimeout;
+            },
+            set: function (t) {
+                this._tapTimeout = t;
+            }
+        },
 
-
+        /**
+         * The minimum value required to set the Release state. This number should
+         * be as close to zero as possible. Increase this value if you are noticing
+         * fluttering between the Pressed and Released states. Default value = 0.01;
+         * @property minValue
+         * @type Number
+         */
+        minValue: {
+            get: function () {
+                return this._minValue;
+            },
+            set: function (val) {
+                this._minValue = val;
+            }
+        }
+    });
+    
     // Document events
 
     /**

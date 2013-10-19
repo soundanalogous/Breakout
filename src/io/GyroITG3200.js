@@ -79,61 +79,86 @@ BO.io.GyroITG3200 = (function () {
     GyroITG3200.prototype = JSUTILS.inherit(I2CBase.prototype);
     GyroITG3200.prototype.constructor = GyroITG3200;
 
-    /**
-     * [read-only] The state of continuous read mode. True if continuous read mode
-     * is enabled, false if it is disabled.
-     * @property isRunning
-     * @type Boolean
-     */      
-    GyroITG3200.prototype.__defineGetter__("isRunning", function () { return this._isReading; });
 
-    /**
-     * [read-only] The x axis output value in degrees.
-     * @property x
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("x", function () { 
-        return this._x / 14.375 * this._polarities.x * this._gains.x + this._offsets.x; 
-    });
+    Object.defineProperties(GyroITG3200.prototype, {
+        /**
+         * [read-only] The x axis output value in degrees.
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x / 14.375 * this._polarities.x * this._gains.x + this._offsets.x;
+            }
+        },
 
-    /**
-     * [read-only] The y axis output value in degrees.
-     * @property y
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("y", function () { 
-        return this._y / 14.375 * this._polarities.y * this._gains.y + this._offsets.y;
-    });
-    
-    /**
-     * [read-only] The z axis output value in degrees.
-     * @property z
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("z", function () { 
-        return this._z / 14.375 * this._polarities.z * this._gains.z + this._offsets.z;
-    }); 
+        /**
+         * [read-only] The y axis output value in degrees.
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y / 14.375 * this._polarities.y * this._gains.y + this._offsets.y;
+            }
+        },
 
-    /**
-     * The raw x axis output value from the sensor.
-     * @property rawX
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("rawX", function () { return this._rawX; });
+        /**
+         * [read-only] The z axis output value in degrees.
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z / 14.375 * this._polarities.z * this._gains.z + this._offsets.z;
+            }
+        },
 
-    /**
-     * The raw y axis output value from the sensor.
-     * @property rawY
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("rawY", function () { return this._rawY; });
-    
-    /**
-     * The raw z axis output value from the sensor.
-     * @property rawZ
-     * @type Number
-     */      
-    GyroITG3200.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });      
+        /**
+         * [read-only] The raw value of the x axis
+         * @property rawX
+         * @type Number
+         */
+        rawX: {
+            get: function () {
+                return this._rawX;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the y axis
+         * @property rawY
+         * @type Number
+         */
+        rawY: {
+            get: function () {
+                return this._rawY;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the z axis
+         * @property rawZ
+         * @type Number
+         */
+        rawZ: {
+            get: function () {
+                return this._rawZ;
+            }
+        },
+
+        /**
+         * [read-only] The state of continuous read mode. True if continuous read mode
+         * is enabled, false if it is disabled.
+         * @property isRunning
+         * @type Boolean
+         */
+        isRunning: {
+            get: function () {
+                return this._isReading;
+            }
+        }
+    });   
     
     /**
      * Set the polarity of the x, y, and z output values.

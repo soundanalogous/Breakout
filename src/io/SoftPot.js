@@ -255,60 +255,93 @@ BO.io.SoftPot = (function () {
         if (this._debugMode) {
             console.log(str); 
         }
-    };  
-    
-    /**
-     * The current value.
-     * @property value
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("value", function () { return this._touchPoint; });
-    
-    /**
-     * The current distance from the press point.
-     * @property distanceFromPressed
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("distanceFromPressed", function () { return this._distanceFromPressed; });
-    
-    /**
-     * The minimum distance required to trigger a flick event. Change this
-     * value to fine tune the flick gesture.
-     * @property minFlickMovement
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("minFlickMovement", function () { return this._minFlickMovement; });  
-    SoftPot.prototype.__defineSetter__("minFlickMovement", function (min) { this._minFlickMovement = min; });        
-    
-    /**
-     * The minimum distance required to trigger a drag event. Change this
-     * value to fine tune the drag response.
-     * @property minDragMovement
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("minDragMovement", function () { return this._minDragMovement; });    
-    SoftPot.prototype.__defineSetter__("minDragMovement", function (min) { this._minDragMovement = min; });
+    };
 
-    /**
-     * The maximum time (in milliseconds) between a press and release in
-     * order to trigger a TAP event.
-     * @property tapTimeout
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("tapTimeout", function () { return this._tapTimeout; });  
-    SoftPot.prototype.__defineSetter__("tapTimeout", function (t) { this._tapTimeout = t; });
+    Object.defineProperties(SoftPot.prototype, {
+        /**
+         * The current value.
+         * @property value
+         * @type Number
+         */
+        value: {
+            get: function () {
+                return this._touchPoint;
+            }
+        },
+        
+        /**
+         * The current distance from the press point.
+         * @property distanceFromPressed
+         * @type Number
+         */
+        distanceFromPressed: {
+            get: function () {
+                return this._distanceFromPressed;
+            }
+        },
+        
+        /**
+         * The minimum distance required to trigger a flick event. Change this
+         * value to fine tune the flick gesture.
+         * @property minFlickMovement
+         * @type Number
+         */
+        minFlickMovement: {
+            get: function () {
+                return this._minFlickMovement;
+            },
+            set: function (min) {
+                this._minFlickMovement = min;
+            }
+        },     
+        
+        /**
+         * The minimum distance required to trigger a drag event. Change this
+         * value to fine tune the drag response.
+         * @property minDragMovement
+         * @type Number
+         */
+        minDragMovement: {
+            get: function () {
+                return this._minDragMovement;
+            },
+            set: function (min) {
+                this._minDragMovement = min;
+            }
+        },
 
-    /**
-     * The minimum value required to set the Release state. This number should
-     * be as close to zero as possible. Increase this value if you are noticing
-     * fluttering between the Pressed and Released states. Default value = 0.01;
-     * @property minValue
-     * @type Number
-     */ 
-    SoftPot.prototype.__defineGetter__("minValue", function () { return this._minValue; });  
-    SoftPot.prototype.__defineSetter__("minValue", function (val) { this._minValue = val; });    
+        /**
+         * The maximum time (in milliseconds) between a press and release in
+         * order to trigger a TAP event.
+         * @property tapTimeout
+         * @type Number
+         */
+        tapTimeout: {
+            get: function () {
+                return this._tapTimeout;
+            },
+            set: function (t) {
+                this._tapTimeout = t;
+            }
+        },
 
-
+        /**
+         * The minimum value required to set the Release state. This number should
+         * be as close to zero as possible. Increase this value if you are noticing
+         * fluttering between the Pressed and Released states. Default value = 0.01;
+         * @property minValue
+         * @type Number
+         */
+        minValue: {
+            get: function () {
+                return this._minValue;
+            },
+            set: function (val) {
+                this._minValue = val;
+            }
+        }
+    });
+    
     // Document events
 
     /**

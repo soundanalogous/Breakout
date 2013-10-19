@@ -41,60 +41,69 @@ JSUTILS.Timer = (function () {
     Timer.prototype = JSUTILS.inherit(EventDispatcher.prototype);
     Timer.prototype.constructor = Timer;
 
+    Object.defineProperties(Timer.prototype, {
+        /**
+         * The delay interval in milliseconds.
+         * 
+         * @property delay
+         * @type Number
+         */
+        delay: {
+            get: function () {
+                return this._delay;
+            },
+            set: function (val) {
+                this._delay = val;
+                if (this._isRunning) {
+                    this.stop();
+                    this.start();
+                }                
+            }
+        },
 
-    /**
-     * The delay interval in milliseconds.
-     * 
-     * @property delay
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("delay", function () {
-        return this._delay;
-    });
-    Timer.prototype.__defineSetter__("delay", function (val) { 
-        this._delay = val;
-        if (this._isRunning) {
-            this.stop();
-            this.start();
+        /**
+         * The repeat count in milliseconds.
+         * 
+         * @property repeatCount
+         * @type Number
+         */
+        repeatCount: {
+            get: function () {
+                return this._repeatCount;
+            },
+            set: function (val) {
+                this._repeatCount = val;
+                if (this._isRunning) {
+                    this.stop();
+                    this.start();
+                }
+            }
+        },
+
+        /**
+         * [read-only] Returns true if the timer is running.
+         * 
+         * @property running
+         * @type Number
+         */
+        running: {
+            get: function () {
+                return this._isRunning;
+            }
+        },
+
+        /**
+         * [read-only] Returns the current count (number of ticks since timer
+         * started).
+         * 
+         * @property currentCount
+         * @type Number
+         */
+        currentCount: {
+            get: function () {
+                return this._count;
+            }
         }
-    }); 
-
-    /**
-     * The repeat count in milliseconds.
-     * 
-     * @property repeatCount
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("repeatCount", function () {
-        return this._repeatCount;
-    });
-    Timer.prototype.__defineSetter__("repeatCount", function (val) { 
-        this._repeatCount = val;
-        if (this._isRunning) {
-            this.stop();
-            this.start();
-        }
-    });
-
-    /**
-     * [read-only] Returns true if the timer is running.
-     * 
-     * @property running
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("running", function () {
-        return this._isRunning;
-    });
-
-    /**
-     * [read-only] Returns the current count (number of ticks since timer
-     * started).
-     * 
-     * @property currentCount
-     * @type Number
-     */ 
-    Timer.prototype.__defineGetter__("currentCount", function () {
-        return this._count;
     });
 
     /**

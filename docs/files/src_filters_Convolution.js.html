@@ -227,17 +227,19 @@ BO.filters.Convolution = (function () {
      * @property coef
      * @type Number[]
      */
-    Convolution.prototype.__defineGetter__(&quot;coef&quot;, function () {
-        return this._coef;
-    });
-    Convolution.prototype.__defineSetter__(&quot;coef&quot;, function (kernel) {
-        this._coef = kernel;
-        this._buffer = new Array(this._coef.length);
-        var len = this._buffer.length;
-        for (var i = 0; i &lt; len; i++) {
-            this._buffer[i] = 0;
+    Object.defineProperty(Convolution.prototype, &quot;coef&quot;, {
+        get: function () {
+            return this._coef;
+        },
+        set: function (kernel) {
+            this._coef = kernel;
+            this._buffer = new Array(this._coef.length);
+            var len = this._buffer.length;
+            for (var i = 0; i &lt; len; i++) {
+                this._buffer[i] = 0;
+            }
         }
-    });
+    });    
 
     /**
      * Override FilterBase.processSample

@@ -54,44 +54,66 @@ BO.io.Potentiometer = (function () {
 
     Potentiometer.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
     Potentiometer.prototype.constructor = Potentiometer;
-    
-    /**
-     * [read-only] The current value of the potentiometer.
-     * @property value
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("value", function () { return this._pin.value; });
 
-    /**
-     * [read-only] Get the (pre-filtered) average value of the potentiometer.
-     * @property average
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("average", function () { return this._pin.average; });
+    Object.defineProperties(Potentiometer.prototype, {
+        /**
+         * [read-only] The current value of the potentiometer.
+         * @property value
+         * @type Number
+         */
+        value: {
+            get: function () {
+                return this._pin.value;
+            }
+        },
 
-    /**
-     * [read-only] Get the value of the potentiometer before filters are
-     * applied.
-     * @property preFilterValue
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("preFilterValue", function () { return this._pin.preFilterValue; });
+        /**
+         * [read-only] Get the (pre-filtered) average value of the potentiometer.
+         * @property average
+         * @type Number
+         */
+        average: {
+            get: function () {
+                return this._pin.average;
+            }
+        },
 
-    /**
-     * [read-only] Get the (pre-filtered) minimum value read by the
-     * potentiometer.
-     * @property minimum
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("minimum", function () { return this._pin.minimum; });
+        /**
+         * [read-only] Get the value of the potentiometer before filters are
+         * applied.
+         * @property preFilterValue
+         * @type Number
+         */
+        preFilterValue: {
+            get: function () {
+                return this._pin.preFilterValue;
+            }
+        },
 
-    /**
-     * [read-only] Get the (pre-filtered) maximum value read by the
-     * potentiometer.
-     * @property maximum
-     * @type Number
-     */ 
-    Potentiometer.prototype.__defineGetter__("maximum", function () { return this._pin.maximum; });
+        /**
+         * [read-only] Get the (pre-filtered) minimum value read by the
+         * potentiometer.
+         * @property minimum
+         * @type Number
+         */
+        minimum: {
+            get: function () {
+                return this._pin.minimum;
+            }
+        },
+
+        /**
+         * [read-only] Get the (pre-filtered) maximum value read by the
+         * potentiometer.
+         * @property maximum
+         * @type Number
+         */
+        maximum: {
+            get: function () {
+                return this._pin.maximum;
+            }
+        }
+    });
 
     /**
      * Resets the minimum, maximum, and average values.

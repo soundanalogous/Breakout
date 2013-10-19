@@ -75,35 +75,51 @@ BO.io.MagnetometerHMC5883 = (function () {
     MagnetometerHMC5883.prototype = JSUTILS.inherit(I2CBase.prototype);
     MagnetometerHMC5883.prototype.constructor = MagnetometerHMC5883;
 
-    /**
-     * [read-only] The heading in degrees.
-     * @property heading
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("heading", function () {
-        return this.getHeading(this._x, this._y);
-    });
+    Object.defineProperties(MagnetometerHMC5883.prototype, {
+        /**
+         * [read-only] The heading in degrees.
+         * @property heading
+         * @type Number
+         */
+        heading: {
+            get: function () {
+                return this.getHeading(this._x, this._y);
+            }
+        },
 
-    /**
-     * [read-only] The x-axis measurement
-     * @property x
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("x", function () { return this._x; });
+        /**
+         * [read-only] The x-axis measurement
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x;
+            }
+        },
 
-    /**
-     * [read-only] The y-axis measurement
-     * @property y
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("y", function () { return this._y; });
-    
-    /**
-     * [read-only] The z-axis measurement
-     * @property z
-     * @type Number
-     */      
-    MagnetometerHMC5883.prototype.__defineGetter__("z", function () { return this._z; });    
+        /**
+         * [read-only] The y-axis measurement
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y;
+            }
+        },
+
+        /**
+         * [read-only] The z-axis measurement
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z;
+            }
+        }
+    });  
     
     /**
      * @private

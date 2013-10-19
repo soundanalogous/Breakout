@@ -323,31 +323,49 @@ BO.io.Button = (function () {
         
         this._repeatCount++;
     };
-    
-    /**
-     * The debounce time interval in milliseconds.
-     * @property debounceInterval
-     * @type Number
-     */ 
-    Button.prototype.__defineGetter__(&quot;debounceInterval&quot;, function () { return this._debounceInterval; });
-    Button.prototype.__defineSetter__(&quot;debounceInterval&quot;, function (interval) { this._debounceInterval = interval; });
-    
-    /**
-     * The delay time (in milliseconds) the button must be held before a
-     * sustained press event is fired.
-     * @property sustainedPressInterval
-     * @type Number
-     */ 
-    Button.prototype.__defineGetter__(&quot;sustainedPressInterval&quot;, function () { return this._sustainedPressInterval; });
-    Button.prototype.__defineSetter__(&quot;sustainedPressInterval&quot;, function (intervalTime) { this._sustainedPressInterval = intervalTime; });
 
-    /**
-     * [read-only] The pin number of the pin the button is attached to.
-     * @property pinNumber
-     * @type Number
-     */
-    Button.prototype.__defineGetter__(&quot;pinNumber&quot;, function () { return this._pin.number; });    
+    Object.defineProperties(Button.prototype, {
+        /**
+         * The debounce time interval in milliseconds.
+         * @property debounceInterval
+         * @type Number
+         */
+        debounceInterval: {
+            get: function () {
+                return this._debounceInterval;
+            },
+            set: function (interval) {
+                this._debounceInterval = interval;
+            }
+        },
+        
+        /**
+         * The delay time (in milliseconds) the button must be held before a
+         * sustained press event is fired.
+         * @property sustainedPressInterval
+         * @type Number
+         */
+        sustainedPressInterval: {
+            get: function () {
+                return this._sustainedPressInterval;
+            },
+            set: function (intervalTime) {
+                this._sustainedPressInterval = intervalTime;
+            }
+        },
 
+        /**
+         * [read-only] The pin number of the pin the button is attached to.
+         * @property pinNumber
+         * @type Number
+         */
+        pinNumber: {
+            get: function () {
+                return this._pin.number;
+            }
+        }
+    });
+      
     /**
      * @property Button.PULL_DOWN
      * @static

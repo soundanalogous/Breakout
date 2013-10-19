@@ -42,23 +42,25 @@ BO.generators.GeneratorBase = (function () {
     GeneratorBase.prototype = JSUTILS.inherit(EventDispatcher.prototype);
     GeneratorBase.prototype.constructor = GeneratorBase;
 
-    /**
-     * [read-only] Get a generated number.
-     * @protected
-     * @property value
-     * @type Number
-     */  
-    GeneratorBase.prototype.__defineGetter__("value", function () { 
-        return this._value;
-    });
 
-    /**
-     * Use setValue() instead?
-     * @protected
-     */
-    GeneratorBase.prototype.__defineSetter__("value", function (val) { 
-        this._value = val;
-    }); 
+    Object.defineProperty(GeneratorBase.prototype, "value", {
+        /**
+         * [read-only] Get a generated number.
+         * @protected
+         * @property value
+         * @type Number
+         */
+        get: function () {
+            return this._value;
+        },
+        /**
+         * Use setValue() instead?
+         * @protected
+         */
+        set: function (val) {
+            this._value = val;
+        }
+    });      
 
     return GeneratorBase;
 

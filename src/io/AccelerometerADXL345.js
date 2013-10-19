@@ -83,112 +83,172 @@ BO.io.AccelerometerADXL345 = (function () {
 
     // Implement Acceleromter interface:
 
-    /**
-     * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
-     * @property dynamicRange
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("dynamicRange", function () { return this._dynamicRange; });
+    Object.defineProperties(AccelerometerADXL345.prototype, {
+        // Properties that apply to any accelereomter
 
-    /**
-     * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
-     * @property x
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("x", function () { return this._x; });
+        /**
+         * [read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..
+         * @property dynamicRange
+         * @type Number
+         */
+        dynamicRange: {
+            get: function () {
+                return this._dynamicRange;
+            }
+        },
 
-    /**
-     * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
-     * @property y
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("y", function () { return this._y; });
-    
-    /**
-     * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
-     * @property z
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("z", function () { return this._z; });
-    
-    /**
-     * [read-only] The pitch value in degrees 
-     * @property pitch
-     * @type Number
-     */ 
-    AccelerometerADXL345.prototype.__defineGetter__("pitch", function () { 
-        // -180 to 180
-        //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.
+         * @property x
+         * @type Number
+         */
+        x: {
+            get: function () {
+                return this._x;
+            }
+        },
+
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.
+         * @property y
+         * @type Number
+         */
+        y: {
+            get: function () {
+                return this._y;
+            }
+        },
+
+        /**
+         * [read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.
+         * @property z
+         * @type Number
+         */
+        z: {
+            get: function () {
+                return this._z;
+            }
+        },
+
+        /**
+         * [read-only] The pitch value in degrees 
+         * @property pitch
+         * @type Number
+         */
+        pitch: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._x, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._x, Math.sqrt(this._y * this._y + this._z * this._z)) * RAD_TO_DEG;
+            }
+        },
+
+        /**
+         * [read-only] The roll value in degrees 
+         * @property roll
+         * @type Number
+         */
+        roll: {
+            get: function () {
+                // -180 to 180
+                //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
+                // -90 to 90
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+            }
+        },
+
+        // Properties specific to this I2C Accelerometers:         
+
+        /**
+         * [read-only] The raw value of the x axis
+         * @property rawX
+         * @type Number
+         */
+        rawX: {
+            get: function () {
+                return this._rawX;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the y axis
+         * @property rawY
+         * @type Number
+         */
+        rawY: {
+            get: function () {
+                return this._rawY;
+            }
+        },
+
+        /**
+         * [read-only] The raw value of the z axis
+         * @property rawZ
+         * @type Number
+         */
+        rawZ: {
+            get: function () {
+                return this._rawZ;
+            }
+        },
+
+        /**
+         * [read-only] The state of continuous read mode. True if continuous read mode
+         * is enabled, false if it is disabled.
+         * @property isRunning
+         * @type Boolean
+         */
+        isRunning: {
+            get: function () {
+                return this._isReading;
+            }
+        },
+
+        // Properties specific to this Accelerometer type:         
+
+        /**
+         * The sensitivity value for the x axis (default value = 0.0390625).
+         * @property sensitivityX
+         * @type Number
+         */
+        sensitivityX: {
+            get: function () {
+                return this._sensitivity.x;
+            },
+            set: function (val) {
+                this._sensitivity.x = val;
+            }
+        },
+
+        /**
+         * The sensitivity value for the y axis (default value = 0.0390625).
+         * @property sensitivityY
+         * @type Number
+         */
+        sensitivityY: {
+            get: function () {
+                
+            },
+            set: function (val) {
+                this._sensitivity.y = val;
+            }
+        },
+
+        /**
+         * The sensitivity value for the z axis (default value = 0.0390625).
+         * @property sensitivityZ
+         * @type Number
+         */
+        sensitivityZ: {
+            get: function () {
+                
+            },
+            set: function (val) {
+                this._sensitivity.z = val;
+            }
+        }
     });
-    
-    /**
-     * [read-only] The roll value in degrees 
-     * @property roll
-     * @type Number
-     */ 
-    AccelerometerADXL345.prototype.__defineGetter__("roll", function () { 
-        // -180 to 180
-        //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
-        // -90 to 90
-        return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
-    });
-    
-    // Methods specific to this Accelerometer type:     
-
-    /**
-     * The raw value of the x axis
-     * @property rawX
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("rawX", function () { return this._rawX; });
-
-    /**
-     * The raw value of the y axis
-     * @property rawY
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("rawY", function () { return this._rawY; });
-    
-    /**
-     * The raw value of the z axis
-     * @property rawZ
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("rawZ", function () { return this._rawZ; });
-
-    /**
-     * [read-only] The state of continuous read mode. True if continuous read mode
-     * is enabled, false if it is disabled.
-     * @property isRunning
-     * @type Boolean
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("isRunning", function () { return this._isReading; });   
-    
-    /**
-     * The sensitivity value for the x axis (default value = 0.0390625).
-     * @property sensitivityX
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("sensitivityX", function () { return this._sensitivity.x; });
-    AccelerometerADXL345.prototype.__defineSetter__("sensitivityX", function (val) { this._sensitivity.x = val; });
-
-    /**
-     * The sensitivity value for the y axis (default value = 0.0390625).
-     * @property sensitivityY
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("sensitivityY", function () { return this._sensitivity.y; });
-    AccelerometerADXL345.prototype.__defineSetter__("sensitivityY", function (val) { this._sensitivity.y = val; });
-    
-    /**
-     * The sensitivity value for the z axis (default value = 0.0390625).
-     * @property sensitivityZ
-     * @type Number
-     */      
-    AccelerometerADXL345.prototype.__defineGetter__("sensitivityZ", function () { return this._sensitivity.z; });
-    AccelerometerADXL345.prototype.__defineSetter__("sensitivityZ", function (val) { this._sensitivity.z = val; });          
 
     /**
      * @private
