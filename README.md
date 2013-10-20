@@ -56,7 +56,7 @@ See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/)
 
 The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-compatible) board and wire up some components:
 
-1. After downloading or cloning Breakout, navigate to `Breakout/firmware/AdvancedFirmata/` and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher).
+1. After downloading or cloning Breakout, navigate to `Breakout/firmware/AdvancedFirmata/` and open AdvancedFirmata.ino in the Arduino IDE (version 1.0 or higher is required, version 1.5.4 or higher is recommended).
 2. Compile *AdvancedFirmata* for your board and upload.
 3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
 
@@ -71,7 +71,7 @@ The next step is to run the Breakout Server application:
 
 You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of "localhost:8887/examples/" enter the IP address or hostname of the computer running Breakout Server (192.168.2.1:8887/examples/ or yourhostname.local:8887/examples/). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
 
-For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
+For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, enabling auto start mode, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
 
 As an alternative to the Breakout Server application, a node.js-based server is also included. See the [Using the node.js server](https://github.com/soundanalogous/Breakout/wiki/Using-the-node.js-server) for details.
 
@@ -85,10 +85,10 @@ You will need one of the following I/O boards:
 
 - An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonardo, Due, etc). 
 - [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy 3.0, Teensy++ 1.0 or 2.0
-- Many Arduino clones / variants should also work
-- See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards
+- Many Arduino clones / variants should also work.
+- See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards.
 
-*In order to use Breakout with an Arduino Leonardo, Arduino Due or Teensy 3.0 board, you need to update the Firmata library in your Arduino application. You can get the latest version of [Firmata here](https://github.com/firmata/arduino). Refer to the README for installation instructions. Note that the instructions are different for Arduino 1.0.x vs Arduino 1.5.x.*
+*In order to use Breakout with an Arduino Leonardo, Arduino Due or Teensy 3.0 board, you need to install [Arduino 1.5.4](http://arduino.cc/en/Main/Software) or higher.
 
 OS:
 
@@ -117,7 +117,8 @@ Contributing
 Contributions are welcome. If you have any ideas, suggestions for improvements, 
 examples to share, or anything else you'd like to contribute please get in touch.
 
-Submit pull requests (against the `dev` branch) for bug fixes and small changes. For any
+To contribute, fork Breakout and create a feature branch off the `dev` branch.
+Submit pull requests against the `dev` branch for bug fixes and small changes. For any
 larger changes, please first start a discussion by opening a new issue.
 
 See [Breakout/build/README.md](https://github.com/soundanalogous/Breakout/blob/master/build/README.md) for instructions on building Breakout. 
