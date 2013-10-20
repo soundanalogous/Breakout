@@ -382,12 +382,9 @@ BO.IOBoard = (function () {
         },
 
         /**
-         * Process incoming analog data. The value is mapped from 0 - 1023 to
-         * a floating point value between 0.0 - 1.0.
-         *
-         * TO DO: add a maxADCValue property to Pin or IOBoard to support
-         * ADC values > 1023. maxADCValue could be set during the 
-         * configuration routine if it's supported by Firmata in the future.
+         * Process incoming analog data. The value is mapped from
+         * 0 - pin.analogReadResolution to a floating point value between
+         * 0.0 - 1.0.
          *
          * @private
          * @method processAnalogMessage
@@ -406,7 +403,8 @@ BO.IOBoard = (function () {
                 return;
             }
 
-            analogPin.value = this.getValueFromTwo7bitBytes(bits0_6, bits7_13) / 1023;
+            // scale according to the analog read resolution set for the pin
+            analogPin.value = this.getValueFromTwo7bitBytes(bits0_6, bits7_13) / analogPin.analogReadResolution;
             if (analogPin.value != analogPin.lastValue) {
                 this.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
             }
@@ -758,7 +756,8 @@ BO.IOBoard = (function () {
         /**
          * Sends an analog value up to 14 bits on an analog pin number between
          * 0 and 15. The value passed to this method should be in the range of
-         * 0.0 to 1.0. It is multiplied by the maxPWMValue set for the pin.
+         * 0.0 to 1.0. It is multiplied by the analog write (PWM) resolution
+         * set for the pin.
          *
          * @param {Number} pin The analog pin number.
          * param {Number} value The value to send (0.0 to 1.0).
@@ -766,10 +765,10 @@ BO.IOBoard = (function () {
          * @method sendAnalogData
          */
         sendAnalogData: function (pin, value) {
-            var pwmMax = this.getDigitalPin(pin).maxPWMValue;
-            value *= pwmMax;
+            var pwmResolution = this.getDigitalPin(pin).analogWriteResolution;
+            value *= pwmResolution;
             value = (value < 0) ? 0: value;
-            value = (value > pwmMax) ? pwmMax : value;
+            value = (value > pwmResolution) ? pwmResolution : value;
 
             if (pin > 15 || value > Math.pow(2, 14)) {
                 this.sendExtendedAnalogData(pin, value);

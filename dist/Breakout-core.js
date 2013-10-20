@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.3.0 - 2013-10-19
+ * Breakout v0.3.0 - 2013-10-20
 
  * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
@@ -707,7 +707,8 @@ BO.Pin = (function () {
         this._capabilities = {};
         this._number = number;
         this._analogNumber = undefined;
-        this._maxPWMValue = 255;
+        this._analogWriteResolution = 255; // default
+        this._analogReadResolution = 1023; // default
         this._value = 0;
         this._lastValue = -1;
         this._preFilterValue = 0;
@@ -759,12 +760,21 @@ BO.Pin = (function () {
         },
 
         /**
-         * The maximum PWM value supported for this pin. This value should
+         * The analog write (PWM) resolution for this pin. This value should
          * normally be set internally.
          * @private
          */
-        setMaxPWMValue: function (value) {
-            this._maxPWMValue = value;
+        setAnalogWriteResolution: function (value) {
+            this._analogWriteResolution = value;
+        },
+
+        /**
+         * The analog read resolution for this pin. This value should
+         * normally be set internally.
+         * @private
+         */
+        setAnalogReadResolution: function (value) {
+            this._analogReadResolution = value;
         },
 
         /**
@@ -781,24 +791,35 @@ BO.Pin = (function () {
         setState: function (state) {
             // convert PWM values to 0.0 - 1.0 range
             if (this._type === Pin.PWM) {
-                state = state / this.maxPWMValue;
+                state = state / this.analogWriteResolution;
             } 
 
             this._state = state;
         },
 
         /**
-         * [read-only] The maximum PWM value supported for this pin.
-         * <p> This is the max PWM value supported by Arduino (currently 255) 
-         * rather than the max PWM value specified by the microcontroller 
-         * datasheet.</p>
+         * [read-only] The analog write (PWM) resolution for this pin.
+         * <p> This is the PWM resolution specified by Arduino rather than the
+         * resolution specified by the microcontroller datasheet.</p>
          *
-         * @property maxPWMValue
+         * @property analogWriteResolution
          * @type Number
-         */          
-        get maxPWMValue() {
-            return this._maxPWMValue;
-        },      
+         */
+        get analogWriteResolution() {
+            return this._analogWriteResolution;
+        },
+
+        /**
+         * [read-only] The analog read resolution for this pin.
+         * <p> This is the analog read resolution specified by Arduino rather
+         * than the resolution specified by the microcontroller datasheet.</p>
+         *
+         * @property analogReadResolution
+         * @type Number
+         */
+        get analogReadResolution() {
+            return this._analogReadResolution;
+        },
         
         /**
          * [read-only] The average value of the pin over time. Call clear() to 
@@ -940,6 +961,17 @@ BO.Pin = (function () {
          */
         setCapabilities: function (pinCapabilities) {
             this._capabilities = pinCapabilities;
+
+            var analogWriteRes = this._capabilities[Pin.PWM];
+            var analogReadRes = this._capabilities[Pin.AIN];
+
+            if (analogWriteRes) {
+                this.setAnalogWriteResolution(Math.pow(2, analogWriteRes) - 1);
+            }
+
+            if (analogReadRes) {
+                this.setAnalogReadResolution(Math.pow(2, analogReadRes) - 1);
+            }
         },      
 
         /**
@@ -1935,12 +1967,9 @@ BO.IOBoard = (function () {
         },
 
         /**
-         * Process incoming analog data. The value is mapped from 0 - 1023 to
-         * a floating point value between 0.0 - 1.0.
-         *
-         * TO DO: add a maxADCValue property to Pin or IOBoard to support
-         * ADC values > 1023. maxADCValue could be set during the 
-         * configuration routine if it's supported by Firmata in the future.
+         * Process incoming analog data. The value is mapped from
+         * 0 - pin.analogReadResolution to a floating point value between
+         * 0.0 - 1.0.
          *
          * @private
          * @method processAnalogMessage
@@ -1959,7 +1988,8 @@ BO.IOBoard = (function () {
                 return;
             }
 
-            analogPin.value = this.getValueFromTwo7bitBytes(bits0_6, bits7_13) / 1023;
+            // scale according to the analog read resolution set for the pin
+            analogPin.value = this.getValueFromTwo7bitBytes(bits0_6, bits7_13) / analogPin.analogReadResolution;
             if (analogPin.value != analogPin.lastValue) {
                 this.dispatchEvent(new IOBoardEvent(IOBoardEvent.ANALOG_DATA), {pin: analogPin});
             }
@@ -2311,7 +2341,8 @@ BO.IOBoard = (function () {
         /**
          * Sends an analog value up to 14 bits on an analog pin number between
          * 0 and 15. The value passed to this method should be in the range of
-         * 0.0 to 1.0. It is multiplied by the maxPWMValue set for the pin.
+         * 0.0 to 1.0. It is multiplied by the analog write (PWM) resolution
+         * set for the pin.
          *
          * @param {Number} pin The analog pin number.
          * param {Number} value The value to send (0.0 to 1.0).
@@ -2319,10 +2350,10 @@ BO.IOBoard = (function () {
          * @method sendAnalogData
          */
         sendAnalogData: function (pin, value) {
-            var pwmMax = this.getDigitalPin(pin).maxPWMValue;
-            value *= pwmMax;
+            var pwmResolution = this.getDigitalPin(pin).analogWriteResolution;
+            value *= pwmResolution;
             value = (value < 0) ? 0: value;
-            value = (value > pwmMax) ? pwmMax : value;
+            value = (value > pwmResolution) ? pwmResolution : value;
 
             if (pin > 15 || value > Math.pow(2, 14)) {
                 this.sendExtendedAnalogData(pin, value);

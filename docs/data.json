@@ -2145,7 +2145,7 @@
         {
             "file": "src/core/IOBoard.js",
             "line": 384,
-            "description": "Process incoming analog data. The value is mapped from 0 - 1023 to\na floating point value between 0.0 - 1.0.\n\nTO DO: add a maxADCValue property to Pin or IOBoard to support\nADC values > 1023. maxADCValue could be set during the \nconfiguration routine if it's supported by Firmata in the future.",
+            "description": "Process incoming analog data. The value is mapped from\n0 - pin.analogReadResolution to a floating point value between\n0.0 - 1.0.",
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -2155,7 +2155,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 415,
+            "line": 413,
             "description": "Route the incoming sysex data to the appropriate method.",
             "access": "private",
             "tagname": "",
@@ -2166,7 +2166,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 450,
+            "line": 448,
             "description": "Construct the firmware name and version from incoming ascii data.",
             "access": "private",
             "tagname": "",
@@ -2177,7 +2177,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 466,
+            "line": 464,
             "description": "Construct a String from an incoming ascii data.",
             "access": "private",
             "tagname": "",
@@ -2188,7 +2188,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 484,
+            "line": 482,
             "description": "Auto configure using capabilities response.\nThis creates a configuration for any board in the Firmata boards.h \nfile.",
             "access": "private",
             "tagname": "",
@@ -2199,7 +2199,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 571,
+            "line": 569,
             "description": "Map map analog pins to board pin numbers. Need to do this because\nthe capability query does not provide the correct order of analog\npins.",
             "access": "private",
             "tagname": "",
@@ -2210,7 +2210,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 601,
+            "line": 599,
             "description": "Single client mode is the default mode.\nChecking the \"Enable multi-client\" box in the Breakout Server UI to\nenable multi-client mode.",
             "access": "private",
             "tagname": "",
@@ -2221,7 +2221,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 621,
+            "line": 619,
             "description": "The IOBoard is configured and ready to send and accept commands.",
             "access": "private",
             "tagname": "",
@@ -2232,7 +2232,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 633,
+            "line": 631,
             "description": "Resets the board to its default state without physically resetting\nthe board.",
             "access": "private",
             "tagname": "",
@@ -2243,7 +2243,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 645,
+            "line": 643,
             "description": "Reads the current configuration of the requested pin. The following\nvalues are returned: 1: pin number, 2: pin type (0: DIN, 1: DOUT, \n2: AIN, 3: AOUT / PWM, 4: SERVO, 5: SHIFT, 6: I2C), 3: pin state.\nThe pin state for output modes is the value previously written\nto the pin. For input modes (AIN, DIN, etc) the state is typically\nzero (it is not the value that was written to the pin). For digital\ninputs the state is the status of the pullup resistor.",
             "access": "private",
             "tagname": "",
@@ -2254,7 +2254,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 695,
+            "line": 693,
             "description": "Convert char to decimal value.",
             "access": "private",
             "tagname": "",
@@ -2265,7 +2265,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 707,
+            "line": 705,
             "description": "Called when ever a pin value is set via pin.value = someValue.\nSends digital or analog output pin and output values to the IOBoard.",
             "access": "private",
             "tagname": "",
@@ -2283,7 +2283,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 734,
+            "line": 732,
             "description": "Ensure that event listeners are properly managed for pin objects \nas the pin type is changed during the execution of the program.",
             "access": "private",
             "tagname": "",
@@ -2294,8 +2294,8 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 758,
-            "description": "Sends an analog value up to 14 bits on an analog pin number between\n0 and 15. The value passed to this method should be in the range of\n0.0 to 1.0. It is multiplied by the maxPWMValue set for the pin.",
+            "line": 756,
+            "description": "Sends an analog value up to 14 bits on an analog pin number between\n0 and 15. The value passed to this method should be in the range of\n0.0 to 1.0. It is multiplied by the analog write (PWM) resolution\nset for the pin.",
             "params": [
                 {
                     "name": "pin",
@@ -2312,7 +2312,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 781,
+            "line": 780,
             "description": "Sends an analog value > 14 bits and/or send a value for a pin number\ngreater than 15.",
             "params": [
                 {
@@ -2335,7 +2335,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 814,
+            "line": 813,
             "description": "Add the pin value to the appropriate digital port and send the \nupdated digital port value.",
             "params": [
                 {
@@ -2358,7 +2358,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 842,
+            "line": 841,
             "description": "Send the servo angle.",
             "params": [
                 {
@@ -2381,7 +2381,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 856,
+            "line": 855,
             "description": "Query the cababilities and current state any board running Firmata.",
             "access": "private",
             "tagname": "",
@@ -2392,7 +2392,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 866,
+            "line": 865,
             "description": "Query which pins correspond to the analog channels",
             "access": "private",
             "tagname": "",
@@ -2403,7 +2403,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 876,
+            "line": 875,
             "description": "Call this method to enable or disable analog input for the specified\npin.",
             "access": "private",
             "tagname": "",
@@ -2426,7 +2426,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 891,
+            "line": 890,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -2435,7 +2435,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 903,
+            "line": 902,
             "description": "Get or set the sampling interval (how often to run the main loop on\nthe IOBoard). Normally the sampling interval should not be changed. \nDefault = 19 (ms).",
             "itemtype": "property",
             "name": "samplingInterval",
@@ -2445,7 +2445,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 924,
+            "line": 923,
             "description": "Set to true when the IOBoard is ready. This can be used in place of\nlistening for the IOBoardEvent.READY event when creating an app with\na draw loop (such as when using processing.js or three.js);",
             "itemtype": "property",
             "name": "isReady",
@@ -2455,7 +2455,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 939,
+            "line": 938,
             "description": "A utility class to assemble a single value from the 2 bytes returned\nfrom the IOBoard (since data is passed in 7 bit Bytes rather than \n8 bit it must be reassembled. This is to be used as a protected\nmethod and should not be needed in any application level code.",
             "access": "private",
             "tagname": "",
@@ -2482,7 +2482,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 957,
+            "line": 956,
             "itemtype": "method",
             "name": "getSocket",
             "return": {
@@ -2494,7 +2494,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 965,
+            "line": 964,
             "description": "Request the Firmata version implemented in the firmware (sketch)\nrunning on the IOBoard.\nListen for the IOBoard.FIRMWARE_VERSION event to be notified of when \nthe Firmata version is returned from the IOBoard.",
             "itemtype": "method",
             "name": "reportVersion",
@@ -2503,7 +2503,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 976,
+            "line": 975,
             "description": "Request the name of the firmware (the sketch) running on the IOBoard.\nListen for the IOBoard.FIRMWARE_NAME event to be notified of when \nthe name is returned from the IOBoard. The version number is also\nreturned.",
             "itemtype": "method",
             "name": "reportFirmware",
@@ -2512,7 +2512,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 987,
+            "line": 986,
             "description": "Disables digital pin reporting for all digital pins.",
             "itemtype": "method",
             "name": "disableDigitalPins",
@@ -2521,7 +2521,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 997,
+            "line": 996,
             "description": "Enables digital pin reporting for all digital pins. You must call\nthis before you can receive digital pin data from the IOBoard.",
             "itemtype": "method",
             "name": "enableDigitalPins",
@@ -2530,7 +2530,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1008,
+            "line": 1007,
             "description": "Enable or disable reporting of all digital pins for the specified\nport.",
             "itemtype": "method",
             "name": "sendDigitalPortReporting",
@@ -2546,7 +2546,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1018,
+            "line": 1017,
             "description": "Call this method to enable analog input for the specified pin.",
             "itemtype": "method",
             "name": "enableAnalogPin",
@@ -2562,7 +2562,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1027,
+            "line": 1026,
             "description": "Call this method to disable analog input for the specified pin.",
             "itemtype": "method",
             "name": "disableAnalogPin",
@@ -2578,7 +2578,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1036,
+            "line": 1035,
             "description": "Set the specified digital pin mode.",
             "itemtype": "method",
             "name": "setDigitalPinMode",
@@ -2604,7 +2604,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1060,
+            "line": 1059,
             "description": "Enable the internal pull-up resistor for the specified pin number.",
             "itemtype": "method",
             "name": "enablePullUp",
@@ -2620,7 +2620,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1070,
+            "line": 1069,
             "itemtype": "method",
             "name": "getFirmwareName",
             "return": {
@@ -2632,7 +2632,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1080,
+            "line": 1079,
             "itemtype": "method",
             "name": "getFirmwareVersion",
             "return": {
@@ -2644,7 +2644,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1089,
+            "line": 1088,
             "description": "Returns the capabilities for each pin on the IOBoard. The array is\nindexed by pin number (beginning at pin 0). Each array element\ncontains an object with a property for each modes (input, output, \npwm, servo, i2c, etc) supported by the pin. The mode value is the\nresolution in bits.",
             "itemtype": "method",
             "name": "getPinCapabilities",
@@ -2657,7 +2657,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1144,
+            "line": 1143,
             "description": "Reads the current state of the requested pin. Listen for the\nIOBoardEvent.PIN_STATE_RESPONSE event to get the response.\nThe response contains a reference to the pin object with its\nstate updated to match the current state of the pin on the IOBoard.\n\nYou should not typically need to call this method since the pin\nstates are maintained client-side. Use the getAnalogPin or \ngetDigitalPin to get the current state of a pin or getPins to\nget an array of all Pin objects for the IOBoard.\n\nCases for queryPinState are to update the pin state after a period\nof inactivity. For example if multiple client applications are\nusing the same IOBoard (so multiple JavaScript apps connected to\nthe same Arduino). When a new client connection is made, \nqueryPinState is called automatically to copy the IOBoard pin state\nto the client. If for some reason you needed to copy the state of a\nsingle or multiple Pins again, you could call queryPinState in your\napplication. In most cases however you should never need to call \nthis method.",
             "itemtype": "method",
             "name": "queryPinState",
@@ -2673,7 +2673,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1175,
+            "line": 1174,
             "description": "Send the digital values for a port. Making this private for now.",
             "access": "private",
             "tagname": "",
@@ -2696,7 +2696,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1188,
+            "line": 1187,
             "description": "Send a string message to the IOBoard. This is useful if you have a\ncustom sketch running on the IOBoard rather than StandardFirmata\nand want to communicate with your javascript message via string\nmessages that you then parse in javascript.\nYou can receive string messages as well.\n\n<p>To test, load the EchoString.pde example from Firmata->Examples\nmenu in the IOBoard Application, then use sendString(\"your string\nmessage\") to have it echoed back to your javascript application.</p>",
             "itemtype": "method",
             "name": "sendString",
@@ -2712,7 +2712,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1215,
+            "line": 1214,
             "description": "Send a sysEx message to the IOBoard. This is useful for sending\ncustom sysEx data to the IOBoard, for example if you are not using\nStandardFirmata. You would likely use it in a class rather than \ncalling it from your main application.",
             "access": "private",
             "tagname": "",
@@ -2738,7 +2738,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1247,
+            "line": 1246,
             "description": "Call to associate a pin with a connected servo motor. See the\ndocumentation for your servo motor for the minimum and maximum \npulse width. If you can't find it, then the default values should\nbe close enough so call sendServoAttach(pin) omitting the min and\nmax values.",
             "itemtype": "method",
             "name": "sendServoAttach",
@@ -2764,7 +2764,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1284,
+            "line": 1283,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -2778,7 +2778,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1293,
+            "line": 1292,
             "itemtype": "method",
             "name": "getAnalogPin",
             "return": {
@@ -2790,7 +2790,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1302,
+            "line": 1301,
             "itemtype": "method",
             "name": "getDigitalPin",
             "return": {
@@ -2802,7 +2802,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1311,
+            "line": 1310,
             "itemtype": "method",
             "name": "getPins",
             "return": {
@@ -2814,7 +2814,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1319,
+            "line": 1318,
             "description": "Use this method to obtain the digital pin number equivalent \nfor an analog pin.",
             "example": [
                 "\n    // set analog pin A3 on an Arduino Uno to digital input\n    board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);\n\n<p>board.analogToDigital(3) returns 17 which is the digital\nequivalent of the analog pin</p>"
@@ -2830,7 +2830,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1338,
+            "line": 1337,
             "itemtype": "method",
             "name": "getPinCount",
             "return": {
@@ -2842,7 +2842,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1346,
+            "line": 1345,
             "itemtype": "method",
             "name": "getAnalogPinCount",
             "return": {
@@ -2854,7 +2854,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1355,
+            "line": 1354,
             "description": "Returns undefined if the board does not have i2c pins.",
             "access": "private",
             "tagname": "",
@@ -2869,7 +2869,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1366,
+            "line": 1365,
             "description": "Call this method to print the capabilities for all pins to \nthe console.",
             "itemtype": "method",
             "name": "reportCapabilities",
@@ -2878,7 +2878,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1387,
+            "line": 1386,
             "description": "A wrapper for the send method of the WebSocket\nI'm not sure there is a case for the user to call this method\nSo I'm making this private for now.",
             "access": "private",
             "tagname": "",
@@ -2896,7 +2896,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1400,
+            "line": 1399,
             "description": "A wrapper for the close method of the WebSocket. Making this \nprivate until a use case arises.",
             "access": "private",
             "tagname": "",
@@ -2907,7 +2907,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1413,
+            "line": 1412,
             "params": [
                 {
                     "name": "type",
@@ -2925,7 +2925,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1422,
+            "line": 1421,
             "params": [
                 {
                     "name": "type",
@@ -2943,7 +2943,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1431,
+            "line": 1430,
             "params": [
                 {
                     "name": "type",
@@ -2956,7 +2956,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1439,
+            "line": 1438,
             "params": [
                 {
                     "name": "type",
@@ -2974,7 +2974,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1453,
+            "line": 1452,
             "description": "The ioBoardReady event is dispatched when the board is ready to\nsend and receive commands.",
             "type": "BO.IOBoardEvent.READY",
             "itemtype": "event",
@@ -2991,7 +2991,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1461,
+            "line": 1460,
             "description": "The ioBoardConnected event is dispatched when the websocket \nconnection is established.",
             "type": "BO.IOBoardEvent.CONNECTED",
             "itemtype": "event",
@@ -3008,7 +3008,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1469,
+            "line": 1468,
             "description": "The ioBoardDisconnected event is dispatched when the websocket\nconnection is closed.",
             "type": "BO.IOBoardEvent.DISCONNECTED",
             "itemtype": "event",
@@ -3025,7 +3025,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1477,
+            "line": 1476,
             "description": "The stringMessage event is dispatched when a string is received\nfrom the IOBoard.",
             "type": "BO.IOBoardEvent.STRING_MESSAGE",
             "itemtype": "event",
@@ -3047,7 +3047,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1486,
+            "line": 1485,
             "description": "The sysexMessage event is dispatched when a sysEx message is \nreceived from the IOBoard.",
             "type": "BO.IOBoardEvent.SYSEX_MESSAGE",
             "itemtype": "event",
@@ -3069,7 +3069,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1495,
+            "line": 1494,
             "description": "The firmwareVersion event is dispatched when the firmware version\nis received from the IOBoard.",
             "type": "BO.IOBoardEvent.FIRMWARE_VERSION",
             "itemtype": "event",
@@ -3091,7 +3091,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1504,
+            "line": 1503,
             "description": "The firmwareName event is dispatched when the firmware name is\nreceived from the IOBoard.",
             "type": "BO.IOBoardEvent.FIRMWARE_NAME",
             "itemtype": "event",
@@ -3118,7 +3118,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1514,
+            "line": 1513,
             "description": "The pinStateResponse event is dispatched when the results of\na pin state query (via a call to: queryPinState()) is received.",
             "type": "BO.IOBoardEvent.PIN_STATE_RESPONSE",
             "itemtype": "event",
@@ -3140,7 +3140,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1523,
+            "line": 1522,
             "description": "The analogData event is dispatched when analog data is received\nfrom the IOBoard. Use thie event to be notified when any analog\npin value changes. Use Pin.CHANGE to be notified when a specific\npin value changes.",
             "type": "BO.IOBoardEvent.ANALOG_DATA",
             "itemtype": "event",
@@ -3162,7 +3162,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1534,
+            "line": 1533,
             "description": "The digitalData event is dispatched when digital data is received\nfrom the IOBoard. Use this event to be notified when any digital\npin value changes. Use Pin.CHANGE to be notified when a specific\npin value changes.",
             "type": "BO.IOBoardEvent.DIGITAL_DATA",
             "itemtype": "event",
@@ -3362,7 +3362,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 67,
+            "line": 68,
             "description": "The analogNumber sould only be set internally.",
             "access": "private",
             "tagname": "",
@@ -3371,7 +3371,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 75,
+            "line": 76,
             "description": "[read-only] The analog pin number used by the IOBoard (printed on \nboard or datasheet).",
             "itemtype": "property",
             "name": "analogNumber",
@@ -3381,7 +3381,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 85,
+            "line": 86,
             "description": "[read-only] The pin number corresponding to the Arduino documentation \nfor the type of board.",
             "itemtype": "property",
             "name": "number",
@@ -3391,8 +3391,8 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 95,
-            "description": "The maximum PWM value supported for this pin. This value should\nnormally be set internally.",
+            "line": 96,
+            "description": "The analog write (PWM) resolution for this pin. This value should\nnormally be set internally.",
             "access": "private",
             "tagname": "",
             "class": "BO.Pin",
@@ -3400,7 +3400,16 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 104,
+            "line": 105,
+            "description": "The analog read resolution for this pin. This value should\nnormally be set internally.",
+            "access": "private",
+            "tagname": "",
+            "class": "BO.Pin",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Pin.js",
+            "line": 114,
             "description": "Sets the state value. This is populated by the \nprocessPinStateResponse method of the IOBoard object. It should not\nbe called manually.",
             "params": [
                 {
@@ -3416,17 +3425,27 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 124,
-            "description": "[read-only] The maximum PWM value supported for this pin.\n<p> This is the max PWM value supported by Arduino (currently 255) \nrather than the max PWM value specified by the microcontroller \ndatasheet.</p>",
+            "line": 134,
+            "description": "[read-only] The analog write (PWM) resolution for this pin.\n<p> This is the PWM resolution specified by Arduino rather than the\nresolution specified by the microcontroller datasheet.</p>",
             "itemtype": "property",
-            "name": "maxPWMValue",
+            "name": "analogWriteResolution",
             "type": "Number",
             "class": "BO.Pin",
             "namespace": "BO"
         },
         {
             "file": "src/core/Pin.js",
-            "line": 137,
+            "line": 146,
+            "description": "[read-only] The analog read resolution for this pin.\n<p> This is the analog read resolution specified by Arduino rather\nthan the resolution specified by the microcontroller datasheet.</p>",
+            "itemtype": "property",
+            "name": "analogReadResolution",
+            "type": "Number",
+            "class": "BO.Pin",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Pin.js",
+            "line": 158,
             "description": "[read-only] The average value of the pin over time. Call clear() to \nreset.",
             "itemtype": "property",
             "name": "average",
@@ -3436,7 +3455,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 147,
+            "line": 168,
             "description": "[read-only] The minimum value of the pin over time. Call clear() to \nreset.",
             "itemtype": "property",
             "name": "minimum",
@@ -3446,7 +3465,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 157,
+            "line": 178,
             "description": "[read-only] The maximum value of the pin over time. Call clear() to \nreset.",
             "itemtype": "property",
             "name": "maximum",
@@ -3456,7 +3475,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 167,
+            "line": 188,
             "description": "<p>[read-only] The state of the pin. For output modes, the state is \nany value that has been previously written to the pin. For input \nmodes, the state is typically zero, however for digital inputs the \nstate is the status of the pullup resistor.</p>\n\n<p>This propery is populated by calling the queryPinState method of \nthe IOBoard object. This is useful if there are multiple client \napplications connected to a single physical IOBoard and you want to \nget the state of a pin that is set by another client application.</p>",
             "itemtype": "property",
             "name": "state",
@@ -3466,7 +3485,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 185,
+            "line": 206,
             "description": "The current digital or analog value of the pin.",
             "itemtype": "property",
             "name": "value",
@@ -3476,7 +3495,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 201,
+            "line": 222,
             "description": "[read-only] The last pin value.",
             "itemtype": "property",
             "name": "lastValue",
@@ -3486,7 +3505,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 210,
+            "line": 231,
             "description": "[read-only] The value before any filters were applied.",
             "itemtype": "property",
             "name": "preFilterValue",
@@ -3496,7 +3515,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 219,
+            "line": 240,
             "description": "Get and set filters for the Pin.",
             "itemtype": "property",
             "name": "filters",
@@ -3506,7 +3525,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 231,
+            "line": 252,
             "description": "[read-only] Get a reference to the current generator.",
             "itemtype": "property",
             "name": "generator",
@@ -3516,7 +3535,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 240,
+            "line": 261,
             "description": "The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,\n4: SERVO, 5: SHIFT, 6: I2C). Use \nIOBoard.setDigitalPinMode(pinNumber) to set the pin type.",
             "itemtype": "method",
             "name": "getType",
@@ -3529,7 +3548,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 251,
+            "line": 272,
             "description": "Set the pin type. This method should only be used internally.",
             "access": "private",
             "tagname": "",
@@ -3538,7 +3557,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 262,
+            "line": 283,
             "description": "An object storing the capabilities of the pin.",
             "itemtype": "method",
             "name": "getCapabilities",
@@ -3551,7 +3570,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 271,
+            "line": 292,
             "description": "This method should only be used internally.",
             "access": "private",
             "tagname": "",
@@ -3560,7 +3579,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 279,
+            "line": 311,
             "description": "Dispatch a Change event whenever a pin value changes",
             "access": "private",
             "tagname": "",
@@ -3571,7 +3590,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 297,
+            "line": 329,
             "description": "From funnel Pin.as",
             "access": "private",
             "tagname": "",
@@ -3582,7 +3601,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 307,
+            "line": 339,
             "description": "From funnel Pin.as",
             "access": "private",
             "tagname": "",
@@ -3593,7 +3612,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 325,
+            "line": 357,
             "description": "Resets the minimum, maximum, average and lastValue of the pin.",
             "itemtype": "method",
             "name": "clear",
@@ -3602,7 +3621,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 334,
+            "line": 366,
             "description": "Add a new filter to the Pin.",
             "itemtype": "method",
             "name": "addFilter",
@@ -3623,7 +3642,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 356,
+            "line": 388,
             "description": "Remove a specified filter from the Pin.",
             "itemtype": "method",
             "name": "removeFilter",
@@ -3644,7 +3663,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 378,
+            "line": 410,
             "description": "Add a new generator to the Pin. A pin can only have one generator\nassigned. \nAssigning a new generator will replace the previously assigned \ngenerator.",
             "itemtype": "method",
             "name": "addGenerator",
@@ -3663,7 +3682,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 395,
+            "line": 427,
             "description": "Removes the generator from the pin.",
             "itemtype": "method",
             "name": "removeGenerator",
@@ -3672,7 +3691,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 407,
+            "line": 439,
             "description": "Removes all filters from the pin.",
             "itemtype": "method",
             "name": "removeAllFilters",
@@ -3681,7 +3700,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 415,
+            "line": 447,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3691,7 +3710,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 424,
+            "line": 456,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -3701,7 +3720,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 446,
+            "line": 478,
             "params": [
                 {
                     "name": "type",
@@ -3719,7 +3738,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 455,
+            "line": 487,
             "params": [
                 {
                     "name": "type",
@@ -3737,7 +3756,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 464,
+            "line": 496,
             "params": [
                 {
                     "name": "type",
@@ -3750,7 +3769,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 472,
+            "line": 504,
             "params": [
                 {
                     "name": "type",
@@ -3768,7 +3787,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 484,
+            "line": 516,
             "itemtype": "property",
             "name": "Pin.HIGH",
             "static": 1,
@@ -3777,7 +3796,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 489,
+            "line": 521,
             "itemtype": "property",
             "name": "Pin.LOW",
             "static": 1,
@@ -3786,7 +3805,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 494,
+            "line": 526,
             "itemtype": "property",
             "name": "Pin.ON",
             "static": 1,
@@ -3795,7 +3814,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 499,
+            "line": 531,
             "itemtype": "property",
             "name": "Pin.OFF",
             "static": 1,
@@ -3804,7 +3823,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 506,
+            "line": 538,
             "itemtype": "property",
             "name": "Pin.DIN",
             "static": 1,
@@ -3813,7 +3832,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 511,
+            "line": 543,
             "itemtype": "property",
             "name": "Pin.DOUT",
             "static": 1,
@@ -3822,7 +3841,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 516,
+            "line": 548,
             "itemtype": "property",
             "name": "Pin.AIN",
             "static": 1,
@@ -3831,7 +3850,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 521,
+            "line": 553,
             "itemtype": "property",
             "name": "Pin.AOUT",
             "static": 1,
@@ -3840,7 +3859,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 526,
+            "line": 558,
             "itemtype": "property",
             "name": "Pin.PWM",
             "static": 1,
@@ -3849,7 +3868,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 531,
+            "line": 563,
             "itemtype": "property",
             "name": "Pin.SERVO",
             "static": 1,
@@ -3858,7 +3877,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 536,
+            "line": 568,
             "itemtype": "property",
             "name": "Pin.SHIFT",
             "static": 1,
@@ -3867,7 +3886,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 541,
+            "line": 573,
             "itemtype": "property",
             "name": "Pin.I2C",
             "static": 1,
@@ -3876,7 +3895,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 546,
+            "line": 578,
             "itemtype": "property",
             "name": "Pin.ONEWIRE",
             "static": 1,
@@ -3885,7 +3904,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 551,
+            "line": 583,
             "itemtype": "property",
             "name": "Pin.STEPPER",
             "static": 1,
@@ -3894,7 +3913,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 556,
+            "line": 588,
             "itemtype": "property",
             "name": "Pin.TOTAL_PIN_MODES",
             "static": 1,
@@ -3903,7 +3922,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 565,
+            "line": 597,
             "description": "The pinChange event is dispatched when the pin value changes.",
             "type": "BO.PinEvent.CHANGE",
             "itemtype": "event",
@@ -3920,7 +3939,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 572,
+            "line": 604,
             "description": "The risingEdge event is dispatched when the pin value increased \n(from 0 to 1).",
             "type": "BO.PinEvent.RISING_EDGE",
             "itemtype": "event",
@@ -3937,7 +3956,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 580,
+            "line": 612,
             "description": "The change event is dispatched when the pin value decreased \n(from 1 to 0).",
             "type": "BO.PinEvent.FALLING_EDGE",
             "itemtype": "event",
@@ -8008,23 +8027,23 @@
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/core/IOBoard.js:891"
+            "line": " src/core/IOBoard.js:890"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1413"
+            "line": " src/core/IOBoard.js:1412"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1422"
+            "line": " src/core/IOBoard.js:1421"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1431"
+            "line": " src/core/IOBoard.js:1430"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1439"
+            "line": " src/core/IOBoard.js:1438"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
@@ -8056,39 +8075,43 @@
         },
         {
             "message": "Missing item type\nThe analogNumber sould only be set internally.",
-            "line": " src/core/Pin.js:67"
+            "line": " src/core/Pin.js:68"
         },
         {
-            "message": "Missing item type\nThe maximum PWM value supported for this pin. This value should\nnormally be set internally.",
-            "line": " src/core/Pin.js:95"
+            "message": "Missing item type\nThe analog write (PWM) resolution for this pin. This value should\nnormally be set internally.",
+            "line": " src/core/Pin.js:96"
+        },
+        {
+            "message": "Missing item type\nThe analog read resolution for this pin. This value should\nnormally be set internally.",
+            "line": " src/core/Pin.js:105"
         },
         {
             "message": "Missing item type\nSets the state value. This is populated by the \nprocessPinStateResponse method of the IOBoard object. It should not\nbe called manually.",
-            "line": " src/core/Pin.js:104"
+            "line": " src/core/Pin.js:114"
         },
         {
             "message": "Missing item type\nSet the pin type. This method should only be used internally.",
-            "line": " src/core/Pin.js:251"
+            "line": " src/core/Pin.js:272"
         },
         {
             "message": "Missing item type\nThis method should only be used internally.",
-            "line": " src/core/Pin.js:271"
+            "line": " src/core/Pin.js:292"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:446"
+            "line": " src/core/Pin.js:478"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:455"
+            "line": " src/core/Pin.js:487"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:464"
+            "line": " src/core/Pin.js:496"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Pin.js:472"
+            "line": " src/core/Pin.js:504"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",

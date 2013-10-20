@@ -41,7 +41,8 @@ BO.Pin = (function () {
         this._capabilities = {};
         this._number = number;
         this._analogNumber = undefined;
-        this._maxPWMValue = 255;
+        this._analogWriteResolution = 255; // default
+        this._analogReadResolution = 1023; // default
         this._value = 0;
         this._lastValue = -1;
         this._preFilterValue = 0;
@@ -93,12 +94,21 @@ BO.Pin = (function () {
         },
 
         /**
-         * The maximum PWM value supported for this pin. This value should
+         * The analog write (PWM) resolution for this pin. This value should
          * normally be set internally.
          * @private
          */
-        setMaxPWMValue: function (value) {
-            this._maxPWMValue = value;
+        setAnalogWriteResolution: function (value) {
+            this._analogWriteResolution = value;
+        },
+
+        /**
+         * The analog read resolution for this pin. This value should
+         * normally be set internally.
+         * @private
+         */
+        setAnalogReadResolution: function (value) {
+            this._analogReadResolution = value;
         },
 
         /**
@@ -115,24 +125,35 @@ BO.Pin = (function () {
         setState: function (state) {
             // convert PWM values to 0.0 - 1.0 range
             if (this._type === Pin.PWM) {
-                state = state / this.maxPWMValue;
+                state = state / this.analogWriteResolution;
             } 
 
             this._state = state;
         },
 
         /**
-         * [read-only] The maximum PWM value supported for this pin.
-         * <p> This is the max PWM value supported by Arduino (currently 255) 
-         * rather than the max PWM value specified by the microcontroller 
-         * datasheet.</p>
+         * [read-only] The analog write (PWM) resolution for this pin.
+         * <p> This is the PWM resolution specified by Arduino rather than the
+         * resolution specified by the microcontroller datasheet.</p>
          *
-         * @property maxPWMValue
+         * @property analogWriteResolution
          * @type Number
-         */          
-        get maxPWMValue() {
-            return this._maxPWMValue;
-        },      
+         */
+        get analogWriteResolution() {
+            return this._analogWriteResolution;
+        },
+
+        /**
+         * [read-only] The analog read resolution for this pin.
+         * <p> This is the analog read resolution specified by Arduino rather
+         * than the resolution specified by the microcontroller datasheet.</p>
+         *
+         * @property analogReadResolution
+         * @type Number
+         */
+        get analogReadResolution() {
+            return this._analogReadResolution;
+        },
         
         /**
          * [read-only] The average value of the pin over time. Call clear() to 
@@ -274,6 +295,17 @@ BO.Pin = (function () {
          */
         setCapabilities: function (pinCapabilities) {
             this._capabilities = pinCapabilities;
+
+            var analogWriteRes = this._capabilities[Pin.PWM];
+            var analogReadRes = this._capabilities[Pin.AIN];
+
+            if (analogWriteRes) {
+                this.setAnalogWriteResolution(Math.pow(2, analogWriteRes) - 1);
+            }
+
+            if (analogReadRes) {
+                this.setAnalogReadResolution(Math.pow(2, analogReadRes) - 1);
+            }
         },      
 
         /**
