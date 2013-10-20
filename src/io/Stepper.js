@@ -108,7 +108,7 @@ BO.io.Stepper = (function () {
                 [CONFIG,
                 this._id,
                 driverType,
-                numStepsPerRevLSB, 
+                numStepsPerRevLSB,
                 numStepsPerRevMSB,
                 directionPin.number,
                 stepPin.number]);
@@ -122,7 +122,7 @@ BO.io.Stepper = (function () {
                 [CONFIG,
                 this._id,
                 driverType,
-                numStepsPerRevLSB, 
+                numStepsPerRevLSB,
                 numStepsPerRevMSB,
                 directionPin.number,
                 stepPin.number,
@@ -150,7 +150,7 @@ BO.io.Stepper = (function () {
          * (max precision of 2 decimal places)
          * @param {Number} accel [optional] Acceleration in rad/sec^2 (max precision of 2 decimal places)
          * @param {Number} decel [optional] Deceleration in rad/sec^2 (max precision of 2 decimal places)
-         */      
+         */
         step: function (numSteps, speed, accel, decel) {
             var steps,
                 speedLSB,
@@ -186,7 +186,7 @@ BO.io.Stepper = (function () {
             if (speed > MAX_SPEED) {
                 speed = MAX_SPEED;
                 console.log("Warning: Maximum speed (163.83 rad/sec) exceeded. Setting speed to 163.83 rad/sec");
-            }                   
+            }
 
             speedLSB = speed & 0x007F;
             speedMSB = (speed >> 7) & 0x007F;
@@ -201,9 +201,9 @@ BO.io.Stepper = (function () {
                 accelMSB = (accel >> 7) & 0x007F;
 
                 decelLSB = decel & 0x007F;
-                decelMSB = (decel >> 7) & 0x007F;               
+                decelMSB = (decel >> 7) & 0x007F;
                             
-                this._board.sendSysex(STEPPER, 
+                this._board.sendSysex(STEPPER,
                     [STEP,
                     this._id,
                     direction,
@@ -219,7 +219,7 @@ BO.io.Stepper = (function () {
                     ]);
             } else {
                 // don't send accel and decel values
-                this._board.sendSysex(STEPPER, 
+                this._board.sendSysex(STEPPER,
                     [STEP,
                     this._id,
                     direction,
@@ -228,7 +228,7 @@ BO.io.Stepper = (function () {
                     steps[2],
                     speedLSB,
                     speedMSB
-                    ]);             
+                    ]);
             }
         },
 
@@ -290,10 +290,10 @@ BO.io.Stepper = (function () {
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */     
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }           
+        }
     
     };
 
@@ -321,7 +321,7 @@ BO.io.Stepper = (function () {
      * @property Stepper.FOUR_WIRE
      * @static
      */
-    Stepper.FOUR_WIRE = 4;              
+    Stepper.FOUR_WIRE = 4;
 
     return Stepper;
 

@@ -21,7 +21,7 @@ BO.io.GyroITG3200 = (function () {
         GYRO_YOUT = 0x1F,
         GYRO_ZOUT = 0x21,
         PWR_MGM = 0x3E,
-        NUM_BYTES = 6;  
+        NUM_BYTES = 6;
 
     // dependencies
     var I2CBase = BO.I2CBase,
@@ -56,10 +56,10 @@ BO.io.GyroITG3200 = (function () {
         this.name = "GyroITG3200";
 
         // private properties
-        this._autoStart = autoStart;        
+        this._autoStart = autoStart;
         this._isReading = false;
         this._tempOffsets = {};
-        this._startupTimer = null;      
+        this._startupTimer = null;
         this._debugMode = BO.enableDebugging;
         
         this._x = 0;
@@ -158,7 +158,7 @@ BO.io.GyroITG3200 = (function () {
                 return this._isReading;
             }
         }
-    });   
+    });
     
     /**
      * Set the polarity of the x, y, and z output values.
@@ -200,7 +200,7 @@ BO.io.GyroITG3200 = (function () {
         this._gains.x = xGain;
         this._gains.y = yGain;
         this._gains.z = zGain;
-    };      
+    };
 
     /**
      * Start continuous reading of the sensor.
@@ -230,17 +230,17 @@ BO.io.GyroITG3200 = (function () {
     GyroITG3200.prototype.update = function () {
 
         if (this._isReading) {
-            this.stopReading(); 
+            this.stopReading();
         }
         // read data: contents of X, Y, and Z registers
         this.sendI2CRequest([I2CBase.READ, this.address, GYRO_XOUT, NUM_BYTES]);
-    };  
+    };
 
     /**
      * @private
      * @method init
-     */ 
-    GyroITG3200.prototype.init = function () {           
+     */
+    GyroITG3200.prototype.init = function () {
         // set fast sample rate divisor = 0
         this.sendI2CRequest([I2CBase.WRITE, this.address, SMPLRT_DIV, 0x00]);
         
@@ -284,7 +284,7 @@ BO.io.GyroITG3200 = (function () {
             value &= ~(1 << bitPos);
         }
         this.sendI2CRequest([I2CBase.WRITE, this.address, regAddress, value]);
-    };  
+    };
 
 
     /**
@@ -309,8 +309,8 @@ BO.io.GyroITG3200 = (function () {
      */
     GyroITG3200.prototype.readGyro = function (data) {
         
-        var x_val, 
-            y_val, 
+        var x_val,
+            y_val,
             z_val;
         
         if (data.length != NUM_BYTES + 1) {
@@ -337,7 +337,7 @@ BO.io.GyroITG3200 = (function () {
             this._z = z_val;
         }
         
-        this.dispatchEvent(new GyroEvent(GyroEvent.UPDATE));    
+        this.dispatchEvent(new GyroEvent(GyroEvent.UPDATE));
     };
     
     /**
@@ -346,7 +346,7 @@ BO.io.GyroITG3200 = (function () {
      */
     GyroITG3200.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
     };
         
@@ -363,7 +363,7 @@ BO.io.GyroITG3200 = (function () {
      * ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.
      * @property GyroITG3200.ID_AD0_VDD
      * @static
-     */    
+     */
     GyroITG3200.ID_AD0_GND = 0x68;
 
 
@@ -374,7 +374,7 @@ BO.io.GyroITG3200 = (function () {
      * @type BO.io.GyroEvent.UPDATE
      * @event update
      * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
-     */     
+     */
             
     return GyroITG3200;
 

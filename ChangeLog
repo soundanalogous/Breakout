@@ -1,4 +1,6 @@
 2013.10.19 Version 0.3.1
+* Added analogReadResolution and analogWriteResolution (PWM) properties to Pin.js.
+  This removes hard coding of 255 pwm resolution and 1023 analog read resolution.
 * Reduced files in Breakout-core build (see coreFiles in Gruntfile.js)
 * Removed GeneratorEvent dependency from Pin object
 * Updated getters and setters to use Object.defineProperties

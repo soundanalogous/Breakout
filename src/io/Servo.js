@@ -70,12 +70,12 @@ BO.io.Servo = (function () {
          * 
          * @property angle
          * @type Number
-         */ 
+         */
         set angle(value) {
             if (this._pin.getType() === Pin.SERVO) {
                 this._angle = value;
                 //this._pin.value = this._angle;
-                this._pin.value = Math.max(0, Math.min(1, (this._angle - this._minAngle) / 
+                this._pin.value = Math.max(0, Math.min(1, (this._angle - this._minAngle) /
                                 (this._maxAngle - this._minAngle) * Servo.COEF_TO_0_180));
 
             }
@@ -84,7 +84,7 @@ BO.io.Servo = (function () {
             if (this._pin.getType() === Pin.SERVO) {
                 return this._angle;
             }
-        }       
+        }
     };
 
     /**

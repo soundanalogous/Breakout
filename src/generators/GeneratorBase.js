@@ -60,7 +60,7 @@ BO.generators.GeneratorBase = (function () {
         set: function (val) {
             this._value = val;
         }
-    });      
+    });
 
     return GeneratorBase;
 

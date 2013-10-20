@@ -65,7 +65,7 @@ BO.filters.Convolution = (function () {
                 this._buffer[i] = 0;
             }
         }
-    });    
+    });
 
     /**
      * Override FilterBase.processSample
@@ -79,7 +79,7 @@ BO.filters.Convolution = (function () {
 
         for (var i = 0; i < len; i++) {
             result += this._coef[i] * this._buffer[i];
-        }   
+        }
 
         return result;
     };
@@ -103,7 +103,7 @@ BO.filters.Convolution = (function () {
      * @property Convolution.MOVING_AVERAGE
      * @static
      */
-    Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];      
+    Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];
         
     return Convolution;
 

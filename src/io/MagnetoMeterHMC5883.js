@@ -119,7 +119,7 @@ BO.io.MagnetometerHMC5883 = (function () {
                 return this._z;
             }
         }
-    });  
+    });
     
     /**
      * @private
@@ -246,7 +246,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      */
     MagnetometerHMC5883.prototype.update = function () {
         if (this._isReading) {
-            this.stopReading(); 
+            this.stopReading();
         }
         // read data: contents of X, Y, and Z registers
         this.sendI2CRequest([I2CBase.READ, this.address, DATAX0, NUM_BYTES]);
@@ -258,9 +258,9 @@ BO.io.MagnetometerHMC5883 = (function () {
      */
     MagnetometerHMC5883.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
-    };  
+    };
 
     // public static constants
 
@@ -268,7 +268,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @property MagnetometerHMC5883.DEVICE_ID
      * @static
      */
-    MagnetometerHMC5883.DEVICE_ID = 0x1E;   
+    MagnetometerHMC5883.DEVICE_ID = 0x1E;
     
     /**
      * @property MagnetometerHMC5883.SAMPLES_1
@@ -289,7 +289,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @property MagnetometerHMC5883.SAMPLES_8
      * @static
      */
-    MagnetometerHMC5883.SAMPLES_8 = 3;  
+    MagnetometerHMC5883.SAMPLES_8 = 3;
     
     /** 0.75 Hz
      * @property MagnetometerHMC5883.HZ_0_75
@@ -325,7 +325,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @property MagnetometerHMC5883.HZ_75
      * @static 
      */
-    MagnetometerHMC5883.HZ_75 = 0x06;       
+    MagnetometerHMC5883.HZ_75 = 0x06;
 
 
     // document events
@@ -335,7 +335,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @type BO.io.MagnetometerEvent.UPDATE
      * @event update
      * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
-     */     
+     */
 
     return MagnetometerHMC5883;
 

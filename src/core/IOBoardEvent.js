@@ -82,7 +82,7 @@ BO.IOBoardEvent = (function () {
      * @property IOBoardEvent.DISCONNECTED
      * @static
      */
-    IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";       
+    IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";
 
     IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
     IOBoardEvent.prototype.constructor = IOBoardEvent;

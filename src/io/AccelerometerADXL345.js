@@ -22,7 +22,7 @@ BO.io.AccelerometerADXL345 = (function () {
         OFSY = 0x1F,
         OFSZ = 0x20,
         ALL_AXIS =  DATAX0 | 0x80,
-        NUM_BYTES = 6;  
+        NUM_BYTES = 6;
 
     // dependencies
     var I2CBase = BO.I2CBase,
@@ -154,7 +154,7 @@ BO.io.AccelerometerADXL345 = (function () {
                 // -180 to 180
                 //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
                 // -90 to 90
-                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
             }
         },
 
@@ -279,7 +279,7 @@ BO.io.AccelerometerADXL345 = (function () {
         // set full scale bit (3) and range bits (0 - 1)
         setting |= (0x08 & 0xEC);
         this.sendI2CRequest([I2CBase.WRITE, this._address, DATA_FORMAT, setting]);
-    };   
+    };
     
     /**
      * @private
@@ -325,7 +325,7 @@ BO.io.AccelerometerADXL345 = (function () {
     /**
      * Offset the x, y, or z axis output by the respective input value.
      * @method setAxisOffset
-     */     
+     */
     AccelerometerADXL345.prototype.setAxisOffset = function (xVal, yVal, zVal) {
         // store values so we can retrieve via getAxisOffset
         this._offset.x = xVal;
@@ -359,7 +359,7 @@ BO.io.AccelerometerADXL345 = (function () {
      */
     AccelerometerADXL345.prototype.update = function () {
         if (this._isReading) {
-            this.stopReading(); 
+            this.stopReading();
         }
         // read data: contents of X, Y, and Z registers
         this.sendI2CRequest([I2CBase.READ, this.address, ALL_AXIS, NUM_BYTES]);
@@ -432,7 +432,7 @@ BO.io.AccelerometerADXL345 = (function () {
         this._y = this._rawY * this._sensitivity.y;
         this._z = this._rawZ * this._sensitivity.z;
         
-        this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));          
+        this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
     };
     
     /**
@@ -441,7 +441,7 @@ BO.io.AccelerometerADXL345 = (function () {
      */
     AccelerometerADXL345.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
     };
         
@@ -485,7 +485,7 @@ BO.io.AccelerometerADXL345 = (function () {
      * @type BO.io.AccelerometerEvent.UPDATE
      * @event update
      * @param {BO.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
-     */                     
+     */
 
     return AccelerometerADXL345;
 

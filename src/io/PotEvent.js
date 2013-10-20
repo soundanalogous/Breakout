@@ -34,7 +34,7 @@ BO.io.PotEvent = (function () {
      * @property PotEvent.CHANGE
      * @static
      */
-    PotEvent.CHANGE = "potChange";  
+    PotEvent.CHANGE = "potChange";
 
     PotEvent.prototype = JSUTILS.inherit(Event.prototype);
     PotEvent.prototype.constructor = PotEvent;

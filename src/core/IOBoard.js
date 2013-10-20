@@ -474,7 +474,7 @@ BO.IOBoard = (function () {
             for (var i = 1; i < len; i += 2) {
                 data = msg[i];
                 data += msg[i + 1];
-                str += String.fromCharCode(data);                
+                str += String.fromCharCode(data);
             }
             this.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
         },
@@ -502,7 +502,7 @@ BO.IOBoard = (function () {
                 type,
                 pin;
 
-            this._capabilityQueryResponseReceived = true;    
+            this._capabilityQueryResponseReceived = true;
                     
             // Create default configuration
             while (byteCounter <= len) {
@@ -603,7 +603,7 @@ BO.IOBoard = (function () {
          * 
          * @private
          * @method startupInMultiClientMode
-         */     
+         */
         startupInMultiClientMode: function () {
             var len = this.getPinCount();
             // Populate pins with the current IOBoard state
@@ -698,7 +698,7 @@ BO.IOBoard = (function () {
          */
         toDec: function (ch) {
             ch = ch.substring(0, 1);
-            var decVal = ch.charCodeAt(0);      
+            var decVal = ch.charCodeAt(0);
             return decVal;
         },
         
@@ -735,7 +735,7 @@ BO.IOBoard = (function () {
          *
          * @private
          * @method managePinListener
-         */  
+         */
         managePinListener: function (pin) {
             if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
                 if (!pin.hasEventListener(PinEvent.CHANGE)) {
@@ -784,7 +784,7 @@ BO.IOBoard = (function () {
          * @param {Number} value The value to send (up to 16 bits).
          * @private
          * @method sendExtendedAnalogData
-         */ 
+         */
         sendExtendedAnalogData: function (pin, value) {
             var analogData = [];
             
@@ -835,7 +835,7 @@ BO.IOBoard = (function () {
                 return; // Invalid value
             }
             
-            this.sendDigitalPort(portNum, this._digitalPort[portNum]);  
+            this.sendDigitalPort(portNum, this._digitalPort[portNum]);
         },
 
         /**
@@ -844,12 +844,12 @@ BO.IOBoard = (function () {
          * @param {Number} value The angle to rotate to (0.0 to 1.0 mapped to 0 - 180).
          * @private
          * @method sendServoData
-         */ 
+         */
         sendServoData: function (pin, value) {
             var servoPin = this.getDigitalPin(pin);
             if (servoPin.getType() == Pin.SERVO && servoPin.lastValue != value) {
                 this.sendAnalogData(pin, value);
-            }   
+            }
         },
         
         /**
@@ -893,7 +893,7 @@ BO.IOBoard = (function () {
          */
         debug: function (str) {
             if (this._debugMode) {
-                console.log(str); 
+                console.log(str);
             }
         },
 
@@ -907,7 +907,7 @@ BO.IOBoard = (function () {
          * @property samplingInterval
          * @type Number
          */
-        get samplingInterval() { 
+        get samplingInterval() {
             return this._samplingInterval;
         },
         set samplingInterval(interval) {
@@ -928,7 +928,7 @@ BO.IOBoard = (function () {
          * @property isReady
          * @type Boolean
          */
-        get isReady() { 
+        get isReady() {
             return this._isReady;
         },
 
@@ -957,7 +957,7 @@ BO.IOBoard = (function () {
          * @method getSocket
          * @return {WSocketWrapper} A reference to the WebSocket
          */
-        getSocket: function () { 
+        getSocket: function () {
             return this._socket;
         },
             
@@ -967,7 +967,7 @@ BO.IOBoard = (function () {
          * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
          * the Firmata version is returned from the IOBoard.
          * @method reportVersion
-         */ 
+         */
         reportVersion: function () {
             this.send(REPORT_VERSION);
         },
@@ -1163,7 +1163,7 @@ BO.IOBoard = (function () {
          *
          * @method queryPinState
          * @param {Pin} pin The pin object to query the pin state for.
-         */      
+         */
         queryPinState: function (pin) {
             // To Do: Ensure that pin is a Pin object
             var pinNumber = pin.number;
@@ -1182,7 +1182,7 @@ BO.IOBoard = (function () {
          */
         sendDigitalPort: function (portNumber, portData) {
             this.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
-        },        
+        },
 
         /**
          * Send a string message to the IOBoard. This is useful if you have a
@@ -1236,11 +1236,11 @@ BO.IOBoard = (function () {
             //}
             
             for (var i = 0, len = data.length; i < len; i++) {
-                sysexData.push(data[i]);            
+                sysexData.push(data[i]);
             }
             sysexData.push(END_SYSEX);
             
-            this.send(sysexData);      
+            this.send(sysexData);
         },
 
         /**
@@ -1270,14 +1270,14 @@ BO.IOBoard = (function () {
             servoData[3] = minPulse % 128;
             servoData[4] = minPulse >> 7;
             servoData[5] = maxPulse % 128;
-            servoData[6] = maxPulse >> 7;   
+            servoData[6] = maxPulse >> 7;
             servoData[7] = END_SYSEX;
             
             this.send(servoData);
         
             servoPin = this.getDigitalPin(pin);
             servoPin.setType(Pin.SERVO);
-            this.managePinListener(servoPin);    
+            this.managePinListener(servoPin);
         },
 
         /**
@@ -1293,7 +1293,7 @@ BO.IOBoard = (function () {
          * @method getAnalogPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board analog pin).
-         */ 
+         */
         getAnalogPin: function (pinNumber) {
             return this._ioPins[this._analogPinMapping[pinNumber]];
         },
@@ -1302,7 +1302,7 @@ BO.IOBoard = (function () {
          * @method getDigitalPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board digital pin).
-         */ 
+         */
         getDigitalPin: function (pinNumber) {
             return this._ioPins[this._digitalPinMapping[pinNumber]];
         },
@@ -1310,7 +1310,7 @@ BO.IOBoard = (function () {
         /**
          * @method getPins
          * @return {Pin[]} An array containing all pins on the IOBoard
-         */ 
+         */
         getPins: function () {
             return this._ioPins;
         },
@@ -1329,9 +1329,9 @@ BO.IOBoard = (function () {
          * @method analogToDigital
          * @return {Number} The digital pin number equivalent for the specified
          * analog pin number.
-         */ 
+         */
         analogToDigital: function (analogPinNumber) {
-            return this.getAnalogPin(analogPinNumber).number;  
+            return this.getAnalogPin(analogPinNumber).number;
         },
         
         /**
@@ -1378,7 +1378,7 @@ BO.IOBoard = (function () {
                     if (capabilities[i].hasOwnProperty(mode)) {
                         resolution = capabilities[i][mode];
                         console.log("\t" + mode + " (" + resolution + (resolution > 1 ? " bits)" : " bit)"));
-                    } 
+                    }
                 }
             }
         },
@@ -1440,7 +1440,7 @@ BO.IOBoard = (function () {
          * @param {Object} optionalParams Optional parameters to assign to the
          * event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */     
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
         }
@@ -1471,7 +1471,7 @@ BO.IOBoard = (function () {
      * @type BO.IOBoardEvent.DISCONNECTED
      * @event ioBoardDisconnected
      * @param {IOBoard} target A reference to the IOBoard
-     */  
+     */
      
     /**
      * The stringMessage event is dispatched when a string is received
@@ -1508,7 +1508,7 @@ BO.IOBoard = (function () {
      * @param {IOBoard} target A reference to the IOBoard
      * @param {String} name The name of the firmware running on the IOBoard
      * @param {Number} version The firmware version (where Firmata 2.3 = 23)
-     */ 
+     */
      
     /**
      * The pinStateResponse event is dispatched when the results of

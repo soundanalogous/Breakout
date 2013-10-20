@@ -25,7 +25,7 @@ BO.WSocketEvent = (function () {
         
         // call the super class
         // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);     
+        Event.call(this, type);
     };
 
     // events
@@ -46,7 +46,7 @@ BO.WSocketEvent = (function () {
     WSocketEvent.CLOSE = "webSocketClosed";
 
     WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
-    WSocketEvent.prototype.constructor = WSocketEvent;  
+    WSocketEvent.prototype.constructor = WSocketEvent;
 
     return WSocketEvent;
 

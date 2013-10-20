@@ -57,7 +57,7 @@ JSUTILS.Timer = (function () {
                 if (this._isRunning) {
                     this.stop();
                     this.start();
-                }                
+                }
             }
         },
 
@@ -160,14 +160,14 @@ JSUTILS.Timer = (function () {
      * @type JSUTILS.TimerEvent.TIMER
      * @event timerTick
      * @param {JSUTILS.Timer} target A reference to the Timer object.
-     */ 
+     */
 
     /**
      * The timerComplete event is dispatched when the repeatCount value
      * @type JSUTILS.TimerEvent.TIMER_COMPLETE
      * @event timerComplete
      * @param {JSUTILS.Timer} target A reference to the Timer object.
-     */      
+     */
 
     return Timer;
 

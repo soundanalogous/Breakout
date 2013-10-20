@@ -19,7 +19,7 @@ BO.WSocketWrapper = (function () {
         "OPEN": 1,
         "CLOSING": 2,
         "CLOSED": 3
-    };        
+    };
 
     /**
      * Creates a wrapper for various websocket implementations to unify the
@@ -111,7 +111,7 @@ BO.WSocketWrapper = (function () {
                     /** @private */
                     self._socket.onclose = function () {
                         self._readyState = self._socket.readyState;
-                        self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));   
+                        self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
                     };
 
                 };
@@ -143,7 +143,7 @@ BO.WSocketWrapper = (function () {
      * @method sendString
      * @param {String} message The message to send
      */
-    WSocketWrapper.prototype.sendString = function (message) {        
+    WSocketWrapper.prototype.sendString = function (message) {
         if (this.readyState === READY_STATE.OPEN) {
             this._socket.send(message.toString());
         }
@@ -154,7 +154,7 @@ BO.WSocketWrapper = (function () {
      * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
      * @property readyState
      * @type String
-     */      
+     */
     Object.defineProperty(WSocketWrapper.prototype, "readyState", {
         get: function () {
             return this._readyState;
@@ -170,7 +170,7 @@ BO.WSocketWrapper = (function () {
      * @type BO.WebsocketEvent.CONNECTED
      * @event webSocketConnected
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
-     */ 
+     */
 
     /**
      * The webSocketMessage event is dispatched when a websocket message is received.
@@ -178,14 +178,14 @@ BO.WSocketWrapper = (function () {
      * @event webSocketMessage
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      * @param {String} message The websocket data    
-     */ 
+     */
 
     /**
      * The webSocketClosed event is dispatched the websocket connection is closed.
      * @type BO.WebsocketEvent.CLOSE
      * @event webSocketClosed
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
-     */      
+     */
 
     return WSocketWrapper;
 

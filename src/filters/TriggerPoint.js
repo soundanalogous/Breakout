@@ -46,7 +46,7 @@ BO.filters.TriggerPoint = (function () {
         if (points[0] instanceof Array) {
             var len = points.length;
             for (var i = 0; i < len; i++) {
-                this._points[points[i][0]] = points[i][1];  
+                this._points[points[i][0]] = points[i][1];
             }
         } else if (typeof points[0] === "number") {
             this._points[points[0]] = points[1];

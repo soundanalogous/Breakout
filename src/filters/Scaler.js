@@ -109,7 +109,7 @@ BO.filters.Scaler = (function () {
      */
     Scaler.CUBE_ROOT = function (val) {
         return Math.pow(val, 0.25);
-    };          
+    };
 
 
     return Scaler;

@@ -59,7 +59,7 @@ BO.io.SoftPotEvent = (function () {
      * @property SoftPotEvent.TAP
      * @static
      */
-    SoftPotEvent.TAP = "softPotTap";        
+    SoftPotEvent.TAP = "softPotTap";
 
     SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
     SoftPotEvent.prototype.constructor = SoftPotEvent;

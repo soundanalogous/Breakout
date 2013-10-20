@@ -54,7 +54,7 @@ BO.custom.ID12RFIDReader = (function () {
         this._board = board;
         this._evtDispatcher = new EventDispatcher(this);
 
-        board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));         
+        board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
     };
 
     ID12RFIDReader.prototype = {
@@ -152,10 +152,10 @@ BO.custom.ID12RFIDReader = (function () {
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */     
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }       
+        }
 
     };
 
@@ -176,7 +176,7 @@ BO.custom.ID12RFIDReader = (function () {
      * @event removeTag
      * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
      * @param {String} tag The RFID tag value.   
-     */         
+     */
 
     return ID12RFIDReader;
 

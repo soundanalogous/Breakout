@@ -71,7 +71,7 @@ BO.io.Button = (function () {
             // Set value to high to avoid initial change event
             this._pin.value = Pin.HIGH;
         }
-        this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));   
+        this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
     };
 
     Button.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
@@ -123,7 +123,7 @@ BO.io.Button = (function () {
     /**
      * @private
      * @method released
-     */ 
+     */
     Button.prototype.released = function () {
         this._timeout = null;
         this.dispatchEvent(new ButtonEvent(ButtonEvent.RELEASE));
@@ -216,14 +216,14 @@ BO.io.Button = (function () {
      * @type BO.io.ButtonEvent.PRESS
      * @event pressed
      * @param {BO.io.Button} target A reference to the Button object
-     */ 
+     */
 
     /**
      * The released event is dispatched when the button is released.
      * @type BO.io.ButtonEvent.RELEASE
      * @event released
      * @param {BO.io.Button} target A reference to the Button object
-     */ 
+     */
      
     /**
      * The longPress event is dispatched once when the button has been held for
@@ -231,7 +231,7 @@ BO.io.Button = (function () {
      * @type BO.io.ButtonEvent.LONG_PRESS
      * @event longPress
      * @param {BO.io.Button} target A reference to the Button object
-     */ 
+     */
      
     /**
      * The sustainedPress event is dispatched continuously at the rate 
@@ -240,7 +240,7 @@ BO.io.Button = (function () {
      * @type BO.io.ButtonEvent.SUSTAINED_PRESS
      * @event sustainedPress
      * @param {BO.io.Button} target A reference to the Button object
-     */              
+     */
 
     return Button;
 

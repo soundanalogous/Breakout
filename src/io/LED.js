@@ -81,7 +81,7 @@ BO.io.LED = (function () {
          * Get or set the current value (intensity) of the LED.
          * @property intensity
          * @type Number
-         */ 
+         */
         get intensity() {
             return this._pin.value;
         },
@@ -216,8 +216,8 @@ BO.io.LED = (function () {
                 this._pin.generator.start();
             } else {
                 this._pin.removeGenerator();
-            }       
-        }   
+            }
+        }
     };
 
     /**

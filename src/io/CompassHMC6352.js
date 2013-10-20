@@ -52,12 +52,12 @@ BO.io.CompassHMC6352 = (function () {
      * [read-only] The heading in degrees.
      * @property heading
      * @type Number
-     */      
+     */
     Object.defineProperty(CompassHMC6352.prototype, "heading", {
         get: function () {
             return this._heading;
         }
-    });    
+    });
     
     /**
      * @private
@@ -98,7 +98,7 @@ BO.io.CompassHMC6352 = (function () {
      * @type BO.io.CompassEvent.UPDATE
      * @event update
      * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
-     */     
+     */
 
     return CompassHMC6352;
 

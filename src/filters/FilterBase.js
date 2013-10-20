@@ -35,7 +35,7 @@ BO.filters.FilterBase = (function () {
      * @param {Number} val The input value to be filtered.
      * @return {Number} The resulting value after applying the filter.
      */
-    FilterBase.prototype.processSample = function (val) { 
+    FilterBase.prototype.processSample = function (val) {
         // to be implemented in sub class
         throw new Error("Filter objects must implement the method processSample");
     };

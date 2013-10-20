@@ -14,7 +14,7 @@ BO.io.SoftPot = (function () {
         FLICK_TIMEOUT           = 200,
         PRESS_TIMER_INTERVAL    = 10,
         MIN_VALUE               = 0.01,
-        DEBOUNCE_TIMEOUT        = 20;   
+        DEBOUNCE_TIMEOUT        = 20;
 
     // dependencies
     var PhysicalInputBase = BO.PhysicalInputBase,
@@ -105,7 +105,7 @@ BO.io.SoftPot = (function () {
      * strip
      */
     SoftPot.prototype.setMinFlickMovement = function (num) {
-        this._minFlickMovement = num;   
+        this._minFlickMovement = num;
     };
     
     /**
@@ -122,16 +122,16 @@ BO.io.SoftPot = (function () {
         this.dispatch(SoftPotEvent.PRESS);
         
         this._isTouched = true;
-        this._isDrag = false;   
+        this._isDrag = false;
     };
 
     /**
      * @private
      * @method onRelease
      */
-    SoftPot.prototype.onRelease = function () {      
+    SoftPot.prototype.onRelease = function () {
 
-        var dispatchedFlick = false; 
+        var dispatchedFlick = false;
         
         // discard unintentional touch / noise
         if (this._pressTimer.currentCount > DEBOUNCE_TIMEOUT / PRESS_TIMER_INTERVAL) {
@@ -141,10 +141,10 @@ BO.io.SoftPot = (function () {
                     this.dispatch(SoftPotEvent.FLICK_DOWN);
                 } else {
                     this.dispatch(SoftPotEvent.FLICK_UP);
-                }   
-                dispatchedFlick = true; 
+                }
+                dispatchedFlick = true;
                 
-            } 
+            }
                         
             if (!dispatchedFlick) {
                 // Check for presses  
@@ -154,13 +154,13 @@ BO.io.SoftPot = (function () {
                     if (!this._isDrag && this._pressTimer.currentCount <= this._tapTimeout / PRESS_TIMER_INTERVAL) {
                         this.dispatch(SoftPotEvent.TAP);
                     }
-                } 
+                }
             }
         }
 
         this.dispatch(SoftPotEvent.RELEASE);
 
-        this.resetForNext(); 
+        this.resetForNext();
     };
     
     /**
@@ -169,9 +169,9 @@ BO.io.SoftPot = (function () {
      * @param {Number} touchPoint The value where the touch is occuring on the
      * strip
      */
-    SoftPot.prototype.onMove = function (touchPoint) {       
+    SoftPot.prototype.onMove = function (touchPoint) {
     
-        this._touchPoint = touchPoint;      
+        this._touchPoint = touchPoint;
         // Save current point
         var curMovePoint = touchPoint;
         
@@ -179,8 +179,8 @@ BO.io.SoftPot = (function () {
         this._flickDistance = Math.abs(curMovePoint - this._lastMovePoint);
         
         if (!this._isDrag && this._flickDistance > this._minFlickMovement) {
-            this._flickTimer.reset(); 
-            this._flickTimer.start(); 
+            this._flickTimer.reset();
+            this._flickTimer.start();
             
             if (curMovePoint - this._lastMovePoint > 0) {
                 this._flickDir = 1;
@@ -188,16 +188,16 @@ BO.io.SoftPot = (function () {
                 this._flickDir = -1;
             }
             
-            this._isDrag = false; 
-        }           
+            this._isDrag = false;
+        }
         
-        var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);                
+        var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);
 
         // Dragging handler 
         // Don't check when flick timer is running
         //console.log("min drag = " + this._minDragMovement);
         if ((dragDistance > this._minDragMovement) && (this._flickTimer.running === false)) {
-            this._isDrag = true; 
+            this._isDrag = true;
         }
         
         if (this._isDrag) {
@@ -205,11 +205,11 @@ BO.io.SoftPot = (function () {
             this._distanceFromPressed = curMovePoint - this._lastMovePoint;
         }
                                 
-        this.debug("SoftPot: distance traveled flick is " + this._flickDistance); 
-        this.debug("SoftPot: distance traveled drag is " + dragDistance); 
+        this.debug("SoftPot: distance traveled flick is " + this._flickDistance);
+        this.debug("SoftPot: distance traveled drag is " + dragDistance);
 
         // Reuse for next 
-        this._lastMovePoint = curMovePoint; 
+        this._lastMovePoint = curMovePoint;
     };
 
     /**
@@ -221,7 +221,7 @@ BO.io.SoftPot = (function () {
      */
     SoftPot.prototype.setRange = function (minimum, maximum) {
         this._pin.removeAllFilters();
-        this._pin.addFilter(new Scaler(minimum, maximum, 0, 1, Scaler.LINEAR)); 
+        this._pin.addFilter(new Scaler(minimum, maximum, 0, 1, Scaler.LINEAR));
     };
 
     /**
@@ -231,7 +231,7 @@ BO.io.SoftPot = (function () {
      */
     SoftPot.prototype.dispatch = function (type) {
         this.debug("SoftPot dispatch " + type);
-        this.dispatchEvent(new SoftPotEvent(type, this._touchPoint));   
+        this.dispatchEvent(new SoftPotEvent(type, this._touchPoint));
     };
 
     /**
@@ -253,7 +253,7 @@ BO.io.SoftPot = (function () {
      */
     SoftPot.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
     };
 
@@ -293,7 +293,7 @@ BO.io.SoftPot = (function () {
             set: function (min) {
                 this._minFlickMovement = min;
             }
-        },     
+        },
         
         /**
          * The minimum distance required to trigger a drag event. Change this
@@ -358,7 +358,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.RELEASE
      * @event softPotReleased
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */ 
+     */
      
     /**
      * The softPotDrag event is dispatched when a drag is detected along 
@@ -366,7 +366,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.DRAG
      * @event softPotDrag
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */ 
+     */
      
     /**
      * The softPotFlickUp event is dispatched when a flick gesture is detected
@@ -374,7 +374,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.FLICK_UP
      * @event softPotFlickUp
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */ 
+     */
      
     /**
      * The softPotFlickDown event is dispatched when a flick gesture is 
@@ -390,7 +390,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.TAP
      * @event softPotTap
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */                  
+     */
 
     return SoftPot;
 

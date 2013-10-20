@@ -57,7 +57,7 @@ BO.Pin = (function () {
 
         this._autoSetValueCallback = this.autoSetValue.bind(this);
         
-        this._evtDispatcher = new EventDispatcher(this);    
+        this._evtDispatcher = new EventDispatcher(this);
 
     };
 
@@ -68,7 +68,7 @@ BO.Pin = (function () {
         /**
          * The analogNumber sould only be set internally.
          * @private
-         */     
+         */
         setAnalogNumber: function (num) {
             this._analogNumber = num;
         },
@@ -78,17 +78,17 @@ BO.Pin = (function () {
          * board or datasheet).
          * @property analogNumber
          * @type Number
-         */ 
+         */
         get analogNumber() {
             return this._analogNumber;
-        },      
+        },
 
         /**
          * [read-only] The pin number corresponding to the Arduino documentation 
          * for the type of board.
          * @property number
          * @type Number
-         */          
+         */
         get number() {
             return this._number;
         },
@@ -126,7 +126,7 @@ BO.Pin = (function () {
             // convert PWM values to 0.0 - 1.0 range
             if (this._type === Pin.PWM) {
                 state = state / this.analogWriteResolution;
-            } 
+            }
 
             this._state = state;
         },
@@ -160,7 +160,7 @@ BO.Pin = (function () {
          * reset.
          * @property average
          * @type Number
-         */          
+         */
         get average() {
             return this._average;
         },
@@ -180,7 +180,7 @@ BO.Pin = (function () {
          * reset.
          * @property maximum
          * @type Number
-         */          
+         */
         get maximum() {
             return this._maximum;
         },
@@ -207,7 +207,7 @@ BO.Pin = (function () {
          * The current digital or analog value of the pin.
          * @property value
          * @type Number
-         */      
+         */
         get value() {
             return this._value;
         },
@@ -223,7 +223,7 @@ BO.Pin = (function () {
          * [read-only] The last pin value.
          * @property lastValue
          * @type Number
-         */          
+         */
         get lastValue() {
             return this._lastValue;
         },
@@ -232,7 +232,7 @@ BO.Pin = (function () {
          * [read-only] The value before any filters were applied.
          * @property preFilterValue
          * @type Number
-         */          
+         */
         get preFilterValue() {
             return this._preFilterValue;
         },
@@ -241,7 +241,7 @@ BO.Pin = (function () {
          * Get and set filters for the Pin.
          * @property filters
          * @type FilterBase[]
-         */ 
+         */
         get filters() {
             return this._filters;
         },
@@ -253,7 +253,7 @@ BO.Pin = (function () {
          * [read-only] Get a reference to the current generator.
          * @property generator
          * @type GeneratorBase
-         */ 
+         */
         get generator() {
             return this._generator;
         },
@@ -264,7 +264,7 @@ BO.Pin = (function () {
          * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
          * @method getType
          * @return {Number} The pin type/mode
-         */ 
+         */
         getType: function () {
             return this._type;
         },
@@ -278,13 +278,13 @@ BO.Pin = (function () {
             if (pinType >= 0 && pinType < Pin.TOTAL_PIN_MODES) {
                 this._type = pinType;
             }
-        },          
+        },
 
         /**
          * An object storing the capabilities of the pin.
          * @method getCapabilities
          * @return {Object} An object describing the capabilities of this Pin.
-         */ 
+         */
         getCapabilities: function () {
             return this._capabilities;
         },
@@ -306,7 +306,7 @@ BO.Pin = (function () {
             if (analogReadRes) {
                 this.setAnalogReadResolution(Math.pow(2, analogReadRes) - 1);
             }
-        },      
+        },
 
         /**
          * Dispatch a Change event whenever a pin value changes
@@ -433,7 +433,7 @@ BO.Pin = (function () {
                 // BO.generators.GeneratorEvent.UPDATE = "update"
                 this._generator.removeEventListener("update", this._autoSetValueCallback);
             }
-            this._generator = null;             
+            this._generator = null;
         },
 
         /**
@@ -506,10 +506,10 @@ BO.Pin = (function () {
          * @param {Object} optionalParams Optional parameters to assign to the 
          * event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */ 
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }       
+        }
             
     };
 
@@ -607,7 +607,7 @@ BO.Pin = (function () {
      * @type BO.PinEvent.RISING_EDGE
      * @event risingEdge
      * @param {BO.Pin} target A reference to the Pin object.
-     */ 
+     */
      
     /**
      * The change event is dispatched when the pin value decreased 

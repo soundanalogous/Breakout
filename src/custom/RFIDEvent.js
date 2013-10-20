@@ -49,7 +49,7 @@ BO.custom.RFIDEvent = (function () {
      * [read-only] The RFID tag value (hexadecimal string).
      * @property tag
      * @type String
-     */ 
+     */
     Object.defineProperty(RFIDEvent.prototype, "tag", {
         get: function () {
             return this._tag;

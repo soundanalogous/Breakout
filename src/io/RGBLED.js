@@ -110,7 +110,7 @@ BO.io.RGBLED = (function () {
             time = time || 1000;
             this._redLED.fadeTo(0, time);
             this._greenLED.fadeTo(0, time);
-            this._blueLED.fadeTo(0, time);          
+            this._blueLED.fadeTo(0, time);
         },
 
         /**
@@ -121,7 +121,7 @@ BO.io.RGBLED = (function () {
          * @param {Number} green The green value to fade to (0 - 255)
          * @param {Number} blue The blue value to fade to (0 - 255)
          * @param {Number} time The time of the fade (in milliseconds)       
-         */     
+         */
         fadeTo: function (red, green, blue, time) {
             red = red / 255;
             green = green / 255;
@@ -143,7 +143,7 @@ BO.io.RGBLED = (function () {
      * @property RGBLED.COMMON_CATHODE
      * @static
      */
-    RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
+    RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;
 
     return RGBLED;
 

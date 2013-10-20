@@ -123,7 +123,7 @@ BO.io.BlinkM = (function () {
      * colorRange[0] = range for Hue (0-255), colorRange[1] = range for
      * Saturation, etc.
      * @param {Number} speed The fade speed. Default value is 15.
-     */ 
+     */
     BlinkM.prototype.fadeToRandomHSBColor = function (colorRange, speed) {
         var fadeSpeed = speed || -1;
         if (fadeSpeed >= 0) {
