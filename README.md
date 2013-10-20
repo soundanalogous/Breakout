@@ -63,13 +63,13 @@ The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-comp
 The next step is to run the Breakout Server application:
 
 1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded. 
-2. You'll find **Breakout Server** for your platform (mac, win or linux) in *Breakout/server/*. Unzip and open the folder for your platform and launch the application. Mountain Lion users may need to [temporarily disable Gatekeeper](https://answers.uchicago.edu/page.php?id=25481) to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
+2. You'll find **Breakout Server** for your platform (mac, win or linux) in `Breakout/server/`. Unzip and open the folder for your platform and launch the application. Mountain Lion users may need to [temporarily disable Gatekeeper](https://answers.uchicago.edu/page.php?id=25481) to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
 6. Open [http://localhost:8887/examples/index.html](http://localhost:8887/examples/index.html) in Chrome (v14 or greater), Firefox (v11 or greater), or Safari (v5 or greater) and try the Getting Started examples. Note that if you changed the network port in step 4, you will need to update the 2nd parameter of the IOBoard constructor to the new port number.
 
-You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of "localhost:8887/examples/" enter the IP address or hostname of the computer running Breakout Server (192.168.2.1:8887/examples/ or yourhostname.local:8887/examples/). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
+You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of `localhost:8887/examples/` enter the IP address or hostname of the computer running Breakout Server (`192.168.2.1:8887/examples/` or `yourhostname.local:8887/examples/`). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
 
 For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, enabling auto start mode, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
 
