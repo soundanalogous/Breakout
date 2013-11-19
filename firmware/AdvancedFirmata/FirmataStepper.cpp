@@ -336,10 +336,12 @@ void FirmataStepper::updateStepPosition() {
 void FirmataStepper::stepMotor(byte step_num, byte direction) {
   if (this->interface == FirmataStepper::DRIVER) {
     digitalWrite(dir_pin, direction);
-	  delayMicroseconds(1);
-	  digitalWrite(step_pin, LOW);
-    delayMicroseconds(1);
-	  digitalWrite(step_pin, HIGH);
+      // delayMicroseconds(2); Provides compatibility with some high current stepper drivers (e.g. TI DRV8825)
+      delayMicroseconds(1);
+      digitalWrite(step_pin, LOW);
+      // delayMicroseconds(2); Provides compatibility with some high current stepper drivers (e.g. TI DRV8825)
+      delayMicroseconds(1);
+      digitalWrite(step_pin, HIGH);
   } else if (this->interface == FirmataStepper::TWO_WIRE) {
     switch (step_num) {
       case 0: /* 01 */
