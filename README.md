@@ -69,7 +69,7 @@ The next step is to run the Breakout Server application:
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
 6. Open [http://localhost:8887/examples/index.html](http://localhost:8887/examples/index.html) in Chrome (v14 or greater), Firefox (v11 or greater), or Safari (v5 or greater) and try the Getting Started examples. Note that if you changed the network port in step 4, you will need to update the 2nd parameter of the IOBoard constructor to the new port number.
 
-You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of `localhost:8887/examples/` enter the IP address or hostname of the computer running Breakout Server (`192.168.2.1:8887/examples/` or `yourhostname.local:8887/examples/`). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
+You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of `localhost:8887/examples/` enter the IP address or hostname of the computer running Breakout Server (`192.168.2.1:8887/examples/` or `yourhostname.local:8887/examples/`u). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
 
 For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, enabling auto start mode, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
 
@@ -93,7 +93,7 @@ You will need one of the following I/O boards:
 OS:
 
 - Mac OS X 10.6 or higher
-- Windows 7 or XP ([Java JRE 1.6 or greater required to run Breakout Server](http://www.java.com/en/download/index.jsp))
+- Windows 8, 7 or XP ([Java JRE 1.6 or greater required to run Breakout Server](http://www.java.com/en/download/index.jsp))
 - Has been tested successfuly on Ubuntu 11.10 running in 64-bit mode on an x86-64 processor
 - May work on older versions of OS X and Windows as well but has not been tested
 - May work on other Linux distributions but has not been tested
@@ -103,7 +103,7 @@ Desktop Browsers:
 - Chrome version 14 or higher
 - Firefox version 11 or higher
 - Safari version 5 or higher
-- Opera 12
+- Opera 12 or higher
 
 Mobile Browsers (browser must support websockets):
 
