@@ -38,8 +38,7 @@ $(document).ready(function() {
     var IOBoardEvent = BO.IOBoardEvent;
     var Pin = BO.Pin;
     var PinEvent = BO.PinEvent;
-    var sensor;
-    var value;
+
     
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -51,15 +50,17 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
+    var line1 = new TimeSeries();
+    var $analogVal = $('#value');
+    var sensor;
+    var value;
 
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     // Initial content
-    $('#value').text("Value = " + "not data available");
-    
-    var line1 = new TimeSeries();
+    $analogVal.text("Value = " + "not data available");
     
     function onReady(event) {
         // Remove the event listener because it is no longer needed
@@ -72,36 +73,34 @@ $(document).ready(function() {
     }
 
     function onChange(evt) {
-        // The potentiometer gives back a value between 0 and 1.0
+        // The potentiometer returns a value between 0 and 1.0
         var valueIn = evt.target.value;
         var value = (valueIn * 100).toFixed(0);
-        $('#value').text("Value = " + value);
+        $analogVal.text("Value = " + value);
     }
 
-       (function() {
-        setInterval(function() {
-        var timestamp = new Date().getTime();
-          line1.append(timestamp, (sensor.value * 100).toFixed(0));}, 1000);
+    var timestamp = new Date().getTime();
+    line1.append(timestamp, (sensor.value * 100).toFixed(0));}, 1000);
 
-        var timeline = new SmoothieChart({
-          minValue: 0.0,
-          maxValue: 100.0,
-          millisPerPixel: 20,
-          grid: { 
-              strokeStyle: 'rgb(127, 127, 127)', 
-              fillStyle: 'rgb(229, 229, 229)',
-              lineWidth: 1, 
-              millisPerLine: 500, 
-              verticalSections: 4,
-              },
-          labels: { fillStyle:'rgb(0, 0, 0)' }
-          });
-        timeline.addTimeSeries(line1, { 
-            strokeStyle: 'rgb(0, 0, 255)', 
-            fillStyle: 'rgba(0, 0, 0, 0)',
-            lineWidth: 2 });
-        timeline.streamTo(document.getElementById("graph"), 1000);
-      })();
+    var timeline = new SmoothieChart({
+        minValue: 0.0,
+        maxValue: 100.0,
+        millisPerPixel: 20,
+        grid: { 
+            strokeStyle: 'rgb(127, 127, 127)', 
+            fillStyle: 'rgb(229, 229, 229)',
+            lineWidth: 1, 
+            millisPerLine: 500, 
+            verticalSections: 4,
+        },
+        labels: { fillStyle:'rgb(0, 0, 0)' }
+    });
+    timeline.addTimeSeries(line1, { 
+        strokeStyle: 'rgb(0, 0, 255)', 
+        fillStyle: 'rgba(0, 0, 0, 0)',
+        lineWidth: 2 
+    });
+    timeline.streamTo(document.getElementById("graph"), 1000);
 });
 </script>
 

@@ -60,14 +60,16 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
+    var $firmware = $('#firmware');
+    var $firmwareVer = $('#firmwareVer');
     
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
     
     // Standard values for the jQuery elements
-    $('#firmware').text("unkown");
-    $('#firmwareVer').text("unknown");
+    $firmware.text("unkown");
+    $firmwareVer.text("unknown");
     
     function onReady(event) {
         var firmware,
@@ -97,8 +99,8 @@ $(document).ready(function() {
         }
         $("#capabilities").append(html);
         
-        $('#firmware').text(firmware);
-        $('#firmwareVer').text(firmwareVer);
+        $firmware.text(firmware);
+        $firmwareVer.text(firmwareVer);
     }
 });
 

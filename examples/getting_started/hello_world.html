@@ -88,6 +88,8 @@ $(document).ready(function() {
     // Variables
     var led;
     var button;
+    var $state = $('#state');
+    var $schematic = $('#schematic');
 
     // Handle showing and hiding the schematic
     $('#schematicBtn').on('click', toggleSchematicView);    
@@ -123,7 +125,7 @@ $(document).ready(function() {
         // triggered the event
         var btn = evt.target;
         // Display the state on the page
-        $('#state').html("Button " + btn.pinNumber + " state: Pressed");
+        $state.html("Button " + btn.pinNumber + " state: Pressed");
     }
 
     function onRelease(evt) {
@@ -131,7 +133,7 @@ $(document).ready(function() {
         // triggered the event      
         var btn = evt.target;
         // Display the state on the page
-        $('#state').html("Button " + btn.pinNumber + " state: Released");
+        $state.html("Button " + btn.pinNumber + " state: Released");
     }
 
     function turnLedOn(evt) {
@@ -150,11 +152,11 @@ $(document).ready(function() {
         if (schematicBtn.data('state') === "hidden") {
             schematicBtn.text("Hide Schematic");
             schematicBtn.data('state', "visible");
-            $('#schematic').css('display', 'block');
+            $schematic.css('display', 'block');
         } else {
             schematicBtn.text("Show Schematic");
             schematicBtn.data('state', "hidden");
-            $('#schematic').css('display', 'none');
+            $schematic.css('display', 'none');
         }   
     }
 });

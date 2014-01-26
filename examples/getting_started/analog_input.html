@@ -61,6 +61,8 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
+    var $analogVal = $('#value');
+    var $progressBar = $("#progressbar");
 
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
@@ -81,8 +83,8 @@ $(document).ready(function() {
         var valueIn = evt.target.value;
         var value = valueIn * 100;
 
-        $('#value').text("Value = " + value.toFixed(0));
-        $("#progressbar").progressbar({ value: value });
+        $analogVal.text("Value = " + value.toFixed(0));
+        $progressBar.progressbar({ value: value });
     }
 });
 </script>

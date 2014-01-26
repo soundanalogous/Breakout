@@ -77,6 +77,8 @@ $(document).ready(function() {
     
     // Variables
     var led;
+    var $slider = $("#slider");
+    var $ledValue = $('#value');
     
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
@@ -95,29 +97,29 @@ $(document).ready(function() {
         
         // Use jQuery to get a reference to the elements
         // and listen for events 
-        $('#btnStop').click(function() { changeLed(0.0); });
-        $('#btnFull').click(function() { changeLed(1.0); });
-        $('#btnHalf').click(function() { changeLed(0.5); });
+        $('#btnStop').click(function () { changeLed(0.0); });
+        $('#btnFull').click(function () { changeLed(1.0); });
+        $('#btnHalf').click(function () { changeLed(0.5); });
 
-        $("#slider").slider({
+        $slider.slider({
             step: 0.05,
             min : 0.0,
             max : 1.0
             });
 
-        $('#value').text("Value: 0.0");
+        $ledValue.text("Value: 0.0");
     }
     
-    $( "#slider" ).bind( "slide", function(event, ui) {
+    $slider.on("slide", function (event, ui) {
         var value = ui.value;
-            $('#value').text("Value: " + value.toFixed(2));
-            led.value = value;
+        $ledValue.text("Value: " + value.toFixed(2));
+        led.value = value;
     })
     
     function changeLed(intensity) {
         led.value = intensity;
-        $("#slider").slider( "option", "value", intensity);
-        $('#value').text("Value: " + intensity);
+        $slider.slider( "option", "value", intensity);
+        $ledValue.text("Value: " + intensity);
     }
     
 /* If you want to switch the LED to an given brightness 

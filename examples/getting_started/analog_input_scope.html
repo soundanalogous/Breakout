@@ -70,10 +70,7 @@ $(document).ready(function() {
     var IOBoardEvent = BO.IOBoardEvent;
     var PinEvent = BO.PinEvent;
     var SignalScope = JSUTILS.SignalScope;
-    
-    // Variables
-    var pot;
-    
+        
     // Set to true to print debug messages to console
     BO.enableDebugging = false; 
 
@@ -87,6 +84,8 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
+    var pot;
+    var $analogVal = $('#value');    
     
     // Scope details
     var scope1 = new SignalScope("scope1", 200, 100, 0, 1);
@@ -102,7 +101,6 @@ $(document).ready(function() {
         // Need to enable an analog pin in order to read it
         arduino.enableAnalogPin(0);
         pot = arduino.getAnalogPin(0);
-        pot.addEventListener(PinEvent.CHANGE, onChange);
 
         // Add markers to scope
         scope1.addMarker(0.5, '#00FF00')
@@ -110,13 +108,10 @@ $(document).ready(function() {
         // Update the graph 
         animate();      
     }
-    
-    function onChange(evt) {
-    }
-    
+        
     function animate() {
         scope1.update(pot.value);
-        $('#value').text('Value = ' + pot.value.toFixed(3));
+        $analogVal.text('Value = ' + pot.value.toFixed(3));
         requestAnimFrame(animate);
     }
 
