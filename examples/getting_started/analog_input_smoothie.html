@@ -30,7 +30,7 @@ h2 {
 <!-- Only needed for the visualization (chart) -->
 <script type="text/javascript" src="../libs/smoothie/smoothie.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function () {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -39,7 +39,6 @@ $(document).ready(function() {
     var Pin = BO.Pin;
     var PinEvent = BO.PinEvent;
 
-    
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
@@ -50,8 +49,8 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    var line1 = new TimeSeries();
     var $analogVal = $('#value');
+    var line1 = new TimeSeries();
     var sensor;
     var value;
 
@@ -70,6 +69,8 @@ $(document).ready(function() {
         arduino.enableAnalogPin(0);
         sensor = arduino.getAnalogPin(0);
         sensor.addEventListener(PinEvent.CHANGE, onChange);
+
+        createSmoothieChart();
     }
 
     function onChange(evt) {
@@ -79,28 +80,34 @@ $(document).ready(function() {
         $analogVal.text("Value = " + value);
     }
 
-    var timestamp = new Date().getTime();
-    line1.append(timestamp, (sensor.value * 100).toFixed(0));}, 1000);
+    function createSmoothieChart() {
+        var timeline = new SmoothieChart({
+            minValue: 0.0,
+            maxValue: 100.0,
+            millisPerPixel: 20,
+            grid: { 
+                strokeStyle: 'rgb(127, 127, 127)', 
+                fillStyle: 'rgb(229, 229, 229)',
+                lineWidth: 1, 
+                millisPerLine: 500, 
+                verticalSections: 4,
+            },
+            labels: { fillStyle:'rgb(0, 0, 0)' }
+        });
 
-    var timeline = new SmoothieChart({
-        minValue: 0.0,
-        maxValue: 100.0,
-        millisPerPixel: 20,
-        grid: { 
-            strokeStyle: 'rgb(127, 127, 127)', 
-            fillStyle: 'rgb(229, 229, 229)',
-            lineWidth: 1, 
-            millisPerLine: 500, 
-            verticalSections: 4,
-        },
-        labels: { fillStyle:'rgb(0, 0, 0)' }
-    });
-    timeline.addTimeSeries(line1, { 
-        strokeStyle: 'rgb(0, 0, 255)', 
-        fillStyle: 'rgba(0, 0, 0, 0)',
-        lineWidth: 2 
-    });
-    timeline.streamTo(document.getElementById("graph"), 1000);
+        timeline.addTimeSeries(line1, { 
+            strokeStyle: 'rgb(0, 0, 255)', 
+            fillStyle: 'rgba(0, 0, 0, 0)',
+            lineWidth: 2 
+        });
+
+        timeline.streamTo(document.getElementById("graph"), 1000);
+
+        setInterval(function () {
+            var timestamp = new Date().getTime();
+            line1.append(timestamp, (sensor.value * 100).toFixed(0));
+        }, 1000);
+    }
 });
 </script>
 
