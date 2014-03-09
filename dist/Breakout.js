@@ -2960,20 +2960,27 @@ BO.io.Stepper = (function () {
      */
     Stepper.COUNTER_CLOCKWISE = 1;
     /**
+     * Uses 1 microsecond delay between steps
      * @property Stepper.DRIVER
      * @static
      */
-    Stepper.DRIVER = 1;
+    Stepper.DRIVER = 0x01;
+    /**
+     * Uses 2 microsecond delay between steps
+     * @property Stepper.DRIVER_HIGH_CURRENT
+     * @static
+     */
+    Stepper.DRIVER_HIGH_CURRENT = 0x11;
     /**
      * @property Stepper.TWO_WIRE
      * @static
      */
-    Stepper.TWO_WIRE = 2;
+    Stepper.TWO_WIRE = 0x02;
     /**
      * @property Stepper.FOUR_WIRE
      * @static
      */
-    Stepper.FOUR_WIRE = 4;
+    Stepper.FOUR_WIRE = 0x04;
 
     return Stepper;
 

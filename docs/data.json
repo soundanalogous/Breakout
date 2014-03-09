@@ -7514,6 +7514,7 @@
         {
             "file": "src/io/Stepper.js",
             "line": 310,
+            "description": "Uses 1 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER",
             "static": 1,
@@ -7522,7 +7523,17 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 315,
+            "line": 316,
+            "description": "Uses 2 microsecond delay between steps",
+            "itemtype": "property",
+            "name": "Stepper.DRIVER_HIGH_CURRENT",
+            "static": 1,
+            "class": "BO.io.Stepper",
+            "namespace": "BO.io"
+        },
+        {
+            "file": "src/io/Stepper.js",
+            "line": 322,
             "itemtype": "property",
             "name": "Stepper.TWO_WIRE",
             "static": 1,
@@ -7531,7 +7542,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 320,
+            "line": 327,
             "itemtype": "property",
             "name": "Stepper.FOUR_WIRE",
             "static": 1,

@@ -1,5 +1,6 @@
 2014.03.09 Version 0.3.1
-* Updated AdvancedFirmata
+* Added new DRIVER_HIGH_CURRENT interface to Stepper.js
+* Updated AdvancedFirmata to support high current stepper driver
 * Added echo_string.html example to custom_examples
 * Updated examples to use jQuery 2.1.0.
 * Removed blink_led.html from getting started examples.

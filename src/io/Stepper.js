@@ -328,7 +328,7 @@ BO.io.Stepper = (function () {
      * @property Stepper.FOUR_WIRE
      * @static
      */
-    Stepper.FOUR_WIRE = 0x04; 
+    Stepper.FOUR_WIRE = 0x04;
 
     return Stepper;
 
