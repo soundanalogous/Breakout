@@ -2,7 +2,7 @@
     "project": {
         "name": "Breakout",
         "description": "breakoutjs.com",
-        "version": "0.3.0"
+        "version": "0.3.1"
     },
     "files": {
         "src/core/I2CBase.js": {
@@ -1763,7 +1763,7 @@
         {
             "file": "src/core/I2CBase.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.I2CBase"
         },
         {
@@ -1979,7 +1979,7 @@
         {
             "file": "src/core/IOBoard.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.IOBoard",
             "namespace": "BO"
         },
@@ -3185,7 +3185,7 @@
         {
             "file": "src/core/IOBoardEvent.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.IOBoardEvent",
             "namespace": "BO"
         },
@@ -3282,7 +3282,7 @@
         {
             "file": "src/core/PhysicalInputBase.js",
             "line": 1,
-            "description": "Based on PhysicalInput.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Based on PhysicalInput.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.PhysicalInputBase",
             "namespace": "BO"
         },
@@ -3356,7 +3356,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 1,
-            "description": "Based on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Based on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.Pin",
             "namespace": "BO"
         },
@@ -3974,7 +3974,7 @@
         {
             "file": "src/core/PinEvent.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.PinEvent",
             "namespace": "BO"
         },
@@ -4008,7 +4008,7 @@
         {
             "file": "src/core/WSocketEvent.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.WSocketEvent",
             "namespace": "BO"
         },
@@ -4042,7 +4042,7 @@
         {
             "file": "src/core/WSocketWrapper.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
@@ -4197,14 +4197,14 @@
         {
             "file": "src/core/core.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.custom.ID12RFIDReader",
             "namespace": "BO"
         },
         {
             "file": "src/core/core.js",
             "line": 7,
-            "version": "0.3.0\n\n<p>Namespace for Breakout objects.</p>\n\n<p>You can use the shorthand \"BO\" instead of \"BREAKOUT\".</p>",
+            "version": "0.3.1\n\n<p>Namespace for Breakout objects.</p>\n\n<p>You can use the shorthand \"BO\" instead of \"BREAKOUT\".</p>",
             "class": "BO.custom.ID12RFIDReader",
             "namespace": "BO"
         },
@@ -7370,13 +7370,13 @@
         {
             "file": "src/io/Stepper.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.io.Stepper",
             "namespace": "BO.io"
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 140,
+            "line": 141,
             "description": "Move the stepper a given number of steps at the specified\nspeed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).\nThe accel and decel parameters are optional but if using, both values\nmust be passed to the function.",
             "itemtype": "method",
             "name": "step",
@@ -7407,7 +7407,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 235,
+            "line": 236,
             "description": "Listen for stepping complete event",
             "access": "private",
             "tagname": "",
@@ -7418,7 +7418,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 253,
+            "line": 254,
             "description": "[read-only] The id of the Stepper object instance. Each stepper motor\nis given a unique id upon initialization.",
             "itemtype": "property",
             "name": "id",
@@ -7428,7 +7428,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 265,
+            "line": 266,
             "params": [
                 {
                     "name": "type",
@@ -7446,7 +7446,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 273,
+            "line": 274,
             "params": [
                 {
                     "name": "type",
@@ -7464,7 +7464,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 281,
+            "line": 282,
             "params": [
                 {
                     "name": "type",
@@ -7477,7 +7477,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 289,
+            "line": 290,
             "params": [
                 {
                     "name": "type",
@@ -7495,7 +7495,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 300,
+            "line": 301,
             "itemtype": "property",
             "name": "Stepper.CLOCKWISE",
             "static": 1,
@@ -7504,7 +7504,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 305,
+            "line": 306,
             "itemtype": "property",
             "name": "Stepper.COUNTER_CLOCKWISE",
             "static": 1,
@@ -7513,7 +7513,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 310,
+            "line": 311,
             "description": "Uses 1 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER",
@@ -7523,7 +7523,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 316,
+            "line": 317,
             "description": "Uses 2 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER_HIGH_CURRENT",
@@ -7533,7 +7533,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 322,
+            "line": 323,
             "itemtype": "property",
             "name": "Stepper.TWO_WIRE",
             "static": 1,
@@ -7542,7 +7542,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 327,
+            "line": 328,
             "itemtype": "property",
             "name": "Stepper.FOUR_WIRE",
             "static": 1,
@@ -7997,7 +7997,7 @@
             "line": " src/utils/SignalScope.js:139"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/I2CBase.js:1"
         },
         {
@@ -8033,7 +8033,7 @@
             "line": " src/core/I2CBase.js:188"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/IOBoard.js:1"
         },
         {
@@ -8057,11 +8057,11 @@
             "line": " src/core/IOBoard.js:1438"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/IOBoardEvent.js:1"
         },
         {
-            "message": "Missing item type\nBased on PhysicalInput.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nBased on PhysicalInput.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/PhysicalInputBase.js:1"
         },
         {
@@ -8081,7 +8081,7 @@
             "line": " src/core/PhysicalInputBase.js:67"
         },
         {
-            "message": "Missing item type\nBased on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nBased on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/Pin.js:1"
         },
         {
@@ -8125,15 +8125,15 @@
             "line": " src/core/Pin.js:504"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/PinEvent.js:1"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/WSocketEvent.js:1"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/WSocketWrapper.js:1"
         },
         {
@@ -8157,7 +8157,7 @@
             "line": " src/core/WSocketWrapper.js:114"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/core.js:1"
         },
         {
@@ -8353,24 +8353,24 @@
             "line": " src/io/SoftPotEvent.js:1"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/io/Stepper.js:1"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:265"
+            "line": " src/io/Stepper.js:266"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:273"
+            "line": " src/io/Stepper.js:274"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:281"
+            "line": " src/io/Stepper.js:282"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:289"
+            "line": " src/io/Stepper.js:290"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
