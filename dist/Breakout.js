@@ -1,7 +1,7 @@
 /*!
- * Breakout v0.3.0 - 2013-10-20
+ * Breakout v0.3.0 - 2014-03-09
 
- * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com> 
+ * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
  * http://breakoutjs.com
  */
@@ -84,37 +84,37 @@ JSUTILS.inherit = function (p) {
 
 
 // Copied from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-if (!Function.prototype.bind) {  
+if (!Function.prototype.bind) {
 
     /** 
      * add bind for browsers that don't support it (Safari)
      * @private
      */
     Function.prototype.bind = function (oThis) {
-        if (typeof this !== "function") {  
+        if (typeof this !== "function") {
             // closest thing possible to the ECMAScript 5 internal IsCallable function  
-            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");  
-        }  
+            throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
+        }
   
-        var aArgs = Array.prototype.slice.call(arguments, 1),   
-            fToBind = this, 
+        var aArgs = Array.prototype.slice.call(arguments, 1),
+            fToBind = this,
             /** 
              * @private
-             */  
+             */
             FNOP = function () {},
             /** 
              * @private
-             */  
-            fBound = function () {  
-                return fToBind.apply(this instanceof FNOP ? this : oThis || window,  
-                                aArgs.concat(Array.prototype.slice.call(arguments)));  
-            };  
+             */
+            fBound = function () {
+                return fToBind.apply(this instanceof FNOP ? this : oThis || window,
+                                aArgs.concat(Array.prototype.slice.call(arguments)));
+            };
   
-        FNOP.prototype = this.prototype;  
-        fBound.prototype = new FNOP();  
+        FNOP.prototype = this.prototype;
+        fBound.prototype = new FNOP();
       
-        return fBound;  
-    };  
+        return fBound;
+    };
 }
 
 JSUTILS.namespace('JSUTILS.Event');
@@ -161,7 +161,7 @@ JSUTILS.Event = (function () {
          * The event target
          * @property target
          * @type Object
-         */ 
+         */
         get target() {
             return this._target;
         },
@@ -262,7 +262,7 @@ JSUTILS.EventDispatcher = (function () {
                 return true;
             } else {
                 return false;
-            }   
+            }
         },
         
         /**
@@ -270,11 +270,11 @@ JSUTILS.EventDispatcher = (function () {
          * @param {Event} type The Event object.
          * @param {Object} optionalParams Optional parameters passed as an object.
          * return {boolean} True if dispatch is successful, false if not.
-         */ 
+         */
         dispatchEvent: function (event, optionalParams) {
             
             event.target = this._target;
-            var isSuccess = false;      
+            var isSuccess = false;
 
             // Add any optional params to the Event object
             for (var obj in optionalParams) {
@@ -294,7 +294,7 @@ JSUTILS.EventDispatcher = (function () {
                     }
                 }
             }
-            return isSuccess;   
+            return isSuccess;
         }
     };
 
@@ -398,7 +398,7 @@ JSUTILS.Timer = (function () {
                 if (this._isRunning) {
                     this.stop();
                     this.start();
-                }                
+                }
             }
         },
 
@@ -501,14 +501,14 @@ JSUTILS.Timer = (function () {
      * @type JSUTILS.TimerEvent.TIMER
      * @event timerTick
      * @param {JSUTILS.Timer} target A reference to the Timer object.
-     */ 
+     */
 
     /**
      * The timerComplete event is dispatched when the repeatCount value
      * @type JSUTILS.TimerEvent.TIMER_COMPLETE
      * @event timerComplete
      * @param {JSUTILS.Timer} target A reference to the Timer object.
-     */      
+     */
 
     return Timer;
 
@@ -733,7 +733,7 @@ BO.IOBoardEvent = (function () {
      * @property IOBoardEvent.DISCONNECTED
      * @static
      */
-    IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";       
+    IOBoardEvent.DISCONNECTED = "ioBoardDisonnected";
 
     IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
     IOBoardEvent.prototype.constructor = IOBoardEvent;
@@ -764,7 +764,7 @@ BO.WSocketEvent = (function () {
         
         // call the super class
         // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);     
+        Event.call(this, type);
     };
 
     // events
@@ -785,7 +785,7 @@ BO.WSocketEvent = (function () {
     WSocketEvent.CLOSE = "webSocketClosed";
 
     WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
-    WSocketEvent.prototype.constructor = WSocketEvent;  
+    WSocketEvent.prototype.constructor = WSocketEvent;
 
     return WSocketEvent;
 
@@ -806,7 +806,7 @@ BO.WSocketWrapper = (function () {
         "OPEN": 1,
         "CLOSING": 2,
         "CLOSED": 3
-    };        
+    };
 
     /**
      * Creates a wrapper for various websocket implementations to unify the
@@ -829,7 +829,7 @@ BO.WSocketWrapper = (function () {
         this._port = port;
         this._protocol = protocol || "default-protocol";
         this._socket = null;
-        this._readyState = 0; // only applies to native WebSocket implementations
+        this._readyState = null; // only applies to native WebSocket implementations
 
         this.init(this);
 
@@ -856,6 +856,9 @@ BO.WSocketWrapper = (function () {
                     // prevent socket.io from automatically attempting to reconnect
                     // when the server is quit
                     self._socket.socket.options.reconnect = false;
+
+                    // set this for compatibility with native WebSocket
+                    self._readyState = READY_STATE.OPEN;
                     
                     self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
                     /** @private */
@@ -898,7 +901,7 @@ BO.WSocketWrapper = (function () {
                     /** @private */
                     self._socket.onclose = function () {
                         self._readyState = self._socket.readyState;
-                        self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));   
+                        self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
                     };
 
                 };
@@ -930,7 +933,7 @@ BO.WSocketWrapper = (function () {
      * @method sendString
      * @param {String} message The message to send
      */
-    WSocketWrapper.prototype.sendString = function (message) {        
+    WSocketWrapper.prototype.sendString = function (message) {
         if (this.readyState === READY_STATE.OPEN) {
             this._socket.send(message.toString());
         }
@@ -941,7 +944,7 @@ BO.WSocketWrapper = (function () {
      * <p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>
      * @property readyState
      * @type String
-     */      
+     */
     Object.defineProperty(WSocketWrapper.prototype, "readyState", {
         get: function () {
             return this._readyState;
@@ -957,7 +960,7 @@ BO.WSocketWrapper = (function () {
      * @type BO.WebsocketEvent.CONNECTED
      * @event webSocketConnected
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
-     */ 
+     */
 
     /**
      * The webSocketMessage event is dispatched when a websocket message is received.
@@ -965,14 +968,14 @@ BO.WSocketWrapper = (function () {
      * @event webSocketMessage
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      * @param {String} message The websocket data    
-     */ 
+     */
 
     /**
      * The webSocketClosed event is dispatched the websocket connection is closed.
      * @type BO.WebsocketEvent.CLOSE
      * @event webSocketClosed
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
-     */      
+     */
 
     return WSocketWrapper;
 
@@ -1003,7 +1006,7 @@ BO.filters.FilterBase = (function () {
      * @param {Number} val The input value to be filtered.
      * @return {Number} The resulting value after applying the filter.
      */
-    FilterBase.prototype.processSample = function (val) { 
+    FilterBase.prototype.processSample = function (val) {
         // to be implemented in sub class
         throw new Error("Filter objects must implement the method processSample");
     };
@@ -1111,7 +1114,7 @@ BO.filters.Scaler = (function () {
      */
     Scaler.CUBE_ROOT = function (val) {
         return Math.pow(val, 0.25);
-    };          
+    };
 
 
     return Scaler;
@@ -1173,7 +1176,7 @@ BO.filters.Convolution = (function () {
                 this._buffer[i] = 0;
             }
         }
-    });    
+    });
 
     /**
      * Override FilterBase.processSample
@@ -1187,7 +1190,7 @@ BO.filters.Convolution = (function () {
 
         for (var i = 0; i < len; i++) {
             result += this._coef[i] * this._buffer[i];
-        }   
+        }
 
         return result;
     };
@@ -1211,7 +1214,7 @@ BO.filters.Convolution = (function () {
      * @property Convolution.MOVING_AVERAGE
      * @static
      */
-    Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];      
+    Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];
         
     return Convolution;
 
@@ -1253,7 +1256,7 @@ BO.filters.TriggerPoint = (function () {
         if (points[0] instanceof Array) {
             var len = points.length;
             for (var i = 0; i < len; i++) {
-                this._points[points[i][0]] = points[i][1];  
+                this._points[points[i][0]] = points[i][1];
             }
         } else if (typeof points[0] === "number") {
             this._points[points[0]] = points[1];
@@ -1448,7 +1451,7 @@ BO.generators.GeneratorBase = (function () {
         set: function (val) {
             this._value = val;
         }
-    });      
+    });
 
     return GeneratorBase;
 
@@ -1787,7 +1790,7 @@ BO.Pin = (function () {
 
         this._autoSetValueCallback = this.autoSetValue.bind(this);
         
-        this._evtDispatcher = new EventDispatcher(this);    
+        this._evtDispatcher = new EventDispatcher(this);
 
     };
 
@@ -1798,7 +1801,7 @@ BO.Pin = (function () {
         /**
          * The analogNumber sould only be set internally.
          * @private
-         */     
+         */
         setAnalogNumber: function (num) {
             this._analogNumber = num;
         },
@@ -1808,17 +1811,17 @@ BO.Pin = (function () {
          * board or datasheet).
          * @property analogNumber
          * @type Number
-         */ 
+         */
         get analogNumber() {
             return this._analogNumber;
-        },      
+        },
 
         /**
          * [read-only] The pin number corresponding to the Arduino documentation 
          * for the type of board.
          * @property number
          * @type Number
-         */          
+         */
         get number() {
             return this._number;
         },
@@ -1856,7 +1859,7 @@ BO.Pin = (function () {
             // convert PWM values to 0.0 - 1.0 range
             if (this._type === Pin.PWM) {
                 state = state / this.analogWriteResolution;
-            } 
+            }
 
             this._state = state;
         },
@@ -1890,7 +1893,7 @@ BO.Pin = (function () {
          * reset.
          * @property average
          * @type Number
-         */          
+         */
         get average() {
             return this._average;
         },
@@ -1910,7 +1913,7 @@ BO.Pin = (function () {
          * reset.
          * @property maximum
          * @type Number
-         */          
+         */
         get maximum() {
             return this._maximum;
         },
@@ -1937,7 +1940,7 @@ BO.Pin = (function () {
          * The current digital or analog value of the pin.
          * @property value
          * @type Number
-         */      
+         */
         get value() {
             return this._value;
         },
@@ -1953,7 +1956,7 @@ BO.Pin = (function () {
          * [read-only] The last pin value.
          * @property lastValue
          * @type Number
-         */          
+         */
         get lastValue() {
             return this._lastValue;
         },
@@ -1962,7 +1965,7 @@ BO.Pin = (function () {
          * [read-only] The value before any filters were applied.
          * @property preFilterValue
          * @type Number
-         */          
+         */
         get preFilterValue() {
             return this._preFilterValue;
         },
@@ -1971,7 +1974,7 @@ BO.Pin = (function () {
          * Get and set filters for the Pin.
          * @property filters
          * @type FilterBase[]
-         */ 
+         */
         get filters() {
             return this._filters;
         },
@@ -1983,7 +1986,7 @@ BO.Pin = (function () {
          * [read-only] Get a reference to the current generator.
          * @property generator
          * @type GeneratorBase
-         */ 
+         */
         get generator() {
             return this._generator;
         },
@@ -1994,7 +1997,7 @@ BO.Pin = (function () {
          * IOBoard.setDigitalPinMode(pinNumber) to set the pin type.
          * @method getType
          * @return {Number} The pin type/mode
-         */ 
+         */
         getType: function () {
             return this._type;
         },
@@ -2008,13 +2011,13 @@ BO.Pin = (function () {
             if (pinType >= 0 && pinType < Pin.TOTAL_PIN_MODES) {
                 this._type = pinType;
             }
-        },          
+        },
 
         /**
          * An object storing the capabilities of the pin.
          * @method getCapabilities
          * @return {Object} An object describing the capabilities of this Pin.
-         */ 
+         */
         getCapabilities: function () {
             return this._capabilities;
         },
@@ -2036,7 +2039,7 @@ BO.Pin = (function () {
             if (analogReadRes) {
                 this.setAnalogReadResolution(Math.pow(2, analogReadRes) - 1);
             }
-        },      
+        },
 
         /**
          * Dispatch a Change event whenever a pin value changes
@@ -2163,7 +2166,7 @@ BO.Pin = (function () {
                 // BO.generators.GeneratorEvent.UPDATE = "update"
                 this._generator.removeEventListener("update", this._autoSetValueCallback);
             }
-            this._generator = null;             
+            this._generator = null;
         },
 
         /**
@@ -2236,10 +2239,10 @@ BO.Pin = (function () {
          * @param {Object} optionalParams Optional parameters to assign to the 
          * event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */ 
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }       
+        }
             
     };
 
@@ -2337,7 +2340,7 @@ BO.Pin = (function () {
      * @type BO.PinEvent.RISING_EDGE
      * @event risingEdge
      * @param {BO.Pin} target A reference to the Pin object.
-     */ 
+     */
      
     /**
      * The change event is dispatched when the pin value decreased 
@@ -2642,10 +2645,10 @@ BO.PhysicalInputBase = (function () {
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */     
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }           
+        }
     };
 
     return PhysicalInputBase;
@@ -2757,7 +2760,7 @@ BO.io.Stepper = (function () {
                 [CONFIG,
                 this._id,
                 driverType,
-                numStepsPerRevLSB, 
+                numStepsPerRevLSB,
                 numStepsPerRevMSB,
                 directionPin.number,
                 stepPin.number]);
@@ -2771,7 +2774,7 @@ BO.io.Stepper = (function () {
                 [CONFIG,
                 this._id,
                 driverType,
-                numStepsPerRevLSB, 
+                numStepsPerRevLSB,
                 numStepsPerRevMSB,
                 directionPin.number,
                 stepPin.number,
@@ -2799,7 +2802,7 @@ BO.io.Stepper = (function () {
          * (max precision of 2 decimal places)
          * @param {Number} accel [optional] Acceleration in rad/sec^2 (max precision of 2 decimal places)
          * @param {Number} decel [optional] Deceleration in rad/sec^2 (max precision of 2 decimal places)
-         */      
+         */
         step: function (numSteps, speed, accel, decel) {
             var steps,
                 speedLSB,
@@ -2835,7 +2838,7 @@ BO.io.Stepper = (function () {
             if (speed > MAX_SPEED) {
                 speed = MAX_SPEED;
                 console.log("Warning: Maximum speed (163.83 rad/sec) exceeded. Setting speed to 163.83 rad/sec");
-            }                   
+            }
 
             speedLSB = speed & 0x007F;
             speedMSB = (speed >> 7) & 0x007F;
@@ -2850,9 +2853,9 @@ BO.io.Stepper = (function () {
                 accelMSB = (accel >> 7) & 0x007F;
 
                 decelLSB = decel & 0x007F;
-                decelMSB = (decel >> 7) & 0x007F;               
+                decelMSB = (decel >> 7) & 0x007F;
                             
-                this._board.sendSysex(STEPPER, 
+                this._board.sendSysex(STEPPER,
                     [STEP,
                     this._id,
                     direction,
@@ -2868,7 +2871,7 @@ BO.io.Stepper = (function () {
                     ]);
             } else {
                 // don't send accel and decel values
-                this._board.sendSysex(STEPPER, 
+                this._board.sendSysex(STEPPER,
                     [STEP,
                     this._id,
                     direction,
@@ -2877,7 +2880,7 @@ BO.io.Stepper = (function () {
                     steps[2],
                     speedLSB,
                     speedMSB
-                    ]);             
+                    ]);
             }
         },
 
@@ -2939,10 +2942,10 @@ BO.io.Stepper = (function () {
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */     
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
-        }           
+        }
     
     };
 
@@ -2970,7 +2973,7 @@ BO.io.Stepper = (function () {
      * @property Stepper.FOUR_WIRE
      * @static
      */
-    Stepper.FOUR_WIRE = 4;              
+    Stepper.FOUR_WIRE = 4;
 
     return Stepper;
 
@@ -3090,7 +3093,7 @@ BO.io.BlinkM = (function () {
      * colorRange[0] = range for Hue (0-255), colorRange[1] = range for
      * Saturation, etc.
      * @param {Number} speed The fade speed. Default value is 15.
-     */ 
+     */
     BlinkM.prototype.fadeToRandomHSBColor = function (colorRange, speed) {
         var fadeSpeed = speed || -1;
         if (fadeSpeed >= 0) {
@@ -3234,12 +3237,12 @@ BO.io.CompassHMC6352 = (function () {
      * [read-only] The heading in degrees.
      * @property heading
      * @type Number
-     */      
+     */
     Object.defineProperty(CompassHMC6352.prototype, "heading", {
         get: function () {
             return this._heading;
         }
-    });    
+    });
     
     /**
      * @private
@@ -3280,7 +3283,7 @@ BO.io.CompassHMC6352 = (function () {
      * @type BO.io.CompassEvent.UPDATE
      * @event update
      * @param {BO.io.CompassHMC6352} target A reference to the CompassHMC6352 object.
-     */     
+     */
 
     return CompassHMC6352;
 
@@ -3405,7 +3408,7 @@ BO.io.Button = (function () {
             // Set value to high to avoid initial change event
             this._pin.value = Pin.HIGH;
         }
-        this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));   
+        this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
     };
 
     Button.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
@@ -3457,7 +3460,7 @@ BO.io.Button = (function () {
     /**
      * @private
      * @method released
-     */ 
+     */
     Button.prototype.released = function () {
         this._timeout = null;
         this.dispatchEvent(new ButtonEvent(ButtonEvent.RELEASE));
@@ -3550,14 +3553,14 @@ BO.io.Button = (function () {
      * @type BO.io.ButtonEvent.PRESS
      * @event pressed
      * @param {BO.io.Button} target A reference to the Button object
-     */ 
+     */
 
     /**
      * The released event is dispatched when the button is released.
      * @type BO.io.ButtonEvent.RELEASE
      * @event released
      * @param {BO.io.Button} target A reference to the Button object
-     */ 
+     */
      
     /**
      * The longPress event is dispatched once when the button has been held for
@@ -3565,7 +3568,7 @@ BO.io.Button = (function () {
      * @type BO.io.ButtonEvent.LONG_PRESS
      * @event longPress
      * @param {BO.io.Button} target A reference to the Button object
-     */ 
+     */
      
     /**
      * The sustainedPress event is dispatched continuously at the rate 
@@ -3574,7 +3577,7 @@ BO.io.Button = (function () {
      * @type BO.io.ButtonEvent.SUSTAINED_PRESS
      * @event sustainedPress
      * @param {BO.io.Button} target A reference to the Button object
-     */              
+     */
 
     return Button;
 
@@ -3611,7 +3614,7 @@ BO.io.PotEvent = (function () {
      * @property PotEvent.CHANGE
      * @static
      */
-    PotEvent.CHANGE = "potChange";  
+    PotEvent.CHANGE = "potChange";
 
     PotEvent.prototype = JSUTILS.inherit(Event.prototype);
     PotEvent.prototype.constructor = PotEvent;
@@ -3873,7 +3876,7 @@ BO.io.AnalogAccelerometer = (function () {
         // Enable the analog pins
         board.enableAnalogPin(xPin.analogNumber);
         board.enableAnalogPin(yPin.analogNumber);
-        board.enableAnalogPin(zPin.analogNumber);       
+        board.enableAnalogPin(zPin.analogNumber);
 
         this._enableSmoothing = enableSmoothing || false;
         this._xPin = xPin || null;
@@ -3976,7 +3979,7 @@ BO.io.AnalogAccelerometer = (function () {
                 // -180 to 180
                 //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
                 // -90 to 90
-                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
             }
         },
 
@@ -4070,7 +4073,7 @@ BO.io.AnalogAccelerometer = (function () {
         range.max = (zeroG + (mVPerG * this._dynamicRange)) / supplyVoltage;
         
         return range;
-    };      
+    };
 
     /**
      * @private
@@ -4097,7 +4100,7 @@ BO.io.AnalogAccelerometer = (function () {
     AnalogAccelerometer.prototype.zAxisChanged = function (event) {
         this._z = event.target.value;
         this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
-    };      
+    };
 
     /**
      * @property AnalogAccelerometer.X_AXIS
@@ -4124,7 +4127,7 @@ BO.io.AnalogAccelerometer = (function () {
      * @event update
      * @param {BO.io.AnalogAccelerometer} target A reference to the 
      * AnalogAccelerometer object.
-     */     
+     */
 
     return AnalogAccelerometer;
 
@@ -4149,7 +4152,7 @@ BO.io.AccelerometerADXL345 = (function () {
         OFSY = 0x1F,
         OFSZ = 0x20,
         ALL_AXIS =  DATAX0 | 0x80,
-        NUM_BYTES = 6;  
+        NUM_BYTES = 6;
 
     // dependencies
     var I2CBase = BO.I2CBase,
@@ -4281,7 +4284,7 @@ BO.io.AccelerometerADXL345 = (function () {
                 // -180 to 180
                 //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
                 // -90 to 90
-                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
             }
         },
 
@@ -4406,7 +4409,7 @@ BO.io.AccelerometerADXL345 = (function () {
         // set full scale bit (3) and range bits (0 - 1)
         setting |= (0x08 & 0xEC);
         this.sendI2CRequest([I2CBase.WRITE, this._address, DATA_FORMAT, setting]);
-    };   
+    };
     
     /**
      * @private
@@ -4452,7 +4455,7 @@ BO.io.AccelerometerADXL345 = (function () {
     /**
      * Offset the x, y, or z axis output by the respective input value.
      * @method setAxisOffset
-     */     
+     */
     AccelerometerADXL345.prototype.setAxisOffset = function (xVal, yVal, zVal) {
         // store values so we can retrieve via getAxisOffset
         this._offset.x = xVal;
@@ -4486,7 +4489,7 @@ BO.io.AccelerometerADXL345 = (function () {
      */
     AccelerometerADXL345.prototype.update = function () {
         if (this._isReading) {
-            this.stopReading(); 
+            this.stopReading();
         }
         // read data: contents of X, Y, and Z registers
         this.sendI2CRequest([I2CBase.READ, this.address, ALL_AXIS, NUM_BYTES]);
@@ -4559,7 +4562,7 @@ BO.io.AccelerometerADXL345 = (function () {
         this._y = this._rawY * this._sensitivity.y;
         this._z = this._rawZ * this._sensitivity.z;
         
-        this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));          
+        this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
     };
     
     /**
@@ -4568,7 +4571,7 @@ BO.io.AccelerometerADXL345 = (function () {
      */
     AccelerometerADXL345.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
     };
         
@@ -4612,7 +4615,7 @@ BO.io.AccelerometerADXL345 = (function () {
      * @type BO.io.AccelerometerEvent.UPDATE
      * @event update
      * @param {BO.io.AccelerometerADXL345} target A reference to the AccelerometerADXL345 object.
-     */                     
+     */
 
     return AccelerometerADXL345;
 
@@ -4677,7 +4680,7 @@ BO.io.GyroITG3200 = (function () {
         GYRO_YOUT = 0x1F,
         GYRO_ZOUT = 0x21,
         PWR_MGM = 0x3E,
-        NUM_BYTES = 6;  
+        NUM_BYTES = 6;
 
     // dependencies
     var I2CBase = BO.I2CBase,
@@ -4712,10 +4715,10 @@ BO.io.GyroITG3200 = (function () {
         this.name = "GyroITG3200";
 
         // private properties
-        this._autoStart = autoStart;        
+        this._autoStart = autoStart;
         this._isReading = false;
         this._tempOffsets = {};
-        this._startupTimer = null;      
+        this._startupTimer = null;
         this._debugMode = BO.enableDebugging;
         
         this._x = 0;
@@ -4814,7 +4817,7 @@ BO.io.GyroITG3200 = (function () {
                 return this._isReading;
             }
         }
-    });   
+    });
     
     /**
      * Set the polarity of the x, y, and z output values.
@@ -4856,7 +4859,7 @@ BO.io.GyroITG3200 = (function () {
         this._gains.x = xGain;
         this._gains.y = yGain;
         this._gains.z = zGain;
-    };      
+    };
 
     /**
      * Start continuous reading of the sensor.
@@ -4886,17 +4889,17 @@ BO.io.GyroITG3200 = (function () {
     GyroITG3200.prototype.update = function () {
 
         if (this._isReading) {
-            this.stopReading(); 
+            this.stopReading();
         }
         // read data: contents of X, Y, and Z registers
         this.sendI2CRequest([I2CBase.READ, this.address, GYRO_XOUT, NUM_BYTES]);
-    };  
+    };
 
     /**
      * @private
      * @method init
-     */ 
-    GyroITG3200.prototype.init = function () {           
+     */
+    GyroITG3200.prototype.init = function () {
         // set fast sample rate divisor = 0
         this.sendI2CRequest([I2CBase.WRITE, this.address, SMPLRT_DIV, 0x00]);
         
@@ -4940,7 +4943,7 @@ BO.io.GyroITG3200 = (function () {
             value &= ~(1 << bitPos);
         }
         this.sendI2CRequest([I2CBase.WRITE, this.address, regAddress, value]);
-    };  
+    };
 
 
     /**
@@ -4965,8 +4968,8 @@ BO.io.GyroITG3200 = (function () {
      */
     GyroITG3200.prototype.readGyro = function (data) {
         
-        var x_val, 
-            y_val, 
+        var x_val,
+            y_val,
             z_val;
         
         if (data.length != NUM_BYTES + 1) {
@@ -4993,7 +4996,7 @@ BO.io.GyroITG3200 = (function () {
             this._z = z_val;
         }
         
-        this.dispatchEvent(new GyroEvent(GyroEvent.UPDATE));    
+        this.dispatchEvent(new GyroEvent(GyroEvent.UPDATE));
     };
     
     /**
@@ -5002,7 +5005,7 @@ BO.io.GyroITG3200 = (function () {
      */
     GyroITG3200.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
     };
         
@@ -5019,7 +5022,7 @@ BO.io.GyroITG3200 = (function () {
      * ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.
      * @property GyroITG3200.ID_AD0_VDD
      * @static
-     */    
+     */
     GyroITG3200.ID_AD0_GND = 0x68;
 
 
@@ -5030,7 +5033,7 @@ BO.io.GyroITG3200 = (function () {
      * @type BO.io.GyroEvent.UPDATE
      * @event update
      * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
-     */     
+     */
             
     return GyroITG3200;
 
@@ -5190,7 +5193,7 @@ BO.io.MagnetometerHMC5883 = (function () {
                 return this._z;
             }
         }
-    });  
+    });
     
     /**
      * @private
@@ -5317,7 +5320,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      */
     MagnetometerHMC5883.prototype.update = function () {
         if (this._isReading) {
-            this.stopReading(); 
+            this.stopReading();
         }
         // read data: contents of X, Y, and Z registers
         this.sendI2CRequest([I2CBase.READ, this.address, DATAX0, NUM_BYTES]);
@@ -5329,9 +5332,9 @@ BO.io.MagnetometerHMC5883 = (function () {
      */
     MagnetometerHMC5883.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
-    };  
+    };
 
     // public static constants
 
@@ -5339,7 +5342,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @property MagnetometerHMC5883.DEVICE_ID
      * @static
      */
-    MagnetometerHMC5883.DEVICE_ID = 0x1E;   
+    MagnetometerHMC5883.DEVICE_ID = 0x1E;
     
     /**
      * @property MagnetometerHMC5883.SAMPLES_1
@@ -5360,7 +5363,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @property MagnetometerHMC5883.SAMPLES_8
      * @static
      */
-    MagnetometerHMC5883.SAMPLES_8 = 3;  
+    MagnetometerHMC5883.SAMPLES_8 = 3;
     
     /** 0.75 Hz
      * @property MagnetometerHMC5883.HZ_0_75
@@ -5396,7 +5399,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @property MagnetometerHMC5883.HZ_75
      * @static 
      */
-    MagnetometerHMC5883.HZ_75 = 0x06;       
+    MagnetometerHMC5883.HZ_75 = 0x06;
 
 
     // document events
@@ -5406,7 +5409,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @type BO.io.MagnetometerEvent.UPDATE
      * @event update
      * @param {BO.io.MagnetometerHMC5883} target A reference to the MagnetometerHMC5883 object.
-     */     
+     */
 
     return MagnetometerHMC5883;
 
@@ -5472,12 +5475,12 @@ BO.io.Servo = (function () {
          * 
          * @property angle
          * @type Number
-         */ 
+         */
         set angle(value) {
             if (this._pin.getType() === Pin.SERVO) {
                 this._angle = value;
                 //this._pin.value = this._angle;
-                this._pin.value = Math.max(0, Math.min(1, (this._angle - this._minAngle) / 
+                this._pin.value = Math.max(0, Math.min(1, (this._angle - this._minAngle) /
                                 (this._maxAngle - this._minAngle) * Servo.COEF_TO_0_180));
 
             }
@@ -5486,7 +5489,7 @@ BO.io.Servo = (function () {
             if (this._pin.getType() === Pin.SERVO) {
                 return this._angle;
             }
-        }       
+        }
     };
 
     /**
@@ -5547,7 +5550,7 @@ BO.io.DCMotor = (function () {
         supplyVoltage = supplyVoltage || 9;
         if (pwmPin === undefined) {
             pwmPin = null;
-        }    
+        }
 
         this._value = 0;
         this._offset = 0;
@@ -5563,18 +5566,18 @@ BO.io.DCMotor = (function () {
             } else {
                 console.log("warning: PWM is not available for the PWM pin");
                 board.setDigitalPinMode(this._pwmPin.number, Pin.DOUT);
-            }           
+            }
         }
 
         if (this._forwardPin.getCapabilities()[Pin.PWM]) {
             board.setDigitalPinMode(this._forwardPin.number, Pin.PWM);
         } else {
             console.log("warning: PWM is not available for the forward pin");
-            board.setDigitalPinMode(this._forwardPin.number, Pin.DOUT);         
+            board.setDigitalPinMode(this._forwardPin.number, Pin.DOUT);
         }
 
         if (this._reversePin.getCapabilities()[Pin.PWM]) {
-            board.setDigitalPinMode(this._reversePin.number, Pin.PWM);          
+            board.setDigitalPinMode(this._reversePin.number, Pin.PWM);
         } else {
             console.log("warning: PWM is not available for the reverse pin");
             board.setDigitalPinMode(this._reversePin.number, Pin.DOUT);
@@ -5596,7 +5599,7 @@ BO.io.DCMotor = (function () {
          * the motor.
          * @property value
          * @type Number
-         */ 
+         */
         set value(val) {
             this._value = Math.max(-1, Math.min(1, val));
 
@@ -5646,7 +5649,7 @@ BO.io.DCMotor = (function () {
         /**
          * @method forward
          * @param {Number} val The new voltage to set (0.0 to 1.0)
-         */     
+         */
         forward: function (val) {
             val = val || 1;
             this._value = Math.max(0, Math.min(1, val));
@@ -5677,7 +5680,7 @@ BO.io.DCMotor = (function () {
                 this._reversePin.value = 1;
                 this._pwmPin.value = Math.max(0, Math.min(1, (this._value * this._range) * -1 + this._offset));
             }
-        }       
+        }
             
     };
 
@@ -5757,7 +5760,7 @@ BO.io.LED = (function () {
          * Get or set the current value (intensity) of the LED.
          * @property intensity
          * @type Number
-         */ 
+         */
         get intensity() {
             return this._pin.value;
         },
@@ -5892,8 +5895,8 @@ BO.io.LED = (function () {
                 this._pin.generator.start();
             } else {
                 this._pin.removeGenerator();
-            }       
-        }   
+            }
+        }
     };
 
     /**
@@ -6011,7 +6014,7 @@ BO.io.RGBLED = (function () {
             time = time || 1000;
             this._redLED.fadeTo(0, time);
             this._greenLED.fadeTo(0, time);
-            this._blueLED.fadeTo(0, time);          
+            this._blueLED.fadeTo(0, time);
         },
 
         /**
@@ -6022,7 +6025,7 @@ BO.io.RGBLED = (function () {
          * @param {Number} green The green value to fade to (0 - 255)
          * @param {Number} blue The blue value to fade to (0 - 255)
          * @param {Number} time The time of the fade (in milliseconds)       
-         */     
+         */
         fadeTo: function (red, green, blue, time) {
             red = red / 255;
             green = green / 255;
@@ -6044,7 +6047,7 @@ BO.io.RGBLED = (function () {
      * @property RGBLED.COMMON_CATHODE
      * @static
      */
-    RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
+    RGBLED.COMMON_CATHODE = LED.SOURCE_DRIVE;
 
     return RGBLED;
 
@@ -6157,7 +6160,7 @@ BO.io.BiColorLED = (function () {
          * @param {Number} color2 The value of the second color to fade
          * to (0 - 255)
          * @param {Number} time The time of the fade (in milliseconds)       
-         */     
+         */
         fadeTo: function (color1, color2, time) {
             color1 = color1 / 255;
             color2 = color2 / 255;
@@ -6177,7 +6180,7 @@ BO.io.BiColorLED = (function () {
      * @property BiColorLED.COMMON_CATHODE
      * @static
      */
-    BiColorLED.COMMON_CATHODE = LED.SOURCE_DRIVE;               
+    BiColorLED.COMMON_CATHODE = LED.SOURCE_DRIVE;
 
     return BiColorLED;
 
@@ -6239,7 +6242,7 @@ BO.io.SoftPotEvent = (function () {
      * @property SoftPotEvent.TAP
      * @static
      */
-    SoftPotEvent.TAP = "softPotTap";        
+    SoftPotEvent.TAP = "softPotTap";
 
     SoftPotEvent.prototype = JSUTILS.inherit(Event.prototype);
     SoftPotEvent.prototype.constructor = SoftPotEvent;
@@ -6273,7 +6276,7 @@ BO.io.SoftPot = (function () {
         FLICK_TIMEOUT           = 200,
         PRESS_TIMER_INTERVAL    = 10,
         MIN_VALUE               = 0.01,
-        DEBOUNCE_TIMEOUT        = 20;   
+        DEBOUNCE_TIMEOUT        = 20;
 
     // dependencies
     var PhysicalInputBase = BO.PhysicalInputBase,
@@ -6364,7 +6367,7 @@ BO.io.SoftPot = (function () {
      * strip
      */
     SoftPot.prototype.setMinFlickMovement = function (num) {
-        this._minFlickMovement = num;   
+        this._minFlickMovement = num;
     };
     
     /**
@@ -6381,16 +6384,16 @@ BO.io.SoftPot = (function () {
         this.dispatch(SoftPotEvent.PRESS);
         
         this._isTouched = true;
-        this._isDrag = false;   
+        this._isDrag = false;
     };
 
     /**
      * @private
      * @method onRelease
      */
-    SoftPot.prototype.onRelease = function () {      
+    SoftPot.prototype.onRelease = function () {
 
-        var dispatchedFlick = false; 
+        var dispatchedFlick = false;
         
         // discard unintentional touch / noise
         if (this._pressTimer.currentCount > DEBOUNCE_TIMEOUT / PRESS_TIMER_INTERVAL) {
@@ -6400,10 +6403,10 @@ BO.io.SoftPot = (function () {
                     this.dispatch(SoftPotEvent.FLICK_DOWN);
                 } else {
                     this.dispatch(SoftPotEvent.FLICK_UP);
-                }   
-                dispatchedFlick = true; 
+                }
+                dispatchedFlick = true;
                 
-            } 
+            }
                         
             if (!dispatchedFlick) {
                 // Check for presses  
@@ -6413,13 +6416,13 @@ BO.io.SoftPot = (function () {
                     if (!this._isDrag && this._pressTimer.currentCount <= this._tapTimeout / PRESS_TIMER_INTERVAL) {
                         this.dispatch(SoftPotEvent.TAP);
                     }
-                } 
+                }
             }
         }
 
         this.dispatch(SoftPotEvent.RELEASE);
 
-        this.resetForNext(); 
+        this.resetForNext();
     };
     
     /**
@@ -6428,9 +6431,9 @@ BO.io.SoftPot = (function () {
      * @param {Number} touchPoint The value where the touch is occuring on the
      * strip
      */
-    SoftPot.prototype.onMove = function (touchPoint) {       
+    SoftPot.prototype.onMove = function (touchPoint) {
     
-        this._touchPoint = touchPoint;      
+        this._touchPoint = touchPoint;
         // Save current point
         var curMovePoint = touchPoint;
         
@@ -6438,8 +6441,8 @@ BO.io.SoftPot = (function () {
         this._flickDistance = Math.abs(curMovePoint - this._lastMovePoint);
         
         if (!this._isDrag && this._flickDistance > this._minFlickMovement) {
-            this._flickTimer.reset(); 
-            this._flickTimer.start(); 
+            this._flickTimer.reset();
+            this._flickTimer.start();
             
             if (curMovePoint - this._lastMovePoint > 0) {
                 this._flickDir = 1;
@@ -6447,16 +6450,16 @@ BO.io.SoftPot = (function () {
                 this._flickDir = -1;
             }
             
-            this._isDrag = false; 
-        }           
+            this._isDrag = false;
+        }
         
-        var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);                
+        var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);
 
         // Dragging handler 
         // Don't check when flick timer is running
         //console.log("min drag = " + this._minDragMovement);
         if ((dragDistance > this._minDragMovement) && (this._flickTimer.running === false)) {
-            this._isDrag = true; 
+            this._isDrag = true;
         }
         
         if (this._isDrag) {
@@ -6464,11 +6467,11 @@ BO.io.SoftPot = (function () {
             this._distanceFromPressed = curMovePoint - this._lastMovePoint;
         }
                                 
-        this.debug("SoftPot: distance traveled flick is " + this._flickDistance); 
-        this.debug("SoftPot: distance traveled drag is " + dragDistance); 
+        this.debug("SoftPot: distance traveled flick is " + this._flickDistance);
+        this.debug("SoftPot: distance traveled drag is " + dragDistance);
 
         // Reuse for next 
-        this._lastMovePoint = curMovePoint; 
+        this._lastMovePoint = curMovePoint;
     };
 
     /**
@@ -6480,7 +6483,7 @@ BO.io.SoftPot = (function () {
      */
     SoftPot.prototype.setRange = function (minimum, maximum) {
         this._pin.removeAllFilters();
-        this._pin.addFilter(new Scaler(minimum, maximum, 0, 1, Scaler.LINEAR)); 
+        this._pin.addFilter(new Scaler(minimum, maximum, 0, 1, Scaler.LINEAR));
     };
 
     /**
@@ -6490,7 +6493,7 @@ BO.io.SoftPot = (function () {
      */
     SoftPot.prototype.dispatch = function (type) {
         this.debug("SoftPot dispatch " + type);
-        this.dispatchEvent(new SoftPotEvent(type, this._touchPoint));   
+        this.dispatchEvent(new SoftPotEvent(type, this._touchPoint));
     };
 
     /**
@@ -6512,7 +6515,7 @@ BO.io.SoftPot = (function () {
      */
     SoftPot.prototype.debug = function (str) {
         if (this._debugMode) {
-            console.log(str); 
+            console.log(str);
         }
     };
 
@@ -6552,7 +6555,7 @@ BO.io.SoftPot = (function () {
             set: function (min) {
                 this._minFlickMovement = min;
             }
-        },     
+        },
         
         /**
          * The minimum distance required to trigger a drag event. Change this
@@ -6617,7 +6620,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.RELEASE
      * @event softPotReleased
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */ 
+     */
      
     /**
      * The softPotDrag event is dispatched when a drag is detected along 
@@ -6625,7 +6628,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.DRAG
      * @event softPotDrag
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */ 
+     */
      
     /**
      * The softPotFlickUp event is dispatched when a flick gesture is detected
@@ -6633,7 +6636,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.FLICK_UP
      * @event softPotFlickUp
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */ 
+     */
      
     /**
      * The softPotFlickDown event is dispatched when a flick gesture is 
@@ -6649,7 +6652,7 @@ BO.io.SoftPot = (function () {
      * @type BO.io.SoftPotEvent.TAP
      * @event softPotTap
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
-     */                  
+     */
 
     return SoftPot;
 
@@ -7126,7 +7129,7 @@ BO.IOBoard = (function () {
             for (var i = 1; i < len; i += 2) {
                 data = msg[i];
                 data += msg[i + 1];
-                str += String.fromCharCode(data);                
+                str += String.fromCharCode(data);
             }
             this.dispatchEvent(new IOBoardEvent(IOBoardEvent.STRING_MESSAGE), {message: str});
         },
@@ -7154,7 +7157,7 @@ BO.IOBoard = (function () {
                 type,
                 pin;
 
-            this._capabilityQueryResponseReceived = true;    
+            this._capabilityQueryResponseReceived = true;
                     
             // Create default configuration
             while (byteCounter <= len) {
@@ -7255,7 +7258,7 @@ BO.IOBoard = (function () {
          * 
          * @private
          * @method startupInMultiClientMode
-         */     
+         */
         startupInMultiClientMode: function () {
             var len = this.getPinCount();
             // Populate pins with the current IOBoard state
@@ -7350,7 +7353,7 @@ BO.IOBoard = (function () {
          */
         toDec: function (ch) {
             ch = ch.substring(0, 1);
-            var decVal = ch.charCodeAt(0);      
+            var decVal = ch.charCodeAt(0);
             return decVal;
         },
         
@@ -7387,7 +7390,7 @@ BO.IOBoard = (function () {
          *
          * @private
          * @method managePinListener
-         */  
+         */
         managePinListener: function (pin) {
             if (pin.getType() == Pin.DOUT || pin.getType() == Pin.AOUT || pin.getType() == Pin.SERVO) {
                 if (!pin.hasEventListener(PinEvent.CHANGE)) {
@@ -7436,7 +7439,7 @@ BO.IOBoard = (function () {
          * @param {Number} value The value to send (up to 16 bits).
          * @private
          * @method sendExtendedAnalogData
-         */ 
+         */
         sendExtendedAnalogData: function (pin, value) {
             var analogData = [];
             
@@ -7487,7 +7490,7 @@ BO.IOBoard = (function () {
                 return; // Invalid value
             }
             
-            this.sendDigitalPort(portNum, this._digitalPort[portNum]);  
+            this.sendDigitalPort(portNum, this._digitalPort[portNum]);
         },
 
         /**
@@ -7496,12 +7499,12 @@ BO.IOBoard = (function () {
          * @param {Number} value The angle to rotate to (0.0 to 1.0 mapped to 0 - 180).
          * @private
          * @method sendServoData
-         */ 
+         */
         sendServoData: function (pin, value) {
             var servoPin = this.getDigitalPin(pin);
             if (servoPin.getType() == Pin.SERVO && servoPin.lastValue != value) {
                 this.sendAnalogData(pin, value);
-            }   
+            }
         },
         
         /**
@@ -7545,7 +7548,7 @@ BO.IOBoard = (function () {
          */
         debug: function (str) {
             if (this._debugMode) {
-                console.log(str); 
+                console.log(str);
             }
         },
 
@@ -7559,7 +7562,7 @@ BO.IOBoard = (function () {
          * @property samplingInterval
          * @type Number
          */
-        get samplingInterval() { 
+        get samplingInterval() {
             return this._samplingInterval;
         },
         set samplingInterval(interval) {
@@ -7580,7 +7583,7 @@ BO.IOBoard = (function () {
          * @property isReady
          * @type Boolean
          */
-        get isReady() { 
+        get isReady() {
             return this._isReady;
         },
 
@@ -7609,7 +7612,7 @@ BO.IOBoard = (function () {
          * @method getSocket
          * @return {WSocketWrapper} A reference to the WebSocket
          */
-        getSocket: function () { 
+        getSocket: function () {
             return this._socket;
         },
             
@@ -7619,7 +7622,7 @@ BO.IOBoard = (function () {
          * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when 
          * the Firmata version is returned from the IOBoard.
          * @method reportVersion
-         */ 
+         */
         reportVersion: function () {
             this.send(REPORT_VERSION);
         },
@@ -7815,7 +7818,7 @@ BO.IOBoard = (function () {
          *
          * @method queryPinState
          * @param {Pin} pin The pin object to query the pin state for.
-         */      
+         */
         queryPinState: function (pin) {
             // To Do: Ensure that pin is a Pin object
             var pinNumber = pin.number;
@@ -7834,7 +7837,7 @@ BO.IOBoard = (function () {
          */
         sendDigitalPort: function (portNumber, portData) {
             this.send([DIGITAL_MESSAGE | (portNumber & 0x0F), portData & 0x7F, portData >> 7]);
-        },        
+        },
 
         /**
          * Send a string message to the IOBoard. This is useful if you have a
@@ -7888,11 +7891,11 @@ BO.IOBoard = (function () {
             //}
             
             for (var i = 0, len = data.length; i < len; i++) {
-                sysexData.push(data[i]);            
+                sysexData.push(data[i]);
             }
             sysexData.push(END_SYSEX);
             
-            this.send(sysexData);      
+            this.send(sysexData);
         },
 
         /**
@@ -7922,14 +7925,14 @@ BO.IOBoard = (function () {
             servoData[3] = minPulse % 128;
             servoData[4] = minPulse >> 7;
             servoData[5] = maxPulse % 128;
-            servoData[6] = maxPulse >> 7;   
+            servoData[6] = maxPulse >> 7;
             servoData[7] = END_SYSEX;
             
             this.send(servoData);
         
             servoPin = this.getDigitalPin(pin);
             servoPin.setType(Pin.SERVO);
-            this.managePinListener(servoPin);    
+            this.managePinListener(servoPin);
         },
 
         /**
@@ -7945,7 +7948,7 @@ BO.IOBoard = (function () {
          * @method getAnalogPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board analog pin).
-         */ 
+         */
         getAnalogPin: function (pinNumber) {
             return this._ioPins[this._analogPinMapping[pinNumber]];
         },
@@ -7954,7 +7957,7 @@ BO.IOBoard = (function () {
          * @method getDigitalPin
          * @return {Pin} A reference to the Pin object (mapped to the IOBoard
          * board digital pin).
-         */ 
+         */
         getDigitalPin: function (pinNumber) {
             return this._ioPins[this._digitalPinMapping[pinNumber]];
         },
@@ -7962,7 +7965,7 @@ BO.IOBoard = (function () {
         /**
          * @method getPins
          * @return {Pin[]} An array containing all pins on the IOBoard
-         */ 
+         */
         getPins: function () {
             return this._ioPins;
         },
@@ -7981,9 +7984,9 @@ BO.IOBoard = (function () {
          * @method analogToDigital
          * @return {Number} The digital pin number equivalent for the specified
          * analog pin number.
-         */ 
+         */
         analogToDigital: function (analogPinNumber) {
-            return this.getAnalogPin(analogPinNumber).number;  
+            return this.getAnalogPin(analogPinNumber).number;
         },
         
         /**
@@ -8030,7 +8033,7 @@ BO.IOBoard = (function () {
                     if (capabilities[i].hasOwnProperty(mode)) {
                         resolution = capabilities[i][mode];
                         console.log("\t" + mode + " (" + resolution + (resolution > 1 ? " bits)" : " bit)"));
-                    } 
+                    }
                 }
             }
         },
@@ -8092,7 +8095,7 @@ BO.IOBoard = (function () {
          * @param {Object} optionalParams Optional parameters to assign to the
          * event object.
          * return {boolean} True if dispatch is successful, false if not.
-         */     
+         */
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
         }
@@ -8123,7 +8126,7 @@ BO.IOBoard = (function () {
      * @type BO.IOBoardEvent.DISCONNECTED
      * @event ioBoardDisconnected
      * @param {IOBoard} target A reference to the IOBoard
-     */  
+     */
      
     /**
      * The stringMessage event is dispatched when a string is received
@@ -8160,7 +8163,7 @@ BO.IOBoard = (function () {
      * @param {IOBoard} target A reference to the IOBoard
      * @param {String} name The name of the firmware running on the IOBoard
      * @param {Number} version The firmware version (where Firmata 2.3 = 23)
-     */ 
+     */
      
     /**
      * The pinStateResponse event is dispatched when the results of

@@ -235,7 +235,7 @@ BO.io.AnalogAccelerometer = (function () {
         // Enable the analog pins
         board.enableAnalogPin(xPin.analogNumber);
         board.enableAnalogPin(yPin.analogNumber);
-        board.enableAnalogPin(zPin.analogNumber);       
+        board.enableAnalogPin(zPin.analogNumber);
 
         this._enableSmoothing = enableSmoothing || false;
         this._xPin = xPin || null;
@@ -338,7 +338,7 @@ BO.io.AnalogAccelerometer = (function () {
                 // -180 to 180
                 //return Math.atan2(this._y, this._z) * RAD_TO_DEG;
                 // -90 to 90
-                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;                
+                return Math.atan2(this._y, Math.sqrt(this._x * this._x + this._z * this._z)) * RAD_TO_DEG;
             }
         },
 
@@ -432,7 +432,7 @@ BO.io.AnalogAccelerometer = (function () {
         range.max = (zeroG + (mVPerG * this._dynamicRange)) / supplyVoltage;
         
         return range;
-    };      
+    };
 
     /**
      * @private
@@ -459,7 +459,7 @@ BO.io.AnalogAccelerometer = (function () {
     AnalogAccelerometer.prototype.zAxisChanged = function (event) {
         this._z = event.target.value;
         this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
-    };      
+    };
 
     /**
      * @property AnalogAccelerometer.X_AXIS
@@ -486,7 +486,7 @@ BO.io.AnalogAccelerometer = (function () {
      * @event update
      * @param {BO.io.AnalogAccelerometer} target A reference to the 
      * AnalogAccelerometer object.
-     */     
+     */
 
     return AnalogAccelerometer;
 

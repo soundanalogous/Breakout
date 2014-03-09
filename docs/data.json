@@ -4072,31 +4072,31 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 74,
+            "line": 77,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 101,
+            "line": 104,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 107,
+            "line": 110,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 111,
+            "line": 114,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 127,
+            "line": 130,
             "description": "Send a message\nTO DO: support sending ArrayBuffers and Blobs\nFor now, forward any calls to sendString",
             "access": "private",
             "tagname": "",
@@ -4114,7 +4114,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 141,
+            "line": 144,
             "description": "Send a message",
             "itemtype": "method",
             "name": "sendString",
@@ -4130,7 +4130,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 152,
+            "line": 155,
             "description": "[read-only] Wrapper for the readyState method of the native websocket implementation\n<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>",
             "itemtype": "property",
             "name": "readyState",
@@ -4140,7 +4140,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 167,
+            "line": 170,
             "description": "The webSocketConnected event is dispatched when a connection with\nthe websocket is established.",
             "type": "BO.WebsocketEvent.CONNECTED",
             "itemtype": "event",
@@ -4157,7 +4157,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 175,
+            "line": 178,
             "description": "The webSocketMessage event is dispatched when a websocket message is received.",
             "type": "BO.WebsocketEvent.MESSAGE",
             "itemtype": "event",
@@ -4179,7 +4179,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 183,
+            "line": 186,
             "description": "The webSocketClosed event is dispatched the websocket connection is closed.",
             "type": "BO.WebsocketEvent.CLOSE",
             "itemtype": "event",
@@ -8131,19 +8131,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:74"
+            "line": " src/core/WSocketWrapper.js:77"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:101"
+            "line": " src/core/WSocketWrapper.js:104"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:107"
+            "line": " src/core/WSocketWrapper.js:110"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:111"
+            "line": " src/core/WSocketWrapper.js:114"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",

@@ -42,7 +42,7 @@ BO.WSocketWrapper = (function () {
         this._port = port;
         this._protocol = protocol || "default-protocol";
         this._socket = null;
-        this._readyState = 0; // only applies to native WebSocket implementations
+        this._readyState = null; // only applies to native WebSocket implementations
 
         this.init(this);
 
@@ -69,6 +69,9 @@ BO.WSocketWrapper = (function () {
                     // prevent socket.io from automatically attempting to reconnect
                     // when the server is quit
                     self._socket.socket.options.reconnect = false;
+
+                    // set this for compatibility with native WebSocket
+                    self._readyState = READY_STATE.OPEN;
                     
                     self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
                     /** @private */

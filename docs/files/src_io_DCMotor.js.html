@@ -230,7 +230,7 @@ BO.io.DCMotor = (function () {
         supplyVoltage = supplyVoltage || 9;
         if (pwmPin === undefined) {
             pwmPin = null;
-        }    
+        }
 
         this._value = 0;
         this._offset = 0;
@@ -246,18 +246,18 @@ BO.io.DCMotor = (function () {
             } else {
                 console.log(&quot;warning: PWM is not available for the PWM pin&quot;);
                 board.setDigitalPinMode(this._pwmPin.number, Pin.DOUT);
-            }           
+            }
         }
 
         if (this._forwardPin.getCapabilities()[Pin.PWM]) {
             board.setDigitalPinMode(this._forwardPin.number, Pin.PWM);
         } else {
             console.log(&quot;warning: PWM is not available for the forward pin&quot;);
-            board.setDigitalPinMode(this._forwardPin.number, Pin.DOUT);         
+            board.setDigitalPinMode(this._forwardPin.number, Pin.DOUT);
         }
 
         if (this._reversePin.getCapabilities()[Pin.PWM]) {
-            board.setDigitalPinMode(this._reversePin.number, Pin.PWM);          
+            board.setDigitalPinMode(this._reversePin.number, Pin.PWM);
         } else {
             console.log(&quot;warning: PWM is not available for the reverse pin&quot;);
             board.setDigitalPinMode(this._reversePin.number, Pin.DOUT);
@@ -279,7 +279,7 @@ BO.io.DCMotor = (function () {
          * the motor.
          * @property value
          * @type Number
-         */ 
+         */
         set value(val) {
             this._value = Math.max(-1, Math.min(1, val));
 
@@ -329,7 +329,7 @@ BO.io.DCMotor = (function () {
         /**
          * @method forward
          * @param {Number} val The new voltage to set (0.0 to 1.0)
-         */     
+         */
         forward: function (val) {
             val = val || 1;
             this._value = Math.max(0, Math.min(1, val));
@@ -360,7 +360,7 @@ BO.io.DCMotor = (function () {
                 this._reversePin.value = 1;
                 this._pwmPin.value = Math.max(0, Math.min(1, (this._value * this._range) * -1 + this._offset));
             }
-        }       
+        }
             
     };
 

@@ -246,7 +246,7 @@ JSUTILS.EventDispatcher = (function () {
                 return true;
             } else {
                 return false;
-            }   
+            }
         },
         
         /**
@@ -254,11 +254,11 @@ JSUTILS.EventDispatcher = (function () {
          * @param {Event} type The Event object.
          * @param {Object} optionalParams Optional parameters passed as an object.
          * return {boolean} True if dispatch is successful, false if not.
-         */ 
+         */
         dispatchEvent: function (event, optionalParams) {
             
             event.target = this._target;
-            var isSuccess = false;      
+            var isSuccess = false;
 
             // Add any optional params to the Event object
             for (var obj in optionalParams) {
@@ -278,7 +278,7 @@ JSUTILS.EventDispatcher = (function () {
                     }
                 }
             }
-            return isSuccess;   
+            return isSuccess;
         }
     };
 
