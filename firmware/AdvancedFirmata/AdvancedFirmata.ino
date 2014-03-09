@@ -13,7 +13,7 @@
   Copyright (C) 2006-2008 Hans-Christoph Steiner.  All rights reserved.
   Copyright (C) 2010-2011 Paul Stoffregen.  All rights reserved.
   Copyright (C) 2009 Shigeru Kobayashi.  All rights reserved.
-  Copyright (C) 2009-2012 Jeff Hoefs.  All rights reserved.
+  Copyright (C) 2009-2014 Jeff Hoefs.  All rights reserved.
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -24,10 +24,6 @@
 
   formatted using the GNU C formatting and indenting
 */
-
-/* 
- * TODO: use Program Control to load stored profiles from EEPROM
- */
 
 #include <Servo.h>
 #include "FirmataStepper.h"
@@ -42,15 +38,16 @@
 #define I2C_READ_WRITE_MODE_MASK B00011000
 #define I2C_10BIT_ADDRESS_MODE_MASK B00100000
 
-#define MAX_QUERIES 8
+#define MAX_QUERIES 8 // max number of i2c devices in read continuous mode
 #define MINIMUM_SAMPLING_INTERVAL 10
 
 #define REGISTER_NOT_SPECIFIED -1
 
-#define MAX_STEPPERS 6 // arbitrary value... may need to adjust
-#define STEPPER 0x72  // move this to Firmata.h
-#define STEPPER_CONFIG 0
-#define STEPPER_STEP 1
+#define MAX_STEPPERS    6     // arbitrary value... may need to adjust
+#define STEPPER_DATA    0x72  // move this to Firmata.h
+#define STEPPER_CONFIG  0
+#define STEPPER_STEP    1
+#define STEPPER         0x08  // pin configured for stepper motor
 
 /*==============================================================================
  * GLOBAL VARIABLES
@@ -71,7 +68,7 @@ int pinState[TOTAL_PINS];           // any value that has been written
 /* timer variables */
 unsigned long currentMillis;        // store the current value from millis()
 unsigned long previousMillis;       // for comparison with currentMillis
-int samplingInterval = 19;          // how often to run the main loop (in ms)
+unsigned int samplingInterval = 19; // how often to run the main loop (in ms)
 
 /* i2c data */
 struct i2c_device_info {
@@ -133,9 +130,9 @@ void readAndReportData(byte address, int theRegister, byte numBytes) {
   }
   else {
     if(numBytes > Wire.available()) {
-      Firmata.sendString("I2C Read Error: Too many bytes received");
+      Firmata.sendString("I2C: Too many bytes received");
     } else {
-      Firmata.sendString("I2C Read Error: Too few bytes received"); 
+      Firmata.sendString("I2C: Too few bytes received"); 
     }
   }
 
@@ -251,10 +248,16 @@ void setPinModeCallback(byte pin, int mode)
       pinConfig[pin] = I2C;
     }
     break;
+  case STEPPER:
+    if (IS_PIN_DIGITAL(pin)) {
+      digitalWrite(PIN_TO_DIGITAL(pin), LOW); // disable PWM
+      pinMode(PIN_TO_DIGITAL(pin), OUTPUT);
+      pinConfig[pin] = STEPPER;
+    }
+    break;
   default:
     Firmata.sendString("Unknown pin mode"); // TODO: put error msgs in EEPROM
   }
-  // TODO: save status to EEPROM here, if changed
 }
 
 void analogWriteCallback(byte pin, int value)
@@ -314,7 +317,6 @@ void reportAnalogCallback(byte analogPin, int value)
       analogInputsToReport = analogInputsToReport | (1 << analogPin);
     }
   }
-  // TODO: save status to EEPROM here, if changed
 }
 
 void reportDigitalCallback(byte port, int value)
@@ -346,7 +348,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
   case I2C_REQUEST:
     mode = argv[1] & I2C_READ_WRITE_MODE_MASK;
     if (argv[1] & I2C_10BIT_ADDRESS_MODE_MASK) {
-      Firmata.sendString("10-bit addressing mode is not yet supported");
+      Firmata.sendString("10-bit addressing not supported");
       return;
     }
     else {
@@ -392,7 +394,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
       query[queryIndex].bytes = argv[4] + (argv[5] << 7);
       break;
     case I2C_STOP_READING:
-	  byte queryIndexToSkip;      
+    byte queryIndexToSkip;      
       // if read continuous mode is enabled for only 1 i2c device, disable
       // read continuous reporting for that device
       if (queryIndex <= 0) {
@@ -402,7 +404,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
         // determine which device to stop reading and remove it's data from
         // the array, shifiting other array data to fill the space
         for (byte i = 0; i < queryIndex + 1; i++) {
-          if (query[i].addr = slaveAddress) {
+          if (query[i].addr == slaveAddress) {
             queryIndexToSkip = i;
             break;
           }
@@ -411,7 +413,7 @@ void sysexCallback(byte command, byte argc, byte *argv)
         for (byte i = queryIndexToSkip; i<queryIndex + 1; i++) {
           if (i < MAX_QUERIES) {
             query[i].addr = query[i+1].addr;
-            query[i].reg = query[i+1].addr;
+            query[i].reg = query[i+1].reg;
             query[i].bytes = query[i+1].bytes; 
           }
         }
@@ -442,16 +444,18 @@ void sysexCallback(byte command, byte argc, byte *argv)
       int maxPulse = argv[3] + (argv[4] << 7);
 
       if (IS_PIN_SERVO(pin)) {
-        if (servos[PIN_TO_SERVO(pin)].attached())
+        if (servos[PIN_TO_SERVO(pin)].attached()) {
           servos[PIN_TO_SERVO(pin)].detach();
+        }
         servos[PIN_TO_SERVO(pin)].attach(PIN_TO_DIGITAL(pin), minPulse, maxPulse);
         setPinModeCallback(pin, SERVO);
       }
     }
     break;
 
-  case STEPPER:
-    byte stepCommand, deviceNum, directionPin, stepPin, stepDirection, interface;
+  case STEPPER_DATA:
+    byte stepCommand, deviceNum, directionPin, stepPin, stepDirection;
+    byte interface, interfaceType;
     byte motorPin3, motorPin4;
     unsigned int stepsPerRev;
     long numSteps;
@@ -462,44 +466,51 @@ void sysexCallback(byte command, byte argc, byte *argv)
     stepCommand = argv[0];
     deviceNum = argv[1];
 
-    if (stepCommand == STEPPER_CONFIG) {
-      numSteppers++; // assumes steppers are added in order 0 -> 5
-      interface = argv[2];
-      stepsPerRev = (argv[3] + (argv[4] << 7));
+    if (deviceNum < MAX_STEPPERS) {
+      if (stepCommand == STEPPER_CONFIG) {
+        interface = argv[2]; // upper 4 bits are the stepDelay, lower 4 bits are the interface type
+        interfaceType = interface & 0x0F; // the interface type is specified by the lower 4 bits
+        stepsPerRev = (argv[3] + (argv[4] << 7));
 
-      directionPin = argv[5]; // or motorPin1 for TWO_WIRE or FOUR_WIRE interface
-      stepPin = argv[6]; // // or motorPin2 for TWO_WIRE or FOUR_WIRE interface
-      setPinModeCallback(directionPin, OUTPUT);
-      setPinModeCallback(stepPin, OUTPUT);      
+        directionPin = argv[5]; // or motorPin1 for TWO_WIRE or FOUR_WIRE interface
+        stepPin = argv[6]; // // or motorPin2 for TWO_WIRE or FOUR_WIRE interface
+        setPinModeCallback(directionPin, STEPPER);
+        setPinModeCallback(stepPin, STEPPER);
 
-      if (interface == FirmataStepper::DRIVER || interface == FirmataStepper::TWO_WIRE) {
-        stepper[deviceNum] = new FirmataStepper(interface, stepsPerRev, directionPin, stepPin);
-      } else if (interface == FirmataStepper::FOUR_WIRE) {
-        motorPin3 = argv[7];
-        motorPin4 = argv[8];          
-        setPinModeCallback(motorPin3, OUTPUT);
-        setPinModeCallback(motorPin4, OUTPUT);
-        stepper[deviceNum] = new FirmataStepper(interface, stepsPerRev, directionPin, stepPin, motorPin3, motorPin4);
+        if (!stepper[deviceNum]) {
+          numSteppers++; // assumes steppers are added in order 0 -> 5
+        }
+      
+        if (interfaceType == FirmataStepper::DRIVER || interfaceType == FirmataStepper::TWO_WIRE) {
+          stepper[deviceNum] = new FirmataStepper(interface, stepsPerRev, directionPin, stepPin);
+        } else if (interfaceType == FirmataStepper::FOUR_WIRE) {
+          motorPin3 = argv[7];
+          motorPin4 = argv[8];          
+          setPinModeCallback(motorPin3, STEPPER);
+          setPinModeCallback(motorPin4, STEPPER);
+          stepper[deviceNum] = new FirmataStepper(interface, stepsPerRev, directionPin, stepPin, motorPin3, motorPin4);
+        }
+      }
+      else if (stepCommand == STEPPER_STEP) {
+        stepDirection = argv[2];
+        numSteps = (long)argv[3] | ((long)argv[4] << 7) | ((long)argv[5] << 14);
+        stepSpeed = (argv[6] + (argv[7] << 7));
+
+        if (stepDirection == 0) { numSteps *= -1; }
+        if (stepper[deviceNum]) {
+          if (argc >= 8 && argc < 12) {
+            // num steps, speed (0.01*rad/sec)
+            stepper[deviceNum]->setStepsToMove(numSteps, stepSpeed); 
+          } else if (argc == 12) {
+            accel = (argv[8] + (argv[9] << 7));
+            decel = (argv[10] + (argv[11] << 7));
+            // num steps, speed (0.01*rad/sec), accel (0.01*rad/sec^2), decel (0.01*rad/sec^2)
+            stepper[deviceNum]->setStepsToMove(numSteps, stepSpeed, accel, decel);
+          }
+        }
       }
     }
-    else if (stepCommand == STEPPER_STEP) {
-      stepDirection = argv[2];
-      numSteps = (long)argv[3] | ((long)argv[4] << 7) | ((long)argv[5] << 14);
-      stepSpeed = (argv[6] + (argv[7] << 7));
-
-      if (stepDirection == 0) { numSteps *= -1; }
-
-      if (argc >= 8 && argc < 12) {
-        // num steps, speed (0.01*rad/sec)
-        stepper[deviceNum]->setStepsToMove(numSteps, stepSpeed); 
-      } else if (argc == 12) {
-        accel = (argv[8] + (argv[9] << 7));
-        decel = (argv[10] + (argv[11] << 7));
-        // num steps, speed (0.01*rad/sec), accel (0.01*rad/sec^2), decel (0.01*rad/sec^2)
-        stepper[deviceNum]->setStepsToMove(numSteps, stepSpeed, accel, decel);
-      }
-    }     
-
+    
     break;
 
   case SAMPLING_INTERVAL:
@@ -546,6 +557,10 @@ void sysexCallback(byte command, byte argc, byte *argv)
         Serial.write(I2C);
         Serial.write(1);  // to do: determine appropriate value 
       }
+      if (IS_PIN_DIGITAL(pin)) {
+        Firmata.write(STEPPER);
+        Firmata.write(21); //21 bits used for number of steps
+      }      
       Serial.write(127);
     }
     Serial.write(END_SYSEX);
@@ -558,9 +573,9 @@ void sysexCallback(byte command, byte argc, byte *argv)
       Serial.write(pin);
       if (pin < TOTAL_PINS) {
         Serial.write((byte)pinConfig[pin]);
-	Serial.write((byte)pinState[pin] & 0x7F);
-	if (pinState[pin] & 0xFF80) Serial.write((byte)(pinState[pin] >> 7) & 0x7F);
-	if (pinState[pin] & 0xC000) Serial.write((byte)(pinState[pin] >> 14) & 0x7F);
+        Serial.write((byte)pinState[pin] & 0x7F);
+        if (pinState[pin] & 0xFF80) Serial.write((byte)(pinState[pin] >> 7) & 0x7F);
+        if (pinState[pin] & 0xC000) Serial.write((byte)(pinState[pin] >> 14) & 0x7F);
       }
       Serial.write(END_SYSEX);
     }
@@ -596,11 +611,11 @@ void enableI2CPins()
 
 /* disable the i2c pins so they can be used for other functions */
 void disableI2CPins() {
-    isI2CEnabled = false;
-    // disable read continuous mode for all devices
-    queryIndex = -1;
-    // uncomment the following if or when the end() method is added to Wire library
-    // Wire.end();
+  isI2CEnabled = false;
+  // disable read continuous mode for all devices
+  queryIndex = -1;
+  // uncomment the following if or when the end() method is added to Wire library
+  // Wire.end();
 }
 
 /*==============================================================================
@@ -612,11 +627,11 @@ void systemResetCallback()
   // initialize a defalt state
   // TODO: option to load config from EEPROM instead of default
   if (isI2CEnabled) {
-  	disableI2CPins();
+    disableI2CPins();
   }
   for (byte i=0; i < TOTAL_PORTS; i++) {
     reportPINs[i] = false;      // by default, reporting off
-    portConfigInputs[i] = 0;	// until activated
+    portConfigInputs[i] = 0;  // until activated
     previousPINs[i] = 0;
   }
   // pins with analog capability default to analog input
@@ -633,7 +648,13 @@ void systemResetCallback()
   // by default, do not report any analog inputs
   analogInputsToReport = 0;
 
-  numSteppers = 0;
+  for (byte i=0;i<MAX_STEPPERS;i++) {
+    if (stepper[i]) {
+      free(stepper[i]);
+      stepper[i] = 0;
+    }
+  }
+  numSteppers=0;
 
   /* send digital inputs to set the initial state on the host computer,
    * since once in the loop(), this firmware will only send on change */
@@ -684,15 +705,16 @@ void loop()
 
   // if one or more stepper motors are used, update their position
   if (numSteppers > 0) {
-    for (int i=0; i<numSteppers; i++) {
-      bool done = stepper[i]->update();
-
-      // send command to client application when stepping is complete
-      if (done) {
-        Serial.write(START_SYSEX);
-        Serial.write(STEPPER);
-        Serial.write(i);
-        Serial.write(END_SYSEX);
+    for (int i=0; i<MAX_STEPPERS; i++) {
+      if (stepper[i]) {
+        bool done = stepper[i]->update();
+        // send command to client application when stepping is complete
+        if (done) {
+          Serial.write(START_SYSEX);
+          Serial.write(STEPPER_DATA);
+          Serial.write(i);
+          Serial.write(END_SYSEX);
+        }
       }
     }
   }

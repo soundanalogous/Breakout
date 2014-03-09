@@ -46,7 +46,7 @@ Requested Features
 Restrictions
 ---
 
-Due ot the large file size, AdvancedFirmata will only run on newer Arduino 
+Due to the large file size, AdvancedFirmata will only run on newer Arduino 
 boards that have > 16KB of flash memory. This is most Arduino and 
 arduino-compatible boards released over the past few years.
 

@@ -72,8 +72,8 @@ class FirmataStepper {
                     int steps_per_rev = 200, 
                     byte pin1 = 2, 
                     byte pin2 = 3, 
-                    byte pin3 = 3, 
-                    byte pin4 = 4);
+                    byte pin3 = 4, 
+                    byte pin4 = 5);
 
     enum Interface {
       DRIVER = 1,
@@ -110,6 +110,7 @@ class FirmataStepper {
     int steps_per_rev;      // number of steps to make one revolution
     long step_number;        // which step the motor is on
     long steps_to_move;   // total number of teps to move
+    byte stepDelay;       // delay between steps (default = 1, increase for high current drivers)
 
     byte run_state;
     int accel_count;
@@ -119,7 +120,7 @@ class FirmataStepper {
 
     long lastAccelDelay;
     unsigned long stepCount;
-    unsigned int rest;    
+    unsigned int rest;
 
     float alpha;  // PI * 2 / steps_per_rev
     long at_x100;  // alpha * T1_FREQ * 100

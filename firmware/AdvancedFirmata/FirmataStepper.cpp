@@ -59,8 +59,10 @@
  * Configure a stepper for an EasyDriver or other step + direction interface or
  * configure a bipolar or unipolar stepper motor for 2 wire drive mode.
  * Configure a bipolar or unipolar stepper for 4 wire drive mode.
- * @param interface The interface type: FirmataStepper::DRIVER or
- * FirmataStepper::TWO_WIRE
+ * @param interface Lower 4 bits:
+ * The interface type: FirmataStepper::DRIVER,
+ * FirmataStepper::TWO_WIRE or FirmataStepper::FOUR_WIRE
+ * Upper 4 bits: Any bits set = use 2 microsecond delay
  * @param steps_per_rev The number of steps to make 1 revolution.
  * @param first_pin The direction pin (EasyDriver) or the pin attached to the 
  * 1st motor coil (2 wire drive mode)
@@ -80,7 +82,15 @@ FirmataStepper::FirmataStepper(byte interface,
   this->last_step_time = 0;    // time stamp in ms of the last step taken
   this->steps_per_rev = steps_per_rev;    // total number of steps for this motor
   this->running = false;
-  this->interface = interface; // default to Easy Stepper (or other step + direction driver)
+  this->interface = interface & 0x0F; // default to Easy Stepper (or other step + direction driver)
+
+  // could update this in future to support additional delays if necessary
+  if (((interface & 0xF0) >> 4) > 0) {
+    // high current driver
+    this->stepDelay = 2; // microseconds
+  } else {
+    this->stepDelay = 1; // microseconds
+  }
 
   this->motor_pin_1 = pin1;
   this->motor_pin_2 = pin2;
@@ -91,7 +101,7 @@ FirmataStepper::FirmataStepper(byte interface,
   pinMode(this->motor_pin_1, OUTPUT);
   pinMode(this->motor_pin_2, OUTPUT);
 
-  if (interface == FirmataStepper::FOUR_WIRE) {
+  if (this->interface == FirmataStepper::FOUR_WIRE) {
     this->motor_pin_3 = pin3;
     this->motor_pin_4 = pin4;    
     pinMode(this->motor_pin_3, OUTPUT);
@@ -336,10 +346,10 @@ void FirmataStepper::updateStepPosition() {
 void FirmataStepper::stepMotor(byte step_num, byte direction) {
   if (this->interface == FirmataStepper::DRIVER) {
     digitalWrite(dir_pin, direction);
-	  delayMicroseconds(1);
-	  digitalWrite(step_pin, LOW);
-    delayMicroseconds(1);
-	  digitalWrite(step_pin, HIGH);
+    delayMicroseconds(this->stepDelay);
+    digitalWrite(step_pin, LOW);
+    delayMicroseconds(this->stepDelay);
+    digitalWrite(step_pin, HIGH);
   } else if (this->interface == FirmataStepper::TWO_WIRE) {
     switch (step_num) {
       case 0: /* 01 */
@@ -393,5 +403,5 @@ void FirmataStepper::stepMotor(byte step_num, byte direction) {
  * @return The version number of this library.
  */
 byte FirmataStepper::version(void) {
-  return 1;
+  return 2;
 }
