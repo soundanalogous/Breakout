@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -102,6 +102,7 @@ BO.io.Stepper = (function () {
         
         switch (driverType) {
         case Stepper.DRIVER:
+        case Stepper.DRIVER_HIGH_CURRENT:
         case Stepper.TWO_WIRE:
             // configure the stepper motor
             this._board.sendSysex(STEPPER,

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Copyright (c) 2011-2013 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
