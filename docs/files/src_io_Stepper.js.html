@@ -211,8 +211,9 @@ BO.io.Stepper = (function () {
      * @uses JSUTILS.EventDispatcher
      * @param {IOBoard} board A reference to the IOBoard instance that the 
      * stepper is attached to.
-     * @param {Number} driverType. The type of driver (&#x60;Stepper.DRIVER&#x60;, 
-     * &#x60;Stepper.TWO_WIRE&#x60;, or &#x60;Stepper.FOUR_WIRE&#x60;).
+     * @param {Number} driverType. The type of driver (&#x60;Stepper.DRIVER&#x60;,
+     * &#x60;Stepper.DRIVER_HIGH_CURRENT, &#x60;Stepper.TWO_WIRE&#x60;, or
+     * &#x60;Stepper.FOUR_WIRE&#x60;).
      * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
      * @param {Pin} directionPin If dirver interface, the pin used to control 
      * the direction.

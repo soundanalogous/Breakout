@@ -1575,7 +1575,7 @@
                 },
                 {
                     "name": "driverType.",
-                    "description": "The type of driver (`Stepper.DRIVER`, \n`Stepper.TWO_WIRE`, or `Stepper.FOUR_WIRE`).",
+                    "description": "The type of driver (`Stepper.DRIVER`,\n`Stepper.DRIVER_HIGH_CURRENT, `Stepper.TWO_WIRE`, or\n`Stepper.FOUR_WIRE`).",
                     "type": "Number"
                 },
                 {
@@ -7376,7 +7376,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 141,
+            "line": 142,
             "description": "Move the stepper a given number of steps at the specified\nspeed (rad/sec), acceleration (rad/sec^2) and deceleration (rad/sec^2).\nThe accel and decel parameters are optional but if using, both values\nmust be passed to the function.",
             "itemtype": "method",
             "name": "step",
@@ -7407,7 +7407,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 236,
+            "line": 237,
             "description": "Listen for stepping complete event",
             "access": "private",
             "tagname": "",
@@ -7418,7 +7418,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 254,
+            "line": 255,
             "description": "[read-only] The id of the Stepper object instance. Each stepper motor\nis given a unique id upon initialization.",
             "itemtype": "property",
             "name": "id",
@@ -7428,7 +7428,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 266,
+            "line": 267,
             "params": [
                 {
                     "name": "type",
@@ -7446,7 +7446,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 274,
+            "line": 275,
             "params": [
                 {
                     "name": "type",
@@ -7464,7 +7464,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 282,
+            "line": 283,
             "params": [
                 {
                     "name": "type",
@@ -7477,7 +7477,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 290,
+            "line": 291,
             "params": [
                 {
                     "name": "type",
@@ -7495,7 +7495,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 301,
+            "line": 302,
             "itemtype": "property",
             "name": "Stepper.CLOCKWISE",
             "static": 1,
@@ -7504,7 +7504,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 306,
+            "line": 307,
             "itemtype": "property",
             "name": "Stepper.COUNTER_CLOCKWISE",
             "static": 1,
@@ -7513,7 +7513,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 311,
+            "line": 312,
             "description": "Uses 1 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER",
@@ -7523,7 +7523,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 317,
+            "line": 318,
             "description": "Uses 2 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER_HIGH_CURRENT",
@@ -7533,7 +7533,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 323,
+            "line": 324,
             "itemtype": "property",
             "name": "Stepper.TWO_WIRE",
             "static": 1,
@@ -7542,7 +7542,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 328,
+            "line": 329,
             "itemtype": "property",
             "name": "Stepper.FOUR_WIRE",
             "static": 1,
@@ -8358,19 +8358,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:266"
+            "line": " src/io/Stepper.js:267"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:274"
+            "line": " src/io/Stepper.js:275"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:282"
+            "line": " src/io/Stepper.js:283"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:290"
+            "line": " src/io/Stepper.js:291"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
