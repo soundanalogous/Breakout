@@ -2,7 +2,7 @@
     "project": {
         "name": "Breakout",
         "description": "breakoutjs.com",
-        "version": "0.3.1"
+        "version": "0.3.2"
     },
     "files": {
         "src/core/I2CBase.js": {
