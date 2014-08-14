@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.3.1 - 2014-03-09
+ * Breakout v0.3.2 - 2014-08-13
 
  * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
