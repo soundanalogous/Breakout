@@ -1575,7 +1575,7 @@
                 },
                 {
                     "name": "driverType.",
-                    "description": "The type of driver (`Stepper.DRIVER`,\n`Stepper.DRIVER_HIGH_CURRENT, `Stepper.TWO_WIRE`, or\n`Stepper.FOUR_WIRE`).",
+                    "description": "The type of driver (`Stepper.DRIVER`,\n`Stepper.DRIVER_HIGH_CURRENT`, `Stepper.TWO_WIRE`, or\n`Stepper.FOUR_WIRE`).",
                     "type": "Number"
                 },
                 {

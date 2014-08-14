@@ -558,8 +558,8 @@ void sysexCallback(byte command, byte argc, byte *argv)
         Serial.write(1);  // to do: determine appropriate value 
       }
       if (IS_PIN_DIGITAL(pin)) {
-        Firmata.write(STEPPER);
-        Firmata.write(21); //21 bits used for number of steps
+        Serial.write(STEPPER);
+        Serial.write(21); //21 bits used for number of steps
       }      
       Serial.write(127);
     }
