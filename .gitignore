@@ -3,6 +3,7 @@
 *.sublime-workspace
 
 dist/*.zip
+examples/playground/
 
 # dependencies
 node_modules
