@@ -61,6 +61,26 @@
             "fors": {},
             "namespaces": {}
         },
+        "src/core/Serial.js": {
+            "name": "src/core/Serial.js",
+            "modules": {},
+            "classes": {
+                "BO.Serial": 1
+            },
+            "fors": {},
+            "namespaces": {
+                "BO": 1
+            }
+        },
+        "src/core/SerialEvent.js": {
+            "name": "src/core/SerialEvent.js",
+            "modules": {},
+            "classes": {
+                "BO.SerialEvent": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/core/WSocketEvent.js": {
             "name": "src/core/WSocketEvent.js",
             "modules": {},
@@ -582,6 +602,81 @@
             "file": "src/core/PinEvent.js",
             "line": 15,
             "description": "An Event object to be dispatched (fired) by a Pin object.",
+            "is_constructor": 1,
+            "extends": "JSUTILS.Event",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The event type",
+                    "type": "String"
+                }
+            ]
+        },
+        "BO.Serial": {
+            "name": "BO.Serial",
+            "shortname": "Serial",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "namespace": "BO",
+            "file": "src/core/Serial.js",
+            "line": 33,
+            "description": "Enables use of Hardware and Software serial ports on the board.",
+            "is_constructor": 1,
+            "uses": [
+                "JSUTILS.EventDispatcher"
+            ],
+            "params": [
+                {
+                    "name": "board",
+                    "description": "A reference to the IOBoard instance.",
+                    "type": "IOBoard"
+                },
+                {
+                    "name": "port",
+                    "description": "The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,\nSW_SERIAL1, SW_SERIAL2, SW_SERIAL3)",
+                    "type": "Number"
+                },
+                {
+                    "name": "baud",
+                    "description": "The baud rate of the serial port.",
+                    "type": "Number"
+                },
+                {
+                    "name": "bytesToRead",
+                    "description": "The number of bytes to read on each iteration of the main loop\n(not yet used)",
+                    "type": "Number"
+                },
+                {
+                    "name": "rxPin",
+                    "description": "[SoftwareSerial only] The RX pin of the SoftwareSerial instance",
+                    "type": "Number"
+                },
+                {
+                    "name": "txPin",
+                    "description": "[SoftwareSerial only] The TX pin of the SoftwareSerial instance",
+                    "type": "Number"
+                }
+            ],
+            "example": [
+                "\n    // Use a SoftwareSerial instance\n    var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 0, 10, 11);\n    serial.addEventListener(BO.SerialEvent.DATA, function (event) {\n        console.log(event.data);\n    });\n    serial.startReading();",
+                "\n    // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)\n    var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600, 0);\n    serial.addEventListener(BO.SerialEvent.DATA, function (event) {\n        console.log(event.data);\n    });\n    serial.startReading();"
+            ]
+        },
+        "BO.SerialEvent": {
+            "name": "BO.SerialEvent",
+            "shortname": "SerialEvent",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "namespace": "BO",
+            "file": "src/core/SerialEvent.js",
+            "line": 15,
+            "description": "An Event object to be dispatched (fired) by a Serial object.",
             "is_constructor": 1,
             "extends": "JSUTILS.Event",
             "params": [
@@ -1641,6 +1736,7 @@
                 "BO.IOBoard",
                 "BO.PhysicalInputBase",
                 "BO.Pin",
+                "BO.Serial",
                 "BO.WSocketWrapper",
                 "BO.custom.ID12RFIDReader",
                 "BO.io.Stepper"
@@ -4024,6 +4120,160 @@
             "name": "PinEvent.FALLING_EDGE",
             "static": 1,
             "class": "BO.PinEvent",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 1,
+            "description": "Copyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 8,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 103,
+            "description": "Handle incoming sysex message.",
+            "access": "private",
+            "tagname": "",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 123,
+            "description": "Write an array of data.",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "",
+                    "type": "Array"
+                }
+            ],
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 139,
+            "description": "Start reading the serial port.",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 146,
+            "description": "Stop reading the serial port.",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 153,
+            "description": "Close the serial port. A new instance must be created in order\nto reopen the port.",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 161,
+            "description": "For HardwareSerial, waits for the transmission of outgoing serial data\nto complete.\nFor SoftwareSerial, removes any buffered incoming serial data.",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 170,
+            "description": "For SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.\nCall this method to set this port to be the reading port in the case there are multiple\nSoftwareSerial instances.",
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 184,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The event type",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "The function to be called when the event is fired",
+                    "type": "Function"
+                }
+            ],
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 192,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The event type",
+                    "type": "String"
+                },
+                {
+                    "name": "listener",
+                    "description": "The function to be called when the event is fired",
+                    "type": "Function"
+                }
+            ],
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 200,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The event type\nreturn {boolean} True is listener exists for this type, false if not.",
+                    "type": "String"
+                }
+            ],
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 208,
+            "params": [
+                {
+                    "name": "type",
+                    "description": "The Event object",
+                    "type": "Event"
+                },
+                {
+                    "name": "optionalParams",
+                    "description": "Optional parameters to assign to the event object.\nreturn {boolean} True if dispatch is successful, false if not.",
+                    "type": "Object"
+                }
+            ],
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/SerialEvent.js",
+            "line": 1,
+            "description": "Copyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "class": "BO.SerialEvent",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/SerialEvent.js",
+            "line": 32,
+            "itemtype": "property",
+            "name": "SerialEvent.DATA",
+            "static": 1,
+            "class": "BO.SerialEvent",
             "namespace": "BO"
         },
         {
@@ -8148,6 +8398,62 @@
         {
             "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/PinEvent.js:1"
+        },
+        {
+            "message": "Missing item type\nCopyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "line": " src/core/Serial.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/core/Serial.js:8"
+        },
+        {
+            "message": "Missing item type\nHandle incoming sysex message.",
+            "line": " src/core/Serial.js:103"
+        },
+        {
+            "message": "Missing item type\nWrite an array of data.",
+            "line": " src/core/Serial.js:123"
+        },
+        {
+            "message": "Missing item type\nStart reading the serial port.",
+            "line": " src/core/Serial.js:139"
+        },
+        {
+            "message": "Missing item type\nStop reading the serial port.",
+            "line": " src/core/Serial.js:146"
+        },
+        {
+            "message": "Missing item type\nClose the serial port. A new instance must be created in order\nto reopen the port.",
+            "line": " src/core/Serial.js:153"
+        },
+        {
+            "message": "Missing item type\nFor HardwareSerial, waits for the transmission of outgoing serial data\nto complete.\nFor SoftwareSerial, removes any buffered incoming serial data.",
+            "line": " src/core/Serial.js:161"
+        },
+        {
+            "message": "Missing item type\nFor SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.\nCall this method to set this port to be the reading port in the case there are multiple\nSoftwareSerial instances.",
+            "line": " src/core/Serial.js:170"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/core/Serial.js:184"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/core/Serial.js:192"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/core/Serial.js:200"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/core/Serial.js:208"
+        },
+        {
+            "message": "Missing item type\nCopyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "line": " src/core/SerialEvent.js:1"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",

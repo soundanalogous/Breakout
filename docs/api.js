@@ -7,6 +7,8 @@ YUI.add("yuidoc-meta", function(Y) {
         "BO.PhysicalInputBase",
         "BO.Pin",
         "BO.PinEvent",
+        "BO.Serial",
+        "BO.SerialEvent",
         "BO.WSocketEvent",
         "BO.WSocketWrapper",
         "BO.custom.ID12RFIDReader",

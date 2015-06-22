@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>src/filters/TriggerPoint.js - Breakout</title>
+    <title>src/core/Serial.js - Breakout</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -172,164 +172,241 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: src/filters/TriggerPoint.js</h1>
+                        <h1 class="file-heading">File: src/core/Serial.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
- /**
- * Based on SetPoint.as originally written in as3.
- * Copyright (c) the Funnel development team
- * http://www.funnel.cc
- *
- * Ported to JavaScript by Jeff Hoefs
- * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
- *
+/**
+ * Copyright (c) 2015 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
  * Released under the MIT license. See LICENSE file for details.
  */
 
-JSUTILS.namespace(&#x27;BO.filters.TriggerPoint&#x27;);
+JSUTILS.namespace(&#x27;BO.Serial&#x27;);
 
-BO.filters.TriggerPoint = (function () {
+/**
+ * @namespace BO
+ */
+BO.Serial = (function () {
     &quot;use strict&quot;;
 
-    var TriggerPoint;
+    var Serial;
+
+    var SERIAL_MESSAGE = 0x60;
+    var CONFIG = 0x10;
+    var WRITE = 0x20;
+    var READ = 0x30;
+    var REPLY = 0x40;
+    var CLOSE = 0x50;
+    var FLUSH = 0x60;
+    var LISTEN = 0x70;
+
+    var READ_CONTINUOUS = 0x00;
+    var STOP_READING = 0x01;
 
     // dependencies
-    var FilterBase = BO.filters.FilterBase;
+    var EventDispatcher = JSUTILS.EventDispatcher;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var SerialEvent = BO.SerialEvent;
 
     /**
-     * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
-     * also use multiple points by providing a nested array such as &#x60;[[0.4, 0.1],
-     * [0.7, 0.05]]&#x60;.
-     * See [Breakout/examples/filters/triggerpoint.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/triggerpoint.html) for an example application.
+     * Enables use of Hardware and Software serial ports on the board.
      *
-     * @class TriggerPoint
+     * @class Serial
      * @constructor
-     * @extends BO.filters.FilterBase
-     * @param {Number[]} points An array of threshold and hysteresis values
-     * operations for input buffers.
+     * @uses JSUTILS.EventDispatcher
+     * @param {IOBoard} board A reference to the IOBoard instance.
+     * @param {Number} port The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
+     * SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)
+     * @param {Number} baud The baud rate of the serial port.
+     * @param {Number} bytesToRead The number of bytes to read on each iteration of the main loop
+     * (not yet used)
+     * @param {Number} rxPin [SoftwareSerial only] The RX pin of the SoftwareSerial instance
+     * @param {Number} txPin [SoftwareSerial only] The TX pin of the SoftwareSerial instance
+     *
+     * @example
+     *     // Use a SoftwareSerial instance
+     *     var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 0, 10, 11);
+     *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+     *         console.log(event.data);
+     *     });
+     *     serial.startReading();
+     *
+     * @example
+     *     // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
+     *     var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600, 0);
+     *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+     *         console.log(event.data);
+     *     });
+     *     serial.startReading();
      */
-    TriggerPoint = function (points) {
-
-        this.name = &quot;TriggerPoint&quot;;
-
-        this._points = {};
-        this._range = [];
-        this._lastStatus = 0;
-
-        if (points === undefined) {
-            points = [[0.5, 0]];
+    Serial = function (board, port, baud, bytesToRead, rxPin, txPin) {
+        if (board === undefined) {
+            console.log(&quot;board undefined&quot;);
+            return;
         }
 
-        if (points[0] instanceof Array) {
-            var len = points.length;
-            for (var i = 0; i &lt; len; i++) {
-                this._points[points[i][0]] = points[i][1];
+        this.name = &quot;Serial&quot;;
+        this.board = board;
+        this.port = port;
+        this.baud = baud;
+        this.txPin = txPin;
+        this.rxPin = rxPin;
+
+        this._evtDispatcher = new EventDispatcher(this);
+
+        board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
+
+        var configData = [
+            CONFIG | this.port,
+            baud &amp; 0x007F,
+            (baud &gt;&gt; 7) &amp; 0x007F,
+            (baud &gt;&gt; 14) &amp; 0x007F,
+            bytesToRead &amp; 0x007F,
+            (bytesToRead &gt;&gt; 7) &amp; 0x007F
+        ];
+        if (txPin) {
+            configData.push(rxPin);
+        }
+        if (rxPin) {
+            configData.push(txPin);
+        }
+
+        board.sendSysex(SERIAL_MESSAGE, configData);
+    };
+
+    Serial.prototype = {
+
+        constructor: Serial,
+
+        /**
+         * Handle incoming sysex message.
+         * @private
+         */
+        onSysExMessage: function (event) {
+            var message = event.message;
+            var data;
+
+            if (message[0] !== SERIAL_MESSAGE) {
+                return;
+            } else {
+                if (message[1] === (REPLY | this.port)) {
+                    for (var i = 2, len = message.length; i &lt; len; i += 2) {
+                        data = this.board.getValueFromTwo7bitBytes(message[i], message[i + 1]);
+                        this.dispatchEvent(new SerialEvent(SerialEvent.DATA), {data: data, portId: this.port});
+                    }
+                }
             }
-        } else if (typeof points[0] === &quot;number&quot;) {
-            this._points[points[0]] = points[1];
-        }
+        },
 
-        this.updateRange();
-
-        this._lastStatus = 0;
-    };
-
-
-    TriggerPoint.prototype = JSUTILS.inherit(FilterBase.prototype);
-    TriggerPoint.prototype.constructor = TriggerPoint;
-
-    /**
-     * Override FilterBase.processSample
-     */
-    TriggerPoint.prototype.processSample = function (val) {
-        var status = this._lastStatus;
-        var len = this._range.length;
-        for (var i = 0; i &lt; len; i++) {
-            var range = this._range[i];
-            if (range[0] &lt;= val &amp;&amp; val &lt;= range[1]) {
-                status = i;
-                break;
+        /**
+         * Write an array of data.
+         * @param {Array} data
+         */
+        write: function (data) {
+            var txData = [];
+            txData.push(WRITE | this.port);
+            for (var i = 0, len = data.length; i &lt; len; i++) {
+                txData.push(data[i] &amp; 0x007F);
+                txData.push((data[i] &gt;&gt; 7) &amp; 0x007F);
             }
-        }
-
-        this._lastStatus = status;
-        return status;
-    };
-
-    /**
-     * @method addPoint
-     */
-    TriggerPoint.prototype.addPoint = function (threshold, hysteresis) {
-        this._points[threshold] = hysteresis;
-        this.updateRange();
-    };
-
-    /**
-     * @method removePoint
-     */
-    TriggerPoint.prototype.removePoint = function (threshold) {
-        // to do: verify that this works in javascript
-        delete this._points[threshold];
-        this.updateRange();
-    };
-
-    /**
-     * @method removeAllPoints
-     */
-    TriggerPoint.prototype.removeAllPoints = function () {
-        this._points = {};
-        this.updateRange();
-    };
-
-    /**
-     * @private
-     * @method updateRange
-     */
-    TriggerPoint.prototype.updateRange = function () {
-                
-        this._range = [];
-        var keys = this.getKeys(this._points);
-
-        var firstKey = keys[0];
-        this._range.push([Number.NEGATIVE_INFINITY, firstKey - this._points[firstKey]]);
-
-        var len = keys.length - 1;
-        for (var i = 0; i &lt; len; i++) {
-            var t0 = keys[i];
-            var t1 = keys[i + 1];
-            var p0 = (t0 * 1) + this._points[t0]; // multiply by 1 to force type to number
-            var p1 = t1 - this._points[t1];
-            if (p0 &gt;= p1) {
-                throw new Error(&quot;The specified range overlaps...&quot;);
+            if (txData.length &gt; 0) {
+                this.board.sendSysex(SERIAL_MESSAGE, txData);
             }
-            this._range.push([p0, p1]);
-        }
+        },
 
-        var lastKey = keys[keys.length - 1];
-        var positiveThresh = (lastKey * 1) + this._points[lastKey];
-        this._range.push([positiveThresh, Number.POSITIVE_INFINITY]);
+        /**
+         * Start reading the serial port.
+         */
+        startReading: function () {
+            this.board.sendSysex(SERIAL_MESSAGE, [READ | this.port, READ_CONTINUOUS]);
+        },
 
-    };
+        /**
+         * Stop reading the serial port.
+         */
+        stopReading: function () {
+            this.board.sendSysex(SERIAL_MESSAGE, [READ | this.port, STOP_READING]);
+        },
 
-    /**
-     * @private
-     * @method getKeys
-     */
-    TriggerPoint.prototype.getKeys = function (obj) {
-        var keys = [];
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                keys.push(key);
+        /**
+         * Close the serial port. A new instance must be created in order
+         * to reopen the port.
+         */
+        close: function () {
+            this.board.sendSysex(SERIAL_MESSAGE, [CLOSE | this.port]);
+        },
+
+        /**
+         * For HardwareSerial, waits for the transmission of outgoing serial data
+         * to complete.
+         * For SoftwareSerial, removes any buffered incoming serial data.
+         */
+        flush: function () {
+            this.board.sendSysex(SERIAL_MESSAGE, [FLUSH | this.port]);
+        },
+
+        /**
+         * For SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.
+         * Call this method to set this port to be the reading port in the case there are multiple
+         * SoftwareSerial instances.
+         */
+        listen: function () {
+            if (this.port &lt; 8) {
+                return;
             }
+            this.board.sendSysex(SERIAL_MESSAGE, [LISTEN | this.port]);
+        },
+
+        /* implement EventDispatcher */
+
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event is fired
+         */
+        addEventListener: function (type, listener) {
+            this._evtDispatcher.addEventListener(type, listener);
+        },
+
+        /**
+         * @param {String} type The event type
+         * @param {Function} listener The function to be called when the event is fired
+         */
+        removeEventListener: function (type, listener) {
+            this._evtDispatcher.removeEventListener(type, listener);
+        },
+
+        /**
+         * @param {String} type The event type
+         * return {boolean} True is listener exists for this type, false if not.
+         */
+        hasEventListener: function (type) {
+            return this._evtDispatcher.hasEventListener(type);
+        },
+
+        /**
+         * @param {Event} type The Event object
+         * @param {Object} optionalParams Optional parameters to assign to the event object.
+         * return {boolean} True if dispatch is successful, false if not.
+         */
+        dispatchEvent: function (event, optionalParams) {
+            return this._evtDispatcher.dispatchEvent(event, optionalParams);
         }
-        return keys.sort();
     };
-        
-    return TriggerPoint;
+
+    Serial.HW_SERIAL0 = 0x00;
+    Serial.HW_SERIAL1 = 0x01;
+    Serial.HW_SERIAL2 = 0x02;
+    Serial.HW_SERIAL3 = 0x03;
+
+    Serial.SW_SERIAL0 = 0x08;
+    Serial.SW_SERIAL1 = 0x09;
+    Serial.SW_SERIAL2 = 0x10;
+    Serial.SW_SERIAL3 = 0x11;
+
+    return Serial;
 
 }());
- 
+
     </pre>
 </div>
 

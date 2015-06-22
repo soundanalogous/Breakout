@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>BO.io.RGBLED - Breakout</title>
+    <title>BO.Serial - Breakout</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -172,15 +172,24 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>BO.io.RGBLED Class</h1>
+                        <h1>BO.Serial Class</h1>
 <div class="box meta">
+    
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                
+                    <li><a href="JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+                
+            </ul>
+        </div>
     
 
     
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_io_RGBLED.js.html#l22"><code>src&#x2F;io&#x2F;RGBLED.js:22</code></a>
+            Defined in: <a href="../files/src_core_Serial.js.html#l33"><code>src&#x2F;core&#x2F;Serial.js:33</code></a>
         </div>
     
 
@@ -192,29 +201,14 @@
 
 
 <div class="box intro">
-    <p>Creates an interface to an RGB LED. This interface is for the
-type of RGB LED with 4 legs. One leg is connected to power or ground 
-(depending on the type of LED - common anode or common cathode) and the
-other 3 legs are connected to PWM pins on the I/O board. See 
-<a href="http://breakoutjs.com/examples/schematics.pdf">Breakout/examples/schematics.pdf</a> for wiring diagrams. See 
-<a href="https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html">Breakout/examples/actuators/rgb_led.html</a> for an example application.</p>
-
-<p>The RGB pins of the RGB LED must be connected to PWM pins on the
-IOBoard.</p>
-
-<p><code>COMMON_ANODE</code> vs <code>COMMON_CATHODE</code>. You can determine if your RGB LED is 
-common anode or common cathode by reading the datasheet. To wire a 
-common cathode RGB LED, connect the cathode to ground and the 3 anode
-pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
-LED, the anode is connected to power and the 3 cathode pins are connected
-to the IOBoard PWM pins via 330 ohm resistors.</p>
+    <p>Enables use of Hardware and Software serial ports on the board.</p>
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_BO.io.RGBLED" class="method item">
-    <h3 class="name"><code>BO.io.RGBLED</code></h3>
+        <div id="method_BO.Serial" class="method item">
+    <h3 class="name"><code>BO.Serial</code></h3>
 
     
         <div class="args">
@@ -228,25 +222,31 @@ to the IOBoard PWM pins via 330 ohm resistors.</p>
             
                 <li class="arg">
                     
-                        <code>redLEDPin</code>
+                        <code>port</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>greenLEDPin</code>
+                        <code>baud</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>blueLEDPin</code>
+                        <code>bytesToRead</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>driveMode</code>
+                        <code>rxPin</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>txPin</code>
                     
                 </li>
             
@@ -279,7 +279,7 @@ to the IOBoard PWM pins via 330 ohm resistors.</p>
             
         
         
-        <a href="../files/src_io_RGBLED.js.html#l22"><code>src&#x2F;io&#x2F;RGBLED.js:22</code></a>
+        <a href="../files/src_core_Serial.js.html#l33"><code>src&#x2F;core&#x2F;Serial.js:33</code></a>
         
         </p>
 
@@ -308,8 +308,7 @@ to the IOBoard PWM pins via 330 ohm resistors.</p>
                     
 
                     <div class="param-description">
-                        <p>A reference to the IOBoard instance that the
-servo is attached to.</p>
+                        <p>A reference to the IOBoard instance.</p>
                     </div>
 
                     
@@ -317,64 +316,76 @@ servo is attached to.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">redLEDPin</code>
-                        <span class="type">Pin</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>A reference to the IOBoard Pin the red LED pin
-is connected to.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">greenLEDPin</code>
-                        <span class="type">Pin</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>A reference to the IOBoard Pin the green LED
-pin is connected to.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">blueLEDPin</code>
-                        <span class="type">Pin</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>A reference to the IOBoard Pin the blue LED pin
-is connected to.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">driveMode</code>
+                        <code class="param-name">port</code>
                         <span class="type">Number</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The drive mode of the RGBLED. Must be set to
-RGBLED.COMMON<em>ANODE or RGBLED.COMMON</em>CATHODE. RGBLED.COMMON_ANODE is
-default.</p>
+                        <p>The serial port to use (HW<em>SERIAL1, HW</em>SERIAL2, HW<em>SERIAL3, SW</em>SERIAL0,
+SW<em>SERIAL1, SW</em>SERIAL2, SW_SERIAL3)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">baud</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The baud rate of the serial port.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">bytesToRead</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The number of bytes to read on each iteration of the main loop
+(not yet used)</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">rxPin</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>[SoftwareSerial only] The RX pin of the SoftwareSerial instance</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">txPin</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>[SoftwareSerial only] The TX pin of the SoftwareSerial instance</p>
                     </div>
 
                     
@@ -386,6 +397,26 @@ default.</p>
 
     
 
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>// Use a SoftwareSerial instance
+var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 0, 10, 11);
+serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+    console.log(event.data);
+});
+serial.startReading();
+</code></pre><pre class="code prettyprint"><code>// Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
+var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600, 0);
+serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+    console.log(event.data);
+});
+serial.startReading();
+</code></pre>
+            </div>
+        </div>
     
 </div>
 
@@ -399,8 +430,6 @@ default.</p>
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
-        
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -416,29 +445,29 @@ default.</p>
 
                     <ul class="index-list methods">
                         
-                            <li class="index-item method">
-                                <a href="#method_fadeIn">fadeIn</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_addEventListener">addEventListener</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_fadeOut">fadeOut</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_fadeTo">fadeTo</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_hasEventListener">hasEventListener</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item method">
-                                <a href="#method_setColor">setColor</a>
+                            <li class="index-item method inherited">
+                                <a href="#method_removeEventListener">removeEventListener</a>
 
                                 
                                 
@@ -448,32 +477,6 @@ default.</p>
                 </div>
             
 
-            
-                <div class="index-section properties">
-                    <h3>Properties</h3>
-
-                    <ul class="index-list properties">
-                        
-                            <li class="index-item property">
-                                <a href="#property_RGBLED.COMMON_ANODE">RGBLED.COMMON_ANODE</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_RGBLED.COMMON_CATHODE">RGBLED.COMMON_CATHODE</a>
-
-                                
-                                    <span class="flag static">static</span>
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
             
 
             
@@ -486,8 +489,8 @@ default.</p>
                 <h2 class="off-left">Methods</h2>
 
                 
-                    <div id="method_fadeIn" class="method item">
-    <h3 class="name"><code>fadeIn</code></h3>
+                    <div id="method_addEventListener" class="method item inherited">
+    <h3 class="name"><code>addEventListener</code></h3>
 
     
         <div class="args">
@@ -495,7 +498,13 @@ default.</p>
             
                 <li class="arg">
                     
-                        <code>time</code>
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
                     
                 </li>
             
@@ -520,15 +529,12 @@ default.</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_addEventListener">JSUTILS.EventDispatcher</a>:
             
         
         
-        <a href="../files/src_io_RGBLED.js.html#l90"><code>src&#x2F;io&#x2F;RGBLED.js:90</code></a>
+        <a href="../files/src_utils_EventDispatcher.js.html#l37"><code>src&#x2F;utils&#x2F;EventDispatcher.js:37</code></a>
         
         </p>
 
@@ -539,7 +545,7 @@ default.</p>
     </div>
 
     <div class="description">
-        <p>Fade in the RGBLED from the off state.</p>
+        
     </div>
 
     
@@ -550,14 +556,30 @@ default.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">time</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The time of the fade (in milliseconds)</p>
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
                     </div>
 
                     
@@ -573,8 +595,8 @@ default.</p>
 </div>
 
                 
-                    <div id="method_fadeOut" class="method item">
-    <h3 class="name"><code>fadeOut</code></h3>
+                    <div id="method_dispatchEvent" class="method item inherited">
+    <h3 class="name"><code>dispatchEvent</code></h3>
 
     
         <div class="args">
@@ -582,7 +604,13 @@ default.</p>
             
                 <li class="arg">
                     
-                        <code>time</code>
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>optionalParams</code>
                     
                 </li>
             
@@ -607,15 +635,12 @@ default.</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_dispatchEvent">JSUTILS.EventDispatcher</a>:
             
         
         
-        <a href="../files/src_io_RGBLED.js.html#l103"><code>src&#x2F;io&#x2F;RGBLED.js:103</code></a>
+        <a href="../files/src_utils_EventDispatcher.js.html#l78"><code>src&#x2F;utils&#x2F;EventDispatcher.js:78</code></a>
         
         </p>
 
@@ -626,7 +651,7 @@ default.</p>
     </div>
 
     <div class="description">
-        <p>Fade out the RGBLED from the on state.</p>
+        
     </div>
 
     
@@ -637,14 +662,30 @@ default.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">time</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">type</code>
+                        <span class="type">Event</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The time of the fade (in milliseconds)</p>
+                        <p>The Event object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">optionalParams</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Optional parameters passed as an object.
+return {boolean} True if dispatch is successful, false if not.</p>
                     </div>
 
                     
@@ -660,8 +701,8 @@ default.</p>
 </div>
 
                 
-                    <div id="method_fadeTo" class="method item">
-    <h3 class="name"><code>fadeTo</code></h3>
+                    <div id="method_hasEventListener" class="method item inherited">
+    <h3 class="name"><code>hasEventListener</code></h3>
 
     
         <div class="args">
@@ -669,25 +710,7 @@ default.</p>
             
                 <li class="arg">
                     
-                        <code>red</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>green</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>blue</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>time</code>
+                        <code>type</code>
                     
                 </li>
             
@@ -712,15 +735,12 @@ default.</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_hasEventListener">JSUTILS.EventDispatcher</a>:
             
         
         
-        <a href="../files/src_io_RGBLED.js.html#l116"><code>src&#x2F;io&#x2F;RGBLED.js:116</code></a>
+        <a href="../files/src_utils_EventDispatcher.js.html#l65"><code>src&#x2F;utils&#x2F;EventDispatcher.js:65</code></a>
         
         </p>
 
@@ -731,7 +751,7 @@ default.</p>
     </div>
 
     <div class="description">
-        <p>Fade from the current color to the new color.</p>
+        
     </div>
 
     
@@ -742,59 +762,15 @@ default.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">red</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The red value to fade to (0 - 255)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">green</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The green value to fade to (0 - 255)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">blue</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The blue value to fade to (0 - 255)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">time</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The time of the fade (in milliseconds)</p>
+                        <p>The event type
+return {boolean} True is listener exists for this type, false if not.</p>
                     </div>
 
                     
@@ -810,8 +786,8 @@ default.</p>
 </div>
 
                 
-                    <div id="method_setColor" class="method item">
-    <h3 class="name"><code>setColor</code></h3>
+                    <div id="method_removeEventListener" class="method item inherited">
+    <h3 class="name"><code>removeEventListener</code></h3>
 
     
         <div class="args">
@@ -819,19 +795,13 @@ default.</p>
             
                 <li class="arg">
                     
-                        <code>red</code>
+                        <code>type</code>
                     
                 </li>
             
                 <li class="arg">
                     
-                        <code>green</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>blue</code>
+                        <code>listener</code>
                     
                 </li>
             
@@ -856,15 +826,12 @@ default.</p>
     <div class="meta">
         
             
-                
-                <p>
-                
-                Defined in
-                
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_removeEventListener">JSUTILS.EventDispatcher</a>:
             
         
         
-        <a href="../files/src_io_RGBLED.js.html#l72"><code>src&#x2F;io&#x2F;RGBLED.js:72</code></a>
+        <a href="../files/src_utils_EventDispatcher.js.html#l50"><code>src&#x2F;utils&#x2F;EventDispatcher.js:50</code></a>
         
         </p>
 
@@ -875,7 +842,7 @@ default.</p>
     </div>
 
     <div class="description">
-        <p>Set the RGBLED color.</p>
+        
     </div>
 
     
@@ -886,14 +853,14 @@ default.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">red</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The red value (0 - 255)</p>
+                        <p>The event type</p>
                     </div>
 
                     
@@ -901,29 +868,15 @@ default.</p>
             
                 <li class="param">
                     
-                        <code class="param-name">green</code>
-                        <span class="type">Number</span>
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The green value (0 - 255)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">blue</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The blue value (0 - 255)</p>
+                        <p>The function to be called when the event
+is fired</p>
                     </div>
 
                     
@@ -942,104 +895,6 @@ default.</p>
             </div>
         
 
-        
-            <div id="properties" class="api-class-tabpanel">
-                <h2 class="off-left">Properties</h2>
-
-                
-                    <div id="property_RGBLED.COMMON_ANODE" class="property item">
-    <h3 class="name"><code>RGBLED.COMMON_ANODE</code></h3>
-    <span class="type">Unknown</span>
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_io_RGBLED.js.html#l137"><code>src&#x2F;io&#x2F;RGBLED.js:137</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_RGBLED.COMMON_CATHODE" class="property item">
-    <h3 class="name"><code>RGBLED.COMMON_CATHODE</code></h3>
-    <span class="type">Unknown</span>
-
-    
-
-    
-
-    
-
-    
-        <span class="flag static">static</span>
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_io_RGBLED.js.html#l142"><code>src&#x2F;io&#x2F;RGBLED.js:142</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-            </div>
         
 
         

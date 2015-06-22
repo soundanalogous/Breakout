@@ -19,6 +19,7 @@ module.exports = function (grunt) {
         'src/utils/Timer.js',
         'src/utils/SignalScope.js',
         'src/core/IOBoardEvent.js',
+        'src/core/SerialEvent.js',
         'src/core/WSocketEvent.js',
         'src/core/WSocketWrapper.js',
         'src/filters/FilterBase.js',
@@ -32,6 +33,7 @@ module.exports = function (grunt) {
         'src/core/Pin.js',
         'src/core/I2CBase.js',
         'src/core/PhysicalInputBase.js',
+        'src/core/serial.js',
         'src/io/Stepper.js',
         'src/io/BlinkM.js',
         'src/io/CompassEvent.js',
@@ -68,6 +70,7 @@ module.exports = function (grunt) {
         'src/utils/Timer.js',
         'src/utils/SignalScope.js',
         'src/core/IOBoardEvent.js',
+        'src/core/SerialEvent.js',
         'src/core/WSocketEvent.js',
         'src/core/WSocketWrapper.js',
         'src/filters/FilterBase.js',
@@ -81,6 +84,7 @@ module.exports = function (grunt) {
         'src/core/Pin.js',
         'src/core/I2CBase.js',
         'src/core/PhysicalInputBase.js',
+        'src/core/Serial.js',
         'src/core/IOBoard.js'
     ];
 
@@ -91,12 +95,14 @@ module.exports = function (grunt) {
         'src/utils/Event.js',
         'src/utils/EventDispatcher.js',
         'src/core/IOBoardEvent.js',
+        'src/core/SerialEvent.js',
         'src/core/WSocketEvent.js',
         'src/core/WSocketWrapper.js',
         'src/core/PinEvent.js',
         'src/core/Pin.js',
         'src/core/PhysicalInputBase.js',
         'src/core/I2CBase.js',
+        'src/core/Serial.js',
         'src/core/IOBoard.js'
     ];
 
