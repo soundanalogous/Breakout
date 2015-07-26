@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.3.2 - 2015-06-21
+ * Breakout v0.3.2 - 2015-07-25
 
  * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
@@ -1713,10 +1713,10 @@ BO.Serial = (function () {
             bytesToRead & 0x007F,
             (bytesToRead >> 7) & 0x007F
         ];
-        if (txPin) {
+        if (rxPin) {
             configData.push(rxPin);
         }
-        if (rxPin) {
+        if (txPin) {
             configData.push(txPin);
         }
 

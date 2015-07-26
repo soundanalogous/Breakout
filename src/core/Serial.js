@@ -86,10 +86,10 @@ BO.Serial = (function () {
             bytesToRead & 0x007F,
             (bytesToRead >> 7) & 0x007F
         ];
-        if (txPin) {
+        if (rxPin) {
             configData.push(rxPin);
         }
-        if (rxPin) {
+        if (txPin) {
             configData.push(txPin);
         }
 

@@ -937,7 +937,7 @@ BO.IOBoard = (function () {
         // Public methods:
 
         /**
-         * A utility class to assemble a single value from the 2 bytes returned
+         * A utility method to assemble a single value from the 2 bytes returned
          * from the IOBoard (since data is passed in 7 bit Bytes rather than
          * 8 bit it must be reassembled. This is to be used as a protected
          * method and should not be needed in any application level code.
