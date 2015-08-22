@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.3.2 - 2015-07-25
+ * Breakout v0.3.2 - 2015-08-22
 
  * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
@@ -2358,6 +2358,16 @@ BO.Pin = (function () {
      */
     Pin.STEPPER = 0x08;
     /**
+     * @property Pin.SERIAL
+     * @static
+     */
+    Pin.ENCODER = 0x09;
+    /**
+     * @property Pin.SERIAL
+     * @static
+     */
+    Pin.SERIAL = 0x0A;
+    /**
      * @property Pin.TOTAL_PIN_MODES
      * @static
      */
@@ -3854,7 +3864,7 @@ BO.IOBoard = (function () {
         // Public methods:
 
         /**
-         * A utility class to assemble a single value from the 2 bytes returned
+         * A utility method to assemble a single value from the 2 bytes returned
          * from the IOBoard (since data is passed in 7 bit Bytes rather than
          * 8 bit it must be reassembled. This is to be used as a protected
          * method and should not be needed in any application level code.
@@ -4053,7 +4063,9 @@ BO.IOBoard = (function () {
                 5: "shift",
                 6: "i2c",
                 7: "onewire",
-                8: "stepper"
+                8: "stepper",
+                9: "encoder",
+                10: "serial"
             };
 
             len = this._ioPins.length;

@@ -1136,7 +1136,9 @@ BO.IOBoard = (function () {
                 5: "shift",
                 6: "i2c",
                 7: "onewire",
-                8: "stepper"
+                8: "stepper",
+                9: "encoder",
+                10: "serial"
             };
 
             len = this._ioPins.length;

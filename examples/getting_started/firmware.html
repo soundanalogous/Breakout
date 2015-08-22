@@ -62,15 +62,15 @@ $(document).ready(function() {
     var arduino = new IOBoard(host, 8887);
     var $firmware = $('#firmware');
     var $firmwareVer = $('#firmwareVer');
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
-    
+
     // Standard values for the jQuery elements
     $firmware.text("unkown");
     $firmwareVer.text("unknown");
-    
+
     function onReady(event) {
         var firmware,
             firmwareVer,
@@ -78,15 +78,15 @@ $(document).ready(function() {
 
         // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         // Get the data from the IOBoard
         firmware = arduino.getFirmwareName();
         firmwareVer = arduino.getFirmwareVersion();
         capabilities = arduino.getPinCapabilities();
-        
+
         // print capabilities to console
         arduino.reportCapabilities();
-                
+
         // Transforming the array to a nice output format
         var len = capabilities.length;
         var html = "";
@@ -98,7 +98,7 @@ $(document).ready(function() {
             });
         }
         $("#capabilities").append(html);
-        
+
         $firmware.text(firmware);
         $firmwareVer.text(firmwareVer);
     }
@@ -112,7 +112,7 @@ $(document).ready(function() {
         <div class="container">
             <p>Firmware name: <strong id="firmware"></strong></p>
             <p>Firmware version: <strong id="firmwareVer"></strong></p>
-            <p>Hardware details:</p> 
+            <p>Hardware details:</p>
             <div id="capabilities"></div>
         </div>
 </body>
