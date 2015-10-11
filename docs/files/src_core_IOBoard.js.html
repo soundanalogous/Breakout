@@ -1115,7 +1115,7 @@ BO.IOBoard = (function () {
         // Public methods:
 
         /**
-         * A utility class to assemble a single value from the 2 bytes returned
+         * A utility method to assemble a single value from the 2 bytes returned
          * from the IOBoard (since data is passed in 7 bit Bytes rather than
          * 8 bit it must be reassembled. This is to be used as a protected
          * method and should not be needed in any application level code.
@@ -1314,7 +1314,9 @@ BO.IOBoard = (function () {
                 5: &quot;shift&quot;,
                 6: &quot;i2c&quot;,
                 7: &quot;onewire&quot;,
-                8: &quot;stepper&quot;
+                8: &quot;stepper&quot;,
+                9: &quot;encoder&quot;,
+                10: &quot;serial&quot;
             };
 
             len = this._ioPins.length;

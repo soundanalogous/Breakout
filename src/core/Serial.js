@@ -40,14 +40,12 @@ BO.Serial = (function () {
      * @param {Number} port The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
      * SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)
      * @param {Number} baud The baud rate of the serial port.
-     * @param {Number} bytesToRead The number of bytes to read on each iteration of the main loop
-     * (not yet used)
      * @param {Number} rxPin [SoftwareSerial only] The RX pin of the SoftwareSerial instance
      * @param {Number} txPin [SoftwareSerial only] The TX pin of the SoftwareSerial instance
      *
      * @example
      *     // Use a SoftwareSerial instance
-     *     var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 0, 10, 11);
+     *     var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 10, 11);
      *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
      *         console.log(event.data);
      *     });
@@ -55,13 +53,13 @@ BO.Serial = (function () {
      *
      * @example
      *     // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
-     *     var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600, 0);
+     *     var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600);
      *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
      *         console.log(event.data);
      *     });
      *     serial.startReading();
      */
-    Serial = function (board, port, baud, bytesToRead, rxPin, txPin) {
+    Serial = function (board, port, baud, rxPin, txPin) {
         if (board === undefined) {
             console.log("board undefined");
             return;
@@ -82,9 +80,7 @@ BO.Serial = (function () {
             CONFIG | this.port,
             baud & 0x007F,
             (baud >> 7) & 0x007F,
-            (baud >> 14) & 0x007F,
-            bytesToRead & 0x007F,
-            (bytesToRead >> 7) & 0x007F
+            (baud >> 14) & 0x007F
         ];
         if (rxPin) {
             configData.push(rxPin);
@@ -138,9 +134,19 @@ BO.Serial = (function () {
 
         /**
          * Start reading the serial port.
+         * @param {Number} maxBytesToRead [optional] The number of bytes to read on each iteration
+         * of the main loop.
          */
-        startReading: function () {
-            this.board.sendSysex(SERIAL_MESSAGE, [READ | this.port, READ_CONTINUOUS]);
+        startReading: function (maxBytesToRead) {
+            var data = [];
+            if (typeof maxBytesToRead === "undefined") {
+                maxBytesToRead = 0;
+            }
+            data.push(READ | this.port);
+            data.push(READ_CONTINUOUS);
+            data.push(maxBytesToRead & 0x007F);
+            data.push((maxBytesToRead >> 7) & 0x007F);
+            this.board.sendSysex(SERIAL_MESSAGE, data);
         },
 
         /**

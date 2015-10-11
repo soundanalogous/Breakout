@@ -234,12 +234,6 @@
             
                 <li class="arg">
                     
-                        <code>bytesToRead</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
                         <code>rxPin</code>
                     
                 </li>
@@ -347,22 +341,6 @@ SW<em>SERIAL1, SW</em>SERIAL2, SW_SERIAL3)</p>
             
                 <li class="param">
                     
-                        <code class="param-name">bytesToRead</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The number of bytes to read on each iteration of the main loop
-(not yet used)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
                         <code class="param-name">rxPin</code>
                         <span class="type">Number</span>
                     
@@ -403,13 +381,13 @@ SW<em>SERIAL1, SW</em>SERIAL2, SW_SERIAL3)</p>
 
             <div class="example-content">
                 <pre class="code prettyprint"><code>// Use a SoftwareSerial instance
-var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 0, 10, 11);
+var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 10, 11);
 serial.addEventListener(BO.SerialEvent.DATA, function (event) {
     console.log(event.data);
 });
 serial.startReading();
 </code></pre><pre class="code prettyprint"><code>// Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
-var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600, 0);
+var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600);
 serial.addEventListener(BO.SerialEvent.DATA, function (event) {
     console.log(event.data);
 });
