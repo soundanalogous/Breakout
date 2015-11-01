@@ -43,7 +43,7 @@ BO.IOBoard = (function () {
         SYSEX_NON_REALTIME      = 0x7E,
         SYSEX_REALTIME          = 0x7F;
 
-    var MIN_SAMPLING_INTERVAL   = 10,
+    var MIN_SAMPLING_INTERVAL   = 1,
         MAX_SAMPLING_INTERVAL   = 100,
         MULTI_CLIENT = "multiClient";
 
