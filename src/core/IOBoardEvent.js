@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -26,7 +26,7 @@ BO.IOBoardEvent = (function () {
     IOBoardEvent = function (type) {
 
         this.name = "IOBoardEvent";
-        
+
         // Call the super class
         // 2nd parameter is passed to EventDispatcher constructor
         Event.call(this, type);

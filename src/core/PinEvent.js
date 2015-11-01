@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -22,7 +22,7 @@ BO.PinEvent = (function () {
     PinEvent = function (type) {
 
         this.name = "PinEvent";
-        
+
         // Call the super class
         // 2nd parameter is passed to EventDispatcher constructor
         Event.call(this, type);
@@ -44,7 +44,7 @@ BO.PinEvent = (function () {
      * @static
      */
     PinEvent.FALLING_EDGE = "fallingEdge";
-    
+
 
     PinEvent.prototype = JSUTILS.inherit(Event.prototype);
     PinEvent.prototype.constructor = PinEvent;

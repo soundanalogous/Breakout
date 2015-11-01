@@ -13,7 +13,6 @@ BO.Serial = (function () {
 
     var Serial;
 
-    var SERIAL_MESSAGE = 0x60;
     var CONFIG = 0x10;
     var WRITE = 0x20;
     var READ = 0x30;

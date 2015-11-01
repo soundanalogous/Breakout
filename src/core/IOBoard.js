@@ -13,9 +13,9 @@ BO.IOBoard = (function () {
 
     // Message command bytes (128-255/0x80-0xFF)
     var DIGITAL_MESSAGE         = 0x90,
-        ANALOG_MESSAGE          = 0xE0,
         REPORT_ANALOG           = 0xC0,
         REPORT_DIGITAL          = 0xD0,
+        ANALOG_MESSAGE          = 0xE0,
         SET_PIN_MODE            = 0xF4,
         SET_PIN_VALUE           = 0xF5,
         REPORT_VERSION          = 0xF9,
@@ -24,19 +24,20 @@ BO.IOBoard = (function () {
         END_SYSEX               = 0xF7;
 
     // Extended command set using sysex (0-127/0x00-0x7F)
-    var SERVO_CONFIG            = 0x70,
+    var SERIAL_MESSAGE          = 0x60;
+        ANALOG_MAPPING_QUERY    = 0x69,
+        ANALOG_MAPPING_RESPONSE = 0x6A,
+        CAPABILITY_QUERY        = 0x6B,
+        CAPABILITY_RESPONSE     = 0x6C,
+        PIN_STATE_QUERY         = 0x6D,
+        PIN_STATE_RESPONSE      = 0x6E,
+        EXTENDED_ANALOG         = 0x6F,
+        SERVO_CONFIG            = 0x70,
         STRING_DATA             = 0x71,
         SHIFT_DATA              = 0x75,
         I2C_REQUEST             = 0x76,
         I2C_REPLY               = 0x77,
         I2C_CONFIG              = 0x78,
-        EXTENDED_ANALOG         = 0x6F,
-        PIN_STATE_QUERY         = 0x6D,
-        PIN_STATE_RESPONSE      = 0x6E,
-        CAPABILITY_QUERY        = 0x6B,
-        CAPABILITY_RESPONSE     = 0x6C,
-        ANALOG_MAPPING_QUERY    = 0x69,
-        ANALOG_MAPPING_RESPONSE = 0x6A,
         REPORT_FIRMWARE         = 0x79,
         SAMPLING_INTERVAL       = 0x7A,
         SYSEX_NON_REALTIME      = 0x7E,
@@ -372,7 +373,7 @@ BO.IOBoard = (function () {
                     return;
                 }
 
-                if (pin.getType() == Pin.DIN) {
+                if (pin.getType() === Pin.DIN || pin.getType() === Pin.INPUT_PULLUP) {
                     pinVal = (portVal >> j) & 0x01;
                     if (pinVal != pin.value) {
                         pin.value = pinVal;
@@ -1050,7 +1051,7 @@ BO.IOBoard = (function () {
          * pin as a digital pin, refer the datasheet for your board to obtain
          * the digital pin equivalent of the analog pin number. For example on
          * an Arduino UNO, analog pin 0 = digital pin 14.
-         * @param {Number} mode Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO,
+         * @param {Number} mode Pin.DIN, Pin.INPUT_PULLUP, Pin.DOUT, Pin.PWM, Pin.SERVO,
          * Pin.SHIFT, or Pin.I2c
          * @param {Boolean} silent [optional] Set to true to not send
          * SET_PIN_MODE command. Default = false.
@@ -1097,7 +1098,12 @@ BO.IOBoard = (function () {
          * pull-up resistor.
          */
         enablePullUp: function (pinNum) {
-            this.sendDigitalData(pinNum, Pin.HIGH);
+            // TODO - change to compare against protocolVersion when it's added
+            if (this._firmwareVersion >= 25) {
+                this.setDigitalPinMode(pinNum, Pin.INPUT_PULLUP);
+            } else {
+                this.sendDigitalData(pinNum, Pin.HIGH);
+            }
         },
 
         /**
