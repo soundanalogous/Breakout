@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.3.2 - 2015-10-10
+ * Breakout v0.3.2 - 2015-10-24
 
  * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
@@ -7026,6 +7026,7 @@ BO.IOBoard = (function () {
         this._inputDataBuffer = [];
         this._digitalPort = [];
         this._numPorts = 0;
+        this._numDigitialIOPins = 0;
         this._analogPinMapping = [];
         this._digitalPinMapping = [];
         this._i2cPins = [];
@@ -7448,6 +7449,8 @@ BO.IOBoard = (function () {
                 type,
                 pin;
 
+            this._numDigitialIOPins = 0;
+
             this._capabilityQueryResponseReceived = true;
 
             // Create default configuration
@@ -7483,6 +7486,10 @@ BO.IOBoard = (function () {
                         this._i2cPins.push(pin.number);
                     }
 
+                    if (pinCapabilities[Pin.DOUT] || pinCapabilities[Pin.DIN]) {
+                        this._numDigitialIOPins++;
+                    }
+
                     pinCapabilities = {};
                     pinCounter++;
                     byteCounter++;
@@ -7494,7 +7501,9 @@ BO.IOBoard = (function () {
                 }
             }
 
-            this._numPorts = Math.ceil(pinCounter / 8);
+            // use the number of digital I/O pins rather than the total number of pins
+            // to calculate the tnumber of ports
+            this._numPorts = Math.ceil(this._numDigitialIOPins / 8);
             this.debug("debug: Num ports = " + this._numPorts);
 
             // Initialize port values
