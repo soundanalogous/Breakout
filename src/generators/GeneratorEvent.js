@@ -11,39 +11,39 @@
 
 JSUTILS.namespace('BO.generators.GeneratorEvent');
 
-BO.generators.GeneratorEvent = (function () {
-    "use strict";
+BO.generators.GeneratorEvent = (function() {
+  "use strict";
 
-    var GeneratorEvent;
+  var GeneratorEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Generator object when its
-     * value has updated.
-     *
-     * @class GeneratorEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    GeneratorEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Generator object when its
+   * value has updated.
+   *
+   * @class GeneratorEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  GeneratorEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = "GeneratorEvent";
-    };
+    this.name = "GeneratorEvent";
+  };
 
-    GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
-    GeneratorEvent.prototype.constructor = GeneratorEvent;
+  GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
+  GeneratorEvent.prototype.constructor = GeneratorEvent;
 
-    /**
-     * @property GeneratorEvent.UPDATE
-     * @static
-     */
-    GeneratorEvent.UPDATE = "update";
+  /**
+   * @property GeneratorEvent.UPDATE
+   * @static
+   */
+  GeneratorEvent.UPDATE = "update";
 
-    return GeneratorEvent;
+  return GeneratorEvent;
 
 }());

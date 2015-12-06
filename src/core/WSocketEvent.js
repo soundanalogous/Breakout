@@ -5,49 +5,49 @@
 
 JSUTILS.namespace('BO.WSocketEvent');
 
-BO.WSocketEvent = (function () {
+BO.WSocketEvent = (function() {
 
-    var WSocketEvent;
+  var WSocketEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
-     * and Closed `onclose` objects.
-     * @class WSocketEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    WSocketEvent = function (type) {
-        this.name = "WSocketEvent";
+  /**
+   * Dispatches Websocket events: Connected `onopen`, Message `onmessge`
+   * and Closed `onclose` objects.
+   * @class WSocketEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  WSocketEvent = function(type) {
+    this.name = "WSocketEvent";
 
-        // call the super class
-        // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);
-    };
+    // call the super class
+    // 2nd parameter is passed to EventDispatcher constructor
+    Event.call(this, type);
+  };
 
-    // events
-    /**
-     * @property WSocketEvent.CONNECTED
-     * @static
-     */
-    WSocketEvent.CONNECTED = "webSocketConnected";
-    /**
-     * @property WSocketEvent.MESSAGE
-     * @static
-     */
-    WSocketEvent.MESSAGE = "webSocketMessage";
-    /**
-     * @property WSocketEvent.CLOSE
-     * @static
-     */
-    WSocketEvent.CLOSE = "webSocketClosed";
+  // events
+  /**
+   * @property WSocketEvent.CONNECTED
+   * @static
+   */
+  WSocketEvent.CONNECTED = "webSocketConnected";
+  /**
+   * @property WSocketEvent.MESSAGE
+   * @static
+   */
+  WSocketEvent.MESSAGE = "webSocketMessage";
+  /**
+   * @property WSocketEvent.CLOSE
+   * @static
+   */
+  WSocketEvent.CLOSE = "webSocketClosed";
 
-    WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
-    WSocketEvent.prototype.constructor = WSocketEvent;
+  WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
+  WSocketEvent.prototype.constructor = WSocketEvent;
 
-    return WSocketEvent;
+  return WSocketEvent;
 
 }());

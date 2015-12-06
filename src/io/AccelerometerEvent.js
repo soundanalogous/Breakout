@@ -5,38 +5,38 @@
 
 JSUTILS.namespace('BO.io.AccelerometerEvent');
 
-BO.io.AccelerometerEvent = (function () {
+BO.io.AccelerometerEvent = (function() {
 
-    var AccelerometerEvent;
+  var AccelerometerEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by an Accelerometer object.
-     * @class AccelerometerEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    AccelerometerEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by an Accelerometer object.
+   * @class AccelerometerEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  AccelerometerEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = "AccelerometerEvent";
+    this.name = "AccelerometerEvent";
 
-    };
+  };
 
-    /**
-     * @property AccelerometerEvent.UPDATE
-     * @static
-     */
-    AccelerometerEvent.UPDATE = "update";
+  /**
+   * @property AccelerometerEvent.UPDATE
+   * @static
+   */
+  AccelerometerEvent.UPDATE = "update";
 
 
-    AccelerometerEvent.prototype = JSUTILS.inherit(Event.prototype);
-    AccelerometerEvent.prototype.constructor = AccelerometerEvent;
+  AccelerometerEvent.prototype = JSUTILS.inherit(Event.prototype);
+  AccelerometerEvent.prototype.constructor = AccelerometerEvent;
 
-    return AccelerometerEvent;
+  return AccelerometerEvent;
 
 }());
