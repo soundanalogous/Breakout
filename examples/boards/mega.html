@@ -46,7 +46,7 @@ $(document).ready(function() {
     var Oscillator = BO.generators.Oscillator;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -58,7 +58,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var mega = new IOBoard(host, 8887);
-    
+
     // Variables
     var servoDir = true;
     var blinkM;
@@ -66,13 +66,13 @@ $(document).ready(function() {
     var servo;
 
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     mega.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
         mega.removeEventListener(IOBoardEvent.READY, onReady);
-                    
+
         // Listen for incoming string messages
         // when using StandardFirmata, error messages will be sent
         // from the I/O board as strings.
@@ -86,7 +86,7 @@ $(document).ready(function() {
         var button01 = new Button(mega, mega.getDigitalPin(37), Button.PULL_DOWN);
         button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
         button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
-        
+
         // Demonstrates reading values on an analog pin
         // enable the analog pin to be read
         mega.enableAnalogPin(15);
@@ -95,7 +95,7 @@ $(document).ready(function() {
         // Listen for the CHANGE event to be notified when the analog
         // value has changed.
         pot.addEventListener(PinEvent.CHANGE, onPotChange);
-        
+
 
         // Digital input example using Pin object:
         // Demonstrates how to use an analog pin as a digital pin
@@ -109,48 +109,48 @@ $(document).ready(function() {
         var button02 = mega.getAnalogPin(2);
 
         button02.addEventListener(PinEvent.CHANGE, onButtonChange);
-        
+
         // Create a new LED
-        // Parameter: board, pin       
+        // Parameter: board, pin
         var fadeLED = new LED(mega, mega.getDigitalPin(11));
         // Use a sine wave to fade the led on and off every 2 seconds
-        fadeLED.blink(2000, 0, Oscillator.SIN);         
-        
-        servo = new Servo(mega, mega.getDigitalPin(4));
+        fadeLED.blink(2000, 0, Oscillator.SIN);
+
+        servo = new Servo(mega, mega.getDigitalPin(48));
         setInterval(servoTest, 5000);
-        
+
         // i2c module example: BlinkM module
         blinkM = new BlinkM(mega);
         blinkM.stopScript();
         setInterval(randomColor, 2000);
-        
+
         // i2c module example:  HMC6352 digital compass module
         compass = new CompassHMC6352(mega);
         compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
     }
-    
+
     function onHeadingUpdate(evt) {
         //console.log("heading = " + evt.target.heading);
         $('#heading').html("heading: " + evt.target.heading);
-    }   
-    
+    }
+
     function randomColor() {
         var red = Math.floor(Math.random() * 255);
         var green = Math.floor(Math.random() * 255);
         var blue = Math.floor(Math.random() * 255);
-        
+
         blinkM.goToRGBColorNow([red, green, blue]);
         //blinkM.fadeToRGBColor([red, green, blue]);
-    }   
-    
+    }
+
     function onPotChange(event) {
         var pin = event.target;
-        var analogData = "pot value: " + pin.value.toFixed(3) + 
-            "\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
+        var analogData = "pot value: " + pin.value.toFixed(3) +
+            "\tmin = " + pin.minimum.toFixed(3) + "\tmax = " +
             pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
-        
+
         //console.log(analogData);
-        $('#potData').html(analogData); 
+        $('#potData').html(analogData);
     }
 
     function onButtonPress(event) {
@@ -162,17 +162,17 @@ $(document).ready(function() {
         var btn = event.target;
         $('#button').html("button: pin = " + btn.pinNumber + " released");
     }
-    
+
     function onButtonChange(event) {
         var pin = event.target;
         //console.log("button changed: pin = " + pin.number + "\tvalue = " + pin.value;
-        $('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);    
-    }   
-        
+        $('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);
+    }
+
     function onStringMessage(event) {
         console.log("string received: " + event.message);
     }
-    
+
     function servoTest() {
         if (servoDir) {
             servo.angle = 0;
@@ -187,10 +187,10 @@ $(document).ready(function() {
 </head>
 <body>
     <h2>Arduino Mega 2560 Test Example</h2>
-  
+
     <div id="potData" class="text">Pot value:</div>
     <div id="heading" class="text">Heading:</div>
     <div id="button" class="text">Button:</div>
-  
+
 </body>
 </html>​

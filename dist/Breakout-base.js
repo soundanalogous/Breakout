@@ -1,5 +1,5 @@
 /*!
- * Breakout v0.3.2 - 2015-10-31
+ * Breakout v0.3.2 - 2015-11-16
 
  * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
@@ -2719,6 +2719,7 @@ BO.Serial = (function () {
 
     var Serial;
 
+    var SERIAL_MESSAGE = 0x60;
     var CONFIG = 0x10;
     var WRITE = 0x20;
     var READ = 0x30;
@@ -2961,8 +2962,7 @@ BO.IOBoard = (function () {
         END_SYSEX               = 0xF7;
 
     // Extended command set using sysex (0-127/0x00-0x7F)
-    var SERIAL_MESSAGE          = 0x60;
-        ANALOG_MAPPING_QUERY    = 0x69,
+    var ANALOG_MAPPING_QUERY    = 0x69,
         ANALOG_MAPPING_RESPONSE = 0x6A,
         CAPABILITY_QUERY        = 0x6B,
         CAPABILITY_RESPONSE     = 0x6C,
@@ -2980,7 +2980,7 @@ BO.IOBoard = (function () {
         SYSEX_NON_REALTIME      = 0x7E,
         SYSEX_REALTIME          = 0x7F;
 
-    var MIN_SAMPLING_INTERVAL   = 10,
+    var MIN_SAMPLING_INTERVAL   = 1,
         MAX_SAMPLING_INTERVAL   = 100,
         MULTI_CLIENT = "multiClient";
 
@@ -4035,7 +4035,12 @@ BO.IOBoard = (function () {
          * pull-up resistor.
          */
         enablePullUp: function (pinNum) {
-            this.setDigitalPinMode(pinNum, Pin.INPUT_PULLUP);
+            // TODO - change to compare against protocolVersion when it's added
+            if (this._firmwareVersion >= 25) {
+                this.setDigitalPinMode(pinNum, Pin.INPUT_PULLUP);
+            } else {
+                this.sendDigitalData(pinNum, Pin.HIGH);
+            }
         },
 
         /**
