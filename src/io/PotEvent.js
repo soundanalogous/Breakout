@@ -23,7 +23,7 @@ BO.io.PotEvent = (function () {
     PotEvent = function (type) {
 
         this.name = "PotEvent";
-        
+
         // Call the super class
         // 2nd parameter is passed to EventDispatcher constructor
         Event.call(this, type);

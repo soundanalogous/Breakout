@@ -48,28 +48,28 @@ $(document).ready(function() {
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // location.hostname with the IP address or hostname
-    // of the computer that the Arduino board is connected to.    
+    // of the computer that the Arduino board is connected to.
     var ard = new IOBoard("localhost", 8887);
     var rfid;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data        
+    // is ready to send and receive data
     ard.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
         ard.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         // Setup the RFID stuff
         rfid = new ID12RFIDReader(ard);
         rfid.addEventListener(RFIDEvent.ADD_TAG, onAddTag);
         rfid.addEventListener(RFIDEvent.REMOVE_TAG, onRemoveTag);
     }
-    
+
     function onAddTag(event) {
         $('#textBox').html("Added tag: " + event.tag);
     }
-    
+
     function onRemoveTag(event) {
         $('#textBox').html("Removed tag: " + event.tag);
     }
@@ -79,8 +79,8 @@ $(document).ready(function() {
 
 </head>
 <body>
-  
+
 <div id="textBox">Read a tag.</div>
-  
+
 </body>
 </html>​

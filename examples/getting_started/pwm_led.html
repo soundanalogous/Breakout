@@ -62,7 +62,7 @@ $(document).ready(function() {
     var Pin = BO.Pin;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = false; 
+    BO.enableDebugging = false;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -74,12 +74,12 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var led;
     var $slider = $("#slider");
     var $ledValue = $('#value');
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
@@ -94,9 +94,9 @@ $(document).ready(function() {
         // Create an LED object to interface with the LED wired
         // to the I/O board
         led = arduino.getDigitalPin(11);
-        
+
         // Use jQuery to get a reference to the elements
-        // and listen for events 
+        // and listen for events
         $('#btnStop').click(function () { changeLed(0.0); });
         $('#btnFull').click(function () { changeLed(1.0); });
         $('#btnHalf').click(function () { changeLed(0.5); });
@@ -109,27 +109,27 @@ $(document).ready(function() {
 
         $ledValue.text("Value: 0.0");
     }
-    
+
     $slider.on("slide", function (event, ui) {
         var value = ui.value;
         $ledValue.text("Value: " + value.toFixed(2));
         led.value = value;
     })
-    
+
     function changeLed(intensity) {
         led.value = intensity;
         $slider.slider( "option", "value", intensity);
         $ledValue.text("Value: " + intensity);
     }
-    
-/* If you want to switch the LED to an given brightness 
+
+/* If you want to switch the LED to an given brightness
 *   function turnLedOn() {
 *       // Turn the LED off
 *       led.value = 0.6; // 0 = Pin.LOW, 1 = Pin.HIGH
 *       $("#slider").slider( "option", "value", 0.6);
 *       $('#value').text("Value: " + 0.6);
 *   }
-*/  
+*/
 });
 
 </script>
@@ -143,7 +143,7 @@ $(document).ready(function() {
             <button id="btnFull" class="ledBtns" type="button">100 %</button>
             <button id="btnStop" class="ledBtns" type="button">Off</button>
         </div>
-  
+
         <div class="container">
             <p>Use the slider to set the intensity of the LED.</p>
             <p id="slider"></p>

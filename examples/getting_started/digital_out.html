@@ -83,10 +83,10 @@ $(document).ready(function() {
     FastClick.attach(document.body);
 
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var led;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
@@ -101,11 +101,11 @@ $(document).ready(function() {
         // Create an LED object to interface with the LED wired
         // to the I/O board
         led = arduino.getDigitalPin(11);
-        
+
         // Use jQuery to get a reference to the buttons
-        // and listen for click events 
+        // and listen for click events
         $('#btnOff').on('click', turnLedOff);
-        $('#btnOn').on('click', turnLedOn);     
+        $('#btnOn').on('click', turnLedOn);
     }
 
     function turnLedOn(evt) {

@@ -18,7 +18,7 @@ BO.io.GyroEvent = (function () {
      * @class GyroEvent
      * @constructor
      * @extends JSUTILS.Event
-     * @param {String} type The event type   
+     * @param {String} type The event type
      */
     GyroEvent = function (type) {
 
@@ -38,7 +38,7 @@ BO.io.GyroEvent = (function () {
      * @static
      */
     GyroEvent.UPDATE = "update";
-    
+
 
     GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
     GyroEvent.prototype.constructor = GyroEvent;

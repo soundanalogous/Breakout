@@ -47,7 +47,7 @@ BO.I2CBase = (function () {
         /** @protected */
         this._address = address;
         this._evtDispatcher = new EventDispatcher(this);
-        
+
         // if the pins are not set as I2C, set them now
         var i2cPins = board.getI2cPins();
         if (i2cPins.length === 2) {
@@ -62,10 +62,10 @@ BO.I2CBase = (function () {
         }
 
         board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
-        
+
         // call this for each board in case delay is set
         board.sendSysex(I2CBase.I2C_CONFIG, [_delayInMicrosecondsLSB, _delayInMicrosecondsMSB]);
-            
+
     };
 
 
@@ -110,9 +110,9 @@ BO.I2CBase = (function () {
             }
 
         },
-        
+
         // public methods:
-        
+
         /**
          * Send an i2c request command to the board
          * @protected
@@ -126,19 +126,19 @@ BO.I2CBase = (function () {
             var tempData = [];
             var address = data[1];
             var readWriteMode = data[0];
-            
+
             tempData[0] = address;
             tempData[1] = readWriteMode << 3;
-            
+
             for (var i = 2, len = data.length; i < len; i++) {
                 tempData.push(data[i] & 0x007F);
                 tempData.push((data[i] >> 7) & 0x007F);
             }
-            
+
             this.board.sendSysex(I2CBase.I2C_REQUEST, tempData);
-            
+
         },
-    
+
         /**
          * To be implemented in subclass
          * @protected
@@ -147,7 +147,7 @@ BO.I2CBase = (function () {
         update: function () {
             // To be implemented in sublasses
         },
-        
+
         /**
          * To be implemented in subclass. Data should be: slave address,
          * register, data0, data1...
@@ -158,9 +158,9 @@ BO.I2CBase = (function () {
             // To be implemented in sublasses
             // data should be: slave address, register, data0, data1...
         },
-                
+
         /* implement EventDispatcher */
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -168,7 +168,7 @@ BO.I2CBase = (function () {
         addEventListener: function (type, listener) {
             this._evtDispatcher.addEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -176,7 +176,7 @@ BO.I2CBase = (function () {
         removeEventListener: function (type, listener) {
             this._evtDispatcher.removeEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
@@ -184,7 +184,7 @@ BO.I2CBase = (function () {
         hasEventListener: function (type) {
             return this._evtDispatcher.hasEventListener(type);
         },
-        
+
         /**
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
@@ -194,7 +194,7 @@ BO.I2CBase = (function () {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
         }
     };
-    
+
 
     /**
      * @property I2CBase.I2C_REQUEST

@@ -26,12 +26,12 @@ BO.custom.ID12RFIDReader = (function () {
      * Creates an interface to an ID-12 RFID Reader. Other Innovations
      * RFID readers will likely work but have not been tested. This object
      * requires firmware other than StandardFirmata to be uploaded to the I/O board.
-     * See [Breakout/custom\_examples/rfid_example1.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html) 
+     * See [Breakout/custom\_examples/rfid_example1.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html)
      * and [rfid\_example2.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example2.html) for
      * example applications.
      *
-     * <p>To use this object with standard io objects in Breakout, 
-     * RFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata. 
+     * <p>To use this object with standard io objects in Breakout,
+     * RFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata.
      * See custom_examples/readme.txt for insturctions.</p>
      *
      * <p>Is is also possible to create a custom application for your
@@ -85,7 +85,7 @@ BO.custom.ID12RFIDReader = (function () {
         dec2hex: function (i) {
             return (i + 0x100).toString(16).substr(-2).toUpperCase();
         },
-        
+
         /**
          * @private
          * @method processRFIDData
@@ -95,7 +95,7 @@ BO.custom.ID12RFIDReader = (function () {
             var tagEvent = this._board.getValueFromTwo7bitBytes(data[1], data[2]);
             var tagEventType = "";
             var tag = "";
-                    
+
             for (var i = 3, len = data.length; i < len; i += 2) {
                 tag += this.dec2hex(this._board.getValueFromTwo7bitBytes(data[i], data[i + 1]));
             }
@@ -109,9 +109,9 @@ BO.custom.ID12RFIDReader = (function () {
                 // got something else
                 return;
             }
-            
+
         },
-        
+
         /**
          * @private
          * @method dispatch
@@ -119,11 +119,11 @@ BO.custom.ID12RFIDReader = (function () {
         dispatch: function (event) {
             this.dispatchEvent(event);
         },
-        
+
         // public methods:
-        
+
         /* implement EventDispatcher */
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -131,7 +131,7 @@ BO.custom.ID12RFIDReader = (function () {
         addEventListener: function (type, listener) {
             this._evtDispatcher.addEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -139,7 +139,7 @@ BO.custom.ID12RFIDReader = (function () {
         removeEventListener: function (type, listener) {
             this._evtDispatcher.removeEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
@@ -147,7 +147,7 @@ BO.custom.ID12RFIDReader = (function () {
         hasEventListener: function (type) {
             return this._evtDispatcher.hasEventListener(type);
         },
-        
+
         /**
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
@@ -167,15 +167,15 @@ BO.custom.ID12RFIDReader = (function () {
      * @type BO.custom.RFIDEvent.ADD_TAG
      * @event addTag
      * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
-     * @param {String} tag The RFID tag value.   
+     * @param {String} tag The RFID tag value.
      */
-     
+
     /**
      * The removeTag event is dispatched when a tag is removed from the reader.
      * @type BO.custom.RFIDEvent.REMOVE_TAG
      * @event removeTag
      * @param {BO.custom.ID12RFIDReader} target A reference to the ID12RFIDReader object.
-     * @param {String} tag The RFID tag value.   
+     * @param {String} tag The RFID tag value.
      */
 
     return ID12RFIDReader;

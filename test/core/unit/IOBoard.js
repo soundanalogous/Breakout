@@ -241,7 +241,7 @@
                         expect(spyCall.args[0].toString()).to.equal(common.sendDigitalPort.toString());
                     });
 
-                });             
+                });
 
                 describe('sendString', function () {
 
@@ -260,7 +260,7 @@
                         spy.restore();
                     });
 
-                });            
+                });
 
                 describe('sendSysex', function () {
 
@@ -290,7 +290,7 @@
                         expect(spyCall.args[0].toString()).to.equal(common.sendServoAttach.toString());
                     });
 
-                }); 
+                });
 
                 describe('sendServoData', function () {
 
@@ -329,7 +329,7 @@
 
                     it("should send the set pin mode command if silent param is not defined or not true", function () {
                         board.setDigitalPinMode(pin, mode);
-                        
+
                         // called once for processInput and a second time for
                         // setDigitalPinMode
                         expect(stubSend.calledTwice).to.equal(true);
@@ -341,7 +341,7 @@
                     it("should not send the set pin command if silent param is true", function () {
                         board.setDigitalPinMode(pin, mode, true);
 
-                        // called once for processInput but not called for 
+                        // called once for processInput but not called for
                         // setDigitalPinMode
                         expect(stubSend.calledOnce).to.equal(true);
                     });
@@ -404,7 +404,7 @@
                             }
 
                             expect(pinTypeMatchCount).to.equal(len);
-                        });               
+                        });
 
                         it("should report the correct i2c pins", function () {
                             var capabilities = board.getPinCapabilities(),
@@ -624,7 +624,7 @@
                                 pin,
                                 spyCall;
 
-                            board.queryPinState(board.getDigitalPin(boardType.testPinStatePwm));   
+                            board.queryPinState(board.getDigitalPin(boardType.testPinStatePwm));
 
                             for (var i = 0; i < len; i++) {
                                 board.processInput(pwmPinState[i]);
@@ -636,7 +636,7 @@
 
                             expect(pin.number).to.equal(boardType.testPinStatePwm);
                             expect(pin.state.toFixed(2)).to.equal('0.85');
-                        });                  
+                        });
 
                     });
 

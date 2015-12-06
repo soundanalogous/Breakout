@@ -30,7 +30,7 @@
             var getType = sinon.stub(pin, "getType"),
                 getPin = sinon.stub(board, "getPin"),
                 getI2cPins = sinon.stub(board, "getI2cPins");
-            
+
             getPin.returns(pin);
             getType.returns(Pin.I2C);
             getI2cPins.returns([pin, pin]);
@@ -117,7 +117,7 @@
                     spy = sinon.spy(i2c, "handleI2C");
                     stub = sinon.stub(board, "getValueFromTwo7bitBytes", function (lsb, msb) {
                         return (msb << 7) | lsb;
-                    });  
+                    });
                 });
 
                 afterEach(function () {
@@ -175,4 +175,4 @@
 
     });
 
-})();        
+})();

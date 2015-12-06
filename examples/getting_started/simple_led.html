@@ -77,7 +77,7 @@ $(document).ready(function() {
         // Create an LED object to interface with the LED wired
         // to the I/O board
         var led = new LED(arduino, arduino.getDigitalPin(13));
-        
+
         // jQuery part for the button
         $('#button').click(function () {
             var btn = $(this);

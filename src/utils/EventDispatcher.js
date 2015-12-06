@@ -10,10 +10,10 @@ JSUTILS.EventDispatcher = (function () {
     var EventDispatcher;
 
     /**
-     * The EventDispatcher class mimics the DOM event dispatcher model so the 
+     * The EventDispatcher class mimics the DOM event dispatcher model so the
      * user can add and remove event listeners in a familiar way. Event bubbling
-     * is not available because events are dispatched in relation to state 
-     * changes of physical components instead of layered graphics so there is 
+     * is not available because events are dispatched in relation to state
+     * changes of physical components instead of layered graphics so there is
      * nothing to bubble up.
      *
      * @class EventDispatcher
@@ -23,10 +23,10 @@ JSUTILS.EventDispatcher = (function () {
      */
     EventDispatcher = function (target) {
         "use strict";
-        
+
         this._target = target || null;
         this._eventListeners = {};
-        
+
         this.name = "EventDispatcher";
     };
 
@@ -46,7 +46,7 @@ JSUTILS.EventDispatcher = (function () {
             }
             this._eventListeners[type].push(listener);
         },
-        
+
         /**
          * @method removeEventListener
          * @param {String} type The event type
@@ -61,7 +61,7 @@ JSUTILS.EventDispatcher = (function () {
             }
             // To Do: If no more listeners for a type, delete key?
         },
-        
+
         /**
          * @method hasEventListener
          * @param {String} type The event type
@@ -74,7 +74,7 @@ JSUTILS.EventDispatcher = (function () {
                 return false;
             }
         },
-        
+
         /**
          * @method dispatchEvent
          * @param {Event} type The Event object.
@@ -82,7 +82,7 @@ JSUTILS.EventDispatcher = (function () {
          * return {boolean} True if dispatch is successful, false if not.
          */
         dispatchEvent: function (event, optionalParams) {
-            
+
             event.target = this._target;
             var isSuccess = false;
 
@@ -92,7 +92,7 @@ JSUTILS.EventDispatcher = (function () {
                     event[obj.toString()] = optionalParams[obj];
                 }
             }
-                        
+
             if (this.hasEventListener(event.type)) {
                 for (var j = 0, len = this._eventListeners[event.type].length; j < len; j++) {
                     try {

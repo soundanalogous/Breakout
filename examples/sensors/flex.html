@@ -68,7 +68,7 @@ $(document).ready(function() {
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
@@ -110,6 +110,6 @@ $(document).ready(function() {
       <div id="value" class="text">Value = 0.000</div>
       <div id="prevalue" class="text">Pre Filter Value = 0.000</div>
   </div>
-  
+
 </body>
 </html>​

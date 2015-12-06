@@ -34,10 +34,10 @@ button {
     font-size: 16px;
     width: 280px;
     color: #00AEFF;
-    
+
 }
 label {
-    color: #666;    
+    color: #666;
     font-size: 14px;
     margin-bottom: 10px;
 }
@@ -97,7 +97,7 @@ $(document).ready(function() {
     var Event = JSUTILS.Event;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -109,13 +109,13 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var stepper,
         numMicroSteps = 8; // by default the EasyDriver uses 8 microsteps per step
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
@@ -123,7 +123,7 @@ $(document).ready(function() {
         // Remove the listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        configureStepper(); 
+        configureStepper();
     }
 
     function configureStepper() {
@@ -139,17 +139,17 @@ $(document).ready(function() {
             if (this.value >= 10 && this.value <= 1000) {
                 numMicroSteps = this.value;
             }
-        });     
+        });
 
         // When the configure button is clicked, create a new instance
         // of a Stepper motor object.
         $('button#configure').on('click', function () {
-            // Parameters: board, motor interface, num steps per rev, 
+            // Parameters: board, motor interface, num steps per rev,
             // direction pin, step pin
-            stepper = new Stepper(arduino, 
-                                Stepper.DRIVER, 
-                                stepsPerRev * numMicroSteps, 
-                                arduino.getDigitalPin(2), 
+            stepper = new Stepper(arduino,
+                                Stepper.DRIVER,
+                                stepsPerRev * numMicroSteps,
+                                arduino.getDigitalPin(2),
                                 arduino.getDigitalPin(3));
 
             // Event.COMPLETE will fire when the step sequence is complete
@@ -159,7 +159,7 @@ $(document).ready(function() {
             $('.control').css('display', 'block');
 
             initGUIListeners();
-        });     
+        });
     }
 
     function initGUIListeners() {
@@ -179,7 +179,7 @@ $(document).ready(function() {
                 // set the number of steps and speed (accel and decel are optional)
                 stepper.step(numSteps, speed);
             }
-            $('.status').text("Stepper " + stepper.id + " sequence running");   
+            $('.status').text("Stepper " + stepper.id + " sequence running");
         });
 
         $('#numSteps').change(function (evt) {
@@ -212,7 +212,7 @@ $(document).ready(function() {
                         value: deceleration
                     });
                     $('#decel').text(deceleration > 0 ? deceleration: "none");
-                }               
+                }
             },
             value: acceleration // set initial acceleration
         });
@@ -241,13 +241,13 @@ $(document).ready(function() {
             } else {
                 link = false;
             }
-        });         
+        });
 
     }
 
     function onStepperComplete(evt) {
         // Each stepper instance is automatically assigned an id
-        // when it is created, starting with 0. You can get the 
+        // when it is created, starting with 0. You can get the
         // id like this but it cannot be set.
         $('.status').text("Stepper " + evt.target.id + " sequence complete");
     }
@@ -271,11 +271,11 @@ $(document).ready(function() {
             <section>
             <label for="microSteps">Number of Microsteps (for EasyDriver): </label>
             <input id="microSteps" type="number" value="8" min="1" max="8" step="1" />
-            </section>      
+            </section>
 
             <section>
             <button type="button" id="configure">Configure</button>
-            </section>      
+            </section>
         </div>
 
         <section class="note">
@@ -283,7 +283,7 @@ $(document).ready(function() {
 
             <p>If you are using an EasyDriver and have configured it to use less than 8 micro steps (default), then you'll need to update the number of microsteps above.</p>
         </section>
-    </section>      
+    </section>
 
     <section class="control">
         <div class="container">
@@ -324,7 +324,7 @@ $(document).ready(function() {
             <p>Depending on your motor, you may not be able to drive the stepper at speeds higher than 31 rad/sec (300 RPM).</p>
 
             <p>To remove acceleration and deceleration, move the acceleration and deceleration sliders all the way to the left. When using accel and decel you must set both values.</p>
-        </section>      
+        </section>
 
     </section>
 

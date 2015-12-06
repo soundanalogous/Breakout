@@ -52,7 +52,7 @@ $(document).ready(function() {
     var ButtonEvent = BO.io.ButtonEvent;
 
     // set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -64,7 +64,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var uno = new IOBoard(host, 8887);
-    
+
     var blinkM;
     var fadeSpeed;
     var initialColor = '#FF0000';
@@ -72,26 +72,26 @@ $(document).ready(function() {
     // initialize color picker
     $('#colorPicker').wColorPicker({
         initColor: initialColor,
-        onSelect: gotoColor, 
-        mode: 'flat', 
+        onSelect: gotoColor,
+        mode: 'flat',
         color: 'white',
     });
 
     // initialize color picker
     $('#fadeColorPicker').wColorPicker({
         initColor: initialColor,
-        onSelect: fadeToColor, 
-        mode: 'flat', 
+        onSelect: fadeToColor,
+        mode: 'flat',
         color: 'white',
-    }); 
-    
+    });
+
     uno.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // remove the listener because it is no longer needed
         uno.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         // Digital input using Button object:
         // params: board, pin, mode
         var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
@@ -120,21 +120,21 @@ $(document).ready(function() {
                 fadeSpeed = val;
                 blinkM.setFadeSpeed(fadeSpeed);
             }
-        });     
+        });
     }
-    
+
     function onButtonPress(event) {
         randomColor();
-    }   
-    
+    }
+
     // set a random color on the BlinkM module
     function randomColor() {
         var red = Math.floor(Math.random() * 255);
         var green = Math.floor(Math.random() * 255);
         var blue = Math.floor(Math.random() * 255);
-        
+
         blinkM.fadeToRGBColor([red, green, blue]);
-    }   
+    }
 
     function getRGBColor(color) {
         var hexColor = parseInt(color.replace(/#/, "0x"));
@@ -144,21 +144,21 @@ $(document).ready(function() {
             blue: hexColor & 0x0000FF
         };
 
-        return rgbColor;    
+        return rgbColor;
     }
 
     function gotoColor(color) {
         if (blinkM === undefined) return;
         var c = getRGBColor(color);
-        blinkM.goToRGBColorNow([c.red, c.green, c.blue]);   
+        blinkM.goToRGBColorNow([c.red, c.green, c.blue]);
     }
 
     function fadeToColor(color) {
         if (blinkM === undefined) return;
         var c = getRGBColor(color);
-        blinkM.fadeToRGBColor([c.red, c.green, c.blue]);        
+        blinkM.fadeToRGBColor([c.red, c.green, c.blue]);
     }
-    
+
 });
 
 </script>
@@ -171,13 +171,13 @@ $(document).ready(function() {
             <p>Fade to color:</p>
             <div id="fadeColorPicker"></div>
             <label for="speed">Fade Speed (1 - 255): </label><input id="speed" type="number" value="15" min="1" max="255" step="1" />
-        </div>      
+        </div>
         <div class="hoverBox">
             <p>Go to color:</p>
             <div id="colorPicker"></div>
             <label>Go to selected color immediately</label>
         </div>
     </div>
-  
+
 </body>
 </html>​

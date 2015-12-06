@@ -63,7 +63,7 @@ $(document).ready(function() {
     var Oscillator = BO.generators.Oscillator;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = false; 
+    BO.enableDebugging = false;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -75,11 +75,11 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var led;
     var blink;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
@@ -87,14 +87,14 @@ $(document).ready(function() {
     function onReady(event) {
         // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         // Set Pin 11 to Digital out (DOUT)
         arduino.setDigitalPinMode(11, Pin.DOUT);
 
         // Create an LED object to interface with the LED wired
         // to the I/O board
         led = arduino.getDigitalPin(11);
-        
+
         // The frequency in seconds
         var freq = 1.0;
         // The number of times to repeat (0 = forever)
@@ -111,12 +111,12 @@ $(document).ready(function() {
         $('#btnStart').on('click', LedStart);
         $('#btnStop').on('click', LedStop);
     }
-    
+
     function LedStart(evt) {
         // Start the oscillator
         blink.start();
     }
-    
+
     function LedStop(evt) {
         // Stop the oscillator. Keep in mind that this stops the blink
         // process only and doesn't switch of the pin to low if it was

@@ -24,7 +24,7 @@ BO.io.Potentiometer = (function () {
      *
      * @class Potentiometer
      * @constructor
-     * @extends BO.PhysicalInputBase    
+     * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.
      * @param {Pin} pin A reference to the Pin the potentiometer is connected
@@ -36,7 +36,7 @@ BO.io.Potentiometer = (function () {
         "use strict";
 
         PhysicalInputBase.call(this);
-        
+
         this.name = "Potentiometer";
         this._pin = pin;
 
@@ -126,7 +126,7 @@ BO.io.Potentiometer = (function () {
     /**
      * Scale from the minimum and maximum input values to 0.0 -> 1.0. This is
      * useful for sensors such as a flex sensor that may not return the full
-     * range of 0 to 1. 
+     * range of 0 to 1.
      *
      * @method setRange
      * @param {Number} minimum The new minimum range (must be less than the maximum).
@@ -154,7 +154,7 @@ BO.io.Potentiometer = (function () {
      *     pot.addEventListener(PotEvent.CHANGE, onValueChange);
      *
      *     function onValueChange(event) {
-     *         console.log("value = " + event.target.value);  
+     *         console.log("value = " + event.target.value);
      *     }
      *
      * @type BO.io.PotEvent.CHANGE

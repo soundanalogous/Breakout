@@ -50,7 +50,7 @@ $(document).ready(function() {
     var AccelerometerEvent = BO.io.AccelerometerEvent;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -64,18 +64,18 @@ $(document).ready(function() {
     var arduino = new IOBoard(host, 8887);
     var RANGE_GS = 3; // +-3 Gs for ADXL335
     var SUPPLY_V = 3.3; // supply voltage of sensor
-    
+
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);               
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
         var accelerometer = new AnalogAccelerometer(
-                                arduino, 
-                                arduino.getAnalogPin(0), 
-                                arduino.getAnalogPin(1), 
+                                arduino,
+                                arduino.getAnalogPin(0),
+                                arduino.getAnalogPin(1),
                                 arduino.getAnalogPin(2),
                                 RANGE_GS,
                                 true);
@@ -93,19 +93,19 @@ $(document).ready(function() {
         accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
         accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
         accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
-        
+
         accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
     }
-    
+
     function onAccelerationUpdate(event) {
         var accel = event.target;
-        
+
         $('#xVal').html("x = " + accel.x.toFixed(3));
         $('#yVal').html("y = " + accel.y.toFixed(3));
         $('#zVal').html("z = " + accel.z.toFixed(3));
         $('#pitch').html("pitch = " + accel.pitch.toFixed(3));
         $('#roll').html("roll = " + accel.roll.toFixed(3));
-    }   
+    }
 });
 </script>
 

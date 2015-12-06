@@ -20,7 +20,7 @@ BO.io.SoftPotEvent = (function () {
      * @constructor
      * @extends JSUTILS.Event
      * @param {String} type The event type
-     * @param {Number} touchPoint The value where the softpot was touched    
+     * @param {Number} touchPoint The value where the softpot was touched
      */
     SoftPotEvent = function (type, touchPoint) {
 

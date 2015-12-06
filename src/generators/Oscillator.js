@@ -25,7 +25,7 @@ BO.generators.Oscillator = (function () {
     /**
      * The Oscillator object can be attached to a Pin or LED object to output
      * a waveform. This is useful for blinking an LED or fading it on and off. In
-     * most cases (unless you are simply using it to blink and LED on or off), 
+     * most cases (unless you are simply using it to blink and LED on or off),
      * the Oscillator should be attached to a Pin or LED object associated with
      * a PWM pin on the I/O board.
      * See [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.
@@ -187,7 +187,7 @@ BO.generators.Oscillator = (function () {
     Oscillator.SQUARE = function (val, lastVal) {
         return (val % 1 <= 0.5) ? 1 : 0;
     };
-    
+
     /**
      * triangle wave
      * @method Oscillator.TRIANGLE
@@ -197,7 +197,7 @@ BO.generators.Oscillator = (function () {
         val %= 1;
         return (val <= 0.5) ? (2 * val) : (2 - 2 * val);
     };
-    
+
     /**
      * saw wave
      * @method Oscillator.SAW
@@ -212,7 +212,7 @@ BO.generators.Oscillator = (function () {
             return val - 0.5;
         }
     };
-    
+
     /**
      * impulse
      * @method Oscillator.IMPULSE
@@ -221,7 +221,7 @@ BO.generators.Oscillator = (function () {
     Oscillator.IMPULSE = function (val, lastVal) {
         return ((val % 1) < (lastVal % 1)) ? 1 : 0;
     };
-    
+
     /**
      * linear
      * @method Oscillator.LINEAR
@@ -230,11 +230,11 @@ BO.generators.Oscillator = (function () {
     Oscillator.LINEAR = function (val, lastVal) {
         return (val < 1) ? val : 1;
     };
-    
+
     // document events
 
     /**
-     * The update event is dispatched at the rate specified 
+     * The update event is dispatched at the rate specified
      * by the serviceInterval parameter (default = 33ms).
      * @type BO.generators.GeneratorEvent.UPDATE
      * @event update

@@ -26,7 +26,7 @@ h2 {
     margin-bottom: 20px;
 }
 #incoming {
-    margin-top: 20px;   
+    margin-top: 20px;
     padding: 10px;
     background-color: #F7F7F7;
 }
@@ -44,7 +44,7 @@ $(document).ready(function() {
     // to type the full namespace
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
-    var BlinkM = BO.io.BlinkM;  
+    var BlinkM = BO.io.BlinkM;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -56,16 +56,16 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Constants
     var RAD_TO_DEG = 180 / Math.PI;
     var GRAVITY = 9.8; // m/s/s
-    
-    // Variables 
+
+    // Variables
     var blinkM;
     var accelData = $('#accelStatus');
 
-    document.addEventListener("touchmove", preventBehavior, false); 
+    document.addEventListener("touchmove", preventBehavior, false);
 
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
@@ -96,11 +96,11 @@ $(document).ready(function() {
      */
     function getRoll(accel) {
         return Math.atan2(accel.y, Math.sqrt(accel.x * accel.x + accel.z * accel.z)) * RAD_TO_DEG;
-    }   
+    }
 
     // Handle devicemotion events from the mobile device
     function onDeviceMotion(event) {
-        var acc = event.accelerationIncludingGravity;       
+        var acc = event.accelerationIncludingGravity;
         var squared = "2";
         var x, y, z, pitch, roll;
         var r, g, b;
@@ -115,12 +115,12 @@ $(document).ready(function() {
         g = Math.abs(y) < 1.0 ? Math.abs(y) : 1.0;
         b = Math.abs(z) < 1.0 ? Math.abs(z) : 1.0;
 
-        // Use the device accelerometer values to set the RGB values of the 
+        // Use the device accelerometer values to set the RGB values of the
         // blinkM RGBLED module
         blinkM.goToRGBColorNow([r * 255, g * 255, b * 255]);
 
         squared = squared.sup();
-        accelData.html('Accelerometer data (m/s' + squared + '): <br />' + 
+        accelData.html('Accelerometer data (m/s' + squared + '): <br />' +
                                 'x = ' + x.toFixed(3) + '<br />' +
                                 'y = ' + y.toFixed(3) + '<br />' +
                                 'z = ' + z.toFixed(3) + '<br />' +
@@ -132,9 +132,9 @@ $(document).ready(function() {
     /**
      * Prevent dragging
      */
-    function preventBehavior(evt) { 
-      evt.preventDefault(); 
-    }   
+    function preventBehavior(evt) {
+      evt.preventDefault();
+    }
 });
 </script>
 

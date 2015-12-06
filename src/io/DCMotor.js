@@ -48,7 +48,7 @@ BO.io.DCMotor = (function () {
      */
     DCMotor = function (board, forwardPin, reversePin, pwmPin, minVoltage, maxVoltage, supplyVoltage) {
         "use strict";
-        
+
         this.name = "DCMotor";
 
         minVoltage = minVoltage || 1;
@@ -120,7 +120,7 @@ BO.io.DCMotor = (function () {
         get value() {
             return this._value;
         },
-        
+
         /**
          * @method despin
          * @param {Boolean} useBrake Default = true
@@ -151,7 +151,7 @@ BO.io.DCMotor = (function () {
             }
             this._value = 0;
         },
-        
+
         /**
          * @method forward
          * @param {Number} val The new voltage to set (0.0 to 1.0)
@@ -187,7 +187,7 @@ BO.io.DCMotor = (function () {
                 this._pwmPin.value = Math.max(0, Math.min(1, (this._value * this._range) * -1 + this._offset));
             }
         }
-            
+
     };
 
     return DCMotor;

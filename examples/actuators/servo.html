@@ -62,7 +62,7 @@ $(document).ready(function() {
     var PotEvent = BO.io.PotEvent;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -74,46 +74,46 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var servo;
     var pot;
     var usePot = false;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // Remove the listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Analog input example using Potentiometer object
         // Parameters: board, analogPin, enableSmoothing
         pot = new Potentiometer(arduino, arduino.getAnalogPin(0), true);
-        
+
         // Listen for events
         pot.addEventListener(PotEvent.CHANGE, onPotChange);
 
         // Parameters: board, pin
         servo = new Servo(arduino, arduino.getDigitalPin(9));
-        // NOTE: Running a servo can interfere with analog 
+        // NOTE: Running a servo can interfere with analog
         // inputs, creating jitter in the signal
 
         // Set initial angle to 90 degrees
         servo.angle = 90;
 
         initGUIListeners();
-                    
+
     }
-    
+
     function onPotChange(event) {
         // Multiply by 180.0 to scale to the range of 0 to 180
-        // target is a reference to the potentiometer that fired 
+        // target is a reference to the potentiometer that fired
         // the CHANGE event
         var angle = event.target.value * 180.0;
-        
+
         // Only use the potentiometer to rotate the servo head
         // if the 'Use Pot' checkbox is checked
         if (usePot) servo.angle = angle;
@@ -131,7 +131,7 @@ $(document).ready(function() {
                 // Rotate the servo head to the specified angle
                 servo.angle = val;
             }
-        }); 
+        });
 
         $('#usePot').change(function(evt) {
             if ($(this).prop('checked')) {
@@ -139,7 +139,7 @@ $(document).ready(function() {
             } else {
                 usePot = false;
             }
-        }); 
+        });
     }
 });
 

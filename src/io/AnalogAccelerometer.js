@@ -28,15 +28,15 @@ BO.io.AnalogAccelerometer = (function () {
 
     /**
      * Creates an interface to an analog accelerometer. Use the
-     * accelerometer to read the acceleration along the x, y, and z axis of an 
+     * accelerometer to read the acceleration along the x, y, and z axis of an
      * object it is attached to. You can also obtain the pitch and roll. This
      * object should interface with most analog accelerometers. See
-     * [Breakout/examples/sensors/analog\_accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/analog_accelerometer.html) and 
+     * [Breakout/examples/sensors/analog\_accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/analog_accelerometer.html) and
      * [Breakout/examples/three\_js/accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/three_js/accelerometer.html) for example applications.
      *
      * @class AnalogAccelerometer
      * @constructor
-     * @extends BO.PhysicalInputBase    
+     * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} xPin A reference to the Pin connected to the x axis of the
      * accelerometer
@@ -45,7 +45,7 @@ BO.io.AnalogAccelerometer = (function () {
      * @param {Pin} zPin A reference to the Pin connected to the z axis of the
      * accelerometer
      * @param {Number} dynamicRange The range of the acceleromter in Gs
-     * (typically 2 or 3 for an 
+     * (typically 2 or 3 for an
      * analog accelerometer). See the datasheet for the acceleromter to get
      * the exact value.
      * @param {Boolean} enableSmoothing True to enable smoothing, false to
@@ -81,11 +81,11 @@ BO.io.AnalogAccelerometer = (function () {
         if (this._yPin !== null) {
             this._yPin.addEventListener(PinEvent.CHANGE, this.yAxisChanged.bind(this));
         }
-        
+
         if (this._zPin !== null) {
             this._zPin.addEventListener(PinEvent.CHANGE, this.zAxisChanged.bind(this));
         }
-        
+
     };
 
     AnalogAccelerometer.prototype = JSUTILS.inherit(PhysicalInputBase.prototype);
@@ -141,7 +141,7 @@ BO.io.AnalogAccelerometer = (function () {
         },
 
         /**
-         * [read-only] The pitch value in degrees 
+         * [read-only] The pitch value in degrees
          * @property pitch
          * @type Number
          */
@@ -155,7 +155,7 @@ BO.io.AnalogAccelerometer = (function () {
         },
 
         /**
-         * [read-only] The roll value in degrees 
+         * [read-only] The roll value in degrees
          * @property roll
          * @type Number
          */
@@ -188,13 +188,13 @@ BO.io.AnalogAccelerometer = (function () {
             }
         }
     });
-    
+
     /**
-     * Scale the range for the specified axis (from 0 to 1) to (minimum to 
+     * Scale the range for the specified axis (from 0 to 1) to (minimum to
      * maximum).
      *
-     * @method setRangeFor 
-     * @param axis the axis to set new range (AnalogAccelerometer.X_AXIS, 
+     * @method setRangeFor
+     * @param axis the axis to set new range (AnalogAccelerometer.X_AXIS,
      * AnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS).
      * @param {Number} minimum The new minimum value
      * @param {Number} maximum The new maximum value
@@ -237,7 +237,7 @@ BO.io.AnalogAccelerometer = (function () {
      * Create a new object to store the return value and then pass obj.min
      * and obj.max along with the respective axis identifier to the setRangeFor
      * method.
-     * 
+     *
      * @method getCalibratedRange
      * @param {Number} minVoltage The minimum value reported on the axis
      * @param {Number} maxVoltage The maximum value reported on the axis
@@ -248,15 +248,15 @@ BO.io.AnalogAccelerometer = (function () {
      */
     AnalogAccelerometer.prototype.getCalibratedRange = function (minVoltage, maxVoltage, supplyVoltage) {
         var range = {min: 0, max: 0};
-        
+
         var mVPerG = (maxVoltage - minVoltage) / 2;
-        
+
         // Find zero G (average of min and max)
         var zeroG = (minVoltage + maxVoltage) / 2;
-        
+
         range.min = (zeroG - (mVPerG * this._dynamicRange)) / supplyVoltage;
         range.max = (zeroG + (mVPerG * this._dynamicRange)) / supplyVoltage;
-        
+
         return range;
     };
 
@@ -277,7 +277,7 @@ BO.io.AnalogAccelerometer = (function () {
         this._y = event.target.value;
         this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
     };
-    
+
     /**
      * @private
      * @method zAxisChanged
@@ -310,7 +310,7 @@ BO.io.AnalogAccelerometer = (function () {
      * The update event is dispatched when the accelerometer values are updated.
      * @type BO.io.AccelerometerEvent.UPDATE
      * @event update
-     * @param {BO.io.AnalogAccelerometer} target A reference to the 
+     * @param {BO.io.AnalogAccelerometer} target A reference to the
      * AnalogAccelerometer object.
      */
 

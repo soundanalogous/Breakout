@@ -12,7 +12,7 @@ JSUTILS.Event = (function () {
 
     var Event;
 
-    /** 
+    /**
      * A base class for the creation of Event objects.
      *
      * @class Event
@@ -30,7 +30,7 @@ JSUTILS.Event = (function () {
     Event.prototype = {
 
         constructor: Event,
-        
+
         /**
          * The event type
          * @property type
@@ -59,17 +59,17 @@ JSUTILS.Event = (function () {
 
     // Generic events
 
-    /** 
+    /**
      * @property Event.CONNECTED
      * @static
      */
     Event.CONNECTED = "connected";
-    /** 
+    /**
      * @property Event.CHANGE
      * @static
      */
     Event.CHANGE    = "change";
-    /** 
+    /**
      * @property Event.COMPLETE
      * @static
      */

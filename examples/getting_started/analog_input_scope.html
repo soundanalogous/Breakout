@@ -42,10 +42,10 @@ p.scopeLabel {
 }
 
 .clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 .clear {display: inline-block;}
@@ -70,9 +70,9 @@ $(document).ready(function() {
     var IOBoardEvent = BO.IOBoardEvent;
     var PinEvent = BO.PinEvent;
     var SignalScope = JSUTILS.SignalScope;
-        
+
     // Set to true to print debug messages to console
-    BO.enableDebugging = false; 
+    BO.enableDebugging = false;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -85,8 +85,8 @@ $(document).ready(function() {
     }
     var arduino = new IOBoard(host, 8887);
     var pot;
-    var $analogVal = $('#value');    
-    
+    var $analogVal = $('#value');
+
     // Scope details
     var scope1 = new SignalScope("scope1", 200, 100, 0, 1);
 
@@ -96,7 +96,7 @@ $(document).ready(function() {
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);   
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Need to enable an analog pin in order to read it
         arduino.enableAnalogPin(0);
@@ -105,10 +105,10 @@ $(document).ready(function() {
         // Add markers to scope
         scope1.addMarker(0.5, '#00FF00')
 
-        // Update the graph 
-        animate();      
+        // Update the graph
+        animate();
     }
-        
+
     function animate() {
         scope1.update(pot.value);
         $analogVal.text('Value = ' + pot.value.toFixed(3));

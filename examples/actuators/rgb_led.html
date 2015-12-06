@@ -22,7 +22,7 @@ label {
     font-size: 14px;
     color: #666;
 }
-.pickerContainer {  
+.pickerContainer {
     float: left;
     margin-bottom: 20px;
 }
@@ -76,7 +76,7 @@ $(document).ready(function() {
     var RGBLED = BO.io.RGBLED;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -88,7 +88,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var rgbLED;
     var button;
@@ -98,31 +98,31 @@ $(document).ready(function() {
     // Initialize color picker
     $('#colorPicker').wColorPicker({
         initColor: initialColor,
-        onSelect: gotoColor, 
+        onSelect: gotoColor,
         color: 'white'
     });
 
     // Initialize color picker
     $('#fadeColorPicker').wColorPicker({
         initColor: initialColor,
-        onSelect: fadeToColor, 
+        onSelect: fadeToColor,
         color: 'white'
-    });     
-    
+    });
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // Remove the listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Digital input using Button object:
         // Parameters: board, pin, mode
         button = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
-        
-        // Listen for events        
+
+        // Listen for events
         button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
         // RGBLED example using RGBLED object:
@@ -131,10 +131,10 @@ $(document).ready(function() {
         // Change COMMON_CATHODE to COMMON_ANODE according to your LED type
         // Parameters: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
         rgbLED = new RGBLED(
-            arduino, 
-            arduino.getDigitalPin(9), 
-            arduino.getDigitalPin(10), 
-            arduino.getDigitalPin(11), 
+            arduino,
+            arduino.getDigitalPin(9),
+            arduino.getDigitalPin(10),
+            arduino.getDigitalPin(11),
             RGBLED.COMMON_CATHODE);
 
         // Set initial color
@@ -146,7 +146,7 @@ $(document).ready(function() {
 
     function onButtonPress(event) {
         randomColor();
-    }   
+    }
 
     function initGUIListeners() {
         $('#duration').change(function(evt) {
@@ -162,18 +162,18 @@ $(document).ready(function() {
 
         $('button#fadeOut').on('click', function() {
             rgbLED.fadeOut(duration);
-        });         
+        });
     }
-    
+
     // Fade the RGB LED to a random color
     function randomColor() {
         var red = Math.floor(Math.random() * 255);
         var green = Math.floor(Math.random() * 255);
         var blue = Math.floor(Math.random() * 255);
-        
+
         // Fade RGB LED to random color in 0.5 seconds
         rgbLED.fadeTo(red, green, blue, 500);
-    }   
+    }
 
     function getRGBColor(color) {
         var hexColor = parseInt(color.replace(/#/, "0x"));
@@ -182,21 +182,21 @@ $(document).ready(function() {
             green: (hexColor >> 8) & 0x0000FF,
             blue: hexColor & 0x0000FF
         };
-        return rgbColor;    
-    }   
+        return rgbColor;
+    }
 
     function gotoColor(color) {
         if (rgbLED === undefined) return;
         var c = getRGBColor(color);
-        rgbLED.setColor(c.red, c.green, c.blue);    
+        rgbLED.setColor(c.red, c.green, c.blue);
     }
 
     function fadeToColor(color) {
         if (rgbLED === undefined) return;
         var c = getRGBColor(color);
-        rgbLED.fadeTo(c.red, c.green, c.blue, duration);        
-    }   
-            
+        rgbLED.fadeTo(c.red, c.green, c.blue, duration);
+    }
+
 });
 
 </script>
@@ -210,7 +210,7 @@ $(document).ready(function() {
             <div id="fadeColorPicker"></div>
             <label for="duration">Fade duration in milliseconds: </label>
             <input id="duration" type="number" value="500" min="0" step="100" />
-        </div>      
+        </div>
         <div class="hoverBox">
             <p>Go to color:</p>
             <div id="colorPicker"></div>

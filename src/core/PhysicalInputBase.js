@@ -37,9 +37,9 @@ BO.PhysicalInputBase = (function () {
     PhysicalInputBase.prototype = {
 
         constructor: PhysicalInputBase,
-        
+
         // Implement EventDispatcher
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -47,7 +47,7 @@ BO.PhysicalInputBase = (function () {
         addEventListener: function (type, listener) {
             this._evtDispatcher.addEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -55,7 +55,7 @@ BO.PhysicalInputBase = (function () {
         removeEventListener: function (type, listener) {
             this._evtDispatcher.removeEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
@@ -63,7 +63,7 @@ BO.PhysicalInputBase = (function () {
         hasEventListener: function (type) {
             return this._evtDispatcher.hasEventListener(type);
         },
-        
+
         /**
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.

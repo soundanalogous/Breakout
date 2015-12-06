@@ -26,7 +26,7 @@ BO.io.BlinkM = (function () {
      *
      * @class BlinkM
      * @constructor
-     * @extends BO.I2CBase 
+     * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the BlinkM module
      */
@@ -35,10 +35,10 @@ BO.io.BlinkM = (function () {
         address = address || 0x09;  // default i2c address for BlinkM
 
         this.name = "BlinkM";
-        
+
         // call super class
         I2CBase.call(this, board, address);
-        
+
 
     };
 
@@ -50,15 +50,15 @@ BO.io.BlinkM = (function () {
      * Sets the BlinkM to the specified RGB color immediately.
      *
      * @method goToRGBColorNow
-     * @param {Number{}} color An array containing the RGB values. 
+     * @param {Number{}} color An array containing the RGB values.
      * color[0] = R, color[1] = G, color[2] = B
      */
     BlinkM.prototype.goToRGBColorNow = function (color) {
         this.sendI2CRequest([I2CBase.WRITE, this.address, 0x6E, color[0], color[1], color[2]]);
     };
-    
+
     /**
-     * Fades to the specified RGB color in the specified time duration. 
+     * Fades to the specified RGB color in the specified time duration.
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
      * 255 is the fastest.
      *
@@ -95,7 +95,7 @@ BO.io.BlinkM = (function () {
     };
 
     /**
-     * Fades to the specified HSB color in the specified time duration. 
+     * Fades to the specified HSB color in the specified time duration.
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
      * 255 is the fastest.
      *
@@ -111,7 +111,7 @@ BO.io.BlinkM = (function () {
         }
         this.sendI2CRequest([I2CBase.WRITE, this.address, 0x68, color[0], color[1], color[2]]);
     };
-    
+
     /**
      * Fade to a random HSB color.
      * The fade speed range is from 1 to 255, where 1 is the slowest time and
@@ -142,7 +142,7 @@ BO.io.BlinkM = (function () {
     BlinkM.prototype.setFadeSpeed = function (speed) {
         this.sendI2CRequest([I2CBase.WRITE, this.address, 0x66, speed]);
     };
-    
+
     /**
      * Play a predefined light script. See the BlinkM datasheet page 20 for a
      * list and description of the predefined scripts.

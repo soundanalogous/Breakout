@@ -109,7 +109,7 @@ BO.filters.TriggerPoint = (function () {
      * @method updateRange
      */
     TriggerPoint.prototype.updateRange = function () {
-                
+
         this._range = [];
         var keys = this.getKeys(this._points);
 
@@ -147,8 +147,7 @@ BO.filters.TriggerPoint = (function () {
         }
         return keys.sort();
     };
-        
+
     return TriggerPoint;
 
 }());
- 

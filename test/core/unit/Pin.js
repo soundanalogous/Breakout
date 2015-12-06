@@ -109,7 +109,7 @@
                     // once for change and once for rising
                     expect(spy.calledTwice).to.equal(true);
                     expect(spyCall.args[0].type).to.equal("risingEdge");
-                });                
+                });
 
                 it('should fire a FALLING_EDGE event', function () {
                     var spyCall;
@@ -224,7 +224,7 @@
                     spyProcessFilter1.restore();
                     spyProcessFilter2.restore();
                 });
-            });            
+            });
 
             describe('addGenerator', function () {
                 var generator = new BO.generators.GeneratorBase(),
@@ -316,4 +316,4 @@
 
     });
 
-})();        
+})();

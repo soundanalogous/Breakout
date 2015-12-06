@@ -14,9 +14,9 @@ JSUTILS.TimerEvent = (function () {
 
     /**
      * An Event object to be dispatched (fired) by a Timer object.
-     * 
+     *
      * @class TimerEvent
-     * @constructor    
+     * @constructor
      * @extends JSUTILS.Event
      * @param {String} type The event type
      */
@@ -27,12 +27,12 @@ JSUTILS.TimerEvent = (function () {
         Event.call(this, type);
     };
 
-    /** 
+    /**
      * @property TimerEvent.TIMER
      * @static
      */
     TimerEvent.TIMER = "timerTick";
-    /** 
+    /**
      * @property TimerEvent.TIMER_COMPLETE
      * @static
      */

@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
 
 <style>
-@font-face { 
-  font-family: "tradeGothicBold"; 
+@font-face {
+  font-family: "tradeGothicBold";
   src: local("TradeGothicLTStd-Bold"),
-       url("fonts/TradeGothicLTStd-Bold.otf") format('opentype'); 
+       url("fonts/TradeGothicLTStd-Bold.otf") format('opentype');
 }
 </style>
 
@@ -17,7 +17,7 @@
 
 </head>
 <body>
-  
+
 <canvas id='canvas1'></canvas>
 
 <!-- The following (socket.io.js) is only required when using the node_server -->
@@ -45,15 +45,15 @@ sketch.imageCache.add("images/pjs.png");
 // get a reference to the canvas
 var canvas = document.getElementById("canvas1");
 
-// get a reference to the Processing object, passing a ref to 
+// get a reference to the Processing object, passing a ref to
 // the canvas and sketch object
 var pjs = new Processing(canvas, sketch);
 
-// attach the sketch function to the canvas 
+// attach the sketch function to the canvas
 // write the code for your sketch within this function
 sketch.attachFunction = function(p) {
-  
-  // declare global variables for your sketch (just like you 
+
+  // declare global variables for your sketch (just like you
   // would at the top of a regular Processing sketch)
   var arduino,
       isPressed = false,
@@ -64,7 +64,7 @@ sketch.attachFunction = function(p) {
       host,
       isMousePressed = false,
       isReady = false;
-    
+
   // Override setup function
   p.setup = function() {
       p.size(400, 400);
@@ -79,7 +79,7 @@ sketch.attachFunction = function(p) {
 
       // to include a system font, simply reference it by name
       helvetica = p.createFont("Helvetica");
-      
+
       // If you are not serving this file from the same computer
       // that the Arduino Leonardo board is connected to, replace
       // window.location.hostname with the IP address or hostname
@@ -88,18 +88,18 @@ sketch.attachFunction = function(p) {
       // if the file is opened locally, set the host to "localhost"
       if (window.location.protocol.indexOf("file:") === 0) {
         host = "localhost";
-      }     
+      }
       arduino = new IOBoard(host, 8887);
       arduino.addEventListener(IOBoardEvent.READY, onReady);
 
   };
-  
-  // Override draw function  
+
+  // Override draw function
   p.draw = function() {
-      
+
       // return if the IOBoard is not yet ready
       if (!isReady) return;
-      
+
       // set background to medium gray
       p.background(150);
 
@@ -123,7 +123,7 @@ sketch.attachFunction = function(p) {
      isMousePressed = true;
   };
 
-  p.mouseReleased = function() {   
+  p.mouseReleased = function() {
     isMousePressed = false;
   };
 
@@ -138,7 +138,7 @@ sketch.attachFunction = function(p) {
         p.image(pjsLogo, 20, 180);
       } else {
         yVal = 90;
-      }      
+      }
 
       p.noStroke();
       p.fill(255, 0, 0);
@@ -147,7 +147,7 @@ sketch.attachFunction = function(p) {
       // draw button base
       p.noStroke();
       p.fill(0, 0, 0);
-      p.rect(20, 110, 120, 40);      
+      p.rect(20, 110, 120, 40);
   }
 
   // draw an on-screen button to control the LED
@@ -178,12 +178,12 @@ sketch.attachFunction = function(p) {
      p.rect(200, 110, 110, 40, 10);
 
   }
-  
+
   // setup the IOBoard once it is ready
   function onReady(event) {
       // remove the listener because it is no longer needed
       arduino.removeEventListener(IOBoardEvent.READY, onReady);
-      
+
       // create a new instance of a Button object
       var btn = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
       // listen for PRESS and RELEASE events
@@ -207,7 +207,7 @@ sketch.attachFunction = function(p) {
       // update the button state
       isPressed = false;
   }
-      
+
 };
 
 

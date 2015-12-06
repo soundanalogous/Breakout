@@ -47,14 +47,14 @@ $(document).ready(function() {
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
     var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
-    var AccelerometerEvent = BO.io.AccelerometerEvent;  
+    var AccelerometerEvent = BO.io.AccelerometerEvent;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = false; 
+    BO.enableDebugging = false;
 
     // Note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
     // with the ADXL345
-    
+
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
@@ -65,23 +65,23 @@ $(document).ready(function() {
         host = "localhost";
     }
     var fio = new IOBoard(host, 8887);
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     fio.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
-        fio.removeEventListener(IOBoardEvent.READY, onReady);   
-        
+        fio.removeEventListener(IOBoardEvent.READY, onReady);
+
         // Params: IOBoard, dynamicRange, i2cAddress
         // var accelerometer = new AccelerometerADXL345(
-        //                      fio, 
+        //                      fio,
         //                      AccelerometerADXL345.RANGE_2G,
         //                      AccelerometerADXL345.DEVICE_ID);
 
         // Using default settings
-        var accelerometer = new AccelerometerADXL345(fio);                      
+        var accelerometer = new AccelerometerADXL345(fio);
 
         // Calibrate the accelerometer
         // start with 0, 0, 0 and add or subtract in increments
@@ -96,17 +96,17 @@ $(document).ready(function() {
         accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
 
     }
-    
+
     function onAccelerationUpdate(event) {
         var accel = event.target;
-        
+
         // Display the accelerometer values in the browser
         $('#xVal').html("x = " + accel.x.toFixed(3));
         $('#yVal').html("y = " + accel.y.toFixed(3));
         $('#zVal').html("z = " + accel.z.toFixed(3));
         $('#pitch').html("pitch = " + accel.pitch.toFixed(3));
         $('#roll').html("roll = " + accel.roll.toFixed(3));
-    }       
+    }
 });
 </script>
 

@@ -29,7 +29,7 @@ BO.io.Servo = (function () {
      *
      * @class Servo
      * @constructor
-     * @param {IOBoard} board A reference to the IOBoard instance that the 
+     * @param {IOBoard} board A reference to the IOBoard instance that the
      * servo is attached to.
      * @param {Pin} servoPin A reference to the Pin the servo is connected to.
      * @param {Number} minAngle The minimum angle the server can rotate to
@@ -39,7 +39,7 @@ BO.io.Servo = (function () {
      */
     Servo = function (board, servoPin, minAngle, maxAngle) {
         "use strict";
-        
+
         this.name = "Servo";
 
         this._pin = servoPin;
@@ -48,7 +48,7 @@ BO.io.Servo = (function () {
         this._maxAngle = maxAngle || 180;
 
         var pinNumber = servoPin.number;
-        
+
         // sendServoAttach will set the pin mode to Pin.SERVO
         board.sendServoAttach(pinNumber);
     };
@@ -61,13 +61,13 @@ BO.io.Servo = (function () {
          * Set the angle (in degrees) to rotate the server head to.
          *
          * <p>If you are using a continuous rotation servo, a value of 90
-         * will stop the servo. A value of 0 (or < 90 depending on the servo) 
+         * will stop the servo. A value of 0 (or < 90 depending on the servo)
          * will cause continous clockwise rotation and a value of 180 (or > 90)
          * will cause continuous counter-clockwise rotation. If your motor
          * does not come to a full stop when setting 90 degrees, you will need
          * to adjust the servo (there is typically a screw on the motor) to
          * adjust</p>
-         * 
+         *
          * @property angle
          * @type Number
          */

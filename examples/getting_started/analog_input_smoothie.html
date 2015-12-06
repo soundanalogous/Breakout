@@ -60,7 +60,7 @@ $(document).ready(function () {
 
     // Initial content
     $analogVal.text("Value = " + "not data available");
-    
+
     function onReady(event) {
         // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
@@ -85,20 +85,20 @@ $(document).ready(function () {
             minValue: 0.0,
             maxValue: 100.0,
             millisPerPixel: 20,
-            grid: { 
-                strokeStyle: 'rgb(127, 127, 127)', 
+            grid: {
+                strokeStyle: 'rgb(127, 127, 127)',
                 fillStyle: 'rgb(229, 229, 229)',
-                lineWidth: 1, 
-                millisPerLine: 500, 
+                lineWidth: 1,
+                millisPerLine: 500,
                 verticalSections: 4,
             },
             labels: { fillStyle:'rgb(0, 0, 0)' }
         });
 
-        timeline.addTimeSeries(line1, { 
-            strokeStyle: 'rgb(0, 0, 255)', 
+        timeline.addTimeSeries(line1, {
+            strokeStyle: 'rgb(0, 0, 255)',
             fillStyle: 'rgba(0, 0, 0, 0)',
-            lineWidth: 2 
+            lineWidth: 2
         });
 
         timeline.streamTo(document.getElementById("graph"), 1000);

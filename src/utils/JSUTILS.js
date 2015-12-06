@@ -14,7 +14,7 @@ var JSUTILS = JSUTILS || {};
 
 // Utility functions
 
-/** 
+/**
  * Use this function to safely create a new namespace
  * if a namespace already exists, it won't be recreated.
  *
@@ -24,7 +24,7 @@ JSUTILS.namespace = function (namespaceString) {
     var parts = namespaceString.split('.'),
         parent = window,
         i;
-            
+
     for (i = 0; i < parts.length; i += 1) {
         // create a property if it doesn't exist
         if (typeof parent[parts[i]] === "undefined") {
@@ -61,33 +61,33 @@ JSUTILS.inherit = function (p) {
 // Copied from https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
 if (!Function.prototype.bind) {
 
-    /** 
+    /**
      * add bind for browsers that don't support it (Safari)
      * @private
      */
     Function.prototype.bind = function (oThis) {
         if (typeof this !== "function") {
-            // closest thing possible to the ECMAScript 5 internal IsCallable function  
+            // closest thing possible to the ECMAScript 5 internal IsCallable function
             throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
         }
-  
+
         var aArgs = Array.prototype.slice.call(arguments, 1),
             fToBind = this,
-            /** 
+            /**
              * @private
              */
             FNOP = function () {},
-            /** 
+            /**
              * @private
              */
             fBound = function () {
                 return fToBind.apply(this instanceof FNOP ? this : oThis || window,
                                 aArgs.concat(Array.prototype.slice.call(arguments)));
             };
-  
+
         FNOP.prototype = this.prototype;
         fBound.prototype = new FNOP();
-      
+
         return fBound;
     };
 }

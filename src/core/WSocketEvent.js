@@ -6,7 +6,7 @@
 JSUTILS.namespace('BO.WSocketEvent');
 
 BO.WSocketEvent = (function () {
-    
+
     var WSocketEvent;
 
     // dependencies
@@ -22,7 +22,7 @@ BO.WSocketEvent = (function () {
      */
     WSocketEvent = function (type) {
         this.name = "WSocketEvent";
-        
+
         // call the super class
         // 2nd parameter is passed to EventDispatcher constructor
         Event.call(this, type);

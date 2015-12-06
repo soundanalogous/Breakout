@@ -45,14 +45,14 @@ $(document).ready(function() {
 
     // dependencies
     // declare these variables so you don't have
-    // to type the full namespace   
+    // to type the full namespace
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
     var MagnetometerHMC5883 = BO.io.MagnetometerHMC5883;
     var MagnetometerEvent = BO.io.MagnetometerEvent;
 
     // set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
     // with the ADXL345
@@ -68,34 +68,34 @@ $(document).ready(function() {
     }
     var fio = new IOBoard(host, 8887),
         accelerometer;
-    
+
     fio.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
 
         fio.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         //params: IOBoard, i2cAddress, numSamples, outputRate
         var magnetometer = new MagnetometerHMC5883(
-                                fio, 
+                                fio,
                                 MagnetometerHMC5883.DEVICE_ID,
                                 MagnetometerHMC5883.SAMPLES_1,
-                                MagnetometerHMC5883.HZ_30);                         
+                                MagnetometerHMC5883.HZ_30);
 
         // using default settings
-        //var magnetometer = new MagnetometerHMC5883(fio);                      
+        //var magnetometer = new MagnetometerHMC5883(fio);
 
         // start reading the accelerometer
         magnetometer.startReading();
 
         magnetometer.addEventListener(MagnetometerEvent.UPDATE, onMagnetoUpdate);
-        
+
     }
-    
+
     function onMagnetoUpdate(event) {
         var data = event.target;
 
-        
+
         $('#xVal').html("x = " + data.x.toFixed(3));
         $('#yVal').html("y = " + data.y.toFixed(3));
         $('#zVal').html("z = " + data.z.toFixed(3));
@@ -103,7 +103,7 @@ $(document).ready(function() {
 
     }
 
-            
+
 });
 </script>
 
@@ -111,13 +111,13 @@ $(document).ready(function() {
 <body>
 
     <h2>HMC5883 Magnetometer</h2>
-  
+
     <div class="container">
         <div id="xVal" class="text">x =</div>
         <div id="yVal" class="text">y =</div>
         <div id="zVal" class="text">z =</div>
         <div id="heading" class="text">heading =</div>
     </div>
-  
+
 </body>
 </html>​

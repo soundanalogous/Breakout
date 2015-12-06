@@ -17,7 +17,7 @@ BO.io.Button = (function () {
 
     /**
      * Creates and interface to a physical button. The Button object
-     * dispatches events on state changes such as Pressed, Released and 
+     * dispatches events on state changes such as Pressed, Released and
      * Sustained Press. The Button object also handles debouncing.
      *
      * The advantage of using the Button class over listening for pin change
@@ -26,7 +26,7 @@ BO.io.Button = (function () {
      * Sustained Press
      *
      * <p>`PULL_UP` vs `PULL_DOWN`. If the other end of the resistor connected to
-     * the button is connected to ground, configuration is `PULL_DOWN`, if the 
+     * the button is connected to ground, configuration is `PULL_DOWN`, if the
      * resistor is connected to power, then the configuration is `PULL_UP`.</p>
      *
      * @class Button
@@ -34,23 +34,23 @@ BO.io.Button = (function () {
      * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the button is connected to.
-     * @param {Number} buttonMode The mode of the button (either 
-     * `Button.PULL_DOWN` or `Button.PULL_UP` if wired with external resistors or 
+     * @param {Number} buttonMode The mode of the button (either
+     * `Button.PULL_DOWN` or `Button.PULL_UP` if wired with external resistors or
      * `Button.INTERNAL_PULL_UP` if using the internal pull-up resistors. Default
      * is `PULL_DOWN`.
-     * @param {Number} sustainedPressInterval The delay time in milliseconds 
+     * @param {Number} sustainedPressInterval The delay time in milliseconds
      * before a sustained press event is fired.
      */
     Button = function (board, pin, buttonMode, sustainedPressInterval) {
         "use strict";
-        
+
         PhysicalInputBase.call(this);
 
         this.name = "Button";
         this._pin = pin;
 
         var pinNumber = pin.number;
-        
+
         this.buttonMode = buttonMode || Button.PULL_DOWN;
         this._sustainedPressInterval = sustainedPressInterval || 1000;
 
@@ -58,7 +58,7 @@ BO.io.Button = (function () {
         this._repeatCount = 0;
         this._timer = null;
         this._timeout = null;
-        
+
         this._board = board;
         board.setDigitalPinMode(pinNumber, Pin.DIN);
 
@@ -82,10 +82,10 @@ BO.io.Button = (function () {
      * @method onPinChange
      */
     Button.prototype.onPinChange = function (evt) {
-        
+
         var btnVal = evt.target.value;
         var stateHandler;
-                
+
         if (this.buttonMode === Button.PULL_DOWN) {
             if (btnVal === 1) {
                 stateHandler = this.pressed;
@@ -99,7 +99,7 @@ BO.io.Button = (function () {
                 stateHandler = this.pressed;
             }
         }
-        
+
         if (this._timeout === null) {
             this._timeout = setTimeout(stateHandler.bind(this), this._debounceInterval);
         } else {
@@ -107,7 +107,7 @@ BO.io.Button = (function () {
             this._timeout = setTimeout(stateHandler.bind(this), this._debounceInterval);
         }
     };
-    
+
     /**
      * @private
      * @method pressed
@@ -116,10 +116,10 @@ BO.io.Button = (function () {
         this._timeout = null;
 
         this.dispatchEvent(new ButtonEvent(ButtonEvent.PRESS));
-        
+
         this._timer = setInterval(this.sustainedPress.bind(this), this._sustainedPressInterval);
     };
-    
+
     /**
      * @private
      * @method released
@@ -127,15 +127,15 @@ BO.io.Button = (function () {
     Button.prototype.released = function () {
         this._timeout = null;
         this.dispatchEvent(new ButtonEvent(ButtonEvent.RELEASE));
-        
+
         if (this._timer !== null) {
             clearInterval(this._timer);
             this._timer = null;
         }
-        
+
         this._repeatCount = 0;
     };
-    
+
     /**
      * @private
      * @method sustainedPress
@@ -146,7 +146,7 @@ BO.io.Button = (function () {
         } else {
             this.dispatchEvent(new ButtonEvent(ButtonEvent.LONG_PRESS));
         }
-        
+
         this._repeatCount++;
     };
 
@@ -164,7 +164,7 @@ BO.io.Button = (function () {
                 this._debounceInterval = interval;
             }
         },
-        
+
         /**
          * The delay time (in milliseconds) the button must be held before a
          * sustained press event is fired.
@@ -191,7 +191,7 @@ BO.io.Button = (function () {
             }
         }
     });
-      
+
     /**
      * @property Button.PULL_DOWN
      * @static
@@ -224,7 +224,7 @@ BO.io.Button = (function () {
      * @event released
      * @param {BO.io.Button} target A reference to the Button object
      */
-     
+
     /**
      * The longPress event is dispatched once when the button has been held for
      * the time duration specified by the sustainedPressInterval property.
@@ -232,9 +232,9 @@ BO.io.Button = (function () {
      * @event longPress
      * @param {BO.io.Button} target A reference to the Button object
      */
-     
+
     /**
-     * The sustainedPress event is dispatched continuously at the rate 
+     * The sustainedPress event is dispatched continuously at the rate
      * specified by the sustainedPressInterval property while the button is
      * held.
      * @type BO.io.ButtonEvent.SUSTAINED_PRESS

@@ -27,11 +27,11 @@ BO.io.BiColorLED = (function () {
      * for an example application.
      *
      * <p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your
-     * LED is common anode or common cathode by reading the datasheet. 
+     * LED is common anode or common cathode by reading the datasheet.
      * To wire a common cathode LED, connect the cathode to ground
      * and the 2 anode pins to the IOBoard PWM pins via resistors. For
-     * a common anode LED, the anode is connected to power and the 2 
-     * cathode pins are connected to the IOBoard PWM pins via two 
+     * a common anode LED, the anode is connected to power and the 2
+     * cathode pins are connected to the IOBoard PWM pins via two
      * resistors.</p>
      *
      * @class BiColorLED
@@ -48,7 +48,7 @@ BO.io.BiColorLED = (function () {
      */
     BiColorLED = function (board, color1LEDPin, color2LEDPin, driveMode) {
         "use strict";
-        
+
         this.name = "BiColorLED";
 
         if (driveMode === undefined) {
@@ -60,12 +60,12 @@ BO.io.BiColorLED = (function () {
     };
 
     BiColorLED.prototype = {
-    
+
         constructor: BiColorLED,
 
         /**
          * Set the bi-color LED color.
-         * 
+         *
          * @method setColor
          * @param {Number} color1 The value (0 - 255) of the first color
          * @param {Number} color2 The value (0 - 255) of the second
@@ -81,7 +81,7 @@ BO.io.BiColorLED = (function () {
 
         /**
          * Fade in the bi-color LED from the off state.
-         * 
+         *
          * @method fadeIn
          * @param {Number} time The time of the fade (in milliseconds)
          */
@@ -93,7 +93,7 @@ BO.io.BiColorLED = (function () {
 
         /**
          * Fade out the bi-color LED from the on state.
-         * 
+         *
          * @method fadeOut
          * @param {Number} time The time of the fade (in milliseconds)
          */
@@ -105,13 +105,13 @@ BO.io.BiColorLED = (function () {
 
         /**
          * Fade from the current color to the new color.
-         * 
+         *
          * @method fadeTo
          * @param {Number} color1 The value of the first color to fade
          * to (0 - 255)
          * @param {Number} color2 The value of the second color to fade
          * to (0 - 255)
-         * @param {Number} time The time of the fade (in milliseconds)       
+         * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeTo: function (color1, color2, time) {
             color1 = color1 / 255;

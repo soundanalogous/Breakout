@@ -31,7 +31,7 @@ BO.generators.GeneratorBase = (function () {
      * @extends JSUTILS.EventDispatcher
      */
     GeneratorBase = function () {
-        
+
         EventDispatcher.call(this, this);
 
         this.name = "GeneratorBase";

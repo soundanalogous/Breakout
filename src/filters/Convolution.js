@@ -48,7 +48,7 @@ BO.filters.Convolution = (function () {
     Convolution.prototype.constructor = Convolution;
 
     /**
-     * An array of coefficients to be used with product-sum operations for input buffers. 
+     * An array of coefficients to be used with product-sum operations for input buffers.
      * If assigned a new array, the input buffer will be cleared.
      * @property coef
      * @type Number[]
@@ -97,14 +97,14 @@ BO.filters.Convolution = (function () {
      * @static
      */
     Convolution.HPF = [1 / 3, -2.0 / 3, 1 / 3];
-    
+
     /**
      * Moving average filter kernel. Use by passing this array to the constructor.
      * @property Convolution.MOVING_AVERAGE
      * @static
      */
     Convolution.MOVING_AVERAGE = [1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8, 1 / 8];
-        
+
     return Convolution;
 
 }());

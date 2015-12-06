@@ -17,7 +17,7 @@ BO.io.CompassEvent = (function () {
      * @class CompassEvent
      * @constructor
      * @extends JSUTILS.Event
-     * @param {String} type The event type   
+     * @param {String} type The event type
      */
     CompassEvent = function (type) {
 
@@ -28,11 +28,11 @@ BO.io.CompassEvent = (function () {
     };
 
     /**
-     * @property CompassEvent.UPDATE 
+     * @property CompassEvent.UPDATE
      * @static
      */
     CompassEvent.UPDATE = "update";
-    
+
 
     CompassEvent.prototype = JSUTILS.inherit(Event.prototype);
     CompassEvent.prototype.constructor = CompassEvent;

@@ -38,7 +38,7 @@
   strings.
 
 2013.03.18 Version 0.2.2
-* Fixed bug in Breakout Server that was preventing selection of serial port 
+* Fixed bug in Breakout Server that was preventing selection of serial port
   other than top port in dropdown list.
 
 2013.02.18 Version 0.2.1
@@ -47,7 +47,7 @@
   also handle a Firmata SYSTEM_RESET callback. See Breakout/custome_examples/.
 * System reset is now called before capability query when starting in single
   client mode.
-* Removed string_test.html from custom_examples and added simple_json.html 
+* Removed string_test.html from custom_examples and added simple_json.html
   example and corresponding skecth (see customm_examples/sketches/.
 * Fixed bug that was setting optional i2c delay time incorrectly.
 * Added ability to open examples directly in browser (closes issue #28)
@@ -86,17 +86,17 @@
 * Added index page for examples: /examples/index.html (initial idea by Fabian Affolter)
 * Added additional getting_started examples (contributed by Fabian Affolter)
 * Included SignalScope.js in the core library under src/utils/
-* Added getFirmwareName() and getPinCapabilities() methods to IOBoard.js 
+* Added getFirmwareName() and getPinCapabilities() methods to IOBoard.js
   (contributed by Fabian Affolter)
 * Added command line arguments to nodeJS server (contributed by Fabian Affolter)
-* Removed useSocketIO parameter from IOBoard and WSocketWrapper. If you include 
+* Removed useSocketIO parameter from IOBoard and WSocketWrapper. If you include
   socket.io, it is now assumed you are using the nodeJS server.
 * Changed default port for nodeJS server from 8080 to 8887
 * Updated nodeJS server to use express framework
 * Enabled touch events for jQuery UI elements
 
 2012.07.18 Version 0.1.6
-* Added examples demonstrating use of DeviceMotion and DeviceOrientation APIs 
+* Added examples demonstrating use of DeviceMotion and DeviceOrientation APIs
   with Breakout
 * Added fritzing files to Breakout/examples/schematics_src/fritzing/
 * Updated examples to be more mobile friendly
@@ -111,22 +111,22 @@
 
 2012.04.14 Version 0.1.4
 * Fixed LED and RGBLED fadeTo issue (issue #8)
-* Fixed Pin / Button bug that was causing pins on same port to trigger false 
+* Fixed Pin / Button bug that was causing pins on same port to trigger false
   events (issue #14)
-* Added DISCONNECTED event to IOBoardEvent that is fired when the server is 
+* Added DISCONNECTED event to IOBoardEvent that is fired when the server is
   disconnected (issue #12)
 
 2012.03.31 Version 0.1.3
-* Min, max and average pin values are now calculated after any filters are 
+* Min, max and average pin values are now calculated after any filters are
   applied (issue #11).
 * Common Anode RGB LEDs now work properly (issue #8)
-* Changed R, G, and B pins in rgb_led example to match pins in the schematics.pdf 
+* Changed R, G, and B pins in rgb_led example to match pins in the schematics.pdf
   document (issue #10).
 * Fixed dcmotor example (issue #9)
 * Fixed LED toggle (issue #7)
 * Created new hello_world example to better demonstrate basic input and output.
 * Added a template example that can be used as a starting point for new projects.
-* Added basic processing_js example and templates for starting new 2d and 3d 
+* Added basic processing_js example and templates for starting new 2d and 3d
   processing_js projects with Breakout.
 * Added examples of flex, FSR (pressure), IR proximity, temperature and sonar sensors.
 * Updated schematics to add new sensor examples and dcmotor with external power supply.

@@ -34,13 +34,13 @@ BO.io.CompassHMC6352 = (function () {
         this._lastHeading = 0;
 
         this.name = "CompassHMC6352";
-        
+
         I2CBase.call(this, board, address);
-            
+
         // 0x51 = 10 Hz measurement rate, Query mode
         this.sendI2CRequest([I2CBase.WRITE, this.address, 0x47, 0x74, 0x51]);
         this.sendI2CRequest([I2CBase.WRITE, this.address, 0x41]);
-        
+
         this.startReading();
 
     };
@@ -58,7 +58,7 @@ BO.io.CompassHMC6352 = (function () {
             return this._heading;
         }
     });
-    
+
     /**
      * @private
      * @method handleI2C
@@ -67,13 +67,13 @@ BO.io.CompassHMC6352 = (function () {
 
         // data[0] = register
         this._heading = Math.floor(((data[1] << 8) | data[2]) / 10.0);
-        
+
         if (this._heading != this._lastHeading) {
             this.dispatchEvent(new CompassEvent(CompassEvent.UPDATE));
         }
         this._lastHeading = this._heading;
     };
-    
+
     /**
      * Start continuous reading of the sensor.
      * @method startReading
@@ -81,7 +81,7 @@ BO.io.CompassHMC6352 = (function () {
     CompassHMC6352.prototype.startReading = function () {
         this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, 0x7F, 0x02]);
     };
-    
+
     /**
      * Stop continuous reading of the sensor
      * @method stopReading

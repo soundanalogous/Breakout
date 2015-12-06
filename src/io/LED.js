@@ -24,12 +24,12 @@ BO.io.LED = (function () {
      * methods for blinking and fading LEDs. To use the fading methods, the
      * LED must be connected to a PWM pin on the I/O board.
      *
-     * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other 
+     * <p>PLEASE NOTE: To use the fade methods, or to use an waveform other
      * than `Oscillator.SQUARE` the LED must be connected to a PWM pin.</p>
      *
      * <p>`SOURCE_DRIVE` vs `SYNC_DRIVE`. If the Anode (longer LED pin) is
      * connected to the microcontroller pin, then it is `SOURCE_DRIVE`. If the
-     * Cathode is connected to the microcontroller pin, then it is 
+     * Cathode is connected to the microcontroller pin, then it is
      * `SYNC_DRIVE`.</p>
      *
      * @class LED
@@ -41,7 +41,7 @@ BO.io.LED = (function () {
      */
     LED = function (board, ledPin, driveMode) {
         "use strict";
-        
+
         this.name = "LED";
 
         this._driveMode = driveMode || LED.SOURCE_DRIVE;
@@ -101,7 +101,7 @@ BO.io.LED = (function () {
                 this._pin.value = 1 - val;
             }
         },
-        
+
         /**
          * Turn the LED on.
          * @method on

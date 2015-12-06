@@ -1,15 +1,15 @@
-<html> 
-<head> 
+<html>
+<head>
 
 <meta charset=utf-8 />
 <meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
 
-<title>Breakout + processing.js Template 3D</title> 
+<title>Breakout + processing.js Template 3D</title>
 
-</head> 
-<body> 
-    
-<canvas id='canvas1'></canvas> 
+</head>
+<body>
+
+<canvas id='canvas1'></canvas>
 
 <!-- The following (socket.io.js) is only required when using the node_server -->
 <script src="../../socket.io/socket.io.js"></script>
@@ -29,15 +29,15 @@ sketch.use3DContext = true;
 // preload images (if you are using any)
 sketch.imageCache.add("images/pjs.png");
 
-// attach function 
+// attach function
 sketch.attachFunction = function(p) {
 
     // Breakout vars
     var arduino,
         isReady = false;
-     
+
     p.setup = function() {
-        // Please note: processingjs cannot run on mobile devices in 
+        // Please note: processingjs cannot run on mobile devices in
         // 3D mode because WebGL is not yet supported on mobile devices
         p.size(200, 200, p.P3D);
 
@@ -45,7 +45,7 @@ sketch.attachFunction = function(p) {
 
 
 
-        // create an instance of the IOBoard       
+        // create an instance of the IOBoard
         arduino = new IOBoard("localhost", 8887);
         // listen for the READY event
         arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
@@ -72,10 +72,10 @@ sketch.attachFunction = function(p) {
 
     };
 
-    p.mouseReleased = function() {   
+    p.mouseReleased = function() {
         // handle mouse release events here:
 
-    };   
+    };
 
     function onArduinoReady(event) {
         // remove the READY event listener. Must always to this.
@@ -88,7 +88,7 @@ sketch.attachFunction = function(p) {
         // signal that the Arduino is ready so processing.js can start
         // drawing with the accelerometer data
         isReady = true;
-    }    
+    }
 
 };
 
@@ -96,6 +96,6 @@ var canvas = document.getElementById("canvas1");
 // attaching the sketch to the canvas
 var p = new Processing(canvas, sketch);
 
-</script> 
-</body> 
-</html> 
+</script>
+</body>
+</html>

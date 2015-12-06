@@ -37,7 +37,7 @@ $(document).ready(function() {
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // "localhost" with the IP address or hostname
-    // of the computer that the Arduino board is connected to.  
+    // of the computer that the Arduino board is connected to.
     var arduino = new IOBoard("localhost", 8887);
 
     // Listen for the IOBoard READY event which indicates the IOBoard
@@ -46,12 +46,12 @@ $(document).ready(function() {
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);     
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Listen for incoming string messages
         arduino.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
     }
-    
+
     // Called when a new string message is received from the I/O board
     function onStringMessage(event) {
         var msg = JSON.parse(event.message);
@@ -62,8 +62,8 @@ $(document).ready(function() {
 
 </head>
 <body>
-  
+
     <div id="message" class="text"></div>
-  
+
 </body>
 </html>​

@@ -27,24 +27,24 @@ BO.io.Stepper = (function () {
     /**
      * Creates an interface to a Stepper motor. Use this object to set
      * the direction and number of steps for the motor to rotate. See
-     * [Breakout/examples/actuators/stepper\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html), 
-     * [stepper\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html), 
-     * [stepper\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html) 
+     * [Breakout/examples/actuators/stepper\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html),
+     * [stepper\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html),
+     * [stepper\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html)
      * and [stepper\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.
      *
      * @class Stepper
      * @constructor
      * @uses JSUTILS.EventDispatcher
-     * @param {IOBoard} board A reference to the IOBoard instance that the 
+     * @param {IOBoard} board A reference to the IOBoard instance that the
      * stepper is attached to.
      * @param {Number} driverType. The type of driver (`Stepper.DRIVER`,
      * `Stepper.DRIVER_HIGH_CURRENT`, `Stepper.TWO_WIRE`, or
      * `Stepper.FOUR_WIRE`).
-     * @param {Number} numStepsPerRev The number of steps to make 1 revolution. 
-     * @param {Pin} directionPin If dirver interface, the pin used to control 
+     * @param {Number} numStepsPerRev The number of steps to make 1 revolution.
+     * @param {Pin} directionPin If dirver interface, the pin used to control
      * the direction.
      * If 2-wire or 4-wire interface, the 1st moter pin.
-     * @param {Pin} stepPin If dirver interface, the pin used to control the 
+     * @param {Pin} stepPin If dirver interface, the pin used to control the
      * steps.
      * If 2-wire or 4-wire interface, the 2nd moter pin.
      * @param {Pin} motorPin3 [optional] Only required for a 4-wire interface.
@@ -78,7 +78,7 @@ BO.io.Stepper = (function () {
      *     }
      */
     Stepper = function (board, driverType, numStepsPerRev, directionPin, stepPin, motorPin3, motorPin4) {
-        
+
         // create a new id each time a new instance is created
         this._id = instanceCounter++;
         if (this._id > 5) {
@@ -100,7 +100,7 @@ BO.io.Stepper = (function () {
         this._board.setDigitalPinMode(stepPin.number, Pin.DOUT, silent);
 
         this._board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
-        
+
         switch (driverType) {
         case Stepper.DRIVER:
         case Stepper.DRIVER_HIGH_CURRENT:
@@ -204,7 +204,7 @@ BO.io.Stepper = (function () {
 
                 decelLSB = decel & 0x007F;
                 decelMSB = (decel >> 7) & 0x007F;
-                            
+
                 this._board.sendSysex(STEPPER,
                     [STEP,
                     this._id,
@@ -263,7 +263,7 @@ BO.io.Stepper = (function () {
         },
 
         /* implement EventDispatcher */
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -271,7 +271,7 @@ BO.io.Stepper = (function () {
         addEventListener: function (type, listener) {
             this._evtDispatcher.addEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * @param {Function} listener The function to be called when the event is fired
@@ -279,7 +279,7 @@ BO.io.Stepper = (function () {
         removeEventListener: function (type, listener) {
             this._evtDispatcher.removeEventListener(type, listener);
         },
-        
+
         /**
          * @param {String} type The event type
          * return {boolean} True is listener exists for this type, false if not.
@@ -287,7 +287,7 @@ BO.io.Stepper = (function () {
         hasEventListener: function (type) {
             return this._evtDispatcher.hasEventListener(type);
         },
-        
+
         /**
          * @param {Event} type The Event object
          * @param {Object} optionalParams Optional parameters to assign to the event object.
@@ -296,7 +296,7 @@ BO.io.Stepper = (function () {
         dispatchEvent: function (event, optionalParams) {
             return this._evtDispatcher.dispatchEvent(event, optionalParams);
         }
-    
+
     };
 
     /**

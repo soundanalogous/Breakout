@@ -20,9 +20,9 @@ BO.filters.Scaler = (function () {
     var FilterBase = BO.filters.FilterBase;
 
     /**
-     * Scales up an input value from its min and max range to a specified 
+     * Scales up an input value from its min and max range to a specified
      * minimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for
-     * an example application.  
+     * an example application.
      *
      * @class Scaler
      * @constructor
@@ -92,7 +92,7 @@ BO.filters.Scaler = (function () {
     Scaler.SQUARE_ROOT = function (val) {
         return Math.pow(val, 0.5);
     };
-    
+
     /**
      * y = x^4
      * @method Scaler.CUBE
@@ -101,7 +101,7 @@ BO.filters.Scaler = (function () {
     Scaler.CUBE = function (val) {
         return val * val * val * val;
     };
-    
+
     /**
      * y = pow(x, 1/4)
      * @method Scaler.CUBE_ROOT

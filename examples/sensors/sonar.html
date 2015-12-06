@@ -52,7 +52,7 @@ $(document).ready(function() {
     var PinEvent = BO.PinEvent;
 
     // set to true to print debug messages to console
-    BO.enableDebugging = true; 
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -70,7 +70,7 @@ $(document).ready(function() {
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
@@ -121,6 +121,6 @@ $(document).ready(function() {
       <div id="distance_cm" class="text"></div>
       <div id="distance_in" class="text"></div>
   </div>
-  
+
 </body>
 </html>​

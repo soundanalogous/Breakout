@@ -59,15 +59,15 @@ $(document).ready(function() {
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // create an LED object to interface with the LED 
+        // create an LED object to interface with the LED
         // on the Arduino board (connected to pin 13)
         led = new LED(arduino, arduino.getDigitalPin(13));
-        
-        // use jQuery to get a reference to the button 
+
+        // use jQuery to get a reference to the button
         // and listen for a click event
         $('#btn').on('click', toggleLED);
     }
@@ -86,8 +86,8 @@ $(document).ready(function() {
   <h2>Breakout Template</h2>
 
   <p>Press the button to toggle the LED on the Arduino board.</p>
-  
+
   <button id="btn" type="button">Toggle LED</button>
-  
+
 </body>
 </html>​

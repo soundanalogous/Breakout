@@ -14,7 +14,7 @@ body {
     max-width: 600px;
 }
 h2 {
-    color: #00AEFF;    
+    color: #00AEFF;
     font-size: 22px;
     padding-bottom: 10px;
 }
@@ -45,7 +45,7 @@ $(document).ready(function() {
     var Event = JSUTILS.Event;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -57,7 +57,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var stepper,
         numMicroSteps = 8, // by default the EasyDriver uses 8 microsteps per step
@@ -67,9 +67,9 @@ $(document).ready(function() {
         numSteps;
 
     // if you are not using an EasyDriver, set numMicroSteps = 1
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
@@ -78,12 +78,12 @@ $(document).ready(function() {
         // Remove the listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Parameters: board, motor interface, num steps per rev, 
+        // Parameters: board, motor interface, num steps per rev,
         // direction pin, step pin
-        stepper = new Stepper(arduino, 
-                            Stepper.DRIVER, 
-                            stepsPerRev * numMicroSteps, 
-                            arduino.getDigitalPin(2), 
+        stepper = new Stepper(arduino,
+                            Stepper.DRIVER,
+                            stepsPerRev * numMicroSteps,
+                            arduino.getDigitalPin(2),
                             arduino.getDigitalPin(3));
 
         // Event.COMPLETE will fire when the step sequence is complete
@@ -109,8 +109,8 @@ $(document).ready(function() {
         } else {
             speed = 10.5;
             // acceleration and deceleration are optional
-            stepper.step(numSteps, speed);            
-        }      
+            stepper.step(numSteps, speed);
+        }
     }
 
 });

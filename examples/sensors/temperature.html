@@ -66,7 +66,7 @@ $(document).ready(function() {
     function onReady(event) {
         // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         // Enable the analog pin so we can read its value
         arduino.enableAnalogPin(0);
         var sensor = arduino.getAnalogPin(0);

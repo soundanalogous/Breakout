@@ -65,37 +65,37 @@ $(document).ready(function() {
     }
     var uno = new IOBoard(host, 8887);
     var compass;
-    
+
     uno.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // remove the listener because it is no longer needed
         uno.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // i2c module example:  HMC6352 digital compass module  
+        // i2c module example:  HMC6352 digital compass module
         compass = new CompassHMC6352(uno);
         compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
-        
+
         setTimeout(stopReading, 1000);
         setTimeout(startReading, 3000);
-                
+
     }
-    
+
     // test compass stopReading method
     function stopReading() {
         compass.stopReading();
     }
-    
+
     // test compass startReading method
     function startReading() {
         compass.startReading();
-    }   
-    
+    }
+
     function onHeadingUpdate(evt) {
         $('#heading').html("heading: " + evt.target.heading);
-    }   
-            
+    }
+
 });
 
 </script>
@@ -104,7 +104,7 @@ $(document).ready(function() {
 <body>
 
     <h2>HMC6352 Digital Compass</h2>
-  
+
     <div class="container">
         <div id="heading" class="text">heading:</div>
     </div>

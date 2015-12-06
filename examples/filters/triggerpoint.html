@@ -40,10 +40,10 @@ p.scopeLabel {
 }
 
 .clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 .clear {display: inline-block;}
@@ -70,7 +70,7 @@ $(document).ready(function() {
     var SignalScope = JSUTILS.SignalScope;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -82,7 +82,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var pot;
     var triggerPoint;
@@ -90,14 +90,14 @@ $(document).ready(function() {
     var scope1 = new SignalScope("scope1", 200, 100, 0, 1);
     // points to add to triggerpoint filter
     var points = [[0.5, 0.05], [0.25, 0], [0.65, 0], [0.8, 0.05]];
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
         // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);       
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Need to enable an analog pin in order to read it
         arduino.enableAnalogPin(0);
@@ -120,11 +120,11 @@ $(document).ready(function() {
         // threshold for that point (green line)
         scope1.addMarker(0.5, '#00FF00')
         scope1.addMarker(0.5 + 0.05, '#0080FF');
-        scope1.addMarker(0.5 - 0.05, '#0080FF');        
+        scope1.addMarker(0.5 - 0.05, '#0080FF');
 
         animate();
     }
-    
+
     function onPotChange(event) {
         var pin = event.target;
         $('#filteredValue').text('Filtered value: ' + pin.value);
@@ -181,12 +181,12 @@ $(document).ready(function() {
 
 </head>
 <body>
-  
+
     <h2>TriggerPoint Example</h2>
 
     <div id="containers" style="width:400px;">
 
-        <label for="selector">Set number of points: </label>    
+        <label for="selector">Set number of points: </label>
         <select id="selector" name="numPoints">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -206,6 +206,6 @@ $(document).ready(function() {
         <p id="printPoints" class="scopeLabel">Points = [[0.5, 0.05]]</p>
 
     </div>
-  
+
 </body>
 </html>​

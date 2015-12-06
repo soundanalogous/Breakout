@@ -68,8 +68,8 @@ $(document).ready(function() {
     var ButtonEvent = BO.io.ButtonEvent;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true; 
-    
+    BO.enableDebugging = true;
+
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
     // window.location.hostname with the IP address or hostname
@@ -84,7 +84,7 @@ $(document).ready(function() {
     FastClick.attach(document.body);
 
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var led;
     var button;
@@ -92,7 +92,7 @@ $(document).ready(function() {
     var $schematic = $('#schematic');
 
     // Handle showing and hiding the schematic
-    $('#schematicBtn').on('click', toggleSchematicView);    
+    $('#schematicBtn').on('click', toggleSchematicView);
 
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
@@ -109,19 +109,19 @@ $(document).ready(function() {
         // Create a new Button object to interface with the physical
         // button wired to the I/O board
         button = new Button(arduino, arduino.getDigitalPin(2));
-        
+
         // Listen for button press and release events
         button.addEventListener(ButtonEvent.PRESS, onPress);
         button.addEventListener(ButtonEvent.RELEASE, onRelease);
-        
+
         // Use jQuery to get a reference to the buttons
-        // and listen for click events 
+        // and listen for click events
         $('#btnLeft').on('click', turnLedOff);
-        $('#btnRight').on('click', turnLedOn);      
+        $('#btnRight').on('click', turnLedOn);
     }
 
     function onPress(evt) {
-        // Get a reference to the target which is the button that 
+        // Get a reference to the target which is the button that
         // triggered the event
         var btn = evt.target;
         // Display the state on the page
@@ -129,8 +129,8 @@ $(document).ready(function() {
     }
 
     function onRelease(evt) {
-        // Get a reference to the target which is the button that 
-        // triggered the event      
+        // Get a reference to the target which is the button that
+        // triggered the event
         var btn = evt.target;
         // Display the state on the page
         $state.html("Button " + btn.pinNumber + " state: Released");
@@ -143,7 +143,7 @@ $(document).ready(function() {
 
     function turnLedOff(evt) {
         // Turn the LED off
-        led.off();  
+        led.off();
     }
 
     // Show or hide the schematic
@@ -157,7 +157,7 @@ $(document).ready(function() {
             schematicBtn.text("Show Schematic");
             schematicBtn.data('state', "hidden");
             $schematic.css('display', 'none');
-        }   
+        }
     }
 });
 </script>

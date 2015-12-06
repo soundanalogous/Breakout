@@ -7,7 +7,7 @@
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
-    io = require('socket.io').listen(server),
+    socketIO = require('socket.io').listen(server),
     path = require('path'),
     fileSystem = require('fs'),
     connectedSocket = null,
@@ -73,7 +73,7 @@ serial.on("data", function (data) {
 
         if (enableMultiConnect) {
             connectedSocket.broadcast.send(data.toJSON());
-        }        
+        }
     }
 });
 
@@ -85,17 +85,17 @@ serial.on("error", function (msg) {
 
 /************************* SOCKET.IO ***********************/
 // configure socket.io
-io.configure(function () {
+socketIO.configure(function () {
     // Suppress socket.io debug output
-    io.set('log level', 1);
-    io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+    socketIO.set('log level', 1);
+    socketIO.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
 });
-  
-io.configure('production', function () {
-    io.enable('browser client etag');
-    io.set('log level', 1);
-    
-    io.set('transports', [
+
+socketIO.configure('production', function () {
+    socketIO.enable('browser client etag');
+    socketIO.set('log level', 1);
+
+    socketIO.set('transports', [
         'websocket',
         'flashsocket',
         'xhr-polling',
@@ -103,11 +103,11 @@ io.configure('production', function () {
     ]);
 });
 
-io.configure('development', function () {
-    io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+socketIO.configure('development', function () {
+    socketIO.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
 });
 
-io.sockets.on('connection', function (connection) {
+socketIO.sockets.on('connection', function (connection) {
 
     connectedSocket = connection;
     isConnected = true;
@@ -138,6 +138,6 @@ io.sockets.on('connection', function (connection) {
             connectedSocket = null;
             isConnected = false;
             console.log("all clients disconnected");
-        } 
+        }
     });
 });

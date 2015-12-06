@@ -71,7 +71,7 @@ $(document).ready(function() {
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
@@ -129,6 +129,6 @@ $(document).ready(function() {
     <p id="distance_cm" class="text"></p>
     <p id="distance_in" class="text"></p>
   </div>
-  
+
 </body>
 </html>​

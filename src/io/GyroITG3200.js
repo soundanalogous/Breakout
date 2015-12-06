@@ -32,7 +32,7 @@ BO.io.GyroITG3200 = (function () {
      * Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures
      * angular acceleration around the x, y, and z axis. This object provides
      * the angular velocity of each axis. Proper calibration is required for an
-     * accurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and 
+     * accurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and
      * [Breakout/examples/processing\_js/gyro.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/gyro.html) for example applications.
      *
      * @class GyroITG3200
@@ -41,7 +41,7 @@ BO.io.GyroITG3200 = (function () {
      * @param {IOBoard} board The IOBoard instance
      * @param {Boolean} autoStart True if read continuous mode should start automatically upon instantiation (default is true)
      * @param {Number} address The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use
-     * `GyroITG3200.ID_AD0_DVV` (0x69), if pin 9 (AD0) is tied to GND, then use `GyroITG3200.ID_AD0_GND`. 
+     * `GyroITG3200.ID_AD0_DVV` (0x69), if pin 9 (AD0) is tied to GND, then use `GyroITG3200.ID_AD0_GND`.
      * Default = `GyroITG3200.ID_AD0_VDD`
      */
     GyroITG3200 = function (board, autoStart, address) {
@@ -50,7 +50,7 @@ BO.io.GyroITG3200 = (function () {
             autoStart = true;
         }
         address = address || GyroITG3200.ID_AD0_VDD;
-        
+
         I2CBase.call(this, board, address);
 
         this.name = "GyroITG3200";
@@ -61,7 +61,7 @@ BO.io.GyroITG3200 = (function () {
         this._tempOffsets = {};
         this._startupTimer = null;
         this._debugMode = BO.enableDebugging;
-        
+
         this._x = 0;
         this._y = 0;
         this._z = 0;
@@ -159,7 +159,7 @@ BO.io.GyroITG3200 = (function () {
             }
         }
     });
-    
+
     /**
      * Set the polarity of the x, y, and z output values.
      *
@@ -173,7 +173,7 @@ BO.io.GyroITG3200 = (function () {
         this._polarities.y = yPol ? -1 : 1;
         this._polarities.z = zPol ? -1 : 1;
     };
-    
+
     /**
      * Offset the x, y, or z output by the respective input value.
      *
@@ -187,7 +187,7 @@ BO.io.GyroITG3200 = (function () {
         this._offsets.y = yOffset;
         this._offsets.z = zOffset;
     };
-    
+
     /**
      * Set the gain value for the x, y, or z output.
      *
@@ -212,7 +212,7 @@ BO.io.GyroITG3200 = (function () {
             this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, GYRO_XOUT, NUM_BYTES]);
         }
     };
-    
+
     /**
      * Stop continuous reading of the sensor.
      * @method stopReading
@@ -223,7 +223,7 @@ BO.io.GyroITG3200 = (function () {
     };
 
 
-    /** 
+    /**
      * Sends read request to accelerometer and updates accelerometer values.
      * @method update
      */
@@ -243,17 +243,17 @@ BO.io.GyroITG3200 = (function () {
     GyroITG3200.prototype.init = function () {
         // set fast sample rate divisor = 0
         this.sendI2CRequest([I2CBase.WRITE, this.address, SMPLRT_DIV, 0x00]);
-        
+
         // set range to +-2000 degrees/sec and low pass filter bandwidth to 256Hz and internal sample rate to 8kHz
         this.sendI2CRequest([I2CBase.WRITE, this.address, DLPF_FS, 0x18]);
-        
+
         // use internal oscillator
         this.sendI2CRequest([I2CBase.WRITE, this.address, PWR_MGM, 0x00]);
-        
+
         // enable ITG ready bit and raw data ready bit
         // note: this is probably not necessary if interrupts aren't used
         this.sendI2CRequest([I2CBase.WRITE, this.address, INT_CFG, 0x05]);
-        
+
 
         this._startupTimer = setTimeout(this.onGyroReady.bind(this), STARTUP_DELAY);
     };
@@ -277,7 +277,7 @@ BO.io.GyroITG3200 = (function () {
      */
     GyroITG3200.prototype.setRegisterBit = function (regAddress, bitPos, state) {
         var value;
-        
+
         if (state) {
             value |= (1 << bitPos);
         } else {
@@ -308,19 +308,19 @@ BO.io.GyroITG3200 = (function () {
      * @method readGyro
      */
     GyroITG3200.prototype.readGyro = function (data) {
-        
+
         var x_val,
             y_val,
             z_val;
-        
+
         if (data.length != NUM_BYTES + 1) {
             throw new Error("Incorrecte number of bytes returned");
         }
-        
+
         x_val = (data[1] << 8) | (data[2]);
         y_val = (data[3] << 8) | (data[4]);
         z_val = (data[5] << 8) | (data[6]);
-        
+
         if (x_val >> 15) {
             this._x = ((x_val ^ 0xFFFF) + 1) * -1;
         } else {
@@ -336,10 +336,10 @@ BO.io.GyroITG3200 = (function () {
         } else {
             this._z = z_val;
         }
-        
+
         this.dispatchEvent(new GyroEvent(GyroEvent.UPDATE));
     };
-    
+
     /**
      * for debugging
      * @private
@@ -349,17 +349,17 @@ BO.io.GyroITG3200 = (function () {
             console.log(str);
         }
     };
-        
+
     // public static constants
 
-    /** 
+    /**
      * ID = 0x69 if sensor pin 9 (AD0) is tied to Power.
      * @property GyroITG3200.ID_AD0_VDD
      * @static
      */
     GyroITG3200.ID_AD0_VDD = 0x69;
 
-    /** 
+    /**
      * ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.
      * @property GyroITG3200.ID_AD0_VDD
      * @static
@@ -375,7 +375,7 @@ BO.io.GyroITG3200 = (function () {
      * @event update
      * @param {BO.io.GyroITG3200} target A reference to the GyroITG3200 object.
      */
-            
+
     return GyroITG3200;
 
 }());

@@ -27,8 +27,8 @@ BO.io.SoftPot = (function () {
 
     /**
      * Creates an interface to a SoftPot sensor. A softpot is a type of
-     * analog resistive sensor that acts as a type of slider input. There are 
-     * straight and curved variations. This object provides a number of useful 
+     * analog resistive sensor that acts as a type of slider input. There are
+     * straight and curved variations. This object provides a number of useful
      * events such as Press, Release, Drag, Tap and capturing Flick gestures.
      * See [Breakout/examples/sensors/softpot.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/softpot.html) for an example application.
      *
@@ -37,12 +37,12 @@ BO.io.SoftPot = (function () {
      * @extends BO.PhysicalInputBase
      * @param {IOBoard} board A reference to the IOBoard instance
      * @param {Pin} pin A reference to the Pin the softpot is connected to.
-     * @param {Number} softPotLength The length of the softpot in mm. 
-     * Default = 100. 
+     * @param {Number} softPotLength The length of the softpot in mm.
+     * Default = 100.
      */
     SoftPot = function (board, pin, softPotLength) {
         "use strict";
-        
+
         PhysicalInputBase.call(this);
 
         this.name = "SoftPot";
@@ -60,12 +60,12 @@ BO.io.SoftPot = (function () {
         this._minDragMovement = 1.0 / softPotLength * 1.0;
         this._tapTimeout = TAP_TIMEOUT;
         this._minValue = MIN_VALUE;
-        
+
         this._board = board;
         board.enableAnalogPin(this._pin.analogNumber);
 
         this._debugMode = BO.enableDebugging;
-                        
+
         this._pin.addEventListener(PinEvent.CHANGE, this.onPinChange.bind(this));
 
         this._pressTimer = new Timer(PRESS_TIMER_INTERVAL, 0);
@@ -107,20 +107,20 @@ BO.io.SoftPot = (function () {
     SoftPot.prototype.setMinFlickMovement = function (num) {
         this._minFlickMovement = num;
     };
-    
+
     /**
      * @private
      * @method startTouch
      */
     SoftPot.prototype.startTouch = function (touchPoint) {
-        
+
         this._pressTimer.reset();
         this._pressTimer.start();
-        
+
         // where we pressed
         this._touchPoint = touchPoint;
         this.dispatch(SoftPotEvent.PRESS);
-        
+
         this._isTouched = true;
         this._isDrag = false;
     };
@@ -132,10 +132,10 @@ BO.io.SoftPot = (function () {
     SoftPot.prototype.onRelease = function () {
 
         var dispatchedFlick = false;
-        
+
         // discard unintentional touch / noise
         if (this._pressTimer.currentCount > DEBOUNCE_TIMEOUT / PRESS_TIMER_INTERVAL) {
-            // must meet minimum time requirement for flick  
+            // must meet minimum time requirement for flick
             if (this._flickTimer.running) {
                 if (this._flickDir > 0) {
                     this.dispatch(SoftPotEvent.FLICK_DOWN);
@@ -143,14 +143,14 @@ BO.io.SoftPot = (function () {
                     this.dispatch(SoftPotEvent.FLICK_UP);
                 }
                 dispatchedFlick = true;
-                
+
             }
-                        
+
             if (!dispatchedFlick) {
-                // Check for presses  
+                // Check for presses
                 if (this._pressTimer.running) {
-            
-                    // If less than tap timeout, then it is a tap 
+
+                    // If less than tap timeout, then it is a tap
                     if (!this._isDrag && this._pressTimer.currentCount <= this._tapTimeout / PRESS_TIMER_INTERVAL) {
                         this.dispatch(SoftPotEvent.TAP);
                     }
@@ -162,7 +162,7 @@ BO.io.SoftPot = (function () {
 
         this.resetForNext();
     };
-    
+
     /**
      * @private
      * @method onMove
@@ -170,45 +170,45 @@ BO.io.SoftPot = (function () {
      * strip
      */
     SoftPot.prototype.onMove = function (touchPoint) {
-    
+
         this._touchPoint = touchPoint;
         // Save current point
         var curMovePoint = touchPoint;
-        
-        // Flick handeling 
+
+        // Flick handeling
         this._flickDistance = Math.abs(curMovePoint - this._lastMovePoint);
-        
+
         if (!this._isDrag && this._flickDistance > this._minFlickMovement) {
             this._flickTimer.reset();
             this._flickTimer.start();
-            
+
             if (curMovePoint - this._lastMovePoint > 0) {
                 this._flickDir = 1;
             } else {
                 this._flickDir = -1;
             }
-            
+
             this._isDrag = false;
         }
-        
+
         var dragDistance = Math.abs(curMovePoint - this._lastMovePoint);
 
-        // Dragging handler 
+        // Dragging handler
         // Don't check when flick timer is running
         //console.log("min drag = " + this._minDragMovement);
         if ((dragDistance > this._minDragMovement) && (this._flickTimer.running === false)) {
             this._isDrag = true;
         }
-        
+
         if (this._isDrag) {
             this.dispatch(SoftPotEvent.DRAG);
             this._distanceFromPressed = curMovePoint - this._lastMovePoint;
         }
-                                
+
         this.debug("SoftPot: distance traveled flick is " + this._flickDistance);
         this.debug("SoftPot: distance traveled drag is " + dragDistance);
 
-        // Reuse for next 
+        // Reuse for next
         this._lastMovePoint = curMovePoint;
     };
 
@@ -248,7 +248,7 @@ BO.io.SoftPot = (function () {
 
     /**
      * For debugging.
-     * 
+     *
      * @private
      */
     SoftPot.prototype.debug = function (str) {
@@ -268,7 +268,7 @@ BO.io.SoftPot = (function () {
                 return this._touchPoint;
             }
         },
-        
+
         /**
          * The current distance from the press point.
          * @property distanceFromPressed
@@ -279,7 +279,7 @@ BO.io.SoftPot = (function () {
                 return this._distanceFromPressed;
             }
         },
-        
+
         /**
          * The minimum distance required to trigger a flick event. Change this
          * value to fine tune the flick gesture.
@@ -294,7 +294,7 @@ BO.io.SoftPot = (function () {
                 this._minFlickMovement = min;
             }
         },
-        
+
         /**
          * The minimum distance required to trigger a drag event. Change this
          * value to fine tune the drag response.
@@ -341,11 +341,11 @@ BO.io.SoftPot = (function () {
             }
         }
     });
-    
+
     // Document events
 
     /**
-     * The softPotPressed event is dispatched when pressure is applied to 
+     * The softPotPressed event is dispatched when pressure is applied to
      * the softpot surface.
      * @type BO.io.SoftPotEvent.PRESS
      * @event softPotPressed
@@ -353,21 +353,21 @@ BO.io.SoftPot = (function () {
      */
 
     /**
-     * The softPotReleased event is dispatched when pressure is released from 
+     * The softPotReleased event is dispatched when pressure is released from
      * the softpot surface.
      * @type BO.io.SoftPotEvent.RELEASE
      * @event softPotReleased
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
-     
+
     /**
-     * The softPotDrag event is dispatched when a drag is detected along 
+     * The softPotDrag event is dispatched when a drag is detected along
      * the length of the softpot sensor.
      * @type BO.io.SoftPotEvent.DRAG
      * @event softPotDrag
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
-     
+
     /**
      * The softPotFlickUp event is dispatched when a flick gesture is detected
      * in the direction of the sensor pins.
@@ -375,15 +375,15 @@ BO.io.SoftPot = (function () {
      * @event softPotFlickUp
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
-     
+
     /**
-     * The softPotFlickDown event is dispatched when a flick gesture is 
+     * The softPotFlickDown event is dispatched when a flick gesture is
      * detected in the direction away from the sensor pins.
      * @type BO.io.SoftPotEvent.FLICK_DOWN
      * @event softPotFlickDown
      * @param {BO.io.SoftPot} target A reference to the SoftPot object
      */
-     
+
     /**
      * The softPotTap event is dispatched when a press and release occurs
      * in in less than the duration specified by the tapTimeout property.

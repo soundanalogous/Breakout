@@ -47,7 +47,7 @@ $(document).ready(function() {
     var BILED = BO.io.BiColorLED;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;    
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -59,7 +59,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var biLED;
 
@@ -67,7 +67,7 @@ $(document).ready(function() {
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-    function onReady(event) {    
+    function onReady(event) {
         // Remove the listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
@@ -77,17 +77,17 @@ $(document).ready(function() {
         // Change COMMON_CATHODE to COMMON_ANODE according to your LED type
         // Parameters: board, redLEDPin, greenLEDPin, driveMode
         biLED = new BILED(
-            arduino, 
+            arduino,
             arduino.getDigitalPin(10),
             arduino.getDigitalPin(11),
             BILED.COMMON_CATHODE);
 
         // Listener for GUI events
         initGUIListeners();
-    }  
+    }
 
     function initGUIListeners() {
-        
+
         $('button#Green').on('click', function() {
             biLED.setColor(255, 0, 0);
         });
@@ -95,7 +95,7 @@ $(document).ready(function() {
         $('button#Red').on('click', function() {
             biLED.setColor(0, 255, 0);
         });
-        
+
         $('button#Off').on('click', function() {
             biLED.setColor(0, 0, 0);
         });

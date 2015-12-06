@@ -138,11 +138,11 @@ module.exports = function (grunt) {
             base: {
                 src: withoutIO,
                 dest: 'dist/' + name + '-base.min.js'
-            }, 
+            },
             core: {
                 src: coreFiles,
                 dest: 'dist/' + name + '-core.min.js'
-            }            
+            }
         },
 
         concat: {
@@ -157,7 +157,7 @@ module.exports = function (grunt) {
             base: {
                 src: withoutIO,
                 dest: 'dist/' + name + '-base.js'
-            }, 
+            },
             core: {
                 src: coreFiles,
                 dest: 'dist/' + name + '-core.js'
@@ -169,11 +169,24 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc'
             },
             target: {
-                src: ['src/**/*.js']
+                //src: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
+                src: ['Gruntfile.js', 'src/**/*.js', 'node_server/server.js']
             }
         },
 
-        /* 
+        jscs: {
+            src: [
+                'Gruntfile.js',
+                'src/**/*.js',
+                'test/**/*.js',
+                'node_server/server.js'
+            ],
+            options: {
+                config: ".jscsrc",
+            }
+        },
+
+        /*
          * Creates the distribution package that is available from
          * breakoutjs.com/downloads.
          */
@@ -226,11 +239,12 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-mocha-phantomjs');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
+    grunt.loadNpmTasks('grunt-jscs');
     grunt.loadNpmTasks('grunt-shell');
 
     grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'mocha_phantomjs', 'yuidoc']);
-    grunt.registerTask('compile', ['concat', 'uglify']);
-    grunt.registerTask('test', ['jshint', 'mocha_phantomjs']);
+    grunt.registerTask('test', ['jshint', 'jscs', 'mocha_phantomjs']);
+    grunt.registerTask('compile', ['test', 'concat', 'uglify']);
     grunt.registerTask('docs', ['yuidoc']);
     grunt.registerTask('package', ['default', 'shell']);
 };

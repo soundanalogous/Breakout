@@ -19,7 +19,7 @@ JSUTILS.Timer = (function () {
      *
      * @class Timer
      * @constructor
-     * @extends JSUTILS.EventDispatcher  
+     * @extends JSUTILS.EventDispatcher
      * @param {Number} delay The delay (ms) interval between ticks
      * @param {Number} repeatCount The number of number of ticks.
      * A value of zero will set the timer to repeat forever. Default = 0
@@ -44,7 +44,7 @@ JSUTILS.Timer = (function () {
     Object.defineProperties(Timer.prototype, {
         /**
          * The delay interval in milliseconds.
-         * 
+         *
          * @property delay
          * @type Number
          */
@@ -63,7 +63,7 @@ JSUTILS.Timer = (function () {
 
         /**
          * The repeat count in milliseconds.
-         * 
+         *
          * @property repeatCount
          * @type Number
          */
@@ -82,7 +82,7 @@ JSUTILS.Timer = (function () {
 
         /**
          * [read-only] Returns true if the timer is running.
-         * 
+         *
          * @property running
          * @type Number
          */
@@ -95,7 +95,7 @@ JSUTILS.Timer = (function () {
         /**
          * [read-only] Returns the current count (number of ticks since timer
          * started).
-         * 
+         *
          * @property currentCount
          * @type Number
          */
@@ -155,7 +155,7 @@ JSUTILS.Timer = (function () {
     // Document events
 
     /**
-     * The timerTick event is dispatched at the rate specified 
+     * The timerTick event is dispatched at the rate specified
      * by the delay interval.
      * @type JSUTILS.TimerEvent.TIMER
      * @event timerTick

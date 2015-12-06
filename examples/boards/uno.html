@@ -51,7 +51,7 @@ $(document).ready(function() {
     var Event = JSUTILS.Event;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -63,7 +63,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var uno = new IOBoard(host, 8887);
-    
+
     // Variables
     var frames = 0;
     var servoDir = true;
@@ -85,19 +85,19 @@ $(document).ready(function() {
 
         // Print the supported modes and resolution (in bits) for each pin
         //uno.reportCapabilities();
-            
+
         // Listen for incoming string messages
         uno.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
-        
+
         // Demonstrates using a pin object to set a LED value
         // Rather than using an LED object.
         // Set digital pin 10 to output
         uno.setDigitalPinMode(10, Pin.DOUT);
         // Get a reference to the pin
         blinkLED = uno.getDigitalPin(10);
-        blinkLED.value = Pin.LOW;   
+        blinkLED.value = Pin.LOW;
         setInterval(blink, 3000);
-        
+
         // Digital input using Button object:
         // Parameters: board, pin, mode
         var button01 = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
@@ -126,14 +126,14 @@ $(document).ready(function() {
         //button02.addEventListener(PinEvent.CHANGE, onButtonChange);
         button02.addEventListener(PinEvent.RISING_EDGE, onRisingEdge);
         button02.addEventListener(PinEvent.FALLING_EDGE, onFallingEdge);
-        
+
 
         // Create a new LED
         // Parameters: board, pin
         var fadeLED = new LED(uno, uno.getDigitalPin(11));
         // use a sine wave to fade the led on and off every 2 seconds
-        fadeLED.blink(2000, 0, Oscillator.SIN);             
-        
+        fadeLED.blink(2000, 0, Oscillator.SIN);
+
 
         // Servo example using Servo object:
         // Parameters: board, pin
@@ -148,10 +148,10 @@ $(document).ready(function() {
         // the IOBoard
         // Parameters: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
         rgbLED = new RGBLED(
-            uno, 
-            uno.getDigitalPin(3), 
-            uno.getDigitalPin(5), 
-            uno.getDigitalPin(6), 
+            uno,
+            uno.getDigitalPin(3),
+            uno.getDigitalPin(5),
+            uno.getDigitalPin(6),
             RGBLED.COMMON_CATHODE);
 
         rgbLED.setColor(128, 255, 0);
@@ -161,48 +161,48 @@ $(document).ready(function() {
         blinkM.stopScript();
         setInterval(randomColor, 4000);
 
-        // i2c module example:  HMC6352 digital compass module  
+        // i2c module example:  HMC6352 digital compass module
         compass = new CompassHMC6352(uno);
         compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
-        
+
         setTimeout(stopReading, 1000);
         setTimeout(startReading, 3000);
     }
-    
+
     // Test compass stopReading method
     function stopReading() {
         compass.stopReading();
     }
-    
+
     // Test compass startReading method
     function startReading() {
         compass.startReading();
-    }   
-    
+    }
+
     function onHeadingUpdate(evt) {
         $('#heading').html("heading: " + evt.target.heading);
-    }   
-    
+    }
+
     // Set a random color on the BlinkM module
     function randomColor() {
         var red = Math.floor(Math.random() * 255);
         var green = Math.floor(Math.random() * 255);
         var blue = Math.floor(Math.random() * 255);
-        
+
         // Fade RGB led to random color in .5 seconds
         rgbLED.fadeTo(red, green, blue, 500);
         blinkM.goToRGBColorNow([red, green, blue]);
         //blinkM.fadeToRGBColor([red, green, blue]);
-    }   
-    
+    }
+
     function onPotChange(event) {
         var pot = event.target;
-        var analogData = "pot value: " + pot.value.toFixed(2) + 
-            "\tpre filter: " + pot.preFilterValue.toFixed(2) + "\tmin = " + 
-            pot.minimum.toFixed(2) + "\tmax = " + 
+        var analogData = "pot value: " + pot.value.toFixed(2) +
+            "\tpre filter: " + pot.preFilterValue.toFixed(2) + "\tmin = " +
+            pot.minimum.toFixed(2) + "\tmax = " +
             pot.maximum.toFixed(2) + "\tavg = " + pot.average.toFixed(2);
-        
-        $('#potData').html(analogData); 
+
+        $('#potData').html(analogData);
     }
 
     function onButtonPress(event) {
@@ -214,10 +214,10 @@ $(document).ready(function() {
         var btn = event.target;
         $('#button1').html("button: pin = " + btn.pinNumber + " released");
     }
-    
+
     function onButtonChange(event) {
         var pin = event.target;
-        $('#button2').html("button: pin = " + pin.number + "\tvalue = " + pin.value);   
+        $('#button2').html("button: pin = " + pin.number + "\tvalue = " + pin.value);
     }
 
     function onRisingEdge(event) {
@@ -229,12 +229,12 @@ $(document).ready(function() {
         var pin = event.target;
         $('#button2').html("button: pin = " + pin.number + " falling edge");
     }
-            
+
     function onStringMessage(event) {
         console.log("string received: " + event.message);
     }
-    
-    // Rotate the servo head        
+
+    // Rotate the servo head
     function servoTest() {
         if (servoDir) {
             servo.angle = 0;
@@ -243,7 +243,7 @@ $(document).ready(function() {
         }
         servoDir = !servoDir;
     }
-    
+
     // Blink an led using only pin methods
     function blink() {
         frames++;
@@ -259,11 +259,11 @@ $(document).ready(function() {
 </head>
 <body>
     <h2>Arduino Uno Test Example</h2>
-  
+
     <div id="potData" class="text">pot value:</div>
     <div id="heading" class="text">heading:</div>
     <div id="button1" class="text">button:</div>
     <div id="button2" class="text">button:</div>
-  
+
 </body>
 </html>​

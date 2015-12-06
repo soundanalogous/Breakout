@@ -9,7 +9,7 @@
 
 </head>
 <body>
-  
+
 <canvas id='canvas1'></canvas>
 
 <!-- The following (socket.io.js) is only required when using the node_server -->
@@ -34,20 +34,20 @@ sketch.imageCache.add("images/pjs.png");
 // get a reference to the canvas
 var canvas = document.getElementById("canvas1");
 
-// get a reference to the Processing object, passing a ref to 
+// get a reference to the Processing object, passing a ref to
 // the canvas and sketch object
 var pjs = new Processing(canvas, sketch);
 
-// attach the sketch function to the canvas 
+// attach the sketch function to the canvas
 // write the code for your sketch within this function
 sketch.attachFunction = function(p) {
-  
-  // declare global variables for your sketch (just like you 
+
+  // declare global variables for your sketch (just like you
   // would at the top of a regular Processing sketch)
   var arduino,
       host,
       isReady = false;
-    
+
   // Override setup function
   p.setup = function() {
       p.size(200, 200);
@@ -55,7 +55,7 @@ sketch.attachFunction = function(p) {
       // write you setup code here:
 
 
-      
+
       // If you are not serving this file from the same computer
       // that the Arduino board is connected to, replace
       // window.location.hostname with the IP address or hostname
@@ -68,8 +68,8 @@ sketch.attachFunction = function(p) {
       arduino = new IOBoard(host, 8887);
       arduino.addEventListener(IOBoardEvent.READY, onReady);
   };
-  
-  // Override draw function  
+
+  // Override draw function
   p.draw = function() {
       p.background(150);
       // return if the IOBoard is not yet ready
@@ -91,23 +91,23 @@ sketch.attachFunction = function(p) {
 
   };
 
-  p.mouseReleased = function() {   
+  p.mouseReleased = function() {
       // handle mouse release events here:
 
   };
-  
+
   // setup the IOBoard once it is ready
   function onReady(event) {
       // remove the listener because it is no longer needed
       arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
       // initialize Pin and I/O objects here:
-      
+
 
       // we are now ready to communicate with the IOBoard
       isReady = true;
   }
-      
+
 };
 
 </script>

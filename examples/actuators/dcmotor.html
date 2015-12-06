@@ -62,7 +62,7 @@ $(document).ready(function() {
     var DCMotor = BO.io.DCMotor;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true; 
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -74,27 +74,27 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var motor;
     var speed;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        // Remove the event listener because it is no longer needed                 
+        // Remove the event listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Parameters: IOBoard, forwardPin, reversePin, pwmPin, 
+        // Parameters: IOBoard, forwardPin, reversePin, pwmPin,
         //             minVoltage, maxVoltage, supplyVoltage
-        motor = new DCMotor(arduino, 
+        motor = new DCMotor(arduino,
             arduino.getDigitalPin(10),
-            arduino.getDigitalPin(9), 
-            arduino.getDigitalPin(11), 
-            1,  
-            5, 
+            arduino.getDigitalPin(9),
+            arduino.getDigitalPin(11),
+            1,
+            5,
             5);
 
         // Set the initial motor speed
@@ -104,7 +104,7 @@ $(document).ready(function() {
         motor.despin(false);
 
         initGUIListeners();
-        
+
     }
 
     function initGUIListeners() {
@@ -119,7 +119,7 @@ $(document).ready(function() {
             $('#motorSpeed').text(speed * -1);
             $('#slider').slider({
                 value: speed * -1
-            });         
+            });
         });
 
         $('button#brake').on('click', function() {
@@ -141,7 +141,7 @@ $(document).ready(function() {
             $('#motorSpeed').text(speed);
             $('#slider').slider({
                 value: speed
-            });         
+            });
         });
 
         $('#speed').change(function(evt) {

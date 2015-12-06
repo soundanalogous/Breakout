@@ -62,7 +62,7 @@ The first step is to upload **AdvancedFirmata** to your Arduino (or Arduino-comp
 
 The next step is to run the Breakout Server application:
 
-1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded. 
+1. Make sure your I/O board is attached and the *AdvancedFirmata* sketch is uploaded.
 2. You'll find **Breakout Server** for your platform (mac, win or linux) in `Breakout/server/`. Unzip and open the folder for your platform and launch the application. **Mac OS X users** may need to [temporarily disable Gatekeeper](https://answers.uchicago.edu/page.php?id=25481) to launch the app for the first time. Note: Linux users may need to run ```sudo apt-get install librxtx-java``` or manually install the librxtxSerial.so driver before launching the BreakoutServer.jar application.
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
@@ -85,7 +85,7 @@ Breakout is only supported for Arduino 1.0 and higher [Download Arduino](http://
 
 You will need one of the following I/O boards:
 
-- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonardo, Due, etc). 
+- An Arduino version Diecimila or newer (Uno, Fio, Mega, Pro, LilyPad, Leonardo, Due, etc).
 - [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy 3.0, Teensy++ 1.0 or 2.0
 - Many Arduino clones / variants should also work.
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards.
@@ -116,21 +116,21 @@ Mobile Browsers (browser must support websockets):
 
 Contributing
 ---
-Contributions are welcome. If you have any ideas, suggestions for improvements, 
+Contributions are welcome. If you have any ideas, suggestions for improvements,
 examples to share, or anything else you'd like to contribute please get in touch.
 
 To contribute, fork Breakout and create a feature branch off the `dev` branch.
 Submit pull requests against the `dev` branch for bug fixes and small changes. For any
 larger changes, please first start a discussion by opening a new issue.
 
-See [Breakout/build/README.md](https://github.com/soundanalogous/Breakout/blob/master/build/README.md) for instructions on building Breakout. 
+See [Breakout/build/README.md](https://github.com/soundanalogous/Breakout/blob/master/build/README.md) for instructions on building Breakout.
 
 
 Credits
 ---
 Breakout is developed by [Jeff Hoefs](http://jeffhoefs.com).
 
-Breakout is based on the as3 library of [Funnel](http://funnel.cc). 
+Breakout is based on the as3 library of [Funnel](http://funnel.cc).
 The author is also a contributor to the Funnel as3 library.
 
 Logo and icon designed by Claire Lin.

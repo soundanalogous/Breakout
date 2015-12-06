@@ -18,7 +18,7 @@ BO.io.ButtonEvent = (function () {
      * @class ButtonEvent
      * @constructor
      * @extends JSUTILS.Event
-     * @param {String} type The event type   
+     * @param {String} type The event type
      */
     ButtonEvent = function (type) {
 

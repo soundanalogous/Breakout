@@ -21,17 +21,17 @@ BO.io.RGBLED = (function () {
 
     /**
      * Creates an interface to an RGB LED. This interface is for the
-     * type of RGB LED with 4 legs. One leg is connected to power or ground 
+     * type of RGB LED with 4 legs. One leg is connected to power or ground
      * (depending on the type of LED - common anode or common cathode) and the
-     * other 3 legs are connected to PWM pins on the I/O board. See 
-     * [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See 
+     * other 3 legs are connected to PWM pins on the I/O board. See
+     * [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See
      * [Breakout/examples/actuators/rgb\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.
      *
      * <p>The RGB pins of the RGB LED must be connected to PWM pins on the
      * IOBoard.</p>
      *
-     * <p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is 
-     * common anode or common cathode by reading the datasheet. To wire a 
+     * <p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is
+     * common anode or common cathode by reading the datasheet. To wire a
      * common cathode RGB LED, connect the cathode to ground and the 3 anode
      * pins to the IOBoard PWM pins via 330 ohm resistors. For a common anode
      * LED, the anode is connected to power and the 3 cathode pins are connected
@@ -46,14 +46,14 @@ BO.io.RGBLED = (function () {
      * @param {Pin} greenLEDPin A reference to the IOBoard Pin the green LED
      * pin is connected to.
      * @param {Pin} blueLEDPin A reference to the IOBoard Pin the blue LED pin
-     * is connected to.  
+     * is connected to.
      * @param {Number} driveMode The drive mode of the RGBLED. Must be set to
      * RGBLED.COMMON_ANODE or RGBLED.COMMON_CATHODE. RGBLED.COMMON_ANODE is
      * default.
      */
     RGBLED = function (board, redLEDPin, greenLEDPin, blueLEDPin, driveMode) {
         "use strict";
-        
+
         this.name = "RGBLED";
 
         if (driveMode === undefined) {
@@ -120,7 +120,7 @@ BO.io.RGBLED = (function () {
          * @param {Number} red The red value to fade to (0 - 255)
          * @param {Number} green The green value to fade to (0 - 255)
          * @param {Number} blue The blue value to fade to (0 - 255)
-         * @param {Number} time The time of the fade (in milliseconds)       
+         * @param {Number} time The time of the fade (in milliseconds)
          */
         fadeTo: function (red, green, blue, time) {
             red = red / 255;

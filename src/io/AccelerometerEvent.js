@@ -17,7 +17,7 @@ BO.io.AccelerometerEvent = (function () {
      * @class AccelerometerEvent
      * @constructor
      * @extends JSUTILS.Event
-     * @param {String} type The event type   
+     * @param {String} type The event type
      */
     AccelerometerEvent = function (type) {
 
@@ -28,11 +28,11 @@ BO.io.AccelerometerEvent = (function () {
     };
 
     /**
-     * @property AccelerometerEvent.UPDATE 
+     * @property AccelerometerEvent.UPDATE
      * @static
      */
     AccelerometerEvent.UPDATE = "update";
-    
+
 
     AccelerometerEvent.prototype = JSUTILS.inherit(Event.prototype);
     AccelerometerEvent.prototype.constructor = AccelerometerEvent;

@@ -18,8 +18,8 @@ JSUTILS.SignalScope = (function () {
      * A simple 2 channel scope to view analog input data.
      *
      * @class SignalScope
-     * @constructor 
-     * @param {String} canvasId The id of the canvas element to 
+     * @constructor
+     * @param {String} canvasId The id of the canvas element to
      * use to draw the signal.
      * @param {Number} width The width of the canvas element.
      * @param {Number} height The height of the canvas element.

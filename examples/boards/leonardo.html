@@ -43,10 +43,10 @@ $(document).ready(function() {
     var ButtonEvent = BO.io.ButtonEvent;
     var Servo = BO.io.Servo;
     var LED = BO.io.LED;
-    var Oscillator = BO.generators.Oscillator;  
+    var Oscillator = BO.generators.Oscillator;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -58,7 +58,7 @@ $(document).ready(function() {
         host = "localhost";
     }
     var leo = new IOBoard(host, 8887);
-    
+
     // Variables
     var servoDir = true;
     var blinkM;
@@ -66,16 +66,16 @@ $(document).ready(function() {
     var servo;
 
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     leo.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
         // Log the board capabilities to the browser console
         leo.reportCapabilities();
-        
+
         // Remove the event listener because it is no longer needed
         leo.removeEventListener(IOBoardEvent.READY, onReady);
-                    
+
         // Listen for incoming string messages
         leo.addEventListener(IOBoardEvent.STRING_MESSAGE, onStringMessage);
 
@@ -83,13 +83,13 @@ $(document).ready(function() {
         // With Leonardo, you can actually use pins 0 and 1 for digital I/O.
         var blinkLED = new LED(leo, leo.getDigitalPin(1));
         blinkLED.blink(1000, 0);
-            
+
         // get a reference to the pin and listen for Change event
         var button01 = new Button(leo, leo.getDigitalPin(0), Button.PULL_DOWN);
         button01.addEventListener(ButtonEvent.PRESS, onButtonPress);
         button01.addEventListener(ButtonEvent.RELEASE, onButtonRelease);
-        
-        // enable reporting for an analog pin 
+
+        // enable reporting for an analog pin
         // analog pin 6 is also digital pin 4
         leo.enableAnalogPin(6);
         var pot = leo.getAnalogPin(6);
@@ -98,12 +98,12 @@ $(document).ready(function() {
         pot.addEventListener(PinEvent.CHANGE, onPotChange);
         // disable reporting for an analog pin
         // leo.disableAnalogPin(0);
-        
+
         // set analog pin to digital input
-        // analog pins A0-A5 are digital pins 18-23. You can use the digial pin 
-        // numbers if you know them, or use the analogToDigital method to get 
-        // the appropriate digital pin number for the analog channel. When you 
-        // press the button, it will report the pin number 20, because analog 
+        // analog pins A0-A5 are digital pins 18-23. You can use the digial pin
+        // numbers if you know them, or use the analogToDigital method to get
+        // the appropriate digital pin number for the analog channel. When you
+        // press the button, it will report the pin number 20, because analog
         // pin 2 is digital pin 20.
         leo.setDigitalPinMode(leo.analogToDigital(2), Pin.DIN);
         var button02 = leo.getDigitalPin(leo.analogToDigital(2));
@@ -111,54 +111,54 @@ $(document).ready(function() {
 
         // fade the LED on and off over a 2 second duration
         var fadeLED = new LED(leo, leo.getDigitalPin(13));
-        fadeLED.blink(2000, 0, Oscillator.SIN);     
+        fadeLED.blink(2000, 0, Oscillator.SIN);
 
         servo = new Servo(leo, leo.getDigitalPin(9));
         // rotate the servo head ever 5 seconds
         setInterval(servoTest, 5000);
-        
+
         blinkM = new BlinkM(leo);
         blinkM.stopScript();
         setInterval(randomColor, 2000);
-        
+
         compass = new CompassHMC6352(leo);
         compass.addEventListener(CompassEvent.UPDATE, onHeadingUpdate);
-        
+
         // test ability to start and stop reading an i2c sensor
         setTimeout(stopReading, 1000);
         setTimeout(startReading, 3000);
-                
+
     }
-    
+
     function stopReading() {
         compass.stopReading();
     }
-    
+
     function startReading() {
         compass.startReading();
-    }   
-    
+    }
+
     function onHeadingUpdate(evt) {
         //console.log("heading = " + evt.target.heading);
         $('#heading').html("heading: " + evt.target.heading);
-    }   
-    
+    }
+
     function randomColor() {
         var red = Math.floor(Math.random() * 255);
         var green = Math.floor(Math.random() * 255);
         var blue = Math.floor(Math.random() * 255);
-        
+
         blinkM.goToRGBColorNow([red, green, blue]);
         //blinkM.fadeToRGBColor([red, green, blue]);
-    }   
-    
+    }
+
     function onPotChange(event) {
         var pin = event.target;
-        var analogData = "pot value: " + pin.value.toFixed(3) + 
-            "\tmin = " + pin.minimum.toFixed(3) + "\tmax = " + 
+        var analogData = "pot value: " + pin.value.toFixed(3) +
+            "\tmin = " + pin.minimum.toFixed(3) + "\tmax = " +
             pin.maximum.toFixed(3) + "\tavg = " + pin.average.toFixed(3)
-        
-        $('#potData').html(analogData); 
+
+        $('#potData').html(analogData);
     }
 
     function onButtonPress(event) {
@@ -170,16 +170,16 @@ $(document).ready(function() {
         var btn = event.target;
         $('#button').html("button: pin = " + btn.pinNumber + " released");
     }
-    
+
     function onButtonChange(event) {
         var pin = event.target;
-        $('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);    
-    }   
-        
+        $('#button').html("button: pin = " + pin.number + "\tvalue = " + pin.value);
+    }
+
     function onStringMessage(event) {
         console.log("string received: " + event.message);
     }
-    
+
     function servoTest() {
         if (servoDir) {
             servo.angle = 0;
@@ -188,7 +188,7 @@ $(document).ready(function() {
         }
         servoDir = !servoDir;
     }
-            
+
 });
 
 </script>
@@ -196,10 +196,10 @@ $(document).ready(function() {
 </head>
 <body>
     <h2>Arduino Leonardo Test Example</h2>
-  
+
     <div id="potData" class="text">pot value:</div>
     <div id="heading" class="text">heading:</div>
     <div id="button" class="text">button:</div>
-  
+
 </body>
 </html>​

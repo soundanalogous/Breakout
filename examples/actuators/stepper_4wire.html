@@ -34,10 +34,10 @@ button {
     font-size: 16px;
     width: 280px;
     color: #00AEFF;
-    
+
 }
 label {
-    color: #666;    
+    color: #666;
     font-size: 14px;
     margin-bottom: 10px;
 }
@@ -97,7 +97,7 @@ $(document).ready(function() {
     var Event = JSUTILS.Event;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -109,20 +109,20 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var stepper;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
+
         // Remove the listener because it is no longer needed
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        configureStepper();     
+        configureStepper();
     }
 
     function configureStepper() {
@@ -132,18 +132,18 @@ $(document).ready(function() {
             if (this.value >= 10 && this.value <= 1000) {
                 stepsPerRev = this.value;
             }
-        }); 
+        });
 
         // When the configure button is clicked, create a new instance
         // of a Stepper motor object.
         $('button#configure').on('click', function () {
 
-        // Parameters: board, motor interface, num steps per rev, 
+        // Parameters: board, motor interface, num steps per rev,
         // motor pin1, motor pin2, motor pin3, motor pin4
-        stepper = new Stepper(arduino, 
-                            Stepper.FOUR_WIRE, 
-                            stepsPerRev, 
-                            arduino.getDigitalPin(2), 
+        stepper = new Stepper(arduino,
+                            Stepper.FOUR_WIRE,
+                            stepsPerRev,
+                            arduino.getDigitalPin(2),
                             arduino.getDigitalPin(3),
                             arduino.getDigitalPin(4),
                             arduino.getDigitalPin(5));
@@ -154,7 +154,7 @@ $(document).ready(function() {
             $('.control').css('display', 'block');
 
             initGUIListeners();
-        });     
+        });
     }
 
     function initGUIListeners() {
@@ -174,7 +174,7 @@ $(document).ready(function() {
                 // set the number of steps and speed (accel and decel are optional)
                 stepper.step(numSteps, speed);
             }
-            $('.status').text("Stepper " + stepper.id + " sequence running");   
+            $('.status').text("Stepper " + stepper.id + " sequence running");
         });
 
         $('#numSteps').change(function (evt) {
@@ -207,7 +207,7 @@ $(document).ready(function() {
                         value: deceleration
                     });
                     $('#decel').text(deceleration > 0 ? deceleration: "none");
-                }               
+                }
             },
             value: acceleration // set initial acceleration
         });
@@ -236,16 +236,16 @@ $(document).ready(function() {
             } else {
                 link = false;
             }
-        });         
+        });
 
     }
 
     function onStepperComplete(evt) {
         // Each stepper instance is automatically assigned an id
-        // when it is created, starting with 0. You can get the 
+        // when it is created, starting with 0. You can get the
         // id like this but it cannot be set.
         $('.status').text("Stepper " + evt.target.id + " sequence complete");
-    }   
+    }
 
 });
 
@@ -260,17 +260,17 @@ $(document).ready(function() {
             <section>
             <label for="stepsPerRev">Number of Steps per Revolution: </label>
             <input id="stepsPerRev" type="number" value="200" min="50" max="1000" step="10" />
-            </section>  
+            </section>
 
             <section>
             <button type="button" id="configure">Configure</button>
-            </section>      
+            </section>
         </div>
 
         <section class="note">
             <p>In order for this example to work correctly you must make sure the number of steps per revolution is set for your stepper motor. This is the number of steps it takes for the motor to make one revolution. You can get this value from you motor's datasheet (if the number is not specified, divide the step angle by 360 degrees to get the number of steps per rev). This value usually ranges from 100 to 400 depending on the motor. The default value for this example is 200 stepsPerRev.</p>
         </section>
-    </section>      
+    </section>
 
     <section class="control">
         <div class="container">
@@ -311,7 +311,7 @@ $(document).ready(function() {
             <p>Depending on your motor, you may not be able to drive the stepper at speeds higher than 25 rad/sec (240 RPM).</p>
 
             <p>To remove acceleration and deceleration, move the acceleration and deceleration sliders all the way to the left. When using accel and decel you must set both values.</p>
-        </section>      
+        </section>
 
     </section>
 

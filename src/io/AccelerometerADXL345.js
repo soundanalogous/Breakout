@@ -30,7 +30,7 @@ BO.io.AccelerometerADXL345 = (function () {
 
     /**
      * Creates an interface to an ADXL345 3-axis accelerometer. Use the
-     * accelerometer to read the acceleration along the x, y, and z axis of an 
+     * accelerometer to read the acceleration along the x, y, and z axis of an
      * object it is attached to. You can also obtain the pitch and roll. See the
      * example in [Breakout/examples/sensors/adxl345.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/adxl345.html).
      *
@@ -38,8 +38,8 @@ BO.io.AccelerometerADXL345 = (function () {
      * @constructor
      * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
-     * @param {Number} range The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`, 
-     * `RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.    
+     * @param {Number} range The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`,
+     * `RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.
      * @param {Number} address The i2c address of the accelerometer (default is 0x53)
      */
     AccelerometerADXL345 = function (board, range, address) {
@@ -50,7 +50,7 @@ BO.io.AccelerometerADXL345 = (function () {
         this.name = "AccelerometerADXL345";
 
         this._dynamicRange = range || AccelerometerADXL345.RANGE_2G;
-        
+
         this._sensitivity = {
             x: AccelerometerADXL345.DEFAULT_SENSITIVITY,
             y: AccelerometerADXL345.DEFAULT_SENSITIVITY,
@@ -131,7 +131,7 @@ BO.io.AccelerometerADXL345 = (function () {
         },
 
         /**
-         * [read-only] The pitch value in degrees 
+         * [read-only] The pitch value in degrees
          * @property pitch
          * @type Number
          */
@@ -145,7 +145,7 @@ BO.io.AccelerometerADXL345 = (function () {
         },
 
         /**
-         * [read-only] The roll value in degrees 
+         * [read-only] The roll value in degrees
          * @property roll
          * @type Number
          */
@@ -158,7 +158,7 @@ BO.io.AccelerometerADXL345 = (function () {
             }
         },
 
-        // Properties specific to this I2C Accelerometers:         
+        // Properties specific to this I2C Accelerometers:
 
         /**
          * [read-only] The raw value of the x axis
@@ -205,7 +205,7 @@ BO.io.AccelerometerADXL345 = (function () {
             }
         },
 
-        // Properties specific to this Accelerometer type:         
+        // Properties specific to this Accelerometer type:
 
         /**
          * The sensitivity value for the x axis (default value = 0.0390625).
@@ -228,7 +228,7 @@ BO.io.AccelerometerADXL345 = (function () {
          */
         sensitivityY: {
             get: function () {
-                
+
             },
             set: function (val) {
                 this._sensitivity.y = val;
@@ -242,7 +242,7 @@ BO.io.AccelerometerADXL345 = (function () {
          */
         sensitivityZ: {
             get: function () {
-                
+
             },
             set: function (val) {
                 this._sensitivity.z = val;
@@ -255,9 +255,9 @@ BO.io.AccelerometerADXL345 = (function () {
      * @method setRangeAndFullRes
      */
     AccelerometerADXL345.prototype.setRangeAndFullRes = function (range) {
-            
+
         var setting;
-        
+
         switch (range) {
         case 2:
             setting = 0x00;
@@ -275,12 +275,12 @@ BO.io.AccelerometerADXL345 = (function () {
             setting = 0x00;
             break;
         }
-        
+
         // set full scale bit (3) and range bits (0 - 1)
         setting |= (0x08 & 0xEC);
         this.sendI2CRequest([I2CBase.WRITE, this._address, DATA_FORMAT, setting]);
     };
-    
+
     /**
      * @private
      * @method handleI2C
@@ -301,7 +301,7 @@ BO.io.AccelerometerADXL345 = (function () {
             break;
         }
     };
-    
+
     /**
      * Start continuous reading of the sensor.
      * @method startReading
@@ -312,7 +312,7 @@ BO.io.AccelerometerADXL345 = (function () {
             this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, ALL_AXIS, NUM_BYTES]);
         }
     };
-    
+
     /**
      * Stop continuous reading of the sensor.
      * @method stopReading
@@ -331,12 +331,12 @@ BO.io.AccelerometerADXL345 = (function () {
         this._offset.x = xVal;
         this._offset.y = yVal;
         this._offset.z = zVal;
-        
+
         this.sendI2CRequest([I2CBase.WRITE, this.address, OFSX, xVal]);
         this.sendI2CRequest([I2CBase.WRITE, this.address, OFSY, yVal]);
         this.sendI2CRequest([I2CBase.WRITE, this.address, OFSZ, zVal]);
     };
-    
+
     /**
      * Get the value of the x, y, and z axis offset.
      * @method getAxisOffset
@@ -346,14 +346,14 @@ BO.io.AccelerometerADXL345 = (function () {
         this.sendI2CRequest([I2CBase.READ, this.address, OFSX, 1]);
         this.sendI2CRequest([I2CBase.READ, this.address, OFSY, 1]);
         this.sendI2CRequest([I2CBase.READ, this.address, OFSZ, 1]);
-        
+
         // return the locally stored values because it is not possible
         // without a more elaborate design to get i2c read values
         // in a single call
         return this._offset;
     };
 
-    /** 
+    /**
      * Sends read request to accelerometer and updates accelerometer values.
      * @method update
      */
@@ -373,18 +373,18 @@ BO.io.AccelerometerADXL345 = (function () {
 
         // standby mode
         this.sendI2CRequest([I2CBase.WRITE, this.address, POWER_CTL, 0]);
-        
+
         // set measure bit
         this.setRegisterBit(POWER_CTL, 3, true);
     };
-    
+
     /**
      * @private
      * @method setRegisterBit
      */
     AccelerometerADXL345.prototype.setRegisterBit = function (regAddress, bitPos, state) {
         var value;
-        
+
         if (state) {
             value |= (1 << bitPos);
         } else {
@@ -399,7 +399,7 @@ BO.io.AccelerometerADXL345 = (function () {
      * @method readAccel
      */
     AccelerometerADXL345.prototype.readAccel = function (data) {
-        
+
         var x_val,
             y_val,
             z_val;
@@ -407,11 +407,11 @@ BO.io.AccelerometerADXL345 = (function () {
         if (data.length != NUM_BYTES + 1) {
             throw new Error("Incorrect number of bytes returned");
         }
-        
+
         x_val = (data[2] << 8) | (data[1]);
         y_val = (data[4] << 8) | (data[3]);
         z_val = (data[6] << 8) | (data[5]);
-        
+
         if (x_val >> 15) {
             this._rawX = ((x_val ^ 0xFFFF) + 1) * -1;
         } else {
@@ -431,10 +431,10 @@ BO.io.AccelerometerADXL345 = (function () {
         this._x = this._rawX * this._sensitivity.x;
         this._y = this._rawY * this._sensitivity.y;
         this._z = this._rawZ * this._sensitivity.z;
-        
+
         this.dispatchEvent(new AccelerometerEvent(AccelerometerEvent.UPDATE));
     };
-    
+
     /**
      * for debugging
      * @private
@@ -444,40 +444,40 @@ BO.io.AccelerometerADXL345 = (function () {
             console.log(str);
         }
     };
-        
+
     // public static constants
-    
+
     /**
-     * @property AccelerometerADXL345.RANGE_2G 
+     * @property AccelerometerADXL345.RANGE_2G
      * @static
      */
     AccelerometerADXL345.RANGE_2G = 2;
     /**
-     * @property AccelerometerADXL345.RANGE_4G 
+     * @property AccelerometerADXL345.RANGE_4G
      * @static
      */
     AccelerometerADXL345.RANGE_4G = 4;
     /**
-     * @property AccelerometerADXL345.RANGE_8G 
+     * @property AccelerometerADXL345.RANGE_8G
      * @static
      */
     AccelerometerADXL345.RANGE_8G = 8;
     /**
-     * @property AccelerometerADXL345.RANGE_16G 
+     * @property AccelerometerADXL345.RANGE_16G
      * @static
      */
     AccelerometerADXL345.RANGE_16G = 16;
     /**
-     * @property AccelerometerADXL345.DEVICE_ID 
+     * @property AccelerometerADXL345.DEVICE_ID
      * @static
      */
     AccelerometerADXL345.DEVICE_ID = 0x53;
     /**
-     * @property AccelerometerADXL345.DEFAULT_SENSITIVITY 
+     * @property AccelerometerADXL345.DEFAULT_SENSITIVITY
      * @static
      */
     AccelerometerADXL345.DEFAULT_SENSITIVITY = 0.00390625;
-    
+
     // document events
 
     /**

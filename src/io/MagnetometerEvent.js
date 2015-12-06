@@ -18,7 +18,7 @@ BO.io.MagnetometerEvent = (function () {
      * @class MagnetometerEvent
      * @constructor
      * @extends JSUTILS.Event
-     * @param {String} type The event type   
+     * @param {String} type The event type
      */
     MagnetometerEvent = function (type) {
 
@@ -33,7 +33,7 @@ BO.io.MagnetometerEvent = (function () {
      * @static
      */
     MagnetometerEvent.UPDATE = "update";
-    
+
 
     MagnetometerEvent.prototype = JSUTILS.inherit(Event.prototype);
     MagnetometerEvent.prototype.constructor = MagnetometerEvent;

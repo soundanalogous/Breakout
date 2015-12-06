@@ -43,10 +43,10 @@ p.scopeLabel {
 }
 
 .clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 .clear {display: inline-block;}
@@ -67,7 +67,7 @@ $(document).ready(function() {
 
     // dependencies
     // declare these variables so you don't have
-    // to type the full namespace   
+    // to type the full namespace
     var IOBoard = BO.IOBoard;
     var Pin = BO.Pin;
     var IOBoardEvent = BO.IOBoardEvent;
@@ -75,7 +75,7 @@ $(document).ready(function() {
     var SignalScope = JSUTILS.SignalScope;
 
     // set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -87,23 +87,23 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     var fadeLED;
     var oscSquare;
     var currentOSC;
     var currentWave = Oscillator.SQUARE;
     var freq;
 
-    var scope = new SignalScope("scope1", 200, 100, 0, 1);  
-    
+    var scope = new SignalScope("scope1", 200, 100, 0, 1);
+
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-                    
+
         arduino.removeEventListener(IOBoardEvent.READY, onReady);
-        
+
         freq = 1.0; // Hz
-    
+
         // set a pin to PWM
         arduino.setDigitalPinMode(11, Pin.PWM);
         // get a reference to the Pin object
@@ -131,8 +131,8 @@ $(document).ready(function() {
 
         initGUIListeners();
 
-        animate();      
-                
+        animate();
+
     }
 
     function initGUIListeners() {
@@ -158,7 +158,7 @@ $(document).ready(function() {
                     break;
                 case 'linear':
                     currentWave = Oscillator.LINEAR;
-                    break;          
+                    break;
             }
             addGenerator();
         });
@@ -176,14 +176,14 @@ $(document).ready(function() {
         fadeLED.addGenerator(currentOSC);
         currentOSC.start();
     }
-    
+
     function animate() {
 
         scope.update(fadeLED.value);
 
         requestAnimFrame(animate);
-    }   
-            
+    }
+
 });
 
 </script>
@@ -208,11 +208,11 @@ $(document).ready(function() {
         </select>
 
         <div class="scopeContainer clear">
-            <canvas id="scope1" class="scope" width="200" height="100"></canvas>            
+            <canvas id="scope1" class="scope" width="200" height="100"></canvas>
         </div>
     </div>
 
-    <label for="freq">Set frequency (0.1 - 33): </label><input id="freq" type="number" value="1.0" min="0.1" max="33.0" step="0.1" />   
-    
+    <label for="freq">Set frequency (0.1 - 33): </label><input id="freq" type="number" value="1.0" min="0.1" max="33.0" step="0.1" />
+
 </body>
 </html>​

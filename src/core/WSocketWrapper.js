@@ -72,20 +72,20 @@ BO.WSocketWrapper = (function () {
 
                     // set this for compatibility with native WebSocket
                     self._readyState = READY_STATE.OPEN;
-                    
+
                     self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
                     /** @private */
                     self._socket.on('message', function (msg) {
                         self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg});
                     });
                 });
-                
+
             } catch (exception) {
                 console.log("Error " + exception);
             }
 
         } else {
-            
+
             try {
 
                 if ("MozWebSocket" in window) {
@@ -118,11 +118,11 @@ BO.WSocketWrapper = (function () {
                     };
 
                 };
-                
+
             } catch (exception) {
                 console.log("Error " + exception);
             }
-                
+
         }
 
     };
@@ -180,14 +180,14 @@ BO.WSocketWrapper = (function () {
      * @type BO.WebsocketEvent.MESSAGE
      * @event webSocketMessage
      * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
-     * @param {String} message The websocket data    
+     * @param {String} message The websocket data
      */
 
     /**
      * The webSocketClosed event is dispatched the websocket connection is closed.
      * @type BO.WebsocketEvent.CLOSE
      * @event webSocketClosed
-     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
+     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
      */
 
     return WSocketWrapper;

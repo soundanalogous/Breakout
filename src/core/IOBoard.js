@@ -777,7 +777,7 @@ BO.IOBoard = (function () {
         sendAnalogData: function (pin, value) {
             var pwmResolution = this.getDigitalPin(pin).analogWriteResolution;
             value *= pwmResolution;
-            value = (value < 0) ? 0: value;
+            value = (value < 0) ? 0 : value;
             value = (value > pwmResolution) ? pwmResolution : value;
 
             if (pin > 15 || value > Math.pow(2, 14)) {

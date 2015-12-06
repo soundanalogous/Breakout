@@ -45,12 +45,12 @@ $(document).ready(function() {
 
     // dependencies
     // declare these variables so you don't have
-    // to type the full namespace   
+    // to type the full namespace
     var Pin = BO.Pin;
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
     var GyroITG3200 = BO.io.GyroITG3200;
-    var GyroEvent = BO.io.GyroEvent;    
+    var GyroEvent = BO.io.GyroEvent;
 
     // set to true to print debug messages to console
     BO.enableDebugging = true;
@@ -69,17 +69,17 @@ $(document).ready(function() {
     }
     var fio = new IOBoard(host, 8887);
     var gyro;
-    
+
     fio.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
 
-        fio.removeEventListener(IOBoardEvent.READY, onReady);   
-        
+        fio.removeEventListener(IOBoardEvent.READY, onReady);
+
         // params: IOBoard, autoStart, i2cAddress
         //gyro = new GyroITG3200(fio, false, GyroITG3200.ID_AD0_VDD);
         gyro = new GyroITG3200(fio);
-                    
+
         // calibration
         // adjust the values until the x, y, and z values
         // of the gyro are approximately 0 when the gyro is not moving
@@ -100,28 +100,28 @@ $(document).ready(function() {
 
         gyro.startReading();
     }
-    
+
     function onGyroUpdate(event) {
         var gyro = event.target;
-        
+
         $('#xVal').html("x = " + gyro.x.toFixed(3));
         $('#yVal').html("y = " + gyro.y.toFixed(3));
         $('#zVal').html("z = " + gyro.z.toFixed(3));
     }
-            
+
 });
 </script>
 
 </head>
 <body>
-  
+
     <h2>ITG3200 3-axis Gyro</h2>
-  
+
     <div class="container">
         <div id="xVal" class="text">x =</div>
         <div id="yVal" class="text">y =</div>
         <div id="zVal" class="text">z =</div>
     </div>
-  
+
 </body>
 </html>​

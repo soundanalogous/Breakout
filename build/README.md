@@ -26,7 +26,7 @@ the required Node modules. This will install everything you need to build Breako
     $ npm install
     ```
 
-*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*    
+*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*
 
 Building a new release
 ---
@@ -70,7 +70,7 @@ $ grunt jshint
 Concatenate and minify
 ---
 If you make changes to any files in the Breakout src directory, you will need
-to concatenate and minify (uglify) the src files. Run the `compile` command to 
+to concatenate and minify (uglify) the src files. Run the `compile` command to
 concatenate and minify the files.
 
 ```bash

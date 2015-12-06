@@ -53,14 +53,14 @@ $(document).ready(function() {
 
     // dependencies
     // declare these variables so you don't have
-    // to type the full namespace   
+    // to type the full namespace
     var IOBoard = BO.IOBoard;
     var IOBoardEvent = BO.IOBoardEvent;
     var AnalogAccelerometer = BO.io.AnalogAccelerometer;
     var AccelerometerEvent = BO.io.AccelerometerEvent;
 
     // set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -74,48 +74,48 @@ $(document).ready(function() {
     var arduino = new IOBoard(host, 8887);
     var RANGE_GS = 3; // +-3 Gs for ADXL335
     var SUPPLY_V = 3.3; // supply voltage of sensor
-    
+
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-                    
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);       
 
-    
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+
         // params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
         var accelerometer = new AnalogAccelerometer(
-                                arduino, 
-                                arduino.getAnalogPin(0), 
-                                arduino.getAnalogPin(1), 
+                                arduino,
+                                arduino.getAnalogPin(0),
+                                arduino.getAnalogPin(1),
                                 arduino.getAnalogPin(2),
                                 RANGE_GS,
                                 false);
-        
+
         accelerometer.addEventListener(AccelerometerEvent.UPDATE, showUncalibratedValues);
     }
 
     function showUncalibratedValues(event) {
         var accel = event.target;
 
-        $('#xVal').html("x min = " + (accel.xPin.minimum * SUPPLY_V).toFixed(3) + 
+        $('#xVal').html("x min = " + (accel.xPin.minimum * SUPPLY_V).toFixed(3) +
                 " \tx max = " + (accel.xPin.maximum * SUPPLY_V).toFixed(3));
 
-        $('#yVal').html("y min = " + (accel.yPin.minimum * SUPPLY_V).toFixed(3) + 
+        $('#yVal').html("y min = " + (accel.yPin.minimum * SUPPLY_V).toFixed(3) +
                 " \ty max = " + (accel.yPin.maximum * SUPPLY_V).toFixed(3));
 
-        $('#zVal').html("z min = " + (accel.zPin.minimum * SUPPLY_V).toFixed(3) + 
+        $('#zVal').html("z min = " + (accel.zPin.minimum * SUPPLY_V).toFixed(3) +
                 " \tz max = " + (accel.zPin.maximum * SUPPLY_V).toFixed(3));
     }
-            
+
 });
 </script>
 
 </head>
 <body>
-  
+
     <div id="xVal" class="text">x =</div>
     <div id="yVal" class="text">y =</div>
     <div id="zVal" class="text">z =</div>
-  
+
 </body>
 </html>​

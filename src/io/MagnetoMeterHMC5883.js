@@ -34,11 +34,11 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @extends BO.I2CBase
      * @param {IOBoard} board The IOBoard instance
      * @param {Number} address The i2c address of the compass module
-     * @param {Number} numSamples The number of samples averaged per 
+     * @param {Number} numSamples The number of samples averaged per
      * measurement output. Options are: `MagnetometerHMC5883.SAMPLES_1`,
      * `MagnetometerHMC5883.SAMPLES_2`, `MagnetometerHMC5883.SAMPLES_4`
      * `MagnetometerHMC5883.SAMPLES_8` (default = `MagnetometerHMC5883.SAMPLES_1`)
-     * @param {Number} outputRate The data output rate in Hz 
+     * @param {Number} outputRate The data output rate in Hz
      * (default = `MagnetometerHMC5883.HZ_30`)
      */
     MagnetometerHMC5883 = function (board, address, numSamples, outputRate) {
@@ -59,15 +59,15 @@ BO.io.MagnetometerHMC5883 = (function () {
         this._debugMode = BO.enableDebugging;
 
         this.name = "MagnetometerHMC5883";
-        
+
         var measurement = 0x00;
         var CRAVal = (numSamples << 5) | (outputRate << 2)  | measurement;
-            
+
         // 1 sample, continuous measurement rate 30 Hz, normal measurement config
         this.sendI2CRequest([I2CBase.WRITE, this.address, CRA, CRAVal]);
         // startup in continuous measurement mode
         this.sendI2CRequest([I2CBase.WRITE, this.address, MODE, 0x00]);
-        
+
         this.startReading();
 
     };
@@ -120,7 +120,7 @@ BO.io.MagnetometerHMC5883 = (function () {
             }
         }
     });
-    
+
     /**
      * @private
      * @method handleI2C
@@ -154,7 +154,7 @@ BO.io.MagnetometerHMC5883 = (function () {
             }
 
             // a value of -4096 indicates an ADC overflow or underflow
-        
+
             this.dispatchEvent(new MagnetometerEvent(MagnetometerEvent.UPDATE));
         } else {
             console.log("Warning: MagnetometerHMC5883 received data from unknown register");
@@ -184,7 +184,7 @@ BO.io.MagnetometerHMC5883 = (function () {
         // heading = Math.atan2(y, x);
         // if (heading < 0) heading += 2*Math.PI;
         // if (heading > 2*Math.PI) heading -= 2*Math.PI;
-        // return heading * RAD_TO_DEG; 
+        // return heading * RAD_TO_DEG;
 
         return heading;
     };
@@ -217,7 +217,7 @@ BO.io.MagnetometerHMC5883 = (function () {
         return this.getHeading(xH, yH);
 
     };
-    
+
     /**
      * Start continuous reading of the sensor.
      * @method startReading
@@ -228,7 +228,7 @@ BO.io.MagnetometerHMC5883 = (function () {
             this.sendI2CRequest([I2CBase.READ_CONTINUOUS, this.address, DATAX0, 6]);
         }
     };
-    
+
     /**
      * Stop continuous reading of the sensor.
      * @method stopReading
@@ -240,7 +240,7 @@ BO.io.MagnetometerHMC5883 = (function () {
         //this.sendI2CRequest([I2CBase.WRITE, this.address, MODE, 0x03]);
     };
 
-    /** 
+    /**
      * Sends read request to magnetometer and updates magnetometer values.
      * @method update
      */
@@ -269,7 +269,7 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @static
      */
     MagnetometerHMC5883.DEVICE_ID = 0x1E;
-    
+
     /**
      * @property MagnetometerHMC5883.SAMPLES_1
      * @static
@@ -290,40 +290,40 @@ BO.io.MagnetometerHMC5883 = (function () {
      * @static
      */
     MagnetometerHMC5883.SAMPLES_8 = 3;
-    
+
     /** 0.75 Hz
      * @property MagnetometerHMC5883.HZ_0_75
-     * @static 
+     * @static
      */
     MagnetometerHMC5883.HZ_0_75 = 0x00;
-    /** 1.5 Hz 
+    /** 1.5 Hz
      * @property MagnetometerHMC5883.HZ_1_5
-     * @static 
+     * @static
      */
     MagnetometerHMC5883.HZ_1_5 = 0x01;
-    /** 3 Hz 
+    /** 3 Hz
      * @property MagnetometerHMC5883.HZ_3
-     * @static 
+     * @static
      */
     MagnetometerHMC5883.HZ_3 = 0x02;
-    /** 7.5 Hz 
+    /** 7.5 Hz
     * @property MagnetometerHMC5883.HZ_7_5
-     * @static 
+     * @static
     */
     MagnetometerHMC5883.HZ_7_5 = 0x03;
-    /** 15 Hz 
+    /** 15 Hz
     * @property MagnetometerHMC5883.HZ_15
-     * @static 
+     * @static
     */
     MagnetometerHMC5883.HZ_15 = 0x04;
-    /** 30 Hz 
+    /** 30 Hz
      * @property MagnetometerHMC5883.HZ_30
-     * @static 
+     * @static
      */
     MagnetometerHMC5883.HZ_30 = 0x05;
-    /** 75 Hz 
+    /** 75 Hz
      * @property MagnetometerHMC5883.HZ_75
-     * @static 
+     * @static
      */
     MagnetometerHMC5883.HZ_75 = 0x06;
 

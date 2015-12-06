@@ -12,7 +12,7 @@
     BO.WSocketWrapper.prototype = {
         addEventListener: function () {}
     };
-    
+
     // stube GeneratorEvent and GeneratorBase
     BO.generators = {};
 

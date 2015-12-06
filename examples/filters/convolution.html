@@ -40,10 +40,10 @@ p.scopeLabel {
 }
 
 .clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 .clear {display: inline-block;}
@@ -70,7 +70,7 @@ $(document).ready(function() {
     var SignalScope = JSUTILS.SignalScope;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -82,22 +82,22 @@ $(document).ready(function() {
         host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var pot;
     var ch1Color = '#FF0000';
     var ch2Color = '#00AEFF';
-    
+
     // Scope
     var scope = new SignalScope("scope1", 200, 100, 0, 1, ch1Color, ch2Color);
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        // Remove the event listener because it is no longer needed 
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);       
+        // Remove the event listener because it is no longer needed
+        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
         // Need to enable an analog pin in order to read it
         arduino.enableAnalogPin(0);
@@ -110,7 +110,7 @@ $(document).ready(function() {
 
         animate();
     }
-    
+
     function onPotChange(event) {
         var pin = event.target;
 
@@ -143,20 +143,20 @@ $(document).ready(function() {
         pot.addFilter(new Convolution(type));
         $('#scope1Label').text(label);
     }
-    
+
     function animate() {
 
         scope.update(pot.preFilterValue, pot.value);
 
         requestAnimFrame(animate);
-    }   
-            
+    }
+
 });
 </script>
 
 </head>
 <body>
-  
+
     <h2>Convolution Example</h2>
 
     <div id="containers" style="width:400px;">
@@ -176,6 +176,6 @@ $(document).ready(function() {
             </div>
         </div>
     </div>
-  
+
 </body>
 </html>​
