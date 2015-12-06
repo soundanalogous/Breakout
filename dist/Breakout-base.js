@@ -2381,7 +2381,7 @@ BO.Pin = (function() {
    */
   Pin.SERIAL = 0x0A;
   /**
-   * @property Pin.SERIAL
+   * @property Pin.INPUT_PULLUP
    * @static
    */
   Pin.INPUT_PULLUP = 0x0B;
@@ -4117,7 +4117,8 @@ BO.IOBoard = (function() {
         7: "onewire",
         8: "stepper",
         9: "encoder",
-        10: "serial"
+        10: "serial",
+        11: "pullup"
       };
 
       len = this._ioPins.length;

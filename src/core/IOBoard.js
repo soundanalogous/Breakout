@@ -1164,7 +1164,8 @@ BO.IOBoard = (function() {
         7: "onewire",
         8: "stepper",
         9: "encoder",
-        10: "serial"
+        10: "serial",
+        11: "pullup"
       };
 
       len = this._ioPins.length;

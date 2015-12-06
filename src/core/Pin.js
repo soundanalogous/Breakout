@@ -596,7 +596,7 @@ BO.Pin = (function() {
    */
   Pin.SERIAL = 0x0A;
   /**
-   * @property Pin.SERIAL
+   * @property Pin.INPUT_PULLUP
    * @static
    */
   Pin.INPUT_PULLUP = 0x0B;
