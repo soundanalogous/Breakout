@@ -282,9 +282,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-jscs');
   grunt.loadNpmTasks('grunt-shell');
 
-  grunt.registerTask('default', ['jshint', 'concat', 'uglify', 'mocha_phantomjs', 'yuidoc']);
+  grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['jshint', 'jscs', 'mocha_phantomjs']);
   grunt.registerTask('compile', ['test', 'concat', 'uglify']);
   grunt.registerTask('docs', ['yuidoc']);
-  grunt.registerTask('package', ['default', 'shell']);
+  grunt.registerTask('package', ['default', 'docs', 'shell']);
 };
