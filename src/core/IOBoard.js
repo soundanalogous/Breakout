@@ -71,7 +71,6 @@ BO.IOBoard = (function() {
     this.name = "IOBoard";
 
     // Private properties
-    this._socket = null;
     this._inputDataBuffer = [];
     this._digitalPort = [];
     this._numPorts = 0;
@@ -86,7 +85,6 @@ BO.IOBoard = (function() {
     this._isReady = false;
     this._firmwareName = "";
     this._firmwareVersion = 0;
-    this._evtDispatcher = null;
     this._isMultiClientEnabled = false;
     this._isConfigured = false;
     this._capabilityQueryResponseReceived = false;
