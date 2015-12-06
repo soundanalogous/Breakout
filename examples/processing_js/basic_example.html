@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
 
-<style>
-@font-face {
-  font-family: "tradeGothicBold";
-  src: local("TradeGothicLTStd-Bold"),
-       url("fonts/TradeGothicLTStd-Bold.otf") format('opentype');
-}
-</style>
+  <style>
+  @font-face {
+    font-family: "tradeGothicBold";
+    src: local("TradeGothicLTStd-Bold"), url("fonts/TradeGothicLTStd-Bold.otf") format('opentype');
+  }
+  </style>
 
-<title>Breakout + processing.js Button + LED example</title>
+  <title>Breakout + processing.js Button + LED example</title>
 
 </head>
+
 <body>
 
-<canvas id='canvas1'></canvas>
+  <canvas id='canvas1'></canvas>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="libs/processing-1.4.1-api.min.js"></script>
-<script type="text/javascript">
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="libs/processing-1.4.1-api.min.js"></script>
+  <script type="text/javascript">
+  // declare these variables so you don't have to type the full namespace
+  var IOBoard = BO.IOBoard;
+  var IOBoardEvent = BO.IOBoardEvent;
+  var Button = BO.io.Button;
+  var ButtonEvent = BO.io.ButtonEvent;
+  var LED = BO.io.LED;
 
-// declare these variables so you don't have to type the full namespace
-var IOBoard = BO.IOBoard;
-var IOBoardEvent = BO.IOBoardEvent;
-var Button = BO.io.Button;
-var ButtonEvent = BO.io.ButtonEvent;
-var LED = BO.io.LED;
+  // get a reference to the Processing sketch object
+  var sketch = new Processing.Sketch();
+  sketch.options.crispLines = true;
 
-// get a reference to the Processing sketch object
-var sketch = new Processing.Sketch();
-sketch.options.crispLines = true;
+  // preload images so they are available when the
+  // sketch begins. Setup won't be called until all images
+  // and external fonts have been loaded.
+  sketch.imageCache.add("images/pjs.png");
 
-// preload images so they are available when the
-// sketch begins. Setup won't be called until all images
-// and external fonts have been loaded.
-sketch.imageCache.add("images/pjs.png");
+  // get a reference to the canvas
+  var canvas = document.getElementById("canvas1");
 
-// get a reference to the canvas
-var canvas = document.getElementById("canvas1");
+  // get a reference to the Processing object, passing a ref to
+  // the canvas and sketch object
+  var pjs = new Processing(canvas, sketch);
 
-// get a reference to the Processing object, passing a ref to
-// the canvas and sketch object
-var pjs = new Processing(canvas, sketch);
+  // attach the sketch function to the canvas
+  // write the code for your sketch within this function
+  sketch.attachFunction = function(p) {
 
-// attach the sketch function to the canvas
-// write the code for your sketch within this function
-sketch.attachFunction = function(p) {
-
-  // declare global variables for your sketch (just like you
-  // would at the top of a regular Processing sketch)
-  var arduino,
+    // declare global variables for your sketch (just like you
+    // would at the top of a regular Processing sketch)
+    var arduino,
       isPressed = false,
       pjsLogo,
       tradeGothic,
@@ -65,8 +65,8 @@ sketch.attachFunction = function(p) {
       isMousePressed = false,
       isReady = false;
 
-  // Override setup function
-  p.setup = function() {
+    // Override setup function
+    p.setup = function() {
       p.size(400, 400);
 
       // load images
@@ -92,10 +92,10 @@ sketch.attachFunction = function(p) {
       arduino = new IOBoard(host, 8887);
       arduino.addEventListener(IOBoardEvent.READY, onReady);
 
-  };
+    };
 
-  // Override draw function
-  p.draw = function() {
+    // Override draw function
+    p.draw = function() {
 
       // return if the IOBoard is not yet ready
       if (!isReady) return;
@@ -117,18 +117,18 @@ sketch.attachFunction = function(p) {
       p.textFont(helvetica, 16);
       p.text("Toggle LED", 215, 135);
 
-  };
+    };
 
-  p.mousePressed = function() {
-     isMousePressed = true;
-  };
+    p.mousePressed = function() {
+      isMousePressed = true;
+    };
 
-  p.mouseReleased = function() {
-    isMousePressed = false;
-  };
+    p.mouseReleased = function() {
+      isMousePressed = false;
+    };
 
-  // draw the on-screen representation of the physical button
-  function drawSwitch() {
+    // draw the on-screen representation of the physical button
+    function drawSwitch() {
       var yVal;
 
       if (isPressed) {
@@ -148,19 +148,19 @@ sketch.attachFunction = function(p) {
       p.noStroke();
       p.fill(0, 0, 0);
       p.rect(20, 110, 120, 40);
-  }
+    }
 
-  // draw an on-screen button to control the LED
-  // the LED turns on when the Toggle LED button is pressed
-  // and off when the button is released
-  function drawButton() {
-     var medGray = p.color(66, 66, 66);
-     var darkGray = p.color(33, 33, 33);
-     var strokeColor = darkGray;
-     var fillColor = medGray;
+    // draw an on-screen button to control the LED
+    // the LED turns on when the Toggle LED button is pressed
+    // and off when the button is released
+    function drawButton() {
+      var medGray = p.color(66, 66, 66);
+      var darkGray = p.color(33, 33, 33);
+      var strokeColor = darkGray;
+      var fillColor = medGray;
 
-     // invert colors if the button is pressed
-     if (isMousePressed) {
+      // invert colors if the button is pressed
+      if (isMousePressed) {
         // check if the mouse pointer is over the button
         if (p.mouseX > 200 && p.mouseX < 310 && p.mouseY > 110 && p.mouseY < 150) {
           strokeColor = medGray;
@@ -168,19 +168,19 @@ sketch.attachFunction = function(p) {
           // if so, turn the led on
           led.on();
         }
-     } else {
+      } else {
         led.off();
-     }
+      }
 
-     p.stroke(strokeColor);
-     p.strokeWeight(4);
-     p.fill(fillColor);
-     p.rect(200, 110, 110, 40, 10);
+      p.stroke(strokeColor);
+      p.strokeWeight(4);
+      p.fill(fillColor);
+      p.rect(200, 110, 110, 40, 10);
 
-  }
+    }
 
-  // setup the IOBoard once it is ready
-  function onReady(event) {
+    // setup the IOBoard once it is ready
+    function onReady(event) {
       // remove the listener because it is no longer needed
       arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
@@ -194,24 +194,23 @@ sketch.attachFunction = function(p) {
 
       // we are now ready to communicate with the IOBoard
       isReady = true;
-  }
+    }
 
-  // handle physical button PRESS event
-  function onPress(event) {
+    // handle physical button PRESS event
+    function onPress(event) {
       // update the button state
       isPressed = true;
-  }
+    }
 
-  // handle physical button RELEASE event
-  function onRelease(event) {
+    // handle physical button RELEASE event
+    function onRelease(event) {
       // update the button state
       isPressed = false;
-  }
+    }
 
-};
-
-
-</script>
+  };
+  </script>
 
 </body>
+
 </html>​

@@ -1,46 +1,51 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
-<link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
 
-<style type="text/css">
-body {
+  <style type="text/css">
+  body {
     margin: 20px;
     font-family: sans-serif;
     font-size: 20px;
     color: #00AEFF;
-}
-h2 {
+  }
+
+  h2 {
     font-size: 22px;
     padding-bottom: 10px;
-}
-label {
+  }
+
+  label {
     font-size: 14px;
     color: #666;
-}
-.hoverBox {
+  }
+
+  .hoverBox {
     float: left;
     margin-right: 40px;
-}
-#speed {
+  }
+
+  #speed {
     width: 60px;
     margin-bottom: 20px;
-}
-</style>
+  }
+  </style>
 
 
-<title>BlinkM Example</title>
+  <title>BlinkM Example</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // dependencies
     // declare these variables so you don't have
@@ -61,7 +66,7 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var uno = new IOBoard(host, 8887);
 
@@ -71,113 +76,115 @@ $(document).ready(function() {
 
     // initialize color picker
     $('#colorPicker').wColorPicker({
-        initColor: initialColor,
-        onSelect: gotoColor,
-        mode: 'flat',
-        color: 'white',
+      initColor: initialColor,
+      onSelect: gotoColor,
+      mode: 'flat',
+      color: 'white',
     });
 
     // initialize color picker
     $('#fadeColorPicker').wColorPicker({
-        initColor: initialColor,
-        onSelect: fadeToColor,
-        mode: 'flat',
-        color: 'white',
+      initColor: initialColor,
+      onSelect: fadeToColor,
+      mode: 'flat',
+      color: 'white',
     });
 
     uno.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
 
-        // remove the listener because it is no longer needed
-        uno.removeEventListener(IOBoardEvent.READY, onReady);
+      // remove the listener because it is no longer needed
+      uno.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Digital input using Button object:
-        // params: board, pin, mode
-        var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
-        button.addEventListener(ButtonEvent.PRESS, onButtonPress);
+      // Digital input using Button object:
+      // params: board, pin, mode
+      var button = new Button(uno, uno.getDigitalPin(2), Button.PULL_DOWN);
+      button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
-        // i2c module example: BlinkM module
-        blinkM = new BlinkM(uno);
-        // stop the built-in light script
-        blinkM.stopScript();
+      // i2c module example: BlinkM module
+      blinkM = new BlinkM(uno);
+      // stop the built-in light script
+      blinkM.stopScript();
 
-        // set the initial fade speed
-        fadeSpeed = 15;
-        blinkM.setFadeSpeed(fadeSpeed);
+      // set the initial fade speed
+      fadeSpeed = 15;
+      blinkM.setFadeSpeed(fadeSpeed);
 
-        // set the initial color
-        gotoColor(initialColor);
+      // set the initial color
+      gotoColor(initialColor);
 
-        initGUIListeners();
+      initGUIListeners();
 
     }
 
     function initGUIListeners() {
-        $('#speed').change(function(evt) {
-            var val = this.value;
-            if (val <= 255 && val >= 1) {
-                fadeSpeed = val;
-                blinkM.setFadeSpeed(fadeSpeed);
-            }
-        });
+      $('#speed').change(function(evt) {
+        var val = this.value;
+        if (val <= 255 && val >= 1) {
+          fadeSpeed = val;
+          blinkM.setFadeSpeed(fadeSpeed);
+        }
+      });
     }
 
     function onButtonPress(event) {
-        randomColor();
+      randomColor();
     }
 
     // set a random color on the BlinkM module
     function randomColor() {
-        var red = Math.floor(Math.random() * 255);
-        var green = Math.floor(Math.random() * 255);
-        var blue = Math.floor(Math.random() * 255);
+      var red = Math.floor(Math.random() * 255);
+      var green = Math.floor(Math.random() * 255);
+      var blue = Math.floor(Math.random() * 255);
 
-        blinkM.fadeToRGBColor([red, green, blue]);
+      blinkM.fadeToRGBColor([red, green, blue]);
     }
 
     function getRGBColor(color) {
-        var hexColor = parseInt(color.replace(/#/, "0x"));
-        var rgbColor = {
-            red: hexColor >> 16,
-            green: (hexColor >> 8) & 0x0000FF,
-            blue: hexColor & 0x0000FF
-        };
+      var hexColor = parseInt(color.replace(/#/, "0x"));
+      var rgbColor = {
+        red: hexColor >> 16,
+        green: (hexColor >> 8) & 0x0000FF,
+        blue: hexColor & 0x0000FF
+      };
 
-        return rgbColor;
+      return rgbColor;
     }
 
     function gotoColor(color) {
-        if (blinkM === undefined) return;
-        var c = getRGBColor(color);
-        blinkM.goToRGBColorNow([c.red, c.green, c.blue]);
+      if (blinkM === undefined) return;
+      var c = getRGBColor(color);
+      blinkM.goToRGBColorNow([c.red, c.green, c.blue]);
     }
 
     function fadeToColor(color) {
-        if (blinkM === undefined) return;
-        var c = getRGBColor(color);
-        blinkM.fadeToRGBColor([c.red, c.green, c.blue]);
+      if (blinkM === undefined) return;
+      var c = getRGBColor(color);
+      blinkM.fadeToRGBColor([c.red, c.green, c.blue]);
     }
 
-});
-
-</script>
+  });
+  </script>
 
 </head>
+
 <body>
-    <h2>BlinkM Example</h2>
-    <div class="pickerContainer">
-        <div class="hoverBox">
-            <p>Fade to color:</p>
-            <div id="fadeColorPicker"></div>
-            <label for="speed">Fade Speed (1 - 255): </label><input id="speed" type="number" value="15" min="1" max="255" step="1" />
-        </div>
-        <div class="hoverBox">
-            <p>Go to color:</p>
-            <div id="colorPicker"></div>
-            <label>Go to selected color immediately</label>
-        </div>
+  <h2>BlinkM Example</h2>
+  <div class="pickerContainer">
+    <div class="hoverBox">
+      <p>Fade to color:</p>
+      <div id="fadeColorPicker"></div>
+      <label for="speed">Fade Speed (1 - 255): </label>
+      <input id="speed" type="number" value="15" min="1" max="255" step="1" />
     </div>
+    <div class="hoverBox">
+      <p>Go to color:</p>
+      <div id="colorPicker"></div>
+      <label>Go to selected color immediately</label>
+    </div>
+  </div>
 
 </body>
+
 </html>​

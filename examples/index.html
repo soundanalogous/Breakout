@@ -1,77 +1,98 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style type="text/css">
-body, p, ul, table, td, tr, li, header, footer {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style type="text/css">
+  body,
+  p,
+  ul,
+  table,
+  td,
+  tr,
+  li,
+  header,
+  footer {
     margin: 0;
     padding: 0;
-}
-body {
+  }
+
+  body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: normal;
     line-height: 1.5em;
     color: #666;
-}
-.container {
+  }
+
+  .container {
     margin: 0 auto;
     padding: 10px 40px 0 40px;
     max-width: 800px;
     height: 100%;
     margin-bottom: 40px;
-}
-a {
+  }
+
+  a {
     color: #333;
-    text-decoration:none;
-}
-a:hover {
+    text-decoration: none;
+  }
+
+  a:hover {
     color: #FF6623;
-}
-header {
-    display:block;
+  }
+
+  header {
+    display: block;
     border-bottom: 1px dotted #8C8C8C;
     overflow: auto;
-}
-.header_links {
+  }
+
+  .header_links {
     padding-left: 20px;
     font-weight: normal;
-}
-.header_links:first-child {
+  }
+
+  .header_links:first-child {
     padding-left: 0px;
-}
-#links {
+  }
+
+  #links {
     float: right;
     font-size: 16px;
     font-weight: bold;
     margin-top: 25px;
-}
-#logo {
-    padding: 10px 0px 10px 0;
-}
+  }
 
-table {
+  #logo {
+    padding: 10px 0px 10px 0;
+  }
+
+  table {
     width: 100%;
     margin-top: 10px;
-}
-td {
+  }
+
+  td {
     vertical-align: top;
     width: 283px;
     border-left: solid 1px #fff;
     background-color: #f9f9f9;
-}
-td:first-child {
-    border-left: 0;
-}
+  }
 
-h2 {
+  td:first-child {
+    border-left: 0;
+  }
+
+  h2 {
     font-weight: normal;
     font-size: 22px;
     margin: 10px 0 20px 0;
-}
-h3 {
+  }
+
+  h3 {
     padding: 2px 2px 2px 5px;
     font-weight: bold;
     font-size: 14px;
@@ -80,173 +101,207 @@ h3 {
     margin: 2px 0 0 0;
     letter-spacing: 0.08em;
     opacity: 0.8;
-}
-li {
+  }
+
+  li {
     font-size: 14px;
     line-height: 28px;
     padding-left: 5px;
     list-style-type: none;
-}
-li:nth-child(odd) {
+  }
+
+  li:nth-child(odd) {
     background-color: #F3F3F3;
-}
-footer {
+  }
+
+  footer {
     padding-top: 10px;
     text-align: center;
     font-size: 12px;
-}
-footer span {
+  }
+
+  footer span {
     letter-spacing: 0.1em;
-}
-@media only screen and (max-width: 480px) {
+  }
+
+  @media only screen and (max-width: 480px) {
     #links {
-        float: left;
-        margin-top: 0px;
+      float: left;
+      margin-top: 0px;
     }
     li {
-        font-size: 18px;
-        line-height: 36px;
-        padding-left: 5px;
-        list-style-type: none;
+      font-size: 18px;
+      line-height: 36px;
+      padding-left: 5px;
+      list-style-type: none;
     }
     .header_links {
-        padding-left: 10px;
+      padding-left: 10px;
     }
     .container {
-        padding: 10px 15px 0 15px;
+      padding: 10px 15px 0 15px;
     }
-}
-</style>
+  }
+  </style>
 
-<title>Breakout.js examples index</title>
+  <title>Breakout.js examples index</title>
 
-<script src="libs/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <script src="libs/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
     var currentSize = "";
-    var links = [
-        { name: "Getting Started", path: "getting_started", examples: [
-            "hello_world.html",
-            "firmware.html",
-            "simple_led.html",
-            "analog_input.html",
-            "analog_input_scope.html",
-            "analog_input_smoothie.html",
-            "digital_out.html",
-            "pwm_led.html"]
-        },
-        { name: "Actuators", path: "actuators", examples: [
-            "blinkM.html",
-            "dcmotor.html",
-            "rgb_led.html",
-            "bi_color_led.html",
-            "servo.html",
-            "stepper_2wire.html",
-            "stepper_4wire.html",
-            "stepper_easydriver.html"]
-        },
-        { name: "Sensors", path: "sensors", examples: [
-            "adxl345.html",
-            "analog_accelerometer.html",
-            "flex.html",
-            "fsr.html",
-            "hmc5883.html",
-            "hmc6352.html",
-            "itg3200.html",
-            "sharp_ir.html",
-            "softpot.html",
-            "sonar.html",
-            "temperature.html"]
-        },
-        { name: "Filters", path: "filters", examples: [
-            "convolution.html",
-            "scaler.html",
-            "triggerpoint.html"]
-        },
-        { name: "Generators", path: "generators", examples: [
-            "blink_led.html",
-            "oscillator.html"]
-        },
-        { name: "Boards", path: "boards", examples: [
-            "leonardo.html",
-            "mega.html",
-            "teensy.html",
-            "uno.html"]
-        },
-        { name: "Processing.js", path: "processing_js", examples: [
-            "basic_example.html",
-            "accelerometer.html",
-            "compass.html",
-            "gyro.html",
-            "imu_test.html"]
-        },
-        { name: "Three.js", path: "three_js", examples: [
-            "accelerometer.html"]
-        },
-        { name: "Device Sensors", path: "device_sensors", examples: [
-            "blinkM_accel.html",
-            "blinkM_compass.html",
-            "rgbled_accel.html"]
-        }
-    ];
+    var links = [{
+      name: "Getting Started",
+      path: "getting_started",
+      examples: [
+        "hello_world.html",
+        "firmware.html",
+        "simple_led.html",
+        "analog_input.html",
+        "analog_input_scope.html",
+        "analog_input_smoothie.html",
+        "digital_out.html",
+        "pwm_led.html"
+      ]
+    }, {
+      name: "Actuators",
+      path: "actuators",
+      examples: [
+        "blinkM.html",
+        "dcmotor.html",
+        "rgb_led.html",
+        "bi_color_led.html",
+        "servo.html",
+        "stepper_2wire.html",
+        "stepper_4wire.html",
+        "stepper_easydriver.html"
+      ]
+    }, {
+      name: "Sensors",
+      path: "sensors",
+      examples: [
+        "adxl345.html",
+        "analog_accelerometer.html",
+        "flex.html",
+        "fsr.html",
+        "hmc5883.html",
+        "hmc6352.html",
+        "itg3200.html",
+        "sharp_ir.html",
+        "softpot.html",
+        "sonar.html",
+        "temperature.html"
+      ]
+    }, {
+      name: "Filters",
+      path: "filters",
+      examples: [
+        "convolution.html",
+        "scaler.html",
+        "triggerpoint.html"
+      ]
+    }, {
+      name: "Generators",
+      path: "generators",
+      examples: [
+        "blink_led.html",
+        "oscillator.html"
+      ]
+    }, {
+      name: "Boards",
+      path: "boards",
+      examples: [
+        "leonardo.html",
+        "mega.html",
+        "teensy.html",
+        "uno.html"
+      ]
+    }, {
+      name: "Processing.js",
+      path: "processing_js",
+      examples: [
+        "basic_example.html",
+        "accelerometer.html",
+        "compass.html",
+        "gyro.html",
+        "imu_test.html"
+      ]
+    }, {
+      name: "Three.js",
+      path: "three_js",
+      examples: [
+        "accelerometer.html"
+      ]
+    }, {
+      name: "Device Sensors",
+      path: "device_sensors",
+      examples: [
+        "blinkM_accel.html",
+        "blinkM_compass.html",
+        "rgbled_accel.html"
+      ]
+    }];
 
     function buildTable(numCols) {
-        var i,
-            j,
-            k,
-            len = links.length,
-            html = "";
+      var i,
+        j,
+        k,
+        len = links.length,
+        html = "";
 
-        html = '<table>';
-        for (i = 0; i < len; i++) {
-            if (i % numCols === 0) html += "<tr>";
-            html += "<td>";
-            html += '<h3>' + links[i].name + '</h3>';
-            html += "<ul>";
-            for (k = 0, numExamples=links[i].examples.length; k < numExamples; k++) {
-                html += '<li>' + links[i].examples[k].split('.')[0].link("../examples/" + links[i].path + '/' + links[i].examples[k]) + '</li>';
-            }
-            html += "</ul></td>";
-            if (i % numCols === numCols - 1) html += "</tr>";
+      html = '<table>';
+      for (i = 0; i < len; i++) {
+        if (i % numCols === 0) html += "<tr>";
+        html += "<td>";
+        html += '<h3>' + links[i].name + '</h3>';
+        html += "<ul>";
+        for (k = 0, numExamples = links[i].examples.length; k < numExamples; k++) {
+          html += '<li>' + links[i].examples[k].split('.')[0].link("../examples/" + links[i].path + '/' + links[i].examples[k]) + '</li>';
         }
-        html += '</table>';
+        html += "</ul></td>";
+        if (i % numCols === numCols - 1) html += "</tr>";
+      }
+      html += '</table>';
 
-        $('.examplesWrapper').html(html);
+      $('.examplesWrapper').html(html);
     }
 
     $(window).resize(function() {
-        setSize($(this).width());
+      setSize($(this).width());
     });
 
     function setSize(width) {
-        if (width <= 480 && currentSize !== "small") {
-            buildTable(1);
-            currentSize = "small";
-        } else if (width > 480 && width <= 768 && currentSize !== "medium") {
-            buildTable(2);
-            currentSize = "medium";
-        } else if (width > 768 && currentSize !== "full") {
-            buildTable(3);
-            currentSize = "full";
-        }
+      if (width <= 480 && currentSize !== "small") {
+        buildTable(1);
+        currentSize = "small";
+      } else if (width > 480 && width <= 768 && currentSize !== "medium") {
+        buildTable(2);
+        currentSize = "medium";
+      } else if (width > 768 && currentSize !== "full") {
+        buildTable(3);
+        currentSize = "full";
+      }
     }
 
     setSize($(window).width());
-});
-</script>
+  });
+  </script>
 
 </head>
+
 <body>
-    <div class="container">
+  <div class="container">
 
     <header>
-        <a href="http://breakoutjs.com"><img id="logo" src="images/BreakoutLogo.png"></a>
-        <div id="links">
-            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
-            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
-            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
-            <a class="header_links" href="http://breakoutjs.com/docs/">Docs</a>
-        </div>
+      <a href="http://breakoutjs.com">
+        <img id="logo" src="images/BreakoutLogo.png">
+      </a>
+      <div id="links">
+        <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+        <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+        <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+        <a class="header_links" href="http://breakoutjs.com/docs/">Docs</a>
+      </div>
     </header>
 
     <h2>Breakout.js examples index</h2>
@@ -256,9 +311,13 @@ $(document).ready(function() {
     <div class="examplesWrapper"></div>
 
     <footer>
-        Breakout is distributed under the terms of the MIT License. See the <a href="https://raw.github.com/soundanalogous/Breakout/master/LICENSE"><span>LICENSE</span></a> file.
+      Breakout is distributed under the terms of the MIT License. See the
+      <a href="https://raw.github.com/soundanalogous/Breakout/master/LICENSE">
+        <span>LICENSE</span>
+      </a> file.
     </footer>
 
-    </div>
+  </div>
 </body>
+
 </html>

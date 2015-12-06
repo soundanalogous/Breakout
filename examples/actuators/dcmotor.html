@@ -1,59 +1,66 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link type="text/css" href="../libs/jquery-ui/jquery-ui.custom.css" rel="stylesheet" />
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link type="text/css" href="../libs/jquery-ui/jquery-ui.custom.css" rel="stylesheet" />
+  <style type="text/css">
+  body {
     margin: 10px;
     font-family: sans-serif;
     font-size: 16px;
     color: #00AEFF;
-}
-.Btns {
+  }
+
+  .Btns {
     padding: 10px;
     font-size: 16px;
     width: 85px;
     color: #00AEFF;
     margin: 0 5px 0 0;
-}
-label {
+  }
+
+  label {
     font-size: 14px;
     color: #666;
-}
-h2 {
+  }
+
+  h2 {
     font-size: 22px;
     padding-bottom: 10px;
-}
-.container {
+  }
+
+  .container {
     background-color: #f7f7f7;
     padding: 10px;
     border: 1px dotted #CCC;
     width: 280px;
     margin-bottom: 20px;
-}
-#speed {
+  }
+
+  #speed {
     width: 50px;
     margin-bottom: 20px;
-}
-#slider {
+  }
+
+  #slider {
     margin-top: 20px;
     width: 280px;
-}
-</style>
+  }
+  </style>
 
-<title>DCMotor Example</title>
+  <title>DCMotor Example</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script src="../libs/jquery-ui/jquery-ui.custom.min.js"></script>
-<script src="../libs/jquery.ui.touch-punch.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script src="../libs/jquery-ui/jquery-ui.custom.min.js"></script>
+  <script src="../libs/jquery.ui.touch-punch.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -71,7 +78,7 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
 
@@ -84,114 +91,117 @@ $(document).ready(function() {
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      // Remove the event listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Parameters: IOBoard, forwardPin, reversePin, pwmPin,
-        //             minVoltage, maxVoltage, supplyVoltage
-        motor = new DCMotor(arduino,
-            arduino.getDigitalPin(10),
-            arduino.getDigitalPin(9),
-            arduino.getDigitalPin(11),
-            1,
-            5,
-            5);
+      // Parameters: IOBoard, forwardPin, reversePin, pwmPin,
+      //             minVoltage, maxVoltage, supplyVoltage
+      motor = new DCMotor(arduino,
+        arduino.getDigitalPin(10),
+        arduino.getDigitalPin(9),
+        arduino.getDigitalPin(11),
+        1,
+        5,
+        5);
 
-        // Set the initial motor speed
-        speed = 0.5;
+      // Set the initial motor speed
+      speed = 0.5;
 
-        // Stop the motor
-        motor.despin(false);
+      // Stop the motor
+      motor.despin(false);
 
-        initGUIListeners();
+      initGUIListeners();
 
     }
 
     function initGUIListeners() {
-        var status = $('.status');
-        status.text("State: Standby");
+      var status = $('.status');
+      status.text("State: Standby");
 
-        $('button#reverse').on('click', function() {
-            // Reverse speed if between 0.0 and 1.0
-            motor.reverse(speed);
+      $('button#reverse').on('click', function() {
+        // Reverse speed if between 0.0 and 1.0
+        motor.reverse(speed);
 
-            status.text("State: Reverse");
-            $('#motorSpeed').text(speed * -1);
-            $('#slider').slider({
-                value: speed * -1
-            });
-        });
-
-        $('button#brake').on('click', function() {
-            // true = apply brake
-            motor.despin(true);
-
-            status.text("State: Brake");
-            $('#motorSpeed').text(0.0);
-            $('#slider').slider({
-                value: 0.0
-            });
-        });
-
-        $('button#forward').on('click', function() {
-            // Forward speed is between 0.0 and 1.0
-            motor.forward(speed);
-
-            status.text("State: Forward");
-            $('#motorSpeed').text(speed);
-            $('#slider').slider({
-                value: speed
-            });
-        });
-
-        $('#speed').change(function(evt) {
-            var val = this.value;
-            if (val <= 1.0 && val >= 0.1) {
-                speed = val;
-            }
-        });
-
+        status.text("State: Reverse");
+        $('#motorSpeed').text(speed * -1);
         $('#slider').slider({
-            min: -1.0,
-            max: 1.0,
-            step: 0.01,
-            slide: function(event, ui) {
-                var motorSpeed = ui.value;
-                // Set the motor value (between -1.0 and 1.0)
-                motor.value = motorSpeed;
-                if (motorSpeed < 0) {
-                    status.text("State: Reverse");
-                } else if (motorSpeed > 0) {
-                    status.text("State: Forward");
-                } else {
-                    status.text("State: Brake");
-                }
-                $('#motorSpeed').text(motorSpeed);
-            }
+          value: speed * -1
         });
-    }
-});
+      });
 
-</script>
+      $('button#brake').on('click', function() {
+        // true = apply brake
+        motor.despin(true);
+
+        status.text("State: Brake");
+        $('#motorSpeed').text(0.0);
+        $('#slider').slider({
+          value: 0.0
+        });
+      });
+
+      $('button#forward').on('click', function() {
+        // Forward speed is between 0.0 and 1.0
+        motor.forward(speed);
+
+        status.text("State: Forward");
+        $('#motorSpeed').text(speed);
+        $('#slider').slider({
+          value: speed
+        });
+      });
+
+      $('#speed').change(function(evt) {
+        var val = this.value;
+        if (val <= 1.0 && val >= 0.1) {
+          speed = val;
+        }
+      });
+
+      $('#slider').slider({
+        min: -1.0,
+        max: 1.0,
+        step: 0.01,
+        slide: function(event, ui) {
+          var motorSpeed = ui.value;
+          // Set the motor value (between -1.0 and 1.0)
+          motor.value = motorSpeed;
+          if (motorSpeed < 0) {
+            status.text("State: Reverse");
+          } else if (motorSpeed > 0) {
+            status.text("State: Forward");
+          } else {
+            status.text("State: Brake");
+          }
+          $('#motorSpeed').text(motorSpeed);
+        }
+      });
+    }
+  });
+  </script>
 
 </head>
+
 <body>
-    <h2>DC Motor Control Example</h2>
+  <h2>DC Motor Control Example</h2>
 
-    <div id="btnContainer" class="container">
-        <label for="speed">Constant Motor Speed (0.1 - 1.0): </label><input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
-        <div>
-            <button type="button" class="Btns" id="reverse">Reverse</button>
-            <button type="button" class="Btns" id="brake">Brake</button>
-            <button type="button" class="Btns" id="forward">Forward</button>
-        </div>
+  <div id="btnContainer" class="container">
+    <label for="speed">Constant Motor Speed (0.1 - 1.0): </label>
+    <input id="speed" type="number" value="0.5" min="0.1" max="1.0" step="0.1" />
+    <div>
+      <button type="button" class="Btns" id="reverse">Reverse</button>
+      <button type="button" class="Btns" id="brake">Brake</button>
+      <button type="button" class="Btns" id="forward">Forward</button>
     </div>
+  </div>
 
-    <div class="container">
-        <label>Variable Motor Speed: </label><label id="motorSpeed">0.0</label>
-        <div id="slider"></div>
-    </div>
+  <div class="container">
+    <label>Variable Motor Speed: </label>
+    <label id="motorSpeed">0.0</label>
+    <div id="slider"></div>
+  </div>
 
-    <p class="status">State: </p>
+  <p class="status">State: </p>
 </body>
+
 </html>

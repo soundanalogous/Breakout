@@ -1,57 +1,63 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style type="text/css">
+  body {
     margin: 10px;
     font-family: sans-serif;
     font-size: 16px;
     color: #00AEFF;
     width: 300px;
-}
-h2 {
+  }
+
+  h2 {
     font-size: 22px;
     padding-bottom: 10px;
-}
-label {
+  }
+
+  label {
     font-size: 14px;
     padding-top: 20px;
     color: #666;
-}
-.Btns {
+  }
+
+  .Btns {
     padding: 5px;
     font-size: 14px;
     width: 90px;
     color: #00AEFF;
-}
-.container {
+  }
+
+  .container {
     background-color: #f7f7f7;
     padding: 10px;
     border: 1px dotted #CCC;
     width: 280px;
     margin: 20px 0 40px 0;
     padding-top: 10px;
-}
-.btnContainer {
+  }
+
+  .btnContainer {
     margin-top: 20px;
-}
-#angle {
+  }
+
+  #angle {
     width: 50px;
-}
+  }
+  </style>
 
-</style>
+  <title>Servo Example</title>
 
-<title>Servo Example</title>
-
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -71,7 +77,7 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
 
@@ -86,83 +92,84 @@ $(document).ready(function() {
 
     function onReady(event) {
 
-        // Remove the listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      // Remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Analog input example using Potentiometer object
-        // Parameters: board, analogPin, enableSmoothing
-        pot = new Potentiometer(arduino, arduino.getAnalogPin(0), true);
+      // Analog input example using Potentiometer object
+      // Parameters: board, analogPin, enableSmoothing
+      pot = new Potentiometer(arduino, arduino.getAnalogPin(0), true);
 
-        // Listen for events
-        pot.addEventListener(PotEvent.CHANGE, onPotChange);
+      // Listen for events
+      pot.addEventListener(PotEvent.CHANGE, onPotChange);
 
-        // Parameters: board, pin
-        servo = new Servo(arduino, arduino.getDigitalPin(9));
-        // NOTE: Running a servo can interfere with analog
-        // inputs, creating jitter in the signal
+      // Parameters: board, pin
+      servo = new Servo(arduino, arduino.getDigitalPin(9));
+      // NOTE: Running a servo can interfere with analog
+      // inputs, creating jitter in the signal
 
-        // Set initial angle to 90 degrees
-        servo.angle = 90;
+      // Set initial angle to 90 degrees
+      servo.angle = 90;
 
-        initGUIListeners();
+      initGUIListeners();
 
     }
 
     function onPotChange(event) {
-        // Multiply by 180.0 to scale to the range of 0 to 180
-        // target is a reference to the potentiometer that fired
-        // the CHANGE event
-        var angle = event.target.value * 180.0;
+      // Multiply by 180.0 to scale to the range of 0 to 180
+      // target is a reference to the potentiometer that fired
+      // the CHANGE event
+      var angle = event.target.value * 180.0;
 
-        // Only use the potentiometer to rotate the servo head
-        // if the 'Use Pot' checkbox is checked
-        if (usePot) servo.angle = angle;
-        //console.log(usePot);
+      // Only use the potentiometer to rotate the servo head
+      // if the 'Use Pot' checkbox is checked
+      if (usePot) servo.angle = angle;
+      //console.log(usePot);
     }
 
     function initGUIListeners() {
-        $('button').on('click', function() {
-            servo.angle = $(this).data('angle');
-        });
+      $('button').on('click', function() {
+        servo.angle = $(this).data('angle');
+      });
 
-        $('#angle').change(function(evt) {
-            var val = this.value;
-            if (val <= 180 && val >= 0) {
-                // Rotate the servo head to the specified angle
-                servo.angle = val;
-            }
-        });
+      $('#angle').change(function(evt) {
+        var val = this.value;
+        if (val <= 180 && val >= 0) {
+          // Rotate the servo head to the specified angle
+          servo.angle = val;
+        }
+      });
 
-        $('#usePot').change(function(evt) {
-            if ($(this).prop('checked')) {
-                usePot = true;
-            } else {
-                usePot = false;
-            }
-        });
+      $('#usePot').change(function(evt) {
+        if ($(this).prop('checked')) {
+          usePot = true;
+        } else {
+          usePot = false;
+        }
+      });
     }
-});
-
-</script>
+  });
+  </script>
 
 </head>
-<body>
-    <h2>Servo Example</h2>
-    <p>Enter or click on a value below:</p>
-    <div class="container">
-        <label for="angle">Angle (0 - 180): </label>
-        <input id="angle" type="number" value="90" min="0" max="180" step="1" />
 
-        <div class="btnContainer">
-            <button type="button" class="Btns" data-angle="45">45 deg</button>
-            <button type="button" class="Btns" data-angle="90">90 deg</button>
-            <button type="button" class="Btns" data-angle="135">135 deg</button>
-        </div>
+<body>
+  <h2>Servo Example</h2>
+  <p>Enter or click on a value below:</p>
+  <div class="container">
+    <label for="angle">Angle (0 - 180): </label>
+    <input id="angle" type="number" value="90" min="0" max="180" step="1" />
+
+    <div class="btnContainer">
+      <button type="button" class="Btns" data-angle="45">45 deg</button>
+      <button type="button" class="Btns" data-angle="90">90 deg</button>
+      <button type="button" class="Btns" data-angle="135">135 deg</button>
     </div>
-    <p>Check the box below to use the potentiometer to set the servo angle.</p>
-    <div class="container">
-        <label for="usePot">Use Pot: </label>
-        <input id="usePot" type="checkbox" />
-    </div>
+  </div>
+  <p>Check the box below to use the potentiometer to set the servo angle.</p>
+  <div class="container">
+    <label for="usePot">Use Pot: </label>
+    <input id="usePot" type="checkbox" />
+  </div>
 </body>
+
 </html>

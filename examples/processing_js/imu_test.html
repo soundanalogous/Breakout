@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset=utf-8 />
-<title>Breakout + processing.js IMU Test</title>
+  <meta charset=utf-8 />
+  <title>Breakout + processing.js IMU Test</title>
 </head>
+
 <body>
-<canvas id='canvas1'></canvas>
+  <canvas id='canvas1'></canvas>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="libs/processing-1.4.1-api.min.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="js/IMUFilter.js"></script>
-<script type="text/javascript">
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="libs/processing-1.4.1-api.min.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="js/IMUFilter.js"></script>
+  <script type="text/javascript">
+  // dependencies
+  // declare these variables so you don't have
+  // to type the full namespace
+  var IOBoard = BO.IOBoard;
+  var IOBoardEvent = BO.IOBoardEvent;
+  var GyroITG3200 = BO.io.GyroITG3200;
+  var GyroEvent = BO.io.GyroEvent;
+  var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
+  var AccelerometerEvent = BO.io.AccelerometerEvent;
+  var Timer = JSUTILS.Timer;
+  var TimerEvent = JSUTILS.TimerEvent;
+  var IMUFilter = BO.IMUFilter;
+  var Button = BO.io.Button;
+  var ButtonEvent = BO.io.ButtonEvent;
 
-// dependencies
-// declare these variables so you don't have
-// to type the full namespace
-var IOBoard = BO.IOBoard;
-var IOBoardEvent = BO.IOBoardEvent;
-var GyroITG3200 = BO.io.GyroITG3200;
-var GyroEvent = BO.io.GyroEvent;
-var AccelerometerADXL345 = BO.io.AccelerometerADXL345;
-var AccelerometerEvent = BO.io.AccelerometerEvent;
-var Timer = JSUTILS.Timer;
-var TimerEvent = JSUTILS.TimerEvent;
-var IMUFilter = BO.IMUFilter;
-var Button = BO.io.Button;
-var ButtonEvent = BO.io.ButtonEvent;
+  // set to true to print debug messages to console
+  BO.enableDebugging = true;
 
-// set to true to print debug messages to console
-BO.enableDebugging = true;
+  // NOTE: you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
+  // with the ITG3200 and ADXL345 sensors
 
-// NOTE: you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
-// with the ITG3200 and ADXL345 sensors
-
-var sketch = new Processing.Sketch();
-// define 3D context
-sketch.use3DContext = true;
-// preload the images
-sketch.imageCache.add("images/pjs.png");
-// attach function
-sketch.attachFunction = function(p) {
+  var sketch = new Processing.Sketch();
+  // define 3D context
+  sketch.use3DContext = true;
+  // preload the images
+  sketch.imageCache.add("images/pjs.png");
+  // attach function
+  sketch.attachFunction = function(p) {
 
     var fio;
     var gyro;
@@ -53,213 +54,213 @@ sketch.attachFunction = function(p) {
     var gotAccel = false;
     var UPDATE_INTERVAL = 100;
     var FILTER_RATE = 0.1;
-    var GRAVITY = 9.812865328;  // /m/s/s
+    var GRAVITY = 9.812865328; // /m/s/s
 
     var isReady = false;
 
     p.setup = function() {
-        p.size(640, 360, p.P3D);
-        texture = p.loadImage("images/pjs.png");
-        p.textureMode(p.NORMALIZED);
-        p.fill(255);
-        p.stroke(p.color(44,48,32));
+      p.size(640, 360, p.P3D);
+      texture = p.loadImage("images/pjs.png");
+      p.textureMode(p.NORMALIZED);
+      p.fill(255);
+      p.stroke(p.color(44, 48, 32));
 
-        // If you are not serving this file from the same computer
-        // that the Arduino Leonardo board is connected to, replace
-        // window.location.hostname with the IP address or hostname
-        // of the computer that the Arduino board is connected to.
-        host = window.location.hostname;
-        // if the file is opened locally, set the host to "localhost"
-        if (window.location.protocol.indexOf("file:") === 0) {
-            host = "localhost";
-        }
-        fio = new IOBoard(host, 8887);
-        fio.addEventListener(IOBoardEvent.READY, onFioReady);
+      // If you are not serving this file from the same computer
+      // that the Arduino Leonardo board is connected to, replace
+      // window.location.hostname with the IP address or hostname
+      // of the computer that the Arduino board is connected to.
+      host = window.location.hostname;
+      // if the file is opened locally, set the host to "localhost"
+      if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+      }
+      fio = new IOBoard(host, 8887);
+      fio.addEventListener(IOBoardEvent.READY, onFioReady);
     };
 
     p.draw = function() {
-        // don't draw until the Arduino is ready
-        if (!isReady) return;
+      // don't draw until the Arduino is ready
+      if (!isReady) return;
 
-        p.background(0);
-        p.noStroke();
-        p.translate(p.width/2.0, p.height/2.0, -100);
+      p.background(0);
+      p.noStroke();
+      p.translate(p.width / 2.0, p.height / 2.0, -100);
 
-        //console.log(imuFilter.pitch);
-        p.rotateX(imuFilter.roll);
-        p.rotateY(imuFilter.yaw);
-        p.rotateZ(-imuFilter.pitch);
-        p.scale(90);
+      //console.log(imuFilter.pitch);
+      p.rotateX(imuFilter.roll);
+      p.rotateY(imuFilter.yaw);
+      p.rotateZ(-imuFilter.pitch);
+      p.scale(90);
 
-        texturedCube(texture);
+      texturedCube(texture);
     }
 
     function texturedCube(texture) {
-        p.beginShape(p.QUADS);
-        p.texture(texture);
+      p.beginShape(p.QUADS);
+      p.texture(texture);
 
-        // Given one texture and six faces, we can easily set up the uv coordinates
-        // such that four of the faces tile "perfectly" along either u or v, but the other
-        // two faces cannot be so aligned.  This code tiles "along" u, "around" the X/Z faces
-        // and fudges the Y faces - the Y faces are arbitrarily aligned such that a
-        // rotation along the X axis will put the "top" of either texture at the "top"
-        // of the screen, but is not otherwised aligned with the X/Z faces. (This
-        // just affects what type of symmetry is required if you need seamless
-        // tiling all the way around the cube)
+      // Given one texture and six faces, we can easily set up the uv coordinates
+      // such that four of the faces tile "perfectly" along either u or v, but the other
+      // two faces cannot be so aligned.  This code tiles "along" u, "around" the X/Z faces
+      // and fudges the Y faces - the Y faces are arbitrarily aligned such that a
+      // rotation along the X axis will put the "top" of either texture at the "top"
+      // of the screen, but is not otherwised aligned with the X/Z faces. (This
+      // just affects what type of symmetry is required if you need seamless
+      // tiling all the way around the cube)
 
-        // +Z "front" face
-        p.vertex(-1, -1,  1, 0, 0);
-        p.vertex( 1, -1,  1, 1, 0);
-        p.vertex( 1,  1,  1, 1, 1);
-        p.vertex(-1,  1,  1, 0, 1);
+      // +Z "front" face
+      p.vertex(-1, -1, 1, 0, 0);
+      p.vertex(1, -1, 1, 1, 0);
+      p.vertex(1, 1, 1, 1, 1);
+      p.vertex(-1, 1, 1, 0, 1);
 
-        // -Z "back" face
-        p.vertex( 1, -1, -1, 0, 0);
-        p.vertex(-1, -1, -1, 1, 0);
-        p.vertex(-1,  1, -1, 1, 1);
-        p.vertex( 1,  1, -1, 0, 1);
+      // -Z "back" face
+      p.vertex(1, -1, -1, 0, 0);
+      p.vertex(-1, -1, -1, 1, 0);
+      p.vertex(-1, 1, -1, 1, 1);
+      p.vertex(1, 1, -1, 0, 1);
 
-        // +Y "bottom" face
-        p.vertex(-1,  1,  1, 0, 0);
-        p.vertex( 1,  1,  1, 1, 0);
-        p.vertex( 1,  1, -1, 1, 1);
-        p.vertex(-1,  1, -1, 0, 1);
+      // +Y "bottom" face
+      p.vertex(-1, 1, 1, 0, 0);
+      p.vertex(1, 1, 1, 1, 0);
+      p.vertex(1, 1, -1, 1, 1);
+      p.vertex(-1, 1, -1, 0, 1);
 
-        // -Y "top" face
-        p.vertex(-1, -1, -1, 0, 0);
-        p.vertex( 1, -1, -1, 1, 0);
-        p.vertex( 1, -1,  1, 1, 1);
-        p.vertex(-1, -1,  1, 0, 1);
+      // -Y "top" face
+      p.vertex(-1, -1, -1, 0, 0);
+      p.vertex(1, -1, -1, 1, 0);
+      p.vertex(1, -1, 1, 1, 1);
+      p.vertex(-1, -1, 1, 0, 1);
 
-        // +X "right" face
-        p.vertex( 1, -1,  1, 0, 0);
-        p.vertex( 1, -1, -1, 1, 0);
-        p.vertex( 1,  1, -1, 1, 1);
-        p.vertex( 1,  1,  1, 0, 1);
+      // +X "right" face
+      p.vertex(1, -1, 1, 0, 0);
+      p.vertex(1, -1, -1, 1, 0);
+      p.vertex(1, 1, -1, 1, 1);
+      p.vertex(1, 1, 1, 0, 1);
 
-        // -X "left" face
-        p.vertex(-1, -1, -1, 0, 0);
-        p.vertex(-1, -1,  1, 1, 0);
-        p.vertex(-1,  1,  1, 1, 1);
-        p.vertex(-1,  1, -1, 0, 1);
+      // -X "left" face
+      p.vertex(-1, -1, -1, 0, 0);
+      p.vertex(-1, -1, 1, 1, 0);
+      p.vertex(-1, 1, 1, 1, 1);
+      p.vertex(-1, 1, -1, 0, 1);
 
-        p.endShape();
+      p.endShape();
     }
 
     function onFioReady(event) {
 
-        fio.removeEventListener(IOBoardEvent.READY, onFioReady);
+      fio.removeEventListener(IOBoardEvent.READY, onFioReady);
 
-        initGyro();
-        initAccelerometer();
+      initGyro();
+      initAccelerometer();
 
-        imuFilter = new IMUFilter(FILTER_RATE, 0.3);
+      imuFilter = new IMUFilter(FILTER_RATE, 0.3);
 
-        // create a tick interval at which to update the sensor
-        // values. This is not as efficient as performing the IMU calculations
-        // directly on the microcontroller since there is less control
-        // over timing going through StandardFirmata
-        imuFilterTick = new Timer(UPDATE_INTERVAL, 0);
-        imuFilterTick.addEventListener(TimerEvent.TIMER, onImuFilterTick);
-        imuFilterTick.start();
+      // create a tick interval at which to update the sensor
+      // values. This is not as efficient as performing the IMU calculations
+      // directly on the microcontroller since there is less control
+      // over timing going through StandardFirmata
+      imuFilterTick = new Timer(UPDATE_INTERVAL, 0);
+      imuFilterTick.addEventListener(TimerEvent.TIMER, onImuFilterTick);
+      imuFilterTick.start();
 
-        // create a button to use to recalibrate the sensor
-        // you must recalibrate often
-        var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
-        button.addEventListener(ButtonEvent.PRESS, onBtnPress);
+      // create a button to use to recalibrate the sensor
+      // you must recalibrate often
+      var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
+      button.addEventListener(ButtonEvent.PRESS, onBtnPress);
     }
 
     function initGyro() {
-        // params: IOBoard, autoStart, i2cAddress
-        // disable autoStart (2nd param) because we want to update manually
-        gyro = new GyroITG3200(fio, false);
-        // need to adjust these values until the gyro x, y, and z
-        // values are each as close to zero as possible
-        // the close to zero you get the, the less drift you will notice
-        gyro.setOffsets(-3, 4.0, -4.1);
-        gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
+      // params: IOBoard, autoStart, i2cAddress
+      // disable autoStart (2nd param) because we want to update manually
+      gyro = new GyroITG3200(fio, false);
+      // need to adjust these values until the gyro x, y, and z
+      // values are each as close to zero as possible
+      // the close to zero you get the, the less drift you will notice
+      gyro.setOffsets(-3, 4.0, -4.1);
+      gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
     }
 
     function initAccelerometer() {
-        // params: IOBoard, dynamicRange, i2cAddress
-        accelerometer = new AccelerometerADXL345(fio);
-        accelerometer.setAxisOffset(-2, -2, 6);
-        accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
+      // params: IOBoard, dynamicRange, i2cAddress
+      accelerometer = new AccelerometerADXL345(fio);
+      accelerometer.setAxisOffset(-2, -2, 6);
+      accelerometer.addEventListener(AccelerometerEvent.UPDATE, onAccelerationUpdate);
     }
 
     function onAccelerationUpdate(event) {
-        gotAccel = true;
+      gotAccel = true;
 
-        // do not call process until we have updated
-        // values from both the gyro and the accelerometer
-        if (gotGyro === true) {
-            process();
-        }
+      // do not call process until we have updated
+      // values from both the gyro and the accelerometer
+      if (gotGyro === true) {
+        process();
+      }
 
     }
 
     function onGyroUpdate(event) {
-        gotGyro = true;
+      gotGyro = true;
 
-        // do not call process until we have updated
-        // values from both the gyro and the accelerometer
-        if (gotAccel === true) {
-            process();
-        }
+      // do not call process until we have updated
+      // values from both the gyro and the accelerometer
+      if (gotAccel === true) {
+        process();
+      }
     }
 
     function process() {
-        gotGyro = false;
-        gotAccel = false;
+      gotGyro = false;
+      gotAccel = false;
 
-        // apply the gyro and accelerometer data to the IMU filter
-        imuFilter.updateFilter(toRadians(gyro.x),
-                                toRadians(gyro.y),
-                                toRadians(gyro.z),
-                                accelerometer.x * GRAVITY,
-                                accelerometer.y * GRAVITY,
-                                accelerometer.z * GRAVITY);
+      // apply the gyro and accelerometer data to the IMU filter
+      imuFilter.updateFilter(toRadians(gyro.x),
+        toRadians(gyro.y),
+        toRadians(gyro.z),
+        accelerometer.x * GRAVITY,
+        accelerometer.y * GRAVITY,
+        accelerometer.z * GRAVITY);
 
-        // computer the euler angles to get pitch, roll and yaw values
-        imuFilter.computeEuler();
+      // computer the euler angles to get pitch, roll and yaw values
+      imuFilter.computeEuler();
 
-        // signal that it is now safe to draw
-        isReady = true;
+      // signal that it is now safe to draw
+      isReady = true;
     }
 
     function onBtnPress(event) {
-        // reset the IMU filter. need to call this to
-        // recalibrate the sensor.
-        imuFilter.reset();
+      // reset the IMU filter. need to call this to
+      // recalibrate the sensor.
+      imuFilter.reset();
     }
 
     function onImuFilterTick(event) {
-        // don't do anything until the accelerometer and gyro have
-        // been initialized
-        if (accelerometer === undefined || gyro === undefined) return;
+      // don't do anything until the accelerometer and gyro have
+      // been initialized
+      if (accelerometer === undefined || gyro === undefined) return;
 
-        // update the accelerometer and gyro manually
-        accelerometer.update();
-        gyro.update();
+      // update the accelerometer and gyro manually
+      accelerometer.update();
+      gyro.update();
     }
 
     function toRadians(decimalVal) {
-        return decimalVal * Math.PI/180;
+      return decimalVal * Math.PI / 180;
     }
 
     function toDegrees(radianVal) {
-        return radianVal * (180/Math.PI);
+      return radianVal * (180 / Math.PI);
     }
 
-};
+  };
 
-var canvas = document.getElementById("canvas1");
-// attaching the sketch to the canvas
-var p = new Processing(canvas, sketch);
-
-</script>
+  var canvas = document.getElementById("canvas1");
+  // attaching the sketch to the canvas
+  var p = new Processing(canvas, sketch);
+  </script>
 
 
 
 </body>
+
 </html>​

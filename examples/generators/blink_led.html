@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style type="text/css">
+  body {
     margin: 15px;
     font-family: sans-serif;
     font-size: 16px;
     line-height: 1.5em;
     color: #666;
-}
-h2 {
+  }
+
+  h2 {
     padding-left: 0px;
     font-weight: normal;
     font-size: 22px;
     color: #00AEFF;
-}
-a {
+  }
+
+  a {
     font-weight: bold;
     color: #333;
-    text-decoration:none;
-}
+    text-decoration: none;
+  }
 
-a:hover {
+  a:hover {
     color: #FF6623;
-}
-.ledBtns {
+  }
+
+  .ledBtns {
     padding: 10px;
     font-size: 22px;
     width: 130px;
     color: #00AEFF;
     margin-bottom: 20px;
-}
+  }
 
-.container {
+  .container {
     background-color: #f7f7f7;
     padding: 0 10px 0 10px;
     border: 1px dotted #CCC;
     width: 270px;
     margin-top: 20px;
-}
-.spacer {
+  }
+
+  .spacer {
     margin-left: 5px;
-}
-</style>
+  }
+  </style>
 
-<title>Blink LED with Oscillator Example</title>
+  <title>Blink LED with Oscillator Example</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
     // Declare these variables so you don't have
     // to type the full namespace
     var IOBoard = BO.IOBoard;
@@ -72,7 +77,7 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
 
@@ -85,62 +90,63 @@ $(document).ready(function() {
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      // Remove the event listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Set Pin 11 to Digital out (DOUT)
-        arduino.setDigitalPinMode(11, Pin.DOUT);
+      // Set Pin 11 to Digital out (DOUT)
+      arduino.setDigitalPinMode(11, Pin.DOUT);
 
-        // Create an LED object to interface with the LED wired
-        // to the I/O board
-        led = arduino.getDigitalPin(11);
+      // Create an LED object to interface with the LED wired
+      // to the I/O board
+      led = arduino.getDigitalPin(11);
 
-        // The frequency in seconds
-        var freq = 1.0;
-        // The number of times to repeat (0 = forever)
-        var times = 0;
-        // Create an instance of an Oscillator object that will apply
-        // a square wave
-        blink = new Oscillator(Oscillator.SQUARE, freq, 1, 0, 0, times);
+      // The frequency in seconds
+      var freq = 1.0;
+      // The number of times to repeat (0 = forever)
+      var times = 0;
+      // Create an instance of an Oscillator object that will apply
+      // a square wave
+      blink = new Oscillator(Oscillator.SQUARE, freq, 1, 0, 0, times);
 
-        // Add the Oscillator object to the digital output
-        led.addGenerator(blink);
+      // Add the Oscillator object to the digital output
+      led.addGenerator(blink);
 
-        // Use jQuery to get a reference to the buttons
-        // and listen for click events
-        $('#btnStart').on('click', LedStart);
-        $('#btnStop').on('click', LedStop);
+      // Use jQuery to get a reference to the buttons
+      // and listen for click events
+      $('#btnStart').on('click', LedStart);
+      $('#btnStop').on('click', LedStop);
     }
 
     function LedStart(evt) {
-        // Start the oscillator
-        blink.start();
+      // Start the oscillator
+      blink.start();
     }
 
     function LedStop(evt) {
-        // Stop the oscillator. Keep in mind that this stops the blink
-        // process only and doesn't switch of the pin to low if it was
-        // high
-        blink.stop();
-        // If you want to make sure that the pin is low at the end,
-        // set to manually
-        //led.value = Pin.LOW;
+      // Stop the oscillator. Keep in mind that this stops the blink
+      // process only and doesn't switch of the pin to low if it was
+      // high
+      blink.stop();
+      // If you want to make sure that the pin is low at the end,
+      // set to manually
+      //led.value = Pin.LOW;
     }
-});
-
-</script>
+  });
+  </script>
 
 </head>
+
 <body>
-    <h2>Blink LED with Oscillator</h2>
-        <div class="container">
-            <p>This example demonstrates blinking an LED with an Oscillator. See the <a href="http://breakoutjs.com/guides/the-pin-object/#analog_output">Analog Output</a> section of 'Using the Pin Object' guide and the <a href="http://breakoutjs.com/docs/symbols/BO.generators.Oscillator.html">Oscillator reference</a> for more info.</p>
-        </div>
-        <div class="container">
-            <p>Use the buttons below to start and stop blinking the LED.</p>
-            <button id="btnStart" class="ledBtns" type="button">Start</button>
-            <span class="spacer"></span>
-            <button id="btnStop" class="ledBtns" type="button">Stop</button>
-        </div>
+  <h2>Blink LED with Oscillator</h2>
+  <div class="container">
+    <p>This example demonstrates blinking an LED with an Oscillator. See the <a href="http://breakoutjs.com/guides/the-pin-object/#analog_output">Analog Output</a> section of 'Using the Pin Object' guide and the <a href="http://breakoutjs.com/docs/symbols/BO.generators.Oscillator.html">Oscillator reference</a> for more info.</p>
+  </div>
+  <div class="container">
+    <p>Use the buttons below to start and stop blinking the LED.</p>
+    <button id="btnStart" class="ledBtns" type="button">Start</button>
+    <span class="spacer"></span>
+    <button id="btnStop" class="ledBtns" type="button">Stop</button>
+  </div>
 </body>
+
 </html>

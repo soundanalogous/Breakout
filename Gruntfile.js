@@ -187,7 +187,7 @@ module.exports = function(grunt) {
     },
 
     jsbeautifier: {
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'node_server/server.js'],
+      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'node_server/server.js', 'examples/**/*.html'],
       options: {
         js: {
           braceStyle: "collapse",
@@ -207,6 +207,20 @@ module.exports = function(grunt) {
           spaceInParen: false,
           unescapeStrings: false,
           wrapLineLength: 0
+        },
+        html: {
+          braceStyle: "collapse",
+          indentChar: " ",
+          indentScripts: "keep",
+          indentSize: 2,
+          maxPreserveNewlines: 10,
+          preserveNewLines: true,
+          unformatted: ["a", "sub", "sup", "b", "i", "u", "style"],
+          wrapLineLength: 0
+        },
+        css: {
+          indentChar: " ",
+          indentSize: 2
         }
       }
     },
