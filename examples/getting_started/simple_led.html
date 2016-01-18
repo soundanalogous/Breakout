@@ -69,6 +69,7 @@
     FastClick.attach(document.body);
 
     var arduino = new IOBoard(host, 8887);
+    var $button = $("#button");
 
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
@@ -81,18 +82,18 @@
       // Create an LED object to interface with the LED wired
       // to the I/O board
       var led = new LED(arduino, arduino.getDigitalPin(13));
+      led.off();
 
-      // jQuery part for the button
-      $('#button').click(function() {
+      $button.click(function() {
         var btn = $(this);
 
-        if (btn.text() === "LED On") {
-          btn.text("LED Off");
-        } else {
-          btn.text("LED On");
-        }
-
         led.toggle();
+
+        if (led.isOn()) {
+          btn.text("Turn LED Off");
+        } else {
+          btn.text("Turn LED On");
+        }
       });
     }
   });
@@ -106,7 +107,7 @@
   <div class="container">
     <p>
       <strong>Output:</strong> Use the button below to turn the on-board LED on or off.</p>
-    <button id="button" class="btn" type="button">LED On</button>
+    <button id="button" class="btn" type="button">Turn LED On</button>
   </div>
 </body>
 
