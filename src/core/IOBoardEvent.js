@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -61,6 +61,7 @@ BO.IOBoardEvent = (function() {
   /**
    * @property IOBoardEvent.STRING_MESSAGE
    * @static
+   * @deprecated use FIRMWARE_VERION instead
    */
   IOBoardEvent.STRING_MESSAGE = "stringMessage";
   /**

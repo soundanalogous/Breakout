@@ -362,6 +362,7 @@ BO.IOBoardEvent = (function() {
   /**
    * @property IOBoardEvent.STRING_MESSAGE
    * @static
+   * @deprecated use FIRMWARE_VERION instead
    */
   IOBoardEvent.STRING_MESSAGE = "stringMessage";
   /**
@@ -2039,6 +2040,7 @@ BO.IOBoard = (function() {
     this._capabilityQueryResponseReceived = false;
     this._debugMode = BO.enableDebugging;
     this._numPinStateRequests = 0;
+    this._boardCapabilities = Object.create(null);
 
     this._evtDispatcher = new EventDispatcher(this);
 
@@ -2137,7 +2139,7 @@ BO.IOBoard = (function() {
      * @method begin
      */
     begin: function() {
-      this.addEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
+      this.addEventListener(IOBoardEvent.FIRMWARE_VERSION, this.initialVersionResultHandler);
       this.reportVersion();
       this.reportFirmware();
     },
@@ -2155,7 +2157,7 @@ BO.IOBoard = (function() {
         name = event.name,
         self = this;
 
-      this.removeEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
+      this.removeEventListener(IOBoardEvent.FIRMWARE_VERSION, this.initialVersionResultHandler);
 
       this.debug("debug: Firmware name = " + name + ", Firmware version = " + event.version);
 
@@ -2273,7 +2275,6 @@ BO.IOBoard = (function() {
           break;
         case REPORT_VERSION:
           this._protocolVersion = commandData[2] + commandData[1] * 10;
-          console.log(this._protocolVersion);
           this.dispatchEvent(new IOBoardEvent(IOBoardEvent.PROTOCOL_VERSION), {
             version: this._protocolVersion
           });
@@ -2411,7 +2412,7 @@ BO.IOBoard = (function() {
         this._firmwareName += String.fromCharCode(data);
       }
       this._firmwareVersion = msg[1] + msg[2] / 10;
-      this.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_NAME), {
+      this.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {
         name: this._firmwareName,
         version: this._firmwareVersion
       });
@@ -2456,6 +2457,8 @@ BO.IOBoard = (function() {
         byteCounter = 1, // Skip 1st byte because it's the command
         pinCounter = 0,
         analogPinCounter = 0,
+        mode,
+        resolution,
         len = msg.length,
         type,
         pin;
@@ -2507,7 +2510,12 @@ BO.IOBoard = (function() {
         } else {
           // Create capabilities object (mode: resolution) for each
           // mode supported by each pin
-          pinCapabilities[msg[byteCounter]] = msg[byteCounter + 1];
+          mode = msg[byteCounter];
+          resolution = msg[byteCounter + 1];
+          if (typeof mode !== "undefined") {
+            this._boardCapabilities[mode] = true;
+          }
+          pinCapabilities[mode] = resolution;
           byteCounter += 2;
         }
       }
@@ -2530,6 +2538,8 @@ BO.IOBoard = (function() {
       // This will map the IOBoard analog pin numbers (printed on IOBoard)
       // to their digital pin number equivalents
       this.queryAnalogMapping();
+
+      console.log(this._boardCapabilities);
     },
 
     /**
@@ -2881,7 +2891,6 @@ BO.IOBoard = (function() {
         this._samplingInterval = interval;
         this.send([START_SYSEX, SAMPLING_INTERVAL, interval & 0x007F, (interval >> 7) & 0x007F, END_SYSEX]);
       } else {
-        // To Do: Throw error?
         console.log("warning: Sampling interval must be between " + MIN_SAMPLING_INTERVAL + " and " + MAX_SAMPLING_INTERVAL);
       }
     },
@@ -2940,7 +2949,7 @@ BO.IOBoard = (function() {
 
     /**
      * Request the name and version of the firmware (the sketch) running on the IOBoard.
-     * Listen for the IOBoard.FIRMWARE_NAME event to be notified of when
+     * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when
      * the name is returned from the IOBoard. The version number is also
      * returned.
      * @method reportFirmware
@@ -3052,8 +3061,7 @@ BO.IOBoard = (function() {
      * pull-up resistor.
      */
     enablePullUp: function(pinNum) {
-      // TODO - change to compare against protocolVersion when it's added
-      if (this._firmwareVersion >= 25) {
+      if (this._boardCapabilities[Pin.INPUT_PULLUP]) {
         this.setDigitalPinMode(pinNum, Pin.INPUT_PULLUP);
       } else {
         this.sendDigitalData(pinNum, Pin.HIGH);
@@ -3062,6 +3070,7 @@ BO.IOBoard = (function() {
 
     /**
      * @method getFirmwareName
+     * @deprecated use getFirmwareVersion instead
      * @return {String} The name of the firmware running on the IOBoard.
      */
     getFirmwareName: function() {
@@ -3373,9 +3382,9 @@ BO.IOBoard = (function() {
     /**
      * Call this method to print the capabilities for all pins to
      * the console.
-     * @method reportCapabilities
+     * @method reportPinCapabilities
      */
-    reportCapabilities: function() {
+    reportPinCapabilities: function() {
       var capabilities = this.getPinCapabilities(),
         len = capabilities.length,
         resolution;
@@ -3455,6 +3464,12 @@ BO.IOBoard = (function() {
 
   };
 
+  /**
+   * @method reportCapabilities
+   * @deprecated use reportPinCapabilities instead
+   */
+  IOBoard.prototype.reportCapabilities = IOBoard.prototype.reportPinCapabilities;
+
   // Document events
 
   /**
@@ -3500,15 +3515,6 @@ BO.IOBoard = (function() {
    */
 
   /**
-   * The firmwareVersion event is dispatched when the firmware version
-   * is received from the IOBoard.
-   * @type BO.IOBoardEvent.FIRMWARE_VERSION
-   * @event firmwareVersion
-   * @param {IOBoard} target A reference to the IOBoard
-   * @param {Number} version The firmware version (where Firmata 2.3 = 23)
-   */
-
-  /**
    * The protocolVersion event is dispatched when the Firmata protocol version
    * is received from the IOBoard.
    * @type BO.IOBoardEvent.PROTOCOL_VERSION
@@ -3521,9 +3527,19 @@ BO.IOBoard = (function() {
    * The firmwareName event is dispatched when the firmware name is
    * received from the IOBoard.
    * @type BO.IOBoardEvent.FIRMWARE_NAME
+   * @deprecated use FIRMWARE_VERION instead
    * @event firmwareName
    * @param {IOBoard} target A reference to the IOBoard
    * @param {String} name The name of the firmware running on the IOBoard
+   * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+   */
+
+  /**
+   * The firmwareVersion event is dispatched when the firmware name and version
+   * is received from the IOBoard.
+   * @type BO.IOBoardEvent.FIRMWARE_VERSION
+   * @event firmwareVersion
+   * @param {IOBoard} target A reference to the IOBoard
    * @param {Number} version The firmware version (where Firmata 2.3 = 23)
    */
 

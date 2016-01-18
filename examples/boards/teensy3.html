@@ -74,7 +74,7 @@
 
     function onReady(event) {
       // Log the board capabilities to the browser console
-      teensy.reportCapabilities();
+      teensy.reportPinCapabilities();
 
       // Remove the listener because it is no longer needed
       teensy.removeEventListener(IOBoardEvent.READY, onReady);

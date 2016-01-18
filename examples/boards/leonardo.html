@@ -74,7 +74,7 @@
 
     function onReady(event) {
       // Log the board capabilities to the browser console
-      leo.reportCapabilities();
+      leo.reportPinCapabilities();
 
       // Remove the event listener because it is no longer needed
       leo.removeEventListener(IOBoardEvent.READY, onReady);

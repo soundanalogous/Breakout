@@ -60,7 +60,7 @@
             spy = sinon.spy(board, "processQueryFirmwareResult");
             listenerSpy = sinon.spy();
 
-            board.addEventListener("firmwareName", listenerSpy);
+            board.addEventListener("firmwareVersion", listenerSpy);
 
             for (var i = 0; i < len; i++) {
               board.processInput(reportFirmware[i]);
@@ -75,7 +75,7 @@
             expect(spy.calledOnce).to.equal(true);
           });
 
-          it("should fire a FIRMWARE_NAME event", function() {
+          it("should fire a FIRMWARE_VERSION event", function() {
             expect(listenerSpy.calledOnce).to.equal(true);
           });
 
