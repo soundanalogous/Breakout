@@ -1,7 +1,7 @@
 /*!
- * Breakout v0.3.2 - 2015-12-06
+ * Breakout v0.3.2 - 2016-01-17
 
- * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com> 
+ * Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
  * http://breakoutjs.com
  */
@@ -2751,63 +2751,75 @@ BO.Serial = (function() {
   var SerialEvent = BO.SerialEvent;
 
   /**
-   * Enables use of Hardware and Software serial ports on the board.
+   * Enables use of Hardware (UART) and Software serial ports on the board.
    *
    * @class Serial
    * @constructor
    * @uses JSUTILS.EventDispatcher
-   * @param {IOBoard} board A reference to the IOBoard instance.
-   * @param {Number} port The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
-   * SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)
-   * @param {Number} baud The baud rate of the serial port.
-   * @param {Number} rxPin [SoftwareSerial only] The RX pin of the SoftwareSerial instance
-   * @param {Number} txPin [SoftwareSerial only] The TX pin of the SoftwareSerial instance
+   * @param {Object} opts Options:
+   * - board {IOBoard} A reference to the IOBoard instance.
+   * - port {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
+   *   SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)
+   * - baud {Number} The baud rate of the serial port. Default = 57600.
+   * - rxPin {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance
+   * - txPin {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance
    *
    * @example
-   *     // Use a SoftwareSerial instance
-   *     var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 10, 11);
-   *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
-   *         console.log(event.data);
-   *     });
-   *     serial.startReading();
+   *   // Use a SoftwareSerial instance
+   *   var serial = new BO.Serial({
+   *     board: arduino,
+   *     port: BO.Serial.SW_SERIAL0,
+   *     baud: 57600,
+   *     txPin: 10,
+   *     rxPin: 11
+   *   });
+   *   serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+   *     console.log(event.data);
+   *   });
+   *   serial.startReading();
    *
    * @example
-   *     // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
-   *     var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600);
-   *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
-   *         console.log(event.data);
-   *     });
-   *     serial.startReading();
+   *   // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
+   *   var serial = new BO.Serial({
+   *     board: arduino,
+   *     port: BO.Serial.HW_SERIAL1,
+   *     baud: 57600
+   *   });
+   *   serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+   *     console.log(event.data);
+   *   });
+   *   serial.startReading();
    */
-  Serial = function(board, port, baud, rxPin, txPin) {
-    if (board === undefined) {
-      console.log("board undefined");
-      return;
+  Serial = function(opts) {
+    if (typeof opts === "undefined" ||
+        typeof opts.board === "undefined" ||
+        typeof opts.port === "undefined") {
+      throw new Error("Serial options board and port must be defined.");
     }
 
     this.name = "Serial";
-    this.board = board;
-    this.port = port;
-    this.baud = baud;
-    this.txPin = txPin;
-    this.rxPin = rxPin;
+    this.board = opts.board;
+    this.port = opts.port;
+    this.baud = opts.baud || 57600;
+    this.txPin = opts.txPin;
+    this.rxPin = opts.rxPin;
 
     this._evtDispatcher = new EventDispatcher(this);
 
-    board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
+    this.board.addEventListener(IOBoardEvent.SYSEX_MESSAGE, this.onSysExMessage.bind(this));
 
     var configData = [
       CONFIG | this.port,
-      baud & 0x007F, (baud >> 7) & 0x007F, (baud >> 14) & 0x007F
+      this.baud & 0x007F, (this.baud >> 7) & 0x007F, (this.baud >> 14) & 0x007F
     ];
-    if (rxPin) {
-      configData.push(rxPin);
-    }
-    if (txPin) {
-      configData.push(txPin);
+    if (this.port > 7 && typeof this.txPin !== "undefined" && typeof this.rxPin !== "undefined") {
+      configData.push(this.rxPin);
+      configData.push(this.txPin);
+    } else if (this.port > 7) {
+      throw new Error("Both RX and TX pins must be defined when using SoftwareSerial.");
     }
 
-    board.sendSysex(SERIAL_MESSAGE, configData);
+    this.board.sendSysex(SERIAL_MESSAGE, configData);
   };
 
   Serial.prototype = {
@@ -2839,10 +2851,16 @@ BO.Serial = (function() {
 
     /**
      * Write an array of data.
-     * @param {Array} data
+     * @param {Number|Array} val A single byte or an array of bytes to write
      */
-    write: function(data) {
+    write: function(val) {
       var txData = [];
+      var data = [];
+      if (!Array.isArray(val)) {
+        data.push(val);
+      } else {
+        data = val;
+      }
       txData.push(WRITE | this.port);
       for (var i = 0, len = data.length; i < len; i++) {
         txData.push(data[i] & 0x007F);
@@ -2942,14 +2960,54 @@ BO.Serial = (function() {
     }
   };
 
+  /**
+   * Not currently used. Corresponds to the default Arduino Serial port
+   * @property Serial.HW_SERIAL0
+   * @static
+   */
   Serial.HW_SERIAL0 = 0x00;
+  /**
+   * Pins RX1 and TX1 on the board
+   * @property Serial.HW_SERIAL1
+   * @static
+   */
   Serial.HW_SERIAL1 = 0x01;
+  /**
+   * Pins RX2 and TX2 on the board
+   * @property Serial.HW_SERIAL2
+   * @static
+   */
   Serial.HW_SERIAL2 = 0x02;
+  /**
+   * Pins RX3 and TX3 on the board
+   * @property Serial.HW_SERIAL3
+   * @static
+   */
   Serial.HW_SERIAL3 = 0x03;
 
+  /**
+   * One of four software serial instances
+   * @property Serial.SW_SERIAL0
+   * @static
+   */
   Serial.SW_SERIAL0 = 0x08;
+  /**
+   * One of four software serial instances
+   * @property Serial.SW_SERIAL1
+   * @static
+   */
   Serial.SW_SERIAL1 = 0x09;
+  /**
+   * One of four software serial instances
+   * @property Serial.SW_SERIAL2
+   * @static
+   */
   Serial.SW_SERIAL2 = 0x10;
+  /**
+   * One of four software serial instances
+   * @property Serial.SW_SERIAL3
+   * @static
+   */
   Serial.SW_SERIAL3 = 0x11;
 
   return Serial;
@@ -7055,7 +7113,6 @@ BO.IOBoard = (function() {
     this.name = "IOBoard";
 
     // Private properties
-    this._socket = null;
     this._inputDataBuffer = [];
     this._digitalPort = [];
     this._numPorts = 0;
@@ -7070,7 +7127,6 @@ BO.IOBoard = (function() {
     this._isReady = false;
     this._firmwareName = "";
     this._firmwareVersion = 0;
-    this._evtDispatcher = null;
     this._isMultiClientEnabled = false;
     this._isConfigured = false;
     this._capabilityQueryResponseReceived = false;

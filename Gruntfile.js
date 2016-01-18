@@ -33,7 +33,7 @@ module.exports = function(grunt) {
     'src/core/Pin.js',
     'src/core/I2CBase.js',
     'src/core/PhysicalInputBase.js',
-    'src/core/serial.js',
+    'src/core/Serial.js',
     'src/io/Stepper.js',
     'src/io/BlinkM.js',
     'src/io/CompassEvent.js',
