@@ -589,8 +589,6 @@ BO.IOBoard = (function() {
       // This will map the IOBoard analog pin numbers (printed on IOBoard)
       // to their digital pin number equivalents
       this.queryAnalogMapping();
-
-      console.log(this._boardCapabilities);
     },
 
     /**

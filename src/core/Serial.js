@@ -112,19 +112,19 @@ BO.Serial = (function() {
      */
     onSysExMessage: function(event) {
       var message = event.message;
-      var data;
+      var data = [];
 
       if (message[0] !== SERIAL_MESSAGE) {
         return;
       } else {
         if (message[1] === (REPLY | this.port)) {
           for (var i = 2, len = message.length; i < len; i += 2) {
-            data = this.board.getValueFromTwo7bitBytes(message[i], message[i + 1]);
-            this.dispatchEvent(new SerialEvent(SerialEvent.DATA), {
-              data: data,
-              portId: this.port
-            });
+            data.push(this.board.getValueFromTwo7bitBytes(message[i], message[i + 1]));
           }
+          this.dispatchEvent(new SerialEvent(SerialEvent.DATA), {
+            data: data,
+            portId: this.port
+          });
         }
       }
     },

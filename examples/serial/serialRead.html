@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Serial Read</title>
+
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    // Declare these variables so you don't have
+    // to type the full namespace
+    var IOBoard = BO.IOBoard;
+    var IOBoardEvent = BO.IOBoardEvent;
+    var Serial = BO.Serial;
+    var SerialEvent = BO.SerialEvent;
+
+    // Set to true to print debug messages to console
+    BO.enableDebugging = true;
+
+    var arduino = new IOBoard("localhost", 8887);
+    var serial;
+
+    // Listen for the IOBoard READY event which indicates the IOBoard
+    // is ready to send and receive data
+    arduino.addEventListener(IOBoardEvent.READY, onReady);
+
+    function onReady(event) {
+      // Remove the event listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+      // example using a software serial port
+      // both rxPin and txPin must be specified when using software serial.
+      // software serial is only available on AVR boards (Uno, Leonardo, Mega, etc)
+      // and on the Arduino 101
+      // If you have a board with an available UART (pins RX1/TX1, RX2/TX2, RX3/TX3),
+      // performance will be much better using hardware serial rather than software
+      // serial
+      serial = new Serial({
+        board: arduino,
+        port: Serial.SW_SERIAL0,
+        baud: 9600,
+        rxPin: 10,
+        txPin: 11
+      });
+
+      // example using a hardware serial port (Pins RX1 and TX1 on an
+      // Arduino Leonardo, Mega, Due, Zero, etc)
+      // serial = new Serial({
+      //   board: arduino,
+      //   port: Serial.HW_SERIAL1,
+      //   baud: 9600
+      // });
+
+      // add a listener to be notified when new serial data is received
+      serial.addEventListener(SerialEvent.DATA, onSerialData);
+
+      // start continuously reading the serial port
+      serial.startReading();
+    }
+
+    function onSerialData(event) {
+      var data = event.data;
+
+      // print raw data
+      console.log(data);
+
+      // if you're expecting a string of ascii characters
+      var ascii = "";
+      for (var i = 0, len = data.length; i < len; i++) {
+        ascii += String.fromCharCode(data[i]);
+      }
+      console.log(ascii);
+    }
+
+  });
+  </script>
+
+</head>
+
+<body>
+  <h2>Serial Read Example</h2>
+  <p>Open the console to view the incoming serial data</p>
+</body>
+
+</html>
