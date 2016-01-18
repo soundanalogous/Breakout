@@ -586,6 +586,7 @@ BO.Pin = (function() {
    */
   Pin.STEPPER = 0x08;
   /**
+   * Placeholder only - not yet supported
    * @property Pin.SERIAL
    * @static
    */

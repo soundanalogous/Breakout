@@ -44,6 +44,11 @@ BO.IOBoardEvent = (function() {
    */
   IOBoardEvent.DIGITAL_DATA = "digitalData";
   /**
+   * @property IOBoardEvent.PROTOCOL_VERSION
+   * @static
+   */
+  IOBoardEvent.PROTOCOL_VERSION = "protocolVersion";
+  /**
    * @property IOBoardEvent.FIRMWARE_VERSION
    * @static
    */

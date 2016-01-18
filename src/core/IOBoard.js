@@ -85,6 +85,7 @@ BO.IOBoard = (function() {
     this._isReady = false;
     this._firmwareName = "";
     this._firmwareVersion = 0;
+    this._protocolVersion = 0;
     this._isMultiClientEnabled = false;
     this._isConfigured = false;
     this._capabilityQueryResponseReceived = false;
@@ -189,6 +190,7 @@ BO.IOBoard = (function() {
      */
     begin: function() {
       this.addEventListener(IOBoardEvent.FIRMWARE_NAME, this.initialVersionResultHandler);
+      this.reportVersion();
       this.reportFirmware();
     },
 
@@ -209,8 +211,9 @@ BO.IOBoard = (function() {
 
       this.debug("debug: Firmware name = " + name + ", Firmware version = " + event.version);
 
-      // Make sure the user has uploaded StandardFirmata 2.3 or greater
-      if (version >= 23) {
+      // Make sure the user has uploaded a version of Firmata implementing protocol version
+      // 2.3.0 or higher
+      if (this._protocolVersion >= 23) {
 
         if (!this._isMultiClientEnabled) {
           // reset IOBoard to its default state
@@ -229,7 +232,6 @@ BO.IOBoard = (function() {
       } else {
         var err = "error: You must upload StandardFirmata version 2.3 or greater from Arduino version 1.0 or higher";
         console.log(err);
-        //throw err;
       }
     },
 
@@ -322,9 +324,10 @@ BO.IOBoard = (function() {
           this.processDigitalMessage(channel, commandData[1], commandData[2]); //(LSB, MSB)
           break;
         case REPORT_VERSION:
-          this._firmwareVersion = commandData[1] + commandData[2] / 10;
-          this.dispatchEvent(new IOBoardEvent(IOBoardEvent.FIRMWARE_VERSION), {
-            version: this._firmwareVersion
+          this._protocolVersion = commandData[2] + commandData[1] * 10;
+          console.log(this._protocolVersion);
+          this.dispatchEvent(new IOBoardEvent(IOBoardEvent.PROTOCOL_VERSION), {
+            version: this._protocolVersion
           });
           break;
         case ANALOG_MESSAGE:
@@ -977,9 +980,9 @@ BO.IOBoard = (function() {
     },
 
     /**
-     * Request the Firmata version implemented in the firmware (sketch)
+     * Request the Firmata protocol version implemented in the firmware (sketch)
      * running on the IOBoard.
-     * Listen for the IOBoard.FIRMWARE_VERSION event to be notified of when
+     * Listen for the IOBoard.PROTOCOL_VERSION event to be notified of when
      * the Firmata version is returned from the IOBoard.
      * @method reportVersion
      */
@@ -988,7 +991,7 @@ BO.IOBoard = (function() {
     },
 
     /**
-     * Request the name of the firmware (the sketch) running on the IOBoard.
+     * Request the name and version of the firmware (the sketch) running on the IOBoard.
      * Listen for the IOBoard.FIRMWARE_NAME event to be notified of when
      * the name is returned from the IOBoard. The version number is also
      * returned.
@@ -1102,7 +1105,7 @@ BO.IOBoard = (function() {
      */
     enablePullUp: function(pinNum) {
       // TODO - change to compare against protocolVersion when it's added
-      if (this._firmwareVersion >= 25) {
+      if (this._protocolVersion >= 25) {
         this.setDigitalPinMode(pinNum, Pin.INPUT_PULLUP);
       } else {
         this.sendDigitalData(pinNum, Pin.HIGH);
@@ -1126,6 +1129,15 @@ BO.IOBoard = (function() {
      */
     getFirmwareVersion: function() {
       return this._firmwareVersion;
+    },
+
+    /**
+     * @method getProtocolVersion
+     * @return {String} The version of Firmata protocol implemented by the firmware
+     * running on the IOBoard.
+     */
+    getProtocolVersion: function() {
+      return this._protocolVersion;
     },
 
     /**
@@ -1546,6 +1558,15 @@ BO.IOBoard = (function() {
    * @event firmwareVersion
    * @param {IOBoard} target A reference to the IOBoard
    * @param {Number} version The firmware version (where Firmata 2.3 = 23)
+   */
+
+  /**
+   * The protocolVersion event is dispatched when the Firmata protocol version
+   * is received from the IOBoard.
+   * @type BO.IOBoardEvent.PROTOCOL_VERSION
+   * @event protocolVersion
+   * @param {IOBoard} target A reference to the IOBoard
+   * @param {Number} version The protocol version (where Firmata 2.3 = 23)
    */
 
   /**
