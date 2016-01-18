@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
@@ -43,6 +43,7 @@ BO.WSocketWrapper = (function() {
     this._protocol = protocol || "default-protocol";
     this._socket = null;
     this._readyState = null; // only applies to native WebSocket implementations
+    this._ioManager = null; // only applies to Socket.IO implementations
 
     this.init(this);
 
@@ -61,14 +62,16 @@ BO.WSocketWrapper = (function() {
 
     // if io (socket.io) is defined, assume that the node server is being used
     if (typeof io !== "undefined") {
-      self._socket = io.connect("http://" + self._host + ":" + self._port);
+      //self._socket = io("http://" + self._host + ":" + self._port);
+
+      self._ioManager = io.Manager("http://" + self._host + ":" + self._port,
+        {reconnection: false});
+
+      self._socket = self._ioManager.socket('/');
 
       try {
         /** @private */
         self._socket.on('connect', function() {
-          // prevent socket.io from automatically attempting to reconnect
-          // when the server is quit
-          self._socket.socket.options.reconnect = false;
 
           // set this for compatibility with native WebSocket
           self._readyState = READY_STATE.OPEN;
@@ -76,9 +79,20 @@ BO.WSocketWrapper = (function() {
           self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
           /** @private */
           self._socket.on('message', function(msg) {
+            var data;
+            if (typeof msg === "string") {
+              data = msg;
+            } else {
+              // ArrayBuffer
+              data = msg.data;
+            }
             self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {
-              message: msg
+              message: data
             });
+          });
+
+          self._socket.on('disconnect', function () {
+            self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
           });
         });
 
@@ -98,7 +112,6 @@ BO.WSocketWrapper = (function() {
           //self._socket = new WebSocket("ws://"+self._host+":"+self._port, self._protocol);
           self._socket = new WebSocket("ws://" + self._host + ":" + self._port + '/websocket');
         } else {
-          console.log("Websockets not supported by this browser");
           throw new Error("Websockets not supported by this browser");
         }
         self._readyState = self._socket.readyState;
@@ -153,6 +166,7 @@ BO.WSocketWrapper = (function() {
   WSocketWrapper.prototype.sendString = function(message) {
     if (this.readyState === READY_STATE.OPEN) {
       this._socket.send(message.toString());
+      //this._socket.send(message);
     }
   };
 

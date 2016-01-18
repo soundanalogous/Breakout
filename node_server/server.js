@@ -1,29 +1,31 @@
 #!/usr/bin/env node
 
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
 var express = require('express'),
   app = express(),
   server = require('http').createServer(app),
-  socketIO = require('socket.io').listen(server),
+  socketIO = require('socket.io')(server),
   path = require('path'),
   fileSystem = require('fs'),
+  debug = require('debug')('server'),
   connectedSocket = null,
+  connectedClients = 0,
   isConnected = false,
   enableMultiConnect = false; // Set to true to enable multiple clients to connect
 
 /**************** ON EXIT CALLBACK *************/
 process.on('exit', function() {
-  console.log('About to exit.');
+  debug('About to exit.');
 });
 
 /**************** COMMAND LINE OPTIONS *************/
 var program = require('commander');
 program
-  .version('0.2.3')
+  .version('0.3.0')
   .option('-p, --port <device>', 'Specify the serial port [/dev/tty.usbmodemfd121]', '/dev/tty.usbmodemfd121')
   .option('-s, --server <port>', 'Specify the port [8887]', Number, 8887)
   .option('-m, --multi <connection>', 'Enable multiple connections [false]', "false")
@@ -38,20 +40,12 @@ if (program.multi == "true") {
   enableMultiConnect = true;
 }
 
-server.listen(parseInt(serverPort, 10));
-console.log("Server is running at: http://localhost:" + serverPort + " -> CTRL + C to shutdown");
-
-app.configure(function() {
-  var dir = path.resolve(program.dir);
-  fileSystem.realpath(dir, function(err, resolvedPath) {
-    if (err) {
-      console.log(dir + " does not exist");
-      process.exit(1);
-    } else {
-      app.use(express.static(dir));
-    }
-  });
+server.listen(parseInt(serverPort, 10), function () {
+  console.log("Server is running at: http://localhost:" + serverPort + " -> CTRL + C to shutdown");
 });
+
+var dir = path.resolve(program.dir);
+app.use(express.static(dir));
 
 
 /******************** SERIAL ************************/
@@ -78,66 +72,56 @@ serial.on("data", function(data) {
 });
 
 serial.on("error", function(msg) {
-  console.log("serial error: " + msg);
+  debug("serial error: " + msg);
   process.exit(1);
 });
 
 
 /************************* SOCKET.IO ***********************/
-// configure socket.io
-socketIO.configure(function() {
-  // Suppress socket.io debug output
-  socketIO.set('log level', 1);
-  socketIO.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
-});
 
-socketIO.configure('production', function() {
-  socketIO.enable('browser client etag');
-  socketIO.set('log level', 1);
+socketIO.sockets.on('connection', function(socket) {
 
-  socketIO.set('transports', [
-    'websocket',
-    'flashsocket',
-    'xhr-polling',
-    'jsonp-polling'
-  ]);
-});
-
-socketIO.configure('development', function() {
-  socketIO.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
-});
-
-socketIO.sockets.on('connection', function(connection) {
-
-  connectedSocket = connection;
+  connectedSocket = socket;
   isConnected = true;
+  connectedClients++;
 
   if (enableMultiConnect) {
-    // TO DO: once Breakout Server has been updated to send JSON strings
-    // update the following line to send a JSON string.
-    connection.send("config: multiClient");
-    console.log("multi client enabled");
+    socket.send("config: multiClient");
+    debug("multi client enabled");
   }
 
-  console.log("connected: " + connection.id);
+  debug("connected: " + socket.id);
 
-  connection.on('message', function(data) {
+  socket.on('message', function(data) {
     var msgData = {};
     msgData = data.split(',');
 
     // Relay websocket data to serial port
-    serial.write(msgData);
+    serial.write(new Buffer(msgData), function(err, results) {
+      if (err) {
+        debug('serial write err ' + err);
+      } else {
+        debug('serial write results ' + results);
+      }
+    });
 
   });
 
-  connection.on('disconnect', function() {
-    var numRemaining = Object.keys(connection.manager.roomClients).length - 1;
-    console.log("disconnected " + connection.id);
+  socket.on('disconnect', function() {
 
-    if (!enableMultiConnect || numRemaining < 1) {
+    debug("disconnected " + socket.id);
+    connectedClients--;
+
+    // TODO - figure out how to get this to work
+    //var clientList = socketIO.sockets.adapter.rooms['/'];
+    //var clientList = Object.keys(socketIO.sockets.adapter.rooms[room]).length = 0;
+    //var numRemaining = clientList.length;
+
+    if (!enableMultiConnect || connectedClients < 1) {
       connectedSocket = null;
       isConnected = false;
-      console.log("all clients disconnected");
+      connectedClients = 0;
+      debug("all clients disconnected");
     }
   });
 });

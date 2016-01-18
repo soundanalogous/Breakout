@@ -139,15 +139,15 @@ BO.IOBoard = (function() {
         data = [],
         len;
 
-      if (message.length > 1) {
+      if (typeof message === "string") {
         data = message.split(",");
-
-        len = data.length;
-        for (var i = 0; i < len; i++) {
-          this.parseInputMessage(data[i]);
-        }
       } else {
-        this.parseInputMessage(message);
+        data = message;
+      }
+
+      len = data.length;
+      for (var i = 0; i < len; i++) {
+        this.parseInputMessage(data[i]);
       }
     },
 
@@ -163,7 +163,7 @@ BO.IOBoard = (function() {
         message = "";
 
       // Check for config messages from the server
-      if (data.match(pattern)) {
+      if (data.match && data.match(pattern)) {
         // to do: update servers to send a JSON string
         // then parse the string here
         message = data.substr(data.indexOf(':') + 2);
