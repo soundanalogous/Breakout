@@ -58,6 +58,7 @@ The first step is to install [ConfigurableFirmata](https://github.com/firmata/Co
 from the Arduino Library manager if you are using Arduino version 1.6.4 or higher. In the Arduino IDE, go to `Sketch > Include Library > Manage Libraries` then search for "ConfigurableFirmata" and click `Install` after tapping on the ConfigurableFirmata item in the filtered results.
 
 Once you have ConfigurableFirmata installed, follow these steps to get started:
+
 1. After downloading or cloning Breakout, navigate to `Breakout/firmware/BreakoutFirmata/` and open BreakoutFirmata.ino in the Arduino IDE (version 1.0 or higher is required, version 1.6.4 or higher is recommended).
 2. Compile *BreakoutFirmata* for your board and upload.
 3. Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
@@ -69,11 +70,11 @@ The next step is to run the Breakout Server application:
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
-6. Open [http://localhost:8887/examples/index.html](http://localhost:8887/examples/index.html) in Chrome (v14 or greater), Firefox (v11 or greater), or Safari (v5 or greater) and try the Getting Started examples. Note that if you changed the network port in step 4, you will need to update the 2nd parameter of the IOBoard constructor to the new port number.
+6. Open [http://localhost:8887/examples/index.html](http://localhost:8887/examples/index.html) in your favorite browser and try the Getting Started examples. Note that if you changed the network port in step 4, you will need to update the 2nd parameter of the IOBoard constructor to the new port number.
 
-**Note OS X Mavericks (or later) users:** You will need to disable the App Nap feature for Breakout Server. Right-click on the Breakout Server icon then select Get Info. Check the `Prevent App Nap` box under the General section in the info panel.
+**Note OS X users:** If you are running Mavericks or later, you will need to disable the App Nap feature for Breakout Server. Right-click on the Breakout Server icon then select Get Info. Check the `Prevent App Nap` box under the General section in the info panel. If you don't disable it, the connection will be dropped a few seconds after the window goes out of focus.
 
-You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of `localhost:8887/examples/` enter the IP address or hostname of the computer running Breakout Server (`192.168.2.1:8887/examples/` or `yourhostname.local:8887/examples/`u). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
+You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets (Safari, Chrome for Android, Firefox Mobile). Instead of `localhost:8887/examples/` enter the IP address or hostname of the computer running Breakout Server (`192.168.2.1:8887/examples/` or `yourhostname.local:8887/examples/`). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
 
 For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, enabling auto start mode, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
 
@@ -88,8 +89,8 @@ Breakout is only supported for Arduino 1.0 and higher [Download Arduino](http://
 You will need one of the following I/O boards:
 
 - An Arduino version Diecimila or newer (Uno, Zero, 101, Fio, Mega, Pro, LilyPad, Leonardo, Due, etc).
-- [Teensy 2.0](http://www.pjrc.com/teensy/), Teensy 3.0/3.1/3.2, Teensy LC, Teensy++ 1.0 or 2.0
-- Many Arduino clones / variants should also work.
+- [Any of the Teensy boards](http://www.pjrc.com/teensy/): Teensy 3.0/3.1/3.2, Teensy LC, Teensy++ 1.0 or 2.0
+- Many Arduino clones variants may also work.
 - See [Test Environment](https://github.com/soundanalogous/Breakout/wiki/Test-Environment) for full list of tested I/O boards.
 
 OS:
