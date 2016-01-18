@@ -170,7 +170,7 @@ module.exports = function(grunt) {
       },
       target: {
         //src: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
-        src: ['Gruntfile.js', 'src/**/*.js', 'node_server/server.js']
+        src: ['Gruntfile.js', 'src/**/*.js']
       }
     },
 
@@ -178,8 +178,7 @@ module.exports = function(grunt) {
       src: [
         'Gruntfile.js',
         'src/**/*.js',
-        'test/**/*.js',
-        'node_server/server.js'
+        'test/**/*.js'
       ],
       options: {
         config: ".jscsrc",
@@ -187,7 +186,7 @@ module.exports = function(grunt) {
     },
 
     jsbeautifier: {
-      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'node_server/server.js', 'examples/**/*.html'],
+      files: ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'examples/**/*.html'],
       options: {
         js: {
           braceStyle: "collapse",
@@ -238,7 +237,6 @@ module.exports = function(grunt) {
           'cp -r docs tmp/Breakout',
           'cp -r examples tmp/Breakout',
           'cp -r firmware tmp/Breakout',
-          'cp -r node_server tmp/Breakout',
           'cp -r server tmp/Breakout',
           'cp -r src tmp/Breakout',
           'cp -r dist tmp/Breakout',
@@ -257,8 +255,6 @@ module.exports = function(grunt) {
           'rm -r ./breakout_server-win64/',
           'rm -r ./breakout_server-linux/',
           'cd ..',
-          'rm -rf node_server/node_modules/',
-          'rm node_server/.gitignore',
           'cd ..',
           'zip -r ./Breakout.zip ./Breakout',
           'cd ..',

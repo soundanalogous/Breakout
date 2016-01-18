@@ -545,8 +545,6 @@ BO.WSocketWrapper = (function() {
 
     // if io (socket.io) is defined, assume that the node server is being used
     if (typeof io !== "undefined") {
-      //self._socket = io("http://" + self._host + ":" + self._port);
-
       self._ioManager = io.Manager("http://" + self._host + ":" + self._port,
         {reconnection: false});
 
@@ -649,7 +647,6 @@ BO.WSocketWrapper = (function() {
   WSocketWrapper.prototype.sendString = function(message) {
     if (this.readyState === READY_STATE.OPEN) {
       this._socket.send(message.toString());
-      //this._socket.send(message);
     }
   };
 
