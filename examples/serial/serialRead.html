@@ -6,6 +6,29 @@
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <style type="text/css">
+  body {
+    margin: 15px;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5em;
+    color: #666;
+  }
+
+  h2 {
+    padding-left: 0px;
+    font-weight: normal;
+    font-size: 28px;
+    color: #00AEFF;
+  }
+
+  p {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+  }
+  </style>
+
   <title>Serial Read</title>
 
   <!-- The following (socket.io.js) is only required when using the node_server -->
@@ -26,6 +49,10 @@
 
     var arduino = new IOBoard("localhost", 8887);
     var serial;
+    var $message = $("#message");
+    var msgText = "";
+    var eventCounter = 0;
+    var numEvents = 30;
 
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
@@ -71,12 +98,19 @@
       // print raw data
       console.log(data);
 
-      // if you're expecting a string of ascii characters
+      // if you're not expecting a string of ascii characters, comment out the following lines
       var ascii = "";
       for (var i = 0, len = data.length; i < len; i++) {
         ascii += String.fromCharCode(data[i]);
       }
-      console.log(ascii);
+      // allow a bunch of data to fill the textview
+      if (eventCounter++ < numEvents) {
+        msgText += ascii;
+      } else {
+        $message.text(msgText);
+        eventCounter = 0;
+        msgText = "";
+      }
     }
 
   });
@@ -86,7 +120,8 @@
 
 <body>
   <h2>Serial Read Example</h2>
-  <p>Open the console to view the incoming serial data</p>
+  <textarea id="message" rows="10" cols="50"></textarea>
+  <p>Open the console to view raw incoming serial data</p>
 </body>
 
 </html>
