@@ -177,240 +177,240 @@
 <div class="file">
     <pre class="code prettyprint linenums">
  /**
- * Based on LED.as originally written in as3.
- * Copyright (c) the Funnel development team
- * http://www.funnel.cc
- *
- * Ported to JavaScript by Jeff Hoefs
- * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
- *
- * Released under the MIT license. See LICENSE file for details.
- */
+  * Based on LED.as originally written in as3.
+  * Copyright (c) the Funnel development team
+  * http://www.funnel.cc
+  *
+  * Ported to JavaScript by Jeff Hoefs
+  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+  *
+  * Released under the MIT license. See LICENSE file for details.
+  */
 
-JSUTILS.namespace(&#x27;BO.io.LED&#x27;);
+ JSUTILS.namespace(&#x27;BO.io.LED&#x27;);
 
-BO.io.LED = (function () {
+ BO.io.LED = (function() {
 
-    var LED;
+   var LED;
 
-    // Dependencies
-    var Pin = BO.Pin;
-    var Oscillator = BO.generators.Oscillator;
+   // Dependencies
+   var Pin = BO.Pin;
+   var Oscillator = BO.generators.Oscillator;
 
-    /**
-     * Creates an interface to an LED. This object provides helpful
-     * methods for blinking and fading LEDs. To use the fading methods, the
-     * LED must be connected to a PWM pin on the I/O board.
-     *
-     * &lt;p&gt;PLEASE NOTE: To use the fade methods, or to use an waveform other 
-     * than &#x60;Oscillator.SQUARE&#x60; the LED must be connected to a PWM pin.&lt;/p&gt;
-     *
-     * &lt;p&gt;&#x60;SOURCE_DRIVE&#x60; vs &#x60;SYNC_DRIVE&#x60;. If the Anode (longer LED pin) is
-     * connected to the microcontroller pin, then it is &#x60;SOURCE_DRIVE&#x60;. If the
-     * Cathode is connected to the microcontroller pin, then it is 
-     * &#x60;SYNC_DRIVE&#x60;.&lt;/p&gt;
-     *
-     * @class LED
-     * @constructor
-     * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
-     * @param {Pin} ledPin A reference to the Pin the LED is connected to.
-     * @param {Number} driveMode The drive mode of the LED. Must be set to
-     * &#x60;LED.SOURCE_MODE&#x60; or &#x60;LED.SYNC_MODE&#x60;. &#x60;SOURCE_MODE&#x60; is default.
-     */
-    LED = function (board, ledPin, driveMode) {
-        &quot;use strict&quot;;
-        
-        this.name = &quot;LED&quot;;
+   /**
+    * Creates an interface to an LED. This object provides helpful
+    * methods for blinking and fading LEDs. To use the fading methods, the
+    * LED must be connected to a PWM pin on the I/O board.
+    *
+    * &lt;p&gt;PLEASE NOTE: To use the fade methods, or to use an waveform other
+    * than &#x60;Oscillator.SQUARE&#x60; the LED must be connected to a PWM pin.&lt;/p&gt;
+    *
+    * &lt;p&gt;&#x60;SOURCE_DRIVE&#x60; vs &#x60;SYNC_DRIVE&#x60;. If the Anode (longer LED pin) is
+    * connected to the microcontroller pin, then it is &#x60;SOURCE_DRIVE&#x60;. If the
+    * Cathode is connected to the microcontroller pin, then it is
+    * &#x60;SYNC_DRIVE&#x60;.&lt;/p&gt;
+    *
+    * @class LED
+    * @constructor
+    * @param {IOBoard} board A reference to the IOBoard the LED is attached to.
+    * @param {Pin} ledPin A reference to the Pin the LED is connected to.
+    * @param {Number} driveMode The drive mode of the LED. Must be set to
+    * &#x60;LED.SOURCE_MODE&#x60; or &#x60;LED.SYNC_MODE&#x60;. &#x60;SOURCE_MODE&#x60; is default.
+    */
+   LED = function(board, ledPin, driveMode) {
+     &quot;use strict&quot;;
 
-        this._driveMode = driveMode || LED.SOURCE_DRIVE;
-        this._pin = ledPin;
-        this._onValue = 1;
-        this._offValue = 0;
-        this._supportsPWM = undefined;
+     this.name = &quot;LED&quot;;
 
-        if (this._driveMode === LED.SOURCE_DRIVE) {
-            this._onValue = 1;
-            this._offValue = 0;
-        } else if (this._driveMode === LED.SYNC_DRIVE) {
-            this._onValue = 0;
-            this._offValue = 1;
-        } else {
-            throw &quot;driveMode should be LED.SOURCE_DRIVE or LED.SYNC_DRIVE&quot;;
-        }
+     this._driveMode = driveMode || LED.SOURCE_DRIVE;
+     this._pin = ledPin;
+     this._onValue = 1;
+     this._offValue = 0;
+     this._supportsPWM = undefined;
 
-        // If the pin supports PWM, set PWM mode else set DOUT mode
-        if (this._pin.getCapabilities()[Pin.PWM]) {
-            board.setDigitalPinMode(this._pin.number, Pin.PWM);
-            this._supportsPWM = true;
-        } else {
-            board.setDigitalPinMode(this._pin.number, Pin.DOUT);
-            this._supportsPWM = false;
-        }
+     if (this._driveMode === LED.SOURCE_DRIVE) {
+       this._onValue = 1;
+       this._offValue = 0;
+     } else if (this._driveMode === LED.SYNC_DRIVE) {
+       this._onValue = 0;
+       this._offValue = 1;
+     } else {
+       throw &quot;driveMode should be LED.SOURCE_DRIVE or LED.SYNC_DRIVE&quot;;
+     }
 
-        // Start in the off state
-        this.off();
-    };
+     // If the pin supports PWM, set PWM mode else set DOUT mode
+     if (this._pin.getCapabilities()[Pin.PWM]) {
+       board.setDigitalPinMode(this._pin.number, Pin.PWM);
+       this._supportsPWM = true;
+     } else {
+       board.setDigitalPinMode(this._pin.number, Pin.DOUT);
+       this._supportsPWM = false;
+     }
 
-    LED.prototype = {
+     // Start in the off state
+     this.off();
+   };
 
-        constructor: LED,
+   LED.prototype = {
 
-        /**
-         * Get or set the current value (intensity) of the LED.
-         * @property intensity
-         * @type Number
-         */
-        get intensity() {
-            return this._pin.value;
-        },
-        set intensity(val) {
-            // If the pin does not support PWM, force the value to 1 or 0
-            if (!this._supportsPWM) {
-                if (val &lt; 0.5) {
-                    val = 0;
-                } else {
-                    val = 1;
-                }
-            }
+     constructor: LED,
 
-            if (this._driveMode === LED.SOURCE_DRIVE) {
-                this._pin.value = val;
-            } else if (this._driveMode === LED.SYNC_DRIVE) {
-                this._pin.value = 1 - val;
-            }
-        },
-        
-        /**
-         * Turn the LED on.
-         * @method on
-         */
-        on: function () {
-            this._pin.value = this._onValue;
-        },
+     /**
+      * Get or set the current value (intensity) of the LED.
+      * @property intensity
+      * @type Number
+      */
+     get intensity() {
+       return this._pin.value;
+     },
+     set intensity(val) {
+       // If the pin does not support PWM, force the value to 1 or 0
+       if (!this._supportsPWM) {
+         if (val &lt; 0.5) {
+           val = 0;
+         } else {
+           val = 1;
+         }
+       }
 
-        /**
-         * Turn the LED off.
-         * @method off
-         */
-        off: function () {
-            this._pin.value = this._offValue;
-        },
+       if (this._driveMode === LED.SOURCE_DRIVE) {
+         this._pin.value = val;
+       } else if (this._driveMode === LED.SYNC_DRIVE) {
+         this._pin.value = 1 - val;
+       }
+     },
 
-        /**
-         * Check if the LED is on.
-         * @method isOn
-         * @return {Boolean} True if the LED is on, false if it is off.
-         */
-        isOn: function () {
-            return this._pin.value === this._onValue;
-        },
+     /**
+      * Turn the LED on.
+      * @method on
+      */
+     on: function() {
+       this._pin.value = this._onValue;
+     },
 
-        /**
-         * Toggle the LED on or off.
-         * @method toggle
-         */
-        toggle: function () {
-            this._pin.value = 1 - this._pin.value;
-        },
+     /**
+      * Turn the LED off.
+      * @method off
+      */
+     off: function() {
+       this._pin.value = this._offValue;
+     },
 
-        /**
-         * @method blink
-         * @param {Number} interval The time interval to blink the LED.
-         * @param {Number} times The number of times the LED should blink.
-         * A value of 0 will blink forever.
-         * @param {Function} wave The waveform to apply (default is Oscillator.SQUARE)
-         * @see BO.generator.Oscillator
-         */
-        blink: function (interval, times, wave) {
-            var freq = 1000 / interval;
-            times = times || 0;
-            wave = wave || Oscillator.SQUARE;
+     /**
+      * Check if the LED is on.
+      * @method isOn
+      * @return {Boolean} True if the LED is on, false if it is off.
+      */
+     isOn: function() {
+       return this._pin.value === this._onValue;
+     },
 
-            if (!this._supportsPWM &amp;&amp; wave !== Oscillator.SQUARE) {
-                console.log(&quot;warning: Only Oscillator.SQUARE may be used on a non-PWM pin.&quot;);
-                console.log(&quot;debug: Setting wave to Oscillator.SQUARE.&quot;);
-                wave = Oscillator.SQUARE;
-            }
+     /**
+      * Toggle the LED on or off.
+      * @method toggle
+      */
+     toggle: function() {
+       this._pin.value = 1 - this._pin.value;
+     },
 
-            //var osc = new Oscillator(wave, freq, 1, 0, 0, times);
-            this._pin.addGenerator(new Oscillator(wave, freq, 1, 0, 0, times));
-            //osc.start();
-            this._pin.generator.start();
-        },
+     /**
+      * @method blink
+      * @param {Number} interval The time interval to blink the LED.
+      * @param {Number} times The number of times the LED should blink.
+      * A value of 0 will blink forever.
+      * @param {Function} wave The waveform to apply (default is Oscillator.SQUARE)
+      * @see BO.generator.Oscillator
+      */
+     blink: function(interval, times, wave) {
+       var freq = 1000 / interval;
+       times = times || 0;
+       wave = wave || Oscillator.SQUARE;
 
-        /**
-         * Stop the LED blink cycle.
-         * @method stopBlinking
-         */
-        stopBlinking: function () {
-            if (this._pin.generator !== null) {
-                this._pin.generator.stop();
-            }
-            this.off();
-        },
+       if (!this._supportsPWM &amp;&amp; wave !== Oscillator.SQUARE) {
+         console.log(&quot;warning: Only Oscillator.SQUARE may be used on a non-PWM pin.&quot;);
+         console.log(&quot;debug: Setting wave to Oscillator.SQUARE.&quot;);
+         wave = Oscillator.SQUARE;
+       }
 
-        /**
-         * The LED must be connected to a PWM pin to use this method.
-         *
-         * @method fadeIn
-         * @param {Number} time The fade-in time (in milliseconds).
-         */
-        fadeIn: function (time) {
-            this.fadeTo(this._onValue, time);
-        },
+       //var osc = new Oscillator(wave, freq, 1, 0, 0, times);
+       this._pin.addGenerator(new Oscillator(wave, freq, 1, 0, 0, times));
+       //osc.start();
+       this._pin.generator.start();
+     },
 
-        /**
-         * The LED must be connected to a PWM pin to use this method.
-         *
-         * @method fadeOut
-         * @param {Number} time The fade-out time (in milliseconds).
-         */
-        fadeOut: function (time) {
-            this.fadeTo(this._offValue, time);
-        },
+     /**
+      * Stop the LED blink cycle.
+      * @method stopBlinking
+      */
+     stopBlinking: function() {
+       if (this._pin.generator !== null) {
+         this._pin.generator.stop();
+       }
+       this.off();
+     },
 
-        /**
-         * The LED must be connected to a PWM pin to use this method.
-         *
-         * @method fadeTo
-         * @param {Number} to The new intensity value to fade to.
-         * @param {Number} time The fade time (in milliseconds).
-         */
-        fadeTo: function (to, time) {
+     /**
+      * The LED must be connected to a PWM pin to use this method.
+      *
+      * @method fadeIn
+      * @param {Number} time The fade-in time (in milliseconds).
+      */
+     fadeIn: function(time) {
+       this.fadeTo(this._onValue, time);
+     },
 
-            if (!this._supportsPWM) {
-                console.log(&quot;warning: Fade methods can only be used for LEDs connected to PWM pins.&quot;);
-                return;
-            }
+     /**
+      * The LED must be connected to a PWM pin to use this method.
+      *
+      * @method fadeOut
+      * @param {Number} time The fade-out time (in milliseconds).
+      */
+     fadeOut: function(time) {
+       this.fadeTo(this._offValue, time);
+     },
 
-            if (this._driveMode === LED.SYNC_DRIVE) {
-                to = 1 - to;
-            }
+     /**
+      * The LED must be connected to a PWM pin to use this method.
+      *
+      * @method fadeTo
+      * @param {Number} to The new intensity value to fade to.
+      * @param {Number} time The fade time (in milliseconds).
+      */
+     fadeTo: function(to, time) {
 
-            time = time || 1000;
-            var freq = 1000 / time;
-            if (this._pin.value !== to) {
-                this._pin.addGenerator(new Oscillator(Oscillator.LINEAR, freq, to - this._pin.value, this._pin.value, 0, 1));
-                this._pin.generator.start();
-            } else {
-                this._pin.removeGenerator();
-            }
-        }
-    };
+       if (!this._supportsPWM) {
+         console.log(&quot;warning: Fade methods can only be used for LEDs connected to PWM pins.&quot;);
+         return;
+       }
 
-    /**
-     * @property LED.SOURCE_DRIVE
-     * @static
-     */
-    LED.SOURCE_DRIVE = 0;
-    /**
-     * @property LED.SYNC_DRIVE
-     * @static
-     */
-    LED.SYNC_DRIVE = 1;
+       if (this._driveMode === LED.SYNC_DRIVE) {
+         to = 1 - to;
+       }
 
-    return LED;
-}());
+       time = time || 1000;
+       var freq = 1000 / time;
+       if (this._pin.value !== to) {
+         this._pin.addGenerator(new Oscillator(Oscillator.LINEAR, freq, to - this._pin.value, this._pin.value, 0, 1));
+         this._pin.generator.start();
+       } else {
+         this._pin.removeGenerator();
+       }
+     }
+   };
+
+   /**
+    * @property LED.SOURCE_DRIVE
+    * @static
+    */
+   LED.SOURCE_DRIVE = 0;
+   /**
+    * @property LED.SYNC_DRIVE
+    * @static
+    */
+   LED.SYNC_DRIVE = 1;
+
+   return LED;
+ }());
 
     </pre>
 </div>

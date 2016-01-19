@@ -1706,38 +1706,40 @@ BO.Serial = (function() {
    * @constructor
    * @uses JSUTILS.EventDispatcher
    * @param {Object} opts Options:
-   * - board {IOBoard} A reference to the IOBoard instance.
-   * - port {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
-   *   SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)
-   * - baud {Number} The baud rate of the serial port. Default = 57600.
-   * - rxPin {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance
-   * - txPin {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance
+   * <ul>
+   * <li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>
+   * <li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
+   *   SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>
+   * <li></strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>
+   * <li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>
+   * <li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>
+   * </ul>
    *
    * @example
-   *   // Use a SoftwareSerial instance
-   *   var serial = new BO.Serial({
-   *     board: arduino,
-   *     port: BO.Serial.SW_SERIAL0,
-   *     baud: 57600,
-   *     txPin: 10,
-   *     rxPin: 11
-   *   });
-   *   serial.addEventListener(BO.SerialEvent.DATA, function (event) {
-   *     console.log(event.data);
-   *   });
-   *   serial.startReading();
+   *     // Use a SoftwareSerial instance
+   *     var serial = new BO.Serial({
+   *       board: arduino,
+   *       port: BO.Serial.SW_SERIAL0,
+   *       baud: 57600,
+   *       txPin: 10,
+   *       rxPin: 11
+   *     });
+   *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+   *       console.log(event.data);
+   *     });
+   *     serial.startReading();
    *
    * @example
-   *   // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
-   *   var serial = new BO.Serial({
-   *     board: arduino,
-   *     port: BO.Serial.HW_SERIAL1,
-   *     baud: 57600
-   *   });
-   *   serial.addEventListener(BO.SerialEvent.DATA, function (event) {
-   *     console.log(event.data);
-   *   });
-   *   serial.startReading();
+   *     // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
+   *     var serial = new BO.Serial({
+   *       board: arduino,
+   *       port: BO.Serial.HW_SERIAL1,
+   *       baud: 57600
+   *     });
+   *     serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+   *       console.log(event.data);
+   *     });
+   *     serial.startReading();
    */
   Serial = function(opts) {
     if (typeof opts === "undefined" ||
@@ -1800,6 +1802,7 @@ BO.Serial = (function() {
 
     /**
      * Write an array of data.
+     * @method write
      * @param {Number|Array} val A single byte or an array of bytes to write
      */
     write: function(val) {
@@ -1822,6 +1825,7 @@ BO.Serial = (function() {
 
     /**
      * Start reading the serial port.
+     * @method startReading
      * @param {Number} maxBytesToRead [optional] The number of bytes to read on each iteration
      * of the main loop.
      */
@@ -1839,6 +1843,7 @@ BO.Serial = (function() {
 
     /**
      * Stop reading the serial port.
+     * @method stopReading
      */
     stopReading: function() {
       this.board.sendSysex(SERIAL_MESSAGE, [READ | this.port, STOP_READING]);
@@ -1847,6 +1852,7 @@ BO.Serial = (function() {
     /**
      * Close the serial port. A new instance must be created in order
      * to reopen the port.
+     * @method close
      */
     close: function() {
       this.board.sendSysex(SERIAL_MESSAGE, [CLOSE | this.port]);
@@ -1856,6 +1862,7 @@ BO.Serial = (function() {
      * For HardwareSerial, waits for the transmission of outgoing serial data
      * to complete.
      * For SoftwareSerial, removes any buffered incoming serial data.
+     * @method flush
      */
     flush: function() {
       this.board.sendSysex(SERIAL_MESSAGE, [FLUSH | this.port]);
@@ -1865,6 +1872,7 @@ BO.Serial = (function() {
      * For SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.
      * Call this method to set this port to be the reading port in the case there are multiple
      * SoftwareSerial instances.
+     * @method listen
      */
     listen: function() {
       if (this.port < 8) {

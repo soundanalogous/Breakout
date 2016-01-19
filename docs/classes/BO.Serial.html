@@ -201,7 +201,7 @@
 
 
 <div class="box intro">
-    <p>Enables use of Hardware and Software serial ports on the board.</p>
+    <p>Enables use of Hardware (UART) and Software serial ports on the board.</p>
 </div>
 
 
@@ -216,31 +216,7 @@
             
                 <li class="arg">
                     
-                        <code>board</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>port</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>baud</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>rxPin</code>
-                    
-                </li>
-            
-                <li class="arg">
-                    
-                        <code>txPin</code>
+                        <code>opts</code>
                     
                 </li>
             
@@ -295,75 +271,23 @@
             
                 <li class="param">
                     
-                        <code class="param-name">board</code>
-                        <span class="type">IOBoard</span>
+                        <code class="param-name">opts</code>
+                        <span class="type">Object</span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>A reference to the IOBoard instance.</p>
-                    </div>
+                        <p>Options:</p>
 
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">port</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The serial port to use (HW<em>SERIAL1, HW</em>SERIAL2, HW<em>SERIAL3, SW</em>SERIAL0,
-SW<em>SERIAL1, SW</em>SERIAL2, SW_SERIAL3)</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">baud</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>The baud rate of the serial port.</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">rxPin</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>[SoftwareSerial only] The RX pin of the SoftwareSerial instance</p>
-                    </div>
-
-                    
-                </li>
-            
-                <li class="param">
-                    
-                        <code class="param-name">txPin</code>
-                        <span class="type">Number</span>
-                    
-
-                    
-
-                    <div class="param-description">
-                        <p>[SoftwareSerial only] The TX pin of the SoftwareSerial instance</p>
+<ul>
+<li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>
+<li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
+  SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>
+<li></strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>
+<li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>
+<li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>
+</ul>
                     </div>
 
                     
@@ -381,15 +305,25 @@ SW<em>SERIAL1, SW</em>SERIAL2, SW_SERIAL3)</p>
 
             <div class="example-content">
                 <pre class="code prettyprint"><code>// Use a SoftwareSerial instance
-var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 10, 11);
+var serial = new BO.Serial({
+  board: arduino,
+  port: BO.Serial.SW_SERIAL0,
+  baud: 57600,
+  txPin: 10,
+  rxPin: 11
+});
 serial.addEventListener(BO.SerialEvent.DATA, function (event) {
-    console.log(event.data);
+  console.log(event.data);
 });
 serial.startReading();
 </code></pre><pre class="code prettyprint"><code>// Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
-var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600);
+var serial = new BO.Serial({
+  board: arduino,
+  port: BO.Serial.HW_SERIAL1,
+  baud: 57600
+});
 serial.addEventListener(BO.SerialEvent.DATA, function (event) {
-    console.log(event.data);
+  console.log(event.data);
 });
 serial.startReading();
 </code></pre>
@@ -408,6 +342,8 @@ serial.startReading();
         
             <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
         
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
         
@@ -430,8 +366,22 @@ serial.startReading();
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_close">close</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
                                 <a href="#method_dispatchEvent">dispatchEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_flush">flush</a>
 
                                 
                                 
@@ -444,8 +394,36 @@ serial.startReading();
                                 
                             </li>
                         
+                            <li class="index-item method">
+                                <a href="#method_listen">listen</a>
+
+                                
+                                
+                            </li>
+                        
                             <li class="index-item method inherited">
                                 <a href="#method_removeEventListener">removeEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_startReading">startReading</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_stopReading">stopReading</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_write">write</a>
 
                                 
                                 
@@ -455,6 +433,86 @@ serial.startReading();
                 </div>
             
 
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL0">Serial.HW_SERIAL0</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL1">Serial.HW_SERIAL1</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL2">Serial.HW_SERIAL2</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL3">Serial.HW_SERIAL3</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL0">Serial.SW_SERIAL0</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL1">Serial.SW_SERIAL1</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL2">Serial.SW_SERIAL2</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL3">Serial.SW_SERIAL3</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -573,6 +631,61 @@ is fired</p>
 </div>
 
                 
+                    <div id="method_close" class="method item">
+    <h3 class="name"><code>close</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l183"><code>src&#x2F;core&#x2F;Serial.js:183</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Close the serial port. A new instance must be created in order
+to reopen the port.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_dispatchEvent" class="method item inherited">
     <h3 class="name"><code>dispatchEvent</code></h3>
 
@@ -679,6 +792,62 @@ return {boolean} True if dispatch is successful, false if not.</p>
 </div>
 
                 
+                    <div id="method_flush" class="method item">
+    <h3 class="name"><code>flush</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l192"><code>src&#x2F;core&#x2F;Serial.js:192</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>For HardwareSerial, waits for the transmission of outgoing serial data
+to complete.
+For SoftwareSerial, removes any buffered incoming serial data.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="method_hasEventListener" class="method item inherited">
     <h3 class="name"><code>hasEventListener</code></h3>
 
@@ -756,6 +925,62 @@ return {boolean} True is listener exists for this type, false if not.</p>
             
             </ul>
         </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_listen" class="method item">
+    <h3 class="name"><code>listen</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l202"><code>src&#x2F;core&#x2F;Serial.js:202</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>For SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.
+Call this method to set this port to be the reading port in the case there are multiple
+SoftwareSerial instances.</p>
+    </div>
+
     
 
     
@@ -870,9 +1095,612 @@ is fired</p>
 </div>
 
                 
+                    <div id="method_startReading" class="method item">
+    <h3 class="name"><code>startReading</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>maxBytesToRead</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l157"><code>src&#x2F;core&#x2F;Serial.js:157</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Start reading the serial port.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">maxBytesToRead</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>[optional] The number of bytes to read on each iteration
+of the main loop.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_stopReading" class="method item">
+    <h3 class="name"><code>stopReading</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l175"><code>src&#x2F;core&#x2F;Serial.js:175</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Stop reading the serial port.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_write" class="method item">
+    <h3 class="name"><code>write</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>val</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l134"><code>src&#x2F;core&#x2F;Serial.js:134</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Write an array of data.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">val</code>
+                        <span class="type">Number | Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A single byte or an array of bytes to write</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
             </div>
         
 
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_Serial.HW_SERIAL0" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL0</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l251"><code>src&#x2F;core&#x2F;Serial.js:251</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Not currently used. Corresponds to the default Arduino Serial port</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.HW_SERIAL1" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL1</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l257"><code>src&#x2F;core&#x2F;Serial.js:257</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pins RX1 and TX1 on the board</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.HW_SERIAL2" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL2</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l263"><code>src&#x2F;core&#x2F;Serial.js:263</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pins RX2 and TX2 on the board</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.HW_SERIAL3" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL3</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l269"><code>src&#x2F;core&#x2F;Serial.js:269</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pins RX3 and TX3 on the board</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL0" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL0</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l276"><code>src&#x2F;core&#x2F;Serial.js:276</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL1" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL1</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l282"><code>src&#x2F;core&#x2F;Serial.js:282</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL2" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL2</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l288"><code>src&#x2F;core&#x2F;Serial.js:288</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL3" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL3</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l294"><code>src&#x2F;core&#x2F;Serial.js:294</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         

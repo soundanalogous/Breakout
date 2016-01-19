@@ -180,63 +180,64 @@
  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
  * Released under the MIT license. See LICENSE file for details.
  */
- 
+
 JSUTILS.namespace(&#x27;BO.custom.RFIDEvent&#x27;);
 
-BO.custom.RFIDEvent = (function () {
-    &quot;use strict&quot;;
+BO.custom.RFIDEvent = (function() {
+  &quot;use strict&quot;;
 
-    var RFIDEvent;
+  var RFIDEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched when an RFID tag is read or when an RFID
-     * tag is removed from a reader.
-     * @class RFIDEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     * @param {String} tag The RFID tag value (hexadecimal)
-     */
-    RFIDEvent = function (type, tag) {
-        this._tag = tag;
-        // call the super class
-        // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);
+  /**
+   * An Event object to be dispatched when an RFID tag is read or when an RFID
+   * tag is removed from a reader.
+   * @class RFIDEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   * @param {String} tag The RFID tag value (hexadecimal)
+   */
+  RFIDEvent = function(type, tag) {
+    this._tag = tag;
+    // call the super class
+    // 2nd parameter is passed to EventDispatcher constructor
+    Event.call(this, type);
 
-        this.name = &quot;RFIDEvent&quot;;
-    };
+    this.name = &quot;RFIDEvent&quot;;
+  };
 
-    /**
-     * @property RFIDEvent.ADD_TAG
-     * @static
-     */
-    RFIDEvent.ADD_TAG = &quot;addTag&quot;;
-    /**
-     * @property RFIDEvent.REMOVE_TAG
-     * @static
-     */
-    RFIDEvent.REMOVE_TAG = &quot;removeTag&quot;;
+  /**
+   * @property RFIDEvent.ADD_TAG
+   * @static
+   */
+  RFIDEvent.ADD_TAG = &quot;addTag&quot;;
+  /**
+   * @property RFIDEvent.REMOVE_TAG
+   * @static
+   */
+  RFIDEvent.REMOVE_TAG = &quot;removeTag&quot;;
 
-    RFIDEvent.prototype = JSUTILS.inherit(Event.prototype);
-    RFIDEvent.prototype.constructor = RFIDEvent;
+  RFIDEvent.prototype = JSUTILS.inherit(Event.prototype);
+  RFIDEvent.prototype.constructor = RFIDEvent;
 
-    /**
-     * [read-only] The RFID tag value (hexadecimal string).
-     * @property tag
-     * @type String
-     */
-    Object.defineProperty(RFIDEvent.prototype, &quot;tag&quot;, {
-        get: function () {
-            return this._tag;
-        }
-    });
+  /**
+   * [read-only] The RFID tag value (hexadecimal string).
+   * @property tag
+   * @type String
+   */
+  Object.defineProperty(RFIDEvent.prototype, &quot;tag&quot;, {
+    get: function() {
+      return this._tag;
+    }
+  });
 
-    return RFIDEvent;
+  return RFIDEvent;
 
 }());
+
     </pre>
 </div>
 

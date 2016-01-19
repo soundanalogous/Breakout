@@ -177,95 +177,101 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Copyright (c) 2011-2016 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
  * Released under the MIT license. See LICENSE file for details.
  */
 
 JSUTILS.namespace(&#x27;BO.IOBoardEvent&#x27;);
 
-BO.IOBoardEvent = (function () {
+BO.IOBoardEvent = (function() {
 
-    var IOBoardEvent;
+  var IOBoardEvent;
 
-    // Dependencies
-    var Event = JSUTILS.Event;
+  // Dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by the IOBoard object.
-     * The most important event is the READY event which signifies that the
-     * I/O board is ready to receive commands from the application. Many of the
-     * other IOBoard events are used when creating new io component objects.
-     *
-     * @class IOBoardEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    IOBoardEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by the IOBoard object.
+   * The most important event is the READY event which signifies that the
+   * I/O board is ready to receive commands from the application. Many of the
+   * other IOBoard events are used when creating new io component objects.
+   *
+   * @class IOBoardEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  IOBoardEvent = function(type) {
 
-        this.name = &quot;IOBoardEvent&quot;;
-        
-        // Call the super class
-        // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);
-    };
+    this.name = &quot;IOBoardEvent&quot;;
 
-    // Events
-    /**
-     * @property IOBoardEvent.ANALOG_DATA
-     * @static
-     */
-    IOBoardEvent.ANALOG_DATA = &quot;analogData&quot;;
-    /**
-     * @property IOBoardEvent.DIGITAL_DATA
-     * @static
-     */
-    IOBoardEvent.DIGITAL_DATA = &quot;digitalData&quot;;
-    /**
-     * @property IOBoardEvent.FIRMWARE_VERSION
-     * @static
-     */
-    IOBoardEvent.FIRMWARE_VERSION = &quot;firmwareVersion&quot;;
-    /**
-     * @property IOBoardEvent.FIRMWARE_NAME
-     * @static
-     */
-    IOBoardEvent.FIRMWARE_NAME = &quot;firmwareName&quot;;
-    /**
-     * @property IOBoardEvent.STRING_MESSAGE
-     * @static
-     */
-    IOBoardEvent.STRING_MESSAGE = &quot;stringMessage&quot;;
-    /**
-     * @property IOBoardEvent.SYSEX_MESSAGE
-     * @static
-     */
-    IOBoardEvent.SYSEX_MESSAGE = &quot;sysexMessage&quot;;
-    /**
-     * @property IOBoardEvent.PIN_STATE_RESPONSE
-     * @static
-     */
-    IOBoardEvent.PIN_STATE_RESPONSE = &quot;pinStateResponse&quot;;
-    /**
-     * @property IOBoardEvent.READY
-     * @static
-     */
-    IOBoardEvent.READY = &quot;ioBoardReady&quot;;
-    /**
-     * @property IOBoardEvent.CONNECTED
-     * @static
-     */
-    IOBoardEvent.CONNECTED = &quot;ioBoardConnected&quot;;
-    /**
-     * @property IOBoardEvent.DISCONNECTED
-     * @static
-     */
-    IOBoardEvent.DISCONNECTED = &quot;ioBoardDisonnected&quot;;
+    // Call the super class
+    // 2nd parameter is passed to EventDispatcher constructor
+    Event.call(this, type);
+  };
 
-    IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
-    IOBoardEvent.prototype.constructor = IOBoardEvent;
+  // Events
+  /**
+   * @property IOBoardEvent.ANALOG_DATA
+   * @static
+   */
+  IOBoardEvent.ANALOG_DATA = &quot;analogData&quot;;
+  /**
+   * @property IOBoardEvent.DIGITAL_DATA
+   * @static
+   */
+  IOBoardEvent.DIGITAL_DATA = &quot;digitalData&quot;;
+  /**
+   * @property IOBoardEvent.PROTOCOL_VERSION
+   * @static
+   */
+  IOBoardEvent.PROTOCOL_VERSION = &quot;protocolVersion&quot;;
+  /**
+   * @property IOBoardEvent.FIRMWARE_VERSION
+   * @static
+   */
+  IOBoardEvent.FIRMWARE_VERSION = &quot;firmwareVersion&quot;;
+  /**
+   * @property IOBoardEvent.FIRMWARE_NAME
+   * @static
+   */
+  IOBoardEvent.FIRMWARE_NAME = &quot;firmwareName&quot;;
+  /**
+   * @property IOBoardEvent.STRING_MESSAGE
+   * @static
+   * @deprecated use FIRMWARE_VERION instead
+   */
+  IOBoardEvent.STRING_MESSAGE = &quot;stringMessage&quot;;
+  /**
+   * @property IOBoardEvent.SYSEX_MESSAGE
+   * @static
+   */
+  IOBoardEvent.SYSEX_MESSAGE = &quot;sysexMessage&quot;;
+  /**
+   * @property IOBoardEvent.PIN_STATE_RESPONSE
+   * @static
+   */
+  IOBoardEvent.PIN_STATE_RESPONSE = &quot;pinStateResponse&quot;;
+  /**
+   * @property IOBoardEvent.READY
+   * @static
+   */
+  IOBoardEvent.READY = &quot;ioBoardReady&quot;;
+  /**
+   * @property IOBoardEvent.CONNECTED
+   * @static
+   */
+  IOBoardEvent.CONNECTED = &quot;ioBoardConnected&quot;;
+  /**
+   * @property IOBoardEvent.DISCONNECTED
+   * @static
+   */
+  IOBoardEvent.DISCONNECTED = &quot;ioBoardDisonnected&quot;;
 
-    return IOBoardEvent;
+  IOBoardEvent.prototype = JSUTILS.inherit(Event.prototype);
+  IOBoardEvent.prototype.constructor = IOBoardEvent;
+
+  return IOBoardEvent;
 
 }());
 

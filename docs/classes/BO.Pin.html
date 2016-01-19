@@ -201,10 +201,10 @@
 
 
 <div class="box intro">
-    <p>Each analog and digital pin of the physical I/O board is 
+    <p>Each analog and digital pin of the physical I/O board is
 represented by a Pin object.
-The Pin object is the foundation for many of the io objects and is also 
-very useful on its own. See the Using The Pin Object Guide on 
+The Pin object is the foundation for many of the io objects and is also
+very useful on its own. See the Using The Pin Object Guide on
 <a href="http://breakoutjs.com">http://breakoutjs.com</a> for a detailed overview.</p>
 </div>
 
@@ -601,6 +601,15 @@ very useful on its own. See the Using The Pin Object Guide on
                             </li>
                         
                             <li class="index-item property">
+                                <a href="#property_Pin.INPUT_PULLUP">Pin.INPUT_PULLUP</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
                                 <a href="#property_Pin.LOW">Pin.LOW</a>
 
                                 
@@ -940,7 +949,7 @@ is fired</p>
                     
 
                     <div class="param-description">
-                        <p>A filter object that extends 
+                        <p>A filter object that extends
 FilterBase.</p>
                     </div>
 
@@ -1011,8 +1020,8 @@ FilterBase.</p>
 
     <div class="description">
         <p>Add a new generator to the Pin. A pin can only have one generator
-assigned. 
-Assigning a new generator will replace the previously assigned 
+assigned.
+Assigning a new generator will replace the previously assigned
 generator.</p>
     </div>
 
@@ -1031,7 +1040,7 @@ generator.</p>
                     
 
                     <div class="param-description">
-                        <p>A generator object that extends 
+                        <p>A generator object that extends
 GeneratorBase.</p>
                     </div>
 
@@ -1607,7 +1616,7 @@ return {boolean} True if dispatch is successful, false if not.</p>
 
     <div class="description">
         <p>The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,
-4: SERVO, 5: SHIFT, 6: I2C). Use 
+4: SERVO, 5: SHIFT, 6: I2C). Use
 IOBoard.setDigitalPinMode(pinNumber) to set the pin type.</p>
     </div>
 
@@ -2059,7 +2068,7 @@ is fired</p>
     </div>
 
     <div class="description">
-        <p>[read-only] The analog pin number used by the IOBoard (printed on 
+        <p>[read-only] The analog pin number used by the IOBoard (printed on
 board or datasheet).</p>
     </div>
 
@@ -2198,7 +2207,7 @@ resolution specified by the microcontroller datasheet.</p>
     </div>
 
     <div class="description">
-        <p>[read-only] The average value of the pin over time. Call clear() to 
+        <p>[read-only] The average value of the pin over time. Call clear() to
 reset.</p>
     </div>
 
@@ -2375,7 +2384,7 @@ reset.</p>
     </div>
 
     <div class="description">
-        <p>[read-only] The maximum value of the pin over time. Call clear() to 
+        <p>[read-only] The maximum value of the pin over time. Call clear() to
 reset.</p>
     </div>
 
@@ -2420,7 +2429,7 @@ reset.</p>
     </div>
 
     <div class="description">
-        <p>[read-only] The minimum value of the pin over time. Call clear() to 
+        <p>[read-only] The minimum value of the pin over time. Call clear() to
 reset.</p>
     </div>
 
@@ -2465,7 +2474,7 @@ reset.</p>
     </div>
 
     <div class="description">
-        <p>[read-only] The pin number corresponding to the Arduino documentation 
+        <p>[read-only] The pin number corresponding to the Arduino documentation
 for the type of board.</p>
     </div>
 
@@ -2753,6 +2762,52 @@ for the type of board.</p>
 </div>
 
                 
+                    <div id="property_Pin.INPUT_PULLUP" class="property item">
+    <h3 class="name"><code>Pin.INPUT_PULLUP</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Pin.js.html#l599"><code>src&#x2F;core&#x2F;Pin.js:599</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
                     <div id="property_Pin.LOW" class="property item">
     <h3 class="name"><code>Pin.LOW</code></h3>
     <span class="type">Unknown</span>
@@ -3008,7 +3063,7 @@ for the type of board.</p>
             
         
         
-        <a href="../files/src_core_Pin.js.html#l593"><code>src&#x2F;core&#x2F;Pin.js:593</code></a>
+        <a href="../files/src_core_Pin.js.html#l594"><code>src&#x2F;core&#x2F;Pin.js:594</code></a>
         
         </p>
 
@@ -3064,7 +3119,7 @@ for the type of board.</p>
     </div>
 
     <div class="description">
-        
+        <p>Placeholder only - not yet supported</p>
     </div>
 
     
@@ -3238,7 +3293,7 @@ for the type of board.</p>
             
         
         
-        <a href="../files/src_core_Pin.js.html#l598"><code>src&#x2F;core&#x2F;Pin.js:598</code></a>
+        <a href="../files/src_core_Pin.js.html#l604"><code>src&#x2F;core&#x2F;Pin.js:604</code></a>
         
         </p>
 
@@ -3336,14 +3391,14 @@ for the type of board.</p>
     </div>
 
     <div class="description">
-        <p>[read-only] The state of the pin. For output modes, the state is 
-any value that has been previously written to the pin. For input 
-modes, the state is typically zero, however for digital inputs the 
+        <p>[read-only] The state of the pin. For output modes, the state is
+any value that has been previously written to the pin. For input
+modes, the state is typically zero, however for digital inputs the
 state is the status of the pullup resistor.</p>
 
-<p>This propery is populated by calling the queryPinState method of 
-the IOBoard object. This is useful if there are multiple client 
-applications connected to a single physical IOBoard and you want to 
+<p>This propery is populated by calling the queryPinState method of
+the IOBoard object. This is useful if there are multiple client
+applications connected to a single physical IOBoard and you want to
 get the state of a pin that is set by another client application.</p>
     </div>
 
@@ -3432,7 +3487,7 @@ get the state of a pin that is set by another client application.</p>
             
         
         
-        <a href="../files/src_core_Pin.js.html#l622"><code>src&#x2F;core&#x2F;Pin.js:622</code></a>
+        <a href="../files/src_core_Pin.js.html#l628"><code>src&#x2F;core&#x2F;Pin.js:628</code></a>
         
         </p>
 
@@ -3442,7 +3497,7 @@ get the state of a pin that is set by another client application.</p>
     </div>
 
     <div class="description">
-        <p>The change event is dispatched when the pin value decreased 
+        <p>The change event is dispatched when the pin value decreased
 (from 1 to 0).</p>
     </div>
 
@@ -3499,7 +3554,7 @@ get the state of a pin that is set by another client application.</p>
             
         
         
-        <a href="../files/src_core_Pin.js.html#l607"><code>src&#x2F;core&#x2F;Pin.js:607</code></a>
+        <a href="../files/src_core_Pin.js.html#l613"><code>src&#x2F;core&#x2F;Pin.js:613</code></a>
         
         </p>
 
@@ -3565,7 +3620,7 @@ get the state of a pin that is set by another client application.</p>
             
         
         
-        <a href="../files/src_core_Pin.js.html#l614"><code>src&#x2F;core&#x2F;Pin.js:614</code></a>
+        <a href="../files/src_core_Pin.js.html#l620"><code>src&#x2F;core&#x2F;Pin.js:620</code></a>
         
         </p>
 
@@ -3575,7 +3630,7 @@ get the state of a pin that is set by another client application.</p>
     </div>
 
     <div class="description">
-        <p>The risingEdge event is dispatched when the pin value increased 
+        <p>The risingEdge event is dispatched when the pin value increased
 (from 0 to 1).</p>
     </div>
 

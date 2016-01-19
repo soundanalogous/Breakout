@@ -498,7 +498,7 @@
             "extension_for": [],
             "namespace": "BO",
             "file": "src/core/IOBoard.js",
-            "line": 56,
+            "line": 50,
             "description": "Creates an interface to the I/O board. The IOBoard object brokers\nthe communication between your application and the physical I/O board.\nCurrently you can only connect to a single I/O board per computer.\nHowever you could connect to multiple I/O boards if they are attached to\nmultiple computers on your network. In that case you would create a\nseparate IOBoard instance for each board you are connecting to in your\nnetwork.",
             "is_constructor": 1,
             "uses": [
@@ -572,7 +572,7 @@
             "namespace": "BO",
             "file": "src/core/Pin.js",
             "line": 23,
-            "description": "Each analog and digital pin of the physical I/O board is \nrepresented by a Pin object.\nThe Pin object is the foundation for many of the io objects and is also \nvery useful on its own. See the Using The Pin Object Guide on \n[http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.",
+            "description": "Each analog and digital pin of the physical I/O board is\nrepresented by a Pin object.\nThe Pin object is the foundation for many of the io objects and is also\nvery useful on its own. See the Using The Pin Object Guide on\n[http://breakoutjs.com](http://breakoutjs.com) for a detailed overview.",
             "is_constructor": 1,
             "uses": [
                 "JSUTILS.EventDispatcher"
@@ -623,41 +623,21 @@
             "namespace": "BO",
             "file": "src/core/Serial.js",
             "line": 33,
-            "description": "Enables use of Hardware and Software serial ports on the board.",
+            "description": "Enables use of Hardware (UART) and Software serial ports on the board.",
             "is_constructor": 1,
             "uses": [
                 "JSUTILS.EventDispatcher"
             ],
             "params": [
                 {
-                    "name": "board",
-                    "description": "A reference to the IOBoard instance.",
-                    "type": "IOBoard"
-                },
-                {
-                    "name": "port",
-                    "description": "The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,\nSW_SERIAL1, SW_SERIAL2, SW_SERIAL3)",
-                    "type": "Number"
-                },
-                {
-                    "name": "baud",
-                    "description": "The baud rate of the serial port.",
-                    "type": "Number"
-                },
-                {
-                    "name": "rxPin",
-                    "description": "[SoftwareSerial only] The RX pin of the SoftwareSerial instance",
-                    "type": "Number"
-                },
-                {
-                    "name": "txPin",
-                    "description": "[SoftwareSerial only] The TX pin of the SoftwareSerial instance",
-                    "type": "Number"
+                    "name": "opts",
+                    "description": "Options:\n<ul>\n<li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>\n<li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,\n  SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>\n<li></strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>\n<li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>\n<li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>\n</ul>",
+                    "type": "Object"
                 }
             ],
             "example": [
-                "\n    // Use a SoftwareSerial instance\n    var serial = new BO.Serial(arduino, BO.Serial.SW_SERIAL0, 57600, 10, 11);\n    serial.addEventListener(BO.SerialEvent.DATA, function (event) {\n        console.log(event.data);\n    });\n    serial.startReading();",
-                "\n    // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)\n    var serial = new BO.Serial(arduino, BO.Serial.HW_SERIAL1, 57600);\n    serial.addEventListener(BO.SerialEvent.DATA, function (event) {\n        console.log(event.data);\n    });\n    serial.startReading();"
+                "\n    // Use a SoftwareSerial instance\n    var serial = new BO.Serial({\n      board: arduino,\n      port: BO.Serial.SW_SERIAL0,\n      baud: 57600,\n      txPin: 10,\n      rxPin: 11\n    });\n    serial.addEventListener(BO.SerialEvent.DATA, function (event) {\n      console.log(event.data);\n    });\n    serial.startReading();",
+                "\n    // Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)\n    var serial = new BO.Serial({\n      board: arduino,\n      port: BO.Serial.HW_SERIAL1,\n      baud: 57600\n    });\n    serial.addEventListener(BO.SerialEvent.DATA, function (event) {\n      console.log(event.data);\n    });\n    serial.startReading();"
             ]
         },
         "BO.SerialEvent": {
@@ -749,7 +729,7 @@
             "namespace": "BO.custom",
             "file": "src/custom/ID12RFIDReader.js",
             "line": 25,
-            "description": "Creates an interface to an ID-12 RFID Reader. Other Innovations\nRFID readers will likely work but have not been tested. This object\nrequires firmware other than StandardFirmata to be uploaded to the I/O board.\nSee [Breakout/custom\\_examples/rfid_example1.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html) \nand [rfid\\_example2.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example2.html) for\nexample applications.\n\n<p>To use this object with standard io objects in Breakout, \nRFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata. \nSee custom_examples/readme.txt for insturctions.</p>\n\n<p>Is is also possible to create a custom application for your\nIOBoard that includes the RFID reader. See IDx_Reader_Firmata_Example\nin the IDxRFIDReader library example files.</p>",
+            "description": "Creates an interface to an ID-12 RFID Reader. Other Innovations\nRFID readers will likely work but have not been tested. This object\nrequires firmware other than StandardFirmata to be uploaded to the I/O board.\nSee [Breakout/custom\\_examples/rfid_example1.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example1.html)\nand [rfid\\_example2.html](https://github.com/soundanalogous/Breakout/blob/master/custom_examples/rfid_example2.html) for\nexample applications.\n\n<p>To use this object with standard io objects in Breakout,\nRFIDFirmata must be uploaded to the IOBoard rather than StandardFirmata.\nSee custom_examples/readme.txt for insturctions.</p>\n\n<p>Is is also possible to create a custom application for your\nIOBoard that includes the RFID reader. See IDx_Reader_Firmata_Example\nin the IDxRFIDReader library example files.</p>",
             "is_constructor": 1,
             "uses": [
                 "JSUTILS.EventDispatcher"
@@ -841,7 +821,7 @@
             "namespace": "BO.filters",
             "file": "src/filters/Scaler.js",
             "line": 22,
-            "description": "Scales up an input value from its min and max range to a specified \nminimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for\nan example application.",
+            "description": "Scales up an input value from its min and max range to a specified\nminimum to maximum range. See [Breakout/examples/filters/scaler.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/scaler.html) for\nan example application.",
             "is_constructor": 1,
             "extends": "BO.filters.FilterBase",
             "params": [
@@ -947,7 +927,7 @@
             "namespace": "BO.generators",
             "file": "src/generators/Oscillator.js",
             "line": 25,
-            "description": "The Oscillator object can be attached to a Pin or LED object to output\na waveform. This is useful for blinking an LED or fading it on and off. In\nmost cases (unless you are simply using it to blink and LED on or off), \nthe Oscillator should be attached to a Pin or LED object associated with\na PWM pin on the I/O board.\nSee [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.",
+            "description": "The Oscillator object can be attached to a Pin or LED object to output\na waveform. This is useful for blinking an LED or fading it on and off. In\nmost cases (unless you are simply using it to blink and LED on or off),\nthe Oscillator should be attached to a Pin or LED object associated with\na PWM pin on the I/O board.\nSee [Breakout/examples/generators/oscillator.html](https://github.com/soundanalogous/Breakout/blob/master/examples/generators/oscillator.html) for an example application.",
             "is_constructor": 1,
             "extends": "BO.generators.GeneratorBase",
             "params": [
@@ -994,7 +974,7 @@
             "namespace": "BO.io",
             "file": "src/io/AccelerometerADXL345.js",
             "line": 31,
-            "description": "Creates an interface to an ADXL345 3-axis accelerometer. Use the\naccelerometer to read the acceleration along the x, y, and z axis of an \nobject it is attached to. You can also obtain the pitch and roll. See the\nexample in [Breakout/examples/sensors/adxl345.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/adxl345.html).",
+            "description": "Creates an interface to an ADXL345 3-axis accelerometer. Use the\naccelerometer to read the acceleration along the x, y, and z axis of an\nobject it is attached to. You can also obtain the pitch and roll. See the\nexample in [Breakout/examples/sensors/adxl345.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/adxl345.html).",
             "is_constructor": 1,
             "extends": "BO.I2CBase",
             "params": [
@@ -1005,7 +985,7 @@
                 },
                 {
                     "name": "range",
-                    "description": "The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`, \n`RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.",
+                    "description": "The dynamic range selection in Gs (options `RANGE_2G`, `RANGE_4G`,\n`RANGE_8G`, `RANGE_16G`). Default is `RANGE_2G`.",
                     "type": "Number"
                 },
                 {
@@ -1048,7 +1028,7 @@
             "namespace": "BO.io",
             "file": "src/io/AnalogAccelerometer.js",
             "line": 29,
-            "description": "Creates an interface to an analog accelerometer. Use the\naccelerometer to read the acceleration along the x, y, and z axis of an \nobject it is attached to. You can also obtain the pitch and roll. This\nobject should interface with most analog accelerometers. See\n[Breakout/examples/sensors/analog\\_accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/analog_accelerometer.html) and \n[Breakout/examples/three\\_js/accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/three_js/accelerometer.html) for example applications.",
+            "description": "Creates an interface to an analog accelerometer. Use the\naccelerometer to read the acceleration along the x, y, and z axis of an\nobject it is attached to. You can also obtain the pitch and roll. This\nobject should interface with most analog accelerometers. See\n[Breakout/examples/sensors/analog\\_accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/analog_accelerometer.html) and\n[Breakout/examples/three\\_js/accelerometer.html](https://github.com/soundanalogous/Breakout/blob/master/examples/three_js/accelerometer.html) for example applications.",
             "is_constructor": 1,
             "extends": "BO.PhysicalInputBase",
             "params": [
@@ -1074,7 +1054,7 @@
                 },
                 {
                     "name": "dynamicRange",
-                    "description": "The range of the acceleromter in Gs\n(typically 2 or 3 for an \nanalog accelerometer). See the datasheet for the acceleromter to get\nthe exact value.",
+                    "description": "The range of the acceleromter in Gs\n(typically 2 or 3 for an\nanalog accelerometer). See the datasheet for the acceleromter to get\nthe exact value.",
                     "type": "Number"
                 },
                 {
@@ -1095,7 +1075,7 @@
             "namespace": "BO.io",
             "file": "src/io/BiColorLED.js",
             "line": 18,
-            "description": "Creates an interface to an bi-color LED. This interface\nis for the type of bi-color LED with 3 legs. One leg is connected\nto power or ground (depending on the type of LED - common anode\nor common cathode) and the other 2 legs are connected to PWM pins\non the I/O board.\nSee [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf)\nfor wiring diagrams.\nSee [Breakout/examples/actuators/bi\\_color\\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/bi_color_led.html)\nfor an example application.\n\n<p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your\nLED is common anode or common cathode by reading the datasheet. \nTo wire a common cathode LED, connect the cathode to ground\nand the 2 anode pins to the IOBoard PWM pins via resistors. For\na common anode LED, the anode is connected to power and the 2 \ncathode pins are connected to the IOBoard PWM pins via two \nresistors.</p>",
+            "description": "Creates an interface to an bi-color LED. This interface\nis for the type of bi-color LED with 3 legs. One leg is connected\nto power or ground (depending on the type of LED - common anode\nor common cathode) and the other 2 legs are connected to PWM pins\non the I/O board.\nSee [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf)\nfor wiring diagrams.\nSee [Breakout/examples/actuators/bi\\_color\\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/bi_color_led.html)\nfor an example application.\n\n<p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your\nLED is common anode or common cathode by reading the datasheet.\nTo wire a common cathode LED, connect the cathode to ground\nand the 2 anode pins to the IOBoard PWM pins via resistors. For\na common anode LED, the anode is connected to power and the 2\ncathode pins are connected to the IOBoard PWM pins via two\nresistors.</p>",
             "is_constructor": 1,
             "params": [
                 {
@@ -1158,7 +1138,7 @@
             "namespace": "BO.io",
             "file": "src/io/Button.js",
             "line": 18,
-            "description": "Creates and interface to a physical button. The Button object\ndispatches events on state changes such as Pressed, Released and \nSustained Press. The Button object also handles debouncing.\n\nThe advantage of using the Button class over listening for pin change\nevents on a Pin object, is that the Button class handles debouncing and\nprovides helpful button events: Pressed, Released, Long Press and\nSustained Press\n\n<p>`PULL_UP` vs `PULL_DOWN`. If the other end of the resistor connected to\nthe button is connected to ground, configuration is `PULL_DOWN`, if the \nresistor is connected to power, then the configuration is `PULL_UP`.</p>",
+            "description": "Creates and interface to a physical button. The Button object\ndispatches events on state changes such as Pressed, Released and\nSustained Press. The Button object also handles debouncing.\n\nThe advantage of using the Button class over listening for pin change\nevents on a Pin object, is that the Button class handles debouncing and\nprovides helpful button events: Pressed, Released, Long Press and\nSustained Press\n\n<p>`PULL_UP` vs `PULL_DOWN`. If the other end of the resistor connected to\nthe button is connected to ground, configuration is `PULL_DOWN`, if the\nresistor is connected to power, then the configuration is `PULL_UP`.</p>",
             "is_constructor": 1,
             "extends": "BO.PhysicalInputBase",
             "params": [
@@ -1174,12 +1154,12 @@
                 },
                 {
                     "name": "buttonMode",
-                    "description": "The mode of the button (either \n`Button.PULL_DOWN` or `Button.PULL_UP` if wired with external resistors or \n`Button.INTERNAL_PULL_UP` if using the internal pull-up resistors. Default\nis `PULL_DOWN`.",
+                    "description": "The mode of the button (either\n`Button.PULL_DOWN` or `Button.PULL_UP` if wired with external resistors or\n`Button.INTERNAL_PULL_UP` if using the internal pull-up resistors. Default\nis `PULL_DOWN`.",
                     "type": "Number"
                 },
                 {
                     "name": "sustainedPressInterval",
-                    "description": "The delay time in milliseconds \nbefore a sustained press event is fired.",
+                    "description": "The delay time in milliseconds\nbefore a sustained press event is fired.",
                     "type": "Number"
                 }
             ]
@@ -1339,7 +1319,7 @@
             "namespace": "BO.io",
             "file": "src/io/GyroITG3200.js",
             "line": 31,
-            "description": "Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures\nangular acceleration around the x, y, and z axis. This object provides\nthe angular velocity of each axis. Proper calibration is required for an\naccurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and \n[Breakout/examples/processing\\_js/gyro.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/gyro.html) for example applications.",
+            "description": "Creates an interface to an ITG3200 3-axis gyroscope. This gyro measures\nangular acceleration around the x, y, and z axis. This object provides\nthe angular velocity of each axis. Proper calibration is required for an\naccurate reading. See [Breakout/examples/sensors/itg3200.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/itg3200.html) and\n[Breakout/examples/processing\\_js/gyro.html](https://github.com/soundanalogous/Breakout/blob/master/examples/processing_js/gyro.html) for example applications.",
             "is_constructor": 1,
             "extends": "BO.I2CBase",
             "params": [
@@ -1355,7 +1335,7 @@
                 },
                 {
                     "name": "address",
-                    "description": "The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use\n`GyroITG3200.ID_AD0_DVV` (0x69), if pin 9 (AD0) is tied to GND, then use `GyroITG3200.ID_AD0_GND`. \nDefault = `GyroITG3200.ID_AD0_VDD`",
+                    "description": "The i2c address of the accelerometer. If pin 9 (AD0) of the module is tied to VDD, then use\n`GyroITG3200.ID_AD0_DVV` (0x69), if pin 9 (AD0) is tied to GND, then use `GyroITG3200.ID_AD0_GND`.\nDefault = `GyroITG3200.ID_AD0_VDD`",
                     "type": "Number"
                 }
             ]
@@ -1371,7 +1351,7 @@
             "namespace": "BO.io",
             "file": "src/io/LED.js",
             "line": 22,
-            "description": "Creates an interface to an LED. This object provides helpful\nmethods for blinking and fading LEDs. To use the fading methods, the\nLED must be connected to a PWM pin on the I/O board.\n\n<p>PLEASE NOTE: To use the fade methods, or to use an waveform other \nthan `Oscillator.SQUARE` the LED must be connected to a PWM pin.</p>\n\n<p>`SOURCE_DRIVE` vs `SYNC_DRIVE`. If the Anode (longer LED pin) is\nconnected to the microcontroller pin, then it is `SOURCE_DRIVE`. If the\nCathode is connected to the microcontroller pin, then it is \n`SYNC_DRIVE`.</p>",
+            "description": "Creates an interface to an LED. This object provides helpful\nmethods for blinking and fading LEDs. To use the fading methods, the\nLED must be connected to a PWM pin on the I/O board.\n\n<p>PLEASE NOTE: To use the fade methods, or to use an waveform other\nthan `Oscillator.SQUARE` the LED must be connected to a PWM pin.</p>\n\n<p>`SOURCE_DRIVE` vs `SYNC_DRIVE`. If the Anode (longer LED pin) is\nconnected to the microcontroller pin, then it is `SOURCE_DRIVE`. If the\nCathode is connected to the microcontroller pin, then it is\n`SYNC_DRIVE`.</p>",
             "is_constructor": 1,
             "params": [
                 {
@@ -1418,12 +1398,12 @@
                 },
                 {
                     "name": "numSamples",
-                    "description": "The number of samples averaged per \nmeasurement output. Options are: `MagnetometerHMC5883.SAMPLES_1`,\n`MagnetometerHMC5883.SAMPLES_2`, `MagnetometerHMC5883.SAMPLES_4`\n`MagnetometerHMC5883.SAMPLES_8` (default = `MagnetometerHMC5883.SAMPLES_1`)",
+                    "description": "The number of samples averaged per\nmeasurement output. Options are: `MagnetometerHMC5883.SAMPLES_1`,\n`MagnetometerHMC5883.SAMPLES_2`, `MagnetometerHMC5883.SAMPLES_4`\n`MagnetometerHMC5883.SAMPLES_8` (default = `MagnetometerHMC5883.SAMPLES_1`)",
                     "type": "Number"
                 },
                 {
                     "name": "outputRate",
-                    "description": "The data output rate in Hz \n(default = `MagnetometerHMC5883.HZ_30`)",
+                    "description": "The data output rate in Hz\n(default = `MagnetometerHMC5883.HZ_30`)",
                     "type": "Number"
                 }
             ]
@@ -1515,7 +1495,7 @@
             "namespace": "BO.io",
             "file": "src/io/RGBLED.js",
             "line": 22,
-            "description": "Creates an interface to an RGB LED. This interface is for the\ntype of RGB LED with 4 legs. One leg is connected to power or ground \n(depending on the type of LED - common anode or common cathode) and the\nother 3 legs are connected to PWM pins on the I/O board. See \n[Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See \n[Breakout/examples/actuators/rgb\\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.\n\n<p>The RGB pins of the RGB LED must be connected to PWM pins on the\nIOBoard.</p>\n\n<p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is \ncommon anode or common cathode by reading the datasheet. To wire a \ncommon cathode RGB LED, connect the cathode to ground and the 3 anode\npins to the IOBoard PWM pins via 330 ohm resistors. For a common anode\nLED, the anode is connected to power and the 3 cathode pins are connected\nto the IOBoard PWM pins via 330 ohm resistors.</p>",
+            "description": "Creates an interface to an RGB LED. This interface is for the\ntype of RGB LED with 4 legs. One leg is connected to power or ground\n(depending on the type of LED - common anode or common cathode) and the\nother 3 legs are connected to PWM pins on the I/O board. See\n[Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf) for wiring diagrams. See\n[Breakout/examples/actuators/rgb\\_led.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/rgb_led.html) for an example application.\n\n<p>The RGB pins of the RGB LED must be connected to PWM pins on the\nIOBoard.</p>\n\n<p>`COMMON_ANODE` vs `COMMON_CATHODE`. You can determine if your RGB LED is\ncommon anode or common cathode by reading the datasheet. To wire a\ncommon cathode RGB LED, connect the cathode to ground and the 3 anode\npins to the IOBoard PWM pins via 330 ohm resistors. For a common anode\nLED, the anode is connected to power and the 3 cathode pins are connected\nto the IOBoard PWM pins via 330 ohm resistors.</p>",
             "is_constructor": 1,
             "params": [
                 {
@@ -1561,7 +1541,7 @@
             "params": [
                 {
                     "name": "board",
-                    "description": "A reference to the IOBoard instance that the \nservo is attached to.",
+                    "description": "A reference to the IOBoard instance that the\nservo is attached to.",
                     "type": "IOBoard"
                 },
                 {
@@ -1592,7 +1572,7 @@
             "namespace": "BO.io",
             "file": "src/io/SoftPot.js",
             "line": 28,
-            "description": "Creates an interface to a SoftPot sensor. A softpot is a type of\nanalog resistive sensor that acts as a type of slider input. There are \nstraight and curved variations. This object provides a number of useful \nevents such as Press, Release, Drag, Tap and capturing Flick gestures.\nSee [Breakout/examples/sensors/softpot.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/softpot.html) for an example application.",
+            "description": "Creates an interface to a SoftPot sensor. A softpot is a type of\nanalog resistive sensor that acts as a type of slider input. There are\nstraight and curved variations. This object provides a number of useful\nevents such as Press, Release, Drag, Tap and capturing Flick gestures.\nSee [Breakout/examples/sensors/softpot.html](https://github.com/soundanalogous/Breakout/blob/master/examples/sensors/softpot.html) for an example application.",
             "is_constructor": 1,
             "extends": "BO.PhysicalInputBase",
             "params": [
@@ -1608,7 +1588,7 @@
                 },
                 {
                     "name": "softPotLength",
-                    "description": "The length of the softpot in mm. \nDefault = 100.",
+                    "description": "The length of the softpot in mm.\nDefault = 100.",
                     "type": "Number"
                 }
             ]
@@ -1652,7 +1632,7 @@
             "namespace": "BO.io",
             "file": "src/io/Stepper.js",
             "line": 27,
-            "description": "Creates an interface to a Stepper motor. Use this object to set\nthe direction and number of steps for the motor to rotate. See\n[Breakout/examples/actuators/stepper\\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html), \n[stepper\\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html), \n[stepper\\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html) \nand [stepper\\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.",
+            "description": "Creates an interface to a Stepper motor. Use this object to set\nthe direction and number of steps for the motor to rotate. See\n[Breakout/examples/actuators/stepper\\_2wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_2wire.html),\n[stepper\\_4wire.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_4wire.html),\n[stepper\\_easydriver.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_easydriver.html)\nand [stepper\\_simple.html](https://github.com/soundanalogous/Breakout/blob/master/examples/actuators/stepper_simple.html) for example applications.",
             "is_constructor": 1,
             "uses": [
                 "JSUTILS.EventDispatcher"
@@ -1660,7 +1640,7 @@
             "params": [
                 {
                     "name": "board",
-                    "description": "A reference to the IOBoard instance that the \nstepper is attached to.",
+                    "description": "A reference to the IOBoard instance that the\nstepper is attached to.",
                     "type": "IOBoard"
                 },
                 {
@@ -1675,12 +1655,12 @@
                 },
                 {
                     "name": "directionPin",
-                    "description": "If dirver interface, the pin used to control \nthe direction.\nIf 2-wire or 4-wire interface, the 1st moter pin.",
+                    "description": "If dirver interface, the pin used to control\nthe direction.\nIf 2-wire or 4-wire interface, the 1st moter pin.",
                     "type": "Pin"
                 },
                 {
                     "name": "stepPin",
-                    "description": "If dirver interface, the pin used to control the \nsteps.\nIf 2-wire or 4-wire interface, the 2nd moter pin.",
+                    "description": "If dirver interface, the pin used to control the\nsteps.\nIf 2-wire or 4-wire interface, the 2nd moter pin.",
                     "type": "Pin"
                 },
                 {
@@ -1739,7 +1719,7 @@
             "namespace": "JSUTILS",
             "file": "src/utils/EventDispatcher.js",
             "line": 12,
-            "description": "The EventDispatcher class mimics the DOM event dispatcher model so the \nuser can add and remove event listeners in a familiar way. Event bubbling\nis not available because events are dispatched in relation to state \nchanges of physical components instead of layered graphics so there is \nnothing to bubble up.",
+            "description": "The EventDispatcher class mimics the DOM event dispatcher model so the\nuser can add and remove event listeners in a familiar way. Event bubbling\nis not available because events are dispatched in relation to state\nchanges of physical components instead of layered graphics so there is\nnothing to bubble up.",
             "is_constructor": 1,
             "params": [
                 {
@@ -1765,7 +1745,7 @@
             "params": [
                 {
                     "name": "canvasId",
-                    "description": "The id of the canvas element to \nuse to draw the signal.",
+                    "description": "The id of the canvas element to\nuse to draw the signal.",
                     "type": "String"
                 },
                 {
@@ -2070,13 +2050,13 @@
         {
             "file": "src/core/IOBoard.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.IOBoard",
             "namespace": "BO"
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 123,
+            "line": 118,
             "description": "A websocket connection has been established.",
             "access": "private",
             "tagname": "",
@@ -2087,7 +2067,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 134,
+            "line": 129,
             "description": "A websocket message has been received.",
             "params": [
                 {
@@ -2105,7 +2085,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 159,
+            "line": 154,
             "description": "Determine if the incoming data is a config message or a byte.",
             "params": [
                 {
@@ -2123,7 +2103,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 182,
+            "line": 177,
             "description": "Report that the websocket connection has been closed.",
             "access": "private",
             "tagname": "",
@@ -2134,7 +2114,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 192,
+            "line": 187,
             "description": "Request the firmware version from the IOBoard.",
             "access": "private",
             "tagname": "",
@@ -2145,7 +2125,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 202,
+            "line": 198,
             "description": "On startup, Firmata reports its version. Make sure the version is\n2.3 or greater before proceeding. If the Firmata version is < 2.3\nreport this to the user (to do: throw appropriate error?).",
             "access": "private",
             "tagname": "",
@@ -2156,7 +2136,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 243,
+            "line": 239,
             "description": "Check if a capability response was received. If not, assume that\na custom sketch was loaded to the IOBoard and fire a READY event.",
             "access": "private",
             "tagname": "",
@@ -2167,7 +2147,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 266,
+            "line": 262,
             "description": "Process a status message from the websocket server",
             "access": "private",
             "tagname": "",
@@ -2178,7 +2158,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 278,
+            "line": 274,
             "description": "Process input data from the IOBoard.",
             "params": [
                 {
@@ -2196,7 +2176,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 311,
+            "line": 307,
             "description": "Incoming data is either multibyte or sysex. Route multibyte\ndata to the appropriate method.",
             "access": "private",
             "tagname": "",
@@ -2207,7 +2187,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 341,
+            "line": 339,
             "description": "Processing incoming digital data. Parse the port number and value\nto determine if any digital input data has changed. Dispatch an\nevent if the value has changed.",
             "params": [
                 {
@@ -2246,7 +2226,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 414,
+            "line": 416,
             "description": "Route the incoming sysex data to the appropriate method.",
             "access": "private",
             "tagname": "",
@@ -2257,7 +2237,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 449,
+            "line": 453,
             "description": "Construct the firmware name and version from incoming ascii data.",
             "access": "private",
             "tagname": "",
@@ -2268,7 +2248,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 465,
+            "line": 472,
             "description": "Construct a String from an incoming ascii data.",
             "access": "private",
             "tagname": "",
@@ -2279,7 +2259,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 483,
+            "line": 492,
             "description": "Auto configure using capabilities response.\nThis creates a configuration for any board in the Firmata boards.h\nfile.",
             "access": "private",
             "tagname": "",
@@ -2290,7 +2270,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 570,
+            "line": 594,
             "description": "Map map analog pins to board pin numbers. Need to do this because\nthe capability query does not provide the correct order of analog\npins.",
             "access": "private",
             "tagname": "",
@@ -2301,7 +2281,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 600,
+            "line": 624,
             "description": "Single client mode is the default mode.\nChecking the \"Enable multi-client\" box in the Breakout Server UI to\nenable multi-client mode.",
             "access": "private",
             "tagname": "",
@@ -2312,7 +2292,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 620,
+            "line": 644,
             "description": "The IOBoard is configured and ready to send and accept commands.",
             "access": "private",
             "tagname": "",
@@ -2323,7 +2303,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 632,
+            "line": 656,
             "description": "Resets the board to its default state without physically resetting\nthe board.",
             "access": "private",
             "tagname": "",
@@ -2334,7 +2314,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 644,
+            "line": 668,
             "description": "Reads the current configuration of the requested pin. The following\nvalues are returned: 1: pin number, 2: pin type (0: DIN, 1: DOUT,\n2: AIN, 3: AOUT / PWM, 4: SERVO, 5: SHIFT, 6: I2C), 3: pin state.\nThe pin state for output modes is the value previously written\nto the pin. For input modes (AIN, DIN, etc) the state is typically\nzero (it is not the value that was written to the pin). For digital\ninputs the state is the status of the pullup resistor.",
             "access": "private",
             "tagname": "",
@@ -2345,7 +2325,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 694,
+            "line": 720,
             "description": "Convert char to decimal value.",
             "access": "private",
             "tagname": "",
@@ -2356,7 +2336,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 706,
+            "line": 732,
             "description": "Called when ever a pin value is set via pin.value = someValue.\nSends digital or analog output pin and output values to the IOBoard.",
             "access": "private",
             "tagname": "",
@@ -2374,7 +2354,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 733,
+            "line": 759,
             "description": "Ensure that event listeners are properly managed for pin objects\nas the pin type is changed during the execution of the program.",
             "access": "private",
             "tagname": "",
@@ -2385,7 +2365,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 757,
+            "line": 783,
             "description": "Sends an analog value up to 14 bits on an analog pin number between\n0 and 15. The value passed to this method should be in the range of\n0.0 to 1.0. It is multiplied by the analog write (PWM) resolution\nset for the pin.",
             "params": [
                 {
@@ -2403,7 +2383,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 781,
+            "line": 807,
             "description": "Sends an analog value > 14 bits and/or send a value for a pin number\ngreater than 15.",
             "params": [
                 {
@@ -2426,7 +2406,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 814,
+            "line": 840,
             "description": "Add the pin value to the appropriate digital port and send the\nupdated digital port value.",
             "params": [
                 {
@@ -2449,7 +2429,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 842,
+            "line": 866,
             "description": "Send the servo angle.",
             "params": [
                 {
@@ -2472,7 +2452,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 856,
+            "line": 880,
             "description": "Query the cababilities and current state any board running Firmata.",
             "access": "private",
             "tagname": "",
@@ -2483,7 +2463,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 866,
+            "line": 890,
             "description": "Query which pins correspond to the analog channels",
             "access": "private",
             "tagname": "",
@@ -2494,7 +2474,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 876,
+            "line": 900,
             "description": "Call this method to enable or disable analog input for the specified\npin.",
             "access": "private",
             "tagname": "",
@@ -2517,7 +2497,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 891,
+            "line": 915,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -2526,7 +2506,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 903,
+            "line": 927,
             "description": "Get or set the sampling interval (how often to run the main loop on\nthe IOBoard). Normally the sampling interval should not be changed.\nDefault = 19 (ms).",
             "itemtype": "property",
             "name": "samplingInterval",
@@ -2536,7 +2516,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 924,
+            "line": 947,
             "description": "Set to true when the IOBoard is ready. This can be used in place of\nlistening for the IOBoardEvent.READY event when creating an app with\na draw loop (such as when using processing.js or three.js);",
             "itemtype": "property",
             "name": "isReady",
@@ -2546,7 +2526,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 939,
+            "line": 962,
             "description": "A utility method to assemble a single value from the 2 bytes returned\nfrom the IOBoard (since data is passed in 7 bit Bytes rather than\n8 bit it must be reassembled. This is to be used as a protected\nmethod and should not be needed in any application level code.",
             "access": "private",
             "tagname": "",
@@ -2573,7 +2553,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 957,
+            "line": 980,
             "itemtype": "method",
             "name": "getSocket",
             "return": {
@@ -2585,8 +2565,8 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 965,
-            "description": "Request the Firmata version implemented in the firmware (sketch)\nrunning on the IOBoard.\nListen for the IOBoard.FIRMWARE_VERSION event to be notified of when\nthe Firmata version is returned from the IOBoard.",
+            "line": 988,
+            "description": "Request the Firmata protocol version implemented in the firmware (sketch)\nrunning on the IOBoard.\nListen for the IOBoard.PROTOCOL_VERSION event to be notified of when\nthe Firmata version is returned from the IOBoard.",
             "itemtype": "method",
             "name": "reportVersion",
             "class": "BO.IOBoard",
@@ -2594,8 +2574,8 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 976,
-            "description": "Request the name of the firmware (the sketch) running on the IOBoard.\nListen for the IOBoard.FIRMWARE_NAME event to be notified of when\nthe name is returned from the IOBoard. The version number is also\nreturned.",
+            "line": 999,
+            "description": "Request the name and version of the firmware (the sketch) running on the IOBoard.\nListen for the IOBoard.FIRMWARE_VERSION event to be notified of when\nthe name is returned from the IOBoard. The version number is also\nreturned.",
             "itemtype": "method",
             "name": "reportFirmware",
             "class": "BO.IOBoard",
@@ -2603,7 +2583,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 987,
+            "line": 1010,
             "description": "Disables digital pin reporting for all digital pins.",
             "itemtype": "method",
             "name": "disableDigitalPins",
@@ -2612,7 +2592,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 997,
+            "line": 1020,
             "description": "Enables digital pin reporting for all digital pins. You must call\nthis before you can receive digital pin data from the IOBoard.",
             "itemtype": "method",
             "name": "enableDigitalPins",
@@ -2621,7 +2601,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1008,
+            "line": 1031,
             "description": "Enable or disable reporting of all digital pins for the specified\nport.",
             "itemtype": "method",
             "name": "sendDigitalPortReporting",
@@ -2637,7 +2617,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1018,
+            "line": 1041,
             "description": "Call this method to enable analog input for the specified pin.",
             "itemtype": "method",
             "name": "enableAnalogPin",
@@ -2653,7 +2633,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1027,
+            "line": 1050,
             "description": "Call this method to disable analog input for the specified pin.",
             "itemtype": "method",
             "name": "disableAnalogPin",
@@ -2669,7 +2649,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1036,
+            "line": 1059,
             "description": "Set the specified digital pin mode.",
             "itemtype": "method",
             "name": "setDigitalPinMode",
@@ -2681,7 +2661,7 @@
                 },
                 {
                     "name": "mode",
-                    "description": "Pin.DIN, Pin.DOUT, Pin.PWM, Pin.SERVO,\nPin.SHIFT, or Pin.I2c",
+                    "description": "Pin.DIN, Pin.INPUT_PULLUP, Pin.DOUT, Pin.PWM, Pin.SERVO,\nPin.SHIFT, or Pin.I2c",
                     "type": "Number"
                 },
                 {
@@ -2695,7 +2675,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1060,
+            "line": 1083,
             "description": "Set the value of the specified pin",
             "itemtype": "method",
             "name": "setDigitalPinValue",
@@ -2716,7 +2696,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1084,
+            "line": 1106,
             "description": "Enable the internal pull-up resistor for the specified pin number.",
             "itemtype": "method",
             "name": "enablePullUp",
@@ -2732,9 +2712,11 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1094,
+            "line": 1120,
             "itemtype": "method",
             "name": "getFirmwareName",
+            "deprecated": true,
+            "deprecationMessage": "use getFirmwareVersion instead",
             "return": {
                 "description": "The name of the firmware running on the IOBoard.",
                 "type": "String"
@@ -2744,7 +2726,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1104,
+            "line": 1131,
             "itemtype": "method",
             "name": "getFirmwareVersion",
             "return": {
@@ -2756,7 +2738,19 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1113,
+            "line": 1140,
+            "itemtype": "method",
+            "name": "getProtocolVersion",
+            "return": {
+                "description": "The version of Firmata protocol implemented by the firmware\nrunning on the IOBoard.",
+                "type": "String"
+            },
+            "class": "BO.IOBoard",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/IOBoard.js",
+            "line": 1149,
             "description": "Returns the capabilities for each pin on the IOBoard. The array is\nindexed by pin number (beginning at pin 0). Each array element\ncontains an object with a property for each modes (input, output,\npwm, servo, i2c, etc) supported by the pin. The mode value is the\nresolution in bits.",
             "itemtype": "method",
             "name": "getPinCapabilities",
@@ -2769,7 +2763,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1170,
+            "line": 1209,
             "description": "Reads the current state of the requested pin. Listen for the\nIOBoardEvent.PIN_STATE_RESPONSE event to get the response.\nThe response contains a reference to the pin object with its\nstate updated to match the current state of the pin on the IOBoard.\n\nYou should not typically need to call this method since the pin\nstates are maintained client-side. Use the getAnalogPin or\ngetDigitalPin to get the current state of a pin or getPins to\nget an array of all Pin objects for the IOBoard.\n\nCases for queryPinState are to update the pin state after a period\nof inactivity. For example if multiple client applications are\nusing the same IOBoard (so multiple JavaScript apps connected to\nthe same Arduino). When a new client connection is made,\nqueryPinState is called automatically to copy the IOBoard pin state\nto the client. If for some reason you needed to copy the state of a\nsingle or multiple Pins again, you could call queryPinState in your\napplication. In most cases however you should never need to call\nthis method.",
             "itemtype": "method",
             "name": "queryPinState",
@@ -2785,7 +2779,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1201,
+            "line": 1240,
             "description": "Send the digital values for a port. Making this private for now.",
             "access": "private",
             "tagname": "",
@@ -2808,7 +2802,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1214,
+            "line": 1253,
             "description": "Send a string message to the IOBoard. This is useful if you have a\ncustom sketch running on the IOBoard rather than StandardFirmata\nand want to communicate with your javascript message via string\nmessages that you then parse in javascript.\nYou can receive string messages as well.\n\n<p>To test, load the EchoString.pde example from Firmata->Examples\nmenu in the IOBoard Application, then use sendString(\"your string\nmessage\") to have it echoed back to your javascript application.</p>",
             "itemtype": "method",
             "name": "sendString",
@@ -2824,7 +2818,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1241,
+            "line": 1280,
             "description": "Send a sysEx message to the IOBoard. This is useful for sending\ncustom sysEx data to the IOBoard, for example if you are not using\nStandardFirmata. You would likely use it in a class rather than\ncalling it from your main application.",
             "access": "private",
             "tagname": "",
@@ -2850,7 +2844,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1273,
+            "line": 1312,
             "description": "Call to associate a pin with a connected servo motor. See the\ndocumentation for your servo motor for the minimum and maximum\npulse width. If you can't find it, then the default values should\nbe close enough so call sendServoAttach(pin) omitting the min and\nmax values.",
             "itemtype": "method",
             "name": "sendServoAttach",
@@ -2876,7 +2870,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1310,
+            "line": 1349,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -2890,7 +2884,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1319,
+            "line": 1358,
             "itemtype": "method",
             "name": "getAnalogPin",
             "return": {
@@ -2902,7 +2896,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1328,
+            "line": 1367,
             "itemtype": "method",
             "name": "getDigitalPin",
             "return": {
@@ -2914,7 +2908,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1337,
+            "line": 1376,
             "itemtype": "method",
             "name": "getPins",
             "return": {
@@ -2926,7 +2920,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1345,
+            "line": 1384,
             "description": "Use this method to obtain the digital pin number equivalent\nfor an analog pin.",
             "example": [
                 "\n    // set analog pin A3 on an Arduino Uno to digital input\n    board.setDigitalPinMode(board.analogToDigital(3), Pin.DIN);\n\n<p>board.analogToDigital(3) returns 17 which is the digital\nequivalent of the analog pin</p>"
@@ -2942,7 +2936,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1364,
+            "line": 1403,
             "itemtype": "method",
             "name": "getPinCount",
             "return": {
@@ -2954,7 +2948,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1372,
+            "line": 1411,
             "itemtype": "method",
             "name": "getAnalogPinCount",
             "return": {
@@ -2966,7 +2960,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1381,
+            "line": 1420,
             "description": "Returns undefined if the board does not have i2c pins.",
             "access": "private",
             "tagname": "",
@@ -2981,16 +2975,16 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1392,
+            "line": 1431,
             "description": "Call this method to print the capabilities for all pins to\nthe console.",
             "itemtype": "method",
-            "name": "reportCapabilities",
+            "name": "reportPinCapabilities",
             "class": "BO.IOBoard",
             "namespace": "BO"
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1413,
+            "line": 1452,
             "description": "A wrapper for the send method of the WebSocket\nI'm not sure there is a case for the user to call this method\nSo I'm making this private for now.",
             "access": "private",
             "tagname": "",
@@ -3008,7 +3002,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1426,
+            "line": 1465,
             "description": "A wrapper for the close method of the WebSocket. Making this\nprivate until a use case arises.",
             "access": "private",
             "tagname": "",
@@ -3019,7 +3013,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1439,
+            "line": 1478,
             "params": [
                 {
                     "name": "type",
@@ -3037,7 +3031,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1448,
+            "line": 1487,
             "params": [
                 {
                     "name": "type",
@@ -3055,7 +3049,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1457,
+            "line": 1496,
             "params": [
                 {
                     "name": "type",
@@ -3068,7 +3062,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1465,
+            "line": 1504,
             "params": [
                 {
                     "name": "type",
@@ -3086,7 +3080,17 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1479,
+            "line": 1516,
+            "itemtype": "method",
+            "name": "reportCapabilities",
+            "deprecated": true,
+            "deprecationMessage": "use reportPinCapabilities instead",
+            "class": "BO.IOBoard",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/IOBoard.js",
+            "line": 1524,
             "description": "The ioBoardReady event is dispatched when the board is ready to\nsend and receive commands.",
             "type": "BO.IOBoardEvent.READY",
             "itemtype": "event",
@@ -3103,7 +3107,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1487,
+            "line": 1532,
             "description": "The ioBoardConnected event is dispatched when the websocket\nconnection is established.",
             "type": "BO.IOBoardEvent.CONNECTED",
             "itemtype": "event",
@@ -3120,7 +3124,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1495,
+            "line": 1540,
             "description": "The ioBoardDisconnected event is dispatched when the websocket\nconnection is closed.",
             "type": "BO.IOBoardEvent.DISCONNECTED",
             "itemtype": "event",
@@ -3137,7 +3141,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1503,
+            "line": 1548,
             "description": "The stringMessage event is dispatched when a string is received\nfrom the IOBoard.",
             "type": "BO.IOBoardEvent.STRING_MESSAGE",
             "itemtype": "event",
@@ -3159,7 +3163,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1512,
+            "line": 1557,
             "description": "The sysexMessage event is dispatched when a sysEx message is\nreceived from the IOBoard.",
             "type": "BO.IOBoardEvent.SYSEX_MESSAGE",
             "itemtype": "event",
@@ -3181,11 +3185,11 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1521,
-            "description": "The firmwareVersion event is dispatched when the firmware version\nis received from the IOBoard.",
-            "type": "BO.IOBoardEvent.FIRMWARE_VERSION",
+            "line": 1566,
+            "description": "The protocolVersion event is dispatched when the Firmata protocol version\nis received from the IOBoard.",
+            "type": "BO.IOBoardEvent.PROTOCOL_VERSION",
             "itemtype": "event",
-            "name": "firmwareVersion",
+            "name": "protocolVersion",
             "params": [
                 {
                     "name": "target",
@@ -3194,7 +3198,7 @@
                 },
                 {
                     "name": "version",
-                    "description": "The firmware version (where Firmata 2.3 = 23)",
+                    "description": "The protocol version (where Firmata 2.3 = 23)",
                     "type": "Number"
                 }
             ],
@@ -3203,9 +3207,11 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1530,
+            "line": 1575,
             "description": "The firmwareName event is dispatched when the firmware name is\nreceived from the IOBoard.",
             "type": "BO.IOBoardEvent.FIRMWARE_NAME",
+            "deprecated": true,
+            "deprecationMessage": "use FIRMWARE_VERION instead",
             "itemtype": "event",
             "name": "firmwareName",
             "params": [
@@ -3230,7 +3236,29 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1540,
+            "line": 1586,
+            "description": "The firmwareVersion event is dispatched when the firmware name and version\nis received from the IOBoard.",
+            "type": "BO.IOBoardEvent.FIRMWARE_VERSION",
+            "itemtype": "event",
+            "name": "firmwareVersion",
+            "params": [
+                {
+                    "name": "target",
+                    "description": "A reference to the IOBoard",
+                    "type": "IOBoard"
+                },
+                {
+                    "name": "version",
+                    "description": "The firmware version (where Firmata 2.3 = 23)",
+                    "type": "Number"
+                }
+            ],
+            "class": "BO.IOBoard",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/IOBoard.js",
+            "line": 1595,
             "description": "The pinStateResponse event is dispatched when the results of\na pin state query (via a call to: queryPinState()) is received.",
             "type": "BO.IOBoardEvent.PIN_STATE_RESPONSE",
             "itemtype": "event",
@@ -3252,7 +3280,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1549,
+            "line": 1604,
             "description": "The analogData event is dispatched when analog data is received\nfrom the IOBoard. Use thie event to be notified when any analog\npin value changes. Use Pin.CHANGE to be notified when a specific\npin value changes.",
             "type": "BO.IOBoardEvent.ANALOG_DATA",
             "itemtype": "event",
@@ -3274,7 +3302,7 @@
         },
         {
             "file": "src/core/IOBoard.js",
-            "line": 1560,
+            "line": 1615,
             "description": "The digitalData event is dispatched when digital data is received\nfrom the IOBoard. Use this event to be notified when any digital\npin value changes. Use Pin.CHANGE to be notified when a specific\npin value changes.",
             "type": "BO.IOBoardEvent.DIGITAL_DATA",
             "itemtype": "event",
@@ -3297,7 +3325,7 @@
         {
             "file": "src/core/IOBoardEvent.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.IOBoardEvent",
             "namespace": "BO"
         },
@@ -3323,7 +3351,7 @@
             "file": "src/core/IOBoardEvent.js",
             "line": 46,
             "itemtype": "property",
-            "name": "IOBoardEvent.FIRMWARE_VERSION",
+            "name": "IOBoardEvent.PROTOCOL_VERSION",
             "static": 1,
             "class": "BO.IOBoardEvent",
             "namespace": "BO"
@@ -3332,7 +3360,7 @@
             "file": "src/core/IOBoardEvent.js",
             "line": 51,
             "itemtype": "property",
-            "name": "IOBoardEvent.FIRMWARE_NAME",
+            "name": "IOBoardEvent.FIRMWARE_VERSION",
             "static": 1,
             "class": "BO.IOBoardEvent",
             "namespace": "BO"
@@ -3341,7 +3369,7 @@
             "file": "src/core/IOBoardEvent.js",
             "line": 56,
             "itemtype": "property",
-            "name": "IOBoardEvent.STRING_MESSAGE",
+            "name": "IOBoardEvent.FIRMWARE_NAME",
             "static": 1,
             "class": "BO.IOBoardEvent",
             "namespace": "BO"
@@ -3350,6 +3378,17 @@
             "file": "src/core/IOBoardEvent.js",
             "line": 61,
             "itemtype": "property",
+            "name": "IOBoardEvent.STRING_MESSAGE",
+            "static": 1,
+            "deprecated": true,
+            "deprecationMessage": "use FIRMWARE_VERION instead",
+            "class": "BO.IOBoardEvent",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/IOBoardEvent.js",
+            "line": 67,
+            "itemtype": "property",
             "name": "IOBoardEvent.SYSEX_MESSAGE",
             "static": 1,
             "class": "BO.IOBoardEvent",
@@ -3357,7 +3396,7 @@
         },
         {
             "file": "src/core/IOBoardEvent.js",
-            "line": 66,
+            "line": 72,
             "itemtype": "property",
             "name": "IOBoardEvent.PIN_STATE_RESPONSE",
             "static": 1,
@@ -3366,7 +3405,7 @@
         },
         {
             "file": "src/core/IOBoardEvent.js",
-            "line": 71,
+            "line": 77,
             "itemtype": "property",
             "name": "IOBoardEvent.READY",
             "static": 1,
@@ -3375,7 +3414,7 @@
         },
         {
             "file": "src/core/IOBoardEvent.js",
-            "line": 76,
+            "line": 82,
             "itemtype": "property",
             "name": "IOBoardEvent.CONNECTED",
             "static": 1,
@@ -3384,7 +3423,7 @@
         },
         {
             "file": "src/core/IOBoardEvent.js",
-            "line": 81,
+            "line": 87,
             "itemtype": "property",
             "name": "IOBoardEvent.DISCONNECTED",
             "static": 1,
@@ -3468,7 +3507,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 1,
-            "description": "Based on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Based on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.Pin",
             "namespace": "BO"
         },
@@ -3484,7 +3523,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 76,
-            "description": "[read-only] The analog pin number used by the IOBoard (printed on \nboard or datasheet).",
+            "description": "[read-only] The analog pin number used by the IOBoard (printed on\nboard or datasheet).",
             "itemtype": "property",
             "name": "analogNumber",
             "type": "Number",
@@ -3494,7 +3533,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 86,
-            "description": "[read-only] The pin number corresponding to the Arduino documentation \nfor the type of board.",
+            "description": "[read-only] The pin number corresponding to the Arduino documentation\nfor the type of board.",
             "itemtype": "property",
             "name": "number",
             "type": "Number",
@@ -3522,11 +3561,11 @@
         {
             "file": "src/core/Pin.js",
             "line": 114,
-            "description": "Sets the state value. This is populated by the \nprocessPinStateResponse method of the IOBoard object. It should not\nbe called manually.",
+            "description": "Sets the state value. This is populated by the\nprocessPinStateResponse method of the IOBoard object. It should not\nbe called manually.",
             "params": [
                 {
                     "name": "state",
-                    "description": "The state of the pin. For output modes, the\nstate is any value that has been previously written to the pin. For \ninput modes, the state is typically zero, however for digital inputs\nthe state is the status of the pullup resistor.",
+                    "description": "The state of the pin. For output modes, the\nstate is any value that has been previously written to the pin. For\ninput modes, the state is typically zero, however for digital inputs\nthe state is the status of the pullup resistor.",
                     "type": "Number"
                 }
             ],
@@ -3558,7 +3597,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 158,
-            "description": "[read-only] The average value of the pin over time. Call clear() to \nreset.",
+            "description": "[read-only] The average value of the pin over time. Call clear() to\nreset.",
             "itemtype": "property",
             "name": "average",
             "type": "Number",
@@ -3568,7 +3607,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 168,
-            "description": "[read-only] The minimum value of the pin over time. Call clear() to \nreset.",
+            "description": "[read-only] The minimum value of the pin over time. Call clear() to\nreset.",
             "itemtype": "property",
             "name": "minimum",
             "type": "Number",
@@ -3578,7 +3617,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 178,
-            "description": "[read-only] The maximum value of the pin over time. Call clear() to \nreset.",
+            "description": "[read-only] The maximum value of the pin over time. Call clear() to\nreset.",
             "itemtype": "property",
             "name": "maximum",
             "type": "Number",
@@ -3588,7 +3627,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 188,
-            "description": "<p>[read-only] The state of the pin. For output modes, the state is \nany value that has been previously written to the pin. For input \nmodes, the state is typically zero, however for digital inputs the \nstate is the status of the pullup resistor.</p>\n\n<p>This propery is populated by calling the queryPinState method of \nthe IOBoard object. This is useful if there are multiple client \napplications connected to a single physical IOBoard and you want to \nget the state of a pin that is set by another client application.</p>",
+            "description": "<p>[read-only] The state of the pin. For output modes, the state is\nany value that has been previously written to the pin. For input\nmodes, the state is typically zero, however for digital inputs the\nstate is the status of the pullup resistor.</p>\n\n<p>This propery is populated by calling the queryPinState method of\nthe IOBoard object. This is useful if there are multiple client\napplications connected to a single physical IOBoard and you want to\nget the state of a pin that is set by another client application.</p>",
             "itemtype": "property",
             "name": "state",
             "type": "Number",
@@ -3648,7 +3687,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 261,
-            "description": "The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,\n4: SERVO, 5: SHIFT, 6: I2C). Use \nIOBoard.setDigitalPinMode(pinNumber) to set the pin type.",
+            "description": "The type/mode of the pin (0: DIN, 1: DOUT, 2: AIN, 3: AOUT / PWM,\n4: SERVO, 5: SHIFT, 6: I2C). Use\nIOBoard.setDigitalPinMode(pinNumber) to set the pin type.",
             "itemtype": "method",
             "name": "getType",
             "return": {
@@ -3740,7 +3779,7 @@
             "params": [
                 {
                     "name": "newFilter",
-                    "description": "A filter object that extends \nFilterBase.",
+                    "description": "A filter object that extends\nFilterBase.",
                     "type": "FilterBase"
                 }
             ],
@@ -3776,13 +3815,13 @@
         {
             "file": "src/core/Pin.js",
             "line": 410,
-            "description": "Add a new generator to the Pin. A pin can only have one generator\nassigned. \nAssigning a new generator will replace the previously assigned \ngenerator.",
+            "description": "Add a new generator to the Pin. A pin can only have one generator\nassigned.\nAssigning a new generator will replace the previously assigned\ngenerator.",
             "itemtype": "method",
             "name": "addGenerator",
             "params": [
                 {
                     "name": "newGenerator",
-                    "description": "A generator object that extends \nGeneratorBase.",
+                    "description": "A generator object that extends\nGeneratorBase.",
                     "type": "GeneratorBase"
                 }
             ],
@@ -3841,7 +3880,7 @@
                 },
                 {
                     "name": "listener",
-                    "description": "The function to be called when the event \nis fired",
+                    "description": "The function to be called when the event\nis fired",
                     "type": "Function"
                 }
             ],
@@ -3859,7 +3898,7 @@
                 },
                 {
                     "name": "listener",
-                    "description": "The function to be called when the event \nis fired",
+                    "description": "The function to be called when the event\nis fired",
                     "type": "Function"
                 }
             ],
@@ -3890,7 +3929,7 @@
                 },
                 {
                     "name": "optionalParams",
-                    "description": "Optional parameters to assign to the \nevent object.\nreturn {boolean} True if dispatch is successful, false if not.",
+                    "description": "Optional parameters to assign to the\nevent object.\nreturn {boolean} True if dispatch is successful, false if not.",
                     "type": "Object"
                 }
             ],
@@ -4026,6 +4065,7 @@
         {
             "file": "src/core/Pin.js",
             "line": 588,
+            "description": "Placeholder only - not yet supported",
             "itemtype": "property",
             "name": "Pin.SERIAL",
             "static": 1,
@@ -4034,7 +4074,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 593,
+            "line": 594,
             "itemtype": "property",
             "name": "Pin.SERIAL",
             "static": 1,
@@ -4043,7 +4083,16 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 598,
+            "line": 599,
+            "itemtype": "property",
+            "name": "Pin.INPUT_PULLUP",
+            "static": 1,
+            "class": "BO.Pin",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Pin.js",
+            "line": 604,
             "itemtype": "property",
             "name": "Pin.TOTAL_PIN_MODES",
             "static": 1,
@@ -4052,7 +4101,7 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 607,
+            "line": 613,
             "description": "The pinChange event is dispatched when the pin value changes.",
             "type": "BO.PinEvent.CHANGE",
             "itemtype": "event",
@@ -4069,8 +4118,8 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 614,
-            "description": "The risingEdge event is dispatched when the pin value increased \n(from 0 to 1).",
+            "line": 620,
+            "description": "The risingEdge event is dispatched when the pin value increased\n(from 0 to 1).",
             "type": "BO.PinEvent.RISING_EDGE",
             "itemtype": "event",
             "name": "risingEdge",
@@ -4086,8 +4135,8 @@
         },
         {
             "file": "src/core/Pin.js",
-            "line": 622,
-            "description": "The change event is dispatched when the pin value decreased \n(from 1 to 0).",
+            "line": 628,
+            "description": "The change event is dispatched when the pin value decreased\n(from 1 to 0).",
             "type": "BO.PinEvent.FALLING_EDGE",
             "itemtype": "event",
             "name": "fallingEdge",
@@ -4104,7 +4153,7 @@
         {
             "file": "src/core/PinEvent.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.PinEvent",
             "namespace": "BO"
         },
@@ -4138,7 +4187,7 @@
         {
             "file": "src/core/Serial.js",
             "line": 1,
-            "description": "Copyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.Serial",
             "namespace": "BO"
         },
@@ -4150,7 +4199,7 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 99,
+            "line": 111,
             "description": "Handle incoming sysex message.",
             "access": "private",
             "tagname": "",
@@ -4159,13 +4208,15 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 119,
+            "line": 134,
             "description": "Write an array of data.",
+            "itemtype": "method",
+            "name": "write",
             "params": [
                 {
-                    "name": "data",
-                    "description": "",
-                    "type": "Array"
+                    "name": "val",
+                    "description": "A single byte or an array of bytes to write",
+                    "type": "Number|Array"
                 }
             ],
             "class": "BO.Serial",
@@ -4173,8 +4224,10 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 135,
+            "line": 157,
             "description": "Start reading the serial port.",
+            "itemtype": "method",
+            "name": "startReading",
             "params": [
                 {
                     "name": "maxBytesToRead",
@@ -4187,35 +4240,43 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 152,
+            "line": 175,
             "description": "Stop reading the serial port.",
+            "itemtype": "method",
+            "name": "stopReading",
             "class": "BO.Serial",
             "namespace": "BO"
         },
         {
             "file": "src/core/Serial.js",
-            "line": 159,
+            "line": 183,
             "description": "Close the serial port. A new instance must be created in order\nto reopen the port.",
+            "itemtype": "method",
+            "name": "close",
             "class": "BO.Serial",
             "namespace": "BO"
         },
         {
             "file": "src/core/Serial.js",
-            "line": 167,
+            "line": 192,
             "description": "For HardwareSerial, waits for the transmission of outgoing serial data\nto complete.\nFor SoftwareSerial, removes any buffered incoming serial data.",
+            "itemtype": "method",
+            "name": "flush",
             "class": "BO.Serial",
             "namespace": "BO"
         },
         {
             "file": "src/core/Serial.js",
-            "line": 176,
+            "line": 202,
             "description": "For SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.\nCall this method to set this port to be the reading port in the case there are multiple\nSoftwareSerial instances.",
+            "itemtype": "method",
+            "name": "listen",
             "class": "BO.Serial",
             "namespace": "BO"
         },
         {
             "file": "src/core/Serial.js",
-            "line": 190,
+            "line": 217,
             "params": [
                 {
                     "name": "type",
@@ -4233,7 +4294,7 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 198,
+            "line": 225,
             "params": [
                 {
                     "name": "type",
@@ -4251,7 +4312,7 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 206,
+            "line": 233,
             "params": [
                 {
                     "name": "type",
@@ -4264,7 +4325,7 @@
         },
         {
             "file": "src/core/Serial.js",
-            "line": 214,
+            "line": 241,
             "params": [
                 {
                     "name": "type",
@@ -4277,6 +4338,86 @@
                     "type": "Object"
                 }
             ],
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 251,
+            "description": "Not currently used. Corresponds to the default Arduino Serial port",
+            "itemtype": "property",
+            "name": "Serial.HW_SERIAL0",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 257,
+            "description": "Pins RX1 and TX1 on the board",
+            "itemtype": "property",
+            "name": "Serial.HW_SERIAL1",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 263,
+            "description": "Pins RX2 and TX2 on the board",
+            "itemtype": "property",
+            "name": "Serial.HW_SERIAL2",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 269,
+            "description": "Pins RX3 and TX3 on the board",
+            "itemtype": "property",
+            "name": "Serial.HW_SERIAL3",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 276,
+            "description": "One of four software serial instances",
+            "itemtype": "property",
+            "name": "Serial.SW_SERIAL0",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 282,
+            "description": "One of four software serial instances",
+            "itemtype": "property",
+            "name": "Serial.SW_SERIAL1",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 288,
+            "description": "One of four software serial instances",
+            "itemtype": "property",
+            "name": "Serial.SW_SERIAL2",
+            "static": 1,
+            "class": "BO.Serial",
+            "namespace": "BO"
+        },
+        {
+            "file": "src/core/Serial.js",
+            "line": 294,
+            "description": "One of four software serial instances",
+            "itemtype": "property",
+            "name": "Serial.SW_SERIAL3",
+            "static": 1,
             "class": "BO.Serial",
             "namespace": "BO"
         },
@@ -4333,13 +4474,13 @@
         {
             "file": "src/core/WSocketWrapper.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 54,
+            "line": 55,
             "description": "Initialize the websocket",
             "access": "private",
             "tagname": "",
@@ -4357,37 +4498,37 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 67,
+            "line": 71,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 77,
+            "line": 78,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 104,
+            "line": 117,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 110,
+            "line": 123,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 114,
+            "line": 129,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 130,
+            "line": 145,
             "description": "Send a message\nTO DO: support sending ArrayBuffers and Blobs\nFor now, forward any calls to sendString",
             "access": "private",
             "tagname": "",
@@ -4405,7 +4546,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 144,
+            "line": 159,
             "description": "Send a message",
             "itemtype": "method",
             "name": "sendString",
@@ -4421,7 +4562,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 155,
+            "line": 170,
             "description": "[read-only] Wrapper for the readyState method of the native websocket implementation\n<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>",
             "itemtype": "property",
             "name": "readyState",
@@ -4431,7 +4572,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 170,
+            "line": 185,
             "description": "The webSocketConnected event is dispatched when a connection with\nthe websocket is established.",
             "type": "BO.WebsocketEvent.CONNECTED",
             "itemtype": "event",
@@ -4448,7 +4589,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 178,
+            "line": 193,
             "description": "The webSocketMessage event is dispatched when a websocket message is received.",
             "type": "BO.WebsocketEvent.MESSAGE",
             "itemtype": "event",
@@ -4470,7 +4611,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 186,
+            "line": 201,
             "description": "The webSocketClosed event is dispatched the websocket connection is closed.",
             "type": "BO.WebsocketEvent.CLOSE",
             "itemtype": "event",
@@ -4488,14 +4629,14 @@
         {
             "file": "src/core/core.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.custom.ID12RFIDReader",
             "namespace": "BO"
         },
         {
             "file": "src/core/core.js",
             "line": 7,
-            "version": "0.3.1\n\n<p>Namespace for Breakout objects.</p>\n\n<p>You can use the shorthand \"BO\" instead of \"BREAKOUT\".</p>",
+            "version": "0.3.2\n\n<p>Namespace for Breakout objects.</p>\n\n<p>You can use the shorthand \"BO\" instead of \"BREAKOUT\".</p>",
             "class": "BO.custom.ID12RFIDReader",
             "namespace": "BO"
         },
@@ -4723,7 +4864,7 @@
         {
             "file": "src/filters/Convolution.js",
             "line": 50,
-            "description": "An array of coefficients to be used with product-sum operations for input buffers. \nIf assigned a new array, the input buffer will be cleared.",
+            "description": "An array of coefficients to be used with product-sum operations for input buffers.\nIf assigned a new array, the input buffer will be cleared.",
             "itemtype": "property",
             "name": "coef",
             "type": "Number[]",
@@ -4869,14 +5010,14 @@
         },
         {
             "file": "src/filters/TriggerPoint.js",
-            "line": 64,
+            "line": 66,
             "description": "Override FilterBase.processSample",
             "class": "BO.filters.TriggerPoint",
             "namespace": "BO.filters"
         },
         {
             "file": "src/filters/TriggerPoint.js",
-            "line": 82,
+            "line": 84,
             "itemtype": "method",
             "name": "addPoint",
             "class": "BO.filters.TriggerPoint",
@@ -4884,7 +5025,7 @@
         },
         {
             "file": "src/filters/TriggerPoint.js",
-            "line": 90,
+            "line": 92,
             "itemtype": "method",
             "name": "removePoint",
             "class": "BO.filters.TriggerPoint",
@@ -4892,7 +5033,7 @@
         },
         {
             "file": "src/filters/TriggerPoint.js",
-            "line": 99,
+            "line": 101,
             "itemtype": "method",
             "name": "removeAllPoints",
             "class": "BO.filters.TriggerPoint",
@@ -4900,7 +5041,7 @@
         },
         {
             "file": "src/filters/TriggerPoint.js",
-            "line": 107,
+            "line": 109,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -4910,7 +5051,7 @@
         },
         {
             "file": "src/filters/TriggerPoint.js",
-            "line": 137,
+            "line": 139,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5030,7 +5171,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 138,
+            "line": 137,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5040,7 +5181,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 148,
+            "line": 147,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5050,7 +5191,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 173,
+            "line": 172,
             "description": "sine wave",
             "itemtype": "method",
             "name": "Oscillator.SIN",
@@ -5060,7 +5201,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 182,
+            "line": 181,
             "description": "square wave",
             "itemtype": "method",
             "name": "Oscillator.SQUARE",
@@ -5070,7 +5211,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 191,
+            "line": 190,
             "description": "triangle wave",
             "itemtype": "method",
             "name": "Oscillator.TRIANGLE",
@@ -5080,7 +5221,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 201,
+            "line": 200,
             "description": "saw wave",
             "itemtype": "method",
             "name": "Oscillator.SAW",
@@ -5090,7 +5231,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 216,
+            "line": 214,
             "description": "impulse",
             "itemtype": "method",
             "name": "Oscillator.IMPULSE",
@@ -5100,7 +5241,7 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 225,
+            "line": 223,
             "description": "linear",
             "itemtype": "method",
             "name": "Oscillator.LINEAR",
@@ -5110,8 +5251,8 @@
         },
         {
             "file": "src/generators/Oscillator.js",
-            "line": 236,
-            "description": "The update event is dispatched at the rate specified \nby the serviceInterval parameter (default = 33ms).",
+            "line": 234,
+            "description": "The update event is dispatched at the rate specified\nby the serviceInterval parameter (default = 33ms).",
             "type": "BO.generators.GeneratorEvent.UPDATE",
             "itemtype": "event",
             "name": "update",
@@ -5140,7 +5281,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 89,
+            "line": 93,
             "description": "[read-only] the accelerometer dynamic range in Gs (either 2G, 4G, 8G, or 16G for this sensor)..",
             "itemtype": "property",
             "name": "dynamicRange",
@@ -5150,7 +5291,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 100,
+            "line": 104,
             "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the x-axis.",
             "itemtype": "property",
             "name": "x",
@@ -5160,7 +5301,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 111,
+            "line": 115,
             "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the y-axis.",
             "itemtype": "property",
             "name": "y",
@@ -5170,7 +5311,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 122,
+            "line": 126,
             "description": "[read-only] The acceleration value in Gs (9.8m/sec^2) along the z-axis.",
             "itemtype": "property",
             "name": "z",
@@ -5180,7 +5321,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 133,
+            "line": 137,
             "description": "[read-only] The pitch value in degrees",
             "itemtype": "property",
             "name": "pitch",
@@ -5190,7 +5331,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 147,
+            "line": 151,
             "description": "[read-only] The roll value in degrees",
             "itemtype": "property",
             "name": "roll",
@@ -5200,7 +5341,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 163,
+            "line": 167,
             "description": "[read-only] The raw value of the x axis",
             "itemtype": "property",
             "name": "rawX",
@@ -5210,7 +5351,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 174,
+            "line": 178,
             "description": "[read-only] The raw value of the y axis",
             "itemtype": "property",
             "name": "rawY",
@@ -5220,7 +5361,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 185,
+            "line": 189,
             "description": "[read-only] The raw value of the z axis",
             "itemtype": "property",
             "name": "rawZ",
@@ -5230,7 +5371,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 196,
+            "line": 200,
             "description": "[read-only] The state of continuous read mode. True if continuous read mode\nis enabled, false if it is disabled.",
             "itemtype": "property",
             "name": "isRunning",
@@ -5240,7 +5381,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 210,
+            "line": 214,
             "description": "The sensitivity value for the x axis (default value = 0.0390625).",
             "itemtype": "property",
             "name": "sensitivityX",
@@ -5250,7 +5391,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 224,
+            "line": 228,
             "description": "The sensitivity value for the y axis (default value = 0.0390625).",
             "itemtype": "property",
             "name": "sensitivityY",
@@ -5260,7 +5401,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 238,
+            "line": 242,
             "description": "The sensitivity value for the z axis (default value = 0.0390625).",
             "itemtype": "property",
             "name": "sensitivityZ",
@@ -5270,7 +5411,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 253,
+            "line": 257,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5280,7 +5421,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 284,
+            "line": 288,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5290,7 +5431,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 305,
+            "line": 309,
             "description": "Start continuous reading of the sensor.",
             "itemtype": "method",
             "name": "startReading",
@@ -5299,7 +5440,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 316,
+            "line": 320,
             "description": "Stop continuous reading of the sensor.",
             "itemtype": "method",
             "name": "stopReading",
@@ -5308,7 +5449,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 325,
+            "line": 329,
             "description": "Offset the x, y, or z axis output by the respective input value.",
             "itemtype": "method",
             "name": "setAxisOffset",
@@ -5317,7 +5458,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 340,
+            "line": 344,
             "description": "Get the value of the x, y, and z axis offset.",
             "itemtype": "method",
             "name": "getAxisOffset",
@@ -5326,7 +5467,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 356,
+            "line": 360,
             "description": "Sends read request to accelerometer and updates accelerometer values.",
             "itemtype": "method",
             "name": "update",
@@ -5335,7 +5476,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 368,
+            "line": 372,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5345,7 +5486,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 381,
+            "line": 385,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5355,7 +5496,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 397,
+            "line": 401,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5365,7 +5506,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 438,
+            "line": 442,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -5374,7 +5515,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 450,
+            "line": 454,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_2G",
             "static": 1,
@@ -5383,7 +5524,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 455,
+            "line": 459,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_4G",
             "static": 1,
@@ -5392,7 +5533,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 460,
+            "line": 464,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_8G",
             "static": 1,
@@ -5401,7 +5542,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 465,
+            "line": 469,
             "itemtype": "property",
             "name": "AccelerometerADXL345.RANGE_16G",
             "static": 1,
@@ -5410,7 +5551,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 470,
+            "line": 474,
             "itemtype": "property",
             "name": "AccelerometerADXL345.DEVICE_ID",
             "static": 1,
@@ -5419,7 +5560,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 475,
+            "line": 479,
             "itemtype": "property",
             "name": "AccelerometerADXL345.DEFAULT_SENSITIVITY",
             "static": 1,
@@ -5428,7 +5569,7 @@
         },
         {
             "file": "src/io/AccelerometerADXL345.js",
-            "line": 483,
+            "line": 487,
             "description": "The update event is dispatched when the accelerometer values are updated.",
             "type": "BO.io.AccelerometerEvent.UPDATE",
             "itemtype": "event",
@@ -5529,13 +5670,13 @@
         {
             "file": "src/io/AnalogAccelerometer.js",
             "line": 192,
-            "description": "Scale the range for the specified axis (from 0 to 1) to (minimum to \nmaximum).",
+            "description": "Scale the range for the specified axis (from 0 to 1) to (minimum to\nmaximum).",
             "itemtype": "method",
             "name": "setRangeFor",
             "params": [
                 {
                     "name": "axis",
-                    "description": "the axis to set new range (AnalogAccelerometer.X_AXIS, \nAnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS)."
+                    "description": "the axis to set new range (AnalogAccelerometer.X_AXIS,\nAnalogAccelerometer.Y_AXIS or AnalogAccelerometer.Z_AXIS)."
                 },
                 {
                     "name": "minimum",
@@ -5583,7 +5724,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 263,
+            "line": 266,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5593,7 +5734,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 272,
+            "line": 275,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5603,7 +5744,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 281,
+            "line": 284,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -5613,7 +5754,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 290,
+            "line": 293,
             "itemtype": "property",
             "name": "AnalogAccelerometer.X_AXIS",
             "static": 1,
@@ -5622,7 +5763,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 295,
+            "line": 298,
             "itemtype": "property",
             "name": "AnalogAccelerometer.Y_AXIS",
             "static": 1,
@@ -5631,7 +5772,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 300,
+            "line": 303,
             "itemtype": "property",
             "name": "AnalogAccelerometer.Z_AXIS",
             "static": 1,
@@ -5640,7 +5781,7 @@
         },
         {
             "file": "src/io/AnalogAccelerometer.js",
-            "line": 309,
+            "line": 312,
             "description": "The update event is dispatched when the accelerometer values are updated.",
             "type": "BO.io.AccelerometerEvent.UPDATE",
             "itemtype": "event",
@@ -5648,7 +5789,7 @@
             "params": [
                 {
                     "name": "target",
-                    "description": "A reference to the \nAnalogAccelerometer object.",
+                    "description": "A reference to the\nAnalogAccelerometer object.",
                     "type": "BO.io.AnalogAccelerometer"
                 }
             ],
@@ -5775,7 +5916,7 @@
             "params": [
                 {
                     "name": "}",
-                    "description": "color An array containing the RGB values. \ncolor[0] = R, color[1] = G, color[2] = B",
+                    "description": "color An array containing the RGB values.\ncolor[0] = R, color[1] = G, color[2] = B",
                     "type": "Number"
                 }
             ],
@@ -5785,7 +5926,7 @@
         {
             "file": "src/io/BlinkM.js",
             "line": 60,
-            "description": "Fades to the specified RGB color in the specified time duration. \nThe fade speed range is from 1 to 255, where 1 is the slowest time and\n255 is the fastest.",
+            "description": "Fades to the specified RGB color in the specified time duration.\nThe fade speed range is from 1 to 255, where 1 is the slowest time and\n255 is the fastest.",
             "itemtype": "method",
             "name": "fadeToRGBColor",
             "params": [
@@ -5827,7 +5968,7 @@
         {
             "file": "src/io/BlinkM.js",
             "line": 97,
-            "description": "Fades to the specified HSB color in the specified time duration. \nThe fade speed range is from 1 to 255, where 1 is the slowest time and\n255 is the fastest.",
+            "description": "Fades to the specified HSB color in the specified time duration.\nThe fade speed range is from 1 to 255, where 1 is the slowest time and\n255 is the fastest.",
             "itemtype": "method",
             "name": "fadeToHSBColor",
             "params": [
@@ -6085,7 +6226,7 @@
         {
             "file": "src/io/Button.js",
             "line": 236,
-            "description": "The sustainedPress event is dispatched continuously at the rate \nspecified by the sustainedPressInterval property while the button is\nheld.",
+            "description": "The sustainedPress event is dispatched continuously at the rate\nspecified by the sustainedPressInterval property while the button is\nheld.",
             "type": "BO.io.ButtonEvent.SUSTAINED_PRESS",
             "itemtype": "event",
             "name": "sustainedPress",
@@ -6316,7 +6457,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 84,
+            "line": 96,
             "description": "[read-only] The x axis output value in degrees.",
             "itemtype": "property",
             "name": "x",
@@ -6326,7 +6467,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 95,
+            "line": 107,
             "description": "[read-only] The y axis output value in degrees.",
             "itemtype": "property",
             "name": "y",
@@ -6336,7 +6477,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 106,
+            "line": 118,
             "description": "[read-only] The z axis output value in degrees.",
             "itemtype": "property",
             "name": "z",
@@ -6346,7 +6487,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 117,
+            "line": 129,
             "description": "[read-only] The raw value of the x axis",
             "itemtype": "property",
             "name": "rawX",
@@ -6356,7 +6497,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 128,
+            "line": 140,
             "description": "[read-only] The raw value of the y axis",
             "itemtype": "property",
             "name": "rawY",
@@ -6366,7 +6507,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 139,
+            "line": 151,
             "description": "[read-only] The raw value of the z axis",
             "itemtype": "property",
             "name": "rawZ",
@@ -6376,7 +6517,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 150,
+            "line": 162,
             "description": "[read-only] The state of continuous read mode. True if continuous read mode\nis enabled, false if it is disabled.",
             "itemtype": "property",
             "name": "isRunning",
@@ -6386,7 +6527,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 163,
+            "line": 175,
             "description": "Set the polarity of the x, y, and z output values.",
             "itemtype": "method",
             "name": "setRevPolarity",
@@ -6412,7 +6553,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 177,
+            "line": 189,
             "description": "Offset the x, y, or z output by the respective input value.",
             "itemtype": "method",
             "name": "setOffsets",
@@ -6438,7 +6579,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 191,
+            "line": 203,
             "description": "Set the gain value for the x, y, or z output.",
             "itemtype": "method",
             "name": "setGains",
@@ -6464,7 +6605,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 205,
+            "line": 217,
             "description": "Start continuous reading of the sensor.",
             "itemtype": "method",
             "name": "startReading",
@@ -6473,7 +6614,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 216,
+            "line": 228,
             "description": "Stop continuous reading of the sensor.",
             "itemtype": "method",
             "name": "stopReading",
@@ -6482,7 +6623,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 226,
+            "line": 238,
             "description": "Sends read request to accelerometer and updates accelerometer values.",
             "itemtype": "method",
             "name": "update",
@@ -6491,7 +6632,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 239,
+            "line": 251,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6501,7 +6642,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 261,
+            "line": 273,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6511,7 +6652,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 274,
+            "line": 286,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6521,7 +6662,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 290,
+            "line": 302,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6531,7 +6672,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 306,
+            "line": 318,
             "access": "private",
             "tagname": "",
             "itemtype": "method",
@@ -6541,7 +6682,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 343,
+            "line": 355,
             "description": "for debugging",
             "access": "private",
             "tagname": "",
@@ -6550,7 +6691,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 355,
+            "line": 367,
             "description": "ID = 0x69 if sensor pin 9 (AD0) is tied to Power.",
             "itemtype": "property",
             "name": "GyroITG3200.ID_AD0_VDD",
@@ -6560,7 +6701,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 362,
+            "line": 374,
             "description": "ID = 0x68 if sensor pin 9 (AD0) is tied to Ground.",
             "itemtype": "property",
             "name": "GyroITG3200.ID_AD0_VDD",
@@ -6570,7 +6711,7 @@
         },
         {
             "file": "src/io/GyroITG3200.js",
-            "line": 372,
+            "line": 384,
             "description": "The update event is dispatched when the accelerometer values are updated.",
             "type": "BO.io.GyroEvent.UPDATE",
             "itemtype": "event",
@@ -7139,7 +7280,7 @@
             "line": 151,
             "description": "The change event is dispatched when the potentiometer value changes.",
             "example": [
-                "\n    pot.addEventListener(PotEvent.CHANGE, onValueChange);\n\n    function onValueChange(event) {\n        console.log(\"value = \" + event.target.value);  \n    }"
+                "\n    pot.addEventListener(PotEvent.CHANGE, onValueChange);\n\n    function onValueChange(event) {\n        console.log(\"value = \" + event.target.value);\n    }"
             ],
             "type": "BO.io.PotEvent.CHANGE",
             "itemtype": "event",
@@ -7278,7 +7419,7 @@
         {
             "file": "src/io/Servo.js",
             "line": 60,
-            "description": "Set the angle (in degrees) to rotate the server head to.\n\n<p>If you are using a continuous rotation servo, a value of 90\nwill stop the servo. A value of 0 (or < 90 depending on the servo) \nwill cause continous clockwise rotation and a value of 180 (or > 90)\nwill cause continuous counter-clockwise rotation. If your motor\ndoes not come to a full stop when setting 90 degrees, you will need\nto adjust the servo (there is typically a screw on the motor) to\nadjust</p>",
+            "description": "Set the angle (in degrees) to rotate the server head to.\n\n<p>If you are using a continuous rotation servo, a value of 90\nwill stop the servo. A value of 0 (or < 90 depending on the servo)\nwill cause continous clockwise rotation and a value of 180 (or > 90)\nwill cause continuous counter-clockwise rotation. If your motor\ndoes not come to a full stop when setting 90 degrees, you will need\nto adjust the servo (there is typically a screw on the motor) to\nadjust</p>",
             "itemtype": "property",
             "name": "angle",
             "type": "Number",
@@ -7488,7 +7629,7 @@
         {
             "file": "src/io/SoftPot.js",
             "line": 347,
-            "description": "The softPotPressed event is dispatched when pressure is applied to \nthe softpot surface.",
+            "description": "The softPotPressed event is dispatched when pressure is applied to\nthe softpot surface.",
             "type": "BO.io.SoftPotEvent.PRESS",
             "itemtype": "event",
             "name": "softPotPressed",
@@ -7505,7 +7646,7 @@
         {
             "file": "src/io/SoftPot.js",
             "line": 355,
-            "description": "The softPotReleased event is dispatched when pressure is released from \nthe softpot surface.",
+            "description": "The softPotReleased event is dispatched when pressure is released from\nthe softpot surface.",
             "type": "BO.io.SoftPotEvent.RELEASE",
             "itemtype": "event",
             "name": "softPotReleased",
@@ -7522,7 +7663,7 @@
         {
             "file": "src/io/SoftPot.js",
             "line": 363,
-            "description": "The softPotDrag event is dispatched when a drag is detected along \nthe length of the softpot sensor.",
+            "description": "The softPotDrag event is dispatched when a drag is detected along\nthe length of the softpot sensor.",
             "type": "BO.io.SoftPotEvent.DRAG",
             "itemtype": "event",
             "name": "softPotDrag",
@@ -7556,7 +7697,7 @@
         {
             "file": "src/io/SoftPot.js",
             "line": 379,
-            "description": "The softPotFlickDown event is dispatched when a flick gesture is \ndetected in the direction away from the sensor pins.",
+            "description": "The softPotFlickDown event is dispatched when a flick gesture is\ndetected in the direction away from the sensor pins.",
             "type": "BO.io.SoftPotEvent.FLICK_DOWN",
             "itemtype": "event",
             "name": "softPotFlickDown",
@@ -7698,7 +7839,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 237,
+            "line": 233,
             "description": "Listen for stepping complete event",
             "access": "private",
             "tagname": "",
@@ -7709,7 +7850,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 255,
+            "line": 251,
             "description": "[read-only] The id of the Stepper object instance. Each stepper motor\nis given a unique id upon initialization.",
             "itemtype": "property",
             "name": "id",
@@ -7719,7 +7860,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 267,
+            "line": 263,
             "params": [
                 {
                     "name": "type",
@@ -7737,7 +7878,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 275,
+            "line": 271,
             "params": [
                 {
                     "name": "type",
@@ -7755,7 +7896,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 283,
+            "line": 279,
             "params": [
                 {
                     "name": "type",
@@ -7768,7 +7909,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 291,
+            "line": 287,
             "params": [
                 {
                     "name": "type",
@@ -7786,7 +7927,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 302,
+            "line": 298,
             "itemtype": "property",
             "name": "Stepper.CLOCKWISE",
             "static": 1,
@@ -7795,7 +7936,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 307,
+            "line": 303,
             "itemtype": "property",
             "name": "Stepper.COUNTER_CLOCKWISE",
             "static": 1,
@@ -7804,7 +7945,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 312,
+            "line": 308,
             "description": "Uses 1 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER",
@@ -7814,7 +7955,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 318,
+            "line": 314,
             "description": "Uses 2 microsecond delay between steps",
             "itemtype": "property",
             "name": "Stepper.DRIVER_HIGH_CURRENT",
@@ -7824,7 +7965,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 324,
+            "line": 320,
             "itemtype": "property",
             "name": "Stepper.TWO_WIRE",
             "static": 1,
@@ -7833,7 +7974,7 @@
         },
         {
             "file": "src/io/Stepper.js",
-            "line": 329,
+            "line": 325,
             "itemtype": "property",
             "name": "Stepper.FOUR_WIRE",
             "static": 1,
@@ -8026,7 +8167,7 @@
         },
         {
             "file": "src/utils/JSUTILS.js",
-            "line": 64,
+            "line": 65,
             "description": "add bind for browsers that don't support it (Safari)",
             "access": "private",
             "tagname": "",
@@ -8035,7 +8176,7 @@
         },
         {
             "file": "src/utils/JSUTILS.js",
-            "line": 76,
+            "line": 77,
             "access": "private",
             "tagname": "",
             "class": "JSUTILS.SignalScope",
@@ -8043,7 +8184,7 @@
         },
         {
             "file": "src/utils/JSUTILS.js",
-            "line": 80,
+            "line": 81,
             "access": "private",
             "tagname": "",
             "class": "JSUTILS.SignalScope",
@@ -8213,7 +8354,7 @@
         {
             "file": "src/utils/Timer.js",
             "line": 157,
-            "description": "The timerTick event is dispatched at the rate specified \nby the delay interval.",
+            "description": "The timerTick event is dispatched at the rate specified\nby the delay interval.",
             "type": "JSUTILS.TimerEvent.TIMER",
             "itemtype": "event",
             "name": "timerTick",
@@ -8324,31 +8465,31 @@
             "line": " src/core/I2CBase.js:188"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/IOBoard.js:1"
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/core/IOBoard.js:891"
+            "line": " src/core/IOBoard.js:915"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1439"
+            "line": " src/core/IOBoard.js:1478"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1448"
+            "line": " src/core/IOBoard.js:1487"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1457"
+            "line": " src/core/IOBoard.js:1496"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/IOBoard.js:1465"
+            "line": " src/core/IOBoard.js:1504"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/IOBoardEvent.js:1"
         },
         {
@@ -8372,7 +8513,7 @@
             "line": " src/core/PhysicalInputBase.js:67"
         },
         {
-            "message": "Missing item type\nBased on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nBased on Pin.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/Pin.js:1"
         },
         {
@@ -8388,7 +8529,7 @@
             "line": " src/core/Pin.js:105"
         },
         {
-            "message": "Missing item type\nSets the state value. This is populated by the \nprocessPinStateResponse method of the IOBoard object. It should not\nbe called manually.",
+            "message": "Missing item type\nSets the state value. This is populated by the\nprocessPinStateResponse method of the IOBoard object. It should not\nbe called manually.",
             "line": " src/core/Pin.js:114"
         },
         {
@@ -8416,11 +8557,11 @@
             "line": " src/core/Pin.js:504"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/PinEvent.js:1"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/Serial.js:1"
         },
         {
@@ -8429,47 +8570,23 @@
         },
         {
             "message": "Missing item type\nHandle incoming sysex message.",
-            "line": " src/core/Serial.js:99"
-        },
-        {
-            "message": "Missing item type\nWrite an array of data.",
-            "line": " src/core/Serial.js:119"
-        },
-        {
-            "message": "Missing item type\nStart reading the serial port.",
-            "line": " src/core/Serial.js:135"
-        },
-        {
-            "message": "Missing item type\nStop reading the serial port.",
-            "line": " src/core/Serial.js:152"
-        },
-        {
-            "message": "Missing item type\nClose the serial port. A new instance must be created in order\nto reopen the port.",
-            "line": " src/core/Serial.js:159"
-        },
-        {
-            "message": "Missing item type\nFor HardwareSerial, waits for the transmission of outgoing serial data\nto complete.\nFor SoftwareSerial, removes any buffered incoming serial data.",
-            "line": " src/core/Serial.js:167"
-        },
-        {
-            "message": "Missing item type\nFor SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.\nCall this method to set this port to be the reading port in the case there are multiple\nSoftwareSerial instances.",
-            "line": " src/core/Serial.js:176"
+            "line": " src/core/Serial.js:111"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Serial.js:190"
+            "line": " src/core/Serial.js:217"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Serial.js:198"
+            "line": " src/core/Serial.js:225"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Serial.js:206"
+            "line": " src/core/Serial.js:233"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/Serial.js:214"
+            "line": " src/core/Serial.js:241"
         },
         {
             "message": "Missing item type\nCopyright (c) 2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
@@ -8480,31 +8597,31 @@
             "line": " src/core/WSocketEvent.js:1"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/WSocketWrapper.js:1"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:67"
+            "line": " src/core/WSocketWrapper.js:71"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:77"
+            "line": " src/core/WSocketWrapper.js:78"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:104"
+            "line": " src/core/WSocketWrapper.js:117"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:110"
+            "line": " src/core/WSocketWrapper.js:123"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:114"
+            "line": " src/core/WSocketWrapper.js:129"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/core.js:1"
         },
         {
@@ -8573,7 +8690,7 @@
         },
         {
             "message": "Missing item type\nOverride FilterBase.processSample",
-            "line": " src/filters/TriggerPoint.js:64"
+            "line": " src/filters/TriggerPoint.js:66"
         },
         {
             "message": "Missing item type\nBased on IGenerator.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <jeff.hoefs@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
@@ -8605,7 +8722,7 @@
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/io/AccelerometerADXL345.js:438"
+            "line": " src/io/AccelerometerADXL345.js:442"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
@@ -8653,7 +8770,7 @@
         },
         {
             "message": "Missing item type\nfor debugging",
-            "line": " src/io/GyroITG3200.js:343"
+            "line": " src/io/GyroITG3200.js:355"
         },
         {
             "message": "Missing item type\nBased on LED.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nPorted to JavaScript by Jeff Hoefs\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
@@ -8705,19 +8822,19 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:267"
+            "line": " src/io/Stepper.js:263"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:275"
+            "line": " src/io/Stepper.js:271"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:283"
+            "line": " src/io/Stepper.js:279"
         },
         {
             "message": "Missing item type",
-            "line": " src/io/Stepper.js:291"
+            "line": " src/io/Stepper.js:287"
         },
         {
             "message": "Missing item type\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
@@ -8749,15 +8866,15 @@
         },
         {
             "message": "Missing item type\nadd bind for browsers that don't support it (Safari)",
-            "line": " src/utils/JSUTILS.js:64"
+            "line": " src/utils/JSUTILS.js:65"
         },
         {
             "message": "Missing item type",
-            "line": " src/utils/JSUTILS.js:76"
+            "line": " src/utils/JSUTILS.js:77"
         },
         {
             "message": "Missing item type",
-            "line": " src/utils/JSUTILS.js:80"
+            "line": " src/utils/JSUTILS.js:81"
         },
         {
             "message": "Missing item type\nBased on SignalScope.as originally written in as3.\nCopyright (c) the Funnel development team\nhttp://www.funnel.cc\n\nCopyright (c) 2011-2012 Jeff Hoefs <soundanalogous@gmail.com>\n\nReleased under the MIT license. See LICENSE file for details.",
