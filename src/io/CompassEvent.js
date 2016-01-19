@@ -5,38 +5,38 @@
 
 JSUTILS.namespace('BO.io.CompassEvent');
 
-BO.io.CompassEvent = (function () {
+BO.io.CompassEvent = (function() {
 
-    var CompassEvent;
+  var CompassEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Compass object.
-     * @class CompassEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type   
-     */
-    CompassEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Compass object.
+   * @class CompassEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  CompassEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = "CompassEvent";
+    this.name = "CompassEvent";
 
-    };
+  };
 
-    /**
-     * @property CompassEvent.UPDATE 
-     * @static
-     */
-    CompassEvent.UPDATE = "update";
-    
+  /**
+   * @property CompassEvent.UPDATE
+   * @static
+   */
+  CompassEvent.UPDATE = "update";
 
-    CompassEvent.prototype = JSUTILS.inherit(Event.prototype);
-    CompassEvent.prototype.constructor = CompassEvent;
 
-    return CompassEvent;
+  CompassEvent.prototype = JSUTILS.inherit(Event.prototype);
+  CompassEvent.prototype.constructor = CompassEvent;
+
+  return CompassEvent;
 
 }());

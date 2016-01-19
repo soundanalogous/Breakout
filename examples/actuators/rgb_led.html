@@ -1,71 +1,77 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
-<link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <link rel="Stylesheet" type="text/css" href="../libs/wColorPicker/wColorPicker.1.1.min.css" />
 
-<style type="text/css">
-body {
+  <style type="text/css">
+  body {
     margin: 20px;
     font-family: sans-serif;
     font-size: 18px;
     color: #00AEFF;
     width: 600px;
-}
-h2 {
+  }
+
+  h2 {
     font-size: 22px;
     padding-bottom: 10px;
-}
-label {
+  }
+
+  label {
     font-size: 14px;
     color: #666;
-}
-.pickerContainer {  
+  }
+
+  .pickerContainer {
     float: left;
     margin-bottom: 20px;
-}
-.hoverBox {
+  }
+
+  .hoverBox {
     float: left;
     margin-right: 40px;
     margin-bottom: 20px;
-}
-#duration {
+  }
+
+  #duration {
     width: 50px;
-}
-.container {
+  }
+
+  .container {
     background-color: #f7f7f7;
     padding-left: 10px;
     border: 1px dotted #CCC;
     width: 280px;
     margin-top: 20px;
-}
-.Btns {
+  }
+
+  .Btns {
     padding: 10px;
     font-size: 16px;
     width: 130px;
     color: #00AEFF;
     margin: 10px 5px 10px 0;
-}
-
-/*  padding: 10px;
+  }
+  /*  padding: 10px;
     font-size: 16px;
     width: 85px;
     color: #00AEFF;
     margin: 0 5px 10px 0;*/
+  </style>
 
-</style>
+  <title>RGB Led Example</title>
 
-<title>RGB Led Example</title>
-
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script src="../libs/wColorPicker/wColorPicker.1.1.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -76,7 +82,7 @@ $(document).ready(function() {
     var RGBLED = BO.io.RGBLED;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -85,10 +91,10 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var rgbLED;
     var button;
@@ -97,131 +103,132 @@ $(document).ready(function() {
 
     // Initialize color picker
     $('#colorPicker').wColorPicker({
-        initColor: initialColor,
-        onSelect: gotoColor, 
-        color: 'white'
+      initColor: initialColor,
+      onSelect: gotoColor,
+      color: 'white'
     });
 
     // Initialize color picker
     $('#fadeColorPicker').wColorPicker({
-        initColor: initialColor,
-        onSelect: fadeToColor, 
-        color: 'white'
-    });     
-    
+      initColor: initialColor,
+      onSelect: fadeToColor,
+      color: 'white'
+    });
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
-        // Remove the listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Digital input using Button object:
-        // Parameters: board, pin, mode
-        button = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
-        
-        // Listen for events        
-        button.addEventListener(ButtonEvent.PRESS, onButtonPress);
+      // Remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // RGBLED example using RGBLED object:
-        // NOTE: The r, g, b pins of the LED must be connected to PWM pins on
-        // the IOBoard.
-        // Change COMMON_CATHODE to COMMON_ANODE according to your LED type
-        // Parameters: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
-        rgbLED = new RGBLED(
-            arduino, 
-            arduino.getDigitalPin(9), 
-            arduino.getDigitalPin(10), 
-            arduino.getDigitalPin(11), 
-            RGBLED.COMMON_CATHODE);
+      // Digital input using Button object:
+      // Parameters: board, pin, mode
+      button = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);
 
-        // Set initial color
-        rgbLED.setColor(128, 255, 0);
+      // Listen for events
+      button.addEventListener(ButtonEvent.PRESS, onButtonPress);
 
-        initGUIListeners();
+      // RGBLED example using RGBLED object:
+      // NOTE: The r, g, b pins of the LED must be connected to PWM pins on
+      // the IOBoard.
+      // Change COMMON_CATHODE to COMMON_ANODE according to your LED type
+      // Parameters: board, redLEDPin, greenLEDPin, blueLEDPin, driveMode
+      rgbLED = new RGBLED(
+        arduino,
+        arduino.getDigitalPin(9),
+        arduino.getDigitalPin(10),
+        arduino.getDigitalPin(11),
+        RGBLED.COMMON_CATHODE);
+
+      // Set initial color
+      rgbLED.setColor(128, 255, 0);
+
+      initGUIListeners();
 
     }
 
     function onButtonPress(event) {
-        randomColor();
-    }   
+      randomColor();
+    }
 
     function initGUIListeners() {
-        $('#duration').change(function(evt) {
-            var val = this.value;
-            if (val >= 0) {
-                duration = val;
-            }
-        });
+      $('#duration').change(function(evt) {
+        var val = this.value;
+        if (val >= 0) {
+          duration = val;
+        }
+      });
 
-        $('button#fadeIn').on('click', function() {
-            rgbLED.fadeIn(duration);
-        });
+      $('button#fadeIn').on('click', function() {
+        rgbLED.fadeIn(duration);
+      });
 
-        $('button#fadeOut').on('click', function() {
-            rgbLED.fadeOut(duration);
-        });         
+      $('button#fadeOut').on('click', function() {
+        rgbLED.fadeOut(duration);
+      });
     }
-    
+
     // Fade the RGB LED to a random color
     function randomColor() {
-        var red = Math.floor(Math.random() * 255);
-        var green = Math.floor(Math.random() * 255);
-        var blue = Math.floor(Math.random() * 255);
-        
-        // Fade RGB LED to random color in 0.5 seconds
-        rgbLED.fadeTo(red, green, blue, 500);
-    }   
+      var red = Math.floor(Math.random() * 255);
+      var green = Math.floor(Math.random() * 255);
+      var blue = Math.floor(Math.random() * 255);
+
+      // Fade RGB LED to random color in 0.5 seconds
+      rgbLED.fadeTo(red, green, blue, 500);
+    }
 
     function getRGBColor(color) {
-        var hexColor = parseInt(color.replace(/#/, "0x"));
-        var rgbColor = {
-            red: hexColor >> 16,
-            green: (hexColor >> 8) & 0x0000FF,
-            blue: hexColor & 0x0000FF
-        };
-        return rgbColor;    
-    }   
+      var hexColor = parseInt(color.replace(/#/, "0x"));
+      var rgbColor = {
+        red: hexColor >> 16,
+        green: (hexColor >> 8) & 0x0000FF,
+        blue: hexColor & 0x0000FF
+      };
+      return rgbColor;
+    }
 
     function gotoColor(color) {
-        if (rgbLED === undefined) return;
-        var c = getRGBColor(color);
-        rgbLED.setColor(c.red, c.green, c.blue);    
+      if (rgbLED === undefined) return;
+      var c = getRGBColor(color);
+      rgbLED.setColor(c.red, c.green, c.blue);
     }
 
     function fadeToColor(color) {
-        if (rgbLED === undefined) return;
-        var c = getRGBColor(color);
-        rgbLED.fadeTo(c.red, c.green, c.blue, duration);        
-    }   
-            
-});
+      if (rgbLED === undefined) return;
+      var c = getRGBColor(color);
+      rgbLED.fadeTo(c.red, c.green, c.blue, duration);
+    }
 
-</script>
+  });
+  </script>
 
 </head>
-<body>
-    <h2>RGB LED Example</h2>
-        <div class="pickerContainer">
-        <div class="hoverBox">
-            <p>Fade to color:</p>
-            <div id="fadeColorPicker"></div>
-            <label for="duration">Fade duration in milliseconds: </label>
-            <input id="duration" type="number" value="500" min="0" step="100" />
-        </div>      
-        <div class="hoverBox">
-            <p>Go to color:</p>
-            <div id="colorPicker"></div>
-            <label>Go to selected color immediately</label>
-        </div>
-    </div>
 
-    <p>Fade out to black, fade in to white:</p>
-    <div class="container">
-        <button type="button" class="Btns" id="fadeOut">Fade Out</button>
-        <button type="button" class="Btns" id="fadeIn">Fade In</button>
+<body>
+  <h2>RGB LED Example</h2>
+  <div class="pickerContainer">
+    <div class="hoverBox">
+      <p>Fade to color:</p>
+      <div id="fadeColorPicker"></div>
+      <label for="duration">Fade duration in milliseconds: </label>
+      <input id="duration" type="number" value="500" min="0" step="100" />
     </div>
+    <div class="hoverBox">
+      <p>Go to color:</p>
+      <div id="colorPicker"></div>
+      <label>Go to selected color immediately</label>
+    </div>
+  </div>
+
+  <p>Fade out to black, fade in to white:</p>
+  <div class="container">
+    <button type="button" class="Btns" id="fadeOut">Fade Out</button>
+    <button type="button" class="Btns" id="fadeIn">Fade In</button>
+  </div>
 </body>
+
 </html>

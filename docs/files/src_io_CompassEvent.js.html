@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -179,39 +183,39 @@
 
 JSUTILS.namespace(&#x27;BO.io.CompassEvent&#x27;);
 
-BO.io.CompassEvent = (function () {
+BO.io.CompassEvent = (function() {
 
-    var CompassEvent;
+  var CompassEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Compass object.
-     * @class CompassEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type   
-     */
-    CompassEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Compass object.
+   * @class CompassEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  CompassEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = &quot;CompassEvent&quot;;
+    this.name = &quot;CompassEvent&quot;;
 
-    };
+  };
 
-    /**
-     * @property CompassEvent.UPDATE 
-     * @static
-     */
-    CompassEvent.UPDATE = &quot;update&quot;;
-    
+  /**
+   * @property CompassEvent.UPDATE
+   * @static
+   */
+  CompassEvent.UPDATE = &quot;update&quot;;
 
-    CompassEvent.prototype = JSUTILS.inherit(Event.prototype);
-    CompassEvent.prototype.constructor = CompassEvent;
 
-    return CompassEvent;
+  CompassEvent.prototype = JSUTILS.inherit(Event.prototype);
+  CompassEvent.prototype.constructor = CompassEvent;
+
+  return CompassEvent;
 
 }());
 

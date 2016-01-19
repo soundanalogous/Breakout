@@ -1,0 +1,23 @@
+{
+  "requireCurlyBraces": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch",
+  ],
+  "disallowTrailingWhitespace": true,
+  "disallowNewlineBeforeBlockStatements": true,
+  "requireSpaceBeforeBlockStatements": true,
+  "requireParenthesesAroundIIFE": true,
+  "requireSpacesInConditionalExpression": true,
+  "requireSpaceAfterKeywords": [
+    "if", "else",
+    "switch", "case",
+    "try", "catch",
+    "do", "while", "for",
+    "return", "typeof", "void",
+  ]
+}

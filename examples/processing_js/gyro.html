@@ -1,264 +1,265 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset=utf-8 />
-<title>Breakout + processing.js Gyro Example</title>
+  <meta charset=utf-8 />
+  <title>Breakout + processing.js Gyro Example</title>
 </head>
+
 <body>
-<canvas id='canvas1'></canvas> 
+  <canvas id='canvas1'></canvas>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="libs/processing-1.4.1-api.min.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script type="text/javascript">
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="libs/processing-1.4.1-api.min.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script type="text/javascript">
+  // dependencies
+  // declare these variables so you don't have
+  // to type the full namespace
+  var IOBoard = BO.IOBoard;
+  var IOBoardEvent = BO.IOBoardEvent;
+  var GyroITG3200 = BO.io.GyroITG3200;
+  var GyroEvent = BO.io.GyroEvent;
+  var Button = BO.io.Button;
+  var ButtonEvent = BO.io.ButtonEvent;
 
-// dependencies
-// declare these variables so you don't have
-// to type the full namespace   
-var IOBoard = BO.IOBoard;
-var IOBoardEvent = BO.IOBoardEvent;
-var GyroITG3200 = BO.io.GyroITG3200;
-var GyroEvent = BO.io.GyroEvent;
-var Button = BO.io.Button;
-var ButtonEvent = BO.io.ButtonEvent;
+  // set to true to print debug messages to console
+  BO.enableDebugging = true;
 
-// set to true to print debug messages to console
-BO.enableDebugging = true;
-
-var sketch = new Processing.Sketch();
-// define 3D context
-sketch.use3DContext = true;
-// preload the images
-sketch.imageCache.add("images/pjs.png");
-// attach function 
-sketch.attachFunction = function(p) {
+  var sketch = new Processing.Sketch();
+  // define 3D context
+  sketch.use3DContext = true;
+  // preload the images
+  sketch.imageCache.add("images/pjs.png");
+  // attach function
+  sketch.attachFunction = function(p) {
 
     // note you must use a 3.3v or lower IOBoard (such as the Arduino Fio)
     // with the ITG3200 and ADXL345 sensors
     var fio,
-        gyro,
-        host,
-        xRot = 0,
-        yRot = 0,
-        zRot = 0,
-        lastX = 0,
-        lastY = 0,
-        lastZ = 0,
-        interval,
-        SMOOTHING = 0.5,
-        smoothedVelocity,
-        realVelocity,
-        isReady = false;
+      gyro,
+      host,
+      xRot = 0,
+      yRot = 0,
+      zRot = 0,
+      lastX = 0,
+      lastY = 0,
+      lastZ = 0,
+      interval,
+      SMOOTHING = 0.5,
+      smoothedVelocity,
+      realVelocity,
+      isReady = false;
 
     p.setup = function() {
-        p.size(640, 360, p.P3D);
-        texture = p.loadImage("images/pjs.png");
-        p.textureMode(p.NORMALIZED);
-        p.fill(255);
-        p.stroke(p.color(44,48,32));
+      p.size(640, 360, p.P3D);
+      texture = p.loadImage("images/pjs.png");
+      p.textureMode(p.NORMALIZED);
+      p.fill(255);
+      p.stroke(p.color(44, 48, 32));
 
-        font = p.createFont("Arial");
-        p.textFont(font, 18);
+      font = p.createFont("Arial");
+      p.textFont(font, 18);
 
-        // create 2 vectors to hold velocity data from the gyro
-        smoothedVelocity = new p.PVector();
-        realVelocity = new p.PVector();
+      // create 2 vectors to hold velocity data from the gyro
+      smoothedVelocity = new p.PVector();
+      realVelocity = new p.PVector();
 
-        // If you are not serving this file from the same computer
-        // that the Arduino Leonardo board is connected to, replace
-        // window.location.hostname with the IP address or hostname
-        // of the computer that the Arduino board is connected to.
-        host = window.location.hostname;
-        // if the file is opened locally, set the host to "localhost"
-        if (window.location.protocol.indexOf("file:") === 0) {
-            host = "localhost";
-        }
-        fio = new IOBoard(host, 8887);
-        fio.addEventListener(IOBoardEvent.READY, onFioReady);
-        // get the sampling interval (this is how often the gyro
-        // data will be reported). We will need this to translate
-        // angular velocity into and angle
-        interval = fio.samplingInterval/1000 * 2;
+      // If you are not serving this file from the same computer
+      // that the Arduino Leonardo board is connected to, replace
+      // window.location.hostname with the IP address or hostname
+      // of the computer that the Arduino board is connected to.
+      host = window.location.hostname;
+      // if the file is opened locally, set the host to "localhost"
+      if (window.location.protocol.indexOf("file:") === 0) {
+        host = "localhost";
+      }
+      fio = new IOBoard(host, 8887);
+      fio.addEventListener(IOBoardEvent.READY, onFioReady);
+      // get the sampling interval (this is how often the gyro
+      // data will be reported). We will need this to translate
+      // angular velocity into and angle
+      interval = fio.samplingInterval / 1000 * 2;
     };
 
     p.draw = function() {
-        // don't draw until the Arduino is ready
-        if (!isReady) return;
+      // don't draw until the Arduino is ready
+      if (!isReady) return;
 
-        p.background(0);
+      p.background(0);
 
-        p.noStroke();
-        p.pushMatrix();
-        p.translate(p.width/2.0, p.height/2.0, -100);
+      p.noStroke();
+      p.pushMatrix();
+      p.translate(p.width / 2.0, p.height / 2.0, -100);
 
-        // apply the rotation computed from the gyro
-        // to the object in the scene
-        // note how y and z are flipped in order to orient
-        // the gyro to the screen
-        p.rotateX(toRadians(xRot));
-        p.rotateY(toRadians(zRot));
-        p.rotateZ(-toRadians(yRot));
-        p.scale(90);        
-        texturedCube(texture);
-        p.popMatrix();
+      // apply the rotation computed from the gyro
+      // to the object in the scene
+      // note how y and z are flipped in order to orient
+      // the gyro to the screen
+      p.rotateX(toRadians(xRot));
+      p.rotateY(toRadians(zRot));
+      p.rotateZ(-toRadians(yRot));
+      p.scale(90);
+      texturedCube(texture);
+      p.popMatrix();
 
-        p.fill(255, 255, 255);
-        // print the current orientation values to the screen
-        p.text("gyro x = " + smoothedVelocity.x.toFixed(3), 10, 10);
-        p.text("gyro y = " + smoothedVelocity.y.toFixed(3), 10, 35);
-        p.text("gyro z = " + smoothedVelocity.z.toFixed(3), 10, 60);
+      p.fill(255, 255, 255);
+      // print the current orientation values to the screen
+      p.text("gyro x = " + smoothedVelocity.x.toFixed(3), 10, 10);
+      p.text("gyro y = " + smoothedVelocity.y.toFixed(3), 10, 35);
+      p.text("gyro z = " + smoothedVelocity.z.toFixed(3), 10, 60);
     }
 
     function texturedCube(texture) {
-        p.beginShape(p.QUADS);
-        p.texture(texture);
+      p.beginShape(p.QUADS);
+      p.texture(texture);
 
-        // Given one texture and six faces, we can easily set up the uv coordinates
-        // such that four of the faces tile "perfectly" along either u or v, but the other
-        // two faces cannot be so aligned.  This code tiles "along" u, "around" the X/Z faces
-        // and fudges the Y faces - the Y faces are arbitrarily aligned such that a
-        // rotation along the X axis will put the "top" of either texture at the "top"
-        // of the screen, but is not otherwised aligned with the X/Z faces. (This
-        // just affects what type of symmetry is required if you need seamless
-        // tiling all the way around the cube)
+      // Given one texture and six faces, we can easily set up the uv coordinates
+      // such that four of the faces tile "perfectly" along either u or v, but the other
+      // two faces cannot be so aligned.  This code tiles "along" u, "around" the X/Z faces
+      // and fudges the Y faces - the Y faces are arbitrarily aligned such that a
+      // rotation along the X axis will put the "top" of either texture at the "top"
+      // of the screen, but is not otherwised aligned with the X/Z faces. (This
+      // just affects what type of symmetry is required if you need seamless
+      // tiling all the way around the cube)
 
-        // +Z "front" face
-        p.vertex(-1, -1,  1, 0, 0);
-        p.vertex( 1, -1,  1, 1, 0);
-        p.vertex( 1,  1,  1, 1, 1);
-        p.vertex(-1,  1,  1, 0, 1);
+      // +Z "front" face
+      p.vertex(-1, -1, 1, 0, 0);
+      p.vertex(1, -1, 1, 1, 0);
+      p.vertex(1, 1, 1, 1, 1);
+      p.vertex(-1, 1, 1, 0, 1);
 
-        // -Z "back" face
-        p.vertex( 1, -1, -1, 0, 0);
-        p.vertex(-1, -1, -1, 1, 0);
-        p.vertex(-1,  1, -1, 1, 1);
-        p.vertex( 1,  1, -1, 0, 1);
+      // -Z "back" face
+      p.vertex(1, -1, -1, 0, 0);
+      p.vertex(-1, -1, -1, 1, 0);
+      p.vertex(-1, 1, -1, 1, 1);
+      p.vertex(1, 1, -1, 0, 1);
 
-        // +Y "bottom" face
-        p.vertex(-1,  1,  1, 0, 0);
-        p.vertex( 1,  1,  1, 1, 0);
-        p.vertex( 1,  1, -1, 1, 1);
-        p.vertex(-1,  1, -1, 0, 1);
+      // +Y "bottom" face
+      p.vertex(-1, 1, 1, 0, 0);
+      p.vertex(1, 1, 1, 1, 0);
+      p.vertex(1, 1, -1, 1, 1);
+      p.vertex(-1, 1, -1, 0, 1);
 
-        // -Y "top" face
-        p.vertex(-1, -1, -1, 0, 0);
-        p.vertex( 1, -1, -1, 1, 0);
-        p.vertex( 1, -1,  1, 1, 1);
-        p.vertex(-1, -1,  1, 0, 1);
+      // -Y "top" face
+      p.vertex(-1, -1, -1, 0, 0);
+      p.vertex(1, -1, -1, 1, 0);
+      p.vertex(1, -1, 1, 1, 1);
+      p.vertex(-1, -1, 1, 0, 1);
 
-        // +X "right" face
-        p.vertex( 1, -1,  1, 0, 0);
-        p.vertex( 1, -1, -1, 1, 0);
-        p.vertex( 1,  1, -1, 1, 1);
-        p.vertex( 1,  1,  1, 0, 1);
+      // +X "right" face
+      p.vertex(1, -1, 1, 0, 0);
+      p.vertex(1, -1, -1, 1, 0);
+      p.vertex(1, 1, -1, 1, 1);
+      p.vertex(1, 1, 1, 0, 1);
 
-        // -X "left" face
-        p.vertex(-1, -1, -1, 0, 0);
-        p.vertex(-1, -1,  1, 1, 0);
-        p.vertex(-1,  1,  1, 1, 1);
-        p.vertex(-1,  1, -1, 0, 1);
+      // -X "left" face
+      p.vertex(-1, -1, -1, 0, 0);
+      p.vertex(-1, -1, 1, 1, 0);
+      p.vertex(-1, 1, 1, 1, 1);
+      p.vertex(-1, 1, -1, 0, 1);
 
-        p.endShape();
+      p.endShape();
     }
 
     function onFioReady(event) {
 
-        fio.removeEventListener(IOBoardEvent.READY, onFioReady);
+      fio.removeEventListener(IOBoardEvent.READY, onFioReady);
 
-        initGyro();
+      initGyro();
 
-        // create a button to use to recalibrate the sensor.
-        // you will have to press the button to recalibrate often
-        var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
-        button.addEventListener(ButtonEvent.PRESS, onBtnPress);
+      // create a button to use to recalibrate the sensor.
+      // you will have to press the button to recalibrate often
+      var button = new Button(fio, fio.getDigitalPin(11), Button.PULL_DOWN);
+      button.addEventListener(ButtonEvent.PRESS, onBtnPress);
     }
 
     function initGyro() {
-        gyro = new GyroITG3200(fio);
-        // adjust the offset values until gyro x, y and z
-        // values are around zero when the gyro is not moving
-        gyro.setOffsets(-2.0, 4.0, -3.6);
-        // start continuous reading of the gyro
-        gyro.startReading();
-        gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
+      gyro = new GyroITG3200(fio);
+      // adjust the offset values until gyro x, y and z
+      // values are around zero when the gyro is not moving
+      gyro.setOffsets(-2.0, 4.0, -3.6);
+      // start continuous reading of the gyro
+      gyro.startReading();
+      gyro.addEventListener(GyroEvent.UPDATE, onGyroUpdate);
 
-        // signal that we can not start drawing
-        isReady = true; 
+      // signal that we can not start drawing
+      isReady = true;
     }
 
     function onGyroUpdate(event) {
-        var xVal = Math.floor(event.target.x);
-        var yVal = Math.floor(event.target.y);
-        var zVal = Math.floor(event.target.z);
+      var xVal = Math.floor(event.target.x);
+      var yVal = Math.floor(event.target.y);
+      var zVal = Math.floor(event.target.z);
 
-        smooth(xVal, yVal, zVal);
+      smooth(xVal, yVal, zVal);
 
-        // translate the angular velocity into rotation
-        // note this is not as accurate as it would be if this
-        // calculation was performed directly on the microcontroller
-        // this is a limitation of Breakout in these types of
-        // timing critical operations.
-        xRot = smoothedVelocity.x * interval;
-        yRot = smoothedVelocity.y * interval;
-        zRot = smoothedVelocity.z * interval;
+      // translate the angular velocity into rotation
+      // note this is not as accurate as it would be if this
+      // calculation was performed directly on the microcontroller
+      // this is a limitation of Breakout in these types of
+      // timing critical operations.
+      xRot = smoothedVelocity.x * interval;
+      yRot = smoothedVelocity.y * interval;
+      zRot = smoothedVelocity.z * interval;
 
-        xRot = (xRot + lastX) % 360;
-        yRot = (yRot + lastY) % 360;
-        zRot = (zRot + lastZ) % 360;
+      xRot = (xRot + lastX) % 360;
+      yRot = (yRot + lastY) % 360;
+      zRot = (zRot + lastZ) % 360;
 
-        lastX = xRot;
-        lastY = yRot;
-        lastZ = zRot;
+      lastX = xRot;
+      lastY = yRot;
+      lastZ = zRot;
     }
 
     function onBtnPress(event) {
-        reset();
+      reset();
     }
 
     // reset the vectors
     // this is important to recalibrate because
     // the sensor will drift quickly
     function reset() {
-        xRot = yRot = zRot = 0;
-        lastX = lastY = lastZ = 0;
-        smoothedVelocity.set(0, 0, 0);
+      xRot = yRot = zRot = 0;
+      lastX = lastY = lastZ = 0;
+      smoothedVelocity.set(0, 0, 0);
     }
 
     // smooth the sensor values
     function smooth(x, y, z) {
-        var lerpFactor;
+      var lerpFactor;
 
-        realVelocity.set(x, y, z);
+      realVelocity.set(x, y, z);
 
-        lerpFactor = 1.0 - SMOOTHING;
-        if (lerpFactor > 1.0) lerpFactor = 1.0;
-        else if(lerpFactor < 0.01) lerpFactor = 0.01;
+      lerpFactor = 1.0 - SMOOTHING;
+      if (lerpFactor > 1.0) lerpFactor = 1.0;
+      else if (lerpFactor < 0.01) lerpFactor = 0.01;
 
-        realVelocity.sub(smoothedVelocity);
-        realVelocity.mult(lerpFactor);
-        smoothedVelocity.add(realVelocity);
+      realVelocity.sub(smoothedVelocity);
+      realVelocity.mult(lerpFactor);
+      smoothedVelocity.add(realVelocity);
     }
 
     // convert degrees to radians
     function toRadians(decimalVal) {
-        return decimalVal * Math.PI/180;
+      return decimalVal * Math.PI / 180;
     }
 
     // convert radians to degrees
     function toDegrees(radianVal) {
-        return radianVal * (180/Math.PI);
+      return radianVal * (180 / Math.PI);
     }
 
-};
+  };
 
-var canvas = document.getElementById("canvas1");
-// attaching the sketch to the canvas
-var p = new Processing(canvas, sketch);
-            
-</script>
+  var canvas = document.getElementById("canvas1");
+  // attaching the sketch to the canvas
+  var p = new Processing(canvas, sketch);
+  </script>
 
 
 
 </body>
+
 </html>​

@@ -1,73 +1,90 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style type="text/css">
+  body {
     margin: 20px;
     font-family: sans-serif;
     font-size: 20px;
     color: #666;
-}
-h2 {
+  }
+
+  h2 {
     font-size: 22px;
     padding-bottom: 20px;
     color: #00AEFF;
-}
-label {
+  }
+
+  label {
     font-size: 14px;
-}
-.scopeContainer {
+  }
+
+  .scopeContainer {
     margin-bottom: 20px;
-}
-.scope {
+  }
+
+  .scope {
     float: left;
     border: 1px solid #666;
-}
-.labelContainer {
+  }
+
+  .labelContainer {
     float: left;
     padding-left: 10px;
-}
-p.scopeLabel {
+  }
+
+  p.scopeLabel {
     margin: 0;
     padding-bottom: 10px;
     font-size: 16px;
-}
-#waveSelector {
+  }
+
+  #waveSelector {
     margin-bottom: 10px;
-}
-#freq {
+  }
+
+  #freq {
     width: 50px;
-}
+  }
 
-.clear:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+  .clear:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
-}
-.clear {display: inline-block;}
-* html .clear {height: 1%;}
-.clear {display: block;}
+  }
 
-</style>
+  .clear {
+    display: inline-block;
+  }
 
-<title>Oscillator Example</title>
+  * html .clear {
+    height: 1%;
+  }
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script src="../libs/requestAnimFrame.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  .clear {
+    display: block;
+  }
+  </style>
+
+  <title>Oscillator Example</title>
+
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script src="../libs/requestAnimFrame.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // dependencies
     // declare these variables so you don't have
-    // to type the full namespace   
+    // to type the full namespace
     var IOBoard = BO.IOBoard;
     var Pin = BO.Pin;
     var IOBoardEvent = BO.IOBoardEvent;
@@ -75,7 +92,7 @@ $(document).ready(function() {
     var SignalScope = JSUTILS.SignalScope;
 
     // set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -84,135 +101,137 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     var fadeLED;
     var oscSquare;
     var currentOSC;
     var currentWave = Oscillator.SQUARE;
     var freq;
 
-    var scope = new SignalScope("scope1", 200, 100, 0, 1);  
-    
+    var scope = new SignalScope("scope1", 200, 100, 0, 1);
+
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-                    
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
-        
-        freq = 1.0; // Hz
-    
-        // set a pin to PWM
-        arduino.setDigitalPinMode(11, Pin.PWM);
-        // get a reference to the Pin object
-        fadeLED = arduino.getDigitalPin(11);
 
-        // create a new generator
-        currentOSC = new Oscillator(currentWave, freq);
-        // add the oscillator to the pin
-        fadeLED.addGenerator(currentOSC);
-        // start the generator
-        currentOSC.start();
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // for non pwm pin you can only use SQUARE or IMPULSE waves
-        // set digital pin 7 to output
-        arduino.setDigitalPinMode(7, Pin.DOUT);
-        // get a reference to the Pin object
-        var blinkLED = arduino.getDigitalPin(7);
-        // params: wave, freq, amplitude, offset, phase, times (0 = forever)
-        oscSquare = new Oscillator(Oscillator.SQUARE, 0.5, 1, 0, 0, 0);
-        //oscSquare = new Oscillator(Oscillator.IMPULSE, 0.5, 1, 0, 0, 0);
-        // add the square wave oscillator to the pin
-        blinkLED.addGenerator(oscSquare);
-        // start the generator
-        oscSquare.start();
+      freq = 1.0; // Hz
 
-        initGUIListeners();
+      // set a pin to PWM
+      arduino.setDigitalPinMode(11, Pin.PWM);
+      // get a reference to the Pin object
+      fadeLED = arduino.getDigitalPin(11);
 
-        animate();      
-                
+      // create a new generator
+      currentOSC = new Oscillator(currentWave, freq);
+      // add the oscillator to the pin
+      fadeLED.addGenerator(currentOSC);
+      // start the generator
+      currentOSC.start();
+
+      // for non pwm pin you can only use SQUARE or IMPULSE waves
+      // set digital pin 7 to output
+      arduino.setDigitalPinMode(7, Pin.DOUT);
+      // get a reference to the Pin object
+      var blinkLED = arduino.getDigitalPin(7);
+      // params: wave, freq, amplitude, offset, phase, times (0 = forever)
+      oscSquare = new Oscillator(Oscillator.SQUARE, 0.5, 1, 0, 0, 0);
+      //oscSquare = new Oscillator(Oscillator.IMPULSE, 0.5, 1, 0, 0, 0);
+      // add the square wave oscillator to the pin
+      blinkLED.addGenerator(oscSquare);
+      // start the generator
+      oscSquare.start();
+
+      initGUIListeners();
+
+      animate();
+
     }
 
     function initGUIListeners() {
-        $('select').on('change', function(evt) {
-            var freq = 1.0;
-            currentOSC.stop();
-            fadeLED.removeGenerator();
-            switch(this.value) {
-                case 'square':
-                    currentWave = Oscillator.SQUARE;
-                    break;
-                case 'sin':
-                    currentWave = Oscillator.SIN;
-                    break;
-                case 'saw':
-                    currentWave = Oscillator.SAW;
-                    break;
-                case 'triangle':
-                    currentWave = Oscillator.TRIANGLE;
-                    break;
-                case 'impulse':
-                    currentWave = Oscillator.IMPULSE;
-                    break;
-                case 'linear':
-                    currentWave = Oscillator.LINEAR;
-                    break;          
-            }
-            addGenerator();
-        });
+      $('select').on('change', function(evt) {
+        var freq = 1.0;
+        currentOSC.stop();
+        fadeLED.removeGenerator();
+        switch (this.value) {
+          case 'square':
+            currentWave = Oscillator.SQUARE;
+            break;
+          case 'sin':
+            currentWave = Oscillator.SIN;
+            break;
+          case 'saw':
+            currentWave = Oscillator.SAW;
+            break;
+          case 'triangle':
+            currentWave = Oscillator.TRIANGLE;
+            break;
+          case 'impulse':
+            currentWave = Oscillator.IMPULSE;
+            break;
+          case 'linear':
+            currentWave = Oscillator.LINEAR;
+            break;
+        }
+        addGenerator();
+      });
 
-        $('#freq').on('change', function(evt) {
-            freq = this.value;
-            fadeLED.removeGenerator();
-            addGenerator();
-        });
+      $('#freq').on('change', function(evt) {
+        freq = this.value;
+        fadeLED.removeGenerator();
+        addGenerator();
+      });
 
     }
 
     function addGenerator() {
-        currentOSC = new Oscillator(currentWave, freq);
-        fadeLED.addGenerator(currentOSC);
-        currentOSC.start();
+      currentOSC = new Oscillator(currentWave, freq);
+      fadeLED.addGenerator(currentOSC);
+      currentOSC.start();
     }
-    
+
     function animate() {
 
-        scope.update(fadeLED.value);
+      scope.update(fadeLED.value);
 
-        requestAnimFrame(animate);
-    }   
-            
-});
+      requestAnimFrame(animate);
+    }
 
-</script>
+  });
+  </script>
 
 </head>
+
 <body>
 
-    <h2>Oscillator Example</h2>
+  <h2>Oscillator Example</h2>
 
-    <p class="scopeLabel">Output signal on digital pin 11</p>
-    <div style="height:20px"></div>
+  <p class="scopeLabel">Output signal on digital pin 11</p>
+  <div style="height:20px"></div>
 
-    <div id="containers" style="width:400px;">
+  <div id="containers" style="width:400px;">
 
-        <select id="waveSelector" name="waveForm">
-            <option value="square">SQUARE</option>
-            <option value="sin">SIN</option>
-            <option value="saw">SAW</option>
-            <option value="triangle">TRIANGLE</option>
-            <option value="impulse">IMPULSE</option>
-            <option value="linear">LINEAR</option>
-        </select>
+    <select id="waveSelector" name="waveForm">
+      <option value="square">SQUARE</option>
+      <option value="sin">SIN</option>
+      <option value="saw">SAW</option>
+      <option value="triangle">TRIANGLE</option>
+      <option value="impulse">IMPULSE</option>
+      <option value="linear">LINEAR</option>
+    </select>
 
-        <div class="scopeContainer clear">
-            <canvas id="scope1" class="scope" width="200" height="100"></canvas>            
-        </div>
+    <div class="scopeContainer clear">
+      <canvas id="scope1" class="scope" width="200" height="100"></canvas>
     </div>
+  </div>
 
-    <label for="freq">Set frequency (0.1 - 33): </label><input id="freq" type="number" value="1.0" min="0.1" max="33.0" step="0.1" />   
-    
+  <label for="freq">Set frequency (0.1 - 33): </label>
+  <input id="freq" type="number" value="1.0" min="0.1" max="33.0" step="0.1" />
+
 </body>
+
 </html>​

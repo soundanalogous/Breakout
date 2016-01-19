@@ -1,59 +1,66 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style type="text/css">
+  body {
     margin: 15px;
     font-family: sans-serif;
     font-size: 16px;
     line-height: 1.5em;
     color: #666;
-}
-h2 {
+  }
+
+  h2 {
     padding-left: 0px;
     font-weight: normal;
     font-size: 28px;
     color: #00AEFF;
-}
-.ledBtns {
+  }
+
+  .ledBtns {
     padding: 5px;
     font-size: 16px;
     width: 85px;
     color: #00AEFF;
-}
-#state {
+  }
+
+  #state {
     color: #00AEFF;
     font-size: 22px;
-}
-.container {
+  }
+
+  .container {
     background-color: #f7f7f7;
     padding: 0 10px 20px 10px;
     border: 1px dotted #CCC;
     width: 270px;
     margin-top: 20px;
-}
-.spacer {
+  }
+
+  .spacer {
     margin-left: 5px;
-}
-#slider {
+  }
+
+  #slider {
     margin: 20px;
-}
-</style>
+  }
+  </style>
 
-<title>LED PWM</title>
+  <title>LED PWM</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script src="../libs/jquery-ui/jquery-ui.custom.min.js"></script>
-<script src="../libs/jquery.ui.touch-punch.min.js"></script>
-<link href="../libs/jquery-ui/jquery-ui.custom.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script src="../libs/jquery-ui/jquery-ui.custom.min.js"></script>
+  <script src="../libs/jquery.ui.touch-punch.min.js"></script>
+  <link href="../libs/jquery-ui/jquery-ui.custom.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -62,7 +69,7 @@ $(document).ready(function() {
     var Pin = BO.Pin;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = false; 
+    BO.enableDebugging = false;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -71,83 +78,90 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var led;
     var $slider = $("#slider");
     var $ledValue = $('#value');
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
     // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        // Remove the event listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      // Remove the event listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Set Pin 11 to PWM
-        arduino.setDigitalPinMode(11, Pin.PWM);
+      // Set Pin 11 to PWM
+      arduino.setDigitalPinMode(11, Pin.PWM);
 
-        // Create an LED object to interface with the LED wired
-        // to the I/O board
-        led = arduino.getDigitalPin(11);
-        
-        // Use jQuery to get a reference to the elements
-        // and listen for events 
-        $('#btnStop').click(function () { changeLed(0.0); });
-        $('#btnFull').click(function () { changeLed(1.0); });
-        $('#btnHalf').click(function () { changeLed(0.5); });
+      // Create an LED object to interface with the LED wired
+      // to the I/O board
+      led = arduino.getDigitalPin(11);
 
-        $slider.slider({
-            step: 0.05,
-            min : 0.0,
-            max : 1.0
-            });
+      // Use jQuery to get a reference to the elements
+      // and listen for events
+      $('#btnStop').click(function() {
+        changeLed(0.0);
+      });
+      $('#btnFull').click(function() {
+        changeLed(1.0);
+      });
+      $('#btnHalf').click(function() {
+        changeLed(0.5);
+      });
 
-        $ledValue.text("Value: 0.0");
+      $slider.slider({
+        step: 0.05,
+        min: 0.0,
+        max: 1.0
+      });
+
+      $ledValue.text("Value: 0.0");
     }
-    
-    $slider.on("slide", function (event, ui) {
-        var value = ui.value;
-        $ledValue.text("Value: " + value.toFixed(2));
-        led.value = value;
+
+    $slider.on("slide", function(event, ui) {
+      var value = ui.value;
+      $ledValue.text("Value: " + value.toFixed(2));
+      led.value = value;
     })
-    
-    function changeLed(intensity) {
-        led.value = intensity;
-        $slider.slider( "option", "value", intensity);
-        $ledValue.text("Value: " + intensity);
-    }
-    
-/* If you want to switch the LED to an given brightness 
-*   function turnLedOn() {
-*       // Turn the LED off
-*       led.value = 0.6; // 0 = Pin.LOW, 1 = Pin.HIGH
-*       $("#slider").slider( "option", "value", 0.6);
-*       $('#value').text("Value: " + 0.6);
-*   }
-*/  
-});
 
-</script>
+    function changeLed(intensity) {
+      led.value = intensity;
+      $slider.slider("option", "value", intensity);
+      $ledValue.text("Value: " + intensity);
+    }
+
+    /* If you want to switch the LED to an given brightness
+     *   function turnLedOn() {
+     *       // Turn the LED off
+     *       led.value = 0.6; // 0 = Pin.LOW, 1 = Pin.HIGH
+     *       $("#slider").slider( "option", "value", 0.6);
+     *       $('#value').text("Value: " + 0.6);
+     *   }
+     */
+  });
+  </script>
 
 </head>
+
 <body>
-    <h2>LED PWM</h2>
-        <div class="container">
-            <p>Use the buttons below to switch the LED to 50 %, 100 %, or off.</p>
-            <button id="btnHalf" class="ledBtns" type="button">50 %</button>
-            <button id="btnFull" class="ledBtns" type="button">100 %</button>
-            <button id="btnStop" class="ledBtns" type="button">Off</button>
-        </div>
-  
-        <div class="container">
-            <p>Use the slider to set the intensity of the LED.</p>
-            <p id="slider"></p>
-            <small id="value"></small>
-        </div>
+  <h2>LED PWM</h2>
+  <div class="container">
+    <p>Use the buttons below to switch the LED to 50 %, 100 %, or off.</p>
+    <button id="btnHalf" class="ledBtns" type="button">50 %</button>
+    <button id="btnFull" class="ledBtns" type="button">100 %</button>
+    <button id="btnStop" class="ledBtns" type="button">Off</button>
+  </div>
+
+  <div class="container">
+    <p>Use the slider to set the intensity of the LED.</p>
+    <p id="slider"></p>
+    <small id="value"></small>
+  </div>
 </body>
+
 </html>

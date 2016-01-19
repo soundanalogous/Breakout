@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -185,42 +189,43 @@
 
 JSUTILS.namespace(&#x27;BO.generators.GeneratorEvent&#x27;);
 
-BO.generators.GeneratorEvent = (function () {
-    &quot;use strict&quot;;
+BO.generators.GeneratorEvent = (function() {
+  &quot;use strict&quot;;
 
-    var GeneratorEvent;
+  var GeneratorEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Generator object when its
-     * value has updated.
-     *
-     * @class GeneratorEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    GeneratorEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Generator object when its
+   * value has updated.
+   *
+   * @class GeneratorEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  GeneratorEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = &quot;GeneratorEvent&quot;;
-    };
+    this.name = &quot;GeneratorEvent&quot;;
+  };
 
-    GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
-    GeneratorEvent.prototype.constructor = GeneratorEvent;
+  GeneratorEvent.prototype = JSUTILS.inherit(Event.prototype);
+  GeneratorEvent.prototype.constructor = GeneratorEvent;
 
-    /**
-     * @property GeneratorEvent.UPDATE
-     * @static
-     */
-    GeneratorEvent.UPDATE = &quot;update&quot;;
+  /**
+   * @property GeneratorEvent.UPDATE
+   * @static
+   */
+  GeneratorEvent.UPDATE = &quot;update&quot;;
 
-    return GeneratorEvent;
+  return GeneratorEvent;
 
 }());
+
     </pre>
 </div>
 

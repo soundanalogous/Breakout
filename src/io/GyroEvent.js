@@ -5,44 +5,44 @@
 
 JSUTILS.namespace('BO.io.GyroEvent');
 
-BO.io.GyroEvent = (function () {
+BO.io.GyroEvent = (function() {
 
-    var GyroEvent;
+  var GyroEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Gyroscope
-     * object.
-     * @class GyroEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type   
-     */
-    GyroEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Gyroscope
+   * object.
+   * @class GyroEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  GyroEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = "GyroEvent";
+    this.name = "GyroEvent";
 
-    };
+  };
 
-    /**
-     * @property GyroEvent.GYRO_READY
-     * @static
-     */
-    GyroEvent.GYRO_READY = "gyroReady";
-    /**
-     * @property GyroEvent.UPDATE
-     * @static
-     */
-    GyroEvent.UPDATE = "update";
-    
+  /**
+   * @property GyroEvent.GYRO_READY
+   * @static
+   */
+  GyroEvent.GYRO_READY = "gyroReady";
+  /**
+   * @property GyroEvent.UPDATE
+   * @static
+   */
+  GyroEvent.UPDATE = "update";
 
-    GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
-    GyroEvent.prototype.constructor = GyroEvent;
 
-    return GyroEvent;
+  GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
+  GyroEvent.prototype.constructor = GyroEvent;
+
+  return GyroEvent;
 
 }());

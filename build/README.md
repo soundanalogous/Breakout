@@ -26,7 +26,7 @@ the required Node modules. This will install everything you need to build Breako
     $ npm install
     ```
 
-*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*    
+*Windows users, see the 'Does Grunt work on Windows?' FAQ [here](http://gruntjs.com/frequently-asked-questions) to get setup.*
 
 Building a new release
 ---
@@ -58,19 +58,20 @@ after making changes to the code rather than running the full build.
 
 Linting
 ---
-[JSHint](https://github.com/jshint/jshint/) is run to enfoce code quality. See
-the jshint options set in `Breakout/.jshintrc`. To run jshint alone, execute the
-following command:
+[JSHint](https://github.com/jshint/jshint/) and [jscs](http://jscs.info/) are run to enfoce code quality. See
+the jshint and jscs options set in `Breakout/.jshintrc` and `Breakout/.jscsrc`. To run jshint or jscs alone, execute the
+following commands:
 
 ```bash
 $ grunt jshint
+$ grunt jscs
 ```
 
 
 Concatenate and minify
 ---
 If you make changes to any files in the Breakout src directory, you will need
-to concatenate and minify (uglify) the src files. Run the `compile` command to 
+to concatenate and minify (uglify) the src files. Run the `compile` command to
 concatenate and minify the files.
 
 ```bash
@@ -94,7 +95,7 @@ Running tests
 Unit tests are written with [mocha](http://visionmedia.github.io/mocha/), [chai for expect](http://chaijs.com/api/bdd/) and [sinon](http://sinonjs.org/) for spies and stubs. [phantomJS](http://phantomjs.org/) is used to run the tests headlessly. phantomJS is installed when you run `npm install` so there is no need to install it separately. If you already have phantomJS
 installed, there will not be a conflict.
 
-The following command will run jshint and then the unit tests via phantomjs:
+The following command will run jshint and jscs and then the unit tests via phantomjs:
 
 ```bash
 $ grunt test

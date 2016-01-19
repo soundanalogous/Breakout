@@ -1,101 +1,102 @@
-<html> 
-<head> 
+<html>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
+<head>
 
-<title>Breakout + processing.js Template 3D</title> 
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=1">
 
-</head> 
-<body> 
-    
-<canvas id='canvas1'></canvas> 
+  <title>Breakout + processing.js Template 3D</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="libs/processing-1.4.1-api.min.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script type="text/javascript">
+</head>
 
-// Breakout dependencies
-var IOBoard = BO.IOBoard;
-var IOBoardEvent = BO.IOBoardEvent;
+<body>
 
-var sketch = new Processing.Sketch();
+  <canvas id='canvas1'></canvas>
 
-// define 3D context
-sketch.use3DContext = true;
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="libs/processing-1.4.1-api.min.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script type="text/javascript">
+  // Breakout dependencies
+  var IOBoard = BO.IOBoard;
+  var IOBoardEvent = BO.IOBoardEvent;
 
-// preload images (if you are using any)
-sketch.imageCache.add("images/pjs.png");
+  var sketch = new Processing.Sketch();
 
-// attach function 
-sketch.attachFunction = function(p) {
+  // define 3D context
+  sketch.use3DContext = true;
+
+  // preload images (if you are using any)
+  sketch.imageCache.add("images/pjs.png");
+
+  // attach function
+  sketch.attachFunction = function(p) {
 
     // Breakout vars
     var arduino,
-        isReady = false;
-     
+      isReady = false;
+
     p.setup = function() {
-        // Please note: processingjs cannot run on mobile devices in 
-        // 3D mode because WebGL is not yet supported on mobile devices
-        p.size(200, 200, p.P3D);
+      // Please note: processingjs cannot run on mobile devices in
+      // 3D mode because WebGL is not yet supported on mobile devices
+      p.size(200, 200, p.P3D);
 
-        // write you setup code here:
+      // write you setup code here:
 
 
 
-        // create an instance of the IOBoard       
-        arduino = new IOBoard("localhost", 8887);
-        // listen for the READY event
-        arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
+      // create an instance of the IOBoard
+      arduino = new IOBoard("localhost", 8887);
+      // listen for the READY event
+      arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
     };
 
     p.draw = function() {
-        p.background(150);
-        // don't draw until the Arduino is ready
-        if (!isReady) return;
+      p.background(150);
+      // don't draw until the Arduino is ready
+      if (!isReady) return;
 
-        // write your draw code here:
+      // write your draw code here:
 
 
 
     };
 
     p.mouseClicked = function() {
-        // handle mouse click events here:
+      // handle mouse click events here:
 
     };
 
     p.mousePressed = function() {
-        // handle mouse press events here:
+      // handle mouse press events here:
 
     };
 
-    p.mouseReleased = function() {   
-        // handle mouse release events here:
+    p.mouseReleased = function() {
+      // handle mouse release events here:
 
-    };   
+    };
 
     function onArduinoReady(event) {
-        // remove the READY event listener. Must always to this.
-        arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);
+      // remove the READY event listener. Must always to this.
+      arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);
 
-        // initialize Pin and I/O objects here:
+      // initialize Pin and I/O objects here:
 
 
 
-        // signal that the Arduino is ready so processing.js can start
-        // drawing with the accelerometer data
-        isReady = true;
-    }    
+      // signal that the Arduino is ready so processing.js can start
+      // drawing with the accelerometer data
+      isReady = true;
+    }
 
-};
+  };
 
-var canvas = document.getElementById("canvas1");
-// attaching the sketch to the canvas
-var p = new Processing(canvas, sketch);
+  var canvas = document.getElementById("canvas1");
+  // attaching the sketch to the canvas
+  var p = new Processing(canvas, sketch);
+  </script>
+</body>
 
-</script> 
-</body> 
-</html> 
+</html>

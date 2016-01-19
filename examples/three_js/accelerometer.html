@@ -1,163 +1,172 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <style type="text/css">
+  body {
     font-family: Monospace;
     background-color: #000;
     margin: 0px;
     overflow: hidden;
-}
+  }
+  </style>
 
-</style>
-
-<title>Breakout + Three.js Accelerometer Example</title>
+  <title>Breakout + Three.js Accelerometer Example</title>
 
 </head>
+
 <body>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>    
-<script src="libs/three.min.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script type="text/javascript">
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="libs/three.min.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script type="text/javascript">
+  // Breakout dependencies
+  var IOBoard = BO.IOBoard;
+  var IOBoardEvent = BO.IOBoardEvent;
+  var AnalogAccelerometer = BO.io.AnalogAccelerometer;
+  var AccelerometerEvent = BO.io.AccelerometerEvent;
 
-    // Breakout dependencies
-    var IOBoard = BO.IOBoard;
-    var IOBoardEvent = BO.IOBoardEvent;
-    var AnalogAccelerometer = BO.io.AnalogAccelerometer;
-    var AccelerometerEvent = BO.io.AccelerometerEvent;
+  // set to true to print debug messages to console
+  BO.enableDebugging = true;
 
-    // set to true to print debug messages to console
-    BO.enableDebugging = true;  
+  // Please note: threejs cannot run on mobile devices
+  // because WebGL is not yet supported on mobile devices
 
-    // Please note: threejs cannot run on mobile devices 
-    // because WebGL is not yet supported on mobile devices
+  // create an instance of the IOBoard
+  var arduino = new IOBoard("localhost", 8887);
+  var accelerometer;
+  var RANGE_GS = 3; // +-3 Gs for ADXL335
+  var SUPPLY_V = 3.3; // supply voltage of sensor
+  var isReady = false;
 
-    // create an instance of the IOBoard
-    var arduino = new IOBoard("localhost", 8887);
-    var accelerometer;
-    var RANGE_GS = 3; // +-3 Gs for ADXL335
-    var SUPPLY_V = 3.3; // supply voltage of sensor
-    var isReady = false;
+  // 3D scene vars
+  var container,
+    camera,
+    scene,
+    renderer,
+    cube;
 
-    // 3D scene vars
-    var container,
-        camera,
-        scene,
-        renderer,
-        cube;
+  init();
+  animate();
 
-    init();
-    animate();
-    
-    // listen for the READY event
-    arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
+  // listen for the READY event
+  arduino.addEventListener(IOBoardEvent.READY, onArduinoReady);
 
-    // initiate the 3D scene
-    function init() {
-        container = document.createElement('div');
-        document.body.appendChild(container);
+  // initiate the 3D scene
+  function init() {
+    container = document.createElement('div');
+    document.body.appendChild(container);
 
-        scene = new THREE.Scene();
+    scene = new THREE.Scene();
 
-        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
-        camera.position.y = 0;
-        scene.add(camera);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+    camera.position.y = 0;
+    scene.add(camera);
 
-        var light, object, materials;
+    var light, object, materials;
 
-        scene.add(new THREE.AmbientLight(0x404040));
+    scene.add(new THREE.AmbientLight(0x404040));
 
-        light = new THREE.DirectionalLight(0xFFFFFF);
-        light.position.set(500, 500, -500);
-        scene.add(light);
+    light = new THREE.DirectionalLight(0xFFFFFF);
+    light.position.set(500, 500, -500);
+    scene.add(light);
 
-        materials = [
-            new THREE.MeshLambertMaterial( {ambient: 0xBBBBBB, map: THREE.ImageUtils.loadTexture( 'textures/ash_uvgrid01.jpg' )}),
-            new THREE.MeshBasicMaterial( {color: 0xFFFFFF, wireframe: true, transparent: true, opacity: 0.1 })
-        ];
+    materials = [
+      new THREE.MeshLambertMaterial({
+        ambient: 0xBBBBBB,
+        map: THREE.ImageUtils.loadTexture('textures/ash_uvgrid01.jpg')
+      }),
+      new THREE.MeshBasicMaterial({
+        color: 0xFFFFFF,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.1
+      })
+    ];
 
-        cube = THREE.SceneUtils.createMultiMaterialObject( new THREE.CubeGeometry(100, 100, 100, 4, 4, 4), 
-            materials);
-        cube.position.set(0, 0, 0);
-        scene.add(cube);
+    cube = THREE.SceneUtils.createMultiMaterialObject(new THREE.CubeGeometry(100, 100, 100, 4, 4, 4),
+      materials);
+    cube.position.set(0, 0, 0);
+    scene.add(cube);
 
-        camera.position.x = 0;
-        camera.position.y = 0;
-        camera.position.z = -300;
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.position.z = -300;
 
-        camera.lookAt(scene.position);      
+    camera.lookAt(scene.position);
 
-        renderer = new THREE.WebGLRenderer( { antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer = new THREE.WebGLRenderer({
+      antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-        container.appendChild(renderer.domElement);
-    }
+    container.appendChild(renderer.domElement);
+  }
 
-    // animate the 3D scene
-    function animate() {
-        requestAnimationFrame(animate);
+  // animate the 3D scene
+  function animate() {
+    requestAnimationFrame(animate);
 
-        render();
-    }
+    render();
+  }
 
-    // render the 3D scene
-    function render() {
-        // only begin rendering once the the IOBoard is ready
-        if (!isReady) return;
+  // render the 3D scene
+  function render() {
+    // only begin rendering once the the IOBoard is ready
+    if (!isReady) return;
 
-        // apply the accelerometer pitch and roll data to the cube
-        // not that the axis of the cube that relates to roll and pitch
-        // from the accelerometer depends on the orientation of the
-        // accelerometer in relation to the screen.
-        cube.rotation.z = accelerometer.roll * Math.PI/180;
-        cube.rotation.x = -accelerometer.pitch * Math.PI/180;       
+    // apply the accelerometer pitch and roll data to the cube
+    // not that the axis of the cube that relates to roll and pitch
+    // from the accelerometer depends on the orientation of the
+    // accelerometer in relation to the screen.
+    cube.rotation.z = accelerometer.roll * Math.PI / 180;
+    cube.rotation.x = -accelerometer.pitch * Math.PI / 180;
 
-        renderer.render(scene, camera);
-    }
+    renderer.render(scene, camera);
+  }
 
-    function onArduinoReady(event) {
+  function onArduinoReady(event) {
 
-        arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);                
+    arduino.removeEventListener(IOBoardEvent.READY, onArduinoReady);
 
-        // create an intance of the AnalogAccelerometer object
-        // params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
-        accelerometer = new AnalogAccelerometer(
-                                arduino, 
-                                arduino.getAnalogPin(0), 
-                                arduino.getAnalogPin(1), 
-                                arduino.getAnalogPin(2),
-                                RANGE_GS,
-                                true);
+    // create an intance of the AnalogAccelerometer object
+    // params: IOBoard, xPin, yPin, zPin, dynamicRange, enableSmoothing
+    accelerometer = new AnalogAccelerometer(
+      arduino,
+      arduino.getAnalogPin(0),
+      arduino.getAnalogPin(1),
+      arduino.getAnalogPin(2),
+      RANGE_GS,
+      true);
 
-        // Use calibrate_accelerometer.html to obtain the min and max voltage values
-        // to supply to the getCalibratedRange method below. Once you obtain the
-        // calibration data for a particular sensor you should not have to recalibrate.
-        // however you will need to use those values in the getCalibratedRange method
-        // each time you use the Accelerometer.
+    // Use calibrate_accelerometer.html to obtain the min and max voltage values
+    // to supply to the getCalibratedRange method below. Once you obtain the
+    // calibration data for a particular sensor you should not have to recalibrate.
+    // however you will need to use those values in the getCalibratedRange method
+    // each time you use the Accelerometer.
 
-        // calibration settings for an ADXL335 at 3.3v
-        // params: minimum voltage on the axis, max voltage on the axis, supply voltage
-        var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
-        var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
-        var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
+    // calibration settings for an ADXL335 at 3.3v
+    // params: minimum voltage on the axis, max voltage on the axis, supply voltage
+    var xRange = accelerometer.getCalibratedRange(1.258, 1.994, SUPPLY_V);
+    var yRange = accelerometer.getCalibratedRange(1.248, 1.984, SUPPLY_V);
+    var zRange = accelerometer.getCalibratedRange(1.284, 1.935, SUPPLY_V);
 
-        // params: axis, minimum range, maximum range
-        accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
-        accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
-        accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
+    // params: axis, minimum range, maximum range
+    accelerometer.setRangeFor(AnalogAccelerometer.X_AXIS, xRange.min, xRange.max);
+    accelerometer.setRangeFor(AnalogAccelerometer.Y_AXIS, yRange.min, yRange.max);
+    accelerometer.setRangeFor(AnalogAccelerometer.Z_AXIS, zRange.min, zRange.max);
 
-        // indicate that the IOBoard and accelerometer are initialized and it's now
-        // safe to render
-        isReady = true;
-    }
-    
+    // indicate that the IOBoard and accelerometer are initialized and it's now
+    // safe to render
+    isReady = true;
+  }
+  </script>
 
-</script>
 
-  
 </body>
+
 </html>​

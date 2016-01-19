@@ -1,93 +1,107 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link type="text/css" href="../libs/jquery-ui/jquery-ui.custom.css" rel="stylesheet" />
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link type="text/css" href="../libs/jquery-ui/jquery-ui.custom.css" rel="stylesheet" />
+  <style type="text/css">
+  body {
     margin: 10px;
     font-family: sans-serif;
     font-size: 16px;
     color: #00AEFF;
     width: 300px;
-}
-h2 {
+  }
+
+  h2 {
     font-size: 22px;
     padding-bottom: 10px;
-}
-h3 {
+  }
+
+  h3 {
     color: #666;
     font-size: 18px;
     margin: 0;
     padding-bottom: 10px;
-}
-section {
+  }
+
+  section {
     margin-bottom: 20px;
-}
-section:last-child {
+  }
+
+  section:last-child {
     margin-bottom: 0px;
-}
-button {
+  }
+
+  button {
     padding: 10px;
     font-size: 16px;
     width: 280px;
     color: #00AEFF;
-    
-}
-label {
-    color: #666;    
+  }
+
+  label {
+    color: #666;
     font-size: 14px;
     margin-bottom: 10px;
-}
-input {
+  }
+
+  input {
     font-size: 16px;
     width: 150px;
-}
-input[type="number"] {
+  }
+
+  input[type="number"] {
     margin-top: 10px;
-}
-#link {
+  }
+
+  #link {
     padding: 0;
     margin: 0;
     width: 25px;
-}
-.container {
+  }
+
+  .container {
     background-color: #f7f7f7;
     padding: 10px;
     border: 1px dotted #CCC;
     width: 280px;
     margin: 20px 0 20px 0;
     padding-top: 10px;
-}
-.configure {
+  }
+
+  .configure {
     display: block;
-}
-.control {
+  }
+
+  .control {
     display: none;
-}
-.slider {
+  }
+
+  .slider {
     margin-top: 10px;
     width: 280px;
-}
-.note {
+  }
+
+  .note {
     color: #666;
     font-size: 14px;
     line-height: 1.5em;
-}
-</style>
+  }
+  </style>
 
-<title>Stepper Example (4 wire)</title>
+  <title>Stepper Example (4 wire)</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script src="../libs/jquery-ui/jquery-ui.custom.min.js"></script>
-<script src="../libs/jquery.ui.touch-punch.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script src="../libs/jquery-ui/jquery-ui.custom.min.js"></script>
+  <script src="../libs/jquery.ui.touch-punch.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -97,7 +111,7 @@ $(document).ready(function() {
     var Event = JSUTILS.Event;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -106,214 +120,219 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var stepper;
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        
-        // Remove the listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        configureStepper();     
+      // Remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+      configureStepper();
     }
 
     function configureStepper() {
-        var stepsPerRev = 200; // adjust to match your particular stepper
+      var stepsPerRev = 200; // adjust to match your particular stepper
 
-        $('#stepsPerRev').change(function (evt) {
-            if (this.value >= 10 && this.value <= 1000) {
-                stepsPerRev = this.value;
-            }
-        }); 
+      $('#stepsPerRev').change(function(evt) {
+        if (this.value >= 10 && this.value <= 1000) {
+          stepsPerRev = this.value;
+        }
+      });
 
-        // When the configure button is clicked, create a new instance
-        // of a Stepper motor object.
-        $('button#configure').on('click', function () {
+      // When the configure button is clicked, create a new instance
+      // of a Stepper motor object.
+      $('button#configure').on('click', function() {
 
-        // Parameters: board, motor interface, num steps per rev, 
+        // Parameters: board, motor interface, num steps per rev,
         // motor pin1, motor pin2, motor pin3, motor pin4
-        stepper = new Stepper(arduino, 
-                            Stepper.FOUR_WIRE, 
-                            stepsPerRev, 
-                            arduino.getDigitalPin(2), 
-                            arduino.getDigitalPin(3),
-                            arduino.getDigitalPin(4),
-                            arduino.getDigitalPin(5));
+        stepper = new Stepper(arduino,
+          Stepper.FOUR_WIRE,
+          stepsPerRev,
+          arduino.getDigitalPin(2),
+          arduino.getDigitalPin(3),
+          arduino.getDigitalPin(4),
+          arduino.getDigitalPin(5));
 
         stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
-            $('.configure').css('display', 'none');
-            $('.control').css('display', 'block');
+        $('.configure').css('display', 'none');
+        $('.control').css('display', 'block');
 
-            initGUIListeners();
-        });     
+        initGUIListeners();
+      });
     }
 
     function initGUIListeners() {
-        var numSteps = 2000; // 2000 steps
-        var speed = 15.0 // rad/sec
-        var acceleration = 20.0 // rad/sec^2
-        var deceleration = 20.0 // rad/sec^2
-        var link = true;
-        var rpmPerRadSec = 9.55; // 1 rad/sec = 9.55 rpm
+      var numSteps = 2000; // 2000 steps
+      var speed = 15.0 // rad/sec
+      var acceleration = 20.0 // rad/sec^2
+      var deceleration = 20.0 // rad/sec^2
+      var link = true;
+      var rpmPerRadSec = 9.55; // 1 rad/sec = 9.55 rpm
 
-        $('button#start').on('click', function () {
-            // acceleration and deceleration are optional parameters
-            if (acceleration > 0 && deceleration > 0) {
-                // set the number of steps, speed and accel and decel parameters
-                stepper.step(numSteps, speed, acceleration, deceleration);
-            } else {
-                // set the number of steps and speed (accel and decel are optional)
-                stepper.step(numSteps, speed);
-            }
-            $('.status').text("Stepper " + stepper.id + " sequence running");   
-        });
+      $('button#start').on('click', function() {
+        // acceleration and deceleration are optional parameters
+        if (acceleration > 0 && deceleration > 0) {
+          // set the number of steps, speed and accel and decel parameters
+          stepper.step(numSteps, speed, acceleration, deceleration);
+        } else {
+          // set the number of steps and speed (accel and decel are optional)
+          stepper.step(numSteps, speed);
+        }
+        $('.status').text("Stepper " + stepper.id + " sequence running");
+      });
 
-        $('#numSteps').change(function (evt) {
-            if (this.value <= 2097151 && this.value >= -2097151) {
-                numSteps = this.value;
-            }
-        });
+      $('#numSteps').change(function(evt) {
+        if (this.value <= 2097151 && this.value >= -2097151) {
+          numSteps = this.value;
+        }
+      });
 
-        $('#speedSlider').slider({
-            min: 1,
-            max: 50,
-            step: 0.1,
-            slide: function (event, ui) {
-                speed = ui.value;
-                $('#stepSpeed').text(speed + " (" + (speed * rpmPerRadSec).toFixed(2) + " RPM)");
-            },
-            value: speed // set initial speed
-        });
+      $('#speedSlider').slider({
+        min: 1,
+        max: 50,
+        step: 0.1,
+        slide: function(event, ui) {
+          speed = ui.value;
+          $('#stepSpeed').text(speed + " (" + (speed * rpmPerRadSec).toFixed(2) + " RPM)");
+        },
+        value: speed // set initial speed
+      });
 
-        $('#accelSlider').slider({
-            min: 0,
-            max: 100,
-            step: 0.1,
-            slide: function (event, ui) {
-                acceleration = ui.value;
-                $('#accel').text(acceleration > 0 ? acceleration : "none");
-                if (link) {
-                    deceleration = acceleration;
-                    $('#decelSlider').slider({
-                        value: deceleration
-                    });
-                    $('#decel').text(deceleration > 0 ? deceleration: "none");
-                }               
-            },
-            value: acceleration // set initial acceleration
-        });
+      $('#accelSlider').slider({
+        min: 0,
+        max: 100,
+        step: 0.1,
+        slide: function(event, ui) {
+          acceleration = ui.value;
+          $('#accel').text(acceleration > 0 ? acceleration : "none");
+          if (link) {
+            deceleration = acceleration;
+            $('#decelSlider').slider({
+              value: deceleration
+            });
+            $('#decel').text(deceleration > 0 ? deceleration : "none");
+          }
+        },
+        value: acceleration // set initial acceleration
+      });
 
-        $('#decelSlider').slider({
-            min: 0,
-            max: 100,
-            step: 0.1,
-            slide: function (event, ui) {
-                deceleration = ui.value;
-                $('#decel').text(deceleration > 0 ? deceleration : "none");
-                if (link) {
-                    acceleration = deceleration;
-                    $('#accelSlider').slider({
-                        value: acceleration
-                    });
-                    $('#accel').text(acceleration > 0 ? acceleration : "none");
-                }
-            },
-            value: deceleration // set initial deceleration
-        });
+      $('#decelSlider').slider({
+        min: 0,
+        max: 100,
+        step: 0.1,
+        slide: function(event, ui) {
+          deceleration = ui.value;
+          $('#decel').text(deceleration > 0 ? deceleration : "none");
+          if (link) {
+            acceleration = deceleration;
+            $('#accelSlider').slider({
+              value: acceleration
+            });
+            $('#accel').text(acceleration > 0 ? acceleration : "none");
+          }
+        },
+        value: deceleration // set initial deceleration
+      });
 
-        $('#link').change(function(evt) {
-            if ($(this).attr('checked')) {
-                link = true;
-            } else {
-                link = false;
-            }
-        });         
+      $('#link').change(function(evt) {
+        if ($(this).attr('checked')) {
+          link = true;
+        } else {
+          link = false;
+        }
+      });
 
     }
 
     function onStepperComplete(evt) {
-        // Each stepper instance is automatically assigned an id
-        // when it is created, starting with 0. You can get the 
-        // id like this but it cannot be set.
-        $('.status').text("Stepper " + evt.target.id + " sequence complete");
-    }   
+      // Each stepper instance is automatically assigned an id
+      // when it is created, starting with 0. You can get the
+      // id like this but it cannot be set.
+      $('.status').text("Stepper " + evt.target.id + " sequence complete");
+    }
 
-});
-
-</script>
+  });
+  </script>
 
 </head>
+
 <body>
-    <h2>Stepper Example</h2>
-    <section class="configure">
-        <div class="container">
-            <h3>Configure your Stepper Motor</h3>
-            <section>
-            <label for="stepsPerRev">Number of Steps per Revolution: </label>
-            <input id="stepsPerRev" type="number" value="200" min="50" max="1000" step="10" />
-            </section>  
+  <h2>Stepper Example</h2>
+  <section class="configure">
+    <div class="container">
+      <h3>Configure your Stepper Motor</h3>
+      <section>
+        <label for="stepsPerRev">Number of Steps per Revolution: </label>
+        <input id="stepsPerRev" type="number" value="200" min="50" max="1000" step="10" />
+      </section>
 
-            <section>
-            <button type="button" id="configure">Configure</button>
-            </section>      
-        </div>
+      <section>
+        <button type="button" id="configure">Configure</button>
+      </section>
+    </div>
 
-        <section class="note">
-            <p>In order for this example to work correctly you must make sure the number of steps per revolution is set for your stepper motor. This is the number of steps it takes for the motor to make one revolution. You can get this value from you motor's datasheet (if the number is not specified, divide the step angle by 360 degrees to get the number of steps per rev). This value usually ranges from 100 to 400 depending on the motor. The default value for this example is 200 stepsPerRev.</p>
-        </section>
-    </section>      
+    <section class="note">
+      <p>In order for this example to work correctly you must make sure the number of steps per revolution is set for your stepper motor. This is the number of steps it takes for the motor to make one revolution. You can get this value from you motor's datasheet (if the number is not specified, divide the step angle by 360 degrees to get the number of steps per rev). This value usually ranges from 100 to 400 depending on the motor. The default value for this example is 200 stepsPerRev.</p>
+    </section>
+  </section>
 
-    <section class="control">
-        <div class="container">
-            <section>
-            <label for="numSteps">Number of Steps to Move (+ CW, - CCW): </label>
-            <input id="numSteps" type="number" value="2000" min="-2097150" max="2097150" step="10" />
-            </section>
+  <section class="control">
+    <div class="container">
+      <section>
+        <label for="numSteps">Number of Steps to Move (+ CW, - CCW): </label>
+        <input id="numSteps" type="number" value="2000" min="-2097150" max="2097150" step="10" />
+      </section>
 
-            <section>
-            <label>Speed (rad/sec): </label><label id="stepSpeed">15.0 (143.25 RPM)</label>
-            <div class="slider" id="speedSlider"></div>
-            </section>
+      <section>
+        <label>Speed (rad/sec): </label>
+        <label id="stepSpeed">15.0 (143.25 RPM)</label>
+        <div class="slider" id="speedSlider"></div>
+      </section>
 
-            <section>
-            <label>Acceleration (rad/sec<sup>2</sup>): </label><label id="accel">20.0</label>
-            <div class="slider" id="accelSlider"></div>
-            </section>
+      <section>
+        <label>Acceleration (rad/sec<sup>2</sup>): </label>
+        <label id="accel">20.0</label>
+        <div class="slider" id="accelSlider"></div>
+      </section>
 
-            <section>
-            <label>Deceleration (rad/sec<sup>2</sup>): </label><label id="decel">20.0</label>
-            <div class="slider" id="decelSlider"></div>
-            </section>
+      <section>
+        <label>Deceleration (rad/sec<sup>2</sup>): </label>
+        <label id="decel">20.0</label>
+        <div class="slider" id="decelSlider"></div>
+      </section>
 
-            <section>
-            <input id="link" type="checkbox" checked="checked" /><label for="link">Link Acceleration and Deceleration</label>
-            </section>
+      <section>
+        <input id="link" type="checkbox" checked="checked" />
+        <label for="link">Link Acceleration and Deceleration</label>
+      </section>
 
-            <section>
-            <button type="button" id="start">Run Step Sequence</button>
-            </section>
-        </div>
+      <section>
+        <button type="button" id="start">Run Step Sequence</button>
+      </section>
+    </div>
 
-        <section>
-        <p class="status"> </p>
-        </section>
-
-        <section class="note">
-            <p>Depending on your motor, you may not be able to drive the stepper at speeds higher than 25 rad/sec (240 RPM).</p>
-
-            <p>To remove acceleration and deceleration, move the acceleration and deceleration sliders all the way to the left. When using accel and decel you must set both values.</p>
-        </section>      
-
+    <section>
+      <p class="status"> </p>
     </section>
 
+    <section class="note">
+      <p>Depending on your motor, you may not be able to drive the stepper at speeds higher than 25 rad/sec (240 RPM).</p>
+
+      <p>To remove acceleration and deceleration, move the acceleration and deceleration sliders all the way to the left. When using accel and decel you must set both values.</p>
+    </section>
+
+  </section>
+
 </body>
+
 </html>

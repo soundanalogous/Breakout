@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -179,45 +183,45 @@
 
 JSUTILS.namespace(&#x27;BO.io.GyroEvent&#x27;);
 
-BO.io.GyroEvent = (function () {
+BO.io.GyroEvent = (function() {
 
-    var GyroEvent;
+  var GyroEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Gyroscope
-     * object.
-     * @class GyroEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type   
-     */
-    GyroEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Gyroscope
+   * object.
+   * @class GyroEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  GyroEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = &quot;GyroEvent&quot;;
+    this.name = &quot;GyroEvent&quot;;
 
-    };
+  };
 
-    /**
-     * @property GyroEvent.GYRO_READY
-     * @static
-     */
-    GyroEvent.GYRO_READY = &quot;gyroReady&quot;;
-    /**
-     * @property GyroEvent.UPDATE
-     * @static
-     */
-    GyroEvent.UPDATE = &quot;update&quot;;
-    
+  /**
+   * @property GyroEvent.GYRO_READY
+   * @static
+   */
+  GyroEvent.GYRO_READY = &quot;gyroReady&quot;;
+  /**
+   * @property GyroEvent.UPDATE
+   * @static
+   */
+  GyroEvent.UPDATE = &quot;update&quot;;
 
-    GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
-    GyroEvent.prototype.constructor = GyroEvent;
 
-    return GyroEvent;
+  GyroEvent.prototype = JSUTILS.inherit(Event.prototype);
+  GyroEvent.prototype.constructor = GyroEvent;
+
+  return GyroEvent;
 
 }());
 

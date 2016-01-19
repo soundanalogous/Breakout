@@ -1,11 +1,11 @@
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>
+ * Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>
  * Released under the MIT license. See LICENSE file for details.
  */
 
 
 /**
- * @version 0.3.1
+ * @version 0.3.2
  *
  * <p>Namespace for Breakout objects.</p>
  *
@@ -18,7 +18,7 @@ var BO = BO || {};
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.3.1';
+BREAKOUT.VERSION = '0.3.2';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application

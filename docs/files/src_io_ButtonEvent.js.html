@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -179,53 +183,53 @@
 
 JSUTILS.namespace(&#x27;BO.io.ButtonEvent&#x27;);
 
-BO.io.ButtonEvent = (function () {
+BO.io.ButtonEvent = (function() {
 
-    var ButtonEvent;
+  var ButtonEvent;
 
-    // Dependencies
-    var Event = JSUTILS.Event;
+  // Dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Button
-     * object.
-     * @class ButtonEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type   
-     */
-    ButtonEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Button
+   * object.
+   * @class ButtonEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  ButtonEvent = function(type) {
 
-        this.name = &quot;ButtonEvent&quot;;
+    this.name = &quot;ButtonEvent&quot;;
 
-        Event.call(this, type);
-    };
+    Event.call(this, type);
+  };
 
-    /**
-     * @property ButtonEvent.PRESS
-     * @static
-     */
-    ButtonEvent.PRESS = &quot;pressed&quot;;
-    /**
-     * @property ButtonEvent.RELEASE
-     * @static
-     */
-    ButtonEvent.RELEASE = &quot;released&quot;;
-    /**
-     * @property ButtonEvent.LONG_PRESS
-     * @static
-     */
-    ButtonEvent.LONG_PRESS = &quot;longPress&quot;;
-    /**
-     * @property ButtonEvent.SUSTAINED_PRESS
-     * @static
-     */
-    ButtonEvent.SUSTAINED_PRESS = &quot;sustainedPress&quot;;
+  /**
+   * @property ButtonEvent.PRESS
+   * @static
+   */
+  ButtonEvent.PRESS = &quot;pressed&quot;;
+  /**
+   * @property ButtonEvent.RELEASE
+   * @static
+   */
+  ButtonEvent.RELEASE = &quot;released&quot;;
+  /**
+   * @property ButtonEvent.LONG_PRESS
+   * @static
+   */
+  ButtonEvent.LONG_PRESS = &quot;longPress&quot;;
+  /**
+   * @property ButtonEvent.SUSTAINED_PRESS
+   * @static
+   */
+  ButtonEvent.SUSTAINED_PRESS = &quot;sustainedPress&quot;;
 
-    ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);
-    ButtonEvent.prototype.constructor = ButtonEvent;
+  ButtonEvent.prototype = JSUTILS.inherit(Event.prototype);
+  ButtonEvent.prototype.constructor = ButtonEvent;
 
-    return ButtonEvent;
+  return ButtonEvent;
 
 }());
 

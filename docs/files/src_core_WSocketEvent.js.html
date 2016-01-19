@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -179,52 +183,53 @@
 
 JSUTILS.namespace(&#x27;BO.WSocketEvent&#x27;);
 
-BO.WSocketEvent = (function () {
-    
-    var WSocketEvent;
+BO.WSocketEvent = (function() {
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  var WSocketEvent;
 
-    /**
-     * Dispatches Websocket events: Connected &#x60;onopen&#x60;, Message &#x60;onmessge&#x60;
-     * and Closed &#x60;onclose&#x60; objects.
-     * @class WSocketEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    WSocketEvent = function (type) {
-        this.name = &quot;WSocketEvent&quot;;
-        
-        // call the super class
-        // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);
-    };
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    // events
-    /**
-     * @property WSocketEvent.CONNECTED
-     * @static
-     */
-    WSocketEvent.CONNECTED = &quot;webSocketConnected&quot;;
-    /**
-     * @property WSocketEvent.MESSAGE
-     * @static
-     */
-    WSocketEvent.MESSAGE = &quot;webSocketMessage&quot;;
-    /**
-     * @property WSocketEvent.CLOSE
-     * @static
-     */
-    WSocketEvent.CLOSE = &quot;webSocketClosed&quot;;
+  /**
+   * Dispatches Websocket events: Connected &#x60;onopen&#x60;, Message &#x60;onmessge&#x60;
+   * and Closed &#x60;onclose&#x60; objects.
+   * @class WSocketEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  WSocketEvent = function(type) {
+    this.name = &quot;WSocketEvent&quot;;
 
-    WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
-    WSocketEvent.prototype.constructor = WSocketEvent;
+    // call the super class
+    // 2nd parameter is passed to EventDispatcher constructor
+    Event.call(this, type);
+  };
 
-    return WSocketEvent;
+  // events
+  /**
+   * @property WSocketEvent.CONNECTED
+   * @static
+   */
+  WSocketEvent.CONNECTED = &quot;webSocketConnected&quot;;
+  /**
+   * @property WSocketEvent.MESSAGE
+   * @static
+   */
+  WSocketEvent.MESSAGE = &quot;webSocketMessage&quot;;
+  /**
+   * @property WSocketEvent.CLOSE
+   * @static
+   */
+  WSocketEvent.CLOSE = &quot;webSocketClosed&quot;;
+
+  WSocketEvent.prototype = JSUTILS.inherit(Event.prototype);
+  WSocketEvent.prototype.constructor = WSocketEvent;
+
+  return WSocketEvent;
 
 }());
+
     </pre>
 </div>
 

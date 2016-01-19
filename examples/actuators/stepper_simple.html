@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<meta charset=utf-8 />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<style type="text/css">
-body {
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style type="text/css">
+  body {
     color: #666;
     font-family: sans-serif;
     font-size: 16px;
     line-height: 1.5em;
     margin: 20px;
     max-width: 600px;
-}
-h2 {
-    color: #00AEFF;    
+  }
+
+  h2 {
+    color: #00AEFF;
     font-size: 22px;
     padding-bottom: 10px;
-}
-a {
+  }
+
+  a {
     font-weight: bold;
     color: #333;
-    text-decoration:none;
-}
-a:hover {
+    text-decoration: none;
+  }
+
+  a:hover {
     color: #FF6623;
-}
-</style>
+  }
+  </style>
 
-<title>Simple Stepper Example</title>
+  <title>Simple Stepper Example</title>
 
-<!-- The following (socket.io.js) is only required when using the node_server -->
-<script src="../../socket.io/socket.io.js"></script>
-<script src="../../dist/Breakout.min.js"></script>
-<script src="../libs/jquery.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
+  <!-- The following (socket.io.js) is only required when using the node_server -->
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="../../dist/Breakout.min.js"></script>
+  <script src="../libs/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
 
     // Declare these variables so you don't have
     // to type the full namespace
@@ -45,7 +49,7 @@ $(document).ready(function() {
     var Event = JSUTILS.Event;
 
     // Set to true to print debug messages to console
-    BO.enableDebugging = true;  
+    BO.enableDebugging = true;
 
     // If you are not serving this file from the same computer
     // that the Arduino board is connected to, replace
@@ -54,80 +58,84 @@ $(document).ready(function() {
     var host = window.location.hostname;
     // if the file is opened locally, set the host to "localhost"
     if (window.location.protocol.indexOf("file:") === 0) {
-        host = "localhost";
+      host = "localhost";
     }
     var arduino = new IOBoard(host, 8887);
-    
+
     // Variables
     var stepper,
-        numMicroSteps = 8, // by default the EasyDriver uses 8 microsteps per step
-        stepsPerRev = 200, // adjust to match your particular stepper
-        acceleration = 20.0,
-        deceleration = 20.0,
-        numSteps;
+      numMicroSteps = 8, // by default the EasyDriver uses 8 microsteps per step
+      stepsPerRev = 200, // adjust to match your particular stepper
+      acceleration = 20.0,
+      deceleration = 20.0,
+      numSteps;
 
     // if you are not using an EasyDriver, set numMicroSteps = 1
-    
+
     // Listen for the IOBoard READY event which indicates the IOBoard
-    // is ready to send and receive data    
+    // is ready to send and receive data
     arduino.addEventListener(IOBoardEvent.READY, onReady);
 
     function onReady(event) {
-        var speed = 15.0;
+      var speed = 15.0;
 
-        // Remove the listener because it is no longer needed
-        arduino.removeEventListener(IOBoardEvent.READY, onReady);
+      // Remove the listener because it is no longer needed
+      arduino.removeEventListener(IOBoardEvent.READY, onReady);
 
-        // Parameters: board, motor interface, num steps per rev, 
-        // direction pin, step pin
-        stepper = new Stepper(arduino, 
-                            Stepper.DRIVER, 
-                            stepsPerRev * numMicroSteps, 
-                            arduino.getDigitalPin(2), 
-                            arduino.getDigitalPin(3));
+      // Parameters: board, motor interface, num steps per rev,
+      // direction pin, step pin
+      stepper = new Stepper(arduino,
+        Stepper.DRIVER,
+        stepsPerRev * numMicroSteps,
+        arduino.getDigitalPin(2),
+        arduino.getDigitalPin(3));
 
-        // Event.COMPLETE will fire when the step sequence is complete
-        stepper.addEventListener(Event.COMPLETE, onStepperComplete);
+      // Event.COMPLETE will fire when the step sequence is complete
+      stepper.addEventListener(Event.COMPLETE, onStepperComplete);
 
-        numSteps = 2000 * numMicroSteps;
+      numSteps = 2000 * numMicroSteps;
 
-        // set the number of steps, speed and accel and decel parameters
-        stepper.step(numSteps, speed, acceleration, deceleration);
+      // set the number of steps, speed and accel and decel parameters
+      stepper.step(numSteps, speed, acceleration, deceleration);
 
     }
 
     function onStepperComplete(evt) {
-        var speed;
+      var speed;
 
-        // toggle the step direction
-        numSteps = numSteps * -1;
+      // toggle the step direction
+      numSteps = numSteps * -1;
 
-        if (numSteps > 0) {
-            speed = 20.0;
-            // set the number of steps, speed and accel and decel parameters
-            stepper.step(numSteps, speed, acceleration, deceleration);
-        } else {
-            speed = 10.5;
-            // acceleration and deceleration are optional
-            stepper.step(numSteps, speed);            
-        }      
+      if (numSteps > 0) {
+        speed = 20.0;
+        // set the number of steps, speed and accel and decel parameters
+        stepper.step(numSteps, speed, acceleration, deceleration);
+      } else {
+        speed = 10.5;
+        // acceleration and deceleration are optional
+        stepper.step(numSteps, speed);
+      }
     }
 
-});
-
-</script>
+  });
+  </script>
 
 </head>
+
 <body>
-    <h2>Simple Stepper Example</h2>
+  <h2>Simple Stepper Example</h2>
 
-    <section>
-        <p>In order for this example to work correctly you must make sure the number of steps per revolution is set for your stepper motor. This is the number of steps it takes for the motor to make one revolution. You can get this value from you motor's datasheet (if the number is not specified, divide the step angle by 360 degrees to get the number of steps per rev). This value usually ranges from 100 to 400 depending on the motor. The default value for this example is 200 stepsPerRev. If your motor has a different value, update the <code>stepsPerRev</code> variable on line 57 of this example.</p>
+  <section>
+    <p>In order for this example to work correctly you must make sure the number of steps per revolution is set for your stepper motor. This is the number of steps it takes for the motor to make one revolution. You can get this value from you motor's datasheet (if the number is not specified, divide the step angle by 360 degrees to get the number of steps per rev). This value usually ranges from 100 to 400 depending on the motor. The default value for this example is 200 stepsPerRev. If your motor has a different value, update the
+      <code>stepsPerRev</code> variable on line 57 of this example.</p>
 
-        <p>If you are using an <a href="http://www.schmalzhaus.com/EasyDriver/">EasyDriver</a> and have configured it to use less than 8 micro steps (default), then you'll need to update the number of microsteps in the <code>numMicroSteps</code> variable on line 56 of this example.</p>
+    <p>If you are using an <a href="http://www.schmalzhaus.com/EasyDriver/">EasyDriver</a> and have configured it to use less than 8 micro steps (default), then you'll need to update the number of microsteps in the
+      <code>numMicroSteps</code> variable on line 56 of this example.</p>
 
-        <p>If you are not using an EasyDriver, set <code>numMicroSteps = 1</code> and update the Interface parameter on line 77 to either Stepper.TWO_WIRE or Stepper.FOUR_WIRE depending on how you have wired the motor.</p>
-    </section>
+    <p>If you are not using an EasyDriver, set
+      <code>numMicroSteps = 1</code> and update the Interface parameter on line 77 to either Stepper.TWO_WIRE or Stepper.FOUR_WIRE depending on how you have wired the motor.</p>
+  </section>
 
 </body>
+
 </html>

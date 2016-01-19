@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -173,57 +177,57 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Copyright (c) 2011-2015 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
  * Released under the MIT license. See LICENSE file for details.
  */
 
 JSUTILS.namespace(&#x27;BO.PinEvent&#x27;);
 
-BO.PinEvent = (function () {
+BO.PinEvent = (function() {
 
-    var PinEvent;
+  var PinEvent;
 
-    // Dependencies
-    var Event = JSUTILS.Event;
+  // Dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Pin object.
-     * @class PinEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type
-     */
-    PinEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Pin object.
+   * @class PinEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  PinEvent = function(type) {
 
-        this.name = &quot;PinEvent&quot;;
-        
-        // Call the super class
-        // 2nd parameter is passed to EventDispatcher constructor
-        Event.call(this, type);
-    };
+    this.name = &quot;PinEvent&quot;;
 
-    // Events
-    /**
-     * @property PinEvent.CHANGE
-     * @static
-     */
-    PinEvent.CHANGE = &quot;pinChange&quot;;
-    /**
-     * @property PinEvent.RISING_EDGE
-     * @static
-     */
-    PinEvent.RISING_EDGE = &quot;risingEdge&quot;;
-    /**
-     * @property PinEvent.FALLING_EDGE
-     * @static
-     */
-    PinEvent.FALLING_EDGE = &quot;fallingEdge&quot;;
-    
+    // Call the super class
+    // 2nd parameter is passed to EventDispatcher constructor
+    Event.call(this, type);
+  };
 
-    PinEvent.prototype = JSUTILS.inherit(Event.prototype);
-    PinEvent.prototype.constructor = PinEvent;
+  // Events
+  /**
+   * @property PinEvent.CHANGE
+   * @static
+   */
+  PinEvent.CHANGE = &quot;pinChange&quot;;
+  /**
+   * @property PinEvent.RISING_EDGE
+   * @static
+   */
+  PinEvent.RISING_EDGE = &quot;risingEdge&quot;;
+  /**
+   * @property PinEvent.FALLING_EDGE
+   * @static
+   */
+  PinEvent.FALLING_EDGE = &quot;fallingEdge&quot;;
 
-    return PinEvent;
+
+  PinEvent.prototype = JSUTILS.inherit(Event.prototype);
+  PinEvent.prototype.constructor = PinEvent;
+
+  return PinEvent;
 
 }());
 

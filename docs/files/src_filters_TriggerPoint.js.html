@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -173,159 +177,161 @@
 <div class="file">
     <pre class="code prettyprint linenums">
  /**
- * Based on SetPoint.as originally written in as3.
- * Copyright (c) the Funnel development team
- * http://www.funnel.cc
- *
- * Ported to JavaScript by Jeff Hoefs
- * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
- *
- * Released under the MIT license. See LICENSE file for details.
- */
+  * Based on SetPoint.as originally written in as3.
+  * Copyright (c) the Funnel development team
+  * http://www.funnel.cc
+  *
+  * Ported to JavaScript by Jeff Hoefs
+  * Copyright (c) 2011-2012 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+  *
+  * Released under the MIT license. See LICENSE file for details.
+  */
 
-JSUTILS.namespace(&#x27;BO.filters.TriggerPoint&#x27;);
+ JSUTILS.namespace(&#x27;BO.filters.TriggerPoint&#x27;);
 
-BO.filters.TriggerPoint = (function () {
-    &quot;use strict&quot;;
+ BO.filters.TriggerPoint = (function() {
+   &quot;use strict&quot;;
 
-    var TriggerPoint;
+   var TriggerPoint;
 
-    // dependencies
-    var FilterBase = BO.filters.FilterBase;
+   // dependencies
+   var FilterBase = BO.filters.FilterBase;
 
-    /**
-     * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
-     * also use multiple points by providing a nested array such as &#x60;[[0.4, 0.1],
-     * [0.7, 0.05]]&#x60;.
-     * See [Breakout/examples/filters/triggerpoint.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/triggerpoint.html) for an example application.
-     *
-     * @class TriggerPoint
-     * @constructor
-     * @extends BO.filters.FilterBase
-     * @param {Number[]} points An array of threshold and hysteresis values
-     * operations for input buffers.
-     */
-    TriggerPoint = function (points) {
+   /**
+    * Divides an input to 0 or 1 based on the threshold and hysteresis. You can
+    * also use multiple points by providing a nested array such as &#x60;[[0.4, 0.1],
+    * [0.7, 0.05]]&#x60;.
+    * See [Breakout/examples/filters/triggerpoint.html](https://github.com/soundanalogous/Breakout/blob/master/examples/filters/triggerpoint.html) for an example application.
+    *
+    * @class TriggerPoint
+    * @constructor
+    * @extends BO.filters.FilterBase
+    * @param {Number[]} points An array of threshold and hysteresis values
+    * operations for input buffers.
+    */
+   TriggerPoint = function(points) {
 
-        this.name = &quot;TriggerPoint&quot;;
+     this.name = &quot;TriggerPoint&quot;;
 
-        this._points = {};
-        this._range = [];
-        this._lastStatus = 0;
+     this._points = {};
+     this._range = [];
+     this._lastStatus = 0;
 
-        if (points === undefined) {
-            points = [[0.5, 0]];
-        }
+     if (points === undefined) {
+       points = [
+         [0.5, 0]
+       ];
+     }
 
-        if (points[0] instanceof Array) {
-            var len = points.length;
-            for (var i = 0; i &lt; len; i++) {
-                this._points[points[i][0]] = points[i][1];
-            }
-        } else if (typeof points[0] === &quot;number&quot;) {
-            this._points[points[0]] = points[1];
-        }
+     if (points[0] instanceof Array) {
+       var len = points.length;
+       for (var i = 0; i &lt; len; i++) {
+         this._points[points[i][0]] = points[i][1];
+       }
+     } else if (typeof points[0] === &quot;number&quot;) {
+       this._points[points[0]] = points[1];
+     }
 
-        this.updateRange();
+     this.updateRange();
 
-        this._lastStatus = 0;
-    };
+     this._lastStatus = 0;
+   };
 
 
-    TriggerPoint.prototype = JSUTILS.inherit(FilterBase.prototype);
-    TriggerPoint.prototype.constructor = TriggerPoint;
+   TriggerPoint.prototype = JSUTILS.inherit(FilterBase.prototype);
+   TriggerPoint.prototype.constructor = TriggerPoint;
 
-    /**
-     * Override FilterBase.processSample
-     */
-    TriggerPoint.prototype.processSample = function (val) {
-        var status = this._lastStatus;
-        var len = this._range.length;
-        for (var i = 0; i &lt; len; i++) {
-            var range = this._range[i];
-            if (range[0] &lt;= val &amp;&amp; val &lt;= range[1]) {
-                status = i;
-                break;
-            }
-        }
+   /**
+    * Override FilterBase.processSample
+    */
+   TriggerPoint.prototype.processSample = function(val) {
+     var status = this._lastStatus;
+     var len = this._range.length;
+     for (var i = 0; i &lt; len; i++) {
+       var range = this._range[i];
+       if (range[0] &lt;= val &amp;&amp; val &lt;= range[1]) {
+         status = i;
+         break;
+       }
+     }
 
-        this._lastStatus = status;
-        return status;
-    };
+     this._lastStatus = status;
+     return status;
+   };
 
-    /**
-     * @method addPoint
-     */
-    TriggerPoint.prototype.addPoint = function (threshold, hysteresis) {
-        this._points[threshold] = hysteresis;
-        this.updateRange();
-    };
+   /**
+    * @method addPoint
+    */
+   TriggerPoint.prototype.addPoint = function(threshold, hysteresis) {
+     this._points[threshold] = hysteresis;
+     this.updateRange();
+   };
 
-    /**
-     * @method removePoint
-     */
-    TriggerPoint.prototype.removePoint = function (threshold) {
-        // to do: verify that this works in javascript
-        delete this._points[threshold];
-        this.updateRange();
-    };
+   /**
+    * @method removePoint
+    */
+   TriggerPoint.prototype.removePoint = function(threshold) {
+     // to do: verify that this works in javascript
+     delete this._points[threshold];
+     this.updateRange();
+   };
 
-    /**
-     * @method removeAllPoints
-     */
-    TriggerPoint.prototype.removeAllPoints = function () {
-        this._points = {};
-        this.updateRange();
-    };
+   /**
+    * @method removeAllPoints
+    */
+   TriggerPoint.prototype.removeAllPoints = function() {
+     this._points = {};
+     this.updateRange();
+   };
 
-    /**
-     * @private
-     * @method updateRange
-     */
-    TriggerPoint.prototype.updateRange = function () {
-                
-        this._range = [];
-        var keys = this.getKeys(this._points);
+   /**
+    * @private
+    * @method updateRange
+    */
+   TriggerPoint.prototype.updateRange = function() {
 
-        var firstKey = keys[0];
-        this._range.push([Number.NEGATIVE_INFINITY, firstKey - this._points[firstKey]]);
+     this._range = [];
+     var keys = this.getKeys(this._points);
 
-        var len = keys.length - 1;
-        for (var i = 0; i &lt; len; i++) {
-            var t0 = keys[i];
-            var t1 = keys[i + 1];
-            var p0 = (t0 * 1) + this._points[t0]; // multiply by 1 to force type to number
-            var p1 = t1 - this._points[t1];
-            if (p0 &gt;= p1) {
-                throw new Error(&quot;The specified range overlaps...&quot;);
-            }
-            this._range.push([p0, p1]);
-        }
+     var firstKey = keys[0];
+     this._range.push([Number.NEGATIVE_INFINITY, firstKey - this._points[firstKey]]);
 
-        var lastKey = keys[keys.length - 1];
-        var positiveThresh = (lastKey * 1) + this._points[lastKey];
-        this._range.push([positiveThresh, Number.POSITIVE_INFINITY]);
+     var len = keys.length - 1;
+     for (var i = 0; i &lt; len; i++) {
+       var t0 = keys[i];
+       var t1 = keys[i + 1];
+       var p0 = (t0 * 1) + this._points[t0]; // multiply by 1 to force type to number
+       var p1 = t1 - this._points[t1];
+       if (p0 &gt;= p1) {
+         throw new Error(&quot;The specified range overlaps...&quot;);
+       }
+       this._range.push([p0, p1]);
+     }
 
-    };
+     var lastKey = keys[keys.length - 1];
+     var positiveThresh = (lastKey * 1) + this._points[lastKey];
+     this._range.push([positiveThresh, Number.POSITIVE_INFINITY]);
 
-    /**
-     * @private
-     * @method getKeys
-     */
-    TriggerPoint.prototype.getKeys = function (obj) {
-        var keys = [];
-        for (var key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                keys.push(key);
-            }
-        }
-        return keys.sort();
-    };
-        
-    return TriggerPoint;
+   };
 
-}());
- 
+   /**
+    * @private
+    * @method getKeys
+    */
+   TriggerPoint.prototype.getKeys = function(obj) {
+     var keys = [];
+     for (var key in obj) {
+       if (obj.hasOwnProperty(key)) {
+         keys.push(key);
+       }
+     }
+     return keys.sort();
+   };
+
+   return TriggerPoint;
+
+ }());
+
     </pre>
 </div>
 

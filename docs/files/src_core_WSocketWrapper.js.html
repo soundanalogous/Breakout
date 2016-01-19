@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -173,200 +177,216 @@
 <div class="file">
     <pre class="code prettyprint linenums">
 /**
- * Copyright (c) 2011-2014 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
+ * Copyright (c) 2011-2016 Jeff Hoefs &lt;soundanalogous@gmail.com&gt;
  * Released under the MIT license. See LICENSE file for details.
  */
 
 JSUTILS.namespace(&#x27;BO.WSocketWrapper&#x27;);
 
-BO.WSocketWrapper = (function () {
-    &quot;use strict&quot;;
+BO.WSocketWrapper = (function() {
+  &quot;use strict&quot;;
 
-    var WSocketWrapper;
+  var WSocketWrapper;
 
-    // dependencies
-    var EventDispatcher = JSUTILS.EventDispatcher,
-        WSocketEvent = BO.WSocketEvent;
+  // dependencies
+  var EventDispatcher = JSUTILS.EventDispatcher,
+    WSocketEvent = BO.WSocketEvent;
 
-    var READY_STATE = {
-        &quot;CONNECTING&quot;: 0,
-        &quot;OPEN&quot;: 1,
-        &quot;CLOSING&quot;: 2,
-        &quot;CLOSED&quot;: 3
-    };
+  var READY_STATE = {
+    &quot;CONNECTING&quot;: 0,
+    &quot;OPEN&quot;: 1,
+    &quot;CLOSING&quot;: 2,
+    &quot;CLOSED&quot;: 3
+  };
 
-    /**
-     * Creates a wrapper for various websocket implementations to unify the
-     * interface.
-     *
-     * @class WSocketWrapper
-     * @constructor
-     * @uses JSUTILS.EventDispatcher
-     * @param {String} host The host address of the web server.
-     * @param {Number} port The port to connect to on the web server.
-     * native websocket implementation.
-     * @param {String} protocol The websockt protocol definition (if necessary).
-     */
-    WSocketWrapper = function (host, port, protocol) {
-        this.name = &quot;WSocketWrapper&quot;;
+  /**
+   * Creates a wrapper for various websocket implementations to unify the
+   * interface.
+   *
+   * @class WSocketWrapper
+   * @constructor
+   * @uses JSUTILS.EventDispatcher
+   * @param {String} host The host address of the web server.
+   * @param {Number} port The port to connect to on the web server.
+   * native websocket implementation.
+   * @param {String} protocol The websockt protocol definition (if necessary).
+   */
+  WSocketWrapper = function(host, port, protocol) {
+    this.name = &quot;WSocketWrapper&quot;;
 
-        EventDispatcher.call(this, this);
+    EventDispatcher.call(this, this);
 
-        this._host = host;
-        this._port = port;
-        this._protocol = protocol || &quot;default-protocol&quot;;
-        this._socket = null;
-        this._readyState = null; // only applies to native WebSocket implementations
+    this._host = host;
+    this._port = port;
+    this._protocol = protocol || &quot;default-protocol&quot;;
+    this._socket = null;
+    this._readyState = null; // only applies to native WebSocket implementations
+    this._ioManager = null; // only applies to Socket.IO implementations
 
-        this.init(this);
+    this.init(this);
 
-    };
+  };
 
-    WSocketWrapper.prototype = JSUTILS.inherit(EventDispatcher.prototype);
-    WSocketWrapper.prototype.constructor = WSocketWrapper;
+  WSocketWrapper.prototype = JSUTILS.inherit(EventDispatcher.prototype);
+  WSocketWrapper.prototype.constructor = WSocketWrapper;
 
-    /**
-     * Initialize the websocket
-     * @private
-     * @method init
-     * @param {Object} self A reference to this websocket object.
-     */
-    WSocketWrapper.prototype.init = function (self) {
+  /**
+   * Initialize the websocket
+   * @private
+   * @method init
+   * @param {Object} self A reference to this websocket object.
+   */
+  WSocketWrapper.prototype.init = function(self) {
 
-        // if io (socket.io) is defined, assume that the node server is being used
-        if (typeof io !== &quot;undefined&quot;) {
-            self._socket = io.connect(&quot;http://&quot; + self._host + &quot;:&quot; + self._port);
+    // if io (socket.io) is defined, assume that the node server is being used
+    if (typeof io !== &quot;undefined&quot;) {
+      self._ioManager = io.Manager(&quot;http://&quot; + self._host + &quot;:&quot; + self._port,
+        {reconnection: false});
 
-            try {
-                /** @private */
-                self._socket.on(&#x27;connect&#x27;, function () {
-                    // prevent socket.io from automatically attempting to reconnect
-                    // when the server is quit
-                    self._socket.socket.options.reconnect = false;
+      self._socket = self._ioManager.socket(&#x27;/&#x27;);
 
-                    // set this for compatibility with native WebSocket
-                    self._readyState = READY_STATE.OPEN;
-                    
-                    self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
-                    /** @private */
-                    self._socket.on(&#x27;message&#x27;, function (msg) {
-                        self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg});
-                    });
-                });
-                
-            } catch (exception) {
-                console.log(&quot;Error &quot; + exception);
+      try {
+        /** @private */
+        self._socket.on(&#x27;connect&#x27;, function() {
+
+          // set this for compatibility with native WebSocket
+          self._readyState = READY_STATE.OPEN;
+
+          self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
+          /** @private */
+          self._socket.on(&#x27;message&#x27;, function(msg) {
+            var data;
+            if (typeof msg === &quot;string&quot;) {
+              data = msg;
+            } else {
+              // ArrayBuffer
+              data = msg.data;
             }
+            self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {
+              message: data
+            });
+          });
 
+          self._socket.on(&#x27;disconnect&#x27;, function () {
+            self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
+          });
+        });
+
+      } catch (exception) {
+        console.log(&quot;Error &quot; + exception);
+      }
+
+    } else {
+
+      try {
+
+        if (&quot;MozWebSocket&quot; in window) {
+          // MozWebSocket is no longer used in Firefox 11 and higher
+          self._socket = new MozWebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;, self._protocol);
+        } else if (&quot;WebSocket&quot; in window) {
+          // Safari doesn&#x27;t like protocol parameter
+          //self._socket = new WebSocket(&quot;ws://&quot;+self._host+&quot;:&quot;+self._port, self._protocol);
+          self._socket = new WebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;);
         } else {
-            
-            try {
-
-                if (&quot;MozWebSocket&quot; in window) {
-                    // MozWebSocket is no longer used in Firefox 11 and higher
-                    self._socket = new MozWebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;, self._protocol);
-                } else if (&quot;WebSocket&quot; in window) {
-                    // Safari doesn&#x27;t like protocol parameter
-                    //self._socket = new WebSocket(&quot;ws://&quot;+self._host+&quot;:&quot;+self._port, self._protocol);
-                    self._socket = new WebSocket(&quot;ws://&quot; + self._host + &quot;:&quot; + self._port + &#x27;/websocket&#x27;);
-                } else {
-                    console.log(&quot;Websockets not supported by this browser&quot;);
-                    throw new Error(&quot;Websockets not supported by this browser&quot;);
-                }
-                self._readyState = self._socket.readyState;
-
-                /** @private */
-                self._socket.onopen = function () {
-
-                    self._readyState = self._socket.readyState;
-                    self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
-
-                    /** @private */
-                    self._socket.onmessage = function (msg) {
-                        self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {message: msg.data});
-                    };
-                    /** @private */
-                    self._socket.onclose = function () {
-                        self._readyState = self._socket.readyState;
-                        self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
-                    };
-
-                };
-                
-            } catch (exception) {
-                console.log(&quot;Error &quot; + exception);
-            }
-                
+          throw new Error(&quot;Websockets not supported by this browser&quot;);
         }
+        self._readyState = self._socket.readyState;
 
-    };
+        /** @private */
+        self._socket.onopen = function() {
 
-    /**
-     * Send a message
-     * TO DO: support sending ArrayBuffers and Blobs
-     * For now, forward any calls to sendString
-     * @private
-     * @method send
-     * @param {String} message The message to send
-     */
-    WSocketWrapper.prototype.send = function (message) {
-        // to do: ensure socket is not null before trying to send
-        //this._socket.send();
-        this.sendString(message);
-    };
+          self._readyState = self._socket.readyState;
+          self.dispatchEvent(new WSocketEvent(WSocketEvent.CONNECTED));
 
-    /**
-     * Send a message
-     * @method sendString
-     * @param {String} message The message to send
-     */
-    WSocketWrapper.prototype.sendString = function (message) {
-        if (this.readyState === READY_STATE.OPEN) {
-            this._socket.send(message.toString());
-        }
-    };
+          /** @private */
+          self._socket.onmessage = function(msg) {
+            self.dispatchEvent(new WSocketEvent(WSocketEvent.MESSAGE), {
+              message: msg.data
+            });
+          };
+          /** @private */
+          self._socket.onclose = function() {
+            self._readyState = self._socket.readyState;
+            self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
+          };
 
-    /**
-     * [read-only] Wrapper for the readyState method of the native websocket implementation
-     * &lt;p&gt;CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3&lt;/p&gt;
-     * @property readyState
-     * @type String
-     */
-    Object.defineProperty(WSocketWrapper.prototype, &quot;readyState&quot;, {
-        get: function () {
-            return this._readyState;
-        }
-    });
+        };
+
+      } catch (exception) {
+        console.log(&quot;Error &quot; + exception);
+      }
+
+    }
+
+  };
+
+  /**
+   * Send a message
+   * TO DO: support sending ArrayBuffers and Blobs
+   * For now, forward any calls to sendString
+   * @private
+   * @method send
+   * @param {String} message The message to send
+   */
+  WSocketWrapper.prototype.send = function(message) {
+    // to do: ensure socket is not null before trying to send
+    //this._socket.send();
+    this.sendString(message);
+  };
+
+  /**
+   * Send a message
+   * @method sendString
+   * @param {String} message The message to send
+   */
+  WSocketWrapper.prototype.sendString = function(message) {
+    if (this.readyState === READY_STATE.OPEN) {
+      this._socket.send(message.toString());
+    }
+  };
+
+  /**
+   * [read-only] Wrapper for the readyState method of the native websocket implementation
+   * &lt;p&gt;CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3&lt;/p&gt;
+   * @property readyState
+   * @type String
+   */
+  Object.defineProperty(WSocketWrapper.prototype, &quot;readyState&quot;, {
+    get: function() {
+      return this._readyState;
+    }
+  });
 
 
-    // document events
+  // document events
 
-    /**
-     * The webSocketConnected event is dispatched when a connection with
-     * the websocket is established.
-     * @type BO.WebsocketEvent.CONNECTED
-     * @event webSocketConnected
-     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
-     */
+  /**
+   * The webSocketConnected event is dispatched when a connection with
+   * the websocket is established.
+   * @type BO.WebsocketEvent.CONNECTED
+   * @event webSocketConnected
+   * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+   */
 
-    /**
-     * The webSocketMessage event is dispatched when a websocket message is received.
-     * @type BO.WebsocketEvent.MESSAGE
-     * @event webSocketMessage
-     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
-     * @param {String} message The websocket data    
-     */
+  /**
+   * The webSocketMessage event is dispatched when a websocket message is received.
+   * @type BO.WebsocketEvent.MESSAGE
+   * @event webSocketMessage
+   * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+   * @param {String} message The websocket data
+   */
 
-    /**
-     * The webSocketClosed event is dispatched the websocket connection is closed.
-     * @type BO.WebsocketEvent.CLOSE
-     * @event webSocketClosed
-     * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object. 
-     */
+  /**
+   * The webSocketClosed event is dispatched the websocket connection is closed.
+   * @type BO.WebsocketEvent.CLOSE
+   * @event webSocketClosed
+   * @param {BO.WSocketWrapper} target A reference to the WSocketWrapper object.
+   */
 
-    return WSocketWrapper;
+  return WSocketWrapper;
 
 }());
+
     </pre>
 </div>
 

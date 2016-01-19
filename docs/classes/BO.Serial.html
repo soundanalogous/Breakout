@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>BO.Serial - Breakout</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="shortcut icon" type="image/png" href="../assets/favicon.png">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="header">
+        <a href="http://breakoutjs.com"><img id="logo" src="http://breakoutjs.com/wp-content/uploads/2012/02/header_logo.png"></a>
+        <div id="links">
+            <a class="header_links" href="http://breakoutjs.com/getting-started/">Getting Started</a>
+            <a class="header_links" href="http://breakoutjs.com/guides/">Guides</a>
+            <a class="header_links" href="http://breakoutjs.com/forum/breakout-forum/">Forum</a>
+            <a class="header_links" href="http://breakoutjs.com/download/">Download</a>
+        </div>
+    </div>
+    
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+    <h2 class="off-left">v0.3.2 APIs</h2>
+    <div id="api-tabview" class="tabview">
+        <ul class="tabs">
+            <li><a href="#api-classes">Classes</a></li>
+            <li><a href="#api-modules">Modules</a></li>
+        </ul>
+
+        <div id="api-tabview-filter">
+            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+        </div>
+
+        <div id="api-tabview-panel">
+            <ul id="api-classes" class="apis classes">
+            
+                <li><a href="../classes/BO.custom.ID12RFIDReader.html">BO.custom.ID12RFIDReader</a></li>
+            
+                <li><a href="../classes/BO.custom.RFIDEvent.html">BO.custom.RFIDEvent</a></li>
+            
+                <li><a href="../classes/BO.filters.Convolution.html">BO.filters.Convolution</a></li>
+            
+                <li><a href="../classes/BO.filters.FilterBase.html">BO.filters.FilterBase</a></li>
+            
+                <li><a href="../classes/BO.filters.Scaler.html">BO.filters.Scaler</a></li>
+            
+                <li><a href="../classes/BO.filters.TriggerPoint.html">BO.filters.TriggerPoint</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorBase.html">BO.generators.GeneratorBase</a></li>
+            
+                <li><a href="../classes/BO.generators.GeneratorEvent.html">BO.generators.GeneratorEvent</a></li>
+            
+                <li><a href="../classes/BO.generators.Oscillator.html">BO.generators.Oscillator</a></li>
+            
+                <li><a href="../classes/BO.I2CBase.html">BO.I2CBase</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerADXL345.html">BO.io.AccelerometerADXL345</a></li>
+            
+                <li><a href="../classes/BO.io.AccelerometerEvent.html">BO.io.AccelerometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.AnalogAccelerometer.html">BO.io.AnalogAccelerometer</a></li>
+            
+                <li><a href="../classes/BO.io.BiColorLED.html">BO.io.BiColorLED</a></li>
+            
+                <li><a href="../classes/BO.io.BlinkM.html">BO.io.BlinkM</a></li>
+            
+                <li><a href="../classes/BO.io.Button.html">BO.io.Button</a></li>
+            
+                <li><a href="../classes/BO.io.ButtonEvent.html">BO.io.ButtonEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassEvent.html">BO.io.CompassEvent</a></li>
+            
+                <li><a href="../classes/BO.io.CompassHMC6352.html">BO.io.CompassHMC6352</a></li>
+            
+                <li><a href="../classes/BO.io.DCMotor.html">BO.io.DCMotor</a></li>
+            
+                <li><a href="../classes/BO.io.GyroEvent.html">BO.io.GyroEvent</a></li>
+            
+                <li><a href="../classes/BO.io.GyroITG3200.html">BO.io.GyroITG3200</a></li>
+            
+                <li><a href="../classes/BO.io.LED.html">BO.io.LED</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerEvent.html">BO.io.MagnetometerEvent</a></li>
+            
+                <li><a href="../classes/BO.io.MagnetometerHMC5883.html">BO.io.MagnetometerHMC5883</a></li>
+            
+                <li><a href="../classes/BO.io.Potentiometer.html">BO.io.Potentiometer</a></li>
+            
+                <li><a href="../classes/BO.io.PotEvent.html">BO.io.PotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.RGBLED.html">BO.io.RGBLED</a></li>
+            
+                <li><a href="../classes/BO.io.Servo.html">BO.io.Servo</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPot.html">BO.io.SoftPot</a></li>
+            
+                <li><a href="../classes/BO.io.SoftPotEvent.html">BO.io.SoftPotEvent</a></li>
+            
+                <li><a href="../classes/BO.io.Stepper.html">BO.io.Stepper</a></li>
+            
+                <li><a href="../classes/BO.IOBoard.html">BO.IOBoard</a></li>
+            
+                <li><a href="../classes/BO.IOBoardEvent.html">BO.IOBoardEvent</a></li>
+            
+                <li><a href="../classes/BO.PhysicalInputBase.html">BO.PhysicalInputBase</a></li>
+            
+                <li><a href="../classes/BO.Pin.html">BO.Pin</a></li>
+            
+                <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
+            
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
+            
+                <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
+            
+                <li><a href="../classes/JSUTILS.Event.html">JSUTILS.Event</a></li>
+            
+                <li><a href="../classes/JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+            
+                <li><a href="../classes/JSUTILS.SignalScope.html">JSUTILS.SignalScope</a></li>
+            
+                <li><a href="../classes/JSUTILS.Timer.html">JSUTILS.Timer</a></li>
+            
+                <li><a href="../classes/JSUTILS.TimerEvent.html">JSUTILS.TimerEvent</a></li>
+            
+            </ul>
+
+            <ul id="api-modules" class="apis modules">
+            
+            </ul>
+        </div>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+        Show:
+        <label for="api-show-inherited">
+            <input type="checkbox" id="api-show-inherited" checked>
+            Inherited
+        </label>
+
+        <label for="api-show-protected">
+            <input type="checkbox" id="api-show-protected">
+            Protected
+        </label>
+
+        <label for="api-show-private">
+            <input type="checkbox" id="api-show-private">
+            Private
+        </label>
+        <label for="api-show-deprecated">
+            <input type="checkbox" id="api-show-deprecated">
+            Deprecated
+        </label>
+
+    </div>
+
+
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+                        <h1>BO.Serial Class</h1>
+<div class="box meta">
+    
+        <div class="uses">
+            Uses
+            <ul class="inline commas">
+                
+                    <li><a href="JSUTILS.EventDispatcher.html">JSUTILS.EventDispatcher</a></li>
+                
+            </ul>
+        </div>
+    
+
+    
+
+    
+        <div class="foundat">
+            Defined in: <a href="../files/src_core_Serial.js.html#l33"><code>src&#x2F;core&#x2F;Serial.js:33</code></a>
+        </div>
+    
+
+    
+
+    
+</div>
+
+
+
+<div class="box intro">
+    <p>Enables use of Hardware (UART) and Software serial ports on the board.</p>
+</div>
+
+
+    <div class="constructor">
+        <h2>Constructor</h2>
+        <div id="method_BO.Serial" class="method item">
+    <h3 class="name"><code>BO.Serial</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>opts</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l33"><code>src&#x2F;core&#x2F;Serial.js:33</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">opts</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Options:</p>
+
+<ul>
+<li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>
+<li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
+  SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>
+<li></strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>
+<li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>
+<li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>
+</ul>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+        <div class="example">
+            <h4>Example:</h4>
+
+            <div class="example-content">
+                <pre class="code prettyprint"><code>// Use a SoftwareSerial instance
+var serial = new BO.Serial({
+  board: arduino,
+  port: BO.Serial.SW_SERIAL0,
+  baud: 57600,
+  txPin: 10,
+  rxPin: 11
+});
+serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+  console.log(event.data);
+});
+serial.startReading();
+</code></pre><pre class="code prettyprint"><code>// Use a HardwareSerial instance (pins RX1, TX1 on Leonardo, Mega, Due, etc)
+var serial = new BO.Serial({
+  board: arduino,
+  port: BO.Serial.HW_SERIAL1,
+  baud: 57600
+});
+serial.addEventListener(BO.SerialEvent.DATA, function (event) {
+  console.log(event.data);
+});
+serial.startReading();
+</code></pre>
+            </div>
+        </div>
+    
+</div>
+
+    </div>
+
+
+<div id="classdocs" class="tabview">
+    <ul class="api-class-tabs">
+        <li class="api-class-tab index"><a href="#index">Index</a></li>
+
+        
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
+        
+            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+        
+        
+        
+    </ul>
+
+    <div>
+        <div id="index" class="api-class-tabpanel index">
+            <h2 class="off-left">Item Index</h2>
+
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_addEventListener">addEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_close">close</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_dispatchEvent">dispatchEvent</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_flush">flush</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_hasEventListener">hasEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_listen">listen</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method inherited">
+                                <a href="#method_removeEventListener">removeEventListener</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_startReading">startReading</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_stopReading">stopReading</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item method">
+                                <a href="#method_write">write</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+                <div class="index-section properties">
+                    <h3>Properties</h3>
+
+                    <ul class="index-list properties">
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL0">Serial.HW_SERIAL0</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL1">Serial.HW_SERIAL1</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL2">Serial.HW_SERIAL2</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.HW_SERIAL3">Serial.HW_SERIAL3</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL0">Serial.SW_SERIAL0</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL1">Serial.SW_SERIAL1</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL2">Serial.SW_SERIAL2</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property">
+                                <a href="#property_Serial.SW_SERIAL3">Serial.SW_SERIAL3</a>
+
+                                
+                                    <span class="flag static">static</span>
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+
+            
+
+            
+        </div>
+
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_addEventListener" class="method item inherited">
+    <h3 class="name"><code>addEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_addEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l37"><code>src&#x2F;utils&#x2F;EventDispatcher.js:37</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_close" class="method item">
+    <h3 class="name"><code>close</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l183"><code>src&#x2F;core&#x2F;Serial.js:183</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Close the serial port. A new instance must be created in order
+to reopen the port.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_dispatchEvent" class="method item inherited">
+    <h3 class="name"><code>dispatchEvent</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>optionalParams</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_dispatchEvent">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l78"><code>src&#x2F;utils&#x2F;EventDispatcher.js:78</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">Event</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The Event object.</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">optionalParams</code>
+                        <span class="type">Object</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>Optional parameters passed as an object.
+return {boolean} True if dispatch is successful, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_flush" class="method item">
+    <h3 class="name"><code>flush</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l192"><code>src&#x2F;core&#x2F;Serial.js:192</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>For HardwareSerial, waits for the transmission of outgoing serial data
+to complete.
+For SoftwareSerial, removes any buffered incoming serial data.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_hasEventListener" class="method item inherited">
+    <h3 class="name"><code>hasEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_hasEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l65"><code>src&#x2F;utils&#x2F;EventDispatcher.js:65</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type
+return {boolean} True is listener exists for this type, false if not.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_listen" class="method item">
+    <h3 class="name"><code>listen</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l202"><code>src&#x2F;core&#x2F;Serial.js:202</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>For SoftwareSerial only. Only a single SoftwareSerial instance can read data at a time.
+Call this method to set this port to be the reading port in the case there are multiple
+SoftwareSerial instances.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_removeEventListener" class="method item inherited">
+    <h3 class="name"><code>removeEventListener</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>type</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>listener</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                <p>Inherited from
+                <a href="../classes/JSUTILS.EventDispatcher.html#method_removeEventListener">JSUTILS.EventDispatcher</a>:
+            
+        
+        
+        <a href="../files/src_utils_EventDispatcher.js.html#l50"><code>src&#x2F;utils&#x2F;EventDispatcher.js:50</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">type</code>
+                        <span class="type">String</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The event type</p>
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">listener</code>
+                        <span class="type">Function</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to be called when the event
+is fired</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_startReading" class="method item">
+    <h3 class="name"><code>startReading</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>maxBytesToRead</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l157"><code>src&#x2F;core&#x2F;Serial.js:157</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Start reading the serial port.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">maxBytesToRead</code>
+                        <span class="type">Number</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>[optional] The number of bytes to read on each iteration
+of the main loop.</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_stopReading" class="method item">
+    <h3 class="name"><code>stopReading</code></h3>
+
+    
+        <span class="paren">()</span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l175"><code>src&#x2F;core&#x2F;Serial.js:175</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Stop reading the serial port.</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="method_write" class="method item">
+    <h3 class="name"><code>write</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>val</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l134"><code>src&#x2F;core&#x2F;Serial.js:134</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Write an array of data.</p>
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">val</code>
+                        <span class="type">Number | Array</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>A single byte or an array of bytes to write</p>
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+            <div id="properties" class="api-class-tabpanel">
+                <h2 class="off-left">Properties</h2>
+
+                
+                    <div id="property_Serial.HW_SERIAL0" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL0</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l251"><code>src&#x2F;core&#x2F;Serial.js:251</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Not currently used. Corresponds to the default Arduino Serial port</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.HW_SERIAL1" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL1</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l257"><code>src&#x2F;core&#x2F;Serial.js:257</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pins RX1 and TX1 on the board</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.HW_SERIAL2" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL2</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l263"><code>src&#x2F;core&#x2F;Serial.js:263</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pins RX2 and TX2 on the board</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.HW_SERIAL3" class="property item">
+    <h3 class="name"><code>Serial.HW_SERIAL3</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l269"><code>src&#x2F;core&#x2F;Serial.js:269</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Pins RX3 and TX3 on the board</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL0" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL0</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l276"><code>src&#x2F;core&#x2F;Serial.js:276</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL1" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL1</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l282"><code>src&#x2F;core&#x2F;Serial.js:282</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL2" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL2</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l288"><code>src&#x2F;core&#x2F;Serial.js:288</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property_Serial.SW_SERIAL3" class="property item">
+    <h3 class="name"><code>Serial.SW_SERIAL3</code></h3>
+    <span class="type">Unknown</span>
+
+    
+
+    
+
+    
+
+    
+        <span class="flag static">static</span>
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_core_Serial.js.html#l294"><code>src&#x2F;core&#x2F;Serial.js:294</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>One of four software serial instances</p>
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+            </div>
+        
+
+        
+
+        
+    </div>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

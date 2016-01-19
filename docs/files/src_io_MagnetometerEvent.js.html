@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -179,40 +183,40 @@
 
 JSUTILS.namespace(&#x27;BO.io.MagnetometerEvent&#x27;);
 
-BO.io.MagnetometerEvent = (function () {
+BO.io.MagnetometerEvent = (function() {
 
-    var MagnetometerEvent;
+  var MagnetometerEvent;
 
-    // dependencies
-    var Event = JSUTILS.Event;
+  // dependencies
+  var Event = JSUTILS.Event;
 
-    /**
-     * An Event object to be dispatched (fired) by a Magnetometer
-     * object.
-     * @class MagnetometerEvent
-     * @constructor
-     * @extends JSUTILS.Event
-     * @param {String} type The event type   
-     */
-    MagnetometerEvent = function (type) {
+  /**
+   * An Event object to be dispatched (fired) by a Magnetometer
+   * object.
+   * @class MagnetometerEvent
+   * @constructor
+   * @extends JSUTILS.Event
+   * @param {String} type The event type
+   */
+  MagnetometerEvent = function(type) {
 
-        Event.call(this, type);
+    Event.call(this, type);
 
-        this.name = &quot;MagnetometerEvent&quot;;
+    this.name = &quot;MagnetometerEvent&quot;;
 
-    };
+  };
 
-    /**
-     * @property MagnetometerEvent.UPDATE
-     * @static
-     */
-    MagnetometerEvent.UPDATE = &quot;update&quot;;
-    
+  /**
+   * @property MagnetometerEvent.UPDATE
+   * @static
+   */
+  MagnetometerEvent.UPDATE = &quot;update&quot;;
 
-    MagnetometerEvent.prototype = JSUTILS.inherit(Event.prototype);
-    MagnetometerEvent.prototype.constructor = MagnetometerEvent;
 
-    return MagnetometerEvent;
+  MagnetometerEvent.prototype = JSUTILS.inherit(Event.prototype);
+  MagnetometerEvent.prototype.constructor = MagnetometerEvent;
+
+  return MagnetometerEvent;
 
 }());
 

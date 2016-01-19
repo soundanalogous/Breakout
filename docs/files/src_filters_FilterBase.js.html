@@ -115,6 +115,10 @@
             
                 <li><a href="../classes/BO.PinEvent.html">BO.PinEvent</a></li>
             
+                <li><a href="../classes/BO.Serial.html">BO.Serial</a></li>
+            
+                <li><a href="../classes/BO.SerialEvent.html">BO.SerialEvent</a></li>
+            
                 <li><a href="../classes/BO.WSocketEvent.html">BO.WSocketEvent</a></li>
             
                 <li><a href="../classes/BO.WSocketWrapper.html">BO.WSocketWrapper</a></li>
@@ -185,38 +189,39 @@
 
 JSUTILS.namespace(&#x27;BO.filters.FilterBase&#x27;);
 
-BO.filters.FilterBase = (function () {
-    &quot;use strict&quot;;
+BO.filters.FilterBase = (function() {
+  &quot;use strict&quot;;
 
-    var FilterBase;
+  var FilterBase;
 
-    /**
-     * A base object to be extended by all Filter objects. This object
-     * should not be instantiated directly.
-     *
-     * @class FilterBase
-     * @constructor
-     */
-    FilterBase = function () {
-        throw new Error(&quot;Can&#x27;t instantiate abstract classes&quot;);
-    };
+  /**
+   * A base object to be extended by all Filter objects. This object
+   * should not be instantiated directly.
+   *
+   * @class FilterBase
+   * @constructor
+   */
+  FilterBase = function() {
+    throw new Error(&quot;Can&#x27;t instantiate abstract classes&quot;);
+  };
 
-    /**
-     * Process the value to be filtered and return the filtered result.
-     *
-     * @protected
-     * @method processSample
-     * @param {Number} val The input value to be filtered.
-     * @return {Number} The resulting value after applying the filter.
-     */
-    FilterBase.prototype.processSample = function (val) {
-        // to be implemented in sub class
-        throw new Error(&quot;Filter objects must implement the method processSample&quot;);
-    };
+  /**
+   * Process the value to be filtered and return the filtered result.
+   *
+   * @protected
+   * @method processSample
+   * @param {Number} val The input value to be filtered.
+   * @return {Number} The resulting value after applying the filter.
+   */
+  FilterBase.prototype.processSample = function(val) {
+    // to be implemented in sub class
+    throw new Error(&quot;Filter objects must implement the method processSample&quot;);
+  };
 
-    return FilterBase;
+  return FilterBase;
 
 }());
+
     </pre>
 </div>
 
