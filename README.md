@@ -54,7 +54,7 @@ See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/)
 
 #### Wire up your board for the hello world example
 
-Wire up a button, led and potentiometer to your I/O board as illustrated on page 3 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
+Wire up a button and led to your I/O board as illustrated on page 2 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
 
 #### Install required Arduino libraries
 
@@ -68,7 +68,7 @@ Wire up a button, led and potentiometer to your I/O board as illustrated on page
 3. Select the serial port for your board from the drop-down if it is not the current port displayed.
 4. If your firewall is enabled, make sure port 8887 is open (or enter a new port that is open).
 5. Click the Connect button. You should see the message "Server running on: [your server name]: 8887/" followed by "Connected to IOBoard on: [serial port name]".
-6. Open [http://localhost:8887/examples/hello_world.html](http://localhost:8887/examples/hello_world.html) in your favorite browser.
+6. Open [http://localhost:8887/examples/hello_world.html](http://localhost:8887/examples/hello_world.html) in your favorite browser. You should be able to control the LED and view the button state changes.
 7. Open [http://localhost:8887/examples/index.html](http://localhost:8887/examples/index.html) and try some of the other examples (unplug your board before wiring up other examples).
 
 **Schematics for the examples can be found here:** http://breakoutjs.com/examples/schematics.pdf
