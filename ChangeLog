@@ -1,3 +1,13 @@
+2016.01.18 Version 0.4.0
+* Now using ConfigurableFirmata instead of Firmata.
+* Updated breakout-server and moved to its own repo:
+  https://github.com/soundanalogous/breakout-server
+* Add support for Firmata Serial feature (see src/core/Serial.js)
+  see examples in Breakout/examples/serial/
+* Add INPUT_PULLUP pin mode
+* Add support for SET_DIGITAL_PIN_MODE
+* Tons of code formatting updates
+
 2014.08.13 Version 0.3.2
 * Update to latest version of AdvancedFirmata
 

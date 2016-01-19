@@ -90,7 +90,7 @@
       var msg = "hello!";
       var msgArray = [];
       for (var i = 0, len = msg.length; i < len; i++) {
-          msgArray.push(msg[i].charCodeAt(0));
+        msgArray.push(msg[i].charCodeAt(0));
       }
       serial.write(msgArray);
 
@@ -98,7 +98,7 @@
       serial.write(128);
 
       // write a message submitted from the form
-      $msgForm.on("submit", function (event) {
+      $msgForm.on("submit", function(event) {
         event.preventDefault();
         var msg = $msgInput.val();
         serial.write(msg);
@@ -117,7 +117,9 @@
 <body>
   <h2>Serial Write Example</h2>
   <form id="message">
-    <div><label for="serial-write">Write a message to the serial port</label></div>
+    <div>
+      <label for="serial-write">Write a message to the serial port</label>
+    </div>
     <input id="serial-write" type="text">
   </form>
 </body>

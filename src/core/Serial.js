@@ -74,8 +74,8 @@ BO.Serial = (function() {
    */
   Serial = function(opts) {
     if (typeof opts === "undefined" ||
-        typeof opts.board === "undefined" ||
-        typeof opts.port === "undefined") {
+      typeof opts.board === "undefined" ||
+      typeof opts.port === "undefined") {
       throw new Error("Serial options board and port must be defined.");
     }
 

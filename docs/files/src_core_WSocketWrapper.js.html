@@ -27,7 +27,7 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">v0.3.2 APIs</h2>
+    <h2 class="off-left">v0.4.0 APIs</h2>
     <div id="api-tabview" class="tabview">
         <ul class="tabs">
             <li><a href="#api-classes">Classes</a></li>
@@ -240,8 +240,9 @@ BO.WSocketWrapper = (function() {
 
     // if io (socket.io) is defined, assume that the node server is being used
     if (typeof io !== &quot;undefined&quot;) {
-      self._ioManager = io.Manager(&quot;http://&quot; + self._host + &quot;:&quot; + self._port,
-        {reconnection: false});
+      self._ioManager = io.Manager(&quot;http://&quot; + self._host + &quot;:&quot; + self._port, {
+        reconnection: false
+      });
 
       self._socket = self._ioManager.socket(&#x27;/&#x27;);
 
@@ -267,7 +268,7 @@ BO.WSocketWrapper = (function() {
             });
           });
 
-          self._socket.on(&#x27;disconnect&#x27;, function () {
+          self._socket.on(&#x27;disconnect&#x27;, function() {
             self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
           });
         });

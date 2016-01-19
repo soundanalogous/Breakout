@@ -62,8 +62,9 @@ BO.WSocketWrapper = (function() {
 
     // if io (socket.io) is defined, assume that the node server is being used
     if (typeof io !== "undefined") {
-      self._ioManager = io.Manager("http://" + self._host + ":" + self._port,
-        {reconnection: false});
+      self._ioManager = io.Manager("http://" + self._host + ":" + self._port, {
+        reconnection: false
+      });
 
       self._socket = self._ioManager.socket('/');
 
@@ -89,7 +90,7 @@ BO.WSocketWrapper = (function() {
             });
           });
 
-          self._socket.on('disconnect', function () {
+          self._socket.on('disconnect', function() {
             self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
           });
         });

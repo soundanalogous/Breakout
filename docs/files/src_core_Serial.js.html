@@ -27,7 +27,7 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">v0.3.2 APIs</h2>
+    <h2 class="off-left">v0.4.0 APIs</h2>
     <div id="api-tabview" class="tabview">
         <ul class="tabs">
             <li><a href="#api-classes">Classes</a></li>
@@ -219,7 +219,7 @@ BO.Serial = (function() {
    * &lt;li&gt;&lt;strong&gt;board&lt;/strong&gt; {IOBoard} A reference to the IOBoard instance.&lt;/li&gt;
    * &lt;li&gt;&lt;strong&gt;port&lt;/strong&gt; {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
    *   SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)&lt;/li&gt;
-   * &lt;li&gt;&lt;/strong&gt;baud&lt;/strong&gt; {Number} The baud rate of the serial port. Default = 57600.&lt;/li&gt;
+   * &lt;li&gt;&lt;strong&gt;baud&lt;/strong&gt; {Number} The baud rate of the serial port. Default = 57600.&lt;/li&gt;
    * &lt;li&gt;&lt;strong&gt;rxPin&lt;/strong&gt; {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance&lt;/li&gt;
    * &lt;li&gt;&lt;strong&gt;txPin&lt;/strong&gt; {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance&lt;/li&gt;
    * &lt;/ul&gt;
@@ -252,8 +252,8 @@ BO.Serial = (function() {
    */
   Serial = function(opts) {
     if (typeof opts === &quot;undefined&quot; ||
-        typeof opts.board === &quot;undefined&quot; ||
-        typeof opts.port === &quot;undefined&quot;) {
+      typeof opts.board === &quot;undefined&quot; ||
+      typeof opts.port === &quot;undefined&quot;) {
       throw new Error(&quot;Serial options board and port must be defined.&quot;);
     }
 

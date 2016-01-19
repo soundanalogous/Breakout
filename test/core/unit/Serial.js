@@ -35,15 +35,15 @@
         expect(Serial.prototype.constructor).to.equal(Serial);
       });
 
-      it("should throw an error if no options are passed", function () {
-        var fn = function () {
+      it("should throw an error if no options are passed", function() {
+        var fn = function() {
           var serial = new Serial();
         }
         expect(fn).to.throw(Error);
       });
 
-      it("should throw an error if port is not defined", function () {
-        var fn = function () {
+      it("should throw an error if port is not defined", function() {
+        var fn = function() {
           var serial = new Serial({
             board: board
           });
@@ -51,8 +51,8 @@
         expect(fn).to.throw(Error);
       });
 
-      it("should throw an error if SoftwareSerial RX and TX pins are not defined", function () {
-        var fn = function () {
+      it("should throw an error if SoftwareSerial RX and TX pins are not defined", function() {
+        var fn = function() {
           var serial = new Serial({
             board: board,
             port: Serial.SW_SERIAL0
@@ -61,7 +61,7 @@
         expect(fn).to.throw(Error);
       })
 
-      it("should default to 57600 baud", function () {
+      it("should default to 57600 baud", function() {
         var serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1
@@ -69,7 +69,7 @@
         expect(serial.baud).to.equal(57600);
       });
 
-      it("should set a baud rate of 9600", function () {
+      it("should set a baud rate of 9600", function() {
         var serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1,
@@ -78,7 +78,7 @@
         expect(serial.baud).to.equal(9600);
       });
 
-      it("should add event listener for SYSEX_MESSAGE", function () {
+      it("should add event listener for SYSEX_MESSAGE", function() {
         var listenerSpy = sinon.spy(board, "addEventListener");
         var serial = new Serial({
           board: board,
@@ -88,7 +88,7 @@
         listenerSpy.restore();
       });
 
-      it("should call board.sendSysex with expected data", function () {
+      it("should call board.sendSysex with expected data", function() {
         var sendSysexSpy = sinon.spy(board, "sendSysex");
         var serial = new Serial({
           board: board,
@@ -103,11 +103,11 @@
 
     });
 
-    describe("write", function () {
+    describe("write", function() {
       var serial;
       var sendSysexSpy;
 
-      beforeEach(function () {
+      beforeEach(function() {
         serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1
@@ -115,11 +115,11 @@
         sendSysexSpy = sinon.spy(board, "sendSysex");
       });
 
-      afterEach(function () {
+      afterEach(function() {
         sendSysexSpy.restore();
       })
 
-      it("should write a single byte to the Serial object", function () {
+      it("should write a single byte to the Serial object", function() {
         serial.write(213);
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -129,7 +129,7 @@
         expect(spyCall.args[1][2]).to.equal((213 >> 7) & 0x007F);
       });
 
-      it("should write an array of bytes to the Serial object", function () {
+      it("should write an array of bytes to the Serial object", function() {
         serial.write([213, 22, 187]);
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -141,11 +141,11 @@
 
     });
 
-    describe("startReading", function () {
+    describe("startReading", function() {
       var serial;
       var sendSysexSpy;
 
-      beforeEach(function () {
+      beforeEach(function() {
         serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1
@@ -153,11 +153,11 @@
         sendSysexSpy = sinon.spy(board, "sendSysex");
       });
 
-      afterEach(function () {
+      afterEach(function() {
         sendSysexSpy.restore();
       })
 
-      it("should send a request to start continuous reading", function () {
+      it("should send a request to start continuous reading", function() {
         serial.startReading();
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -168,7 +168,7 @@
         expect(spyCall.args[1][2]).to.equal(0);
       });
 
-      it("should send a request to start continuous reading with a max bytes limit", function () {
+      it("should send a request to start continuous reading with a max bytes limit", function() {
         serial.startReading(4);
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -181,11 +181,11 @@
 
     });
 
-    describe("stopReading", function () {
+    describe("stopReading", function() {
       var serial;
       var sendSysexSpy;
 
-      beforeEach(function () {
+      beforeEach(function() {
         serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1
@@ -193,11 +193,11 @@
         sendSysexSpy = sinon.spy(board, "sendSysex");
       });
 
-      afterEach(function () {
+      afterEach(function() {
         sendSysexSpy.restore();
       })
 
-      it("should send a request to stop continuous reading", function () {
+      it("should send a request to stop continuous reading", function() {
         serial.stopReading();
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -209,11 +209,11 @@
 
     });
 
-    describe("close", function () {
+    describe("close", function() {
       var serial;
       var sendSysexSpy;
 
-      beforeEach(function () {
+      beforeEach(function() {
         serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1
@@ -221,11 +221,11 @@
         sendSysexSpy = sinon.spy(board, "sendSysex");
       });
 
-      afterEach(function () {
+      afterEach(function() {
         sendSysexSpy.restore();
       })
 
-      it("should send a request to close the serial port", function () {
+      it("should send a request to close the serial port", function() {
         serial.close();
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -235,11 +235,11 @@
 
     });
 
-    describe("flush", function () {
+    describe("flush", function() {
       var serial;
       var sendSysexSpy;
 
-      beforeEach(function () {
+      beforeEach(function() {
         serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1
@@ -247,11 +247,11 @@
         sendSysexSpy = sinon.spy(board, "sendSysex");
       });
 
-      afterEach(function () {
+      afterEach(function() {
         sendSysexSpy.restore();
       })
 
-      it("should send a request to flush the serial port", function () {
+      it("should send a request to flush the serial port", function() {
         serial.flush();
         var spyCall = sendSysexSpy.getCall(0);
         expect(sendSysexSpy.calledOnce).to.equal(true);
@@ -261,9 +261,9 @@
 
     });
 
-    describe("listen", function () {
+    describe("listen", function() {
 
-      it("should send a request to listen to a software serial port", function () {
+      it("should send a request to listen to a software serial port", function() {
         serial = new Serial({
           board: board,
           port: Serial.SW_SERIAL0,
@@ -280,7 +280,7 @@
         sendSysexSpy.restore();
       });
 
-      it("should not send a listen request to a hardware serial port", function () {
+      it("should not send a listen request to a hardware serial port", function() {
         serial = new Serial({
           board: board,
           port: Serial.HW_SERIAL1

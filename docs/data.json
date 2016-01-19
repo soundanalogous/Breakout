@@ -2,7 +2,7 @@
     "project": {
         "name": "Breakout",
         "description": "breakoutjs.com",
-        "version": "0.3.2"
+        "version": "0.4.0"
     },
     "files": {
         "src/core/I2CBase.js": {
@@ -631,7 +631,7 @@
             "params": [
                 {
                     "name": "opts",
-                    "description": "Options:\n<ul>\n<li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>\n<li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,\n  SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>\n<li></strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>\n<li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>\n<li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>\n</ul>",
+                    "description": "Options:\n<ul>\n<li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>\n<li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,\n  SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>\n<li><strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>\n<li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>\n<li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>\n</ul>",
                     "type": "Object"
                 }
             ],
@@ -4440,7 +4440,7 @@
         {
             "file": "src/core/WSocketEvent.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.WSocketEvent",
             "namespace": "BO"
         },
@@ -4498,37 +4498,37 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 71,
+            "line": 72,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 78,
+            "line": 79,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 117,
+            "line": 118,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 123,
+            "line": 124,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 129,
+            "line": 130,
             "class": "BO.WSocketWrapper",
             "namespace": "BO"
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 145,
+            "line": 146,
             "description": "Send a message\nTO DO: support sending ArrayBuffers and Blobs\nFor now, forward any calls to sendString",
             "access": "private",
             "tagname": "",
@@ -4546,7 +4546,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 159,
+            "line": 160,
             "description": "Send a message",
             "itemtype": "method",
             "name": "sendString",
@@ -4562,7 +4562,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 170,
+            "line": 171,
             "description": "[read-only] Wrapper for the readyState method of the native websocket implementation\n<p>CONNECTING = 0, OPEN = 1, CLOSING = 2, CLOSED = 3</p>",
             "itemtype": "property",
             "name": "readyState",
@@ -4572,7 +4572,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 185,
+            "line": 186,
             "description": "The webSocketConnected event is dispatched when a connection with\nthe websocket is established.",
             "type": "BO.WebsocketEvent.CONNECTED",
             "itemtype": "event",
@@ -4589,7 +4589,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 193,
+            "line": 194,
             "description": "The webSocketMessage event is dispatched when a websocket message is received.",
             "type": "BO.WebsocketEvent.MESSAGE",
             "itemtype": "event",
@@ -4611,7 +4611,7 @@
         },
         {
             "file": "src/core/WSocketWrapper.js",
-            "line": 201,
+            "line": 202,
             "description": "The webSocketClosed event is dispatched the websocket connection is closed.",
             "type": "BO.WebsocketEvent.CLOSE",
             "itemtype": "event",
@@ -4629,14 +4629,14 @@
         {
             "file": "src/core/core.js",
             "line": 1,
-            "description": "Copyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "description": "Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "class": "BO.custom.ID12RFIDReader",
             "namespace": "BO"
         },
         {
             "file": "src/core/core.js",
             "line": 7,
-            "version": "0.3.2\n\n<p>Namespace for Breakout objects.</p>\n\n<p>You can use the shorthand \"BO\" instead of \"BREAKOUT\".</p>",
+            "version": "0.4.0\n\n<p>Namespace for Breakout objects.</p>\n\n<p>You can use the shorthand \"BO\" instead of \"BREAKOUT\".</p>",
             "class": "BO.custom.ID12RFIDReader",
             "namespace": "BO"
         },
@@ -8593,7 +8593,7 @@
             "line": " src/core/SerialEvent.js:1"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2014 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/WSocketEvent.js:1"
         },
         {
@@ -8602,26 +8602,26 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:71"
+            "line": " src/core/WSocketWrapper.js:72"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:78"
+            "line": " src/core/WSocketWrapper.js:79"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:117"
+            "line": " src/core/WSocketWrapper.js:118"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:123"
+            "line": " src/core/WSocketWrapper.js:124"
         },
         {
             "message": "Missing item type",
-            "line": " src/core/WSocketWrapper.js:129"
+            "line": " src/core/WSocketWrapper.js:130"
         },
         {
-            "message": "Missing item type\nCopyright (c) 2011-2015 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
+            "message": "Missing item type\nCopyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com>\nReleased under the MIT license. See LICENSE file for details.",
             "line": " src/core/core.js:1"
         },
         {

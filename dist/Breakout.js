@@ -1,12 +1,12 @@
 /*!
- * Breakout v0.3.2 - 2016-01-18
+ * Breakout v0.4.0 - 2016-01-18
 
  * Copyright (c) 2011-2016 Jeff Hoefs <soundanalogous@gmail.com> 
  * Released under the MIT license. See LICENSE file for details.
  * http://breakoutjs.com
  */
 /**
- * @version 0.3.2
+ * @version 0.4.0
  *
  * <p>Namespace for Breakout objects.</p>
  *
@@ -19,7 +19,7 @@ var BO = BO || {};
 // allow either namespace BO or BREAKOUT
 var BREAKOUT = BREAKOUT || BO;
 
-BREAKOUT.VERSION = '0.3.2';
+BREAKOUT.VERSION = '0.4.0';
 
 /**
  * The BO.enableDebugging flag can be set to true in an application
@@ -897,8 +897,9 @@ BO.WSocketWrapper = (function() {
 
     // if io (socket.io) is defined, assume that the node server is being used
     if (typeof io !== "undefined") {
-      self._ioManager = io.Manager("http://" + self._host + ":" + self._port,
-        {reconnection: false});
+      self._ioManager = io.Manager("http://" + self._host + ":" + self._port, {
+        reconnection: false
+      });
 
       self._socket = self._ioManager.socket('/');
 
@@ -924,7 +925,7 @@ BO.WSocketWrapper = (function() {
             });
           });
 
-          self._socket.on('disconnect', function () {
+          self._socket.on('disconnect', function() {
             self.dispatchEvent(new WSocketEvent(WSocketEvent.CLOSE));
           });
         });
@@ -2779,7 +2780,7 @@ BO.Serial = (function() {
    * <li><strong>board</strong> {IOBoard} A reference to the IOBoard instance.</li>
    * <li><strong>port</strong> {Number} The serial port to use (HW_SERIAL1, HW_SERIAL2, HW_SERIAL3, SW_SERIAL0,
    *   SW_SERIAL1, SW_SERIAL2, SW_SERIAL3)</li>
-   * <li></strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>
+   * <li><strong>baud</strong> {Number} The baud rate of the serial port. Default = 57600.</li>
    * <li><strong>rxPin</strong> {Number} [SoftwareSerial only] The RX pin of the SoftwareSerial instance</li>
    * <li><strong>txPin</strong> {Number} [SoftwareSerial only] The TX pin of the SoftwareSerial instance</li>
    * </ul>
@@ -2812,8 +2813,8 @@ BO.Serial = (function() {
    */
   Serial = function(opts) {
     if (typeof opts === "undefined" ||
-        typeof opts.board === "undefined" ||
-        typeof opts.port === "undefined") {
+      typeof opts.board === "undefined" ||
+      typeof opts.port === "undefined") {
       throw new Error("Serial options board and port must be defined.");
     }
 
