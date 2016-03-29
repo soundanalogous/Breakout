@@ -88,11 +88,7 @@
 
       // write a single message to the serial port
       var msg = "hello!";
-      var msgArray = [];
-      for (var i = 0, len = msg.length; i < len; i++) {
-        msgArray.push(msg[i].charCodeAt(0));
-      }
-      serial.write(msgArray);
+      serial.write(createCharArray(msg));
 
       // write a single byte to the serial port
       serial.write(128);
@@ -101,12 +97,20 @@
       $msgForm.on("submit", function(event) {
         event.preventDefault();
         var msg = $msgInput.val();
-        serial.write(msg);
+        serial.write(createCharArray(msg));
 
         // clear the form input
         $msgInput.val("");
       });
 
+    }
+
+    function createCharArray(msg) {
+      msgArray = [];
+      for (var i = 0, len = msg.length; i < len; i++) {
+        msgArray.push(msg[i].charCodeAt(0));
+      }
+      return msgArray;
     }
 
   });
