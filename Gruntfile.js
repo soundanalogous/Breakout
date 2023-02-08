@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         version: '<%= pkg.version %>',
         options: {
           paths: 'src',
-          outdir: 'docs',
+          outdir: 'api-docs',
           themedir: 'build/yuidoc_theme'
         }
       }
@@ -234,7 +234,7 @@ module.exports = function(grunt) {
           'rm dist/*.zip',
           'mkdir -p tmp/Breakout',
           'cp -r custom_examples tmp/Breakout',
-          'cp -r docs tmp/Breakout',
+          'cp -r api-docs tmp/Breakout',
           'cp -r examples tmp/Breakout',
           'cp -r firmware tmp/Breakout',
           'cp -r server tmp/Breakout',
