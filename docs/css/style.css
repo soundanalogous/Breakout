@@ -1,0 +1,500 @@
+/*
+Theme Name: Clean Home
+Theme URI: http://midmodesign.com/news/general/our-special-wordpress-theme/
+Description: A clean looking, minimal design, offering two widgets areas and four color schemes. This theme also features custom background and header functionality. With a traditional look, yet a modern finish, plus several customizations options Clean Home comes as a flexible option for your site.
+Version: 1.2.0-wpcom
+Author: Mid Mo Design
+Author URI: http://midmodesign.com/
+Tags: white, red, black, blue, yellow, tan, light, dark, fixed-width, two-columns, right-sidebar, custom-background, custom-header, custom-menu, theme-options, sticky-post, translation-ready, rtl-language-support, blog, design, journal, professional, seasonal, bright, clean, colorful, earthy, elegant, generic, geometric, minimal, modern, simple, traditional
+
+	The CSS, XHTML and design is released under the GPL.
+
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, sub, sup, tt, var, ol, ul, li,
+fieldset, form, label, legend {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+}
+body {
+	line-height: 1;
+	color: black;
+	background: transparent;
+}
+ol, ul {
+	list-style: none;
+}
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+	font-weight: normal;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+
+/* Structure */
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: 1.7em;
+}
+hr {
+	margin-top: 25px;
+	border: 0;
+	border-top: 1px dotted #ccc;
+	width: 650px;
+	color: #fff;
+	clear: both;
+}
+hr.guides {
+	border: 0;
+	border-top: 1px dotted #fff;
+	width: 600px;
+}
+#wrapper {
+	width: 670px;
+	margin: 30px auto 140px;
+	padding: 0px 30px 0;
+	background: #fff;
+	background: rgba(255,255,255,0.88);
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+.header {
+	float: left;
+	width: 670px;
+	border-bottom: 1px dotted #ccc;
+	margin: 0;
+}
+#imglogo {
+	float: left;
+	padding: 0px 0px 10px 0px
+}
+#logo {
+	float: left;
+	width: auto;
+	padding: 0px 0px 0px 0px;
+}
+#logo a {
+	color: #FF6623;
+	font-size: 60px;
+	font-weight: 600;
+	text-decoration: none;
+	border-bottom: none;
+	letter-spacing: -2px;
+	text-rendering: optimizeLegibility;
+	display: none;
+}
+#logo h2 {
+	font-size: 18px;
+	font-weight: 200;
+	padding: 12px 4px 0 0;
+	display: none;
+}
+#header-image {
+	clear: both;
+	border-top: 6px solid #333;
+	margin-bottom: 10px;
+}
+#header-image a {
+	border: none;
+}
+#blurb em {
+	font-style: italic;
+}
+
+.example {
+	border: 1px dotted #ccc;
+}
+
+code {
+	/*color: #00AEFF*/
+	font-size: 12px;
+}
+
+.code_wrapper {
+	padding: 5px;
+	border: 1px solid #ccc;
+	background: #F7F7F7;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+/* Links */
+
+.header a,
+#blurb a,
+.content a,
+#sidebar a,
+#footer a {
+	border-bottom: 1px dotted #000;
+	text-decoration: none;
+	color: #000;
+	font-weight: 600;
+}
+.header a:hover,
+#blurb a:hover,
+#sidebar a:hover,
+#footer a:hover,
+.content a:hover {
+	color: #FF6623;
+	border-bottom: 1px dotted #FF6623;
+}
+#sidebar a:hover {
+	background-color: #f7f7f7;
+	background-color: rgba(255,255,255,0.5);
+}
+
+
+/* Menu */
+
+#nav {
+	float: right;
+	width: auto;
+	padding: 0px 0 0;
+}
+#nav ul {
+	height: 50px;
+	margin-bottom: 2px;
+}
+#nav li {
+	text-align: center;
+	float: left;
+	display: inline;
+	width: auto;
+}
+#nav li a {
+	font-size: 16px;
+	font-weight: 400;
+	display: block;
+	padding: 15px;
+	border-bottom: none;
+}
+#nav li a:hover {
+	/*background-color: #f7f7f7;*/
+	background-color: #FFFFFF;
+	border-bottom: none;
+}
+#nav li {
+	position: relative;
+}
+#nav ul ul {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	z-index: 99999;
+	float: none;
+	height: auto;
+	width: 150px;
+	-webkit-box-shadow: -1px 1px 3px rgba(0,0,0,0.2);
+	-moz-box-shadow: -1px 1px 3px rgba(0,0,0,0.2);
+	box-shadow: -1px 1px 3px rgba(0,0,0,0.2);
+}
+#nav ul ul a {
+	width: 120px;
+	background: #efefef;
+	font-size: 15px;
+	text-align: right;
+	padding: 10px 15px;
+}
+#nav ul ul ul {
+	right: 100%;
+	top: 0;
+}
+#nav ul li:hover > ul {
+	display: block;
+}
+#nav ul li.current_page_item > a,
+#nav ul li.current_page_parent > a,
+#nav ul li.current_page_ancestor > a,
+#nav ul li.current-cat > a,
+#nav ul li.current-menu-ancestor > a,
+#nav ul li.current-menu-item > a {
+	/*background: #f6f6f6;*/
+	background: #FFFFFF;
+	color: #bbb;
+}
+
+
+/* Content */
+
+#blurb {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	height: auto;
+	border-bottom: 1px dotted #ccc;
+	width: 100%;
+	float: left;
+	padding: 35px 0;
+	font-size: 32px;
+	font-weight: 400;
+	line-height: 120%;
+}
+.content {
+	width: 100%;
+	padding: 0 0 30px 0;
+	min-height: 420px;
+	overflow: hidden;
+}
+.hentry {
+	padding: 0 30px 0 0;
+}
+.hentry p {
+	margin: 14px 0 14px 0;
+}
+.hentry em {
+	font-style: italic;
+}
+.hentry h2 {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	margin: 25px 0 10px 0;
+	font-weight: normal;
+}
+.hentry h1,
+.hentry h1 a,
+div.attachment h1,
+div.attachment h1 a {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 28px;
+	margin: 30px 0 10px 0;
+	font-weight: normal;
+	line-height: 32px;
+}
+.hentry h3,
+.hentry h4 {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 20px;
+	margin: 15px 0 10px 0;
+	font-weight: normal;
+}
+.hentry h4 {
+	font-size: 18px;
+}
+.hentry .indent {
+	padding-left: 10px;
+}
+.hentry .indent p {
+	padding-left: 10px;
+}
+.hentry small {
+	font-size: 11px;
+}
+.hentry small a {
+	font-weight: normal;
+}
+.hentry .alignright,
+.navigation .alignright {
+	float: right;
+	margin-left: 10px;
+}
+.navigation .alignright {
+	margin-right: 10px;
+}
+.hentry .alignleft,
+.navigation .alignleft {
+	float: left;
+	margin-right: 10px;
+}
+.hentry .aligncenter {
+	margin: 0 auto;
+	display: block;
+}
+.hentry abbr {
+	font-weight: normal
+}
+.hentry ul {
+	list-style: circle;
+	margin: 0 0 0 25px;
+}
+.hentry ol {
+	list-style: decimal;
+	margin: 0 0 0 30px;
+}
+.hentry .wp-caption {
+	background: #f7f7f7;
+	border: 1px solid #ddd;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align: center;
+	padding: 5px 5px 0;
+}
+.hentry .wp-caption-text {
+	margin: 0;
+	font-size: smaller;
+}
+.hentry .wp-caption a,
+.hentry .wp-caption a:hover {
+	border-bottom: 0;
+}
+.hentry blockquote,
+.comment blockquote {
+	color: #777;
+	border-left: 5px solid #ccc;
+	margin: 15px 30px 0 10px;
+	padding-left: 20px;
+}
+.hentry pre {
+	font-family: Courier;
+	font-size: 12px;
+	/*letter-spacing: -1px;*/
+	/*margin: 14px 0 14px 0;*/
+}
+.hentry .message ul {
+	margin: 12px 0 0;
+}
+.hentry .message {
+	display: none;
+	background: #0f67a1;
+	margin-top: 10px;
+	padding: 20px;
+	color: #fff;
+}
+.sticky .hentry-date {
+	display: none;
+}
+.sticky hr {
+	border-top: 12px solid #a0daf5;
+}
+.hentry table {
+	margin: 10px 0;
+	width: 100%;
+}
+.hentry th {
+	border-bottom: 2px solid rgba(0,0,0,0.5);
+	font-weight: bold;
+	text-align: left;
+}
+.hentry th,
+.hentry td {
+	padding: 5px 10px;
+	vertical-align: top;
+}
+.hentry table img {
+	margin: 0;
+	padding: 0;
+	border-width: 1px;
+}
+.hentry td {
+	background: #fafafa;
+	border-bottom: 1px solid #dadada;
+}
+.hentry tr:nth-child(2n+1) td {
+	background: #eee;
+}
+.hentry tr:hover td {
+	background: #ddd;
+}
+body.single .navigation {
+	border-top: 1px dotted #ccc;
+	margin: 30px 30px 0;
+	padding-top: 10px;
+}
+body.single .nav-above {
+	border-top: none;
+	margin: 5px 10px 60px;
+	color: #666;
+}
+body.single .nav-above a {
+	color: #666;
+	border-color: #666;
+}
+.hentry .hentry-meta {
+	color: #666;
+}
+.hentry .hentry-meta a {
+	color: #555;
+}
+.hentry .hentry-meta a:hover {
+	color: #000;
+	border-bottom: 1px solid;
+}
+table th,
+table td {
+	padding: 3px 5px;
+}
+.gallery-caption {
+	color: #888;
+	font-size: 12px;
+	margin: 0 0 12px;
+}
+.hentry img,
+body.attachment .navigation img {
+	margin: 0px 0px 5px;
+}
+.hentry img.wp-smiley {
+	background: transparent;
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+.hentry .wp-caption img {
+	border-width: 1px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	padding: 1px;
+	margin: 0;
+	color: #666;
+}
+.gallery a,
+.gallery a:hover {
+	border: none;
+}
+.gallery a:hover img,
+body.attachment .navigation a:hover img {
+	background: #333;
+	border-color: #222 !important;
+}
+
+
+/* Attachments */
+
+body.attachment .content {
+	width: 100%;
+	border-right: none;
+}
+body.attachment .attachment img {
+	margin: 20px auto 0;
+	display: block;
+	border: none;
+	border-top: 6px solid #222;
+	padding: 0;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	border-radius: 0px;
+	background: transparent;
+}
+body.attachment #wrapper .attachment small + a {
+	border-bottom: none;
+}
+body.attachment .navigation {
+	width: 620px;
+	margin: 0 auto 20px;
+	border: none;
+	overflow: hidden;
+}
+body.attachment .navigation a {
+	border: none;
+}

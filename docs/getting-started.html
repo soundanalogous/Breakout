@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="Breakout is a javascript prototyping tool that provides interfaces to sensors and actuators from the browser via an Arduino-compatible I/O board.">
+  <title>Getting Started</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+</head>
+
+<body class="home page-template-default page page-id-5 custom-background">
+  <div id="wrapper">
+
+    <div class="header">
+      <a href="index.html"><img id="imglogo"
+        src="images/header_logo.png" alt="logo" /></a>
+      <div id="logo">
+        <h1><a href="index.html">Breakout</a></h1>
+        <h2></h2>
+      </div>
+
+      <div id="nav">
+        <ul id="menu-breakout-menu" class="menu">
+          <li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-365"><a
+              href="getting-started.html">Getting Started</a></li>
+          <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a
+              href="guides.html">Guides</a></li>
+          <li id="menu-item-111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-111"><a
+              href="api-docs/index.html">Docs</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="content">
+      <div class="post-28 page type-page status-publish hentry" id="post-28">
+        <h1>Getting Started</h1>
+        <small class="post-meta"></small>
+        <p>To get started, you&#8217;ll need to download the Breakout software, make sure you have the Arduino
+          application installed and a <a href="http://breakoutjs.com/compatible-boards/">compatible I/O board</a> along
+          with a button, LED, a couple of resistors and a <a title="breadboard"
+            href="http://en.wikipedia.org/wiki/Breadboard">breadboard</a>.</p>
+        <h2>Requirements</h2>
+        <p><a title="Requirements" href="http://breakoutjs.com/requirements/">View system and browser requirements</a>
+        </p>
+        <h2>Download and Install Breakout</h2>
+        <ol>
+          <li>Download and unzip the <a title="download breakout" href="http://breakoutjs.com/download/"
+              target="_blank">latest Breakout package</a> or clone the <a title="breakout github"
+              href="https://github.com/soundanalogous/Breakout" target="_blank">github</a> repository</li>
+          <li>See the <a title="installation" href="http://breakoutjs.com/?page_id=136#installation">Installation</a>
+            section of the Using Breakout Server guide.</li>
+        </ol>
+        <h2>Upload BreakoutFirmata to your I/O board</h2>
+        <p>This section assumes you are familiar with the Arduino application and the process of uploading new programs
+          (&#8216;sketches&#8217;) to the I/O board. If you are new to Arduino, please first see the Getting Started
+          section for your platform (Mac, Windows or Linux) on the <a title="Arduino"
+            href="http://arduino.cc/en/Guide/HomePage">Arduino</a> website.</p>
+        <ol>
+          <li>Install the <a href="https://github.com/firmata/ConfigurableFirmata">ConfigurableFirmata</a> library in
+            you Arduino sketchbook libraries folder. The easiest way to install it if you are using Arduino version
+            1.6.4 or higher is to use the Arduino Library manager (in the Arduino IDE, navigate to Sketch &gt; Include
+            Library &gt; Manage Libraries, then search for &#8220;ConfigurableFirmata&#8221; and click on Install after
+            tapping on the ConfigurableFirmata item in the filtered results. If you have an older Arduino IDE, see the
+            installation instructions in the ConfigurableFirmata <a
+              href="https://github.com/firmata/ConfigurableFirmata#installation">README</a> file.</li>
+          <li>Navigate to Breakout/firmware/BreakoutFirmata/.</li>
+          <li>Open BreakoutFirmata.ino in <a title="Arduino" href="http://arduino.cc/en/Main/Software">Arduino 1.0</a>
+            or higher (Preferably Arduino version 1.6.4 or higher).</li>
+          <li>Compile and upload BreakoutFirmata to your I/O board (make sure your particular I/O board is selected
+            under Tools -&gt; Board).</li>
+        </ol>
+        <p><em>BreakoutFirmata is a program that allows a client application running on a computer to communicate with
+            the I/O board, and is just one application of the Firmata protocol. See <a title="firmata.org"
+              href="http://firmata.org">firmata.org</a> for a complete overview.</em></p>
+        <h2>Wire a button and LED to your I/O board</h2>
+        <p>Open Breakout/examples/<a title="schematics"
+            href="http://breakoutjs.com/examples/schematics.pdf">schematics.pdf</a> and wire up your components
+          according to wiring diagram on page 2. If you have no idea what the diagram means, read through the lessons in
+          this <a title="excellent tutorial by ladyada" href="http://www.ladyada.net/learn/arduino/index.html">tutorial
+            by ladyada.</a>.</p>
+        <h2>Run Breakout Server</h2>
+        <p>Assuming you performed the steps in the Download and Install Breakout section above, you can now double-click
+          on the Breakout Server application (you&#8217;ll find it in Breakout/server/) for your platform to launch it
+          (Linux users need to launch the jar file from the command line unless you set up a custom launcher).</p>
+        <h4>When you launch the server you should see the following:</h4>
+        <h2><a href="http://breakoutjs.com/wp-content/uploads/2012/11/status_panel.png"><img decoding="async"
+              class="alignleft size-full wp-image-140" title="status_panel"
+              src="http://breakoutjs.com/wp-content/uploads/2012/11/status_panel.png" alt="status panel" width="480"
+              height="360" /></a></h2>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <ol>
+          <li>Select the serial port your I/O board is connected to (if it is not already displayed in the drop down).
+          </li>
+          <li>If you have a firewall enabled for your computer or network, make sure port 8887 is open, or enter a new
+            port number that is open (be sure to hit the enter key upon typing in a new port number).</li>
+          <li>Click the Connect button.</li>
+        </ol>
+        <h4>You should now see this screen:</h4>
+        <p><a href="http://breakoutjs.com/wp-content/uploads/2012/11/start_single.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-142" title="start_single"
+              src="http://breakoutjs.com/wp-content/uploads/2012/11/start_single.png" alt="connection" width="480"
+              height="360" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>The name of your computer and the network port you are connected to should be printed along with the serial
+          port your I/O board is connected to (on windows this will say something like &#8220;COM3&#8221;).</p>
+        <p>If you encounter any issues, refer to the <a title="troubleshooting"
+            href="http://breakoutjs.com/?page_id=136#troubleshooting">Troubleshooting</a> section of the Using Breakout
+          Server guide. If you are still unable to get Breakout Server or the following example to work, please post the
+          issue in the <a title="Beta v0.1.0 Issues Forum"
+            href="http://breakoutjs.com/?forum=beta-breakout-server-issues">Breakout Issues forum</a>.</p>
+        <h2>Running the Hello World example</h2>
+        <p>Assuming you were able to launch the server and connect without any issues, you should now be ready to open
+          an example.</p>
+        <ol>
+          <li>Open Chrome, Firefox or Safari and enter the following url:
+            http://localhost:8887/examples/getting_started/hello_world.html</li>
+          <li>You should be able to click the LED On an LED Off buttons to turn the LED wired to pin 11 on or off. If
+            you press the button wired to pin 2 of the Arduino board, the button state (pressed or released) should be
+            displayed on the screen.</li>
+          <li>If this is not working, double (or triple) check your wiring. You may have the Led backwards for example.
+          </li>
+        </ol>
+        <p><em>Note that if you changed the network port in the server you will also need to change the network port in
+            the url above as well as in the hello_world.html file on line 71.</em></p>
+        <h2>Running the Hello World example from the Web</h2>
+        <p>You can also load files from external web servers (such as the one hosting this post). In this case Breakout
+          Server is simply bridging the serial data from the I/O board with the websocket connection to the page you
+          have loaded from an external server. Note that the example below will only work if you can connect to network
+          port 8887 (because this is the port number set in the file you are loading).</p>
+        <ol>
+          <li>With Breakout Server connected, refresh this page. Use the buttons to turn the LED on or off. Pressing the
+            physical button on the breadboard will display the button state (pressed or released) on the screen below.
+          </li>
+        </ol>
+        <p><iframe loading="lazy" src="http://breakoutjs.com/examples/getting_started/hello_world.html" width="650"
+            height="440"></iframe></p>
+        <h2>Let&#8217;s take a look at the hello_world code</h2>
+        <p>The minified file Breakout.js is included near the top of the file. You&#8217;ll see jQuery is also included
+          on the following line. Many of the examples use the jQuery library. jQuery is not a requirement of Breakout
+          and is only included for the examples. You can use any javascript framework you like with Breakout.</p>
+        <p>Breakout uses the namespace BO. If you do not want to type the full namespace for each object, you can
+          declare variables at the top of your file to refer to the objects from the Breakout library that you are
+          using. Here are the objects used in the hello_world example:</p>
+        <div class="code_wrapper"><code>var IOBoard = BO.IOBoard;<br />
+  var IOBoardEvent = BO.IOBoardEvent;<br />
+  var LED = BO.io.LED;<br />
+  var Button = BO.io.Button;<br />
+  var ButtonEvent = BO.io.ButtonEvent;</code></div>
+        <p>See the Breakout <a title="docs" href="http://breakoutjs.com/docs/">docs</a> for details on all of the
+          Breakout objects.</p>
+        <p>Next an instance of the <a title="IOBoard"
+            href="http://breakoutjs.com/docs/symbols/BO.IOBoard.html">IOBoard</a> object is created. The constructor
+          parameters are the IP address (as a String), and the network port.</p>
+        <div class="code_wrapper"><code>var arduino = new IOBoard(host, 8887);</code></div>
+        <p>Host is the IP address or hostname of the computer the IO board is connected to. The host is set to either
+          &#8220;localhost&#8221; or window.location.hostname (which is the IP address of the computer serving this web
+          page). Just in case the following lines don&#8217;t make sense, I&#8217;ll explain them briefly:</p>
+        <pre class="code_wrapper">var host = window.location.hostname;
+  // if the file is opened locally, set the host to "localhost"
+  if (window.location.protocol.indexOf("file:") === 0) {
+    host = "localhost";
+  }</pre>
+        <p>What this does is sets the host by default to window.location.hostname, but if the file is opened directly
+          (double-clicking on the html file) instead of loading it from a server, the host is set to
+          &#8220;localhost&#8221;. This enables the file to be opened by either means. However you can leave these lines
+          out in your own applications and simple set the host to &#8220;localhost&#8221;,
+          <code>window.location.hostname</code>, or a specific IP address. Setting host to
+          <code>window.location.hostname</code> enables you to open the application locally or on a mobile device on the
+          same network as the computer the IO board is connected to.</p>
+        <p>When an IOBoard instance is created it must finish its initialization routine before you can send any
+          commands. Listen for the READY event to be notified when it is safe to send data to the I/O board.</p>
+        <div class="code_wrapper"><code>arduino.addEventListener(IOBoardEvent.READY, onReady);</code></div>
+        <p>When the onReady method is called, the first thing you should always do is remove the event listener for the
+          READY event:</p>
+        <div class="code_wrapper"><code>arduino.removeEventListener(IOBoardEvent.READY, onReady);</code></div>
+        <p>Next an instance of an <a title="LED" href="http://breakoutjs.com/docs/symbols/BO.io.LED.html">LED</a> object
+          is created. Breakout provides a number of hardware abstractions such as LED, Button, Servo, etc. The LED
+          constructor parameters are a reference to the IOBoard object, and a reference to the pin the LED is connected
+          to. The getDigitalPin(pinNumber) and getAnalogPin(analogPinNumber) methods are used to get a reference to a
+          Pin object. See the docs for <a title="BO.Pin"
+            href="http://breakoutjs.com/docs/symbols/BO.Pin.html">BO.Pin</a> for details.</p>
+        <div class="code_wrapper"><code>led = new LED(arduino, arduino.getDigitalPin(11));</code></div>
+        <p>Next an instance of the <a title="Button"
+            href="http://breakoutjs.com/docs/symbols/BO.io.Button.html">Button</a> object is created. Note that if you
+          are using a javascript UI library that also has an object named &#8216;Button&#8217; then you will need to use
+          the full namespace for the Breakout button to avoid any naming conflicts (BO.io.Button). The Button object
+          takes 3 parameters: A reference to the IOBoard, a reference to the Pin the button is attached to, and the
+          button mode. The default mode is Button.PULL_DOWN. Other modes are Button.PULL_UP and Button.INTERNAL_PULL_UP.
+          Which one you use depends on how you have wired the physical button to your I/O board. If the other end of the
+          resistor connected to the button is connected to ground, then the mode is PULL_DOWN, if the other end is
+          connected to power, then the mode is PULL_UP and if a resistor is not used, the mode is INTERNAL_PULL_UP.</p>
+        <div class="code_wrapper">
+          <code>var button = new Button(arduino, arduino.getDigitalPin(2), Button.PULL_DOWN);</code></div>
+        <p>Listen for PRESS and RELEASE button events to be notified when the button state changes.</p>
+        <div class="code_wrapper"><code>button.addEventListener(ButtonEvent.PRESS, onPress);<br />
+  button.addEventListener(ButtonEvent.RELEASE, onRelease);</code></div>
+        <p>The onPress method is called whenever the physical button is pressed and the onRelease method is called every
+          time the button is released. The parameter passed to onPress and onRelease callback functions is a reference
+          to the event object. Each event object has a target property which refers to the object that triggered the
+          event. Therefore event.target gives us a reference to the button that was pressed (in the case that more than
+          one button is connected to the I/O board, this is helpful). jQuery is used simply to print the button state to
+          the browser window.</p>
+        <pre class="code_wrapper">function onPress(evt) {
+    // get a reference to the button object that fired the event
+    var btn = evt.target;
+    $('#state').html("Button " + btn.pinNumber + " state: Pressed");
+  }
+  
+  function onRelease(evt) {
+    // get a reference to the button object that fired the event
+    var btn = evt.target;
+    $('#state').html("Button " + btn.pinNumber + " state: Released");
+  }</pre>
+        <p>The following 2 lines register click events with the two on-screen buttons:</p>
+        <pre class="code_wrapper">$('#btnLeft').on('click', turnLedOff);
+  $('#btnRight').on('click', turnLedOn);</pre>
+        <p>When a button is clicked, the LED is turned on or off:</p>
+        <pre class="code_wrapper">function turnLedOn(evt) {
+    // turn the LED on
+    led.on();
+  }
+  
+  function turnLedOff(evt) {
+    // turn the LED off
+    led.off();
+  }</pre>
+        <p>The remaining code is simply used to show or hide the schematic view.</p>
+        <h2>Next Steps</h2>
+        <ul>
+          <li>Take a look at the getting started examples in Breakout/examples/. Wire up the circuit on page 3 of the <a
+              href="http://breakoutjs.com/examples/schematics.pdf">schematics.pdf</a> and open
+            Breakout/examples/index.html on a desktop/laptop computer, tablet or smartphone.</li>
+          <li>Try out some of the sensor and actuator examples if you have the components.</li>
+          <li>Check out the <a title="Using the Pin Object" href="http://breakoutjs.com/guides/the-pin-object/">Using
+              the Pin Object</a> guide for a detailed explanation on how to use digital and analog input and output in
+            Breakout.</li>
+          <li>See the Breakout <a title="file structure overview" href="http://breakoutjs.com/?page_id=298">File
+              Structure Overview</a> guide.</li>
+          <li>Browse the <a title="documentation" href="http://breakoutjs.com/docs/">documentation</a> to learn more
+            about the various objects in the Breakout library.</li>
+          <li>Read the <a title="Using Beakout Server" href="http://breakoutjs.com/?page_id=136">Using Breakout Server
+              guide</a> to learn how to enable multi-client connections and how to select a new webserver root
+            directory.</li>
+        </ul>
+        <p>&nbsp;</p>
+        <hr />
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
