@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset=utf-8 />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<style type="text/css">
+body {
+	margin: 15px;
+	font-family: sans-serif;
+	font-size: 16px;
+	line-height: 1.5em;
+	color: #666;
+}
+h2 {
+	padding-left: 0px;
+	font-weight: normal;
+	font-size: 28px;
+	color: #00AEFF;
+}
+.ledBtns {
+	padding: 10px;
+	font-size: 22px;
+	width: 130px;
+	color: #00AEFF;
+	margin-bottom: 20px;
+}
+#state {
+	color: #00AEFF;
+	font-size: 22px;
+}
+.container {
+	background-color: #f7f7f7;
+	padding-left: 10px;
+	border: 1px dotted #CCC;
+	width: 280px;
+	margin-top: 20px;
+}
+.spacer {
+	margin-left: 5px;
+}
+#schematic {
+	position: absolute;
+	display: none;
+	top: 65px;
+	left: 15px;
+}
+#schematicBtn {
+	margin-top: 20px;
+}
+#ipAddr {
+	font-size: 22px;
+	width: 88%;
+}
+#startScreen {
+	padding-left: 10px;
+	background-color: #f7f7f7;
+	width: 280px;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+	border: 1px dotted #CCC;
+}
+
+</style>
+
+<title>Hello World</title>
+
+<!-- The following (socket.io.js) is only required when using the node_server -->
+<script src="../../socket.io/socket.io.js"></script>
+<script src="../../dist/Breakout.min.js"></script>
+<script src="../libs/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	// declare these variables so you don't have
+	// to type the full namespace
+	var IOBoard = BO.IOBoard;
+	var IOBoardEvent = BO.IOBoardEvent;
+	var LED = BO.io.LED;
+	var Button = BO.io.Button;
+	var ButtonEvent = BO.io.ButtonEvent;
+
+	// for temporary start screen
+	var ipAddrInput;
+    var ipAddress;
+
+	var arduino;
+	var led;
+
+	// handle showing and hiding the schematic
+	$('#schematicBtn').on('click', toggleSchematicView);
+
+	ipAddrInput = document.getElementById('ipAddr');
+	ipAddrInput.addEventListener('change', ipAddrEntered);
+
+	function startup() {
+		console.log(ipAddress);
+		arduino = new IOBoard(ipAddress, 8887);
+		console.log("connected");
+		arduino.addEventListener(IOBoardEvent.READY, onReady);	
+	}	
+
+	function onReady(event) {
+
+		console.log("ready");
+		
+		// remove the event listener because it is no longer needed
+		arduino.removeEventListener(IOBoardEvent.READY, onReady);
+
+		// create an LED object to interface with the LED wired
+		// to the I/O board
+		led = new LED(arduino, arduino.getDigitalPin(11));
+
+		// create a new Button object to interface with the physical
+		// button wired to the I/O board
+		var button = new Button(arduino, arduino.getDigitalPin(2));
+		// listen for button press and release events
+		button.addEventListener(ButtonEvent.PRESS, onPress);
+		button.addEventListener(ButtonEvent.RELEASE, onRelease);
+		
+		// use jQuery to get a reference to the buttons
+		// and listen for click events 
+		$('#btnLeft').on('click', turnLedOff);
+		$('#btnRight').on('click', turnLedOn);		
+	}
+
+	function onPress(evt) {
+		// get a reference to the target which is the button that 
+		// triggered the event
+		var btn = evt.target;
+		// display the state on the page
+		$('#state').html("Button " + btn.pinNumber + " state: Pressed");
+	}
+
+	function onRelease(evt) {
+		// get a reference to the target which is the button that 
+		// triggered the event		
+		var btn = evt.target;
+		// display the state on the page
+		$('#state').html("Button " + btn.pinNumber + " state: Released");
+	}
+
+	function turnLedOn(evt) {
+		// turn the LED on
+		led.on();
+	}
+
+	function turnLedOff(evt) {
+		// turn the LED off
+		led.off();	
+	}
+
+	function ipAddrEntered(evt) {
+		closeStartScreen();
+
+		// store the IP address
+		ipAddress = this.value;
+
+		// for some reason you can't create a new websocket in
+		// response to a form element submission, however
+		// setting a timeout to call the method that ultimately
+		// creates the websocket does work
+		setTimeout(startup, 1);
+		//startup();
+	}
+
+	function closeStartScreen() {
+		ipAddrInput.removeEventListener('change', ipAddrEntered);
+		var startScreen = document.querySelector('#startScreen');
+		startScreen.style.display = 'none';		
+	}		
+
+	// show or hide the schematic
+	function toggleSchematicView(evt) {
+		var schematicBtn = $(this);
+		if (schematicBtn.data('state') === "hidden") {
+			schematicBtn.text("Hide Schematic");
+			schematicBtn.data('state', "visible");
+			$('#schematic').css('display', 'block');
+		} else {
+			schematicBtn.text("Show Schematic");
+			schematicBtn.data('state', "hidden");
+			$('#schematic').css('display', 'none');
+		}
+		
+	}
+
+});
+
+</script>
+
+</head>
+<body>
+
+  <h2>Hello World Example</h2>
+
+  <div id="startScreen">
+	<p>First enter server IP address:</p>
+	<input id="ipAddr" type="text" name="ip" />
+  </div>  
+
+  <div class="container">
+	<p><strong>Output:</strong> Use the buttons below to turn the LED on the breadboard on or off.</p>
+  	<button id="btnLeft" class="ledBtns" type="button">LED Off</button>
+  	<span class="spacer"></span>
+  	<button id="btnRight" class="ledBtns" type="button">LED On</button>
+  </div>
+
+  <div class="container">
+  	<p><strong>Input:</strong> Press the button on the breadboard to display the state below.</p>
+  	<p id="state">Display Button State</p>
+  </div>
+
+  <img id="schematic" src="images/hello_world_schematic.png">
+  <button id="schematicBtn" data-state="hidden">Show Schematic</button>
+  
+</body>
+</html>​

@@ -13,24 +13,23 @@
   <div id="wrapper">
 
     <div class="header">
-      <a href="index.html"><img id="imglogo"
-        src="images/header_logo.png" alt="logo" /></a>
+      <a href="http://soundanalogous.github.io/Breakout/index.html"><img id="imglogo"
+          src="http://soundanalogous.github.io/Breakout/images/header_logo.png" alt="logo" /></a>
       <div id="logo">
-        <h1><a href="index.html">Breakout</a></h1>
+        <h1><a href="http://soundanalogous.github.io/Breakout/index.html">Breakout</a></h1>
         <h2></h2>
       </div>
 
       <div id="nav">
         <ul id="menu-breakout-menu" class="menu">
           <li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-365"><a
-              href="getting-started.html">Getting Started</a></li>
+              href="http://soundanalogous.github.io/Breakout/getting-started.html">Getting Started</a></li>
           <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a
-              href="guides.html">Guides</a></li>
+              href="http://soundanalogous.github.io/Breakout/guides.html">Guides</a></li>
           <li id="menu-item-111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-111"><a
-              href="api-docs/index.html">Docs</a></li>
+              href="http://soundanalogous.github.io/Breakout/api-docs/index.html">Docs</a></li>
         </ul>
       </div>
-
     </div>
 
     <div class="content">
@@ -76,7 +75,7 @@
               href="http://firmata.org">firmata.org</a> for a complete overview.</em></p>
         <h2>Wire a button and LED to your I/O board</h2>
         <p>Open Breakout/examples/<a title="schematics"
-            href="http://breakoutjs.com/examples/schematics.pdf">schematics.pdf</a> and wire up your components
+            href="http://soundanalogous.github.io/Breakout/examples/schematics.pdf">schematics.pdf</a> and wire up your components
           according to wiring diagram on page 2. If you have no idea what the diagram means, read through the lessons in
           this <a title="excellent tutorial by ladyada" href="http://www.ladyada.net/learn/arduino/index.html">tutorial
             by ladyada.</a>.</p>
@@ -85,9 +84,9 @@
           on the Breakout Server application (you&#8217;ll find it in Breakout/server/) for your platform to launch it
           (Linux users need to launch the jar file from the command line unless you set up a custom launcher).</p>
         <h4>When you launch the server you should see the following:</h4>
-        <h2><a href="http://breakoutjs.com/wp-content/uploads/2012/11/status_panel.png"><img decoding="async"
+        <h2><a href="http://soundanalogous.github.io/Breakout/images/status_panel.png"><img decoding="async"
               class="alignleft size-full wp-image-140" title="status_panel"
-              src="http://breakoutjs.com/wp-content/uploads/2012/11/status_panel.png" alt="status panel" width="480"
+              src="http://soundanalogous.github.io/Breakout/images/status_panel.png" alt="status panel" width="480"
               height="360" /></a></h2>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
@@ -108,9 +107,9 @@
           <li>Click the Connect button.</li>
         </ol>
         <h4>You should now see this screen:</h4>
-        <p><a href="http://breakoutjs.com/wp-content/uploads/2012/11/start_single.png"><img decoding="async"
+        <p><a href="http://soundanalogous.github.io/Breakout/images/start_single.png"><img decoding="async"
               loading="lazy" class="alignleft size-full wp-image-142" title="start_single"
-              src="http://breakoutjs.com/wp-content/uploads/2012/11/start_single.png" alt="connection" width="480"
+              src="http://soundanalogous.github.io/Breakout/images/start_single.png" alt="connection" width="480"
               height="360" /></a></p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
@@ -127,9 +126,7 @@
           port your I/O board is connected to (on windows this will say something like &#8220;COM3&#8221;).</p>
         <p>If you encounter any issues, refer to the <a title="troubleshooting"
             href="http://breakoutjs.com/?page_id=136#troubleshooting">Troubleshooting</a> section of the Using Breakout
-          Server guide. If you are still unable to get Breakout Server or the following example to work, please post the
-          issue in the <a title="Beta v0.1.0 Issues Forum"
-            href="http://breakoutjs.com/?forum=beta-breakout-server-issues">Breakout Issues forum</a>.</p>
+          Server guide.</p>
         <h2>Running the Hello World example</h2>
         <p>Assuming you were able to launch the server and connect without any issues, you should now be ready to open
           an example.</p>
@@ -154,7 +151,7 @@
             physical button on the breadboard will display the button state (pressed or released) on the screen below.
           </li>
         </ol>
-        <p><iframe loading="lazy" src="http://breakoutjs.com/examples/getting_started/hello_world.html" width="650"
+        <p><iframe loading="lazy" src="http://soundanalogous.github.io/Breakout/examples/getting_started/hello_world.html" width="650"
             height="440"></iframe></p>
         <h2>Let&#8217;s take a look at the hello_world code</h2>
         <p>The minified file Breakout.js is included near the top of the file. You&#8217;ll see jQuery is also included
@@ -168,10 +165,10 @@
   var LED = BO.io.LED;<br />
   var Button = BO.io.Button;<br />
   var ButtonEvent = BO.io.ButtonEvent;</code></div>
-        <p>See the Breakout <a title="docs" href="http://breakoutjs.com/docs/">docs</a> for details on all of the
+        <p>See the Breakout <a title="docs" href="http://soundanalogous.github.io/Breakout/api-docs/index.html">docs</a> for details on all of the
           Breakout objects.</p>
         <p>Next an instance of the <a title="IOBoard"
-            href="http://breakoutjs.com/docs/symbols/BO.IOBoard.html">IOBoard</a> object is created. The constructor
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.IOBoard.html">IOBoard</a> object is created. The constructor
           parameters are the IP address (as a String), and the network port.</p>
         <div class="code_wrapper"><code>var arduino = new IOBoard(host, 8887);</code></div>
         <p>Host is the IP address or hostname of the computer the IO board is connected to. The host is set to either
@@ -195,15 +192,15 @@
         <p>When the onReady method is called, the first thing you should always do is remove the event listener for the
           READY event:</p>
         <div class="code_wrapper"><code>arduino.removeEventListener(IOBoardEvent.READY, onReady);</code></div>
-        <p>Next an instance of an <a title="LED" href="http://breakoutjs.com/docs/symbols/BO.io.LED.html">LED</a> object
+        <p>Next an instance of an <a title="LED" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.LED.html">LED</a> object
           is created. Breakout provides a number of hardware abstractions such as LED, Button, Servo, etc. The LED
           constructor parameters are a reference to the IOBoard object, and a reference to the pin the LED is connected
           to. The getDigitalPin(pinNumber) and getAnalogPin(analogPinNumber) methods are used to get a reference to a
           Pin object. See the docs for <a title="BO.Pin"
-            href="http://breakoutjs.com/docs/symbols/BO.Pin.html">BO.Pin</a> for details.</p>
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.Pin.html">BO.Pin</a> for details.</p>
         <div class="code_wrapper"><code>led = new LED(arduino, arduino.getDigitalPin(11));</code></div>
         <p>Next an instance of the <a title="Button"
-            href="http://breakoutjs.com/docs/symbols/BO.io.Button.html">Button</a> object is created. Note that if you
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Button.html">Button</a> object is created. Note that if you
           are using a javascript UI library that also has an object named &#8216;Button&#8217; then you will need to use
           the full namespace for the Breakout button to avoid any naming conflicts (BO.io.Button). The Button object
           takes 3 parameters: A reference to the IOBoard, a reference to the Pin the button is attached to, and the
@@ -250,17 +247,17 @@
         <h2>Next Steps</h2>
         <ul>
           <li>Take a look at the getting started examples in Breakout/examples/. Wire up the circuit on page 3 of the <a
-              href="http://breakoutjs.com/examples/schematics.pdf">schematics.pdf</a> and open
+              href="http://soundanalogous.github.io/Breakout/examples/schematics.pdf">schematics.pdf</a> and open
             Breakout/examples/index.html on a desktop/laptop computer, tablet or smartphone.</li>
           <li>Try out some of the sensor and actuator examples if you have the components.</li>
-          <li>Check out the <a title="Using the Pin Object" href="http://breakoutjs.com/guides/the-pin-object/">Using
+          <li>Check out the <a title="Using the Pin Object" href="http://soundanalogous.github.io/Breakout/pin-object.html">Using
               the Pin Object</a> guide for a detailed explanation on how to use digital and analog input and output in
             Breakout.</li>
-          <li>See the Breakout <a title="file structure overview" href="http://breakoutjs.com/?page_id=298">File
+          <li>See the Breakout <a title="file structure overview" href="http://soundanalogous.github.io/Breakout/file-structure.html">File
               Structure Overview</a> guide.</li>
-          <li>Browse the <a title="documentation" href="http://breakoutjs.com/docs/">documentation</a> to learn more
+          <li>Browse the <a title="documentation" href="http://soundanalogous.github.io/Breakout/api-docs/">documentation</a> to learn more
             about the various objects in the Breakout library.</li>
-          <li>Read the <a title="Using Beakout Server" href="http://breakoutjs.com/?page_id=136">Using Breakout Server
+          <li>Read the <a title="Using Beakout Server" href="http://soundanalogous.github.io/Breakout/using-breakout-server.html">Using Breakout Server
               guide</a> to learn how to enable multi-client connections and how to select a new webserver root
             directory.</li>
         </ul>

@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="Breakout is a javascript prototyping tool that provides interfaces to sensors and actuators from the browser via an Arduino-compatible I/O board.">
+  <title>Using Breakout Server</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+</head>
+
+<body class="home page-template-default page page-id-5 custom-background">
+  <div id="wrapper">
+
+    <div class="header">
+      <a href="http://soundanalogous.github.io/Breakout/index.html"><img id="imglogo"
+          src="http://soundanalogous.github.io/Breakout/images/header_logo.png" alt="logo" /></a>
+      <div id="logo">
+        <h1><a href="http://soundanalogous.github.io/Breakout/index.html">Breakout</a></h1>
+        <h2></h2>
+      </div>
+
+      <div id="nav">
+        <ul id="menu-breakout-menu" class="menu">
+          <li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-365"><a
+              href="http://soundanalogous.github.io/Breakout/getting-started.html">Getting Started</a></li>
+          <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a
+              href="http://soundanalogous.github.io/Breakout/guides.html">Guides</a></li>
+          <li id="menu-item-111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-111"><a
+              href="http://soundanalogous.github.io/Breakout/api-docs/index.html">Docs</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content">
+
+
+      <div class="post-136 page type-page status-publish hentry" id="post-136">
+        <h1>Using Breakout Server</h1>
+        <small class="post-meta"></small>
+        <p>Breakout Server is simple WebSocket and HTTP server that bridges an I/O board (such as Arduino) to a web
+          browser. The server uses <a title="webbit" href="https://github.com/webbit/webbit">webbit</a> for the
+          WebSocket and HTTP server connections. If you prefer, you can serve your pages from another web server (for
+          example if you need to use php) and simply use Breakout Server to connect to the I/O board via WebSockets.</p>
+        <h2>Requirements</h2>
+        <p><a title="Requirements" href="http://breakoutjs.com/requirements/">View system and browser
+            requirements</a><br />
+          <a name="installation"></a>
+        </p>
+        <h2>Installation</h2>
+        <p>To install Breakout Server, simply download the files to your hard drive. You&#8217;ll find a version of
+          Breakout Server for your platform in Breakout/server/. If you cloned or downloaded the repository from github,
+          then this directory will contain folders for Mac OS X, Windows (32 bit and 64 bit) and Linux along with the
+          server source code. If you downloaded the Breakout zip package from the Download link, you will find a zip for
+          each platform in the Breakout/server/ directory. Note that if you move the server files out of the
+          Breakout/server/ directory, you will need to update the webserver root directory location. See <a
+            title="webserver_root" href="#webserver_root">WebServer Root Directory</a> in the Settings Panel section of
+          this guide for more info.</p>
+        <p>Here are more specific instructions for each platform:</p>
+        <h5>Mac OS X</h5>
+        <p>If you downloaded the Breakout release package, expand the breakout_server-mac.zip file in Breakout/server/.
+          You can either run the Breakout Server application directly from the breakout_server-mac folder or move it to
+          your Applications directory. You can delete the win and linux zip files.</p>
+        <p>If you cloned the source from github then the contents of the Breakout/server/ directory are not compressed.
+          You can use the server for your platform as is, or you can copy it to Applications or another location on your
+          hard drive.</p>
+        <p>Mac OS X Mountain Lion (and newer) users may need to <a
+            href="https://answers.uchicago.edu/page.php?id=25481">temporarily disable Gatekeeper</a> to launch Breakout
+          Server for the first time. After the initial launch you can re-enable Gatekeeper.</p>
+        <h5>Windows</h5>
+        <p>If you downloaded the Breakout release package, expand the breakout_server-win.zip (32 or 64 bit version
+          depending on your OS) file found in the Breakout/server/ directory. You can either move the
+          breakout-server-win folder to another location on your hard drive or run it directly from the
+          breakout_server-win folder. You can delete the mac and linux zip files.</p>
+        <p>If you cloned the source from github then the contents of the Breakout/server/ directory are not compressed.
+          You can use the server for your platform as is, or you can copy it to another location on your hard drive. If
+          you want to move the Breakout Server.exe application, move the breakout_server-win folder. The rxtxServer.dll
+          must be at the same level as the exe file in order for the server to work properly.</p>
+        <h5>Linux</h5>
+        <p>Breakout Server has only been tested in 64-bit Ubuntu 11.10, 12.04 and 14.04 and it may or may not work on
+          other distributions. You will first need to run <code>sudo apt-get install librxtx-java</code> to ensure that
+          the serial drivers are properly installed. If you know how to manually install them, you may do that as well.
+          Once the serial drivers are installed you can launch the jar from the command line (java -jar
+          BreakoutServer.jar).</p>
+        <p>If you downloaded the Breakout release package, expand the breakout_server-linux.zip file found in the
+          Breakout/server/ directory. You can move the breakout-server-linux folder to another location on your hard
+          drive or run the JAR directly from the breakout_server-linux folder. You can delete the mac and win zip files.
+          The librxtxSerial.so driver is included in case you choose to manually install this file, however it should
+          have been installed to the proper location automatically if you ran
+          <code>sudo apt-get install librxtx-java</code>. The Breakout icon is also included in case you want to create
+          a custom launcher for the Breakout Server application.<br />
+          <a name="status_panel"></a>
+        </p>
+        <h2>Application Overview: Status Panel</h2>
+        <p>The status panel provides the following UI elements:</p>
+        <ul>
+          <li>A drop-down list to select the serial port the I/O Board is connected to (most often the 1st item in the
+            list so you don&#8217;t have to select it).</li>
+          <li>A text input containing the network port (default = 8887). You can also change this value (see
+            &#8216;Changing the Network Port&#8217; below)</li>
+          <li>A button to connect/disconnect the server (connects/disconnects the serial port and the web server).</li>
+        </ul>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/status_panel.png"><img decoding="async"
+              class="alignleft size-full wp-image-140" title="status_panel"
+              src="http://soundanalogous.github.io/Breakout/images/status_panel.png" alt="status panel" width="480"
+              height="360" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h4></h4>
+        <p><a name="change_port"></a></p>
+        <h5>Changing the network port</h5>
+        <p>You can change the network port number by entering a new number. Be sure to press the Enter key upon changing
+          the number. The new number will be stored until it is changed again in the future. When you change the port
+          number, be sure to use the new port number when creating a new instance of the I/O board in your script. For
+          example, if you changed the port number to 9000 in the Status panel you need to use the new port number when
+          creating an new instance of an IOBoard object:</p>
+        <p><code>var arduino = new IOBoard("localhost", 9000);</code><br />
+          <a name="settings_panel"></a>
+        </p>
+        <h2>Application Overview: Settings Panel</h2>
+        <p>The settings panel provides the following UI elements:</p>
+        <ul>
+          <li>A non-editable textbox displaying the web server root directory</li>
+          <li>A button to open a file chooser to select a new root directory for the web server</li>
+          <li>A checkbox to enable multi-client connections (see the section on multi-client connections below)</li>
+        </ul>
+        <p><a name="webserver_root"></a><br />
+          <a href="http://soundanalogous.github.io/Breakout/images/settings_panel.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-141" title="settings_panel"
+              src="http://soundanalogous.github.io/Breakout/images/settings_panel.png" alt="settings panel" width="480"
+              height="360" /></a>
+        </p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h5>Webserver Root Directory</h5>
+        <p>The default webserver root directory is &#8220;../../&#8221; which is the relative path from the server (ie
+          server/breakout_server-mac) to the root of the Breakout directory. If you move Breakout Server to another
+          directory (such as your Applications folder) you can update the Webserver root directory by clicking the
+          Choose New Webserver Root button and selecting the root directory of your web app(s). This may be the Breakout
+          directory, or any directory you choose to work from (as long as you also copy the Breakout.js file and any
+          other required files to that directory). The new webserver root will be stored until you change it again in
+          the future.</p>
+        <h5>Multi-client Connections</h5>
+        <p>By default Breakout Server only supports one client connection at a time. While one browser is connected, if
+          another browser tries to connect, the connection is taken over by the 2nd browser. This is because in default
+          mode, upon connect, a soft reset of the I/O board is performed to set the pins back to their default state.
+          This is helpful when you are writing a script and want new code to execute when you refresh the browser. If
+          the I/O board pins did not reset to their default state, the script would begin executing with the board in
+          the state it was in prior to refreshing the browser.</p>
+        <p>However, there are other cases in which you may want to share data from the I/O board with multiple clients.
+          In this case you expect to connect to a I/O board in its current state. Enabling the multi-client connections
+          checkbox will allow multiple clients to connect to the server. Upon connection, the current state of the I/O
+          board is copied to the client so there are no interruptions of data being viewed on other clients.</p>
+        <p>If you only need a single client connection but do not want the I/O board to reset it&#8217;s state upon
+          refreshing the browser, then you can also enable multi-client connection mode for that purpose.</p>
+        <p>Also, it&#8217;s worth noting that multi-connect mode works well when you are sending data from the IOBoard
+          (such as sensor data), but not as well when you are sending data to the IOBoard (such as controlling a motor
+          or an RGB led) unless each client is trying to control a unique component on the IOBoard.</p>
+        <h2>Connecting</h2>
+        <p>Clicking the &#8216;Connect&#8217; button creates the serial connection to the I/O board and also starts the
+          WebSocket and HTTP server. Upon connection you should see the following in the status message area:</p>
+        <ul>
+          <li>The name and port of the computer you are connected to.</li>
+          <li>The Serial port you are connected to.</li>
+          <li>The Connect button should now read &#8220;Disconnect&#8221;</li>
+        </ul>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/start_single.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-142" title="start_single"
+              src="http://soundanalogous.github.io/Breakout/images/start_single.png" alt="connection" width="480"
+              height="360" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p><em>Note that when you click the Connect button that the IOBoard is reset. This is helpful if you are in
+            multi-client mode and want to reset the IOBoard to it&#8217;s default state. All clients will be
+            disconnected when the Disconnect button is clicked.</em></p>
+        <p>If you enabled multi-client connection mode in the Settings Pane, then you should see the following:</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/start_multi_client.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-143" title="start_multi_client"
+              src="http://soundanalogous.github.io/Breakout/images/start_multi_client.png" alt="startup multi-client"
+              width="480" height="360" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>To connect a client, open web browser and enter the url of an html file (be sure to include the port number
+          in the url&#8230; for example: http://localhost:8887/examples/getting_started/hello_world.html). You should
+          see the connection status as follows:</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/client_connected.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-146" title="client_connected"
+              src="http://soundanalogous.github.io/Breakout/images/client_connected.png" alt="client connected"
+              width="480" height="360" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>In multi-client connection mode you will see the number of active connections. Note that the client number
+          may be higher than the number of active connections, especially if you are refreshing one of the open browser
+          windows.</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/multi_2_connected.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-147" title="multi_2_connected"
+              src="http://soundanalogous.github.io/Breakout/images/multi_2_connected.png"
+              alt="multiple clients connected" width="480" height="360" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p><a name="connecting_mobile"></a></p>
+        <h2>Connecting Mobile Devices</h2>
+        <p>Mobile browser clients can connect to Breakout Server if they support WebSockets. Currently iOS, Firefox (8
+          or higher) for Android and Chrome Beta for Android (ice cream sandwich only) support WebSockets. Performance
+          depends on the complexity of the web app you are trying to load. To connect a mobile device, you must be on
+          the same network as the computer running Breakout Server and you must set the IP address in the IOBoard
+          constructor to the IP address of the computer running the server. For example if the IP address of the
+          computer running Breakout Server is 192.168.1.20 then instantiate an IOBoard as follows and you should be able
+          to load the page on a mobile device:</p>
+        <p><code>var arduino = new IOBoard("192.168.1.20", 8887);</code><br />
+          <a name="troubleshooting"></a>
+        </p>
+        <h2>Troubleshooting</h2>
+        <p>If you run into any issues while trying to use Breakout Server, first check the following:</p>
+        <ol>
+          <li>Make sure your firewall allows port 8887 (or any new port number you may have set).</li>
+          <li>Make sure your I/O board serial port is available. Verify by compiling and uploading a sketch in the
+            Arduino IDE.</li>
+          <li>Ensure you have Java Runtime Environment version 1.6 or higher installed.</li>
+          <li>If you moved Breakout Server out of the Breakout/server/ directory, make sure you updated the WebServer
+            Root Directory location in the Settings panel.</li>
+          <li>If you are attempting to connect from a mobile device, make sure the device browser supports WebSockets
+            and that you are on the same network as the computer running Breakout Server. Also make sure you are using a
+            fairly new device (for example iPhone 3G and older are too slow).</li>
+          <li>If the issue persists, file an issue on the <a title="Breakout github site"
+              href="https://github.com/soundanalogous/Breakout">Breakout github site</a>.</li>
+        </ol>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>

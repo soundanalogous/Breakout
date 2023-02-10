@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="Breakout is a javascript prototyping tool that provides interfaces to sensors and actuators from the browser via an Arduino-compatible I/O board.">
+  <title>File Structure Overview</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+</head>
+
+<body class="home page-template-default page page-id-5 custom-background">
+  <div id="wrapper">
+
+    <div class="header">
+      <a href="http://soundanalogous.github.io/Breakout/index.html"><img id="imglogo"
+          src="http://soundanalogous.github.io/Breakout/images/header_logo.png" alt="logo" /></a>
+      <div id="logo">
+        <h1><a href="http://soundanalogous.github.io/Breakout/index.html">Breakout</a></h1>
+        <h2></h2>
+      </div>
+
+      <div id="nav">
+        <ul id="menu-breakout-menu" class="menu">
+          <li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-365"><a
+              href="http://soundanalogous.github.io/Breakout/getting-started.html">Getting Started</a></li>
+          <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a
+              href="http://soundanalogous.github.io/Breakout/guides.html">Guides</a></li>
+          <li id="menu-item-111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-111"><a
+              href="http://soundanalogous.github.io/Breakout/api-docs/index.html">Docs</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <div class="post-298 page type-page status-publish hentry" id="post-298">
+        <h1>File Structure Overview</h1>
+        <small class="post-meta"></small>
+        <h2>Breakout release file overview</h2>
+        <p>This section provides and overview of the Breakout file structure. If you downloaded the Breakout release
+          from this website, then you should have the following file structure:</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/release_dir.png"><img decoding="async"
+              class="alignleft size-full wp-image-299" title="release_dir"
+              src="http://soundanalogous.github.io/Breakout/images/release_dir.png" alt="release directory" width="323"
+              height="245" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>The following sections describe the directory contents:</p>
+        <h3>ChangeLog</h3>
+        <p>A log of the changes in each release.</p>
+        <h3>custom_examples</h3>
+        <p>This folder contains a few examples that demonstrate how to use Breakout without StandardFirmata. See <a
+            title="using breakout without standard firmata" href="http://breakoutjs.com/?page_id=302">Using Breakout
+            Without StandardFirmata</a> for details. The schematics.pdf file contains wiring diagrams for the examples.
+          Any libraries required to run the example files are included in the libs subdirectory.</p>
+        <h3>dist</h3>
+        <p>The dist directory contains the minified Breakout files. You will need to include one of these files in your
+          applications. There are 3 versions described below:</p>
+        <h5>Breakout.js</h5>
+        <p>This is the minified version the full Breakout javascript library. Everything in Breakout/src/ except the
+          files in Breakout/src/custom/ is included.</p>
+        <h5>Breakout-base.js</h5>
+        <p>This minified file contains everything in Breakout/src/ except the files in Breakout/io/. Use this version if
+          you are not using any of the IO objects (from Breakout/io/) or would only like to include the IO objects you
+          are using in your application. In the later case, you must include the IO objects individually after including
+          the Breakout-base.js file. Also, if an IO object has a corresponding Event object, the Event object must be
+          included before the IO object. For example if the only IO object you are using is an analog accelerometer, you
+          could include the following rather than the full Breakout.js file which would include all IO objects:</p>
+        <div class="code_wrapper"><code>&lt;script src="../dist/Breakout-base.js"&gt;&lt;/script&gt;<br />
+  &lt;script src="../src/AccelerometerEvent.js"&gt;&lt;/script&gt;<br />
+  &lt;script src="../src/AnalogAccelerometer.js"&gt;&lt;/script&gt;</code></div>
+        <p>&nbsp;</p>
+        <h5>Breakout-core.js</h5>
+        <p>This file contains only the minimal objects required to communicate with the I/O board. The only use for this
+          version is in creating applications that don&#8217;t rely on StandardFirmata. See the
+          Breakout/custom_examples/rfid_example2.html. Currently this file contains more than you need for custom
+          applications. A lighter file will be created in the future for this type of application.</p>
+        <h3>docs</h3>
+        <p>This folder contains the documentation of the objects in the Breakout javascript library. Launch index.html
+          to view the documentation. You can also view it online from the Docs link.</p>
+        <h3>examples</h3>
+        <p>Examples are created for many of the objects in the Breakout library. See the various subdirectories for
+          examples to use certain types of components such as actuators or sensors. There are also examples for using
+          Breakout with other javascript frameworks such as <a title="three.js"
+            href="https://github.com/mrdoob/three.js/">Three.js</a> and <a title="processing.js"
+            href="http://processingjs.org/">Processing.js</a>. The schematic.pdf file contains wiring diagrams for all
+          of the example files. The libs subdirectory contains any libraries required by the examples.</p>
+        <h3>firmware</h3>
+        <p>The firmware folder contains the AdvancedFirmata arduino sketch. You must upload AdvancedFirmata to your
+          board before using Breakout. Open the AdvancedFirmata.ino file in the Arudino IDE (version 1.0 or higher),
+          select your board from Tools -&gt; Board, compile and upload.</p>
+        <h3>LICENSE</h3>
+        <p>This file contains the text of the MIT license that applies to Breakout.</p>
+        <h3>node_server</h3>
+        <p>A <a href="https://github.com/soundanalogous/breakout-server">node.js-based version of Breakout Server</a>
+          used to be included with Breakout. However not it resides in its own github repository. See the instructions
+          in the <a href="https://github.com/soundanalogous/breakout-server/blob/master/README.md">README</a> file to
+          get started if you want to use this server. Note however that it is more difficult to use than the simple GUI
+          version of Breakout Server.</p>
+        <h3>README.md</h3>
+        <p>This file provides an overview of the Breakout project. It is also what you see when you view the Breakout
+          project on <a title="breakout on github" href="https://github.com/soundanalogous/Breakout"
+            target="_blank">github</a>.</p>
+        <h3>server</h3>
+        <p>If you downloaded the Breakout beta release package, the contents of the server directory should be as
+          follows:</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/server_release.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-338" title="server_release"
+              src="http://soundanalogous.github.io/Breakout/images/server_release.png" alt="server release" width="302"
+              height="111" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p><em>If you see more files than above such as a build and lib folder etc, then you downloaded (or cloned) the
+            full Breakout repository rather than the distribution release. That&#8217;s okay, just refer the server
+            section of <a title="repository structure" href="#breakout_repository_structure">Breakout Repository file
+              structure overview</a> below.</em></p>
+        <p>The release version of the server directory contains a compressed version of each server. You will need to
+          expand the Server for your platform (see the<a title="installing breakout"
+            href="http://breakoutjs.com/?page_id=136#installation" target="_blank"> Installation</a> section of the
+          Using Breakout Server guide for details). You can also delete the files for the other platforms. In order to
+          simplify the downloadable Breakout distribution, the download does not include the server source code. You
+          must clone the Breakout source code on Github to get the Breakout Server source.</p>
+        <h3>src</h3>
+        <p>The src directory contains all of the javascript source files for Breakout.</p>
+        <h5>core</h5>
+        <p>The core files are the base of the Breakout framework.</p>
+        <h5>custom</h5>
+        <p>The custom directory contains files for objects that do not use StandardFirmata, but are useful enough to be
+          included in the distribution source code. The files in the custom directory are not included in the minified
+          Breakout.js file. See Breakout/custom_exemples/ for examples of use.</p>
+        <h5>filters</h5>
+        <p>This directory contains a number of objects that are used to filter analog input. See the examples in
+          Breakout/examples/filters/ and the <a title="using filters" href="http://soundanalogous.github.io/Breakout/using-filters.html"
+            target="_blank">Using Filters</a> guide for details.</p>
+        <h5>generators</h5>
+        <p>This directory contains an oscillator object that can generate signals on an output pin. For example it can
+          be used to blink or fade an LED. See the examples in Breakout/examples/generators/.</p>
+        <h5>io</h5>
+        <p>The files/objects in the io directory are hardware abstractions of physical components. These objects greatly
+          simplify the ability to interface with various input (sensors) and output (actuators). Expect additional io
+          objects to be added in the future. See the examples in Breakout/examples/actuators/ and
+          Breakout/examples/sensors/. Also see the examples in Breakout/examples/processing_js/ and
+          Breakout/examples/three_js/ for applications of using sensors with WebGL graphics.</p>
+        <h5>utils</h5>
+        <p>The utils folder contains javascript files that are used in Breakout but are not specific to Breakout. These
+          provide common utilities such as event handling, timers, namespacing, etc.</p>
+        <hr />
+        <p><a name="breakout_repository_structure"></a></p>
+        <h2>Breakout repository file structure overview</h2>
+        <p>If you cloned the repository from github then you&#8217;ll have some additional folders and files:</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/clone_dir.png"><img decoding="async" loading="lazy"
+              class="alignleft size-full wp-image-331" title="clone_dir"
+              src="http://soundanalogous.github.io/Breakout/images/clone_dir.png" alt="clone dir" width="302"
+              height="282" /></a><br />
+          &nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <h3>server</h3>
+        <p>The biggest difference between the repository and the release build is the structure of the Breakout/server/
+          directory. By cloning the repository you have access to the Breakout Server source code. In the repositoy the
+          server directory contains the following files:</p>
+        <p><a href="http://soundanalogous.github.io/Breakout/images/clone_server_release.png"><img decoding="async"
+              loading="lazy" class="alignleft size-full wp-image-316" title="server_release"
+              src="http://soundanalogous.github.io/Breakout/images/clone_server_release.png" alt="server release"
+              width="302" height="225" /></a></p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <ul>
+          <li>The first 4 items are versions of the server for Mac, Win and Linux.</li>
+          <li>The build subdirectory contains the Jar file. You can run Breakout Server from this jar file or if
+            you&#8217;re using Mac OS X or Windows you can use the more convenient executables found in the respective
+            platform folders above.</li>
+          <li>An eclipse_archive is included as a convenience for any eclipse users who would like to modify the source
+            code.</li>
+          <li>The lib subdirectory contains the jar files required to build the server.</li>
+          <li>README.md explains how to build Breakout Server. The build step is only required if you modify Breakout
+            Server. Pre-built versions are already included for Mac, Win, and Linux.</li>
+          <li>The release subdirectory contains graphics and other files used to build the executables.</li>
+          <li>src contains the java source files and the manifest file.</li>
+        </ul>
+        <p>The repository also includes the following files and folders that are not present in the release
+          distribution:</p>
+        <h3>build</h3>
+        <p>This folder contains the Closure Compiler that is used to minify the Breakout javascript code. There are
+          several build files that can be run to minify the Breakout code. See the README file for build instructions.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>

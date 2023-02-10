@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="Breakout is a javascript prototyping tool that provides interfaces to sensors and actuators from the browser via an Arduino-compatible I/O board.">
+  <title>Using The Pin Object</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+</head>
+
+<body class="home page-template-default page page-id-5 custom-background">
+  <div id="wrapper">
+
+    <div class="header">
+      <a href="http://soundanalogous.github.io/Breakout/index.html"><img id="imglogo"
+          src="http://soundanalogous.github.io/Breakout/images/header_logo.png" alt="logo" /></a>
+      <div id="logo">
+        <h1><a href="http://soundanalogous.github.io/Breakout/index.html">Breakout</a></h1>
+        <h2></h2>
+      </div>
+
+      <div id="nav">
+        <ul id="menu-breakout-menu" class="menu">
+          <li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-365"><a
+              href="http://soundanalogous.github.io/Breakout/getting-started.html">Getting Started</a></li>
+          <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a
+              href="http://soundanalogous.github.io/Breakout/guides.html">Guides</a></li>
+          <li id="menu-item-111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-111"><a
+              href="http://soundanalogous.github.io/Breakout/api-docs/index.html">Docs</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content">
+
+
+      <div class="post-236 page type-page status-publish hentry" id="post-236">
+        <h1>Using the Pin Object</h1>
+        <small class="post-meta"></small>
+        <p>Each analog and digital pin of the I/O board is represented by a <a title="pin"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.Pin.html">Pin</a> object. The Pin object is the foundation for
+          many of the Breakout IO objects and is also very useful on it&#8217;s own. This section describes how to use
+          pins as <a href="#digital_input">digital inputs</a>,<a href="#digital_output"> digital outputs</a>, <a
+            href="#analog_input">analog inputs</a> and <a href="#analog_output">analog outputs</a>.</p>
+        <p><a name="digital_input"></a></p>
+        <h2>Digital Input</h2>
+        <p>Let&#8217;s assume you have an Arduino board with a button connected to digital pin 2 and that you have
+          created an instance of the IOBoard object and named it &#8220;board&#8221;.</p>
+        <p>In order to use pin 2 as an input, you must first set the pin mode to digital input (DIN):</p>
+        <div class="code_wrapper"><code>board.setDigitalPinMode(2, Pin.DIN);</code></div>
+        <p>Next you need to get a reference to the Pin object associated with digital pin 2:</p>
+        <div class="code_wrapper"><code>var btn = board.getDigitalPin(2);</code></div>
+        <p>So in order to use a digital pin as an input, you first need to set the pin mode, then get a reference to the
+          pin:</p>
+        <div class="code_wrapper"><code>board.setDigitalPinMode(2, Pin.DIN);<br />
+  var btn = board.getDigitalPin(2);<br />
+  </code></div>
+        <p>Now that we have a reference to the pin we can we can read the pin&#8217;s value:</p>
+        <div class="code_wrapper"><code>var pinValue = btn.value;</code></div>
+        <p>The value of a digital input will be 1 or 0. While we can check the pin value at any time, it&#8217;s most
+          useful get the value only when it changes. To do this, you can attach an event listener to the Pin object. In
+          this example we&#8217;ll listen for a change event:</p>
+        <div class="code_wrapper"><code>btn.addEventListener(PinEvent.CHANGE, onPinChange);</code></div>
+        <p>This will call the listener function <code>onPinChange</code> each time the value of the pin changes. You can
+          use any name you like for the listener (so onPin2Change, onBtnChange, etc. are also valid names).</p>
+        <p>Next we define the listener function:</p>
+        <pre class="code_wrapper">function onPinChange(event) {
+    console.log("pin value = " + event.target.value);
+  }</pre>
+        <p>Notice the function parameter named <code>event</code>. This is an object that contains data about the event
+          (in this case a <a title="PinEvent" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.PinEvent.html">PinEvent</a>).
+          You can use any name for this parameter (&#8216;evt&#8217; and &#8216;e&#8217; are other common names). All
+          event objects have a property named <code>target</code> that provides a reference to the object that fired the
+          event. So in this case, <code>event.target</code> refers to the Pin object representing the button and
+          therefore <code>event.target.value</code> refers to the value of the button (either 1 or 0). The code simply
+          prints the pin value to the console each time the button is pressed.</p>
+        <p>If you need to refer to the target more than once, it is best to create a variable first such as:</p>
+        <div class="code_wrapper"><code>var pin = event.target;<br />
+  console.log("pin value = " + pin.value);<br />
+  </code></div>
+        <p>This is more clear and also makes lookups to properties of pin faster if you need to get or set the value of
+          multiple properties.</p>
+        <p>We can also get the <code>number</code> of the pin. This is useful if you have more than one digital input
+          and want to use a single listener to handle all of the inputs. For example, assume you have also connected
+          buttons to pins 3 and 4 of the I/O board and added a listener for the CHANGE event to each Pin object. You can
+          handle all of the changes in a single listener function to save memory:</p>
+        <pre class="code_wrapper">function onPinChange(event) {
+    var pin = event.target;
+    switch(pin.number) {
+      case 2:
+        doSomething(pin.value);
+        break;
+      case 3:
+        doSomethingElse(pin.value);
+        break;
+      case 4:
+        doAnotherThing(pin.value);
+        break;
+    }
+  }</pre>
+        <p>There are two additional events available for the Pin object. They are PinEvent.FALLING_EDGE and
+          PinEvent.RISING_EDGE. The falling edge event is dispatched / fired when the pin changed value from 1 to 0. The
+          rising edge event is fired when the pin changed value from 0 to 1. If you are only interested in being
+          notified when the value changes from 0 to 1, then simply listen for the rising edge event:</p>
+        <pre class="code_wrapper">btn.addEventListener(PinEvent.RISING_EDGE, onHigh);
+  
+  function onHigh(event) {
+    // assume the button is wired with a pull-down resistor so a value
+    // of 1 indicates that the button was pressed
+    console.log("button pressed");
+  }</pre>
+        <p>Now that you have a better understanding of how to use a pin as a digital input, you may be wondering what
+          the difference is between using a Pin object as a digital input and using the Breakout <a
+            title="Button documentation" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Button.html">Button</a> object.
+          The Button object is a wrapper around a digital input pin, but it provides a number of useful features such as
+          switch <a title="switch debounce"
+            href="http://www.labbookpages.co.uk/electronics/debounce.html">debouncing</a>, sustained press events (fires
+          at the interval specified while the button is held continuously) and setting the pin mode automatically. In
+          most cases, if you are using an actual button (in that it&#8217;s a digital input that is physically pressed
+          by a human) as a digital input it is best to use the Button object, but if you have another type of digital
+          input that is not controlled by a physical press (such as a motion sensor that outputs a high or low value
+          when presence is detected), then it may make more sense to use the Pin directly as described in this section.
+        </p>
+        <p>Now lets look at digital output.</p>
+        <p><a name="digital_output"></a></p>
+        <h2>Digital Output</h2>
+        <p>A common digital output that is easy to understand is an LED. Let&#8217;s assume an LED is connected to
+          digital pin 9 of an Arduino board.</p>
+        <p>Like in the digital input example, the first step is to set the pin mode. In this case we want to set pin 9
+          to digital output (DOUT):</p>
+        <div class="code_wrapper"><code>board.setDigitalPinMode(9, Pin.DOUT);</code></div>
+        <p>The next step is to get a reference to the pin object:</p>
+        <div class="code_wrapper"><code>board.setDigitalPinMode(9, Pin.DOUT);<br />
+  var led = board.getDigitalPin(9);<br />
+  </code></div>
+        <p>Now since we are using a digital output, there is no need to listen for events. We can simply set the value
+          at any time, causing the Led to turn on or off:</p>
+        <pre class="code_wrapper">// turn the led on
+  led.value = Pin.HIGH;
+  
+  // turn the led off
+  led.value = Pin.LOW;</pre>
+        <p>A cool thing you can do with digital output is attach a Generator. A generator is a type of object that can
+          automatically change (or drive) an output value by applying various waveforms or other equations. Currently
+          the only type of generator in breakout is the <a title="Oscillator"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.generators.Oscillator.html">Oscillator</a> object. The
+          oscillator uses a waveform to generate an output signal. The possibilities are much more exciting for an
+          analog output (PWM) pin, but you can also use a generator on a digial output to oscillate between 1 and 0 on a
+          set frequency. Here&#8217;s an example:</p>
+        <pre class="code_wrapper">var freq = 1.0; // the frequency in seconds
+  var times = 0; // the number of times to repeat (zero = forever)
+  // create an instance of an Oscillator object that will apply a square wave
+  var blink = new Oscillator(Oscillator.SQUARE, freq, 1, 0, 0, times);
+  
+  // add the Oscillator object to the digital output
+  led.addGenerator(blink);
+  
+  // start the oscillator
+  blink.start();</pre>
+        <p>This code attaches a square wave oscillator, setting the frequency to 1 second, amplitude to 1, offset and
+          phase each to zero, and a repeat count of zero which will cause the oscillator to run &#8216;forever&#8217;.
+          Finally the oscillator is started and the Led will blink on for 1 second then off for 1 second repeatedly
+          until the program execution ends. You can also call <code>blink.stop()</code> to stop the oscillator.</p>
+        <p>You can learn more about Oscillators in the <a href="#analog_output">Analog Output</a> section of this guide
+          as well as the examples in Breakout/examples/generators/.</p>
+        <p>Also see the <a title="BO.io.LED" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.LED.html">LED</a> object in
+          the Breakout/io/ package. It provides a number of helpful methods that make it easier to use an LED. However
+          note that some of the methods such as fadeIn, fadeOut and fadeTo can only be used if the LED is connected to a
+          PWM pin on the I/O board. You&#8217;ll learn more about using PWM pins in the Analog Output section.</p>
+        <p><a name="analog_input"></a></p>
+        <h2>Analog Input</h2>
+        <p>Setting a pin as an analog input enables you to read data from hundreds (if not thousands) of different
+          sensors. For this section let&#8217;s assume a potentiometer is attached to pin A0 of your I/O board and that
+          you have created an instance of the IOBoard object named &#8220;board&#8221;.</p>
+        <p>Unlike the digital input and output examples, we do not have to set the pin mode to use a pin as an analog
+          input, instead we need to enable the analog input pin:</p>
+        <div class="code_wrapper"><code>board.enableAnalogPin(0);</code></div>
+        <p>By default all analog pins are disabled. This is so the I/O board does not have to send analog data
+          continuously when it&#8217;s not even needed by the user. Therefore it is necessary to enable analog input for
+          the specific pins you are connecting sensors to. It&#8217;s also worth noting that analog data is sent at a
+          maximum rate of 19 milliseconds (53 times/second). You can lower the interval (sending data less frequently)
+          using the <code>board.setInterval</code> property. So <code>board.setInterval = 33;</code> would cause the
+          board to send analog data at a rate of 33 milliseconds (or 30 times/second), but you should not set the
+          sampling interval to a rate faster than 19 milliseconds or you could end up with incomplete data.</p>
+        <p>The next step is to get a reference to the analog pin:</p>
+        <div class="code_wrapper"><code>var sensor = board.getAnalogPin(0);</code></div>
+        <p>So to read an analog input we enable the pin then get a reference to the pin object:</p>
+        <div class="code_wrapper"><code>board.enableAnalogPin(0);<br />
+  var sensor = board.getAnalogPin(0);<br />
+  </code></div>
+        <p>Now that we have enabled analog input and have a reference to the pin we can read the sensor value:</p>
+        <div class="code_wrapper"><code>var sensorValue = sensor.value;</code></div>
+        <p>Analog input values are in the range of 0.0 to 1.0. The value is only updated when it changes. While we can
+          read it at any time, it&#8217;s best to add a listener to be notified when the value changes:</p>
+        <div class="code_wrapper"><code>sensor.addEventListener(PinEvent.CHANGE, onSensorUpdate);</code></div>
+        <p>The listener function <code>onSensorUpdate</code> will be called automatically each time a new analog input
+          value from pin A0 is received. You can use any name you like for the listener function so onPinChange,
+          onSensorPinChange, etc are also valid names.</p>
+        <p>Next you need to implement the listener:</p>
+        <pre class="code_wrapper">function onSensorUpdate(event) {
+    console.log("sensor value = " + event.target.value);
+  }</pre>
+        <p>This will print the sensor value to the console each time it changes. Note the <code>event</code> parameter.
+          This is a reference to the event object (PinEvent). You can call the paramater anything (evt and e are other
+          common names). Every event object has a property called <code>target</code> that provides a reference to the
+          object that dispatched (fired) the event. So in this case <code>target</code> refers to the analog input pin.
+          Therefore <code>event.target.value</code> refers to the value of the analog input pin that fired the event.
+        </p>
+        <p>There are a number of useful properties that the pin object provides for analog input. First we will use a
+          variable to store the target so we don&#8217;t have to keep referring to it as <code>event.target</code>:</p>
+        <pre class="code_wrapper">function onSensorUpdate(event) {
+    var sensorPin = event.target;
+    console.log("sensor value = " + sensorPin.value);
+  }</pre>
+        <p>Now we can explore some of the pin properties:</p>
+        <pre class="code_wrapper">function onSensorUpdate(event) {
+    var sensorPin = event.target;
+    console.log("sensor value = " + sensorPin.value);
+  
+    // the minimum value sent by the sensor since the application started
+    console.log("min value = " + sensorPin.minimum);
+  
+    // the maximum value sent by the sensor since the application started
+    console.log("max value = " + sensorPin.maximum);
+  
+    // the average of the sensor values since the application started
+    console.log("average value = " + sensorPin.average);
+  
+    // the last (previous) value read
+    console.log("previous value = " + sensorPin.lastValue);
+  }</pre>
+        <p>You may notice if you turn the potentiometer all the way clockwise and then all the way counterclockwise you
+          will be quickly left with minimim and maximum values of 0.0 and 1.0 respectively. If at any point you want to
+          reset the minimum, maximum and average values you can call the <code>clear()</code> method as follows:</p>
+        <div class="code_wrapper"><code>sensor.clear();</code></div>
+        <p>An analog input pin also has a <code>number</code> property, but it may not give you the result you expect.
+          For example if you have an Arduino Uno board and you have connected a sensor to pin A0 and you read the
+          <code>number</code> property the result will be 14, not 0. This is because the number property is based on a
+          count of the total number of analog and digital pins on the I/O board, therefore Analog pin 0 is actually pin
+          number 14 on an Arduino Uno. There is another property, <code>analogNumber</code> that returns the analog
+          number of the pin so for the Arduino Uno, the analog number of pin A0 will be 0. Here&#8217;s an example:</p>
+        <pre class="code_wrapper">console.log("pin number = " + sensorPin.number); // prints 14 for an Arduino Uno
+  
+  console.log("analog number = " + sensorPin.analogNumber); // prints 0 for an Uno</pre>
+        <p>Breakout also includes a number of filters that you can apply to the analog input data. These include a <a
+            title="BO.filters.Convolution"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.Convolution.html">Convolution</a> filter to smooth data,
+          a <a title="BO.filters.Scaler" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.Scaler.html">Scaler</a>
+          filter to scale from one range of data to another using a variety of equations, and a <a
+            title="BO.filters.TriggerPoint"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.TriggerPoint.html">TriggerPoint</a> filter that can be
+          used to set a trigger when specific input values are met. To learn more about using filters, see the <a
+            title="Using Filters" href="http://soundanalogous.github.io/Breakout/using-filters.html">Using Filters</a> guide and the
+          examples in Breakout/examples/filters/.</p>
+        <p>If you are using a potentiometer or other linear analog input, it is often easier to use the <a
+            title="BO.io.Potentiometer"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Potentiometer.html">Potentiometer</a> object from the
+          Breakout/io/ package rather than using the analog input Pin object directly. The Potentiometer object is a
+          wrapper object for the analog input pin providing similar functionality but is a bit easier to use (you
+          don&#8217;t have to worry about enabling the analog pin for example, it&#8217;s handled automatically and
+          setting filters is also integrated). You will also find this object used in many of the examples. Also, for a
+          complex example of using analog inputs as well as creating new IO objects for specific sensors, see the
+          implementations of the AnalogAccelerometer and SoftPot objects in Breakout/io/.</p>
+        <p><a name="analog_output"></a></p>
+        <h2>Analog Output</h2>
+        <p>Certain pins on an I/O board can be set as analog output to simulate an analog output signal. I say simulate
+          because an actual analog signal is not output, but rather the pin is pulsed on and off rapidly to simulate a
+          specific output voltage. This technique is called <a title="PWM defined"
+            href="http://en.wikipedia.org/wiki/Pulse-width_modulation">Pulse-width modulation</a> (PWM). Most I/O boards
+          will have a few PWM pins. The Arduino Uno has 6 PWM pins: digital pins 3, 5, 6, 9, 10, 11. On many Arduino
+          boards PWM pins are marked with a tilde (~) character. For other I/O boards you may need to refer to the
+          datasheet for the board in order to determine which pins are PWM pins, or you can print the pin capabilities
+          for your I/O board using the following method:</p>
+        <div class="code_wrapper"><code>board.reportCapabilities();</code></div>
+        <p>Make sure your browser&#8217;s console window (search &#8216;how to view console&#8217; for the browser you
+          are using if you are not sure how to show the console) is visible before calling the
+          <code>reportCapabilities()</code> method. This will print the modes associated with each pin. If you see a pin
+          number with &#8216;mode: pwm&#8217; next to it, then it is PWM capable.</p>
+        <p>Now that you have identified the PWM pins on your I/O board, you can use them to control the speed of a motor
+          or the intensity of an LED, the color of an RGB Led, generate tones if a speaker is attached, etc. For the
+          remainder of this section let&#8217;s assume an LED is connected to a PWM pin on your I/O board and that you
+          have created an instance of the IOBoard object and named it &#8220;board&#8221;.</p>
+        <p>To use a Pin object as an analog output we first need to set the pin mode to PWM:</p>
+        <div class="code_wrapper"><code>board.setDigitalPinMode(11, Pin.PWM);</code></div>
+        <p>Next get a reference to the PWM pin:</p>
+        <div class="code_wrapper"><code>var led = board.getDigitalPin(11);</code></div>
+        <p>Now we can set the intensity (brightness) of the led:</p>
+        <div class="code_wrapper"><code>// set the LED to 1/4 intensity (where 1.0 is full intensity)<br />
+  led.value = 0.25;</code></div>
+        <p>Obviously this is more interesting if you can change the value over time. Try creating an on-screen slider to
+          change the value between 0.0 and 1.0, or you can use a potentiometer (or other analog input) to change the
+          value. Here&#8217;s an example of controlling the LED intensity using a potentiometer connected to analog pin
+          0:</p>
+        <pre class="code_wrapper">board.setDigitalPinMode(11, Pin.PWM);
+  var led = board.getDigitalPin(11);
+  
+  board.enableAnalogPin(0);
+  var pot = board.getAnalogPin(0);
+  pot.addEventListener(PinEvent.CHANGE, onPotChange);
+  
+  function onPotChange(event) {
+    var pin = event.target;
+    // set the LED value equal to the potentiometer value
+    led.value = pin.value;
+  }</pre>
+        <p>You can also attach an <a title="BO.filters.Oscillator"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.generators.Oscillator.html">Oscillator</a> to an analog output
+          to drive the output value with a waveform. We looked at the Oscillator (which is a type of Generator) briefly
+          in the <a title="digital output" href="#digital_output">Digital
+            Output</a> section where we used it to turn an LED on and off. When an LED is connected to a PWM pin,
+          however you can apply a variety of waveforms to the output value. Here&#8217;s an example of fading an LED on
+          and off using a sine wave:</p>
+        <pre class="code_wrapper">var freq = 2.0; // time in seconds
+  var amplitude = 1.0;
+  var offset = 0;
+  var phase = 0;
+  var repeat = 0; // where zero = forever, and 10 = repeat 10 times
+  // create a new sine wave oscillator
+  // this will fade the LED on over a 2 second period and then off over a 2 second
+  // period and repeat this cycle until the oscillator is stopped or the program
+  // execution ends
+  var sinewave = new Oscillator(Oscillator.SIN, freq, amplitude, offset, phase, repeat);
+  
+  // add the oscillator to the PWM pin
+  led.addGenerator(sinewave);
+  
+  // start the oscillator
+  sinewave.start();</pre>
+        <p>Some additional types of waveforms you can apply are: SAW, SQUARE, TRIANGLE, LINEAR, and IMPULSE. To learn
+          more about using Generators, see the examples in Breakout/examples/generators/.</p>
+        <p>The Breakout/io/ package includes a number of useful objects (&#8216;classes&#8217;) such as <a
+            title="BO.io.LED" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.LED.html">LED</a>, <a title="BO.io.RGBLED"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.RGBLED.html">RGBLED</a>, <a title="BO.io.Servo"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Servo.html">Servo</a>, and <a title="BO.io.DCMotor"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.DCMotor.html">DCMotor</a> that are based on the analog output
+          pin. It&#8217;s often easier to use these hardware abstractions rather than the analog Pin object directly.
+          See Breakout/examples/actuators/ for examples. Also take a look at the code for these objects for an example
+          of how to create new IO objects from Pin objects.</p>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>

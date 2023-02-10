@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="Breakout is a javascript prototyping tool that provides interfaces to sensors and actuators from the browser via an Arduino-compatible I/O board.">
+  <title>Using Filters</title>
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" />
+</head>
+
+<body class="home page-template-default page page-id-5 custom-background">
+  <div id="wrapper">
+
+    <div class="header">
+      <a href="http://soundanalogous.github.io/Breakout/index.html"><img id="imglogo"
+          src="http://soundanalogous.github.io/Breakout/images/header_logo.png" alt="logo" /></a>
+      <div id="logo">
+        <h1><a href="http://soundanalogous.github.io/Breakout/index.html">Breakout</a></h1>
+        <h2></h2>
+      </div>
+
+      <div id="nav">
+        <ul id="menu-breakout-menu" class="menu">
+          <li id="menu-item-365" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-365"><a
+              href="http://soundanalogous.github.io/Breakout/getting-started.html">Getting Started</a></li>
+          <li id="menu-item-24" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-24"><a
+              href="http://soundanalogous.github.io/Breakout/guides.html">Guides</a></li>
+          <li id="menu-item-111" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-111"><a
+              href="http://soundanalogous.github.io/Breakout/api-docs/index.html">Docs</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content">
+
+
+      <div class="post-230 page type-page status-publish hentry" id="post-230">
+        <h1>Using Filters</h1>
+        <small class="post-meta"></small>
+        <p>One of the more interesting features of analog input in Breakout is the ability to apply filters to the input
+          data. Currently three types of filters are available: <a href="#scaler">Scaler</a>, <a
+            href="#convolution">Convolution</a> and <a href="#triggerpoint">TriggerPoint</a>. We&#8217;ll explore each
+          type of filter in detail and later how to <a title="combining filters"
+            href="#combining_filters">combine filters</a>.</p>
+        <p><em>Assume for the following sections that we have a sensor connected to analog pin 0 of an I/O board and
+            that we have created an instance of the IOBoard object and named it &#8220;board&#8221;. Also it will be
+            helpful to read the <a title="The Pin Object"
+              href="http://soundanalogous.github.io/Breakout/pin-object.html#analog_input">Analog Input</a> section of the Using The
+            Pin Object guide before proceeding.</em></p>
+        <p><a name="scaler"></a></p>
+        <h2>Scaler</h2>
+        <p>A <a title="BO.filters.Scaler" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.Scaler.html">Scaler</a>
+          takes a minimum input and output value and scales them to a specified maximum input and output value. This is
+          helpful since some sensors do not return the full range of values from 0.0 to 1.0. For example, a flex sensor
+          may return a value around 0.15 in its non-flexed state and a maximum value of around 0.55 in its flexed state.
+          If you want to scale these values to the range of 0.0 to 1.0, or 0.0 to 180.0 or any other range you can add a
+          Scaler filter to the analog input pin object.</p>
+        <p>Let&#8217;s get a reference to an analog input and add a Scaler filter:</p>
+        <pre class="code_wrapper">// enable the analog input pin and get a reference to the Pin object
+  board.enableAnalogPin(0);
+  var sensor = board.getAnalogPin(0);
+  
+  // add a new Scaler filter to an analog input pin
+  // scaling the input from 0.15 -&gt; 0.55 to 0.0 -&gt; 1.0
+  sensor.addFilter(new Scaler(0.15, 0.55, 0.0, 1.0));
+  sensor.addEventListener(PinEvent.CHANGE, onSensorUpdate);
+  
+  function onSensorUpdate(event) {
+    var sensorPin = event.target;
+    // print the filtered sensor value
+    console.log("sensor value = " + sensorPin.value);
+  
+    // print the pre-filtered sensor value
+    console.log("pre filtered value = " + sensorPin.value);
+  }</pre>
+        <p>In this example the filtered sensor value will range from 0.0 to 1.0 and the pre-filtered value will range
+          from 0.15 to 0.55 (assuming a flex sensor&#8230; exact values will vary depending on the sensor).</p>
+        <p>You can also apply a number of equations to the Scaler filter. This is useful if you have a sensor that
+          outputs a range of values that do not have a linear relationship to the real-world data they represent. For
+          example if you have a temperature sensor that outputs a range of value from 0.2 to 0.7 to represent a
+          temperature scale from 0 to 100 degrees Centigrade, but the relationship of analog value to temperature is not
+          linear then you can apply an equation that may be a better match. The equations are: LINEAR (y = x), SQUARE (y
+          = x * x), SQUARE_ROOT (y = sqrt(x)), CUBE (y = x^4) and CUBE_ROOT (y = pow(x, 1/4). LINEAR is the default
+          equation. To apply any other equation set it as the 5th parameter to the Scaler constructor:</p>
+        <div class="code_wrapper"><code>sensor.addFilter(new Scaler(0.15, 0.55, 0.0, 1.0, Scaler.CUBE));</code></div>
+        <p>There is also an optional 6th parameter to the Scaler constructor which is a boolean value to enable or
+          disable the limiter. The default value is true. The limiter ensures that the maximum input and output values
+          (3rd and 4th parameters) are not exceeded. In almost all cases this is likely the desired behavior so you
+          generally do not need to specify the 6th parameter when creating a new Scaler.</p>
+        <p>See Breakout/examples/filters/scaler.html for examples of using the Scaler filter.</p>
+        <p><a name="convolution"></a></p>
+        <h2>Convolution</h2>
+        <p>The <a title="BO.filters.Convolution"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.Convolution.html">Convolution</a> filter is used to
+          smooth input values or apply low-pass or high-pass filtering to the input data. If you notice that analog
+          input values are kind of &#8216;jittery&#8217; then you can smooth them out a bit by applying a moving average
+          Convolution filter:</p>
+        <div class="code_wrapper"><code>sensor.addFilter(new Convolution(Convolution.MOVING_AVERAGE));</code></div>
+        <p>You should notice that the filtered data is now less jittery. You can also experiment with the low-pass
+          <code>Convolution.LPF</code> and high-pass <code>Convolution.HPF</code> filters. (<em>Note that the high-pass
+            filter is not working correctly and will be fixed in an upcoming release</em>).</p>
+        <p>See Breakout/examples/filters/convolution.html for examples of using the Convolution filter.</p>
+        <p><a name="triggerpoint"></a></p>
+        <h2>TriggerPoint</h2>
+        <p>The <a title="BO.filters.TriggerPoint"
+            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.TriggerPoint.html">TriggerPoint</a> filter is used to
+          set certain values in the range of analog input that can be used to trigger events. For example you can set a
+          trigger point on an analog input for a temperature sensor to indicate when a specific temperature has been
+          reached. Here is an example of setting a single trigger point:</p>
+        <div class="code_wrapper"><code>sensor.addFilter(new TriggerPoint([0.7, 0]));</code></div>
+        <p>This sets a trigger point at 0.7. So if an analog input value of 0.7 is approximately 68 degrees, then when
+          the temperature increases above 68 degrees the filtered value will be set to 1 and when the temperature
+          decreases below 68 degress the filtered value will be set back to 0.</p>
+        <p>Notice that you must pass an array of values to the TriggerPoint constructor (hence the [ ] syntax). The
+          second value is used to create a threshold for the trigger point rather than a specific point. For example:
+        </p>
+        <div class="code_wrapper"><code>sensor.addFilter(new TriggerPoint([0.7, 0.05]));</code></div>
+        <p>For this example it&#8217;s easier to assume a sensor like a potentiometer. The filtered value will now
+          change from 0 to 1 when the analog value 0.75 has been reached and when rotating the dial in the opposite
+          direction the filtered value will change from 1 to 0 when the analog value of 0.65 has been reached. This
+          prevents the filtered value from fluttering between 0 and 1 when that analog input value is close to 0.7.</p>
+        <p>You can also set multiple trigger points so you could set several points for an analog input to indicate when
+          those points have been reached:</p>
+        <div class="code_wrapper"><code>sensor.addFilter(new TriggerPoint([[0.25, 0.05], [0.7, 0.05]]));</code></div>
+        <p>Note the syntax as it can be a bit tricky if you are not used to it. This time a nested array of 2 sets of
+          values is passed to the TriggerPoint constructor. Notice the outer brackets that enclose the 2 inner sets. Now
+          that we have 2 trigger points, when the analog input value reaches 0.30 (remember 0.25 + 0.05) the filtered
+          value will increase from 0 to 1. Then when the analog input value reaches 0.75 the filtered value will
+          increase from 1 to 2. Here is an example:</p>
+        <pre class="code_wrapper">// add a new Scaler filter to an analog input pin
+  sensor.addFilter(new TriggerPoint([[0.25, 0.05], [0.7, 0.05]]));
+  sensor.addEventListener(PinEvent.CHANGE, onSensorUpdate);
+  
+  function onSensorUpdate(event) {
+    var sensorPin = event.target;
+  
+    switch (sensorPin.value) {
+      case 1:
+        // do something in response to the 1st trigger point
+        doSomething();
+        break;
+      case 2:
+        // do something in response to the 2nd trigger point
+        doSomethingElse();
+        break;
+    }
+  
+    // print the analog input value (this will only be printed
+    // when the trigger point is reached)
+    console.log("pre-filter value = " + sensorPin.preFilterValue);
+  }</pre>
+        <p>You can also add individual trigger points. To do so you need to create an instance of the TriggerPoint
+          object and then add it to the analog input pin:</p>
+        <pre class="code_wrapper">// create an initial trigger point at 0.3 with a threshold of 0.05
+  var triggerPoint = new TriggerPoint([0.3, 0.05]);
+  // add the trigger point to a pin
+  sensor.addFilter(triggerPoint);
+  
+  // add another point
+  // when using the addPoint method, you do not need to pass an array of values
+  triggerPoint.addPoint(0.6, 0.05);</pre>
+        <p>Trigger points are now set at 0.3 and 0.6. When you have a reference to a trigger point, you can remove it
+          using the removePoint() method. To remove a point you pass only the point value to the removePoint method:</p>
+        <div class="code_wrapper"><code>triggerPoint.removePoint(0.3);</code></div>
+        <p>Now only the trigger point at 0.6 remains. You can also remove all points by calling
+          <code>triggerPoint.removeAllPoints();</code>. If you need to add or remove points throughout your program,
+          it&#8217;s best to first create a variable to store the TriggerPoint instance and then pass the instance to
+          the filter as we did in the example above.</p>
+        <p>See Breakout/examples/filters/triggerpoint.html for examples of using the TriggerPoint filter.</p>
+        <p><a name="combining_filters"></a></p>
+        <h2>Combining Filters</h2>
+        <p>It is also possible to apply different types of filters to a single pin. The filters will be processed in the
+          order they were applied. Here&#8217;s an example of applying both a Convolution and a Scaler filter to an
+          analog input:</p>
+        <pre class="code_wrapper">board.enableAnalogPin(0);
+  var sensor = board.getAnalogPin(0);
+  
+  // create a new moving average filter to smooth the input values
+  var smooth = new Convolution(Convolution.MOVING_AVERAGE);
+  
+  // create a new linear scaler to scaler the input value range to 0 -&gt; 180
+  var scale = new Scaler(0, 1, 0, 180, Scaler.LINEAR);
+  
+  // apply the convolution filter
+  sensor.addFilter(smooth);
+  
+  // apply the scaler filter
+  sensor.addFilter(scale);</pre>
+        <p>In this example the convolution filter will be processed, then the scaler filter will be processed.</p>
+        <p>You can apply more than one filter simultaneously by assigning an array of filters to the Pin&#8217;s
+          <code>filters</code> property:</p>
+        <pre class="code_wrapper">var smooth = new Convolution(Convolution.MOVING_AVERAGE);
+  var scale = new Scaler(0, 1, 0, 180, Scaler.LINEAR);
+  
+  // apply both filters
+  sensor.filters = [smooth, scale];</pre>
+        <p>By assigning an array of filters, any existing filters assigned to the pin will be deleted before the new set
+          of filters is applied.</p>
+        <p>You can also read the <code>filters</code> property. This is useful, for example if you need to copy the
+          filters from one pin to another pin. You could accomplish this as follows:</p>
+        <pre class="code_wrapper">// copy the filters assigned to sensor1 to sensor2
+  sensor2.filters = sensor1.filters;</pre>
+        <p>Use the <code>removeAllFilters()</code> method to remove all of the filters from a pin:</p>
+        <pre class="code_wrapper">// remove all filters assigned to this pin
+  sensor.removeAllFilters();</pre>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
