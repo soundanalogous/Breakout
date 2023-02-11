@@ -7,7 +7,7 @@ Breakout is a prototyping tool for exploring the intersection of the web and the
 
 Breakout grew out of a need for a simple platform to enable designers to prototype functional web-based interfaces to the physical world. It is based largely on the Funnel toolkit and informed by the experiences of the developers of both Funnel and Breakout as designers, technologists and educators.
 
-See [http://soundanalogous.github.io/Breakout/index.html](the project site) for detailed documentation and other helpful information.
+See [the project site](http://soundanalogous.github.io/Breakout/index.html) for detailed documentation and other helpful information.
 
 Hello World example
 ---
