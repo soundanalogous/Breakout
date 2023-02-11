@@ -3,11 +3,11 @@ About
 
 Breakout is a prototyping tool for exploring the intersection of the web and the physical world. The popular [Arduino](http://arduino.cc) platform and the [Firmata](http://firmata.org) protocol are leveraged to enable users to access physical input and output purely from javascript. This makes it easy for anyone familiar with javascript and basic web development to explore the possibilities of using sensors and actuators in their web applications. Furthermore, the Breakout framework includes a growing library of hardware abstractions such as buttons, leds, servo motors, accelerometers, gyros, etc enabling the user to easily interface with a range of sensors and actuators using just a few lines of javascript code.
 
-![](http://breakoutjs.com/wp-content/uploads/2012/02/how_breakout_works.png)
+![](http://soundanalogous.github.io/Breakout/images/how_breakout_works.png)
 
-Breakout grew out of a need for a simple platform to enable designers to prototype functional web-based interfaces to the physical world. It is based largely on the [Funnel](http://funnel.cc) toolkit and informed by the experiences of the developers of both Funnel and Breakout as designers, technologists and educators.
+Breakout grew out of a need for a simple platform to enable designers to prototype functional web-based interfaces to the physical world. It is based largely on the Funnel toolkit and informed by the experiences of the developers of both Funnel and Breakout as designers, technologists and educators.
 
-See [breakoutjs.com](http://breakoutjs.com) for detailed documentation and other helpful information.
+See [http://soundanalogous.github.io/Breakout/](the project site) for detailed documentation and other helpful information.
 
 Hello World example
 ---
@@ -50,11 +50,11 @@ Hello World example
 Quick Start
 ---
 
-See the detailed [Getting Started guide](http://breakoutjs.com/getting-started/) or the quickstart guide below.
+See the detailed [Getting Started guide](http://soundanalogous.github.io/Breakout/getting-started.html) or the quickstart guide below.
 
 #### Wire up your board for the hello world example
 
-Wire up a button and led to your I/O board as illustrated on page 2 in [Breakout/examples/schematics.pdf](http://breakoutjs.com/examples/schematics.pdf).
+Wire up a button and led to your I/O board as illustrated on page 2 in [Breakout/examples/schematics.pdf](http://soundanalogous.github.io/Breakout/examples/schematics.pdf).
 
 #### Install required Arduino libraries
 
@@ -71,13 +71,13 @@ Wire up a button and led to your I/O board as illustrated on page 2 in [Breakout
 6. Open [http://localhost:8887/examples/hello_world.html](http://localhost:8887/examples/hello_world.html) in your favorite browser. You should be able to control the LED and view the button state changes.
 7. Open [http://localhost:8887/examples/index.html](http://localhost:8887/examples/index.html) and try some of the other examples (unplug your board before wiring up other examples).
 
-**Schematics for the examples can be found here:** http://breakoutjs.com/examples/schematics.pdf
+**Schematics for the examples can be found here:** http://soundanalogous.github.io/Breakout/examples/schematics.pdf
 
 **Note OS X users:** If you are running Mavericks or later, you will need to disable the App Nap feature for Breakout Server. Right-click on the Breakout Server icon then select Get Info. Check the `Prevent App Nap` box under the General section in the info panel. If you don't disable it, the connection will be dropped a few seconds after the window goes out of focus.
 
 You can also interact with the examples on your smartphone or tablet as long as your mobile browser supports websockets. Instead of `localhost:8887/examples/` enter the IP address or hostname of the computer running Breakout Server (`192.168.2.1:8887/examples/` or `yourhostname.local:8887/examples/`). Also make sure your mobile device is connected to the same wi-fi network as the computer running the Breakout Server application.
 
-For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, enabling auto start mode, or using Breakout with mobile devices, see [Using Breakout Server](http://breakoutjs.com/using-breakout-server/).
+For more information on using Breakout Server including enabling multiple client connections, changing the webserver root directory, enabling auto start mode, or using Breakout with mobile devices, see [Using Breakout Server](http://soundanalogous.github.io/Breakout/using-breakout-server.html).
 
 As an alternative to the Breakout Server application, a node.js-based server is also available. See [breakout-server](https://github.com/soundanalogous/breakout-server) for details.
 
