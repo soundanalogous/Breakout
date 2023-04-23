@@ -41,13 +41,13 @@
           with a button, LED, a couple of resistors and a <a title="breadboard"
             href="http://en.wikipedia.org/wiki/Breadboard">breadboard</a>.</p>
         <h2>Requirements</h2>
-        <p><a title="Requirements" href="https://github.com/soundanalogous/Breakout/requirements.html">View system and browser requirements</a>
+        <p><a title="Requirements" href="http://soundanalogous.github.io/Breakout/requirements.html">View system and browser requirements</a>
         </p>
         <h2>Download and Install Breakout</h2>
         <ol>
           <li>Clone the <a title="breakout github"
               href="https://github.com/soundanalogous/Breakout" target="_blank">github</a> repository or <a title="download breakout" href="https://github.com/soundanalogous/Breakout/releases" target="_blank">download the latest release</a></li>
-          <li>See the <a title="installation" href="https://github.com/soundanalogous/Breakout/using-breakout-server.html#installation">Installation</a>
+          <li>See the <a title="installation" href="http://soundanalogous.github.io/Breakout/using-breakout-server.html#installation">Installation</a>
             section of the Using Breakout Server guide.</li>
         </ol>
         <h2>Upload BreakoutFirmata to your I/O board</h2>
@@ -73,7 +73,7 @@
             the I/O board, and is just one application of the Firmata protocol. See <a title="firmata.org"
               href="http://firmata.org">firmata.org</a> for a complete overview.</em></p>
         <h2>Wire a button and LED to your I/O board</h2>
-        <p>Open Breakout/examples/<a title="schematics"
+        <p>Open <a title="Breakout/examples/schematics"
             href="http://soundanalogous.github.io/Breakout/examples/schematics.pdf">schematics.pdf</a> and wire up your components
           according to wiring diagram on page 2. If you have no idea what the diagram means, read through the lessons in
           this <a title="excellent tutorial by ladyada" href="http://www.ladyada.net/learn/arduino/index.html">tutorial
@@ -124,8 +124,9 @@
         <p>The name of your computer and the network port you are connected to should be printed along with the serial
           port your I/O board is connected to (on windows this will say something like &#8220;COM3&#8221;).</p>
         <p>If you encounter any issues, refer to the <a title="troubleshooting"
-            href="https://github.com/soundanalogous/Breakout/using-breakout-server.html#troubleshooting">Troubleshooting</a> section of the Using Breakout
+            href="http://soundanalogous.github.io/Breakout/using-breakout-server.html#troubleshooting">Troubleshooting</a> section of the Using Breakout
           Server guide.</p>
+
         <h2>Running the Hello World example</h2>
         <p>Assuming you were able to launch the server and connect without any issues, you should now be ready to open
           an example.</p>
@@ -152,6 +153,7 @@
         </ol>
         <p><iframe loading="lazy" src="http://soundanalogous.github.io/Breakout/examples/getting_started/hello_world.html" width="650"
             height="440"></iframe></p>
+
         <h2>Let&#8217;s take a look at the hello_world code</h2>
         <p>The minified file Breakout.js is included near the top of the file. You&#8217;ll see jQuery is also included
           on the following line. Many of the examples use the jQuery library. jQuery is not a requirement of Breakout
@@ -167,7 +169,7 @@
         <p>See the Breakout <a title="docs" href="http://soundanalogous.github.io/Breakout/api-docs/index.html">docs</a> for details on all of the
           Breakout objects.</p>
         <p>Next an instance of the <a title="IOBoard"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.IOBoard.html">IOBoard</a> object is created. The constructor
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.IOBoard.html">IOBoard</a> object is created. The constructor
           parameters are the IP address (as a String), and the network port.</p>
         <div class="code_wrapper"><code>var arduino = new IOBoard(host, 8887);</code></div>
         <p>Host is the IP address or hostname of the computer the IO board is connected to. The host is set to either
@@ -191,15 +193,15 @@
         <p>When the onReady method is called, the first thing you should always do is remove the event listener for the
           READY event:</p>
         <div class="code_wrapper"><code>arduino.removeEventListener(IOBoardEvent.READY, onReady);</code></div>
-        <p>Next an instance of an <a title="LED" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.LED.html">LED</a> object
+        <p>Next an instance of an <a title="LED" href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.LED.html">LED</a> object
           is created. Breakout provides a number of hardware abstractions such as LED, Button, Servo, etc. The LED
           constructor parameters are a reference to the IOBoard object, and a reference to the pin the LED is connected
           to. The getDigitalPin(pinNumber) and getAnalogPin(analogPinNumber) methods are used to get a reference to a
           Pin object. See the docs for <a title="BO.Pin"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.Pin.html">BO.Pin</a> for details.</p>
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.Pin.html">BO.Pin</a> for details.</p>
         <div class="code_wrapper"><code>led = new LED(arduino, arduino.getDigitalPin(11));</code></div>
         <p>Next an instance of the <a title="Button"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Button.html">Button</a> object is created. Note that if you
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.Button.html">Button</a> object is created. Note that if you
           are using a javascript UI library that also has an object named &#8216;Button&#8217; then you will need to use
           the full namespace for the Breakout button to avoid any naming conflicts (BO.io.Button). The Button object
           takes 3 parameters: A reference to the IOBoard, a reference to the Pin the button is attached to, and the
