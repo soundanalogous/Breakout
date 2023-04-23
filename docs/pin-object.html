@@ -39,7 +39,7 @@
         <h1>Using the Pin Object</h1>
         <small class="post-meta"></small>
         <p>Each analog and digital pin of the I/O board is represented by a <a title="pin"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.Pin.html">Pin</a> object. The Pin object is the foundation for
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.Pin.html">Pin</a> object. The Pin object is the foundation for
           many of the Breakout IO objects and is also very useful on it&#8217;s own. This section describes how to use
           pins as <a href="#digital_input">digital inputs</a>,<a href="#digital_output"> digital outputs</a>, <a
             href="#analog_input">analog inputs</a> and <a href="#analog_output">analog outputs</a>.</p>
@@ -69,7 +69,7 @@
     console.log("pin value = " + event.target.value);
   }</pre>
         <p>Notice the function parameter named <code>event</code>. This is an object that contains data about the event
-          (in this case a <a title="PinEvent" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.PinEvent.html">PinEvent</a>).
+          (in this case a <a title="PinEvent" href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.PinEvent.html">PinEvent</a>).
           You can use any name for this parameter (&#8216;evt&#8217; and &#8216;e&#8217; are other common names). All
           event objects have a property named <code>target</code> that provides a reference to the object that fired the
           event. So in this case, <code>event.target</code> refers to the Pin object representing the button and
@@ -112,7 +112,7 @@
   }</pre>
         <p>Now that you have a better understanding of how to use a pin as a digital input, you may be wondering what
           the difference is between using a Pin object as a digital input and using the Breakout <a
-            title="Button documentation" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Button.html">Button</a> object.
+            title="Button documentation" href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.Button.html">Button</a> object.
           The Button object is a wrapper around a digital input pin, but it provides a number of useful features such as
           switch <a title="switch debounce"
             href="http://www.labbookpages.co.uk/electronics/debounce.html">debouncing</a>, sustained press events (fires
@@ -144,7 +144,7 @@
         <p>A cool thing you can do with digital output is attach a Generator. A generator is a type of object that can
           automatically change (or drive) an output value by applying various waveforms or other equations. Currently
           the only type of generator in breakout is the <a title="Oscillator"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.generators.Oscillator.html">Oscillator</a> object. The
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.generators.Oscillator.html">Oscillator</a> object. The
           oscillator uses a waveform to generate an output signal. The possibilities are much more exciting for an
           analog output (PWM) pin, but you can also use a generator on a digial output to oscillate between 1 and 0 on a
           set frequency. Here&#8217;s an example:</p>
@@ -164,7 +164,7 @@
           until the program execution ends. You can also call <code>blink.stop()</code> to stop the oscillator.</p>
         <p>You can learn more about Oscillators in the <a href="#analog_output">Analog Output</a> section of this guide
           as well as the examples in Breakout/examples/generators/.</p>
-        <p>Also see the <a title="BO.io.LED" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.LED.html">LED</a> object in
+        <p>Also see the <a title="BO.io.LED" href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.LED.html">LED</a> object in
           the Breakout/io/ package. It provides a number of helpful methods that make it easier to use an LED. However
           note that some of the methods such as fadeIn, fadeOut and fadeTo can only be used if the LED is connected to a
           PWM pin on the I/O board. You&#8217;ll learn more about using PWM pins in the Analog Output section.</p>
@@ -245,17 +245,17 @@
   console.log("analog number = " + sensorPin.analogNumber); // prints 0 for an Uno</pre>
         <p>Breakout also includes a number of filters that you can apply to the analog input data. These include a <a
             title="BO.filters.Convolution"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.Convolution.html">Convolution</a> filter to smooth data,
-          a <a title="BO.filters.Scaler" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.Scaler.html">Scaler</a>
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.filters.Convolution.html">Convolution</a> filter to smooth data,
+          a <a title="BO.filters.Scaler" href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.filters.Scaler.html">Scaler</a>
           filter to scale from one range of data to another using a variety of equations, and a <a
             title="BO.filters.TriggerPoint"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.filters.TriggerPoint.html">TriggerPoint</a> filter that can be
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.filters.TriggerPoint.html">TriggerPoint</a> filter that can be
           used to set a trigger when specific input values are met. To learn more about using filters, see the <a
             title="Using Filters" href="http://soundanalogous.github.io/Breakout/using-filters.html">Using Filters</a> guide and the
           examples in Breakout/examples/filters/.</p>
         <p>If you are using a potentiometer or other linear analog input, it is often easier to use the <a
             title="BO.io.Potentiometer"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Potentiometer.html">Potentiometer</a> object from the
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.Potentiometer.html">Potentiometer</a> object from the
           Breakout/io/ package rather than using the analog input Pin object directly. The Potentiometer object is a
           wrapper object for the analog input pin providing similar functionality but is a bit easier to use (you
           don&#8217;t have to worry about enabling the analog pin for example, it&#8217;s handled automatically and
@@ -305,7 +305,7 @@
     led.value = pin.value;
   }</pre>
         <p>You can also attach an <a title="BO.filters.Oscillator"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.generators.Oscillator.html">Oscillator</a> to an analog output
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.generators.Oscillator.html">Oscillator</a> to an analog output
           to drive the output value with a waveform. We looked at the Oscillator (which is a type of Generator) briefly
           in the <a title="digital output" href="#digital_output">Digital
             Output</a> section where we used it to turn an LED on and off. When an LED is connected to a PWM pin,
@@ -330,10 +330,10 @@
         <p>Some additional types of waveforms you can apply are: SAW, SQUARE, TRIANGLE, LINEAR, and IMPULSE. To learn
           more about using Generators, see the examples in Breakout/examples/generators/.</p>
         <p>The Breakout/io/ package includes a number of useful objects (&#8216;classes&#8217;) such as <a
-            title="BO.io.LED" href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.LED.html">LED</a>, <a title="BO.io.RGBLED"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.RGBLED.html">RGBLED</a>, <a title="BO.io.Servo"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.Servo.html">Servo</a>, and <a title="BO.io.DCMotor"
-            href="http://soundanalogous.github.io/Breakout/api-docs/symbols/BO.io.DCMotor.html">DCMotor</a> that are based on the analog output
+            title="BO.io.LED" href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.LED.html">LED</a>, <a title="BO.io.RGBLED"
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.RGBLED.html">RGBLED</a>, <a title="BO.io.Servo"
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.Servo.html">Servo</a>, and <a title="BO.io.DCMotor"
+            href="http://soundanalogous.github.io/Breakout/api-docs/classes/BO.io.DCMotor.html">DCMotor</a> that are based on the analog output
           pin. It&#8217;s often easier to use these hardware abstractions rather than the analog Pin object directly.
           See Breakout/examples/actuators/ for examples. Also take a look at the code for these objects for an example
           of how to create new IO objects from Pin objects.</p>
